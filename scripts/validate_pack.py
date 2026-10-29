@@ -128,6 +128,18 @@ def main() -> int:
                         errors.append(f"invalid skill field {field}")
                 if "action" in skill or "auto_apply" in skill:
                     errors.append("skill must not contain executable/action fields")
+                audiences = skill.get("audiences")
+                if (not isinstance(audiences, list) or not audiences
+                        or len(audiences) > 5 or any(
+                            item not in {"all_ai_bots", "chat_moderators", "community_bots"}
+                            for item in audiences
+                        )):
+                    errors.append("invalid skill audience selection")
+                if skill.get("kind") == "moderation_language" and "all_ai_bots" in (audiences or []):
+                    errors.append("chat-specific moderation must not be treated as general AuroraFox knowledge")
+                if skill.get("kind") == "bot_help" and "all_ai_bots" in (audiences or []):
+                    errors.append("bot-specific help must not be treated as general AuroraFox knowledge")
+
 
     if errors:
         print("Bot-Knowledge validation: FAIL")
