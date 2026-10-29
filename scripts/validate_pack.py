@@ -89,6 +89,46 @@ def main() -> int:
             if len(ids) != len(set(ids)):
                 errors.append("duplicate intent ids")
 
+    skills_path = ROOT / "packs/ru/skills.json"
+    if skills_path.exists():
+        payload = skills_path.read_bytes()
+        if len(payload) > 128 * 1024:
+            errors.append("skills pack exceeds 128 KiB")
+        data = read_json(skills_path)
+        policy = data.get("usage_policy", {})
+        if (data.get("schema_version") != 1
+                or data.get("language") != "ru"
+                or not isinstance(policy, dict)
+                or policy.get("user_data_allowed") is not False
+                or policy.get("automatic_sanctions_allowed") is not False
+                or policy.get("initiative_requires_local_authorization") is not True):
+            errors.append("skills policy must forbid personal data, automatic sanctions and unauthorized initiative")
+        skills = data.get("skills")
+        if not isinstance(skills, list) or not skills:
+            errors.append("skills pack must contain a nonempty list")
+        else:
+            seen = set()
+            for skill in skills:
+                if not isinstance(skill, dict):
+                    errors.append("invalid skills entry")
+                    continue
+                skill_id = skill.get("id")
+                if not isinstance(skill_id, str) or not skill_id.isascii() or not skill_id.replace("_", "").isalnum():
+                    errors.append("invalid skill id")
+                if skill_id in seen:
+                    errors.append("duplicate skill id")
+                seen.add(skill_id)
+                if skill.get("kind") not in {"social", "bot_help", "moderation_language"}:
+                    errors.append("unsupported skill kind")
+                for field in ("when", "avoid", "examples"):
+                    items = skill.get(field)
+                    if not isinstance(items, list) or len(items) > 12 or any(
+                        not isinstance(item, str) or not 1 <= len(item) <= 300 for item in items
+                    ):
+                        errors.append(f"invalid skill field {field}")
+                if "action" in skill or "auto_apply" in skill:
+                    errors.append("skill must not contain executable/action fields")
+
     if errors:
         print("Bot-Knowledge validation: FAIL")
         for error in errors:
