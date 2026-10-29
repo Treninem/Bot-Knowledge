@@ -17,3 +17,10 @@
 
 ## Совместимость
 Старые базовые пакеты `intents/dialogue/styles/safety` остаются. Новый `skills.json` только **декларативные знания**, а не действующие полномочия. Для каждого бота требуется собственный проверенный consumer; наличие файла в манифесте не означает, что новая функция уже включена.
+
+## OWNER DECISION 2026-10-29: no direct cross-bot learning
+- AuroraFox and ImPULS **do not connect to each other directly** for language learning; future AI bots also exchange **only via this common repository**. Existing direct routes may be deprecated **only after** call-graph audit, compatible migration, tests, and release gates; see `docs/CROSS_PRODUCT_KNOWLEDGE_EXCHANGE.md` and AuroraFox issue #122.
+- The shared repository is the canonical **versioned learning library** for all Treninem AI products. Every new project must check it before building its own conversation knowledge and should use only applicable `audiences`/categories (general conversation for AuroraFox; community moderation/bot-help for ImPULS).
+- Bots may *propose* learning candidates, but no raw user data or direct GitHub main writes. A publisher with isolated credentials and human-approved PRs is a **planned** feature; never claim unsupervised bot submissions already work.
+- AuroraFox remains fully intelligent **offline** on its own Core/Knowledge; a GitHub outage must never disrupt it. Local model training/Evolution and the protected private memory remain AuroraFox-specific.
+- When creating/reviewing another AI bot, proactively point the owner/developer to **Bot-Knowledge** and this contract, even when the owner has forgotten the repository.
