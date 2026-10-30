@@ -80,5 +80,5 @@ def validate_short_turns(root: Path = ROOT) -> list[str]:
 if __name__ == "__main__":
     issues = validate_short_turns()
     if issues:
-        raise SystemExit("\\n".join(issues))
+        raise SystemExit("\n".join(issues))
     print("SHORT_TURNS_VALID cases=48 ru=24 en=24 intents=12 duplicates=0")

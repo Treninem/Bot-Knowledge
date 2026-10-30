@@ -25,7 +25,7 @@ POLICY = {
 PENDING = {"confirmation", "choice", "information"}
 INTENTS = {"affirm", "deny", "unsure", "defer", "cancel", "first",
            "second", "both", "neither", "repeat", "explain", "ambiguous"}
-WORD = re.compile(r"[^\\W_]+", re.UNICODE)
+WORD = re.compile(r"[^\W_]+", re.UNICODE)
 
 
 def normalize(value: str) -> str:
@@ -76,7 +76,7 @@ class ShortTurns:
         if (quoted or any(mark in message for mark in ('"', "«", "»", "“", "”"))
                 or message.strip().startswith("'") or message.strip().endswith("'")):
             return {"status": "quoted_ignored", **empty}
-        if any(mark in message for mark in ("?", "？", "…", ";", ":", "\\n", "\\r")):
+        if any(mark in message for mark in ("?", "？", "…", ";", ":", "\n", "\r")):
             return {"status": "needs_clarification", **empty}
         key = normalize(message)
         if not key:
