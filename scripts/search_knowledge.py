@@ -83,7 +83,7 @@ class KnowledgeSearch:
                         "pack": rel,
                         "audiences": audiences,
                         "topic": item.get("target_case_id", item.get("topic", item.get("kind", item.get("category", "")))),
-                        "expression": item.get("expression") or item.get("source") or (item.get("input", "") if "target_case_id" in item or "expected_ids" in item or ((rel in {"packs/ru/style_preferences.json", "packs/ru/scoped_style_requests.json", "packs/ru/composable_style.json"} and "dimension" in item) or (rel in {"packs/ru/numeric_repairs.json", "packs/ru/lexical_repairs.json"} and "expected_status" in item) or (rel == "packs/ru/discourse_links.json" and "relation" in item)) else ""),
+                        "expression": item.get("expression") or item.get("source") or (item.get("input", "") if "target_case_id" in item or "expected_ids" in item or ((rel in {"packs/ru/style_preferences.json", "packs/ru/scoped_style_requests.json", "packs/ru/composable_style.json"} and "dimension" in item) or (rel in {"packs/ru/numeric_repairs.json", "packs/ru/lexical_repairs.json"} and "expected_status" in item) or (rel == "packs/ru/discourse_links.json" and "relation" in item) or (rel == "packs/ru/short_turns.json" and "pending_kind" in item)) else ""),
                         "preview": (item.get("expression") or item.get("response") or item.get("reason")
                                     or item.get("source") or item.get("input") or item.get("message")
                                     or (item.get("examples") or [""])[0])[:220],
@@ -102,7 +102,8 @@ class KnowledgeSearch:
         if not 1 <= limit <= 20:
             raise ValueError("Invalid limit")
         terms = tokens(query)
-        if not terms:
+        exact_matches = self.exact.get(exact_phrase(query), ())
+        if not terms and not exact_matches:
             return ()
         allowed = {"all_ai_bots", audience}
         scores: dict[int, int] = defaultdict(int)
@@ -111,7 +112,7 @@ class KnowledgeSearch:
                 if allowed.intersection(self.records[i]["audiences"]):
                     scores[i] += 1
         # Rank an exact phrase above loose token overlap, after audience filtering.
-        for i in self.exact.get(exact_phrase(query), ()):
+        for i in exact_matches:
             if allowed.intersection(self.records[i]["audiences"]):
                 scores[i] += max(10, 3 * len(terms))
         ranked = sorted(scores, key=lambda i: (-scores[i], self.records[i]["id"]))

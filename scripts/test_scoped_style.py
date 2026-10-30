@@ -13,7 +13,7 @@ scoped = load_scoped_requests()
 cases = scoped["cases"]
 assert len(cases) == 80
 index = KnowledgeSearch()
-assert len(index.records) == 1131, len(index.records)
+assert len(index.records) == 1179, len(index.records)
 for row in cases:
     session = PreferenceSession(book, scoped_book=scoped)
     answer = session.observe_scoped(row["input"], language=row["language"], addressed=True)

@@ -38,7 +38,7 @@ def main() -> None:
     assert sum(c["language"] == "ru" for c in cases) == 28
     assert sum(c["language"] == "en" for c in cases) == 28
     index = KnowledgeSearch()
-    assert len(index.records) == 1131, len(index.records)
+    assert len(index.records) == 1179, len(index.records)
     for case in cases:
         actual = execute(case)
         expected = {"status": case["expected_status"], "ids": case["expected_ids"]}

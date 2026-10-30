@@ -16,7 +16,7 @@ cases = book["cases"]
 assert len(cases) == 30
 engine = DiscourseLinks()
 index = KnowledgeSearch()
-assert len(index.records) == 1131, len(index.records)
+assert len(index.records) == 1179, len(index.records)
 assert len({row["id"] for row in cases}) == 30
 
 for row in cases:
