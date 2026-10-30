@@ -24,7 +24,7 @@ def main() -> None:
     assert len({e["id"] for e in entries}) == 48
     assert len({(e["language"], normalized(e["source"])) for e in entries}) == 48
     search = KnowledgeSearch()
-    assert len(search.records) == 957, len(search.records)
+    assert len(search.records) == 1037, len(search.records)
     for e in entries:
         source, language = e["source"], e["language"]
         for tone in ("neutral", "casual"):

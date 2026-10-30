@@ -52,7 +52,7 @@ def load_scoped_requests(root: Path = ROOT) -> dict:
 class PreferenceSession:
     """Separate instance per conversation. No texts, identity or history stored."""
 
-    def __init__(self, book: dict, ttl_turns: int = 12, scoped_book: dict | None = None):
+    def __init__(self, book: dict, ttl_turns: int = 12, scoped_book: dict | None = None, composer=None):
         if type(ttl_turns) is not int or not 1 <= ttl_turns <= 100:
             raise ValueError("Invalid ttl_turns")
         self.ttl_turns = ttl_turns
@@ -60,6 +60,7 @@ class PreferenceSession:
         self.rules: dict[str, tuple[str, int]] = {}
         self.examples = {}
         self.scoped_examples = {}
+        self.composer = composer
         self.one_reply: dict[str, str] = {}
         self.session_rules: dict[str, str] = {}
         for row in book["cases"]:
@@ -126,6 +127,22 @@ class PreferenceSession:
             self.one_reply.pop(dimension, None)
         return {"status": "updated", "dimension": dimension,
                 "value": value, "scope": scope}
+
+    def observe_composed(self, message: str, *, language: str,
+                         addressed: bool = False, quoted: bool = False) -> dict:
+        """Apply only a complete approved RU/EN compositional request."""
+        if self.composer is None:
+            return {"status": "composable_unavailable"}
+        result = self.composer.match(message, language=language, addressed=addressed, quoted=quoted)
+        if result["status"] != "updated":
+            return result
+        dimension, value, scope = result["dimension"], result["value"], result["scope"]
+        if scope == "one_reply":
+            self.one_reply[dimension] = value
+        else:
+            self.session_rules[dimension] = value
+            self.one_reply.pop(dimension, None)
+        return result
 
     def snapshot(self, *, sensitive: bool = False) -> dict[str, str | None]:
         result = {name: (self.rules[name][0] if name in self.rules else None)
