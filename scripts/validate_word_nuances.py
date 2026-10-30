@@ -26,6 +26,16 @@ def normalized(value: str) -> str:
     return " ".join(re.findall(r"[a-zа-я0-9]+", value))
 
 
+def version_not_newer(pack_version: str, knowledge_version: str) -> bool:
+    """Existing immutable packs may have an earlier version than the manifest."""
+    def parse(value: str):
+        if not isinstance(value, str) or not re.fullmatch(r"\d{4}\.\d{2}\.\d{2}\.\d+", value):
+            return None
+        return tuple(int(part) for part in value.split("."))
+    pack, manifest = parse(pack_version), parse(knowledge_version)
+    return pack is not None and manifest is not None and pack <= manifest
+
+
 def validate_word_nuances_pack(root: Path = ROOT) -> list[str]:
     issues: list[str] = []
     try:
@@ -41,7 +51,7 @@ def validate_word_nuances_pack(root: Path = ROOT) -> list[str]:
         return [f"word nuances cannot load: {exc}"]
 
     if (book.get("schema_version") != 1 or book.get("language") != "multilingual"
-            or book.get("pack_version") != manifest.get("knowledge_version")
+            or not version_not_newer(book.get("pack_version"), manifest.get("knowledge_version"))
             or book.get("usage_policy") != POLICY or not isinstance(book.get("tones"), list)
             or len(book["tones"]) != 3 or set(book["tones"]) != TONES):
         issues.append("invalid word nuances schema/version/policy/tones")
