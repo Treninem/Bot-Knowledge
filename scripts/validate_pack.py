@@ -141,6 +141,48 @@ def main() -> int:
                     errors.append("bot-specific help must not be treated as general AuroraFox knowledge")
 
 
+    context_path = ROOT / "packs/ru/context_cases.json"
+    if context_path.exists():
+        data = read_json(context_path)
+        if data.get("schema_version") != 1 or data.get("language") != "ru":
+            errors.append("invalid context case pack metadata")
+        cases = data.get("cases")
+        if not isinstance(cases, list) or not cases or len(cases) > 1000:
+            errors.append("invalid context cases list")
+        else:
+            ids, seen_inputs = set(), set()
+            allowed = {"answer", "clarify", "abstain", "human_review", "refuse_claim"}
+            for case in cases:
+                if not isinstance(case, dict):
+                    errors.append("context case must be an object")
+                    continue
+                case_id, decision = case.get("id"), case.get("decision")
+                if not isinstance(case_id, str) or not case_id.isascii() or not case_id.replace("_","").isalnum() or case_id in ids:
+                    errors.append("invalid or duplicate context case id")
+                ids.add(case_id)
+                if decision not in allowed:
+                    errors.append(f"invalid context decision: {case_id}")
+                source = case.get("input")
+                if not isinstance(source, str) or not 4 <= len(source) <= 300:
+                    errors.append(f"invalid context input: {case_id}")
+                else:
+                    key = " ".join(source.casefold().split())
+                    if key in seen_inputs:
+                        errors.append(f"repeated context input: {case_id}")
+                    seen_inputs.add(key)
+                for field in ("context", "expected_behavior", "forbidden_behavior"):
+                    value = case.get(field)
+                    if not isinstance(value, str) or not 4 <= len(value) <= 300:
+                        errors.append(f"invalid context {field}: {case_id}")
+                audiences = case.get("audiences")
+                if not isinstance(audiences,list) or not audiences or not set(audiences) <= {"all_ai_bots","chat_moderators","community_bots"}:
+                    errors.append(f"invalid context audiences: {case_id}")
+                if case.get("category") in {"moderation_semantics", "permissions"} and "all_ai_bots" in (audiences or []):
+                    errors.append(f"cross-product permission leak in {case_id}")
+                if "action" in case or "auto_apply" in case:
+                    errors.append(f"executable field forbidden in {case_id}")
+
+
     if errors:
         print("Bot-Knowledge validation: FAIL")
         for error in errors:
