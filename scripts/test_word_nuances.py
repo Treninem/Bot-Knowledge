@@ -10,11 +10,14 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 from word_nuances import load_word_nuances, choose_word, PACK
-from validate_word_nuances import validate_word_nuances_pack
+from validate_word_nuances import validate_word_nuances_pack, version_not_newer
 from search_knowledge import KnowledgeSearch
 
 
 def main() -> None:
+    assert version_not_newer('2026.10.30.12', '2026.10.30.13')
+    assert not version_not_newer('2026.10.30.14', '2026.10.30.13')
+    assert not version_not_newer('unversioned', '2026.10.30.13')
     issues = validate_word_nuances_pack(ROOT)
     assert issues == [], issues
     book = load_word_nuances()
@@ -24,7 +27,7 @@ def main() -> None:
     assert sum(c["language"] == "ru" for c in cases) == 36
     assert sum(c["language"] == "en" for c in cases) == 36
     index = KnowledgeSearch()
-    assert len(index.records) == 749, len(index.records)
+    assert len(index.records) == 829, len(index.records)
     for case in cases:
         search = index.search(case["source"], "all_ai_bots", 20)
         assert search and search[0][0] == case["id"], (case["id"], search)
