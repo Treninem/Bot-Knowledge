@@ -83,7 +83,7 @@ def validate_lexical_repairs(root: Path = ROOT) -> list[str]:
         domains.add(row["domain"])
         if kind == "ok":
             if (guard != "explicit_correction" or row["expected_status"] != "proposal"
-                    or row["expected_new"] != cleaned[1] or row["addressed"] is not True
+                    or canonical_value(row["expected_new"], lang) != cleaned[1] or row["addressed"] is not True
                     or row["quoted"] is not False):
                 errors.append("Unsafe lexical positive case")
         else:
