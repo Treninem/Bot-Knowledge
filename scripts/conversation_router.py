@@ -12,6 +12,7 @@ from pathlib import Path
 
 from choose_expression import pick_phrase, load_phrasebook
 from interpret_pragmatics import interpret, load as load_pragmatics, norm
+from conservative_typo import ConservativeTypoMatcher, Example, SAFE_KINDS, EXCLUDED_IDS
 
 ROOT = Path(__file__).resolve().parents[1]
 AUDIENCES = {"all_ai_bots", "chat_moderators", "community_bots"}
@@ -61,6 +62,23 @@ class ConversationRouter:
                 raise ValueError("Unknown target case")
             self.triggers[key] = entry
         self.triggers_count = len(self.triggers)
+        # Typo-only fallback for benign approved cases. Never approximate
+        # permissions, rule statements, profanity, humor or silence requests.
+        candidates = []
+        for (language, expression), case_id in self.originals.items():
+            case = self.cases[case_id]
+            if case.get("kind") in SAFE_KINDS and case_id not in EXCLUDED_IDS:
+                candidates.append(Example(language, expression, case_id))
+        for (language, expression), entry in self.triggers.items():
+            case_id = entry["target_case_id"]
+            case = self.cases[case_id]
+            if (case.get("kind") in SAFE_KINDS and case_id not in EXCLUDED_IDS
+                    and not entry["requires_strong_opt_in"]
+                    and not entry["requires_dark_opt_in"]
+                    and not entry["requires_silence"]):
+                candidates.append(Example(language, expression, case_id))
+        self.typo_matcher = ConservativeTypoMatcher(candidates)
+
 
     @staticmethod
     def _present(text: str, recent: tuple[str, ...]) -> bool:
@@ -70,7 +88,8 @@ class ConversationRouter:
               audience: str = "all_ai_bots", addressed: bool = False,
               context: str = "", tone: str = "neutral",
               dark_opt_in: bool = False, strong_opt_in: bool = False,
-              sensitive: bool = False, recent: tuple[str, ...] = ()) -> dict:
+              sensitive: bool = False, recent: tuple[str, ...] = (),
+              allow_typos: bool = True) -> dict:
         if language not in LANGUAGES or audience not in AUDIENCES or tone not in TONES:
             raise ValueError("Unsupported locale, audience or tone")
         if not addressed:
@@ -94,6 +113,15 @@ class ConversationRouter:
             return {"status": "ok", "text": text, "source_id": p["pair_id"], "route": "pragmatics"}
         trigger = self.triggers.get((language, key))
         case_id = trigger["target_case_id"] if trigger else self.originals.get((language, key))
+        typo_routed = False
+        if not case_id and allow_typos:
+            approximate = self.typo_matcher.match(message, language)
+            if approximate["status"] == "ambiguous":
+                return {"status": "needs_clarification", "text": None}
+            if approximate["status"] == "match":
+                case_id = approximate["case_id"]
+                trigger = self.triggers.get((language, approximate["source"]))
+                typo_routed = True
         if not case_id:
             return {"status": "unknown_input", "text": None}
         case = self.cases[case_id]
@@ -134,7 +162,7 @@ class ConversationRouter:
                             "source_id": trigger["fallback_expression_id"], "route": "alternative"}
             return {"status": "repeat_suppressed", "text": None}
         return {"status": "ok", "text": text, "source_id": case_id,
-                "route": "trigger" if trigger else "original"}
+                "route": "typo" if typo_routed else ("trigger" if trigger else "original")}
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Safe local RU/EN response router")
@@ -147,12 +175,13 @@ def main() -> None:
     parser.add_argument("--dark-opt-in", action="store_true")
     parser.add_argument("--strong-opt-in", action="store_true")
     parser.add_argument("--sensitive", action="store_true")
+    parser.add_argument("--no-typos", action="store_true")
     args = parser.parse_args()
     result = ConversationRouter().reply(
         args.message, language=args.language, audience=args.audience,
         context=args.context, tone=args.tone, addressed=args.addressed,
         dark_opt_in=args.dark_opt_in, strong_opt_in=args.strong_opt_in,
-        sensitive=args.sensitive
+        sensitive=args.sensitive, allow_typos=not args.no_typos
     )
     print(json.dumps(result, ensure_ascii=False, indent=2))
 
