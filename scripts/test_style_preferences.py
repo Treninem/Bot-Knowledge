@@ -13,7 +13,7 @@ book = load_preferences()
 cases = book["cases"]
 assert len(cases) == 80
 index = KnowledgeSearch()
-assert len(index.records) == 1101, len(index.records)
+assert len(index.records) == 1131, len(index.records)
 
 for row in cases:
     s = PreferenceSession(book)

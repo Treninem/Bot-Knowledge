@@ -22,7 +22,7 @@ assert Counter((row["language"], row["kind"]) for row in rows) == {
 assert len({row["id"] for row in rows}) == 64
 engine = LexicalRepair()
 index = KnowledgeSearch()
-assert len(index.records) == 1101, len(index.records)
+assert len(index.records) == 1131, len(index.records)
 
 for row in rows:
     state = {row["slot"]: row["current"], "unused_slot": "unchanged"}
