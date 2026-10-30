@@ -17,6 +17,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 AUDIENCES = {"all_ai_bots", "chat_moderators", "community_bots"}
 WORDS = re.compile(r"[a-zа-яё0-9]+", re.IGNORECASE)
+
+def exact_phrase(text: str) -> str:
+    return " ".join(WORDS.findall(text.casefold().replace("ё", "е")))
 STOP = {"это", "мне", "для", "что", "как", "или", "with", "the", "and", "you", "are"}
 
 def tokens(text: str) -> set[str]:
@@ -33,7 +36,7 @@ def searchable_text(item: dict) -> str:
     fields = ("id", "topic", "category", "kind", "domain", "classification",
               "context", "input", "message", "local_rule", "reason",
               "response", "meaning_ru", "when", "avoid", "examples",
-              "expected_behavior", "forbidden_behavior")
+              "expected_behavior", "forbidden_behavior", "expression")
     values = []
     for key in fields:
         value = item.get(key)
@@ -41,6 +44,12 @@ def searchable_text(item: dict) -> str:
             values.append(value)
         elif isinstance(value, list):
             values.extend(x for x in value if isinstance(x, str))
+    for reading in item.get("readings", ()):
+        if isinstance(reading, dict):
+            for name in ("context", "meaning", "suggested_response"):
+                if isinstance(reading.get(name), str):
+                    values.append(reading[name])
+            values.extend(c for c in reading.get("cues", ()) if isinstance(c, str))
     return " ".join(values)
 
 class KnowledgeSearch:
@@ -48,6 +57,7 @@ class KnowledgeSearch:
         manifest = json.loads((root / "manifest.json").read_text(encoding="utf-8"))
         self.records: list[dict] = []
         self.inverted: dict[str, set[int]] = defaultdict(set)
+        self.exact: dict[str, set[int]] = defaultdict(set)
         for info in manifest["packs"]:
             rel = info["path"]
             if not rel.startswith("packs/ru/") or ".." in Path(rel).parts:
@@ -56,7 +66,7 @@ class KnowledgeSearch:
             if hashlib.sha256(payload).hexdigest() != info["sha256"]:
                 raise ValueError("SHA mismatch: " + rel)
             pack = json.loads(payload.decode("utf-8"))
-            for key in ("skills", "cases", "intents"):
+            for key in ("skills", "cases", "intents", "pairs"):
                 for item in pack.get(key, []):
                     if not isinstance(item, dict):
                         continue
@@ -69,12 +79,15 @@ class KnowledgeSearch:
                         "pack": rel,
                         "audiences": audiences,
                         "topic": item.get("topic", item.get("kind", item.get("category", ""))),
-                        "preview": (item.get("response") or item.get("reason")
+                        "expression": item.get("expression", ""),
+                        "preview": (item.get("expression") or item.get("response") or item.get("reason")
                                     or item.get("input") or item.get("message")
                                     or (item.get("examples") or [""])[0])[:220],
                     }
                     index = len(self.records)
                     self.records.append(record)
+                    if isinstance(record["expression"], str) and record["expression"].strip():
+                        self.exact[exact_phrase(record["expression"])].add(index)
                     for term in tokens(contents):
                         self.inverted[term].add(index)
 
@@ -93,6 +106,10 @@ class KnowledgeSearch:
             for i in self.inverted.get(term, ()):
                 if allowed.intersection(self.records[i]["audiences"]):
                     scores[i] += 1
+        # Rank an exact phrase above loose token overlap, after audience filtering.
+        for i in self.exact.get(exact_phrase(query), ()):
+            if allowed.intersection(self.records[i]["audiences"]):
+                scores[i] += max(10, 3 * len(terms))
         ranked = sorted(scores, key=lambda i: (-scores[i], self.records[i]["id"]))
         return tuple((self.records[i]["id"], self.records[i]["pack"],
                       self.records[i]["topic"], self.records[i]["preview"])
