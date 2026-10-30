@@ -66,7 +66,7 @@ class KnowledgeSearch:
             if hashlib.sha256(payload).hexdigest() != info["sha256"]:
                 raise ValueError("SHA mismatch: " + rel)
             pack = json.loads(payload.decode("utf-8"))
-            for key in ("skills", "cases", "intents", "pairs"):
+            for key in ("skills", "cases", "intents", "pairs", "triggers"):
                 for item in pack.get(key, []):
                     if not isinstance(item, dict):
                         continue
@@ -78,8 +78,8 @@ class KnowledgeSearch:
                         "id": item.get("id", ""),
                         "pack": rel,
                         "audiences": audiences,
-                        "topic": item.get("topic", item.get("kind", item.get("category", ""))),
-                        "expression": item.get("expression", ""),
+                        "topic": item.get("target_case_id", item.get("topic", item.get("kind", item.get("category", "")))),
+                        "expression": item.get("expression") or (item.get("input", "") if "target_case_id" in item else ""),
                         "preview": (item.get("expression") or item.get("response") or item.get("reason")
                                     or item.get("input") or item.get("message")
                                     or (item.get("examples") or [""])[0])[:220],

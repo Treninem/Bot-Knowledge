@@ -50,10 +50,9 @@ class ConversationRouter:
                 raise ValueError("Duplicate original utterance")
             self.originals[key] = case["id"]
         self.triggers = {}
-        self.pair_utterances = set()
+        self.pair_languages = {}
         for pair in self.pragmatics["pairs"]:
-            for audience in pair["audiences"]:
-                self.pair_utterances.add((audience, norm(pair["expression"])))
+            self.pair_languages.setdefault(norm(pair["expression"]), set()).add(pair["language"])
         for entry in triggers["triggers"]:
             key = (entry["language"], norm(entry["input"]))
             if key in self.triggers or key in self.originals:
@@ -79,6 +78,9 @@ class ConversationRouter:
         key = norm(message)
         if not key:
             return {"status": "empty", "text": None}
+        # Explicit language choice must not accidentally route to the opposite-language example.
+        if key in self.pair_languages and language not in self.pair_languages[key]:
+            return {"status": "wrong_language", "text": None}
         # Ambiguous expressions must not fall through into a cheerful template.
         p = interpret(self.pragmatics, message, context, audience)
         if p["status"] == "needs_context" or p["status"] == "ambiguous_expression":
