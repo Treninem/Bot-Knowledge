@@ -11,7 +11,7 @@ from search_knowledge import KnowledgeSearch, exact_phrase
 def main() -> None:
     index = KnowledgeSearch()
     triggers = json.loads((ROOT/"packs/ru/dialogue_triggers.json").read_text(encoding="utf-8"))["triggers"]
-    assert len(index.records) == 609
+    assert len(index.records) == 665
     assert len(triggers) == 60
     for trigger in triggers:
         matches = index.search(trigger["input"], "all_ai_bots", limit=20)
