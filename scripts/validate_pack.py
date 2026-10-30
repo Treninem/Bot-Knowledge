@@ -242,6 +242,9 @@ def main() -> int:
     from validate_style_preferences import validate_style_preferences
     errors.extend(validate_style_preferences(ROOT))
 
+    from validate_scoped_style import validate_scoped_style
+    errors.extend(validate_scoped_style(ROOT))
+
     if errors:
         print("Bot-Knowledge validation: FAIL")
         for error in errors:
