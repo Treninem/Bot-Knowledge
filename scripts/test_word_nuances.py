@@ -10,11 +10,14 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 from word_nuances import load_word_nuances, choose_word, PACK
-from validate_word_nuances import validate_word_nuances_pack
+from validate_word_nuances import validate_word_nuances_pack, version_not_newer
 from search_knowledge import KnowledgeSearch
 
 
 def main() -> None:
+    assert version_not_newer('2026.10.30.12', '2026.10.30.13')
+    assert not version_not_newer('2026.10.30.14', '2026.10.30.13')
+    assert not version_not_newer('unversioned', '2026.10.30.13')
     issues = validate_word_nuances_pack(ROOT)
     assert issues == [], issues
     book = load_word_nuances()
