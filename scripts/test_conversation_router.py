@@ -41,6 +41,8 @@ def main() -> None:
                             addressed=False)["status"] == "not_addressed"
     assert router.reply("Completely new sentence", language="en", addressed=True)["status"] == "unknown_input"
     assert router.reply("Отличная работа.", addressed=True)["status"] == "needs_context"
+    assert router.reply("Отличная работа.", addressed=True, language="en")["status"] == "wrong_language"
+    assert router.reply("Well, that\u0027s perfect.", addressed=True, language="ru")["status"] == "wrong_language"
     context = "Проект успешно запустился, команда благодарит автора за результат."
     positive = router.reply("Отличная работа.", addressed=True, context=context)
     assert positive["status"] == "ok" and positive["route"] == "pragmatics"
