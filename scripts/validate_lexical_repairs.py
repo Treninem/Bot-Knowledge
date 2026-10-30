@@ -74,6 +74,7 @@ def validate_lexical_repairs(root: Path = ROOT) -> list[str]:
                 errors.append("Invalid/duplicate choice or stale fixture")
         except ValueError as exc:
             errors.append(str(exc))
+            continue
         kind, guard = row["kind"], row["guard"]
         if kind not in ("ok", "guard"):
             errors.append("Invalid lexical case kind")
