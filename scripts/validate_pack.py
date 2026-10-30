@@ -239,6 +239,9 @@ def main() -> int:
     from validate_word_nuances import validate_word_nuances_pack
     errors.extend(validate_word_nuances_pack(ROOT))
 
+    from validate_style_preferences import validate_style_preferences
+    errors.extend(validate_style_preferences(ROOT))
+
     if errors:
         print("Bot-Knowledge validation: FAIL")
         for error in errors:
