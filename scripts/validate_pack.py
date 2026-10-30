@@ -182,6 +182,56 @@ def main() -> int:
                 if "action" in case or "auto_apply" in case:
                     errors.append(f"executable field forbidden in {case_id}")
 
+    # New bilingual reference examples are executable test vectors, not powers to act.
+    referent_path=ROOT/"packs/ru/referent_resolution.json"
+    if referent_path.exists():
+        referents=read_json(referent_path)
+        needed={"synthetic_examples_only":True,"personal_data_allowed":False,
+                "automatic_actions_allowed":False,"automatic_sanctions_allowed":False,
+                "caller_supplies_context":True,"explicit_address_required":True}
+        if referents.get("schema_version")!=1 or referents.get("language")!="multilingual" or referents.get("usage_policy")!=needed:
+            errors.append("unsafe referent schema/policy")
+        cases=referents.get("cases")
+        if not isinstance(cases,list) or len(cases)!=50:
+            errors.append("referent pack must have 50 validated cases")
+        else:
+            seen_ids,seen_inputs=set(),set()
+            allowed={"resolved","needs_clarification","no_match","not_direct_request",
+                     "confirm_required","negated_instruction","no_context","not_addressed"}
+            for case in cases:
+                cid,inp=case.get("id"),case.get("input")
+                if not isinstance(cid,str) or not cid.isascii() or not cid.replace("_","").isalnum() or cid in seen_ids:
+                    errors.append("duplicate or invalid referent ID")
+                seen_ids.add(cid)
+                if not isinstance(inp,str) or not 4<=len(inp)<=300:
+                    errors.append("invalid referent input")
+                    continue
+                import re
+                key=" ".join(re.findall(r"[a-zа-яё0-9]+",inp.casefold().replace("ё","е")))
+                if key in seen_inputs:
+                    errors.append("duplicate normalized referent phrase")
+                seen_inputs.add(key)
+                if case.get("language") not in {"ru","en"} or case.get("expected_status") not in allowed or case.get("audiences")!=["all_ai_bots"] or case.get("addressed") is not True:
+                    errors.append("invalid referent language, audience or status")
+                options=case.get("candidates")
+                if not isinstance(options,list) or len(options)>12:
+                    errors.append("invalid candidate set")
+                    continue
+                ids,labels=set(),set()
+                for opt in options:
+                    if not isinstance(opt,dict) or set(opt)!={"id","label","gender"}:
+                        errors.append("invalid candidate shape")
+                        continue
+                    if opt["id"] in ids or not isinstance(opt["label"],str) or opt["label"].casefold() in labels or opt["gender"] not in {"m","f","n","u"}:
+                        errors.append("duplicate or invalid candidate label")
+                    ids.add(opt["id"]); labels.add(opt["label"].casefold())
+                expected=case.get("expected_ids")
+                if not isinstance(expected,list) or len(expected)!=len(set(expected)) or not set(expected)<=ids:
+                    errors.append("invalid expected candidate ids")
+                    continue
+                if bool(expected)!=(case["expected_status"] in {"resolved","confirm_required"}):
+                    errors.append("unresolved or successful case with contradictory expected IDs")
+
 
     if errors:
         print("Bot-Knowledge validation: FAIL")
