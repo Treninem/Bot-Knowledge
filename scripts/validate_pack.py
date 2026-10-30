@@ -233,6 +233,9 @@ def main() -> int:
                     errors.append("unresolved or successful case with contradictory expected IDs")
 
 
+    from validate_paraphrases import validate_paraphrase_pack
+    errors.extend(validate_paraphrase_pack(ROOT))
+
     if errors:
         print("Bot-Knowledge validation: FAIL")
         for error in errors:
