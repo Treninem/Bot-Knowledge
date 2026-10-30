@@ -70,7 +70,7 @@ class KnowledgeSearch:
             if hashlib.sha256(payload).hexdigest() != info["sha256"]:
                 raise ValueError("SHA mismatch: " + rel)
             pack = json.loads(payload.decode("utf-8"))
-            for key in ("skills", "cases", "intents", "pairs", "triggers", "paraphrases"):
+            for key in ("skills", "cases", "intents", "pairs", "triggers", "paraphrases", "scenarios"):
                 for item in pack.get(key, []):
                     if not isinstance(item, dict):
                         continue
