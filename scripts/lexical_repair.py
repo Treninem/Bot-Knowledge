@@ -139,5 +139,5 @@ class LexicalRepair:
             if old == new:
                 return {"status": "no_change"}
             return {"status": "proposal", "slot": slot,
-                    "previous": current, "new": new}
+                    "previous": state[slot], "new": choices[approved.index(new)]}
         return {"status": "unrecognized"}
