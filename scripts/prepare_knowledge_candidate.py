@@ -14,10 +14,10 @@ BAD_KEYS = {"chat_id", "user_id", "telegram_id", "username", "first_name",
             "last_name", "phone", "email", "password", "cookie", "token",
             "raw_message", "raw_chat", "chat_history", "private_quote"}
 SUSPICIOUS = [
-    re.compile(r"https?://\\S+", re.I),
-    re.compile(r"(?i)\\b[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,}\\b"),
-    re.compile(r"(?<!\\d)\\d{10,}(?!\\d)"),
-    re.compile(r"(?i)\\b(?:token|password|secret|api.key)\\s*[:=]"),
+    re.compile(r"https?://[^\s]+", re.I),
+    re.compile(r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b", re.I),
+    re.compile(r"(?<!\d)\d{10,}(?!\d)"),
+    re.compile(r"\b(?:token|password|secret|api[_-]?key)\s*[:=]", re.I),
 ]
 AUDIENCES = {"all_ai_bots", "chat_moderators", "community_bots"}
 
