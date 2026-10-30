@@ -236,6 +236,9 @@ def main() -> int:
     from validate_paraphrases import validate_paraphrase_pack
     errors.extend(validate_paraphrase_pack(ROOT))
 
+    from validate_word_nuances import validate_word_nuances_pack
+    errors.extend(validate_word_nuances_pack(ROOT))
+
     if errors:
         print("Bot-Knowledge validation: FAIL")
         for error in errors:
