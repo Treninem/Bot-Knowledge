@@ -11,7 +11,7 @@ from search_knowledge import KnowledgeSearch, exact_phrase
 def main() -> None:
     index = KnowledgeSearch()
     pairs = json.loads((ROOT / "packs/ru/pragmatic_contrasts.json").read_text(encoding="utf-8"))["pairs"]
-    assert len(index.records) == 909
+    assert len(index.records) == 957
     assert len(pairs) == 48
     assert exact_phrase(" Ну, ты гений! ") == exact_phrase("ну ты гений")
     for pair in pairs:
