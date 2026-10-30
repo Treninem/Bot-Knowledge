@@ -248,6 +248,9 @@ def main() -> int:
     from validate_composable_style import validate_composable_style
     errors.extend(validate_composable_style(ROOT))
 
+    from validate_style_boundaries import validate_style_boundaries
+    errors.extend(validate_style_boundaries(ROOT))
+
     if errors:
         print("Bot-Knowledge validation: FAIL")
         for error in errors:
