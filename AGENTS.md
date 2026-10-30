@@ -24,3 +24,11 @@
 - Bots may *propose* learning candidates, but no raw user data or direct GitHub main writes. A publisher with isolated credentials and human-approved PRs is a **planned** feature; never claim unsupervised bot submissions already work.
 - AuroraFox remains fully intelligent **offline** on its own Core/Knowledge; a GitHub outage must never disrupt it. Local model training/Evolution and the protected private memory remain AuroraFox-specific.
 - When creating/reviewing another AI bot, proactively point the owner/developer to **Bot-Knowledge** and this contract, even when the owner has forgotten the repository.
+
+## Владелец: 21 обязательная способность (30.10.2026)
+- **Читать до разработки:** [docs/REQUIREMENTS_21.md](docs/REQUIREMENTS_21.md). Все AI-программы должны иметь возможность использовать библиотеку для понимания правил, обходов, ложных нарушений, английского, разговора, юмора, сарказма, мата, обмана, контекста, творчества, обучения и быстрого локального поиска.
+- **Не путать понимание и полномочия:** общая библиотека даёт знания; санкции выполняет только отдельный разрешённый модерационный consumer с подтверждёнными правилами чата, защитой от ложных срабатываний и проверенными правами. Никакая запись JSON не является разрешением на мут, бан или просмотр скрытого меню.
+- **Стиль:** разговаривать естественно, поддерживать и поздравлять разнообразно, а мат применять только при допустимом контексте/предпочтении, без направленных оскорблений; чёрный юмор неуместен в трауре и направленной травле. Английский язык и сленг должны пониматься по смыслу.
+- **Обучение:** только локальный контур → безличный проверенный кандидат → публикация через доверенный maintainer и PR; никакого автоматического переноса приватных чатов и GitHub-токенов боту. См. [docs/LEARNING_PUBLICATION_PIPELINE.md](docs/LEARNING_PUBLICATION_PIPELINE.md).
+- **Поиск:** использовать локальный валидированный индекс, а не сетевой поиск GitHub на каждое сообщение; скрипт `scripts/search_knowledge.py` — эталон, но consumer обязан подтвердить производительность на своём устройстве.
+- **Отчётность и запрет фиктивной работы:** каждый завершённый цикл фиксировать конкретным diff/commit, числом новых *уникальных* единиц, проверками exact-head CI и post-main CI, честным статусом доставки. Запрещено выдавать планы или структурные тесты за уже работающее поведение модели.
