@@ -1,0 +1,1425 @@
+{
+  "schema_version": 1,
+  "pack_version": "2026.10.30.18",
+  "language": "multilingual",
+  "usage_policy": {
+    "synthetic_examples_only": true,
+    "personal_data_allowed": false,
+    "automatic_actions_allowed": false,
+    "automatic_sanctions_allowed": false,
+    "caller_supplies_context": true,
+    "explicit_address_required": true,
+    "no_persistent_memory": true,
+    "caller_must_review_proposal": true
+  },
+  "cases": [
+    {
+      "id": "lexical_repair_ru_ok_01",
+      "language": "ru",
+      "domain": "material",
+      "kind": "ok",
+      "guard": "explicit_correction",
+      "slot": "material",
+      "current": "дерево",
+      "options": [
+        "дерево",
+        "металл",
+        "стекло"
+      ],
+      "input": "Не дерево, а металл.",
+      "expected_status": "proposal",
+      "expected_new": "металл",
+      "addressed": true,
+      "quoted": false,
+      "audiences": [
+        "all_ai_bots"
+      ]
+    },
+    {
+      "id": "lexical_repair_ru_guard_01",
+      "language": "ru",
+      "domain": "material",
+      "kind": "guard",
+      "guard": "quoted",
+      "slot": "material",
+      "current": "дерево",
+      "options": [
+        "дерево",
+        "металл",
+        "стекло"
+      ],
+      "input": "В цитате: «Не дерево, а металл.»",
+      "expected_status": "quoted_ignored",
+      "expected_new": null,
+      "addressed": true,
+      "quoted": true,
+      "audiences": [
+        "all_ai_bots"
+      ]
+    },
+    {
+      "id": "lexical_repair_en_ok_01",
+      "language": "en",
+      "domain": "material",
+      "kind": "ok",
+      "guard": "explicit_correction",
+      "slot": "material",
+      "current": "wood",
+      "options": [
+        "wood",
+        "metal",
+        "glass"
+      ],
+      "input": "Not wood, but metal.",
+      "expected_status": "proposal",
+      "expected_new": "metal",
+      "addressed": true,
+      "quoted": false,
+      "audiences": [
+        "all_ai_bots"
+      ]
+    },
+    {
+      "id": "lexical_repair_en_guard_01",
+      "language": "en",
+      "domain": "material",
+      "kind": "guard",
+      "guard": "quoted",
+      "slot": "material",
+      "current": "wood",
+      "options": [
+        "wood",
+        "metal",
+        "glass"
+      ],
+      "input": "Quoted wording: \"Not wood, but metal.\"",
+      "expected_status": "quoted_ignored",
+      "expected_new": null,
+      "addressed": true,
+      "quoted": true,
+      "audiences": [
+        "all_ai_bots"
+      ]
+    },
+    {
+      "id": "lexical_repair_ru_ok_02",
+      "language": "ru",
+      "domain": "color",
+      "kind": "ok",
+      "guard": "explicit_correction",
+      "slot": "color",
+      "current": "синий",
+      "options": [
+        "синий",
+        "зелёный",
+        "красный"
+      ],
+      "input": "Замени синий на зелёный.",
+      "expected_status": "proposal",
+      "expected_new": "зелёный",
+      "addressed": true,
+      "quoted": false,
+      "audiences": [
+        "all_ai_bots"
+      ]
+    },
+    {
+      "id": "lexical_repair_ru_guard_02",
+      "language": "ru",
+      "domain": "color",
+      "kind": "guard",
+      "guard": "not_addressed",
+      "slot": "color",
+      "current": "синий",
+      "options": [
+        "синий",
+        "зелёный",
+        "красный"
+      ],
+      "input": "В заметке написано: Замени синий на зелёный.",
+      "expected_status": "not_addressed",
+      "expected_new": null,
+      "addressed": false,
+      "quoted": false,
+      "audiences": [
+        "all_ai_bots"
+      ]
+    },
+    {
+      "id": "lexical_repair_en_ok_02",
+      "language": "en",
+      "domain": "color",
+      "kind": "ok",
+      "guard": "explicit_correction",
+      "slot": "color",
+      "current": "blue",
+      "options": [
+        "blue",
+        "green",
+        "red"
+      ],
+      "input": "Replace blue with green.",
+      "expected_status": "proposal",
+      "expected_new": "green",
+      "addressed": true,
+      "quoted": false,
+      "audiences": [
+        "all_ai_bots"
+      ]
+    },
+    {
+      "id": "lexical_repair_en_guard_02",
+      "language": "en",
+      "domain": "color",
+      "kind": "guard",
+      "guard": "not_addressed",
+      "slot": "color",
+      "current": "blue",
+      "options": [
+        "blue",
+        "green",
+        "red"
+      ],
+      "input": "The note says: Replace blue with green.",
+      "expected_status": "not_addressed",
+      "expected_new": null,
+      "addressed": false,
+      "quoted": false,
+      "audiences": [
+        "all_ai_bots"
+      ]
+    },
+    {
+      "id": "lexical_repair_ru_ok_03",
+      "language": "ru",
+      "domain": "format",
+      "kind": "ok",
+      "guard": "explicit_correction",
+      "slot": "format",
+      "current": "таблица",
+      "options": [
+        "таблица",
+        "список",
+        "сетка"
+      ],
+      "input": "Я имел в виду список, не таблица.",
+      "expected_status": "proposal",
+      "expected_new": "список",
+      "addressed": true,
+      "quoted": false,
+      "audiences": [
+        "all_ai_bots"
+      ]
+    },
+    {
+      "id": "lexical_repair_ru_guard_03",
+      "language": "ru",
+      "domain": "format",
+      "kind": "guard",
+      "guard": "stale_context",
+      "slot": "format",
+      "current": "таблица",
+      "options": [
+        "таблица",
+        "список",
+        "сетка"
+      ],
+      "input": "Я имел в виду список, не сетка.",
+      "expected_status": "stale_context",
+      "expected_new": null,
+      "addressed": true,
+      "quoted": false,
+      "audiences": [
+        "all_ai_bots"
+      ]
+    },
+    {
+      "id": "lexical_repair_en_ok_03",
+      "language": "en",
+      "domain": "format",
+      "kind": "ok",
+      "guard": "explicit_correction",
+      "slot": "format",
+      "current": "table",
+      "options": [
+        "table",
+        "list",
+        "grid"
+      ],
+      "input": "I meant list, not table.",
+      "expected_status": "proposal",
+      "expected_new": "list",
+      "addressed": true,
+      "quoted": false,
+      "audiences": [
+        "all_ai_bots"
+      ]
+    },
+    {
+      "id": "lexical_repair_en_guard_03",
+      "language": "en",
+      "domain": "format",
+      "kind": "guard",
+      "guard": "stale_context",
+      "slot": "format",
+      "current": "table",
+      "options": [
+        "table",
+        "list",
+        "grid"
+      ],
+      "input": "I meant list, not grid.",
+      "expected_status": "stale_context",
+      "expected_new": null,
+      "addressed": true,
+      "quoted": false,
+      "audiences": [
+        "all_ai_bots"
+      ]
+    },
+    {
+      "id": "lexical_repair_ru_ok_04",
+      "language": "ru",
+      "domain": "layout",
+      "kind": "ok",
+      "guard": "explicit_correction",
+      "slot": "layout",
+      "current": "сетка",
+      "options": [
+        "сетка",
+        "колонка",
+        "строка"
+      ],
+      "input": "Поправка: сетка нужно заменить на колонка.",
+      "expected_status": "proposal",
+      "expected_new": "колонка",
+      "addressed": true,
+      "quoted": false,
+      "audiences": [
+        "all_ai_bots"
+      ]
+    },
+    {
+      "id": "lexical_repair_ru_guard_04",
+      "language": "ru",
+      "domain": "layout",
+      "kind": "guard",
+      "guard": "no_change",
+      "slot": "layout",
+      "current": "сетка",
+      "options": [
+        "сетка",
+        "колонка",
+        "строка"
+      ],
+      "input": "Поправка: сетка нужно заменить на сетка.",
+      "expected_status": "no_change",
+      "expected_new": null,
+      "addressed": true,
+      "quoted": false,
+      "audiences": [
+        "all_ai_bots"
+      ]
+    },
+    {
+      "id": "lexical_repair_en_ok_04",
+      "language": "en",
+      "domain": "layout",
+      "kind": "ok",
+      "guard": "explicit_correction",
+      "slot": "layout",
+      "current": "grid",
+      "options": [
+        "grid",
+        "column",
+        "row"
+      ],
+      "input": "Correction: use column, not grid.",
+      "expected_status": "proposal",
+      "expected_new": "column",
+      "addressed": true,
+      "quoted": false,
+      "audiences": [
+        "all_ai_bots"
+      ]
+    },
+    {
+      "id": "lexical_repair_en_guard_04",
+      "language": "en",
+      "domain": "layout",
+      "kind": "guard",
+      "guard": "no_change",
+      "slot": "layout",
+      "current": "grid",
+      "options": [
+        "grid",
+        "column",
+        "row"
+      ],
+      "input": "Correction: use grid, not grid.",
+      "expected_status": "no_change",
+      "expected_new": null,
+      "addressed": true,
+      "quoted": false,
+      "audiences": [
+        "all_ai_bots"
+      ]
+    },
+    {
+      "id": "lexical_repair_ru_ok_05",
+      "language": "ru",
+      "domain": "chart",
+      "kind": "ok",
+      "guard": "explicit_correction",
+      "slot": "chart",
+      "current": "гистограмма",
+      "options": [
+        "гистограмма",
+        "линия",
+        "диаграмма"
+      ],
+      "input": "Не гистограмма, а линия.",
+      "expected_status": "proposal",
+      "expected_new": "линия",
+      "addressed": true,
+      "quoted": false,
+      "audiences": [
+        "all_ai_bots"
+      ]
+    },
+    {
+      "id": "lexical_repair_ru_guard_05",
+      "language": "ru",
+      "domain": "chart",
+      "kind": "guard",
+      "guard": "reported_quote",
+      "slot": "chart",
+      "current": "гистограмма",
+      "options": [
+        "гистограмма",
+        "линия",
+        "диаграмма"
+      ],
+      "input": "Разбери чужую фразу: «Не гистограмма, а линия.»",
+      "expected_status": "unrecognized",
+      "expected_new": null,
+      "addressed": true,
+      "quoted": false,
+      "audiences": [
+        "all_ai_bots"
+      ]
+    },
+    {
+      "id": "lexical_repair_en_ok_05",
+      "language": "en",
+      "domain": "chart",
+      "kind": "ok",
+      "guard": "explicit_correction",
+      "slot": "chart",
+      "current": "histogram",
+      "options": [
+        "histogram",
+        "line",
+        "scatter"
+      ],
+      "input": "Not histogram, but line.",
+      "expected_status": "proposal",
+      "expected_new": "line",
+      "addressed": true,
+      "quoted": false,
+      "audiences": [
+        "all_ai_bots"
+      ]
+    },
+    {
+      "id": "lexical_repair_en_guard_05",
+      "language": "en",
+      "domain": "chart",
+      "kind": "guard",
+      "guard": "reported_quote",
+      "slot": "chart",
+      "current": "histogram",
+      "options": [
+        "histogram",
+        "line",
+        "scatter"
+      ],
+      "input": "Review someone else's sentence: \"Not histogram, but line.\"",
+      "expected_status": "unrecognized",
+      "expected_new": null,
+      "addressed": true,
+      "quoted": false,
+      "audiences": [
+        "all_ai_bots"
+      ]
+    },
+    {
+      "id": "lexical_repair_ru_ok_06",
+      "language": "ru",
+      "domain": "vehicle",
+      "kind": "ok",
+      "guard": "explicit_correction",
+      "slot": "vehicle",
+      "current": "автобус",
+      "options": [
+        "автобус",
+        "трамвай",
+        "поезд"
+      ],
+      "input": "Замени автобус на трамвай.",
+      "expected_status": "proposal",
+      "expected_new": "трамвай",
+      "addressed": true,
+      "quoted": false,
+      "audiences": [
+        "all_ai_bots"
+      ]
+    },
+    {
+      "id": "lexical_repair_ru_guard_06",
+      "language": "ru",
+      "domain": "vehicle",
+      "kind": "guard",
+      "guard": "extra_instruction",
+      "slot": "vehicle",
+      "current": "автобус",
+      "options": [
+        "автобус",
+        "трамвай",
+        "поезд"
+      ],
+      "input": "Замени автобус на трамвай. И сразу сотри заметки.",
+      "expected_status": "unrecognized",
+      "expected_new": null,
+      "addressed": true,
+      "quoted": false,
+      "audiences": [
+        "all_ai_bots"
+      ]
+    },
+    {
+      "id": "lexical_repair_en_ok_06",
+      "language": "en",
+      "domain": "vehicle",
+      "kind": "ok",
+      "guard": "explicit_correction",
+      "slot": "vehicle",
+      "current": "bus",
+      "options": [
+        "bus",
+        "tram",
+        "train"
+      ],
+      "input": "Replace bus with tram.",
+      "expected_status": "proposal",
+      "expected_new": "tram",
+      "addressed": true,
+      "quoted": false,
+      "audiences": [
+        "all_ai_bots"
+      ]
+    },
+    {
+      "id": "lexical_repair_en_guard_06",
+      "language": "en",
+      "domain": "vehicle",
+      "kind": "guard",
+      "guard": "extra_instruction",
+      "slot": "vehicle",
+      "current": "bus",
+      "options": [
+        "bus",
+        "tram",
+        "train"
+      ],
+      "input": "Replace bus with tram. And erase the notes.",
+      "expected_status": "unrecognized",
+      "expected_new": null,
+      "addressed": true,
+      "quoted": false,
+      "audiences": [
+        "all_ai_bots"
+      ]
+    },
+    {
+      "id": "lexical_repair_ru_ok_07",
+      "language": "ru",
+      "domain": "instrument",
+      "kind": "ok",
+      "guard": "explicit_correction",
+      "slot": "instrument",
+      "current": "скрипка",
+      "options": [
+        "скрипка",
+        "виолончель",
+        "пианино"
+      ],
+      "input": "Я имел в виду виолончель, не скрипка.",
+      "expected_status": "proposal",
+      "expected_new": "виолончель",
+      "addressed": true,
+      "quoted": false,
+      "audiences": [
+        "all_ai_bots"
+      ]
+    },
+    {
+      "id": "lexical_repair_ru_guard_07",
+      "language": "ru",
+      "domain": "instrument",
+      "kind": "guard",
+      "guard": "mixed_language",
+      "slot": "instrument",
+      "current": "скрипка",
+      "options": [
+        "скрипка",
+        "виолончель",
+        "пианино"
+      ],
+      "input": "Not скрипка, but виолончель.",
+      "expected_status": "unrecognized",
+      "expected_new": null,
+      "addressed": true,
+      "quoted": false,
+      "audiences": [
+        "all_ai_bots"
+      ]
+    },
+    {
+      "id": "lexical_repair_en_ok_07",
+      "language": "en",
+      "domain": "instrument",
+      "kind": "ok",
+      "guard": "explicit_correction",
+      "slot": "instrument",
+      "current": "violin",
+      "options": [
+        "violin",
+        "cello",
+        "piano"
+      ],
+      "input": "I meant cello, not violin.",
+      "expected_status": "proposal",
+      "expected_new": "cello",
+      "addressed": true,
+      "quoted": false,
+      "audiences": [
+        "all_ai_bots"
+      ]
+    },
+    {
+      "id": "lexical_repair_en_guard_07",
+      "language": "en",
+      "domain": "instrument",
+      "kind": "guard",
+      "guard": "mixed_language",
+      "slot": "instrument",
+      "current": "violin",
+      "options": [
+        "violin",
+        "cello",
+        "piano"
+      ],
+      "input": "Не violin, а cello.",
+      "expected_status": "unrecognized",
+      "expected_new": null,
+      "addressed": true,
+      "quoted": false,
+      "audiences": [
+        "all_ai_bots"
+      ]
+    },
+    {
+      "id": "lexical_repair_ru_ok_08",
+      "language": "ru",
+      "domain": "season",
+      "kind": "ok",
+      "guard": "explicit_correction",
+      "slot": "season",
+      "current": "весна",
+      "options": [
+        "весна",
+        "осень",
+        "зима"
+      ],
+      "input": "Поправка: весна нужно заменить на осень.",
+      "expected_status": "proposal",
+      "expected_new": "осень",
+      "addressed": true,
+      "quoted": false,
+      "audiences": [
+        "all_ai_bots"
+      ]
+    },
+    {
+      "id": "lexical_repair_ru_guard_08",
+      "language": "ru",
+      "domain": "season",
+      "kind": "guard",
+      "guard": "unapproved_candidate",
+      "slot": "season",
+      "current": "весна",
+      "options": [
+        "весна",
+        "осень",
+        "зима"
+      ],
+      "input": "Поправка: весна нужно заменить на другое.",
+      "expected_status": "unrecognized",
+      "expected_new": null,
+      "addressed": true,
+      "quoted": false,
+      "audiences": [
+        "all_ai_bots"
+      ]
+    },
+    {
+      "id": "lexical_repair_en_ok_08",
+      "language": "en",
+      "domain": "season",
+      "kind": "ok",
+      "guard": "explicit_correction",
+      "slot": "season",
+      "current": "spring",
+      "options": [
+        "spring",
+        "autumn",
+        "winter"
+      ],
+      "input": "Correction: use autumn, not spring.",
+      "expected_status": "proposal",
+      "expected_new": "autumn",
+      "addressed": true,
+      "quoted": false,
+      "audiences": [
+        "all_ai_bots"
+      ]
+    },
+    {
+      "id": "lexical_repair_en_guard_08",
+      "language": "en",
+      "domain": "season",
+      "kind": "guard",
+      "guard": "unapproved_candidate",
+      "slot": "season",
+      "current": "spring",
+      "options": [
+        "spring",
+        "autumn",
+        "winter"
+      ],
+      "input": "Correction: use other, not spring.",
+      "expected_status": "unrecognized",
+      "expected_new": null,
+      "addressed": true,
+      "quoted": false,
+      "audiences": [
+        "all_ai_bots"
+      ]
+    },
+    {
+      "id": "lexical_repair_ru_ok_09",
+      "language": "ru",
+      "domain": "room",
+      "kind": "ok",
+      "guard": "explicit_correction",
+      "slot": "room",
+      "current": "кухня",
+      "options": [
+        "кухня",
+        "кабинет",
+        "прихожая"
+      ],
+      "input": "Не кухня, а кабинет.",
+      "expected_status": "proposal",
+      "expected_new": "кабинет",
+      "addressed": true,
+      "quoted": false,
+      "audiences": [
+        "all_ai_bots"
+      ]
+    },
+    {
+      "id": "lexical_repair_ru_guard_09",
+      "language": "ru",
+      "domain": "room",
+      "kind": "guard",
+      "guard": "quoted",
+      "slot": "room",
+      "current": "кухня",
+      "options": [
+        "кухня",
+        "кабинет",
+        "прихожая"
+      ],
+      "input": "В цитате: «Не кухня, а кабинет.»",
+      "expected_status": "quoted_ignored",
+      "expected_new": null,
+      "addressed": true,
+      "quoted": true,
+      "audiences": [
+        "all_ai_bots"
+      ]
+    },
+    {
+      "id": "lexical_repair_en_ok_09",
+      "language": "en",
+      "domain": "room",
+      "kind": "ok",
+      "guard": "explicit_correction",
+      "slot": "room",
+      "current": "kitchen",
+      "options": [
+        "kitchen",
+        "office",
+        "hall"
+      ],
+      "input": "Not kitchen, but office.",
+      "expected_status": "proposal",
+      "expected_new": "office",
+      "addressed": true,
+      "quoted": false,
+      "audiences": [
+        "all_ai_bots"
+      ]
+    },
+    {
+      "id": "lexical_repair_en_guard_09",
+      "language": "en",
+      "domain": "room",
+      "kind": "guard",
+      "guard": "quoted",
+      "slot": "room",
+      "current": "kitchen",
+      "options": [
+        "kitchen",
+        "office",
+        "hall"
+      ],
+      "input": "Quoted wording: \"Not kitchen, but office.\"",
+      "expected_status": "quoted_ignored",
+      "expected_new": null,
+      "addressed": true,
+      "quoted": true,
+      "audiences": [
+        "all_ai_bots"
+      ]
+    },
+    {
+      "id": "lexical_repair_ru_ok_10",
+      "language": "ru",
+      "domain": "resource",
+      "kind": "ok",
+      "guard": "explicit_correction",
+      "slot": "resource",
+      "current": "песок",
+      "options": [
+        "песок",
+        "глина",
+        "камень"
+      ],
+      "input": "Замени песок на глина.",
+      "expected_status": "proposal",
+      "expected_new": "глина",
+      "addressed": true,
+      "quoted": false,
+      "audiences": [
+        "all_ai_bots"
+      ]
+    },
+    {
+      "id": "lexical_repair_ru_guard_10",
+      "language": "ru",
+      "domain": "resource",
+      "kind": "guard",
+      "guard": "not_addressed",
+      "slot": "resource",
+      "current": "песок",
+      "options": [
+        "песок",
+        "глина",
+        "камень"
+      ],
+      "input": "В заметке написано: Замени песок на глина.",
+      "expected_status": "not_addressed",
+      "expected_new": null,
+      "addressed": false,
+      "quoted": false,
+      "audiences": [
+        "all_ai_bots"
+      ]
+    },
+    {
+      "id": "lexical_repair_en_ok_10",
+      "language": "en",
+      "domain": "resource",
+      "kind": "ok",
+      "guard": "explicit_correction",
+      "slot": "resource",
+      "current": "sand",
+      "options": [
+        "sand",
+        "clay",
+        "stone"
+      ],
+      "input": "Replace sand with clay.",
+      "expected_status": "proposal",
+      "expected_new": "clay",
+      "addressed": true,
+      "quoted": false,
+      "audiences": [
+        "all_ai_bots"
+      ]
+    },
+    {
+      "id": "lexical_repair_en_guard_10",
+      "language": "en",
+      "domain": "resource",
+      "kind": "guard",
+      "guard": "not_addressed",
+      "slot": "resource",
+      "current": "sand",
+      "options": [
+        "sand",
+        "clay",
+        "stone"
+      ],
+      "input": "The note says: Replace sand with clay.",
+      "expected_status": "not_addressed",
+      "expected_new": null,
+      "addressed": false,
+      "quoted": false,
+      "audiences": [
+        "all_ai_bots"
+      ]
+    },
+    {
+      "id": "lexical_repair_ru_ok_11",
+      "language": "ru",
+      "domain": "finish",
+      "kind": "ok",
+      "guard": "explicit_correction",
+      "slot": "finish",
+      "current": "матовый",
+      "options": [
+        "матовый",
+        "глянцевый",
+        "сатиновый"
+      ],
+      "input": "Я имел в виду глянцевый, не матовый.",
+      "expected_status": "proposal",
+      "expected_new": "глянцевый",
+      "addressed": true,
+      "quoted": false,
+      "audiences": [
+        "all_ai_bots"
+      ]
+    },
+    {
+      "id": "lexical_repair_ru_guard_11",
+      "language": "ru",
+      "domain": "finish",
+      "kind": "guard",
+      "guard": "stale_context",
+      "slot": "finish",
+      "current": "матовый",
+      "options": [
+        "матовый",
+        "глянцевый",
+        "сатиновый"
+      ],
+      "input": "Я имел в виду глянцевый, не сатиновый.",
+      "expected_status": "stale_context",
+      "expected_new": null,
+      "addressed": true,
+      "quoted": false,
+      "audiences": [
+        "all_ai_bots"
+      ]
+    },
+    {
+      "id": "lexical_repair_en_ok_11",
+      "language": "en",
+      "domain": "finish",
+      "kind": "ok",
+      "guard": "explicit_correction",
+      "slot": "finish",
+      "current": "matte",
+      "options": [
+        "matte",
+        "glossy",
+        "satin"
+      ],
+      "input": "I meant glossy, not matte.",
+      "expected_status": "proposal",
+      "expected_new": "glossy",
+      "addressed": true,
+      "quoted": false,
+      "audiences": [
+        "all_ai_bots"
+      ]
+    },
+    {
+      "id": "lexical_repair_en_guard_11",
+      "language": "en",
+      "domain": "finish",
+      "kind": "guard",
+      "guard": "stale_context",
+      "slot": "finish",
+      "current": "matte",
+      "options": [
+        "matte",
+        "glossy",
+        "satin"
+      ],
+      "input": "I meant glossy, not satin.",
+      "expected_status": "stale_context",
+      "expected_new": null,
+      "addressed": true,
+      "quoted": false,
+      "audiences": [
+        "all_ai_bots"
+      ]
+    },
+    {
+      "id": "lexical_repair_ru_ok_12",
+      "language": "ru",
+      "domain": "shape",
+      "kind": "ok",
+      "guard": "explicit_correction",
+      "slot": "shape",
+      "current": "круг",
+      "options": [
+        "круг",
+        "овал",
+        "квадрат"
+      ],
+      "input": "Поправка: круг нужно заменить на овал.",
+      "expected_status": "proposal",
+      "expected_new": "овал",
+      "addressed": true,
+      "quoted": false,
+      "audiences": [
+        "all_ai_bots"
+      ]
+    },
+    {
+      "id": "lexical_repair_ru_guard_12",
+      "language": "ru",
+      "domain": "shape",
+      "kind": "guard",
+      "guard": "no_change",
+      "slot": "shape",
+      "current": "круг",
+      "options": [
+        "круг",
+        "овал",
+        "квадрат"
+      ],
+      "input": "Поправка: круг нужно заменить на круг.",
+      "expected_status": "no_change",
+      "expected_new": null,
+      "addressed": true,
+      "quoted": false,
+      "audiences": [
+        "all_ai_bots"
+      ]
+    },
+    {
+      "id": "lexical_repair_en_ok_12",
+      "language": "en",
+      "domain": "shape",
+      "kind": "ok",
+      "guard": "explicit_correction",
+      "slot": "shape",
+      "current": "circle",
+      "options": [
+        "circle",
+        "oval",
+        "square"
+      ],
+      "input": "Correction: use oval, not circle.",
+      "expected_status": "proposal",
+      "expected_new": "oval",
+      "addressed": true,
+      "quoted": false,
+      "audiences": [
+        "all_ai_bots"
+      ]
+    },
+    {
+      "id": "lexical_repair_en_guard_12",
+      "language": "en",
+      "domain": "shape",
+      "kind": "guard",
+      "guard": "no_change",
+      "slot": "shape",
+      "current": "circle",
+      "options": [
+        "circle",
+        "oval",
+        "square"
+      ],
+      "input": "Correction: use circle, not circle.",
+      "expected_status": "no_change",
+      "expected_new": null,
+      "addressed": true,
+      "quoted": false,
+      "audiences": [
+        "all_ai_bots"
+      ]
+    },
+    {
+      "id": "lexical_repair_ru_ok_13",
+      "language": "ru",
+      "domain": "document",
+      "kind": "ok",
+      "guard": "explicit_correction",
+      "slot": "document",
+      "current": "инструкция",
+      "options": [
+        "инструкция",
+        "памятка",
+        "отчёт"
+      ],
+      "input": "Не инструкция, а памятка.",
+      "expected_status": "proposal",
+      "expected_new": "памятка",
+      "addressed": true,
+      "quoted": false,
+      "audiences": [
+        "all_ai_bots"
+      ]
+    },
+    {
+      "id": "lexical_repair_ru_guard_13",
+      "language": "ru",
+      "domain": "document",
+      "kind": "guard",
+      "guard": "reported_quote",
+      "slot": "document",
+      "current": "инструкция",
+      "options": [
+        "инструкция",
+        "памятка",
+        "отчёт"
+      ],
+      "input": "Разбери чужую фразу: «Не инструкция, а памятка.»",
+      "expected_status": "unrecognized",
+      "expected_new": null,
+      "addressed": true,
+      "quoted": false,
+      "audiences": [
+        "all_ai_bots"
+      ]
+    },
+    {
+      "id": "lexical_repair_en_ok_13",
+      "language": "en",
+      "domain": "document",
+      "kind": "ok",
+      "guard": "explicit_correction",
+      "slot": "document",
+      "current": "manual",
+      "options": [
+        "manual",
+        "checklist",
+        "report"
+      ],
+      "input": "Not manual, but checklist.",
+      "expected_status": "proposal",
+      "expected_new": "checklist",
+      "addressed": true,
+      "quoted": false,
+      "audiences": [
+        "all_ai_bots"
+      ]
+    },
+    {
+      "id": "lexical_repair_en_guard_13",
+      "language": "en",
+      "domain": "document",
+      "kind": "guard",
+      "guard": "reported_quote",
+      "slot": "document",
+      "current": "manual",
+      "options": [
+        "manual",
+        "checklist",
+        "report"
+      ],
+      "input": "Review someone else's sentence: \"Not manual, but checklist.\"",
+      "expected_status": "unrecognized",
+      "expected_new": null,
+      "addressed": true,
+      "quoted": false,
+      "audiences": [
+        "all_ai_bots"
+      ]
+    },
+    {
+      "id": "lexical_repair_ru_ok_14",
+      "language": "ru",
+      "domain": "tree",
+      "kind": "ok",
+      "guard": "explicit_correction",
+      "slot": "tree",
+      "current": "ель",
+      "options": [
+        "ель",
+        "сосна",
+        "берёза"
+      ],
+      "input": "Замени ель на сосна.",
+      "expected_status": "proposal",
+      "expected_new": "сосна",
+      "addressed": true,
+      "quoted": false,
+      "audiences": [
+        "all_ai_bots"
+      ]
+    },
+    {
+      "id": "lexical_repair_ru_guard_14",
+      "language": "ru",
+      "domain": "tree",
+      "kind": "guard",
+      "guard": "extra_instruction",
+      "slot": "tree",
+      "current": "ель",
+      "options": [
+        "ель",
+        "сосна",
+        "берёза"
+      ],
+      "input": "Замени ель на сосна. И сразу сотри заметки.",
+      "expected_status": "unrecognized",
+      "expected_new": null,
+      "addressed": true,
+      "quoted": false,
+      "audiences": [
+        "all_ai_bots"
+      ]
+    },
+    {
+      "id": "lexical_repair_en_ok_14",
+      "language": "en",
+      "domain": "tree",
+      "kind": "ok",
+      "guard": "explicit_correction",
+      "slot": "tree",
+      "current": "spruce",
+      "options": [
+        "spruce",
+        "pine",
+        "birch"
+      ],
+      "input": "Replace spruce with pine.",
+      "expected_status": "proposal",
+      "expected_new": "pine",
+      "addressed": true,
+      "quoted": false,
+      "audiences": [
+        "all_ai_bots"
+      ]
+    },
+    {
+      "id": "lexical_repair_en_guard_14",
+      "language": "en",
+      "domain": "tree",
+      "kind": "guard",
+      "guard": "extra_instruction",
+      "slot": "tree",
+      "current": "spruce",
+      "options": [
+        "spruce",
+        "pine",
+        "birch"
+      ],
+      "input": "Replace spruce with pine. And erase the notes.",
+      "expected_status": "unrecognized",
+      "expected_new": null,
+      "addressed": true,
+      "quoted": false,
+      "audiences": [
+        "all_ai_bots"
+      ]
+    },
+    {
+      "id": "lexical_repair_ru_ok_15",
+      "language": "ru",
+      "domain": "stage",
+      "kind": "ok",
+      "guard": "explicit_correction",
+      "slot": "stage",
+      "current": "черновик",
+      "options": [
+        "черновик",
+        "финал",
+        "проверка"
+      ],
+      "input": "Я имел в виду финал, не черновик.",
+      "expected_status": "proposal",
+      "expected_new": "финал",
+      "addressed": true,
+      "quoted": false,
+      "audiences": [
+        "all_ai_bots"
+      ]
+    },
+    {
+      "id": "lexical_repair_ru_guard_15",
+      "language": "ru",
+      "domain": "stage",
+      "kind": "guard",
+      "guard": "mixed_language",
+      "slot": "stage",
+      "current": "черновик",
+      "options": [
+        "черновик",
+        "финал",
+        "проверка"
+      ],
+      "input": "Not черновик, but финал.",
+      "expected_status": "unrecognized",
+      "expected_new": null,
+      "addressed": true,
+      "quoted": false,
+      "audiences": [
+        "all_ai_bots"
+      ]
+    },
+    {
+      "id": "lexical_repair_en_ok_15",
+      "language": "en",
+      "domain": "stage",
+      "kind": "ok",
+      "guard": "explicit_correction",
+      "slot": "stage",
+      "current": "draft",
+      "options": [
+        "draft",
+        "final",
+        "review"
+      ],
+      "input": "I meant final, not draft.",
+      "expected_status": "proposal",
+      "expected_new": "final",
+      "addressed": true,
+      "quoted": false,
+      "audiences": [
+        "all_ai_bots"
+      ]
+    },
+    {
+      "id": "lexical_repair_en_guard_15",
+      "language": "en",
+      "domain": "stage",
+      "kind": "guard",
+      "guard": "mixed_language",
+      "slot": "stage",
+      "current": "draft",
+      "options": [
+        "draft",
+        "final",
+        "review"
+      ],
+      "input": "Не draft, а final.",
+      "expected_status": "unrecognized",
+      "expected_new": null,
+      "addressed": true,
+      "quoted": false,
+      "audiences": [
+        "all_ai_bots"
+      ]
+    },
+    {
+      "id": "lexical_repair_ru_ok_16",
+      "language": "ru",
+      "domain": "art",
+      "kind": "ok",
+      "guard": "explicit_correction",
+      "slot": "art",
+      "current": "акварель",
+      "options": [
+        "акварель",
+        "графика",
+        "коллаж"
+      ],
+      "input": "Поправка: акварель нужно заменить на графика.",
+      "expected_status": "proposal",
+      "expected_new": "графика",
+      "addressed": true,
+      "quoted": false,
+      "audiences": [
+        "all_ai_bots"
+      ]
+    },
+    {
+      "id": "lexical_repair_ru_guard_16",
+      "language": "ru",
+      "domain": "art",
+      "kind": "guard",
+      "guard": "unapproved_candidate",
+      "slot": "art",
+      "current": "акварель",
+      "options": [
+        "акварель",
+        "графика",
+        "коллаж"
+      ],
+      "input": "Поправка: акварель нужно заменить на другое.",
+      "expected_status": "unrecognized",
+      "expected_new": null,
+      "addressed": true,
+      "quoted": false,
+      "audiences": [
+        "all_ai_bots"
+      ]
+    },
+    {
+      "id": "lexical_repair_en_ok_16",
+      "language": "en",
+      "domain": "art",
+      "kind": "ok",
+      "guard": "explicit_correction",
+      "slot": "art",
+      "current": "watercolor",
+      "options": [
+        "watercolor",
+        "lineart",
+        "collage"
+      ],
+      "input": "Correction: use lineart, not watercolor.",
+      "expected_status": "proposal",
+      "expected_new": "lineart",
+      "addressed": true,
+      "quoted": false,
+      "audiences": [
+        "all_ai_bots"
+      ]
+    },
+    {
+      "id": "lexical_repair_en_guard_16",
+      "language": "en",
+      "domain": "art",
+      "kind": "guard",
+      "guard": "unapproved_candidate",
+      "slot": "art",
+      "current": "watercolor",
+      "options": [
+        "watercolor",
+        "lineart",
+        "collage"
+      ],
+      "input": "Correction: use other, not watercolor.",
+      "expected_status": "unrecognized",
+      "expected_new": null,
+      "addressed": true,
+      "quoted": false,
+      "audiences": [
+        "all_ai_bots"
+      ]
+    }
+  ]
+}
