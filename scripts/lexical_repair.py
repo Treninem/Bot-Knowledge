@@ -67,7 +67,7 @@ def patterns(language: str, choices: tuple[str, ...]) -> tuple[re.Pattern, ...]:
             rf"не {old},? а {new}",
             rf"замени {old} на {new}",
             rf"я имел в виду {new},? не {old}",
-            rf"поправка: {old} нужно заменить на {new}",
+            rf"поправка: не {old},? а {new}",
         )
     else:
         sources = (
