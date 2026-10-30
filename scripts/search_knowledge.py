@@ -36,7 +36,7 @@ def searchable_text(item: dict) -> str:
     fields = ("id", "topic", "category", "kind", "domain", "classification",
               "context", "input", "message", "local_rule", "reason",
               "response", "meaning_ru", "when", "avoid", "examples",
-              "expected_behavior", "forbidden_behavior", "expression")
+              "expected_behavior", "forbidden_behavior", "expression", "source", "semantic_guard")
     values = []
     for key in fields:
         value = item.get(key)
@@ -50,6 +50,10 @@ def searchable_text(item: dict) -> str:
                 if isinstance(reading.get(name), str):
                     values.append(reading[name])
             values.extend(c for c in reading.get("cues", ()) if isinstance(c, str))
+    # Do not index deliberately incorrect counterexamples as approved text.
+    variants = item.get("variants", {})
+    if isinstance(variants, dict):
+        values.extend(v for v in variants.values() if isinstance(v, str))
     return " ".join(values)
 
 class KnowledgeSearch:
@@ -66,7 +70,7 @@ class KnowledgeSearch:
             if hashlib.sha256(payload).hexdigest() != info["sha256"]:
                 raise ValueError("SHA mismatch: " + rel)
             pack = json.loads(payload.decode("utf-8"))
-            for key in ("skills", "cases", "intents", "pairs", "triggers"):
+            for key in ("skills", "cases", "intents", "pairs", "triggers", "paraphrases"):
                 for item in pack.get(key, []):
                     if not isinstance(item, dict):
                         continue
@@ -79,9 +83,9 @@ class KnowledgeSearch:
                         "pack": rel,
                         "audiences": audiences,
                         "topic": item.get("target_case_id", item.get("topic", item.get("kind", item.get("category", "")))),
-                        "expression": item.get("expression") or (item.get("input", "") if "target_case_id" in item or "expected_ids" in item else ""),
+                        "expression": item.get("expression") or item.get("source") or (item.get("input", "") if "target_case_id" in item or "expected_ids" in item else ""),
                         "preview": (item.get("expression") or item.get("response") or item.get("reason")
-                                    or item.get("input") or item.get("message")
+                                    or item.get("source") or item.get("input") or item.get("message")
                                     or (item.get("examples") or [""])[0])[:220],
                     }
                     index = len(self.records)
