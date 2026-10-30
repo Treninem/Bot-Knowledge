@@ -73,3 +73,7 @@ ImPULS **уже использует** четыре проверяемых SHA-2
 Референсный offline-поиск `python scripts/search_knowledge.py --query "сарказм" --audience all_ai_bots` проверяет SHA и не обращается к GitHub на каждое сообщение. Проверка данных и 10 разных поисковых сценариев: `python scripts/test_extended_knowledge.py`.
 
 **Все 21 требования владельца** перечислены в [docs/REQUIREMENTS_21.md](docs/REQUIREMENTS_21.md). Безопасный процесс пополнения GitHub — в [docs/LEARNING_PUBLICATION_PIPELINE.md](docs/LEARNING_PUBLICATION_PIPELINE.md). Данные и структурные тесты **не включают новые способности автоматически в запущенные продукты**.
+
+## Новый выбор слов и выражений v2026.10.30.4
+
+Добавлено 30 речевых ситуаций с 180 неповторяющимися RU/EN формулировками в трёх тонах. `scripts/choose_expression.py` — реальный автономный селектор с проверкой SHA-256 и ограничениями на сильную лексику/мрачный юмор; это не модель автоматического понимания беседы. Установка новых данных в потребители требует отдельной интеграции. Детали: [docs/CONVERSATION_EXPRESSION_GUIDE.md](docs/CONVERSATION_EXPRESSION_GUIDE.md).
