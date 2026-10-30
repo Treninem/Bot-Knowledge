@@ -251,6 +251,9 @@ def main() -> int:
     from validate_style_boundaries import validate_style_boundaries
     errors.extend(validate_style_boundaries(ROOT))
 
+    from validate_lexical_repairs import validate_lexical_repairs
+    errors.extend(validate_lexical_repairs(ROOT))
+
     if errors:
         print("Bot-Knowledge validation: FAIL")
         for error in errors:

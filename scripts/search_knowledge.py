@@ -83,7 +83,7 @@ class KnowledgeSearch:
                         "pack": rel,
                         "audiences": audiences,
                         "topic": item.get("target_case_id", item.get("topic", item.get("kind", item.get("category", "")))),
-                        "expression": item.get("expression") or item.get("source") or (item.get("input", "") if "target_case_id" in item or "expected_ids" in item or ((rel in {"packs/ru/style_preferences.json", "packs/ru/scoped_style_requests.json", "packs/ru/composable_style.json"} and "dimension" in item) or (rel == "packs/ru/numeric_repairs.json" and "expected_status" in item)) else ""),
+                        "expression": item.get("expression") or item.get("source") or (item.get("input", "") if "target_case_id" in item or "expected_ids" in item or ((rel in {"packs/ru/style_preferences.json", "packs/ru/scoped_style_requests.json", "packs/ru/composable_style.json"} and "dimension" in item) or (rel in {"packs/ru/numeric_repairs.json", "packs/ru/lexical_repairs.json"} and "expected_status" in item)) else ""),
                         "preview": (item.get("expression") or item.get("response") or item.get("reason")
                                     or item.get("source") or item.get("input") or item.get("message")
                                     or (item.get("examples") or [""])[0])[:220],
