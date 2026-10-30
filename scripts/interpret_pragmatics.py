@@ -47,10 +47,9 @@ def interpret(book: dict, utterance: str, context: str = "",
         return {"status": "ambiguous_expression", "response": None}
     pair = matches[0]
     context_terms = " " + norm(context) + " "
-    scores = []
-    for reading in pair["readings"]:
-        score = sum((" " + norm(cue) + " ") in context_terms for cue in reading["cues"])
-        scores.append(score)
+    matched = [[norm(cue) for cue in reading["cues"] if (" " + norm(cue) + " ") in context_terms] for reading in pair["readings"]]
+    # Discount weaker overlapping cues: "audit log" inside "no reliable audit log".
+    scores = [sum(not any(cue != other and (" " + cue + " ") in (" " + other + " ") for j, others in enumerate(matched) if j != i for other in others) for cue in hits) for i, hits in enumerate(matched)]
     # Two *different* cues are required; if opposing evidence appears, abstain.
     if max(scores) < 2 or sum(x > 0 for x in scores) > 1:
         return {"status": "needs_context", "pair_id": pair["id"], "response": None,
