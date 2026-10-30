@@ -20,6 +20,20 @@ def normalize(text: str) -> str:
     return " ".join(WORD.findall(value))
 
 
+def exact_style_surface(text: str) -> str | None:
+    """Keep punctuation/quotation so cited text cannot grant preference consent.
+
+    Only case, whitespace and ё/е are normalized. Provenance still belongs to
+    the caller via addressed/quoted; this is not a free-form intent classifier.
+    """
+    if not isinstance(text, str) or not 4 <= len(text) <= 240:
+        return None
+    value = unicodedata.normalize("NFKC", text)
+    if any(unicodedata.category(char).startswith("C") for char in value):
+        return None
+    return " ".join(value.casefold().replace("ё", "е").split())
+
+
 def load_preferences(root: Path = ROOT) -> dict:
     manifest = json.loads((root / "manifest.json").read_text(encoding="utf-8"))
     hashes = [x["sha256"] for x in manifest["packs"] if x["path"] == PACK]
@@ -67,7 +81,7 @@ class PreferenceSession:
             lookup = (row["language"], normalize(row["input"]))
             if lookup in self.examples or row["dimension"] not in DIMENSIONS:
                 raise ValueError("Duplicate or unsupported preference")
-            self.examples[lookup] = (row["dimension"], row["value"])
+            self.examples[lookup] = (row["dimension"], row["value"], exact_style_surface(row["input"]))
         if scoped_book is not None:
             for row in scoped_book["cases"]:
                 lookup = (row["language"], normalize(row["input"]))
@@ -75,7 +89,7 @@ class PreferenceSession:
                     raise ValueError("Duplicate scoped preference input")
                 if row["dimension"] not in DIMENSIONS or row["scope"] not in {"one_reply", "session"}:
                     raise ValueError("Unsafe scoped preference")
-                self.scoped_examples[lookup] = (row["dimension"], row["value"], row["scope"])
+                self.scoped_examples[lookup] = (row["dimension"], row["value"], row["scope"], exact_style_surface(row["input"]))
 
     def clear(self) -> None:
         self.rules.clear()
@@ -98,10 +112,13 @@ class PreferenceSession:
             return {"status": "not_addressed"}
         if quoted:
             return {"status": "quoted_ignored"}
-        match = self.examples.get((language, normalize(message)))
-        if match is None:
+        surface = exact_style_surface(message)
+        if surface is None:
             return {"status": "unknown_input"}
-        dimension, value = match
+        match = self.examples.get((language, normalize(message)))
+        if match is None or match[2] != surface:
+            return {"status": "unknown_input"}
+        dimension, value, _ = match
         self.session_rules.pop(dimension, None)
         self.one_reply.pop(dimension, None)
         self.rules[dimension] = (value, self.turn)
@@ -116,10 +133,13 @@ class PreferenceSession:
             return {"status": "not_addressed"}
         if quoted:
             return {"status": "quoted_ignored"}
-        match = self.scoped_examples.get((language, normalize(message)))
-        if match is None:
+        surface = exact_style_surface(message)
+        if surface is None:
             return {"status": "unknown_input"}
-        dimension, value, scope = match
+        match = self.scoped_examples.get((language, normalize(message)))
+        if match is None or match[3] != surface:
+            return {"status": "unknown_input"}
+        dimension, value, scope, _ = match
         if scope == "one_reply":
             self.one_reply[dimension] = value
         else:
