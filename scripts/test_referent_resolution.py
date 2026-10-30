@@ -22,6 +22,11 @@ def main() -> None:
     ru=[{"id":"a","label":"вариант альфа","gender":"m"},{"id":"b","label":"вариант бета","gender":"m"}]
     en=[{"id":"a","label":"draft alpha","gender":"u"},{"id":"b","label":"draft beta","gender":"u"}]
     assert resolve("Покажи второго",ru,addressed=True)["ids"]==["b"]
+    # Unseen accusative noun form: "таблица" -> "таблицу".
+    ru_table=[{"id":"a","label":"таблица","gender":"f"},
+              {"id":"b","label":"план","gender":"m"}]
+    assert resolve("Покажи таблицу",ru_table,addressed=True)["ids"]==["a"]
+    assert resolve("Сравни план и таблицу",ru_table,addressed=True)["ids"]==["a","b"]
     assert resolve("Send 2nd",en,language="en",addressed=True)["ids"]==["b"]
     assert resolve("Нет, не первый, а второй",ru,addressed=True)["ids"]==["b"]
     assert resolve("Not the first but the second",en,language="en",addressed=True)["ids"]==["b"]

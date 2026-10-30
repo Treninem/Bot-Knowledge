@@ -83,7 +83,20 @@ def _scan(phrase: str, candidates: list[dict], language: str) -> tuple[set[int],
         else:
             out_of_range=True
     for i,c in enumerate(candidates):
-        if (" "+norm(c["label"])+" ") in (" "+phrase+" "):
+        label=norm(c["label"])
+        forms={label}
+        if language=="ru":
+            parts=label.split()
+            last=parts[-1]
+            # Limited noun-case equivalence for explicit, caller-provided labels.
+            # Full-word forms only: never match arbitrary substrings or unknown words.
+            if len(last)>=4 and last.endswith("а"):
+                forms.update(" ".join(parts[:-1]+[last[:-1]+end])
+                             for end in ("у","е","ы","ой"))
+            elif len(last)>=4 and last.endswith("я"):
+                forms.update(" ".join(parts[:-1]+[last[:-1]+end])
+                             for end in ("ю","и","е","ей"))
+        if any((" "+form+" ") in (" "+phrase+" ") for form in forms):
             selected.add(i)
     if selected or out_of_range:
         return selected,out_of_range,False
