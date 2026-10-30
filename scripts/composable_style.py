@@ -18,8 +18,8 @@ POLICY = {"synthetic_examples_only": True, "personal_data_allowed": False,
           "automatic_actions_allowed": False, "automatic_sanctions_allowed": False,
           "caller_owns_context": True, "explicit_address_required": True,
           "ephemeral_only": True}
-FORBIDDEN = set("\\\"'«»“”„‘’`<>[]{}\\|;:/\\r\\n")
-WORD = re.compile(r"[^\\W_]+", re.UNICODE)
+FORBIDDEN = {chr(c) for c in (34, 39, 171, 187, 8220, 8221, 8222, 8216, 8217, 96, 60, 62, 91, 93, 123, 125, 92, 124, 59, 58, 47, 13, 10)}
+WORD = re.compile(r"[^\W_]+", re.UNICODE)
 
 
 def normalized(text: str) -> str:
@@ -72,7 +72,7 @@ class ComposableStyle:
         raw = unicodedata.normalize("NFKC", message)
         if any(char in FORBIDDEN for char in raw):
             return {"status": "unknown_input"}
-        if not re.fullmatch(r"[\\w\\s,.!?]+", raw):
+        if not re.fullmatch(r"[\w\s,.!?]+", raw):
             return {"status": "unknown_input"}
         found = self.lookup.get((language, normalized(raw)))
         if found is None:
