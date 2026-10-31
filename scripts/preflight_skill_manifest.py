@@ -81,7 +81,10 @@ def _safe_pack_path(raw: object) -> str | None:
     return raw
 
 
-def validate_bundle(root: Path, candidate_path: Path, reviewed_skill_path: Path, manifest_path: Path) -> None:
+def validate_bundle(
+    root: Path, candidate_path: Path, reviewed_skill_path: Path, manifest_path: Path,
+    baseline_root: Path, baseline_manifest_path: Path,
+) -> None:
     """Raise ValueError on unsafe, inconsistent or unreviewed local inputs."""
     candidate = _read_json(candidate_path, max_bytes=16 * 1024)
     try:
@@ -139,7 +142,49 @@ def validate_bundle(root: Path, candidate_path: Path, reviewed_skill_path: Path,
 
     if SKILL_PATH not in seen:
         raise ValueError("skills pack absent from manifest")
-    skills = _read_json(root / SKILL_PATH, max_bytes=128 * 1024)
+    baseline = _read_json(baseline_manifest_path, max_bytes=128 * 1024)
+    if (not isinstance(baseline, dict) or not isinstance(baseline.get("packs"), list)
+            or not isinstance(baseline.get("knowledge_version"), str)
+            or baseline.get("schema_version") != 1 or baseline.get("language") != "ru"
+            or re.fullmatch(r"[0-9]{4}\.[0-9]{1,2}\.[0-9]{1,2}\.[0-9]+", baseline["knowledge_version"]) is None
+            or tuple(map(int, manifest["knowledge_version"].split(".")))
+            <= tuple(map(int, baseline["knowledge_version"].split(".")))):
+        raise ValueError("baseline invalid or knowledge version not increased")
+    baseline_entries: dict[str, str] = {}
+    for entry in baseline["packs"]:
+        if not isinstance(entry, dict) or set(entry) != {"path", "sha256"}:
+            raise ValueError("baseline manifest entry invalid")
+        relative = _safe_pack_path(entry["path"])
+        expected = entry["sha256"]
+        if (relative is None or relative in baseline_entries or not isinstance(expected, str)
+                or re.fullmatch(r"[0-9a-f]{64}", expected) is None):
+            raise ValueError("baseline manifest path or SHA invalid")
+        baseline_entries[relative] = expected
+        base_path = baseline_root / relative
+        if (base_path.is_symlink() or not base_path.is_file()
+                or not base_path.resolve().is_relative_to(baseline_root.resolve())
+                or base_path.stat().st_size > (128 * 1024 if relative == SKILL_PATH else 1024 * 1024)
+                or hashlib.sha256(base_path.read_bytes()).hexdigest() != expected):
+            raise ValueError("baseline pack missing or SHA mismatch")
+    proposed_entries = {entry["path"]: entry["sha256"] for entry in entries}
+    if set(proposed_entries) != set(baseline_entries) or any(
+        proposed_entries[path] != sha for path, sha in baseline_entries.items() if path != SKILL_PATH
+    ):
+        raise ValueError("unrelated pack or manifest entry changed")
+    if SKILL_PATH not in baseline_entries or proposed_entries[SKILL_PATH] == baseline_entries[SKILL_PATH]:
+        raise ValueError("skills pack unchanged or absent in baseline")
+    baseline_skills = _read_json(baseline_root / SKILL_PATH, max_bytes=128 * 1024)
+    baseline_rows = baseline_skills.get("skills") if isinstance(baseline_skills, dict) else None
+    if not isinstance(baseline_rows, list) or not isinstance(skills := _read_json(root / SKILL_PATH, max_bytes=128 * 1024), dict):
+        raise ValueError("baseline or proposed skills shape invalid")
+    if (set(skills) != set(baseline_skills) or any(
+            key != "skills" and skills[key] != baseline_skills[key] for key in baseline_skills
+    ) or not isinstance(skills.get("skills"), list)
+            or skills["skills"][:-1] != baseline_rows
+            or len(skills["skills"]) != len(baseline_rows) + 1
+            or not isinstance(skills["skills"][-1], dict)
+            or skills["skills"][-1].get("id") != candidate["candidate_id"]):
+        raise ValueError("existing skills changed or candidate was not appended once")
     policy = skills.get("usage_policy") if isinstance(skills, dict) else None
     if (not isinstance(skills, dict) or skills.get("schema_version") != 1 or skills.get("language") != "ru"
             or not isinstance(policy, dict) or policy.get("user_data_allowed") is not False
@@ -193,12 +238,15 @@ def validate_bundle(root: Path, candidate_path: Path, reviewed_skill_path: Path,
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--root", type=Path, required=True, help="local draft pack root")
+    parser.add_argument("--baseline-root", type=Path, required=True, help="trusted published pack root")
     parser.add_argument("--candidate", type=Path, required=True, help="reviewed abstract candidate JSON")
     parser.add_argument("--reviewed-skill", type=Path, required=True, help="exact skill JSON reviewed for publication")
     parser.add_argument("--manifest", type=Path, required=True, help="draft manifest JSON")
+    parser.add_argument("--baseline-manifest", type=Path, required=True, help="trusted published manifest JSON")
     args = parser.parse_args()
     try:
-        validate_bundle(args.root, args.candidate, args.reviewed_skill, args.manifest)
+        validate_bundle(args.root, args.candidate, args.reviewed_skill, args.manifest,
+                        args.baseline_root, args.baseline_manifest)
     except (OSError, UnicodeDecodeError, json.JSONDecodeError, ValueError) as exc:
         print(f"PREFLIGHT_REJECTED: {exc}")
         return 1
