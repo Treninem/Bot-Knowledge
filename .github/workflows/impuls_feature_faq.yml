@@ -1,0 +1,20 @@
+name: Small synthetic ImPULS feature FAQ checks
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  verify-feature-faq:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Validate all manifest SHA-pinned packs
+        run: python scripts/validate_pack.py
+      - name: Run 10 x 10 audience, integrity and SHA/cache FAQ checks
+        run: python scripts/test_impuls_feature_faq.py
