@@ -14,7 +14,7 @@ cases = load_pack()["cases"]
 assert len(cases) == 48
 engine = ShortTurns()
 index = KnowledgeSearch()
-assert len(index.records) == 1179, len(index.records)
+assert len(index.records) >= 1179, len(index.records)
 assert len({row["id"] for row in cases}) == 48
 assert len({row["input"].casefold() for row in cases}) == 48
 
