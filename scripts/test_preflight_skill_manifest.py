@@ -43,6 +43,7 @@ def _fixture(root: Path, index: int):
     pack = {
         "schema_version": 1,
         "language": "ru",
+        "pack_version": "2026.10.31.1",
         "usage_policy": {
             "shared_between_bots": True,
             "user_data_allowed": False,
@@ -60,6 +61,7 @@ def _fixture(root: Path, index: int):
     baseline_pack_path = baseline_root / "packs/ru/skills.json"
     baseline_manifest_path = baseline_root / "manifest.json"
     baseline_pack = copy.deepcopy(pack)
+    baseline_pack["pack_version"] = "2026.10.31.0"
     baseline_pack["skills"] = [existing_skill]
     _write(baseline_pack_path, baseline_pack)
     _write(baseline_manifest_path, {
@@ -196,6 +198,18 @@ def main() -> None:
                     _write(extra, {"synthetic": True})
                     manifest["packs"].append({"path": "packs/ru/extra.json",
                                               "sha256": hashlib.sha256(extra.read_bytes()).hexdigest()})
+                    _write(manifest_path, manifest)
+                    _rejected(root, candidate_path, reviewed_skill_path, manifest_path,
+                              baseline_root, baseline_manifest_path)
+                if index in {5, 6}:
+                    pack = copy.deepcopy(safe_pack)
+                    manifest = copy.deepcopy(safe_manifest)
+                    if index == 5:
+                        pack["usage_policy"]["allow_unreviewed_execution"] = True
+                    else:
+                        pack["pack_version"] = "2026.10.31.0"
+                    _write(pack_path, pack)
+                    manifest["packs"][0]["sha256"] = hashlib.sha256(pack_path.read_bytes()).hexdigest()
                     _write(manifest_path, manifest)
                     _rejected(root, candidate_path, reviewed_skill_path, manifest_path,
                               baseline_root, baseline_manifest_path)

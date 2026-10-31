@@ -178,16 +178,28 @@ def validate_bundle(
     if not isinstance(baseline_rows, list) or not isinstance(skills := _read_json(root / SKILL_PATH, max_bytes=128 * 1024), dict):
         raise ValueError("baseline or proposed skills shape invalid")
     if (set(skills) != set(baseline_skills) or any(
-            key != "skills" and skills[key] != baseline_skills[key] for key in baseline_skills
+            key not in {"skills", "pack_version"} and skills[key] != baseline_skills[key]
+            for key in baseline_skills
     ) or not isinstance(skills.get("skills"), list)
             or skills["skills"][:-1] != baseline_rows
             or len(skills["skills"]) != len(baseline_rows) + 1
             or not isinstance(skills["skills"][-1], dict)
             or skills["skills"][-1].get("id") != candidate["candidate_id"]):
         raise ValueError("existing skills changed or candidate was not appended once")
+    version_pattern = r"[0-9]{4}\.[0-9]{1,2}\.[0-9]{1,2}\.[0-9]+"
+    old_version, new_version = baseline_skills.get("pack_version"), skills.get("pack_version")
+    if (not isinstance(old_version, str) or not isinstance(new_version, str)
+            or re.fullmatch(version_pattern, old_version) is None
+            or re.fullmatch(version_pattern, new_version) is None
+            or tuple(map(int, new_version.split("."))) <= tuple(map(int, old_version.split(".")))):
+        raise ValueError("skills pack version not increased")
     policy = skills.get("usage_policy") if isinstance(skills, dict) else None
-    if (not isinstance(skills, dict) or skills.get("schema_version") != 1 or skills.get("language") != "ru"
-            or not isinstance(policy, dict) or policy.get("user_data_allowed") is not False
+    if (set(skills) != {"schema_version", "language", "pack_version", "usage_policy", "skills"}
+            or type(skills.get("schema_version")) is not int or skills["schema_version"] != 1
+            or skills.get("language") != "ru" or not isinstance(policy, dict)
+            or set(policy) != {"shared_between_bots", "user_data_allowed", "automatic_sanctions_allowed",
+                               "initiative_requires_local_authorization", "scope_filter_required"}
+            or policy.get("user_data_allowed") is not False
             or policy.get("automatic_sanctions_allowed") is not False
             or policy.get("initiative_requires_local_authorization") is not True
             or policy.get("scope_filter_required") is not True
