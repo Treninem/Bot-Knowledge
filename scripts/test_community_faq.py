@@ -76,6 +76,7 @@ def inspect_pack() -> None:
 
 def ten_scoped_rounds() -> None:
     index = KnowledgeSearch(ROOT)
+    assert len(index.records) == 1182, len(index.records)  # 1179 baseline + 3 review-only FAQ cases
     # Each probe is a distinct permission/use-case; retrieval is NOT authorization.
     probes = [
         ("как настроить антиспам в чате", "community_bots", "bot_help_antispam_settings_faq", True),
