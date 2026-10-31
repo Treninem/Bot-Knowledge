@@ -95,8 +95,14 @@ class KnowledgeSearch:
                     for term in tokens(contents):
                         self.inverted[term].add(index)
 
-    @lru_cache(maxsize=512)
+        # Cache is owned by this verified snapshot. A module-level decorated
+        # method would retain old KnowledgeSearch instances after an update.
+        self._cached_search = lru_cache(maxsize=512)(self._search_uncached)
+
     def search(self, query: str, audience: str = "all_ai_bots", limit: int = 5) -> tuple[tuple, ...]:
+        return self._cached_search(query, audience, limit)
+
+    def _search_uncached(self, query: str, audience: str, limit: int) -> tuple[tuple, ...]:
         if audience not in AUDIENCES:
             raise ValueError("Unknown audience")
         if not 1 <= limit <= 20:
