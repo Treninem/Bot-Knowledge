@@ -14,6 +14,8 @@
 
 Перед PR с новым навыком запустите офлайн `python scripts/preflight_skill_manifest.py --root <draft> --baseline-root <published> --candidate <reviewed-candidate.json> --reviewed-skill <reviewed-skill.json> --manifest <draft/manifest.json> --baseline-manifest <published/manifest.json>`. Проверка сверяет кандидат, точный проверенный навык, политики, версии и SHA всех пакетов; она не публикует данные и не заменяет ручной обзор приватности.
 
+Для подготовки локального черновика после этой проверки используйте `python scripts/build_skill_draft.py --baseline-root <published> --candidate <reviewed-candidate.json> --reviewed-skill <reviewed-skill.json> --output <new-draft-outside-repository> --pack-version <YYYY.M.D.N> --knowledge-version <YYYY.M.D.N>`. Скрипт собирает пакет и манифест с проверенными SHA, повторно запускает preflight и отказывает при существующем каталоге вывода. Он не публикует PR и не заменяет ручной обзор.
+
 ## Структура
 
 - `manifest.json` — версия и список пакетов.
