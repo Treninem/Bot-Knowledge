@@ -35,10 +35,19 @@ PRIVATE_KEYS = {
 }
 
 
+def _unique_pairs(pairs):
+    result = {}
+    for key, value in pairs:
+        if key in result:
+            raise ValueError(f"duplicate JSON key: {key}")
+        result[key] = value
+    return result
+
+
 def _read_json(path: Path, *, max_bytes: int):
     if path.stat().st_size > max_bytes:
         raise ValueError("JSON input too large")
-    return json.loads(path.read_text(encoding="utf-8"))
+    return json.loads(path.read_text(encoding="utf-8"), object_pairs_hook=_unique_pairs)
 
 
 def _walk(value):
@@ -72,7 +81,7 @@ def _safe_pack_path(raw: object) -> str | None:
     return raw
 
 
-def validate_bundle(root: Path, candidate_path: Path, manifest_path: Path) -> None:
+def validate_bundle(root: Path, candidate_path: Path, reviewed_skill_path: Path, manifest_path: Path) -> None:
     """Raise ValueError on unsafe, inconsistent or unreviewed local inputs."""
     candidate = _read_json(candidate_path, max_bytes=16 * 1024)
     try:
@@ -81,6 +90,9 @@ def validate_bundle(root: Path, candidate_path: Path, manifest_path: Path) -> No
         raise ValueError(f"candidate rejected: {exc}") from exc
     if _private_value(candidate):
         raise ValueError("candidate contains private or executable content")
+    reviewed_skill = _read_json(reviewed_skill_path, max_bytes=16 * 1024)
+    if not isinstance(reviewed_skill, dict) or _private_value(reviewed_skill):
+        raise ValueError("reviewed skill contains private or executable content")
 
     manifest = _read_json(manifest_path, max_bytes=128 * 1024)
     if (not isinstance(manifest, dict)
@@ -119,7 +131,7 @@ def validate_bundle(root: Path, candidate_path: Path, manifest_path: Path) -> No
         if hashlib.sha256(payload).hexdigest() != expected:
             raise ValueError("manifest SHA mismatch")
         try:
-            data = json.loads(payload.decode("utf-8"))
+            data = json.loads(payload.decode("utf-8"), object_pairs_hook=_unique_pairs)
         except (UnicodeDecodeError, json.JSONDecodeError) as exc:
             raise ValueError("pack JSON invalid") from exc
         if relative == SKILL_PATH and _private_value(data):
@@ -133,7 +145,8 @@ def validate_bundle(root: Path, candidate_path: Path, manifest_path: Path) -> No
             or not isinstance(policy, dict) or policy.get("user_data_allowed") is not False
             or policy.get("automatic_sanctions_allowed") is not False
             or policy.get("initiative_requires_local_authorization") is not True
-            or policy.get("scope_filter_required") is not True):
+            or policy.get("scope_filter_required") is not True
+            or policy.get("shared_between_bots") is not True):
         raise ValueError("skills policy invalid")
     rows = skills.get("skills")
     if not isinstance(rows, list) or not rows or len(rows) > 256:
@@ -145,11 +158,11 @@ def validate_bundle(root: Path, candidate_path: Path, manifest_path: Path) -> No
                 or not {"id", "kind", "when", "avoid", "examples", "audiences"} <= set(skill)
                 or set(skill) - {"id", "kind", "when", "avoid", "examples", "audiences"} - {"domain"}):
             raise ValueError("skill shape invalid")
-        if "domain" in skill and skill["domain"] not in DOMAINS:
+        if "domain" in skill and (not isinstance(skill["domain"], str) or skill["domain"] not in DOMAINS):
             raise ValueError("skill domain invalid")
         skill_id = skill["id"]
         if (not isinstance(skill_id, str) or re.fullmatch(r"[a-z][a-z0-9_]{2,70}", skill_id) is None
-                or skill_id in ids or skill["kind"] not in KINDS):
+                or skill_id in ids or not isinstance(skill["kind"], str) or skill["kind"] not in KINDS):
             raise ValueError("skill identity invalid")
         ids.add(skill_id)
         for field in ("when", "avoid", "examples"):
@@ -173,16 +186,19 @@ def validate_bundle(root: Path, candidate_path: Path, manifest_path: Path) -> No
     if (proposed["when"] != candidate["when"] or proposed["avoid"] != candidate["avoid"]
             or proposed["audiences"] != candidate["audiences"]):
         raise ValueError("candidate and proposed skill differ")
+    if proposed != reviewed_skill:
+        raise ValueError("proposed skill differs from exact reviewed skill")
 
 
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--root", type=Path, required=True, help="local draft pack root")
     parser.add_argument("--candidate", type=Path, required=True, help="reviewed abstract candidate JSON")
+    parser.add_argument("--reviewed-skill", type=Path, required=True, help="exact skill JSON reviewed for publication")
     parser.add_argument("--manifest", type=Path, required=True, help="draft manifest JSON")
     args = parser.parse_args()
     try:
-        validate_bundle(args.root, args.candidate, args.manifest)
+        validate_bundle(args.root, args.candidate, args.reviewed_skill, args.manifest)
     except (OSError, UnicodeDecodeError, json.JSONDecodeError, ValueError) as exc:
         print(f"PREFLIGHT_REJECTED: {exc}")
         return 1

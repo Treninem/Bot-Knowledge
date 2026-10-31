@@ -37,6 +37,7 @@ def _fixture(root: Path, index: int):
         "schema_version": 1,
         "language": "ru",
         "usage_policy": {
+            "shared_between_bots": True,
             "user_data_allowed": False,
             "automatic_sanctions_allowed": False,
             "initiative_requires_local_authorization": True,
@@ -45,9 +46,11 @@ def _fixture(root: Path, index: int):
         "skills": [skill],
     }
     candidate_path = root / "candidate.json"
+    reviewed_skill_path = root / "reviewed_skill.json"
     pack_path = root / "packs/ru/skills.json"
     manifest_path = root / "manifest.json"
     _write(candidate_path, candidate)
+    _write(reviewed_skill_path, skill)
     _write(pack_path, pack)
     manifest = {
         "schema_version": 1,
@@ -56,17 +59,17 @@ def _fixture(root: Path, index: int):
         "packs": [{"path": "packs/ru/skills.json", "sha256": hashlib.sha256(pack_path.read_bytes()).hexdigest()}],
     }
     _write(manifest_path, manifest)
-    return candidate_path, pack_path, manifest_path, candidate, pack, manifest
+    return candidate_path, reviewed_skill_path, pack_path, manifest_path, candidate, pack, manifest
 
 
 def _snapshot(root: Path) -> dict[str, bytes]:
     return {str(path.relative_to(root)): path.read_bytes() for path in root.rglob("*") if path.is_file()}
 
 
-def _rejected(root: Path, candidate_path: Path, manifest_path: Path) -> None:
+def _rejected(root: Path, candidate_path: Path, reviewed_skill_path: Path, manifest_path: Path) -> None:
     before = _snapshot(root)
     try:
-        validate_bundle(root, candidate_path, manifest_path)
+        validate_bundle(root, candidate_path, reviewed_skill_path, manifest_path)
     except ValueError:
         pass
     else:
@@ -81,9 +84,12 @@ def main() -> None:
         for index in range(10):
             with tempfile.TemporaryDirectory(prefix=f"round_{index}_", dir=work) as folder:
                 root = Path(folder)
-                candidate_path, pack_path, manifest_path, candidate, pack, manifest = _fixture(root, index)
+                candidate_path, reviewed_skill_path, pack_path, manifest_path, candidate, pack, manifest = _fixture(root, index)
+                safe_candidate = copy.deepcopy(candidate)
+                safe_pack = copy.deepcopy(pack)
+                safe_manifest = copy.deepcopy(manifest)
                 before = _snapshot(root)
-                validate_bundle(root, candidate_path, manifest_path)
+                validate_bundle(root, candidate_path, reviewed_skill_path, manifest_path)
                 assert _snapshot(root) == before, "preflight wrote to fixture"
 
                 if index == 0:
@@ -122,7 +128,24 @@ def main() -> None:
                 else:
                     candidate["statement"] += " 123e4567-e89b-12d3-a456-426614174000"
                     _write(candidate_path, candidate)
-                _rejected(root, candidate_path, manifest_path)
+                _rejected(root, candidate_path, reviewed_skill_path, manifest_path)
+
+                if index == 0:
+                    # A changed response with a valid new SHA must not inherit the original review.
+                    _write(candidate_path, safe_candidate)
+                    pack["skills"][0]["examples"] = ["Совершенно иная реакция, не прошедшая обзор."]
+                    _write(pack_path, pack)
+                    manifest["packs"][0]["sha256"] = hashlib.sha256(pack_path.read_bytes()).hexdigest()
+                    _write(manifest_path, manifest)
+                    _rejected(root, candidate_path, reviewed_skill_path, manifest_path)
+                if index == 1:
+                    _write(pack_path, safe_pack)
+                    _write(manifest_path, safe_manifest)
+                    duplicate = manifest_path.read_text(encoding="utf-8").replace(
+                        '"packs": [', '"packs": [], "packs": [', 1,
+                    )
+                    manifest_path.write_text(duplicate, encoding="utf-8")
+                    _rejected(root, candidate_path, reviewed_skill_path, manifest_path)
             print(f"PREFLIGHT_SKILL_MANIFEST_ROUND_PASS {index + 1}/10", flush=True)
     finally:
         work.rmdir()
