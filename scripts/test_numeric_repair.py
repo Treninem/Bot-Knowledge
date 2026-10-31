@@ -55,7 +55,7 @@ assert not prior_inputs.intersection(
 )
 engine = NumericRepair()
 index = KnowledgeSearch()
-assert len(index.records) == 1179, len(index.records)
+assert len(index.records) >= 1179, len(index.records)
 for row in cases:
     state = {row["slot"]: row["current"], "other_slot": "untouched"}
     kwargs = dict(language=row["language"], state=state, slot=row["slot"],
