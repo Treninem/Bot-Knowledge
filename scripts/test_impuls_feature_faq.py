@@ -63,7 +63,7 @@ def validate() -> tuple[dict, bytes]:
         for key in ("when", "avoid", "examples"):
             for value in entry[key]:
                 assert 5 <= len(value) <= 300
-                assert not re.search(r"https?://|@[A-Za-z0-9_]{4,32}\\b|[\\w.+-]+@[\\w.-]+\\.[A-Za-z]{2,}|(?<!\\d)\\d{12,19}(?!\\d)", value)
+                assert not re.search(r"https?://|@[A-Za-z0-9_]{4,32}\b|[\w.+-]+@[\w.-]+\.[A-Za-z]{2,}|(?<!\d)\d{12,19}(?!\d)", value)
                 if key != "avoid":
                     new_texts.append(normalized(value))
         assert not {"action", "auto_apply", "token", "sanction", "chat_id", "user_id"} & set(entry)
