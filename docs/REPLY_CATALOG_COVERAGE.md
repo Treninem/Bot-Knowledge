@@ -6,8 +6,8 @@ This candidate adds a **new, separate** SHA-pinned pack. It does not rewrite the
 
 ## Measured coverage
 
-**29 distinct canonical questions, 2165 authored answers, 26 packs total**.
-Twenty questions are complete at 100/100, and 9 remain partial. These are reply
+**32 distinct canonical questions, 2465 authored answers, 26 packs total**.
+Twenty-three questions are complete at 100/100, and 9 remain partial. These are reply
 variants, not 443 trained model skills or new executable ImPULS commands.
 
 | Question / intent | Count / 100 | Audience |
@@ -41,6 +41,9 @@ variants, not 443 trained model skills or new executable ImPULS commands.
 | Поддержать разговор (`conversation_followup`) | 100 | all AI bots |
 | Почему это не работает? (`diagnose_problem`) | 100 | all AI bots |
 | Как проверить достоверность? (`verify_claim`) | 100 | all AI bots |
+| Уточни, что я хочу (`clarify_request`) | 100 | all AI bots |
+| Как дать полезную обратную связь? (`constructive_feedback`) | 100 | all AI bots |
+| Помоги обдумать решение (`reason_together`) | 100 | all AI bots |
 
 ## Source and factual limits
 
@@ -85,14 +88,14 @@ mutes, permissions or other actions.
 
 ## Integrity and verification
 
-The manifest version for the latest candidate is `2026.11.02.9`. The package is pinned by the current manifest SHA-256; size and digest must be checked from actual bytes; all 26 packs must be present and SHA-valid.
+The manifest version for the latest candidate is `2026.11.02.10`. The package is pinned by the current manifest SHA-256; size and digest must be checked from actual bytes; all 26 packs must be present and SHA-valid.
 The selector's cache identity is `(knowledge_version, pack_sha256)`; it
 does not change any running bot's cache.
 
 `python scripts/validate_pack.py`,
 `python scripts/test_reply_catalog.py --repository -v`, and the separate
 exact-head workflow must complete on the actual PR head SHA before merge.
-Test requirements cover all 2165 reachable responses, normalized duplicates,
+Test requirements cover all 2465 reachable responses, normalized duplicates,
 cross-pack exact matches, 100/100 completeness, opt-in, audience isolation,
 refusal conditions, repeat suppression and tampered SHA/cache snapshots.
 A review of semantic similarity remains necessary: an exact-string test cannot
@@ -172,3 +175,27 @@ only after a completed exact-head PR workflow and merge; live consumer integrati
 and post-main CI are separate verification steps. Reviewer must assess meaningful
 similarity beyond string-level deduplication, follow actual test results, and avoid
 padding incomplete technical FAQ with cosmetic variants.
+
+## 2026-11-02 new general-language continuation (2026.11.02.10)
+
+Baseline: merged main `4d565578f52023922f8180f50f7e75245d8bf437`. This batch adds **300 original
+synthetic replies** across **three entirely new canonical question sets**. No old replies
+were rewritten or removed; total catalogue **32 canonical questions / 2465 replies**.
+All three new sets are 100/100, bringing complete sets to **23**, partial sets **9**.
+
+- `clarify_request` (100): referent resolution, scope, date/time, output format, goal,
+  constraints, permission, safe examples, tone, and genuinely unavailable context.
+- `constructive_feedback` (100): observation, specificity, respectful critique,
+  concrete praise, corrections, collaboration, creative works, community rules,
+  disagreement, and checking fixes.
+- `reason_together` (100): assumptions, goals, evidence, options, cost, risk,
+  counterexamples, timing, stakeholder perspectives, and conditional decisions.
+
+All 30 groups carry explicit `when` and `avoid`; the caller must verify context,
+audience and local permission, rather than inferring rights from these texts.
+No external source facts, real chat material or personal identifiers were added.
+SHA-256 of the revised reply pack: `f1fcfb0e8129a145bad0e32c4c9a0014fff462bf901b9832322bccc428f2676a` (knowledge_version `2026.11.02.10`).
+The other 25 manifest pack hashes remain unchanged. Next cycle: continue the
+nine unfinished ImPULS FAQ sets from exact counts above, or choose a different
+useful question when reaching 100 would require low-quality paraphrase padding.
+These replies are not proof of deployment in ImPULS or any live consumer.
