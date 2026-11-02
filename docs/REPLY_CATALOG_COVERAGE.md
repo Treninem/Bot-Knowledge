@@ -6,8 +6,8 @@ This candidate adds a **new, separate** SHA-pinned pack. It does not rewrite the
 
 ## Measured coverage
 
-**75 distinct canonical questions, 7500 authored answers, 27 packs total**.
-All 75 questions are complete at 100/100; there are no partial sets in this snapshot. These are reply
+**80 distinct canonical questions, 8000 authored answers, 27 packs total**.
+All 80 questions are complete at 100/100; there are no partial sets in this snapshot. These are reply
 variants, not 443 trained model skills or new executable ImPULS commands.
 
 | Question / intent | Count / 100 | Audience |
@@ -83,12 +83,17 @@ variants, not 443 trained model skills or new executable ImPULS commands.
 | Как исправить недопонимание? (`repair_misunderstanding`) | 100 | all AI bots |
 | Как найти компромисс без давления? (`constructive_compromise`) | 100 | all AI bots |
 | Как корректно исправить неверный факт? (`fact_correction`) | 100 | all AI bots |
+| Как расставить приоритеты? (`prioritize_tasks`) | 100 | all AI bots |
+| Как передать задачу другому человеку? (`handoff_task`) | 100 | all AI bots |
+| Как оценить риски перед изменением? (`risk_review`) | 100 | all AI bots |
+| Как составить хороший чек-лист? (`build_checklist`) | 100 | all AI bots |
+| Как правильно проверить изменение? (`verify_change_result`) | 100 | all AI bots |
+| Как нормально описать проблему? (`problem_report`) | 100 | all AI bots |
 | Как воспроизвести ошибку для разработчика? (`reproduce_bug`) | 100 | all AI bots |
 | Как честно сообщить о ходе работы? (`progress_report`) | 100 | all AI bots |
 | Как безопасно обезличить материал перед публикацией? (`privacy_before_publish`) | 100 | all AI bots |
 | Как тактично напомнить о сообщении без ответа? (`followup_no_reply`) | 100 | all AI bots |
 | Как попросить подтверждение перед важным действием? (`confirm_before_change`) | 100 | all AI bots |
-| Как расставить приоритеты, когда задач слишком много? (`prioritize_tasks`) | 100 | all AI bots |
 ## Source and factual limits
 
 The eight ImPULS-specific question sets are abstract user-facing help, grounded
@@ -110,7 +115,7 @@ not start new duplicate question IDs.
 ## Selection and safety
 
 `scripts/reply_catalog.py` is an offline **opt-in reference selector**:
-it directly indexes the pack's 69 canonical IDs and their groups. It does
+it directly indexes the pack's 80 canonical IDs and their groups. It does
 **not** recognize natural-language intent, configure chats, execute commands,
 read Telegram messages or remember sessions. A caller must independently
 validate explicit address, local permission, audience, and chosen context group.
@@ -132,14 +137,14 @@ mutes, permissions or other actions.
 
 ## Integrity and verification
 
-The manifest version for this completed catalogue is `2026.11.02.24`. The package is pinned by the current manifest SHA-256; size and digest must be checked from actual bytes; all 27 packs must be present and SHA-valid.
+The manifest version for this completed catalogue is `2026.11.02.27`. The package is pinned by the current manifest SHA-256; size and digest must be checked from actual bytes; all 27 packs must be present and SHA-valid.
 The selector's cache identity is `(knowledge_version, pack_sha256)`; it
 does not change any running bot's cache.
 
 `python scripts/validate_pack.py`,
 `python scripts/test_reply_catalog.py --repository -v`, and the separate
 exact-head workflow must complete on the actual PR head SHA before merge.
-Test requirements cover all 6900 reachable responses, normalized duplicates,
+Test requirements cover all 8000 reachable responses, normalized duplicates,
 cross-pack exact matches, 100/100 completeness, opt-in, audience isolation,
 refusal conditions, repeat suppression and tampered SHA/cache snapshots.
 A review of semantic similarity remains necessary: an exact-string test cannot
@@ -295,10 +300,13 @@ actual exact-head CI plus post-main CI remain publication gates.
 
 Verified main baseline `8d785003be3d56c2dbd433c059903b1cec8f9bdc`: 66 canonical questions and 6600 replies. Three new complete intents gained 100 individually authored responses each with ten explicit context/avoid groups: `repair_misunderstanding`, `constructive_compromise`, and `fact_correction`. Exactly **+300** net new original synthetic responses; candidate **69 questions / 6900 replies**, all **69 complete 100/100**, **zero partial**. Prior 6600 answers kept. Across-pool three-gram Jaccard near-match sweep found no similarity at or above 0.52 for those 300 against the prior 6600 and themselves; this is not proof of semantic perfection. No ImPULS repo changes, private messages, external actions, sanctions or live consumer integration. Source data SHA-256 over UTF-8 bytes: `5d364a2925a61b852f8ffce487691b57ef5aeff8ff74e6be63537938fca41b39`; manifest/cache version `2026.11.02.24`. Only ship after actual completed exact-head QA and post-main CI.
 
-## 2026-11-02 reproducibility / status / privacy batch 2026.11.02.25
 
-Fresh exact baseline main `2277ea78b7aea2ba647e46755e88592bd2209a7e`: 69 canonical questions / 6900 replies. Three new generalized, source-independent, opt-in RU questions, each with ten distinct context-and-avoid groups of ten original answers: `reproduce_bug`, `progress_report`, and `privacy_before_publish`. Exactly **+300** newly authored, normalized-distinct responses. Candidate: **72 questions / 7200 replies**, all 72 complete at 100/100; no partial sets. Existing 6900 replies are kept unmodified. Synthetic examples only, no personal records, ImPULS claims, executable sanctions or live rollout. Cross-pool 3-word Jaccard near-match audit of the 300 new responses against previous 6900 and each other: max 0.200, no pair ≥0.58; semantic review still required. Pack SHA-256 of actual UTF-8 content: `e1512e2896351c31e60c1cb5bdb4a05454fbfa7fb0726d4aeb37f345a1ac56ba`; manifest version/cache key `2026.11.02.25`. Merge only after exact-head CI and post-main CI.
+## 2026-11-02 practical skills batch 2026.11.02.26
 
-## 2026-11-02 careful follow-ups / approvals / prioritization batch 2026.11.02.26
+Six new independent questions were added at **100/100** each: `prioritize_tasks`, `handoff_task`, `risk_review`, `build_checklist`, `verify_change_result`, and `problem_report`. Exact addition: **+600** original synthetic replies in guarded context groups. Catalogue: **6900 → 7500 replies**, **69 → 75 canonical questions**, all complete at 100/100. A pre-PR self-check caught an accidental 110-reply set in `verify_change_result`; the extra 10-item group was removed before publication so the canonical 100-reply limit is preserved. No PII, secrets, sanctions, product-specific powers or live-memory claims are introduced.
 
-Continued existing PR #59 at prior head `3920b62c9bc5f117c2805a97cd441c61fc4cbfca`, preserving all 7200 replies. Added three more complete general, synthetic and opt-in question sets: `followup_no_reply` (unanswered messages without pressure), `confirm_before_change` (clear approval and fail-closed scope), and `prioritize_tasks` (dependencies, user impact, risk). **+300 new validated responses**, 10 context-guarded groups of 10 per question. Proposed cumulative delta vs main `2277ea78b7aea2ba647e46755e88592bd2209a7e`: **+600**, **69→75** question IDs and **6900→7500** accepted responses. No partial questions. Exact normalized collisions: zero; 3-word Jaccard near matches ≥0.58 across new answers and prior pool: zero (maximum 0.364). Final pack top-level version 2026.11.02.26, UTF-8 SHA-256 `83430d66b273a5d5b49d895360d0244fc9609cb7a6a19661556ee10b273bd5e5`; manifest/cache same version. These are general textual choices, not app permissions, live memory, payments, bot updates or moderation actions. Require current exact-head CI and post-main run before claiming publication.
+## 2026-11-02 PR #59 concurrency reconciliation v2026.11.02.27
+
+Fresh GitHub main `97d80d3181d42d94a2bae6251e146ecf0b06f8c5` after independent PR #60 was merged: **75 distinct intents, 7500 responses**, with completed `prioritize_tasks`, `handoff_task`, `risk_review`, `build_checklist`, `verify_change_result`, and `problem_report`. PR #59 already authored 600 responses at `16a063782de296e20033bfbc00b5f1b62ee76693`, but `prioritize_tasks` overlapped an already accepted canonical question after the parallel merge. **Do not count the 100 alternate `prioritize_tasks` responses twice**; they remain recoverable in the original PR #59 commit `16a063782de296e20033bfbc00b5f1b62ee76693` for later comparison, not in the active merged catalogue. No existing main set was removed or rewritten.
+
+This reconciled proposal adds the **other five complete original intents** to fresh main: `reproduce_bug`, `progress_report`, `privacy_before_publish`, `followup_no_reply`, `confirm_before_change`. Net **+500 accepted responses**, 75→80 questions and 7500→8000 answers; each new set has ten explicit context guards and ten original responses per group. All 80 sets total 100/100, zero partial. One overlapping 100-answer candidate was deferred due exact intent collision (not included in published counts). New pack SHA-256 `c8d584056b2f748a2ab5885eadc9adc91e47a8cc244b0395aa2bb09d9fa2dfeb`, manifest `2026.11.02.27`, with actual exact-head and post-main CI still required. PR #59 branch merged main without force-push to retain ancestry and make a reviewable diff; consumer rollout not claimed.
