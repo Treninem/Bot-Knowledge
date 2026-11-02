@@ -47,6 +47,9 @@ EXPECTED = {
     "reproduce_bug": 100,
     "progress_report": 100,
     "privacy_before_publish": 100,
+    "followup_no_reply": 100,
+    "confirm_before_change": 100,
+    "prioritize_tasks": 100,
 }
 FORBIDDEN = {
     "user_id", "chat_id", "telegram_id", "username", "phone", "email",
@@ -127,13 +130,13 @@ class ReplyCatalogueTests(unittest.TestCase):
         options.update(kw)
         return self.catalog.reply(intent, **options)
 
-    def test_exact_72_questions_7200_replies(self):
+    def test_exact_75_questions_7500_replies(self):
         self.assertEqual(self.catalog.coverage, EXPECTED)
-        self.assertEqual(len(EXPECTED), 72)
-        self.assertEqual(sum(EXPECTED.values()), 7200)
+        self.assertEqual(len(EXPECTED), 75)
+        self.assertEqual(sum(EXPECTED.values()), 7500)
 
     def test_all_sets_complete_100(self):
-        self.assertEqual(len(self.catalog.coverage), 72)
+        self.assertEqual(len(self.catalog.coverage), 75)
         self.assertTrue(all(value == 100 for value in self.catalog.coverage.values()))
 
     def test_all_6900_reachable(self):
@@ -153,7 +156,7 @@ class ReplyCatalogueTests(unittest.TestCase):
                                      audience=record["audiences"][0],
                                      humor_allowed=True, recent=recent)
                 self.assertEqual(exhausted["status"], "repeat_suppressed")
-        self.assertEqual(len(result_ids), 7200)
+        self.assertEqual(len(result_ids), 7500)
 
     def test_normalized_unique_globally(self):
         replies = [v for x in self.data["sets"] for g in x["groups"] for v in g["replies"]]
@@ -195,7 +198,8 @@ class ReplyCatalogueTests(unittest.TestCase):
                    "resume_after_pause", "discussion_summary", "capability_boundaries",
                    "repair_misunderstanding", "constructive_compromise",
                    "fact_correction", "reproduce_bug", "progress_report",
-                   "privacy_before_publish")
+                   "privacy_before_publish", "followup_no_reply",
+                   "confirm_before_change", "prioritize_tasks")
         community = ("rules_explain", "chat_settings", "report_violations",
                      "profile_access", "pulse_navigation", "moderator_commands",
                      "private_panel", "danetka_start", "danetka_off")
