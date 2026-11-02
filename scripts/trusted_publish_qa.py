@@ -13,6 +13,7 @@ import json
 import os
 import re
 import sys
+import time
 import urllib.error
 import urllib.request
 from pathlib import Path
@@ -165,12 +166,35 @@ def _put(path: str, content: str, *, token: str, branch: str, sha: str, message:
     return value["commit"]["sha"]
 
 
-def _checks_green(sha: str, *, token: str) -> bool:
+def _checks_state(sha: str, *, token: str) -> str:
     checks = _api(f"/repos/{REPO}/commits/{sha}/check-runs?per_page=100", token=token, accept="application/vnd.github+json")
     rows = checks.get("check_runs", [])
-    if not rows:
-        return False
-    return all(row.get("status") == "completed" and row.get("conclusion") in {"success","neutral","skipped"} for row in rows)
+    required = [row for row in rows if row.get("name") == "validate"]
+    if not required:
+        return "pending"
+    if any(row.get("status") == "completed" and row.get("conclusion") not in {"success", "neutral", "skipped"} for row in rows):
+        return "failed"
+    if any(row.get("status") != "completed" for row in rows):
+        return "pending"
+    return "green" if all(row.get("conclusion") == "success" for row in required) else "failed"
+
+
+def wait_for_reviewed_checks(sha: str, *, token: str, base: str, base_sha: str, timeout_seconds: int = 1200,
+                             interval_seconds: int = 20) -> None:
+    """Wait for the PR's exact head; never approve a run against a moved base."""
+    deadline = time.monotonic() + timeout_seconds
+    while True:
+        current_base = _api(f"/repos/{REPO}/git/ref/heads/{quote(base)}", token=token)["object"]["sha"]
+        if current_base != base_sha:
+            raise PublishError("base main moved; rebase and rerun exact-head checks")
+        state = _checks_state(sha, token=token)
+        if state == "failed":
+            raise PublishError("PR opened, but exact-head checks failed")
+        if state == "green":
+            return
+        if time.monotonic() >= deadline:
+            raise PublishError("PR opened, but exact-head checks are not green before timeout")
+        time.sleep(min(interval_seconds, max(0, deadline - time.monotonic())))
 
 
 def publish(candidate: dict, *, token: str, base: str, branch: str, skip_ci: bool, merge_if_green: bool) -> str:
@@ -178,6 +202,8 @@ def publish(candidate: dict, *, token: str, base: str, branch: str, skip_ci: boo
         raise PublishError("set BK_TRUSTED_PUBLISHER=1 only in isolated maintainer environment")
     if os.getenv("BOT_TOKEN") or os.getenv("IMPULS_BOT_TOKEN"):
         raise PublishError("refusing to run beside bot runtime credentials")
+    if merge_if_green and skip_ci:
+        raise PublishError("cannot auto-merge when CI was deliberately skipped")
     path, pack_text, manifest_text, shas = prepare_changes(candidate, token=token, base=base)
     pack_sha, manifest_sha = shas.split(":")
     base_ref = _api(f"/repos/{REPO}/git/ref/heads/{quote(base)}", token=token)
@@ -191,14 +217,14 @@ def publish(candidate: dict, *, token: str, base: str, branch: str, skip_ci: boo
     head = _put("manifest.json", manifest_text, token=token, branch=branch, sha=mm["sha"], message="manifest: pin reviewed knowledge"+suffix)
     pr = _api(f"/repos/{REPO}/pulls", token=token, method="POST", data={
         "title": f"Knowledge: {candidate['record']['id']}",
-        "head": branch, "base": base, "draft": True,
+        "head": branch, "base": base, "draft": not merge_if_green,
         "body": "Reviewed qa.v1 publication candidate. Source and privacy were validated locally; exact-head checks remain authoritative.",
     })
     if merge_if_green:
-        if skip_ci:
-            raise PublishError("cannot auto-merge when CI was deliberately skipped")
-        if not _checks_green(head, token=token):
-            raise PublishError("PR opened, but checks are not green; merge refused")
+        wait_for_reviewed_checks(head, token=token, base=base, base_sha=base_sha)
+        latest = _api(f"/repos/{REPO}/pulls/{pr['number']}", token=token)
+        if latest.get("head", {}).get("sha") != head or latest.get("base", {}).get("sha") != base_sha:
+            raise PublishError("PR head or base moved after checks; merge refused")
         _api(f"/repos/{REPO}/pulls/{pr['number']}/merge", token=token, method="PUT", data={"sha":head,"merge_method":"squash"})
     return pr["html_url"]
 
