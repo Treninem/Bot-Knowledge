@@ -1,0 +1,58 @@
+"""Regression guard for public, read-only ImPULS qa.v1 help."""
+from __future__ import annotations
+import hashlib
+import json
+import re
+import unittest
+from pathlib import Path
+
+from scripts.validate_qa_v1 import validate_qa_pack
+
+ROOT = Path(__file__).resolve().parents[1]
+TARGET = "packs/ru/impuls_help_qa.json"
+
+def normalize(text):
+    return re.sub(r"[^\w]+", " ", text.casefold().replace("ё", "е")).strip()
+
+class ImpulsPublicHelpTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.raw = (ROOT / TARGET).read_bytes()
+        cls.pack = json.loads(cls.raw)
+        cls.manifest = json.loads((ROOT / "manifest.json").read_text("utf-8"))
+
+    def test_manifest_hash_and_scopes(self):
+        item = next(entry for entry in self.manifest["packs"] if entry["path"] == TARGET)
+        self.assertEqual(item["sha256"], hashlib.sha256(self.raw).hexdigest())
+        self.assertEqual(validate_qa_pack(self.pack), len(self.pack["records"]))
+        catalog = self.pack["catalog"]
+        self.assertEqual(catalog["adapter"], "qa.v1")
+        self.assertEqual(catalog["audiences"], ["impuls"])
+        self.assertEqual(catalog["constraints"], {
+            "read_only": True, "requires_direct_address": True, "no_personal_data": True})
+        self.assertEqual(catalog["contexts"], ["direct", "private", "group_addressed"])
+
+    def test_unique_question_and_reply_text(self):
+        rows = self.pack["records"]
+        self.assertGreaterEqual(len(rows), 79)
+        self.assertEqual(len(rows), len({x["id"] for x in rows}))
+        self.assertEqual(len(rows), len({normalize(x["question"]) for x in rows}))
+        seen = set()
+        for row in rows:
+            self.assertEqual(row.get("audiences", ["impuls"]), ["impuls"])
+            self.assertEqual(row.get("contexts", ["direct"]), ["direct", "private", "group_addressed"])
+            self.assertNotIn("action", row)
+            self.assertNotIn("auto_apply", row)
+            for reply in [row["answer"], *row.get("variants", [])]:
+                self.assertNotIn(normalize(reply), seen)
+                seen.add(normalize(reply))
+
+    def test_critical_new_questions(self):
+        ids = {r["id"] for r in self.pack["records"]}
+        self.assertTrue({"chat_selection","quoted_setting","training_revocation",
+                         "game_start_diagnosis","moderation_false_alarm",
+                         "bot_publication_rights","feature_not_live",
+                         "respect_privacy_examples","explain_previous_step"} <= ids)
+
+if __name__ == "__main__":
+    unittest.main()
