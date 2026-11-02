@@ -296,5 +296,20 @@ class ImpulsPublicHelpTests(unittest.TestCase):
                 self.assertLess(len(candidate & other) / max(1, len(candidate | other)), 0.68)
 
 
+
+    def test_group_inline_button_qa_public_sources(self):
+        expected = ["inline_group_visibility","inline_click_not_post","inline_press_owner","inline_private_notice","inline_wait_spinner","inline_payload_bytes","inline_payload_not_private","inline_edit_shared_message","inline_markup_only","board_one_post","mines_hidden_map","board_split_private_public","board_locked_cell","board_move_receipt","board_stale_client_view","board_previous_round_click","board_restart_persistence","board_forum_topic","board_private_chat_optional","inline_vs_reply_keyboard","board_field_size_ux","board_spectator_click","board_join_confirm","board_client_order","board_private_error_different","board_hint_notification","board_mobile_dense_controls","board_accessible_text"]
+        recs = {r["id"]: r for r in self.pack["records"]}
+        self.assertTrue(set(expected) <= recs.keys())
+        self.assertGreaterEqual(len(recs), 346)
+        self.assertGreaterEqual(sum(1 + len(r.get("variants", [])) for r in recs.values()), 1013)
+        for key in expected:
+            row = recs[key]
+            self.assertEqual(row["audiences"], ["impuls"])
+            self.assertEqual(row["contexts"], ["direct", "private", "group_addressed"])
+            self.assertEqual(row["language"], "ru")
+            self.assertEqual(row["source"], "https://core.telegram.org/bots/api")
+            self.assertEqual(len(row["variants"]), 2)
+
 if __name__ == "__main__":
     unittest.main()
