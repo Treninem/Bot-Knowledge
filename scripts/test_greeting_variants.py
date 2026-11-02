@@ -17,7 +17,7 @@ def read(path: str):
     return json.loads((ROOT / path).read_text(encoding="utf-8"))
 
 def normal(text: str) -> str:
-    return re.sub(r"[\\W_]+", "", text.casefold().replace("ё", "е"))
+    return re.sub(r"[\W_]+", "", text.casefold().replace("ё", "е"))
 
 def walk_strings(value):
     if isinstance(value, str):
@@ -39,8 +39,9 @@ def main() -> int:
     assert pack["schema_version"] == 1 and pack["language"] == "ru"
     assert pack["pack_version"] == manifest["knowledge_version"], "cache version must change with pack"
     replies = pack["reactions"]["greeting"]
-    assert len(replies) == 22, "expected first increment: 2 existing + 20 new"
+    assert 22 <= len(replies) <= 100, "expected at least first verified batch, no overflow"
     assert tuple(replies[:2]) == BASE_ANSWERS, "do not rewrite legacy consumer replies"
+    assert normal("Привет?!") == normal("п р и в е т"), "normalizer must ignore punctuation and spacing"
     normalized = [normal(x) for x in replies]
     assert len(normalized) == len(set(normalized)), "duplicate greeting responses"
     assert all(isinstance(x, str) and 15 <= len(x) <= 180 for x in replies)
@@ -55,7 +56,7 @@ def main() -> int:
     intents = read("packs/ru/intents.json")["intents"]
     greeting = [x for x in intents if x["id"] == "greeting"]
     assert len(greeting) == 1 and "привет" in greeting[0]["examples"]
-    print("PASS greeting replies: +20, 22/100; no normalized/cross-pack duplicates; SHA/version and intent OK")
+    print(f"PASS greeting replies: {len(replies)}/100; no normalized/cross-pack duplicates; SHA/version and intent OK")
     return 0
 
 if __name__ == "__main__":
