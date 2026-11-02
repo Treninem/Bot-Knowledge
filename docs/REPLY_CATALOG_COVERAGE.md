@@ -6,8 +6,8 @@ This candidate adds a **new, separate** SHA-pinned pack. It does not rewrite the
 
 ## Measured coverage
 
-**97 distinct canonical questions, 9700 authored answers, 27 packs total**.
-All 95 earlier questions remain complete at 100/100; there are no partial sets in this snapshot. These are reply
+**99 distinct canonical questions, 9900 authored answers, 27 packs total**.
+All 97 earlier questions remain complete at 100/100; there are no partial sets in this snapshot. These are reply
 variants, not 443 trained model skills or new executable ImPULS commands.
 
 | Question / intent | Count / 100 | Audience |
@@ -111,6 +111,8 @@ variants, not 443 trained model skills or new executable ImPULS commands.
 | Что делать с большим объёмом информации? (`handle_info_overload`) | 100 | all AI bots |
 | Каких условий не хватает для задачи? (`spot_missing_constraints`) | 100 | all AI bots |
 | Как выйти из ложной дилеммы? (`false_dilemma`) | 100 | all AI bots |
+| Как вернуться к незаконченной задаче? (`recover_task_context`) | 100 | all AI bots |
+| Как отличить причину от совпадения? (`causality_check`) | 100 | all AI bots |
 ## Source and factual limits
 
 The eight ImPULS-specific question sets are abstract user-facing help, grounded
@@ -357,3 +359,7 @@ Only generic conversation/data-triage examples; no private messages, PII, secret
 ## 2026-11-02 task boundaries and false-dilemma reasoning v2026.11.02.34
 
 Base own PR branch `ac76230f11a4cbc231a459c5af225df1a83e8a5e`: 95 sets / 9500 replies (including 200 proposed in PR #66, not yet counted in main). Two new general RU canonical questions: `spot_missing_constraints` (goal, audience, deadlines, resources, inputs, format, quality, permissions, dependencies, ambiguities) and `false_dilemma` (extreme choices, speed/quality, cost, relationships, work, community, technology, safety, uncertainty, implementation). Exactly 200 manually authored candidates in 20 guarded context groups. After normalized and indexed 3-gram Jaccard duplicate filtering: **+200 accepted new**; 0 rejected near/exact candidates. Per question `spot_missing_constraints` 100/100, 0 remaining; `false_dilemma` 100/100, 0 remaining. Proposal totals **97 sets / 9700 replies**, preserving all prior 9500. Max observed Jaccard 0.333 before filtering; no retained pair >=0.58. This heuristic is not comprehensive human semantic QA. UTF-8 pack SHA-256 `00d4c0808cef90458b2344fd2fd4efbb36b13b3d7850587edeb3ba9220bd4dbf`; manifest/cache `2026.11.02.34`. Zero ImPULS changes, real chats, personal identifiers, sanctions, new consumer abilities or deployment. Check full exact-head CI and post-main before merge. Follow-up: complete any partial set, then `recover_task_context`.
+
+## 2026-11-02 returning to work and checking causal claims v2026.11.02.35
+
+Previous candidate branch `ace9944c84071a50c98dca7174aa7ad837615487` had 97 sets / 9700 replies (PR #66; not main). Two new independent general RU questions: `recover_task_context` covers interrupted work, stale requirements, team concurrency, tooling, missing notes, dependencies and accurate status; `causality_check` covers time order, reverse causation, confounders, anecdotes, statistics, software symptoms, social inference, promotion, rules and safe tests. Each contains ten guarded contexts and ten manually authored candidates, **200 accepted new responses**, 0 duplicates rejected by exact/3-gram Jaccard ≥0.58. Now **99 questions / 9900 answers** in PR; per-set `recover_task_context` 100/100 (remaining 0); `causality_check` 100/100 (remaining 0). Previous 9700 unchanged. Highest observed prefilter Jaccard 0.182; heuristic does not prove semantic correctness. SHA-256 actual UTF-8 content `5e8b30d4c346fe052f3f8706002e76e14df7872748c09f56bafdd0e0655af670`, manifest/cache version `2026.11.02.35`. No private messages, unverified ImPULS details, credentials, sanctions, deployment or untested consumer claims. Exact-head and post-main CI gates remain required.
