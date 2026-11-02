@@ -28,6 +28,49 @@ def candidate():
     }
 
 
+class QAPinnedPublicSourceTests(unittest.TestCase):
+    """Only canonical public commit SHAs are exempt from phone-like digit scans."""
+
+    @staticmethod
+    def functions():
+        try:
+            from scripts.validate_qa_v1 import _url, _data
+        except ModuleNotFoundError:
+            from validate_qa_v1 import _url, _data
+        return _url, _data
+
+    def test_valid_pinned_public_qa_source(self):
+        url, walk = self.functions()
+        source = (
+            "https://github.com/Treninem/Bot-Knowledge/blob/"
+            "e14123a7756803437f51dc8ab946351e063899a8/docs/REQUIREMENTS_21.md"
+        )
+        self.assertEqual(url(source), source)
+        walk({"records": [{"source": source, "answer": "Проверенный синтетический пример."}]})
+
+    def test_block_numeric_only_revision_and_unrelated_long_numbers(self):
+        url, walk = self.functions()
+        base = "https://github.com/Treninem/Bot-Knowledge/blob/"
+        for source in (
+            base + "1234567890123456789012345678901234567890/docs/REQUIREMENTS_21.md",
+            base + "e14123a7756803437f51dc8ab946351e063899a8/docs/1234567890123.txt",
+            "https://example.org/docs/1234567890123.txt",
+            base + "main/docs/1234567890123.txt",
+            base + "e14123a7756803437f51dc8ab946351e063899a8/docs/POLICY.md?x=1234",
+            base + "e14123a7756803437f51dc8ab946351e063899a8/docs/POLICY.md#private",
+        ):
+            with self.subTest(source=source), self.assertRaises(ValueError):
+                url(source)
+            with self.subTest(source=source), self.assertRaises(ValueError):
+                walk({"source": source})
+
+    def test_free_text_still_rejects_contact_or_secret(self):
+        _, walk = self.functions()
+        for snippet in ("Позвони 1234567890123.", "token=not-a-credential", "@realusername"):
+            with self.subTest(text=snippet), self.assertRaises(ValueError):
+                walk({"answer": snippet})
+
+
 class PublisherValidationTests(unittest.TestCase):
     def test_accepts_reviewed_qa(self):
         path, record, version = validate_payload(candidate())

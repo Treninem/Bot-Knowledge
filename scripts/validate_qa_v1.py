@@ -27,6 +27,10 @@ FORBIDDEN = frozenset({
     "username", "phone", "email", "token", "cookie", "password", "secret", "first_name",
     "last_name", "raw_message", "raw_chat", "chat_history", "private_quote",
 })
+GITHUB_REV_SOURCE = re.compile(
+    r"^/Treninem/Bot-Knowledge/blob/([0-9a-f]{40})/[A-Za-z0-9._/-]+$",
+    re.IGNORECASE,
+)
 PRIVATE_MARKERS = re.compile(
     r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b|(?<!\w)@[A-Za-z0-9_]{4,}|"
     r"(?<!\d)\d{10,}(?!\d)|\b(?:token|password|secret|api[_-]?key|пароль|токен)\s*[:=]",
@@ -57,7 +61,16 @@ def _url(value) -> str:
     if (parsed.scheme != "https" or not parsed.hostname or parsed.username or parsed.password
             or any(char in value for char in "<>\"'\\") or any(char.isspace() for char in value)):
         raise ValueError("invalid_source_url")
-    if PRIVATE_MARKERS.search(value) or parsed.query or parsed.fragment:
+    # GitHub's immutable 40-hex revision segment is a public content
+    # identifier, not a telephone number. Mask ONLY this exact segment on
+    # the canonical public BK source URL before screening for private data.
+    # Other long numbers in paths, query strings and arbitrary hosts remain
+    # blocked. A decimal-only segment is deliberately not whitelisted.
+    screened = value
+    match = GITHUB_REV_SOURCE.fullmatch(parsed.path) if parsed.hostname.lower() == "github.com" else None
+    if match and re.search(r"[a-f]", match.group(1), re.IGNORECASE):
+        screened = value.replace("/blob/" + match.group(1) + "/", "/blob/REVISION/", 1)
+    if PRIVATE_MARKERS.search(screened) or parsed.query or parsed.fragment:
         raise ValueError("source_must_be_public_without_personal_or_secret_query_data")
     return value
 
@@ -77,10 +90,10 @@ def _data(value, depth: int = 0, *, url_field: bool = False) -> None:
             _data(child, depth + 1)
     elif isinstance(value, str):
         _text(value, 5000, required=False)
-        if PRIVATE_MARKERS.search(value):
-            raise ValueError("potential_private_data_or_secret")
         if url_field:
             _url(value)
+        elif PRIVATE_MARKERS.search(value):
+            raise ValueError("potential_private_data_or_secret")
     elif isinstance(value, float) and not math.isfinite(value):
         raise ValueError("non_finite_number")
     elif value is not None and not isinstance(value, (bool, int, float)):
