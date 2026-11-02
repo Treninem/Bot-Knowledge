@@ -6,8 +6,8 @@ This candidate adds a **new, separate** SHA-pinned pack. It does not rewrite the
 
 ## Measured coverage
 
-**39 distinct canonical questions, 3165 authored answers, 26 packs total**.
-Thirty questions are complete at 100/100, and 9 remain partial. These are reply
+**47 distinct canonical questions, 3325 authored answers, 26 packs total**.
+Thirty questions are complete at 100/100, and 17 remain partial. These are reply
 variants, not 443 trained model skills or new executable ImPULS commands.
 
 | Question / intent | Count / 100 | Audience |
@@ -51,6 +51,14 @@ variants, not 443 trained model skills or new executable ImPULS commands.
 | Разбор возможного нарушения (`moderation_reasoning`) | 100 | chat moderators only |
 | Оригинальная короткая история (`micro_story`) | 100 | all AI bots |
 | Разбор противоречивой ситуации (`critical_analysis`) | 100 | all AI bots |
+| С чего начать пользоваться ImPULS? (`impuls_first_steps`) | 20 | community bots only |
+| Как задать ImPULS обычный вопрос? (`impuls_ask_ai`) | 20 | community bots only |
+| Почему ImPULS не отвечает на вопрос? (`impuls_ai_no_reply`) | 20 | community bots only |
+| Где посмотреть, как играть в игры ImPULS? (`impuls_game_help`) | 20 | community bots only |
+| Чем вопрос ImPULS отличается от команды? (`impuls_command_context`) | 20 | community bots only |
+| Может ли ImPULS переносить правила между чатами? (`impuls_chat_isolation`) | 20 | community bots only |
+| Как посмотреть версию и изменения ImPULS? (`impuls_release_info`) | 20 | community bots only |
+| Как понять, какие права у меня есть в ImPULS? (`impuls_check_permissions`) | 20 | community bots only |
 
 ## Source and factual limits
 
@@ -198,3 +206,7 @@ Added **200 further authored answers across two completed new intents**: `chat_a
 ## 2026-11-02 short creative stories and structured reasoning (2026.11.02.13)
 
 New completed intents: `micro_story` **100 original two-sentence miniature stories** across ten genres, and `critical_analysis` **100 context-scoped reasoning responses** across ten analytical stages. This adds +200 more, bringing this PR to **1000 newly authored, distinct synthetic replies across ten completed questions**, catalogue **3165 total** across **39 canonical questions** (30 at 100/100, 9 existing partial). No old reply overwritten, no private data, source-code claims, live moderation powers or deployment. Version/cache identity and source-byte SHA recomputed. Semantic near-duplicate review and exact-head CI still required.
+
+## 2026-11-02 newly verified ImPULS-oriented help topics (2026.11.02.14)
+
+Added **8 new canonical ImPULS FAQs with 20 original, audience-limited, context-scoped replies each** (+160). Their 80-response remainder per question is explicitly unfinished; 47 questions / 3325 catalogue replies overall, 30 complete and 17 partial. Source reference: read-only `Treninem/Impuls` main `95dcb0fc0773f970e162a6009a4d889e880a2d0e`, user-facing `README.md` and `docs/COMMANDS_MATRIX_V30.md`. Grounded subjects: starting with group/DM commands, asking AI questions, diagnosing silence, games help, questions vs explicit commands, per-chat isolation, release navigation, checking roles. User-facing documentation describes candidate features, not verified live BotHost behavior. No private source text, identities, tokens, or undocumented settings were copied. These community-only variants cannot be served by a generic AI audience and require local verified permission and explicit caller context. In this PR total newly authored replies **1160** across 18 new questions, ten at 100/100, eight at 20/100; pre-existing nine partial sets were not modified because overlapping extension work remains open.
