@@ -105,9 +105,12 @@ class ReplyCatalog:
                 amount += len(replies)
             if amount > 100:
                 raise ValueError("More than 100 replies per canonical question")
-            self._sets[name] = (tuple(audiences), prepared)
+            default_group = record.get('default_group')
+            if default_group is not None and default_group not in prepared:
+                raise ValueError('Unknown default response group')
+            self._sets[name] = (tuple(audiences), prepared, default_group)
         self.coverage = {name: sum(len(v) for v in groups.values())
-                         for name, (_, groups) in self._sets.items()}
+                         for name, (_, groups, _) in self._sets.items()}
         self.snapshot_key = (manifest["knowledge_version"], digest)
 
     @staticmethod
@@ -143,15 +146,18 @@ class ReplyCatalog:
         item = self._sets.get(intent)
         if item is None:
             return self._reject("unknown_intent")
-        audiences, groups = item
+        audiences, groups, default_group = item
         if audience not in audiences and "all_ai_bots" not in audiences:
             return self._reject("wrong_audience")
         if intent in HUMOR_INTENTS and not humor_allowed:
             return self._reject("humor_not_authorized")
         if group is None:
-            if len(groups) != 1:
+            if default_group is not None:
+                group = default_group
+            elif len(groups) == 1:
+                group = next(iter(groups))
+            else:
                 return self._reject("group_required")
-            group = next(iter(groups))
         if group not in groups:
             return self._reject("wrong_group")
         seen = {normalized(s) for s in recent}

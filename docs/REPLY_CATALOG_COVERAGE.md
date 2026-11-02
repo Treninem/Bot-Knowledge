@@ -6,29 +6,29 @@ This candidate adds a **new, separate** SHA-pinned pack. It does not rewrite the
 
 ## Measured coverage
 
-**25 distinct canonical questions, 883 authored answers, 26 packs total**.
-Seven questions are complete at 100/100, and 18 remain partial. These are reply
+**25 distinct canonical questions, 1587 authored answers, 26 packs total**.
+Fifteen questions are complete at 100/100, and 10 remain partial. These are reply
 variants, not 443 trained model skills or new executable ImPULS commands.
 
 | Question / intent | Count / 100 | Audience |
 |---|---:|---|
 | О чём поговорим? (`what_discuss`) | 100 | all AI bots |
 | Пошути (`tell_joke`) | 100 | all AI bots, explicit humor opt-in |
-| Спасибо (`thanks_reply`) | 12 | all AI bots |
-| Пока (`farewell_reply`) | 12 | all AI bots |
+| Спасибо (`thanks_reply`) | 100 | all AI bots |
+| Пока (`farewell_reply`) | 100 | all AI bots |
 | Не понял (`explain_again`) | 100 | all AI bots |
-| Я не согласен (`disagreement_reply`) | 12 | all AI bots |
-| Мне тяжело (`need_support`) | 12 | all AI bots |
+| Я не согласен (`disagreement_reply`) | 100 | all AI bots |
+| Мне тяжело (`need_support`) | 100 | all AI bots |
 | Мне скучно (`bored`) | 100 | all AI bots |
 | Помоги выбрать (`need_decision`) | 100 | all AI bots |
 | Ответить на грубость (`boundaries`) | 100 | all AI bots |
 | Подкинь идею (`idea_request`) | 100 | all AI bots |
-| Помоги извиниться (`apology_help`) | 12 | all AI bots |
-| Помнишь прошлый разговор? (`lost_context`) | 12 | all AI bots |
-| Сменим тему (`change_topic`) | 12 | all AI bots |
+| Помоги извиниться (`apology_help`) | 100 | all AI bots |
+| Помнишь прошлый разговор? (`lost_context`) | 100 | all AI bots |
+| Сменим тему (`change_topic`) | 100 | all AI bots |
 | Чёрный юмор (`dark_humor`) | 12 | all AI bots, explicit humor opt-in |
 | Объясни правила (`rules_explain`) | 12 | community bots only |
-| Ты уверен? (`no_sure`) | 12 | all AI bots |
+| Ты уверен? (`no_sure`) | 100 | all AI bots |
 | Где настройки ImPULS? (`chat_settings`) | 9 | community bots only |
 | Как пожаловаться? (`report_violations`) | 9 | community bots only |
 | Где мой профиль? (`profile_access`) | 6 | community bots only |
@@ -81,16 +81,14 @@ mutes, permissions or other actions.
 
 ## Integrity and verification
 
-The manifest version is `2026.11.02.3`. The new package SHA-256 is
-`dcf8658c802ee0d525c52721725742e3281e6084354b0a1830812b4af53b9784`.
-Source bytes are 158,706 UTF-8 bytes; all 26 packs must be present and SHA-valid.
+The manifest version is `2026.11.02.6`. The package is pinned by the current manifest SHA-256; size and digest must be checked from actual bytes; all 26 packs must be present and SHA-valid.
 The selector's cache identity is `(knowledge_version, pack_sha256)`; it
 does not change any running bot's cache.
 
 `python scripts/validate_pack.py`,
 `python scripts/test_reply_catalog.py --repository -v`, and the separate
 exact-head workflow must complete on the actual PR head SHA before merge.
-Test requirements cover all 883 reachable responses, normalized duplicates,
+Test requirements cover all 1587 reachable responses, normalized duplicates,
 cross-pack exact matches, 100/100 completeness, opt-in, audience isolation,
 refusal conditions, repeat suppression and tampered SHA/cache snapshots.
 A review of semantic similarity remains necessary: an exact-string test cannot
@@ -102,8 +100,7 @@ cycle. Candidate-only values must not be reported as shipped to ImPULS.
 
 ## Next unfinished questions
 
-First extend `thanks_reply`, `farewell_reply`, `disagreement_reply`,
-`need_support`, `apology_help` and `lost_context` with useful,
+First extend `dark_humor` and reviewed community-specific help with useful,
 context-distinct answers, then deepen the fact-checked ImPULS FAQ. Count
 existing entries and active PR variants before writing. Aim for 100 each,
 but do not pad with repeated paraphrases or invented functionality.
@@ -118,3 +115,17 @@ cumulative catalogue: **883**, full sets: **7**, partial sets: **18**.
 These are language examples, not operational moderation authority. The new
 context groups require explicit caller selection; do not infer sensitive or
 technical permissions from text. Every prior reply remains in place.
+
+## 2026-11-02 contextual batch 2026.11.02.4
+
+Three partial questions (`thanks_reply`, `farewell_reply`, `disagreement_reply`) received 8 distinct guarded groups and 88 original synthetic replies each. Total **+264** (883 -> **1587**). Each moved from 12/100 to 100/100; ten completed sets in main after verified merge. The original 12-item group remains the safe default via an explicit `default_group`, while additional groups require caller-known context. The opt-in selector remains read-only and its SHA/version snapshot changes. Consumer integration, live rollout and repeat policies are unverified.
+
+## 2026-11-02 additional batch 2026.11.02.5
+
+Three further unfinished question sets gained 8 guarded groups and 88 original examples each: `change_topic`, `no_sure`, `apology_help`. Added **264** further replies (1147 → 1587), for **528** additions in this PR relative to its initial main. Three more intents reached 100/100; **13 complete** and **12 partial** remain. All original replies are retained. `default_group` keeps existing short response behavior when the caller omits the group; contextual alternatives require a deliberate choice. Claims about ImPULS functionality were not added in this batch.
+
+Integrity fix: an exact normalized reply collided with `dialogue.json`/`skills.json` and was replaced with a substantively distinct phrase before merge. This was detected by the real exact-head workflow; the earlier failure is not claimed as a pass.
+
+## 2026-11-02 additional batch 2026.11.02.6
+
+`need_support` and `lost_context` gained 8 carefully scoped groups each, **176** new original synthetic replies total (1411 → 1587). Both reached 100/100 with no claim of access to unavailable chat history, and no replacement for crisis interventions. Existing defaults remain available; other groups require local context. This brings the PR total to **704 new replies** vs its base main, **15 full** and **10 partial** sets. Sensitive contexts continue to abstain. All totals are pre-merge until actual CI and GitHub merge are confirmed.
