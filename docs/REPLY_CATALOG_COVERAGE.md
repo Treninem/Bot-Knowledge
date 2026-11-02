@@ -6,8 +6,8 @@ This candidate adds a **new, separate** SHA-pinned pack. It does not rewrite the
 
 ## Measured coverage
 
-**93 distinct canonical questions, 9300 authored answers, 27 packs total**.
-All 93 questions are complete at 100/100; there are no partial sets in this snapshot. These are reply
+**99 distinct canonical questions, 9900 authored answers, 27 packs total**.
+All 97 earlier questions remain complete at 100/100; there are no partial sets in this snapshot. These are reply
 variants, not 443 trained model skills or new executable ImPULS commands.
 
 | Question / intent | Count / 100 | Audience |
@@ -107,6 +107,12 @@ variants, not 443 trained model skills or new executable ImPULS commands.
 | Как уважительно принять чужой отказ? (`respect_refusal`) | 100 | all AI bots |
 | Что делать с непроверенным слухом? (`rumor_handling`) | 100 | all AI bots |
 | Как похвалить человека искренне, без лести? (`sincere_praise`) | 100 | all AI bots |
+| Как попросить паузу в разговоре? (`pause_conversation`) | 100 | all AI bots |
+| Что делать с большим объёмом информации? (`handle_info_overload`) | 100 | all AI bots |
+| Каких условий не хватает для задачи? (`spot_missing_constraints`) | 100 | all AI bots |
+| Как выйти из ложной дилеммы? (`false_dilemma`) | 100 | all AI bots |
+| Как вернуться к незаконченной задаче? (`recover_task_context`) | 100 | all AI bots |
+| Как отличить причину от совпадения? (`causality_check`) | 100 | all AI bots |
 ## Source and factual limits
 
 The eight ImPULS-specific question sets are abstract user-facing help, grounded
@@ -343,3 +349,17 @@ Fresh main `93a0c42655e2dda4ac4c3e4209a9fcbfe79c93e2`: 89 canonical questions / 
 ## 2026-11-02 rumor checking and sincere encouragement v2026.11.02.32
 
 Verified base main `3f295fae95dec8ecbfcb8fab2ac4799cd27a4027` contained 91 complete synthetic RU question sets / 9100 answers. Original new intents: `rumor_handling` (unverified headlines, reputation, groups, screenshots, numerical claims, safety, business, private information and corrections) and `sincere_praise` (specific achievement, effort, learning, creativity, teamwork, support, boundaries, small improvements, group recognition and avoiding manipulation). Each 10 guarded topical groups with 10 distinct authored texts. **+200 candidate responses**, 93 questions / 9300 replies, all 93/93 at 100/100, zero partial; old 9100 kept. Normalized global duplicates 0, candidate 3-gram Jaccard ≥0.58 count 0, maximum 0.188. Synthetic general wording only, no private transcripts, identified individuals, sanctions, new ImPULS features or consumer rollout. Exact UTF-8 pack SHA-256 `05b415a5b293aded4fea651caf7f6e16ee6e7284498a1f5342d9773b5a1030d4`, cache/manifest version `2026.11.02.32`. Exact-head CI and post-main gate still required.
+
+## 2026-11-02 guarded conversation pause and information triage v2026.11.02.33
+
+Verified baseline `6ca40c69a8ae69fcd239bc3a58a5cdaf9cd5f270` had 93 sets / 9300 answers. Two new original synthetic all-AI RU questions: `pause_conversation` and `handle_info_overload`, each with 10 independent context groups and explicit when/avoid guards. Authored 200 candidate replies; normalized and 3-word Jaccard screening (threshold 0.58) rejected 0 duplicates/near matches. **Accepted exactly 200 new-to-main candidate replies**. Proposed 95 sets / 9500 total answers, current progress: `pause_conversation` 100/100 (remaining 0); `handle_info_overload` 100/100 (remaining 0). Old 9300 retained intact. Max observed 3-gram Jaccard 0.200 before rejected candidates, no retained near pair >=0.58. This is a heuristic, not proof of full semantic distinctness.
+
+Only generic conversation/data-triage examples; no private messages, PII, secrets, new ImPULS commands or roles, sanctions, executable actions or live rollout. Pack actual UTF-8 SHA-256 `1ca3ace37ff4940a7e339d54d3e92c1118b587b502739c58acb12ab93d523f58`, manifest/cache version `2026.11.02.33`. Require actual exact-head CI and post-main CI before publication. Finish incomplete sets first in next pass, then proceed to `spot_missing_constraints`.
+
+## 2026-11-02 task boundaries and false-dilemma reasoning v2026.11.02.34
+
+Base own PR branch `ac76230f11a4cbc231a459c5af225df1a83e8a5e`: 95 sets / 9500 replies (including 200 proposed in PR #66, not yet counted in main). Two new general RU canonical questions: `spot_missing_constraints` (goal, audience, deadlines, resources, inputs, format, quality, permissions, dependencies, ambiguities) and `false_dilemma` (extreme choices, speed/quality, cost, relationships, work, community, technology, safety, uncertainty, implementation). Exactly 200 manually authored candidates in 20 guarded context groups. After normalized and indexed 3-gram Jaccard duplicate filtering: **+200 accepted new**; 0 rejected near/exact candidates. Per question `spot_missing_constraints` 100/100, 0 remaining; `false_dilemma` 100/100, 0 remaining. Proposal totals **97 sets / 9700 replies**, preserving all prior 9500. Max observed Jaccard 0.333 before filtering; no retained pair >=0.58. This heuristic is not comprehensive human semantic QA. UTF-8 pack SHA-256 `00d4c0808cef90458b2344fd2fd4efbb36b13b3d7850587edeb3ba9220bd4dbf`; manifest/cache `2026.11.02.34`. Zero ImPULS changes, real chats, personal identifiers, sanctions, new consumer abilities or deployment. Check full exact-head CI and post-main before merge. Follow-up: complete any partial set, then `recover_task_context`.
+
+## 2026-11-02 returning to work and checking causal claims v2026.11.02.35
+
+Previous candidate branch `ace9944c84071a50c98dca7174aa7ad837615487` had 97 sets / 9700 replies (PR #66; not main). Two new independent general RU questions: `recover_task_context` covers interrupted work, stale requirements, team concurrency, tooling, missing notes, dependencies and accurate status; `causality_check` covers time order, reverse causation, confounders, anecdotes, statistics, software symptoms, social inference, promotion, rules and safe tests. Each contains ten guarded contexts and ten manually authored candidates, **200 accepted new responses**, 0 duplicates rejected by exact/3-gram Jaccard ≥0.58. Now **99 questions / 9900 answers** in PR; per-set `recover_task_context` 100/100 (remaining 0); `causality_check` 100/100 (remaining 0). Previous 9700 unchanged. Highest observed prefilter Jaccard 0.182; heuristic does not prove semantic correctness. SHA-256 actual UTF-8 content `5e8b30d4c346fe052f3f8706002e76e14df7872748c09f56bafdd0e0655af670`, manifest/cache version `2026.11.02.35`. No private messages, unverified ImPULS details, credentials, sanctions, deployment or untested consumer claims. Exact-head and post-main CI gates remain required.
