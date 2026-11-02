@@ -6,8 +6,8 @@ This candidate adds a **new, separate** SHA-pinned pack. It does not rewrite the
 
 ## Measured coverage
 
-**93 distinct canonical questions, 9300 authored answers, 27 packs total**.
-All 93 questions are complete at 100/100; there are no partial sets in this snapshot. These are reply
+**95 distinct canonical questions, 9500 authored answers, 27 packs total**.
+All 93 former questions remain complete at 100/100; there are no partial sets in this snapshot. These are reply
 variants, not 443 trained model skills or new executable ImPULS commands.
 
 | Question / intent | Count / 100 | Audience |
@@ -343,3 +343,9 @@ Fresh main `93a0c42655e2dda4ac4c3e4209a9fcbfe79c93e2`: 89 canonical questions / 
 ## 2026-11-02 rumor checking and sincere encouragement v2026.11.02.32
 
 Verified base main `3f295fae95dec8ecbfcb8fab2ac4799cd27a4027` contained 91 complete synthetic RU question sets / 9100 answers. Original new intents: `rumor_handling` (unverified headlines, reputation, groups, screenshots, numerical claims, safety, business, private information and corrections) and `sincere_praise` (specific achievement, effort, learning, creativity, teamwork, support, boundaries, small improvements, group recognition and avoiding manipulation). Each 10 guarded topical groups with 10 distinct authored texts. **+200 candidate responses**, 93 questions / 9300 replies, all 93/93 at 100/100, zero partial; old 9100 kept. Normalized global duplicates 0, candidate 3-gram Jaccard ≥0.58 count 0, maximum 0.188. Synthetic general wording only, no private transcripts, identified individuals, sanctions, new ImPULS features or consumer rollout. Exact UTF-8 pack SHA-256 `05b415a5b293aded4fea651caf7f6e16ee6e7284498a1f5342d9773b5a1030d4`, cache/manifest version `2026.11.02.32`. Exact-head CI and post-main gate still required.
+
+## 2026-11-02 guarded conversation pause and information triage v2026.11.02.33
+
+Verified baseline `6ca40c69a8ae69fcd239bc3a58a5cdaf9cd5f270` had 93 sets / 9300 answers. Two new original synthetic all-AI RU questions: `pause_conversation` and `handle_info_overload`, each with 10 independent context groups and explicit when/avoid guards. Authored 200 candidate replies; normalized and 3-word Jaccard screening (threshold 0.58) rejected 0 duplicates/near matches. **Accepted exactly 200 new-to-main candidate replies**. Proposed 95 sets / 9500 total answers, current progress: `pause_conversation` 100/100 (remaining 0); `handle_info_overload` 100/100 (remaining 0). Old 9300 retained intact. Max observed 3-gram Jaccard 0.200 before rejected candidates, no retained near pair >=0.58. This is a heuristic, not proof of full semantic distinctness.
+
+Only generic conversation/data-triage examples; no private messages, PII, secrets, new ImPULS commands or roles, sanctions, executable actions or live rollout. Pack actual UTF-8 SHA-256 `1ca3ace37ff4940a7e339d54d3e92c1118b587b502739c58acb12ab93d523f58`, manifest/cache version `2026.11.02.33`. Require actual exact-head CI and post-main CI before publication. Finish incomplete sets first in next pass, then proceed to `spot_missing_constraints`.
