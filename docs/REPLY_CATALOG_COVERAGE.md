@@ -6,8 +6,8 @@ This candidate adds a **new, separate** SHA-pinned pack. It does not rewrite the
 
 ## Measured coverage
 
-**27 distinct canonical questions, 1875 authored answers, 26 packs total**.
-Eighteen questions are complete at 100/100, and 9 remain partial. These are reply
+**29 distinct canonical questions, 2165 authored answers, 26 packs total**.
+Twenty questions are complete at 100/100, and 9 remain partial. These are reply
 variants, not 443 trained model skills or new executable ImPULS commands.
 
 | Question / intent | Count / 100 | Audience |
@@ -27,18 +27,20 @@ variants, not 443 trained model skills or new executable ImPULS commands.
 | Помнишь прошлый разговор? (`lost_context`) | 100 | all AI bots |
 | Сменим тему (`change_topic`) | 100 | all AI bots |
 | Чёрный юмор (`dark_humor`) | 100 | all AI bots, explicit humor opt-in |
-| Объясни правила (`rules_explain`) | 12 | community bots only |
+| Объясни правила (`rules_explain`) | 22 | community bots only |
 | Ты уверен? (`no_sure`) | 100 | all AI bots |
-| Где настройки ImPULS? (`chat_settings`) | 9 | community bots only |
-| Как пожаловаться? (`report_violations`) | 9 | community bots only |
-| Где мой профиль? (`profile_access`) | 6 | community bots only |
-| Где Пульсы? (`pulse_navigation`) | 6 | community bots only |
-| Команды модератора (`moderator_commands`) | 9 | community bots only |
-| Открыть панель (`private_panel`) | 6 | community bots only |
-| Запустить Данетки (`danetka_start`) | 9 | community bots only |
-| Отключить Данетки (`danetka_off`) | 9 | community bots only |
+| Где настройки ImPULS? (`chat_settings`) | 19 | community bots only |
+| Как пожаловаться? (`report_violations`) | 19 | community bots only |
+| Где мой профиль? (`profile_access`) | 16 | community bots only |
+| Где Пульсы? (`pulse_navigation`) | 16 | community bots only |
+| Команды модератора (`moderator_commands`) | 19 | community bots only |
+| Открыть панель (`private_panel`) | 16 | community bots only |
+| Запустить Данетки (`danetka_start`) | 19 | community bots only |
+| Отключить Данетки (`danetka_off`) | 19 | community bots only |
 | Подколи по-доброму (`friendly_tease`) | 100 | all AI bots, explicit humor opt-in |
 | Поддержать разговор (`conversation_followup`) | 100 | all AI bots |
+| Почему это не работает? (`diagnose_problem`) | 100 | all AI bots |
+| Как проверить достоверность? (`verify_claim`) | 100 | all AI bots |
 
 ## Source and factual limits
 
@@ -83,14 +85,14 @@ mutes, permissions or other actions.
 
 ## Integrity and verification
 
-The manifest version is `2026.11.02.7`. The package is pinned by the current manifest SHA-256; size and digest must be checked from actual bytes; all 26 packs must be present and SHA-valid.
+The manifest version for the latest candidate is `2026.11.02.9`. The package is pinned by the current manifest SHA-256; size and digest must be checked from actual bytes; all 26 packs must be present and SHA-valid.
 The selector's cache identity is `(knowledge_version, pack_sha256)`; it
 does not change any running bot's cache.
 
 `python scripts/validate_pack.py`,
 `python scripts/test_reply_catalog.py --repository -v`, and the separate
 exact-head workflow must complete on the actual PR head SHA before merge.
-Test requirements cover all 1875 reachable responses, normalized duplicates,
+Test requirements cover all 2165 reachable responses, normalized duplicates,
 cross-pack exact matches, 100/100 completeness, opt-in, audience isolation,
 refusal conditions, repeat suppression and tampered SHA/cache snapshots.
 A review of semantic similarity remains necessary: an exact-string test cannot
@@ -135,3 +137,38 @@ Integrity fix: an exact normalized reply collided with `dialogue.json`/`skills.j
 ## 2026-11-02 second verified candidate series (2026.11.02.7)
 
 New independently useful, original, synthetic content: `dark_humor` **+88** across eight clearly opt-in fantasy categories, `friendly_tease` **+100** in ten everyday contexts targeting only benign behavior, and `conversation_followup` **+100** with ten conversation-management contexts. Total **+288** (1587 → 1875) and 27 canonical questions; 18 complete at 100/100, 9 partial. Humor has a required `humor_allowed=True` caller flag; groups explicitly state when and avoid conditions, and sensitive/silence flags suppress output. No personal chat logs, product-specific powers or live bot integration were added. This is a separate PR based on the exact merged main after #43.
+
+## 2026-11-02 new multi-question batch (2026.11.02.9)
+
+Verified source base `36e7d985f0504323c474d2e52b763f99a4ec30d3`; scope is public synthetic language data only.
+This batch contributes **290 new distinct replies across 11 canonical questions**:
+**2 new completed sets** (`diagnose_problem`, `verify_claim`) containing 100 each,
+and **9 existing incomplete ImPULS help sets** gaining ten contextual replies each (90 total).
+The nine sets remain incomplete and must continue from their exact saved counts below.
+Nothing in these replies performs actions or confers permissions. Their use requires an
+independently validated intent, explicit address, local authorization and an appropriate
+context group. The package has no automatic natural-language intent classifier.
+
+| Remaining partial intent | Accepted / 100 | Remaining |
+|---|---:|---:|
+| `rules_explain` | 22 | 78 |
+| `chat_settings` | 19 | 81 |
+| `report_violations` | 19 | 81 |
+| `profile_access` | 16 | 84 |
+| `pulse_navigation` | 16 | 84 |
+| `moderator_commands` | 19 | 81 |
+| `private_panel` | 16 | 84 |
+| `danetka_start` | 19 | 81 |
+| `danetka_off` | 19 | 81 |
+
+Source of existing ImPULS command spellings and high-level navigation for this batch:
+read-only `Treninem/Impuls` main `95dcb0fc0773f970e162a6009a4d889e880a2d0e`,
+`README.md`, `docs/COMMANDS_MATRIX_V30.md`. This source code snapshot does not establish
+that BotHost is on the same version. No private source files or chat messages were copied.
+
+Manifest snapshot `2026.11.02.9` pins the revised reply pack to SHA-256
+`dc51e29425f01b96bd72d0dd63648c9ff70f37ec6155396af5808e68d6e92fa7`. Existing 25 pack digests remain unchanged. The pack is distributed
+only after a completed exact-head PR workflow and merge; live consumer integration
+and post-main CI are separate verification steps. Reviewer must assess meaningful
+similarity beyond string-level deduplication, follow actual test results, and avoid
+padding incomplete technical FAQ with cosmetic variants.
