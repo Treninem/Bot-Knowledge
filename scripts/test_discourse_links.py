@@ -8,6 +8,7 @@ from pathlib import Path
 
 from discourse_links import DiscourseLinks, PACK, ROOT, REGISTERS, load_pack
 from search_knowledge import KnowledgeSearch
+from index_contract import expected_index_count
 from validate_discourse_links import validate_discourse
 
 assert validate_discourse() == [], validate_discourse()
@@ -16,7 +17,7 @@ cases = book["cases"]
 assert len(cases) == 30
 engine = DiscourseLinks()
 index = KnowledgeSearch()
-assert len(index.records) == 1179, len(index.records)
+assert len(index.records) == expected_index_count(), len(index.records)
 assert len({row["id"] for row in cases}) == 30
 
 for row in cases:

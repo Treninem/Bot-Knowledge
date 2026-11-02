@@ -7,11 +7,12 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 from search_knowledge import KnowledgeSearch, exact_phrase
+from index_contract import expected_index_count
 
 def main() -> None:
     index = KnowledgeSearch()
     pairs = json.loads((ROOT / "packs/ru/pragmatic_contrasts.json").read_text(encoding="utf-8"))["pairs"]
-    assert len(index.records) == 1179
+    assert len(index.records) == expected_index_count()
     assert len(pairs) == 48
     assert exact_phrase(" Ну, ты гений! ") == exact_phrase("ну ты гений")
     for pair in pairs:

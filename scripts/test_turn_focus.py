@@ -12,6 +12,7 @@ sys.path.insert(0, str(ROOT / "scripts"))
 from turn_focus import TurnFocus
 from validate_turn_focus import validate_turn_focus_pack, PACK
 from search_knowledge import KnowledgeSearch
+from index_contract import expected_index_count
 
 
 def execute(case: dict) -> dict:
@@ -38,7 +39,7 @@ def main() -> None:
     assert sum(c["language"] == "ru" for c in cases) == 28
     assert sum(c["language"] == "en" for c in cases) == 28
     index = KnowledgeSearch()
-    assert len(index.records) == 1179, len(index.records)
+    assert len(index.records) == expected_index_count(), len(index.records)
     for case in cases:
         actual = execute(case)
         expected = {"status": case["expected_status"], "ids": case["expected_ids"]}
