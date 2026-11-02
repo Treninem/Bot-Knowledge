@@ -64,5 +64,57 @@ class ImpulsPublicHelpTests(unittest.TestCase):
                          "bot_publication_rights","feature_not_live",
                          "respect_privacy_examples","explain_previous_step"} <= ids)
 
+
+    def test_contextual_qa_additions(self):
+        """Pinned public sources and genuine context distinctions for the latest batch."""
+        new_ids = {
+            "two_questions_in_one", "followup_changes_one_detail", "unfinished_sentence",
+            "latin_written_russian", "switch_language_mid_chat", "unclear_local_slang",
+            "bot_name_inside_quote", "two_bots_in_group", "answer_to_wrong_person",
+            "repeating_same_reply", "separate_chat_participants", "late_reply_context",
+            "fact_assumption_advice", "unverified_test_claim", "old_document_new_build",
+            "unrelated_help_in_answer", "contradictory_evidence", "ambiguous_relative_date",
+            "outside_text_instruction", "link_without_permission",
+            "hypothetical_ban_question", "request_to_stop",
+            "strong_language_without_target", "sanitized_example_only",
+        }
+        records = {r["id"]: r for r in self.pack["records"]}
+        self.assertTrue(new_ids <= records.keys())
+        self.assertGreaterEqual(len(self.pack["records"]), 148)
+        self.assertGreaterEqual(
+            sum(1 + len(r.get("variants", [])) for r in self.pack["records"]), 419
+        )
+        for id_ in new_ids:
+            row = records[id_]
+            self.assertEqual(len(row.get("variants", [])), 2)
+            self.assertRegex(
+                row["source"],
+                r"^https://github\\.com/Treninem/Bot-Knowledge/blob/[0-9a-f]{40}/"
+            )
+            self.assertEqual(row["audiences"], ["impuls"])
+            self.assertEqual(row["language"], "ru")
+
+        def triples(value):
+            words = normalize(value).split()
+            return {" ".join(words[i:i + 3]) for i in range(len(words) - 2)}
+
+        previous = []
+        new_texts = []
+        for row in self.pack["records"]:
+            texts = [row["answer"], *row.get("variants", [])]
+            if row["id"] in new_ids:
+                new_texts.extend(texts)
+            else:
+                previous.extend(texts)
+        previously_seen = [triples(t) for t in previous]
+        new_sets = [triples(t) for t in new_texts]
+        for i, a in enumerate(new_sets):
+            for b in [*previously_seen, *new_sets[:i]]:
+                if not a and not b:
+                    continue
+                overlap = len(a & b) / max(1, len(a | b))
+                self.assertLess(overlap, 0.68)
+
+
 if __name__ == "__main__":
     unittest.main()
