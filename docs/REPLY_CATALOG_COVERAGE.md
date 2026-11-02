@@ -6,8 +6,8 @@ This candidate adds a **new, separate** SHA-pinned pack. It does not rewrite the
 
 ## Measured coverage
 
-**37 distinct canonical questions, 2965 authored answers, 26 packs total**.
-Twenty-eight questions are complete at 100/100, and 9 remain partial. These are reply
+**39 distinct canonical questions, 3165 authored answers, 26 packs total**.
+Thirty questions are complete at 100/100, and 9 remain partial. These are reply
 variants, not 443 trained model skills or new executable ImPULS commands.
 
 | Question / intent | Count / 100 | Audience |
@@ -49,6 +49,8 @@ variants, not 443 trained model skills or new executable ImPULS commands.
 | Вести групповое обсуждение (`group_discussion`) | 100 | all AI bots |
 | Предложи активности чата (`chat_activities`) | 100 | all AI bots |
 | Разбор возможного нарушения (`moderation_reasoning`) | 100 | chat moderators only |
+| Оригинальная короткая история (`micro_story`) | 100 | all AI bots |
+| Разбор противоречивой ситуации (`critical_analysis`) | 100 | all AI bots |
 
 ## Source and factual limits
 
@@ -192,3 +194,7 @@ Three more new canonical questions received 100 independently authored replies e
 ## More reviewed prompts, 2026.11.02.12
 
 Added **200 further authored answers across two completed new intents**: `chat_activities` (10 non-automated conversation activity categories) and `moderation_reasoning` (10 context-dependent moderation-analysis categories restricted to chat moderators, explicit prohibition on automatic sanctions). PR cumulative additions **800**; 37 canonical questions, 2965 total replies, 28 full and 9 partial. Existing 9 technical FAQs remain unchanged because an overlapping open PR contains their extensions; preserve those independently pending reconciliation. SHA-256/version updated with real bytes; exact-head CI and human semantic review are still required.
+
+## 2026-11-02 short creative stories and structured reasoning (2026.11.02.13)
+
+New completed intents: `micro_story` **100 original two-sentence miniature stories** across ten genres, and `critical_analysis` **100 context-scoped reasoning responses** across ten analytical stages. This adds +200 more, bringing this PR to **1000 newly authored, distinct synthetic replies across ten completed questions**, catalogue **3165 total** across **39 canonical questions** (30 at 100/100, 9 existing partial). No old reply overwritten, no private data, source-code claims, live moderation powers or deployment. Version/cache identity and source-byte SHA recomputed. Semantic near-duplicate review and exact-head CI still required.
