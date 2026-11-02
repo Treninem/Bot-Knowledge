@@ -62,6 +62,7 @@ EXPECTED = {
     "pause_conversation": 100, "handle_info_overload": 100,
     "spot_missing_constraints": 100, "false_dilemma": 100,
     "recover_task_context": 100, "causality_check": 100,
+    "fair_comparison": 100, "shared_understanding": 100,
 }
 FORBIDDEN = {
     "user_id", "chat_id", "telegram_id", "username", "phone", "email",
@@ -142,16 +143,16 @@ class ReplyCatalogueTests(unittest.TestCase):
         options.update(kw)
         return self.catalog.reply(intent, **options)
 
-    def test_exact_99_questions_9900_replies(self):
+    def test_exact_101_questions_10100_replies(self):
         self.assertEqual(self.catalog.coverage, EXPECTED)
-        self.assertEqual(len(EXPECTED), 99)
-        self.assertEqual(sum(EXPECTED.values()), 9900)
+        self.assertEqual(len(EXPECTED), 101)
+        self.assertEqual(sum(EXPECTED.values()), 10100)
 
-    def test_exact_ninety_nine_full_100_sets(self):
-        self.assertEqual(len(self.catalog.coverage), 99)
+    def test_exact_one_hundred_one_full_100_sets(self):
+        self.assertEqual(len(self.catalog.coverage), 101)
         self.assertTrue(all(value == 100 for key, value in self.catalog.coverage.items() if EXPECTED[key] == 100))
 
-    def test_all_9900_reachable(self):
+    def test_all_10100_reachable(self):
         result_ids = set()
         for record in self.data["sets"]:
             for group in record["groups"]:
@@ -168,7 +169,7 @@ class ReplyCatalogueTests(unittest.TestCase):
                                      audience=record["audiences"][0],
                                      humor_allowed=True, recent=recent)
                 self.assertEqual(exhausted["status"], "repeat_suppressed")
-        self.assertEqual(len(result_ids), 9900)
+        self.assertEqual(len(result_ids), 10100)
 
     def test_normalized_unique_globally(self):
         replies = [v for x in self.data["sets"] for g in x["groups"] for v in g["replies"]]
@@ -183,7 +184,7 @@ class ReplyCatalogueTests(unittest.TestCase):
                     if min(len(a), len(b)) / max(len(a), len(b)) < .85:
                         continue
                     self.assertLess(
-                        SequenceMatcher(None, a, b, autojunk=False).ratio(), .99,
+                        SequenceMatcher(None, a, b, autojunk=False).ratio(), .101,
                         f"near-cosmetic duplicate in {item['id']}: {a!r} / {b!r}")
 
     def test_groups_have_when_avoid(self):

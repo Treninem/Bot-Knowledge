@@ -6,8 +6,8 @@ This candidate adds a **new, separate** SHA-pinned pack. It does not rewrite the
 
 ## Measured coverage
 
-**99 distinct canonical questions, 9900 authored answers, 27 packs total**.
-All 97 earlier questions remain complete at 100/100; there are no partial sets in this snapshot. These are reply
+**101 distinct canonical questions, 10100 authored answers, 27 packs total**.
+All 99 earlier questions remain complete at 100/100; there are no partial sets in this snapshot. These are reply
 variants, not 443 trained model skills or new executable ImPULS commands.
 
 | Question / intent | Count / 100 | Audience |
@@ -113,6 +113,8 @@ variants, not 443 trained model skills or new executable ImPULS commands.
 | Как выйти из ложной дилеммы? (`false_dilemma`) | 100 | all AI bots |
 | Как вернуться к незаконченной задаче? (`recover_task_context`) | 100 | all AI bots |
 | Как отличить причину от совпадения? (`causality_check`) | 100 | all AI bots |
+| Как честно сравнить варианты? (`fair_comparison`) | 100 | all AI bots |
+| Как проверить общее понимание? (`shared_understanding`) | 100 | all AI bots |
 ## Source and factual limits
 
 The eight ImPULS-specific question sets are abstract user-facing help, grounded
@@ -363,3 +365,7 @@ Base own PR branch `ac76230f11a4cbc231a459c5af225df1a83e8a5e`: 95 sets / 9500 re
 ## 2026-11-02 returning to work and checking causal claims v2026.11.02.35
 
 Previous candidate branch `ace9944c84071a50c98dca7174aa7ad837615487` had 97 sets / 9700 replies (PR #66; not main). Two new independent general RU questions: `recover_task_context` covers interrupted work, stale requirements, team concurrency, tooling, missing notes, dependencies and accurate status; `causality_check` covers time order, reverse causation, confounders, anecdotes, statistics, software symptoms, social inference, promotion, rules and safe tests. Each contains ten guarded contexts and ten manually authored candidates, **200 accepted new responses**, 0 duplicates rejected by exact/3-gram Jaccard ≥0.58. Now **99 questions / 9900 answers** in PR; per-set `recover_task_context` 100/100 (remaining 0); `causality_check` 100/100 (remaining 0). Previous 9700 unchanged. Highest observed prefilter Jaccard 0.182; heuristic does not prove semantic correctness. SHA-256 actual UTF-8 content `5e8b30d4c346fe052f3f8706002e76e14df7872748c09f56bafdd0e0655af670`, manifest/cache version `2026.11.02.35`. No private messages, unverified ImPULS details, credentials, sanctions, deployment or untested consumer claims. Exact-head and post-main CI gates remain required.
+
+## 2026-11-02 fair option comparisons and shared agreement v2026.11.02.36
+
+Dependent base `873ed8541299c257e25ae6579eec5f76383b8227` (PR #66 candidate; **not** yet main), 99 sets and 9900 answers. This separate follow-up branch adds two general RU intents: `fair_comparison` (criteria, total cost, usability, quality, speed, risk, evidence, compatibility, maintenance, decision) and `shared_understanding` (ambiguous yes, group consensus, roles, deadlines, scope, meanings, corrections, asynchronous dialogue, handoff, acceptance). Each comprises ten original guarded context groups with ten authored replies. Proposed +200 accepted new-to-branch answers, 0 exact/near duplicate rejections, resulting **101 canonical questions / 10100 total replies**, counts `fair_comparison`: 100/100 (0 remaining); `shared_understanding`: 100/100 (0 remaining). Existing 9900 retained. Full normalized exact duplicates: 0. Three-word Jaccard screening of new-to-branch candidates against existing and each other: no accepted pair ≥0.58, highest observed 0.300. This does not prove all semantic variation. Only synthetic, no private messages, unconfirmed ImPULS features, sanctions, payments, consumer rollout or secrets. SHA-256 over actual new UTF-8 pack `3f26a275c64de8bce9d5d4b0129f5c69871547c59174dbfd845035fd5e9ae28c`, manifest/cache `2026.11.02.36`. PR #66 must merge and pass post-main CI before this dependent branch can be assessed for merge.
