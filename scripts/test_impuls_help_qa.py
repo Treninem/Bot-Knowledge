@@ -80,6 +80,21 @@ class ImpulsPublicHelpTests(unittest.TestCase):
             self.assertEqual(len(row["variants"]), 2)
             self.assertTrue(row["source"].startswith("https://github.com/Treninem/Bot-Knowledge/blob/c919aaac8f4facae806a274aa000311c7320c5e2/"))
 
+    def test_public_help_batch_2026_11_02_48(self):
+        """Public source-backed ImPULS QA continues without scope widening."""
+        new_ids = ["moderation_forwarded_message","moderation_deleted_evidence","moderation_edited_after_warning","moderation_reaction_meaning","moderation_voice_unavailable","moderation_unclear_addressee","moderation_cross_group","moderation_other_bot_message","access_old_owner_claim","access_display_not_permission","access_conflicting_admin_instructions","access_owner_panel_citation","conversation_we_ambiguity","conversation_reply_outdated","conversation_source_not_quote","conversation_joke_inside_quote","conversation_missing_attachment","conversation_unseen_prior_chat","conversation_language_ambiguity","conversation_instruction_conflict","game_participant_left","game_screenshot_score","raffle_external_winner","raffle_missing_eligibility","pulses_old_receipt","pulses_transfer_claim","learning_optout_for_chat","learning_unique_quote","learning_pending_review","knowledge_unrecognized_adapter","knowledge_stale_local_index","help_conflicting_error_reports","privacy_public_link_to_chat","help_one_step_answer","help_no_tool_access","help_nonexistent_button","moderation_delayed_report","group_reply_wrong_thread","help_offline_cached_reply","safety_confirm_risky_action"]
+        records = {r["id"]: r for r in self.pack["records"]}
+        self.assertTrue(set(new_ids) <= records.keys())
+        self.assertGreaterEqual(len(records), 223)
+        self.assertGreaterEqual(sum(1 + len(r.get("variants", [])) for r in records.values()), 644)
+        for key in new_ids:
+            record = records[key]
+            self.assertEqual(record["audiences"], ["impuls"])
+            self.assertEqual(record["contexts"], ["direct", "private", "group_addressed"])
+            self.assertEqual(record["language"], "ru")
+            self.assertEqual(len(record["variants"]), 2)
+            self.assertTrue(record["source"].startswith("https://github.com/Treninem/Bot-Knowledge/blob/cb5329be6b5ad3990b2b30a032092c2abca1b938/"))
+
     def test_contextual_qa_additions(self):
         """Pinned public sources and genuine context distinctions for the latest batch."""
         new_ids = {
