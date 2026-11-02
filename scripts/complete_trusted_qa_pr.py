@@ -109,6 +109,8 @@ def verify_append_only(number: int, *, token: str, base_sha: str, head_sha: str)
     before, _ = content("manifest.json", token=token, ref=base_sha)
     after, _ = content("manifest.json", token=token, ref=head_sha)
     old_entries, new_entries = before.get("packs"), after.get("packs")
+    if before.get("knowledge_version") == after.get("knowledge_version"):
+        raise FinalizeError("new pack requires new knowledge_version to invalidate consumer cache")
     if not isinstance(old_entries, list) or not isinstance(new_entries, list) or len(old_entries) != len(new_entries):
         raise FinalizeError("manifest pack list changed")
     if set(before) != set(after) or any(
