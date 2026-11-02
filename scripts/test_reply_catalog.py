@@ -37,6 +37,9 @@ EXPECTED = {
     "clarifying_question": 100, "feedback_reply": 100,
     "rule_exception": 100, "rule_conflict": 100, "safe_setting_change": 100,
     "ask_for_help": 100, "admit_mistake": 100, "calm_conflict_reply": 100,
+    "impuls_antispam_help": 100, "impuls_family_help": 100,
+    "impuls_raffle_help": 100, "impuls_word_chain_help": 100,
+    "impuls_pulse_journal_help": 100,
 }
 FORBIDDEN = {
     "user_id", "chat_id", "telegram_id", "username", "phone", "email",
@@ -117,16 +120,16 @@ class ReplyCatalogueTests(unittest.TestCase):
         options.update(kw)
         return self.catalog.reply(intent, **options)
 
-    def test_exact_58_questions_5800_replies(self):
+    def test_exact_63_questions_6300_replies(self):
         self.assertEqual(self.catalog.coverage, EXPECTED)
-        self.assertEqual(len(EXPECTED), 58)
-        self.assertEqual(sum(EXPECTED.values()), 5800)
+        self.assertEqual(len(EXPECTED), 63)
+        self.assertEqual(sum(EXPECTED.values()), 6300)
 
-    def test_exact_fifty_eight_full_100_sets(self):
-        self.assertEqual(len(self.catalog.coverage), 58)
+    def test_exact_sixty_three_full_100_sets(self):
+        self.assertEqual(len(self.catalog.coverage), 63)
         self.assertTrue(all(value == 100 for value in self.catalog.coverage.values()))
 
-    def test_all_5800_reachable(self):
+    def test_all_6300_reachable(self):
         result_ids = set()
         for record in self.data["sets"]:
             for group in record["groups"]:
@@ -143,7 +146,7 @@ class ReplyCatalogueTests(unittest.TestCase):
                                      audience=record["audiences"][0],
                                      humor_allowed=True, recent=recent)
                 self.assertEqual(exhausted["status"], "repeat_suppressed")
-        self.assertEqual(len(result_ids), 5800)
+        self.assertEqual(len(result_ids), 6300)
 
     def test_normalized_unique_globally(self):
         replies = [v for x in self.data["sets"] for g in x["groups"] for v in g["replies"]]
@@ -313,7 +316,7 @@ class ReplyCatalogueTests(unittest.TestCase):
         technical = [x for x in self.data["sets"]
                      if x["audiences"] == ["community_bots"]
                      and x["id"] != "rules_explain"]
-        self.assertEqual(len(technical), 16)
+        self.assertEqual(len(technical), 21)
         for item in technical:
             source = item["source"]
             self.assertEqual(source["repository"], "Treninem/Impuls")
