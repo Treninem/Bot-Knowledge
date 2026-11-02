@@ -6,8 +6,8 @@ This candidate adds a **new, separate** SHA-pinned pack. It does not rewrite the
 
 ## Measured coverage
 
-**91 distinct canonical questions, 9100 authored answers, 27 packs total**.
-All 91 questions are complete at 100/100; there are no partial sets in this snapshot. These are reply
+**93 distinct canonical questions, 9300 authored answers, 27 packs total**.
+All 93 questions are complete at 100/100; there are no partial sets in this snapshot. These are reply
 variants, not 443 trained model skills or new executable ImPULS commands.
 
 | Question / intent | Count / 100 | Audience |
@@ -105,6 +105,8 @@ variants, not 443 trained model skills or new executable ImPULS commands.
 | Как объяснить, на чём основан ответ? (`source_provenance`) | 100 | all AI bots |
 | Как правильно реагировать на критику? (`respond_to_criticism`) | 100 | all AI bots |
 | Как уважительно принять чужой отказ? (`respect_refusal`) | 100 | all AI bots |
+| Что делать с непроверенным слухом? (`rumor_handling`) | 100 | all AI bots |
+| Как похвалить человека искренне, без лести? (`sincere_praise`) | 100 | all AI bots |
 ## Source and factual limits
 
 The eight ImPULS-specific question sets are abstract user-facing help, grounded
@@ -337,3 +339,7 @@ Main `cd210f8656cff23ef5181f76e7980f889ec8147a`: 87 questions, 8700 accepted rep
 ## 2026-11-02 criticism and consent boundaries v2026.11.02.31
 
 Fresh main `93a0c42655e2dda4ac4c3e4209a9fcbfe79c93e2`: 89 canonical questions / 8900 replies, 0 partial. Authored two independent general RU intents: `respond_to_criticism` (accurate, vague, angry, incorrect, public, private, workplace, creative, repeated and action-based feedback) and `respect_refusal` (direct no, invitation, privacy, help, work, disagreement, safety, ambiguity, group consent and repairing pressure). Each 10 guarded contexts with 10 original replies, **+200 unique candidates**, overall **91 questions / 9100 replies**, all 91/91 at 100/100 with zero partial. Previously accepted 8900 preserved. Normalized exact duplicates: 0; near 3-word Jaccard ≥0.58 among new texts and entire corpus: 0, maximum 0.214. Synthetic only; no private user messages, unverified bot powers, threats, sanctions or deployment. Pack actual UTF-8 SHA-256 `f51c780999c68a8eacfae53c36de4768970b2a5aa1aec191c9656a63142e7b95`; manifest/cache `2026.11.02.31`; require exact-head CI and post-main CI prior to fully verified publication.
+
+## 2026-11-02 rumor checking and sincere encouragement v2026.11.02.32
+
+Verified base main `3f295fae95dec8ecbfcb8fab2ac4799cd27a4027` contained 91 complete synthetic RU question sets / 9100 answers. Original new intents: `rumor_handling` (unverified headlines, reputation, groups, screenshots, numerical claims, safety, business, private information and corrections) and `sincere_praise` (specific achievement, effort, learning, creativity, teamwork, support, boundaries, small improvements, group recognition and avoiding manipulation). Each 10 guarded topical groups with 10 distinct authored texts. **+200 candidate responses**, 93 questions / 9300 replies, all 93/93 at 100/100, zero partial; old 9100 kept. Normalized global duplicates 0, candidate 3-gram Jaccard ≥0.58 count 0, maximum 0.188. Synthetic general wording only, no private transcripts, identified individuals, sanctions, new ImPULS features or consumer rollout. Exact UTF-8 pack SHA-256 `05b415a5b293aded4fea651caf7f6e16ee6e7284498a1f5342d9773b5a1030d4`, cache/manifest version `2026.11.02.32`. Exact-head CI and post-main gate still required.
