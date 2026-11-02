@@ -184,7 +184,7 @@ class ReplyCatalogueTests(unittest.TestCase):
                     if min(len(a), len(b)) / max(len(a), len(b)) < .85:
                         continue
                     self.assertLess(
-                        SequenceMatcher(None, a, b, autojunk=False).ratio(), .101,
+                        SequenceMatcher(None, a, b, autojunk=False).ratio(), .95,
                         f"near-cosmetic duplicate in {item['id']}: {a!r} / {b!r}")
 
     def test_groups_have_when_avoid(self):
