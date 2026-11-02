@@ -6,8 +6,8 @@ This candidate adds a **new, separate** SHA-pinned pack. It does not rewrite the
 
 ## Measured coverage
 
-**47 distinct canonical questions, 4060 authored answers, 26 packs total**.
-Thirty-nine questions are complete at 100/100, and 8 remain partial. These are reply
+**47 distinct canonical questions, 4700 authored answers, 26 packs total**.
+All 47 questions are complete at 100/100; there are no partial sets in this snapshot. These are reply
 variants, not 443 trained model skills or new executable ImPULS commands.
 
 | Question / intent | Count / 100 | Audience |
@@ -103,14 +103,14 @@ mutes, permissions or other actions.
 
 ## Integrity and verification
 
-The manifest version for the latest candidate is `2026.11.02.9`. The package is pinned by the current manifest SHA-256; size and digest must be checked from actual bytes; all 26 packs must be present and SHA-valid.
+The manifest version for this completed catalogue is `2026.11.02.16`. The package is pinned by the current manifest SHA-256; size and digest must be checked from actual bytes; all 26 packs must be present and SHA-valid.
 The selector's cache identity is `(knowledge_version, pack_sha256)`; it
 does not change any running bot's cache.
 
 `python scripts/validate_pack.py`,
 `python scripts/test_reply_catalog.py --repository -v`, and the separate
 exact-head workflow must complete on the actual PR head SHA before merge.
-Test requirements cover all 2165 reachable responses, normalized duplicates,
+Test requirements cover all 4700 reachable responses, normalized duplicates,
 cross-pack exact matches, 100/100 completeness, opt-in, audience isolation,
 refusal conditions, repeat suppression and tampered SHA/cache snapshots.
 A review of semantic similarity remains necessary: an exact-string test cannot
@@ -122,10 +122,13 @@ cycle. Candidate-only values must not be reported as shipped to ImPULS.
 
 ## Next unfinished questions
 
-Next extend reviewed community-specific help and missing distinct intents with useful,
-context-distinct answers, then deepen the fact-checked ImPULS FAQ. Count
-existing entries and active PR variants before writing. Aim for 100 each,
-but do not pad with repeated paraphrases or invented functionality.
+All 47 current canonical questions are complete at 100/100 in this candidate.
+The next cycle should create new, genuinely distinct canonical questions in the
+under-covered sections (communication, help, setup, skills and abilities) rather
+than adding more variants to completed sets. Before adding any new ImPULS-specific
+question, re-check current Treninem/Impuls documentation read-only and keep
+product-specific facts source-pinned.
+
 
 ## 2026-11-02 next completed batch (candidate 2026.11.02.3)
 
@@ -214,3 +217,22 @@ Added **8 new canonical ImPULS FAQs with 20 original, audience-limited, context-
 ## 2026-11-02 reconciliation of older response extension PR #46 (2026.11.02.15)
 
 Older [PR #46](https://github.com/Treninem/Bot-Knowledge/pull/46), exact head `a21bfb79b50ef0804889ca662d8a285f073ac483`, contains **825 prior-authored** candidate replies for nine existing ImPULS question sets, based on an old 883-reply catalogue. Current main had independently gained 10 replies in each. To preserve the 100/100 per-question cap, we selected 10 candidates to exclude per set (90 total) using lexical-overlap scoring against existing records while retaining at least six replies in each new context group. **735 preserved original answers from that existing open PR migrated**, completing all nine sets from 22/19/16 to 100. These 735 were NOT newly authored during this run; they are new only to main after merging this candidate. Existing 3325 replies retained; resulting candidate: **47 questions, 4060 replies, 39 complete 100/100 and 8 partial**. The older extension PR and its different selector code remain open for separate compatibility review; no loss of its branches is claimed. Its eight source-bearing sets use current read-only `Treninem/Impuls` documents at `95dcb0fc0773f970e162a6009a4d889e880a2d0e`. All changes require actual exact-head CI, source SHA/cache, near-duplicate and full-repository regression checks before main merge. This is public synthetic content only, not operational bot permissions or live rollout.
+
+
+## 2026-11-02 ImPULS FAQ completion batch 2026.11.02.16
+
+The eight remaining ImPULS-specific partial sets each gained **80** original,
+context-guarded synthetic replies: `impuls_first_steps`, `impuls_ask_ai`,
+`impuls_ai_no_reply`, `impuls_game_help`, `impuls_command_context`,
+`impuls_chat_isolation`, `impuls_release_info`, and
+`impuls_check_permissions`. Exact addition: **+640** replies, moving the
+catalogue from **4060 to 4700** and from **39/47 to 47/47 complete sets**.
+
+The product facts were re-checked read-only against Treninem/Impuls
+`95dcb0fc0773f970e162a6009a4d889e880a2d0e` (README and
+`docs/COMMANDS_MATRIX_V30.md`). The new replies only explain already documented
+routing, games help, chat isolation, release/version distinction and permission
+checks. They do not execute commands, grant roles, apply sanctions, expose
+private chat state or claim live deployment. All new groups have explicit
+`when`/`avoid` guards. Consumer integration and BotHost rollout remain
+separate and are not claimed here.
