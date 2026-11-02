@@ -1,0 +1,51 @@
+name: Reply extensions exact-head and main
+on:
+  pull_request:
+    paths:
+      - 'packs/ru/**'
+      - 'manifest.json'
+      - 'scripts/reply_catalog*.py'
+      - 'scripts/test_reply*.py'
+      - 'docs/REPLY_EXTENSIONS_COVERAGE.md'
+      - '.github/workflows/reply-extensions.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'packs/ru/**'
+      - 'manifest.json'
+      - 'scripts/reply_catalog*.py'
+      - 'scripts/test_reply*.py'
+      - 'docs/REPLY_EXTENSIONS_COVERAGE.md'
+      - '.github/workflows/reply-extensions.yml'
+permissions:
+  contents: read
+jobs:
+  reply-extensions:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Assert exact checked-out commit
+        env:
+          EXPECTED_HEAD: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          test "$(git rev-parse HEAD)" = "$EXPECTED_HEAD"
+          git rev-parse HEAD
+      - name: Validate every manifest SHA and package
+        run: python scripts/validate_pack.py
+      - name: Test 616 replies and audit the full real repository
+        run: python scripts/test_reply_extensions.py --repository
+      - name: Preserve all base catalogue responses
+        run: python scripts/test_reply_catalog.py --repository -v
+      - name: Preserve the 100 greeting answers
+        run: python scripts/test_greeting_catalog.py --repository -v
+      - name: Preserve existing dialogue routing
+        run: python scripts/test_conversation_router.py
+      - name: Preserve existing knowledge safeguards
+        run: python scripts/test_extended_knowledge.py
