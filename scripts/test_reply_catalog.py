@@ -32,6 +32,7 @@ EXPECTED = {
     "chat_activities": 100, "moderation_reasoning": 100,
     "micro_story": 100, "critical_analysis": 100,
     "impuls_first_steps": 30, "impuls_ask_ai": 30, "impuls_ai_no_reply": 30, "impuls_game_help": 30, "impuls_command_context": 30, "impuls_chat_isolation": 30, "impuls_release_info": 30, "impuls_check_permissions": 30,
+    "question_crafting": 100,
 }
 FORBIDDEN = {
     "user_id", "chat_id", "telegram_id", "username", "phone", "email",
