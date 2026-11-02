@@ -6,8 +6,8 @@ This candidate adds a **new, separate** SHA-pinned pack. It does not rewrite the
 
 ## Measured coverage
 
-**47 distinct canonical questions, 4700 authored answers, 26 packs total**.
-All 47 questions are complete at 100/100; there are no partial sets in this snapshot. These are reply
+**51 distinct canonical questions, 5100 authored answers, 26 packs total**.
+All 51 questions are complete at 100/100; there are no partial sets in this snapshot. These are reply
 variants, not 443 trained model skills or new executable ImPULS commands.
 
 | Question / intent | Count / 100 | Audience |
@@ -103,14 +103,14 @@ mutes, permissions or other actions.
 
 ## Integrity and verification
 
-The manifest version for this completed catalogue is `2026.11.02.16`. The package is pinned by the current manifest SHA-256; size and digest must be checked from actual bytes; all 26 packs must be present and SHA-valid.
+The manifest version for this completed catalogue is `2026.11.02.17`. The package is pinned by the current manifest SHA-256; size and digest must be checked from actual bytes; all 26 packs must be present and SHA-valid.
 The selector's cache identity is `(knowledge_version, pack_sha256)`; it
 does not change any running bot's cache.
 
 `python scripts/validate_pack.py`,
 `python scripts/test_reply_catalog.py --repository -v`, and the separate
 exact-head workflow must complete on the actual PR head SHA before merge.
-Test requirements cover all 4700 reachable responses, normalized duplicates,
+Test requirements cover all 5100 reachable responses, normalized duplicates,
 cross-pack exact matches, 100/100 completeness, opt-in, audience isolation,
 refusal conditions, repeat suppression and tampered SHA/cache snapshots.
 A review of semantic similarity remains necessary: an exact-string test cannot
@@ -122,7 +122,7 @@ cycle. Candidate-only values must not be reported as shipped to ImPULS.
 
 ## Next unfinished questions
 
-All 47 current canonical questions are complete at 100/100 in this candidate.
+All 51 current canonical questions are complete at 100/100 in this candidate.
 The next cycle should create new, genuinely distinct canonical questions in the
 under-covered sections (communication, help, setup, skills and abilities) rather
 than adding more variants to completed sets. Before adding any new ImPULS-specific
@@ -236,3 +236,19 @@ checks. They do not execute commands, grant roles, apply sanctions, expose
 private chat state or claim live deployment. All new groups have explicit
 `when`/`avoid` guards. Consumer integration and BotHost rollout remain
 separate and are not claimed here.
+
+
+## 2026-11-02 broad practical-language batch 2026.11.02.17
+
+After completing the eight ImPULS FAQ sets, the same run continued instead of
+stopping at the first checkpoint. Four new independent general-purpose questions
+were added at **100/100** each: `tactful_refusal`, `simple_explanation`,
+`clarifying_question`, and `feedback_reply`. Exact addition: **+400** original
+synthetic replies in 40 guarded context groups.
+
+Combined with the ImPULS FAQ completion in the same branch, this run adds
+**+1040 replies total** relative to its base main: **4060 → 5100**, and expands
+the catalogue from **47 to 51 canonical questions**, all complete at 100/100.
+The new generic sets contain no product-specific facts, actions, sanctions,
+personal data or live-memory claims. They are reference replies selected only
+after caller-provided context; consumer integration remains separate.
