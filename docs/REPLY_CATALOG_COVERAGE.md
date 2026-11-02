@@ -6,8 +6,8 @@ This candidate adds a **new, separate** SHA-pinned pack. It does not rewrite the
 
 ## Measured coverage
 
-**35 distinct canonical questions, 2765 authored answers, 26 packs total**.
-Twenty-six questions are complete at 100/100, and 9 remain partial. These are reply
+**37 distinct canonical questions, 2965 authored answers, 26 packs total**.
+Twenty-eight questions are complete at 100/100, and 9 remain partial. These are reply
 variants, not 443 trained model skills or new executable ImPULS commands.
 
 | Question / intent | Count / 100 | Audience |
@@ -47,6 +47,8 @@ variants, not 443 trained model skills or new executable ImPULS commands.
 | Написать ясное сообщение (`message_draft`) | 100 | all AI bots |
 | Освоить новый навык (`learning_path`) | 100 | all AI bots |
 | Вести групповое обсуждение (`group_discussion`) | 100 | all AI bots |
+| Предложи активности чата (`chat_activities`) | 100 | all AI bots |
+| Разбор возможного нарушения (`moderation_reasoning`) | 100 | chat moderators only |
 
 ## Source and factual limits
 
@@ -186,3 +188,7 @@ Added **300 original replies in 3 new fully completed (100/100) canonical intent
 ## Additional 2026-11-02 cross-context batch (2026.11.02.11)
 
 Three more new canonical questions received 100 independently authored replies each: `message_draft` (writing clear requests, questions, updates, refusals, complaints, feedback, coordination, instructions, public announcements, corrections), `learning_path` (ten stages of learning), and `group_discussion` (ten non-enforcement discussion contexts). Added +300 on top of prior +300 in this PR: 35 canonical sets, 2765 total catalogue replies, 26 full and 9 partial. All 600 new replies are written as individual original strings, not generated cartesian permutations; SHA-256 is recalculated on actual UTF-8 bytes and bound to version/cache identity. No bot powers or moderation sanctions are granted; group-specific replies require caller-validated context.
+
+## More reviewed prompts, 2026.11.02.12
+
+Added **200 further authored answers across two completed new intents**: `chat_activities` (10 non-automated conversation activity categories) and `moderation_reasoning` (10 context-dependent moderation-analysis categories restricted to chat moderators, explicit prohibition on automatic sanctions). PR cumulative additions **800**; 37 canonical questions, 2965 total replies, 28 full and 9 partial. Existing 9 technical FAQs remain unchanged because an overlapping open PR contains their extensions; preserve those independently pending reconciliation. SHA-256/version updated with real bytes; exact-head CI and human semantic review are still required.
