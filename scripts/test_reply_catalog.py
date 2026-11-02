@@ -20,11 +20,12 @@ EXPECTED = {
     "explain_again": 100, "disagreement_reply": 100, "need_support": 100,
     "bored": 100, "need_decision": 100, "boundaries": 100,
     "idea_request": 100, "apology_help": 100, "lost_context": 100,
-    "change_topic": 100, "dark_humor": 12, "rules_explain": 12,
+    "change_topic": 100, "dark_humor": 100, "rules_explain": 12,
     "no_sure": 100, "chat_settings": 9, "report_violations": 9,
     "profile_access": 6, "pulse_navigation": 6,
     "moderator_commands": 9, "private_panel": 6, "danetka_start": 9,
     "danetka_off": 9,
+    "friendly_tease": 100, "conversation_followup": 100,
 }
 FORBIDDEN = {
     "user_id", "chat_id", "telegram_id", "username", "phone", "email",
@@ -101,20 +102,21 @@ class ReplyCatalogueTests(unittest.TestCase):
         options.update(kw)
         return self.catalog.reply(intent, **options)
 
-    def test_exact_25_questions_1587_replies(self):
+    def test_exact_27_questions_1875_replies(self):
         self.assertEqual(self.catalog.coverage, EXPECTED)
-        self.assertEqual(len(EXPECTED), 25)
-        self.assertEqual(sum(EXPECTED.values()), 1587)
+        self.assertEqual(len(EXPECTED), 27)
+        self.assertEqual(sum(EXPECTED.values()), 1875)
 
-    def test_exact_fifteen_full_100_sets(self):
+    def test_exact_eighteen_full_100_sets(self):
         self.assertEqual({k for k, v in self.catalog.coverage.items() if v == 100},
                          {"what_discuss", "tell_joke", "explain_again", "bored",
                           "need_decision", "boundaries", "idea_request",
                           "thanks_reply", "farewell_reply", "disagreement_reply",
                           "change_topic", "no_sure", "apology_help",
-                          "need_support", "lost_context"})
+                          "need_support", "lost_context", "dark_humor",
+                          "friendly_tease", "conversation_followup"})
 
-    def test_all_1587_reachable(self):
+    def test_all_1875_reachable(self):
         result_ids = set()
         for record in self.data["sets"]:
             for group in record["groups"]:
@@ -131,7 +133,7 @@ class ReplyCatalogueTests(unittest.TestCase):
                                      audience=record["audiences"][0],
                                      humor_allowed=True, recent=recent)
                 self.assertEqual(exhausted["status"], "repeat_suppressed")
-        self.assertEqual(len(result_ids), 1587)
+        self.assertEqual(len(result_ids), 1875)
 
     def test_normalized_unique_globally(self):
         replies = [v for x in self.data["sets"] for g in x["groups"] for v in g["replies"]]
@@ -212,6 +214,10 @@ class ReplyCatalogueTests(unittest.TestCase):
         self.assertEqual(self.ask("thanks_reply")["status"], "ok")
 
     def test_humor_requires_opt_in(self):
+        self.assertEqual(self.ask('friendly_tease', group='games')['status'],
+                         'humor_not_authorized')
+        self.assertEqual(self.ask('friendly_tease', group='games',
+                                  humor_allowed=True)['status'], 'ok')
         self.assertEqual(self.ask("tell_joke", group="work")["status"], "humor_not_authorized")
         self.assertEqual(self.ask("dark_humor")["status"], "humor_not_authorized")
         self.assertEqual(self.ask("tell_joke", group="work",
