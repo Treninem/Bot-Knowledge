@@ -6,8 +6,8 @@ This candidate adds a **new, separate** SHA-pinned pack. It does not rewrite the
 
 ## Measured coverage
 
-**69 distinct canonical questions, 6900 authored answers, 27 packs total**.
-All 69 questions are complete at 100/100; there are no partial sets in this snapshot. These are reply
+**72 distinct canonical questions, 7200 authored answers, 27 packs total**.
+All 72 questions are complete at 100/100; there are no partial sets in this snapshot. These are reply
 variants, not 443 trained model skills or new executable ImPULS commands.
 
 | Question / intent | Count / 100 | Audience |
@@ -83,6 +83,9 @@ variants, not 443 trained model skills or new executable ImPULS commands.
 | Как исправить недопонимание? (`repair_misunderstanding`) | 100 | all AI bots |
 | Как найти компромисс без давления? (`constructive_compromise`) | 100 | all AI bots |
 | Как корректно исправить неверный факт? (`fact_correction`) | 100 | all AI bots |
+| Как воспроизвести ошибку для разработчика? (`reproduce_bug`) | 100 | all AI bots |
+| Как честно сообщить о ходе работы? (`progress_report`) | 100 | all AI bots |
+| Как безопасно обезличить материал перед публикацией? (`privacy_before_publish`) | 100 | all AI bots |
 ## Source and factual limits
 
 The eight ImPULS-specific question sets are abstract user-facing help, grounded
@@ -288,3 +291,7 @@ actual exact-head CI plus post-main CI remain publication gates.
 ## 2026-11-02 semantic repair batch v2026.11.02.24
 
 Verified main baseline `8d785003be3d56c2dbd433c059903b1cec8f9bdc`: 66 canonical questions and 6600 replies. Three new complete intents gained 100 individually authored responses each with ten explicit context/avoid groups: `repair_misunderstanding`, `constructive_compromise`, and `fact_correction`. Exactly **+300** net new original synthetic responses; candidate **69 questions / 6900 replies**, all **69 complete 100/100**, **zero partial**. Prior 6600 answers kept. Across-pool three-gram Jaccard near-match sweep found no similarity at or above 0.52 for those 300 against the prior 6600 and themselves; this is not proof of semantic perfection. No ImPULS repo changes, private messages, external actions, sanctions or live consumer integration. Source data SHA-256 over UTF-8 bytes: `5d364a2925a61b852f8ffce487691b57ef5aeff8ff74e6be63537938fca41b39`; manifest/cache version `2026.11.02.24`. Only ship after actual completed exact-head QA and post-main CI.
+
+## 2026-11-02 reproducibility / status / privacy batch 2026.11.02.25
+
+Fresh exact baseline main `2277ea78b7aea2ba647e46755e88592bd2209a7e`: 69 canonical questions / 6900 replies. Three new generalized, source-independent, opt-in RU questions, each with ten distinct context-and-avoid groups of ten original answers: `reproduce_bug`, `progress_report`, and `privacy_before_publish`. Exactly **+300** newly authored, normalized-distinct responses. Candidate: **72 questions / 7200 replies**, all 72 complete at 100/100; no partial sets. Existing 6900 replies are kept unmodified. Synthetic examples only, no personal records, ImPULS claims, executable sanctions or live rollout. Cross-pool 3-word Jaccard near-match audit of the 300 new responses against previous 6900 and each other: max 0.200, no pair ≥0.58; semantic review still required. Pack SHA-256 of actual UTF-8 content: `e1512e2896351c31e60c1cb5bdb4a05454fbfa7fb0726d4aeb37f345a1ac56ba`; manifest version/cache key `2026.11.02.25`. Merge only after exact-head CI and post-main CI.
