@@ -42,6 +42,8 @@ EXPECTED = {
     "impuls_pulse_journal_help": 100,
     "resume_after_pause": 100, "discussion_summary": 100,
     "capability_boundaries": 100,
+    "repair_misunderstanding": 100, "constructive_compromise": 100,
+    "fact_correction": 100,
 }
 FORBIDDEN = {
     "user_id", "chat_id", "telegram_id", "username", "phone", "email",
@@ -122,16 +124,16 @@ class ReplyCatalogueTests(unittest.TestCase):
         options.update(kw)
         return self.catalog.reply(intent, **options)
 
-    def test_exact_66_questions_6600_replies(self):
+    def test_exact_69_questions_6900_replies(self):
         self.assertEqual(self.catalog.coverage, EXPECTED)
-        self.assertEqual(len(EXPECTED), 66)
-        self.assertEqual(sum(EXPECTED.values()), 6600)
+        self.assertEqual(len(EXPECTED), 69)
+        self.assertEqual(sum(EXPECTED.values()), 6900)
 
-    def test_exact_sixty_six_full_100_sets(self):
-        self.assertEqual(len(self.catalog.coverage), 66)
+    def test_exact_sixty_nine_full_100_sets(self):
+        self.assertEqual(len(self.catalog.coverage), 69)
         self.assertTrue(all(value == 100 for value in self.catalog.coverage.values()))
 
-    def test_all_6600_reachable(self):
+    def test_all_6900_reachable(self):
         result_ids = set()
         for record in self.data["sets"]:
             for group in record["groups"]:
@@ -148,7 +150,7 @@ class ReplyCatalogueTests(unittest.TestCase):
                                      audience=record["audiences"][0],
                                      humor_allowed=True, recent=recent)
                 self.assertEqual(exhausted["status"], "repeat_suppressed")
-        self.assertEqual(len(result_ids), 6600)
+        self.assertEqual(len(result_ids), 6900)
 
     def test_normalized_unique_globally(self):
         replies = [v for x in self.data["sets"] for g in x["groups"] for v in g["replies"]]
@@ -187,7 +189,9 @@ class ReplyCatalogueTests(unittest.TestCase):
 
     def test_new_contextual_sets_are_explicit_and_scoped(self):
         general = ("diagnose_problem", "verify_claim",
-                   "resume_after_pause", "discussion_summary", "capability_boundaries")
+                   "resume_after_pause", "discussion_summary", "capability_boundaries",
+                   "repair_misunderstanding", "constructive_compromise",
+                   "fact_correction")
         community = ("rules_explain", "chat_settings", "report_violations",
                      "profile_access", "pulse_navigation", "moderator_commands",
                      "private_panel", "danetka_start", "danetka_off")
