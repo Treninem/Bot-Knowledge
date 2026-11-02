@@ -2,7 +2,7 @@
   "$schema": "https://raw.githubusercontent.com/Treninem/Bot-Knowledge/main/schema/qa.v1.schema.json",
   "schema_version": 1,
   "language": "ru",
-  "pack_version": "2026.11.03.57",
+  "pack_version": "2026.11.03.58",
   "catalog": {
     "schema_version": 1,
     "id": "impuls_help_qa",
@@ -6797,6 +6797,966 @@
         "Для сложного поля стоит предусмотреть альтернативный текстовый обзор, если разработка игры это позволяет."
       ],
       "source": "https://core.telegram.org/bots/api",
+      "audiences": [
+        "impuls"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "language": "ru"
+    },
+    {
+      "id": "moderation_split_sentence",
+      "question": "Как оценить спорную фразу, разбитую на несколько сообщений?",
+      "aliases": [],
+      "answer": "Сначала прочитай связанные реплики целиком: отдельный обрывок может искажать смысл.",
+      "variants": [
+        "Если участник завершил мысль следующим сообщением, учитывай оба фрагмента при разборе.",
+        "До понимания адресата и полного контекста нельзя уверенно объявлять нарушение."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/a70fad7da94987e6caf327eeecdb115d449b9dbd/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "impuls"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "language": "ru"
+    },
+    {
+      "id": "moderation_retracted_allegation",
+      "question": "Как реагировать, если участник публично отозвал обвинение?",
+      "aliases": [],
+      "answer": "Не продолжай распространять исходное утверждение как установленный факт.",
+      "variants": [
+        "При необходимости коротко отметь, что обвинение отозвано, без пересказа личных обстоятельств.",
+        "Оценка ситуации должна опираться на независимые подтверждения, а не на уже исправленную реплику."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/a70fad7da94987e6caf327eeecdb115d449b9dbd/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "impuls"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "language": "ru"
+    },
+    {
+      "id": "moderation_whole_word_boundary",
+      "question": "Почему совпадение части запрещённого слова не всегда нарушение?",
+      "aliases": [],
+      "answer": "Похожая последовательность букв встречается и внутри безобидных слов.",
+      "variants": [
+        "Проверь границы слова и предложение целиком, а не только совпавший фрагмент.",
+        "Автоматическая подсветка должна запускать проверку, но не заменять её."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/a70fad7da94987e6caf327eeecdb115d449b9dbd/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "impuls"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "language": "ru"
+    },
+    {
+      "id": "moderation_rule_scope_mismatch",
+      "question": "Можно ли применять запрет одной темы ко всей группе без подтверждения?",
+      "aliases": [],
+      "answer": "Сначала выясни, для какой части сообщества правило действительно установлено.",
+      "variants": [
+        "Ограничение отдельного обсуждения нельзя произвольно превращать в общий запрет.",
+        "Если область действия неясна, лучше запросить разъяснение у ответственного администратора."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/a70fad7da94987e6caf327eeecdb115d449b9dbd/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "impuls"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "language": "ru"
+    },
+    {
+      "id": "moderation_disagreement_without_insult",
+      "question": "Резкое несогласие с идеей всегда считается травлей?",
+      "aliases": [],
+      "answer": "Нет: критика аргумента отличается от адресного унижения человека.",
+      "variants": [
+        "При оценке важны содержание, адресат, повторяемость и действующие правила группы.",
+        "Непопулярная позиция сама по себе ещё не доказывает нападение на участника."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/a70fad7da94987e6caf327eeecdb115d449b9dbd/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "impuls"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "language": "ru"
+    },
+    {
+      "id": "moderation_followup_changes_meaning",
+      "question": "Что делать, когда позднее пояснение меняет трактовку старой реплики?",
+      "aliases": [],
+      "answer": "Пересмотри ситуацию с новым контекстом, не защищая прежнюю оценку автоматически.",
+      "variants": [
+        "Уточнение бывает и добросовестным, и оправдательным: вывод зависит от всего разговора.",
+        "Если решение принималось по неполным сведениям, передай его на проверку уполномоченному человеку."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/a70fad7da94987e6caf327eeecdb115d449b9dbd/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "impuls"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "language": "ru"
+    },
+    {
+      "id": "moderation_evidence_not_original",
+      "question": "Достаточно ли пересказа жалобы, чтобы установить слова другого человека?",
+      "aliases": [],
+      "answer": "Пересказ описывает претензию, но не доказывает точную цитату и её обстоятельства.",
+      "variants": [
+        "Не утверждай, что видел оригинал, если доступна лишь чужая интерпретация.",
+        "Попроси безопасное подтверждение и прямо укажи, какие факты пока неизвестны."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/a70fad7da94987e6caf327eeecdb115d449b9dbd/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "impuls"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "language": "ru"
+    },
+    {
+      "id": "moderation_security_claim_not_confession",
+      "question": "Доказывает ли фраза «мой аккаунт взломали», что владелец намеренно спамил?",
+      "aliases": [],
+      "answer": "Нет. Заявление о взломе не подтверждает ни факт компрометации, ни умысел владельца.",
+      "variants": [
+        "Не приписывай человеку намерение на основании одного сообщения о проблеме доступа.",
+        "Отдели историю о возможном взломе от проверенных сведений о конкретном действии."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/a70fad7da94987e6caf327eeecdb115d449b9dbd/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "impuls"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "language": "ru"
+    },
+    {
+      "id": "access_same_title_two_groups",
+      "question": "Можно ли переносить права между группами с одинаковым названием?",
+      "aliases": [],
+      "answer": "Название не подтверждает, что это один и тот же чат с общими полномочиями.",
+      "variants": [
+        "Даже одинаковое оформление не означает одинаковых владельцев, правил и настроек.",
+        "Проверяй разрешения отдельно для конкретного сообщества, не по его заголовку."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/a70fad7da94987e6caf327eeecdb115d449b9dbd/AGENTS.md",
+      "audiences": [
+        "impuls"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "language": "ru"
+    },
+    {
+      "id": "access_explain_without_control",
+      "question": "Если бот объяснил настройку, значит ли это, что я могу её поменять?",
+      "aliases": [],
+      "answer": "Нет. Получение справки и выполнение изменения требуют разных разрешений.",
+      "variants": [
+        "Можно знать порядок действий и при этом не иметь прав на их выполнение.",
+        "Управление настройками должно проверять актуальную роль в нужном чате."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/a70fad7da94987e6caf327eeecdb115d449b9dbd/AGENTS.md",
+      "audiences": [
+        "impuls"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "language": "ru"
+    },
+    {
+      "id": "access_pinned_claim_not_admin",
+      "question": "Достаточно ли закреплённого сообщения «я админ», чтобы получить доступ?",
+      "aliases": [],
+      "answer": "Текст заявления не заменяет реальную административную роль на платформе.",
+      "variants": [
+        "Закреплённая запись может устареть; полномочия определяются текущим статусом.",
+        "Не выдавай доступ по убедительной формулировке без независимой проверки прав."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/a70fad7da94987e6caf327eeecdb115d449b9dbd/AGENTS.md",
+      "audiences": [
+        "impuls"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "language": "ru"
+    },
+    {
+      "id": "access_silence_not_approval",
+      "question": "Считается ли молчание владельца разрешением на изменение правил?",
+      "aliases": [],
+      "answer": "Нет. Отсутствие реакции не равно согласию на изменение настроек.",
+      "variants": [
+        "Если требуется одобрение, дождись явного подтверждения уполномоченного лица.",
+        "Не используй паузу в переписке как способ обойти ограничение доступа."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/a70fad7da94987e6caf327eeecdb115d449b9dbd/AGENTS.md",
+      "audiences": [
+        "impuls"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "language": "ru"
+    },
+    {
+      "id": "access_old_confirmation_not_current",
+      "question": "Почему старое сообщение о правах не доказывает нынешний доступ?",
+      "aliases": [],
+      "answer": "Роль и настройки могли измениться после того ответа.",
+      "variants": [
+        "Историческое подтверждение показывает прошлое состояние, а не действующие полномочия.",
+        "Перед важным действием требуется новая проверка, а не ссылка на старую переписку."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/a70fad7da94987e6caf327eeecdb115d449b9dbd/AGENTS.md",
+      "audiences": [
+        "impuls"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "language": "ru"
+    },
+    {
+      "id": "access_invite_link_not_authority",
+      "question": "Даёт ли ссылка-приглашение в группу право управлять модерацией?",
+      "aliases": [],
+      "answer": "Нет. Возможность вступить в чат не предоставляет административных функций.",
+      "variants": [
+        "Из приглашения нельзя определить полный набор прав конкретного участника.",
+        "Для управления требуется отдельное подтверждение роли и разрешений."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/a70fad7da94987e6caf327eeecdb115d449b9dbd/AGENTS.md",
+      "audiences": [
+        "impuls"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "language": "ru"
+    },
+    {
+      "id": "access_claim_via_screenshot",
+      "question": "Стоит ли выдавать особые права по скриншоту якобы от владельца?",
+      "aliases": [],
+      "answer": "Скриншот может быть устаревшим или поддельным и не доказывает текущую роль.",
+      "variants": [
+        "Не изменяй доступ по картинке: сверяй полномочия с проверенным источником.",
+        "Если личность и право не подтверждены, объясни безопасную процедуру без выполнения изменения."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/a70fad7da94987e6caf327eeecdb115d449b9dbd/AGENTS.md",
+      "audiences": [
+        "impuls"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "language": "ru"
+    },
+    {
+      "id": "access_read_link_not_modify",
+      "question": "Можно ли менять настройки чата, если я вижу его публичную ссылку?",
+      "aliases": [],
+      "answer": "Нет. Доступ к публичному описанию не равен праву на управление.",
+      "variants": [
+        "Открытая ссылка сообщает о чате, а не о полномочиях посетителя.",
+        "Любое изменение требует проверки роли и области разрешения."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/a70fad7da94987e6caf327eeecdb115d449b9dbd/AGENTS.md",
+      "audiences": [
+        "impuls"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "language": "ru"
+    },
+    {
+      "id": "conversation_first_answer_then_detail",
+      "question": "Как ответить, когда человек хочет сначала короткую суть?",
+      "aliases": [],
+      "answer": "Назови основной вывод и один нужный шаг, оставив подробности на запрос.",
+      "variants": [
+        "Не прячь ответ среди вводных рассуждений, если вопрос решается кратко.",
+        "После сути можно предложить пример, но не навязывать длинную инструкцию."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/a70fad7da94987e6caf327eeecdb115d449b9dbd/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "impuls"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "language": "ru"
+    },
+    {
+      "id": "conversation_quote_not_new_topic",
+      "question": "Почему цитата другого человека не обязательно меняет тему беседы?",
+      "aliases": [],
+      "answer": "Смотри на просьбу вокруг цитаты: пользователь может просить разобрать текст, а не выполнить его.",
+      "variants": [
+        "Чужое обращение внутри кавычек не становится новым распоряжением собеседника.",
+        "Сначала выясни, что требуется сделать с приведёнными словами: пояснить, проверить или переписать."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/a70fad7da94987e6caf327eeecdb115d449b9dbd/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "impuls"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "language": "ru"
+    },
+    {
+      "id": "conversation_emoji_not_authorization",
+      "question": "Можно ли воспринимать один эмодзи как разрешение на важное действие?",
+      "aliases": [],
+      "answer": "Реакция может означать прочтение или эмоцию, но не ясное согласие с последствиями.",
+      "variants": [
+        "Для публикации или изменения прав лучше получить недвусмысленное подтверждение.",
+        "Не объявляй согласование завершённым на основании неоднозначного значка."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/a70fad7da94987e6caf327eeecdb115d449b9dbd/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "impuls"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "language": "ru"
+    },
+    {
+      "id": "conversation_audio_uncertain_words",
+      "question": "Что делать, если в расшифровке голосового сообщения неясно ключевое слово?",
+      "aliases": [],
+      "answer": "Попроси повторить именно сомнительный участок, а не угадывай команду.",
+      "variants": [
+        "Если ошибка распознавания способна изменить смысл, воздержись от действий по предположению.",
+        "Коротко перескажи услышанное и дай возможность исправить конкретную неточность."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/a70fad7da94987e6caf327eeecdb115d449b9dbd/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "impuls"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "language": "ru"
+    },
+    {
+      "id": "conversation_one_constraint_changed",
+      "question": "Надо ли менять весь план, если собеседник уточнил только один параметр?",
+      "aliases": [],
+      "answer": "Сохрани прочие согласованные условия и обнови только названное ограничение.",
+      "variants": [
+        "Новый срок не означает автоматического изменения бюджета, аудитории или формата.",
+        "Укажи, какой параметр изменён, а какие условия остались прежними."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/a70fad7da94987e6caf327eeecdb115d449b9dbd/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "impuls"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "language": "ru"
+    },
+    {
+      "id": "conversation_disagree_without_justifying",
+      "question": "Обязан ли человек объяснять причины отказа от предложения?",
+      "aliases": [],
+      "answer": "Нет. Можно принять отказ и не требовать оправданий.",
+      "variants": [
+        "Если вариант не подошёл, предложи иной путь без давления на личные причины.",
+        "Уточнить предпочтения полезно, но собеседник вправе не продолжать обсуждение."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/a70fad7da94987e6caf327eeecdb115d449b9dbd/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "impuls"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "language": "ru"
+    },
+    {
+      "id": "conversation_abbreviation_multiple_meanings",
+      "question": "Как отвечать, когда сокращение допускает несколько расшифровок?",
+      "aliases": [],
+      "answer": "Не выбирай популярное значение вне контекста разговора.",
+      "variants": [
+        "Уточни сферу вопроса или предложи несколько вероятных значений без категоричности.",
+        "Лучше проверить короткое сокращение, чем строить длинный ответ на неверной догадке."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/a70fad7da94987e6caf327eeecdb115d449b9dbd/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "impuls"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "language": "ru"
+    },
+    {
+      "id": "conversation_timezone_in_schedule",
+      "question": "Как договориться о времени, если участники находятся в разных часовых поясах?",
+      "aliases": [],
+      "answer": "Сначала укажи дату, город или часовой пояс, чтобы никто не получил ошибочное время.",
+      "variants": [
+        "Фраза «в восемь» может означать местное время говорящего; не делай скрытого допущения.",
+        "Для точного расписания уточни недостающую зону до пересчёта времени."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/a70fad7da94987e6caf327eeecdb115d449b9dbd/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "impuls"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "language": "ru"
+    },
+    {
+      "id": "help_issue_one_device",
+      "question": "Если ошибка появляется только на одном телефоне, это общий сбой бота?",
+      "aliases": [],
+      "answer": "Одного устройства недостаточно для такого вывода; сравни условия и шаги.",
+      "variants": [
+        "Возможны отличия клиента, сети или локальной настройки, а не всей службы.",
+        "Для диагностики сообщи воспроизводимые действия без личных данных."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/a70fad7da94987e6caf327eeecdb115d449b9dbd/AGENTS.md",
+      "audiences": [
+        "impuls"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "language": "ru"
+    },
+    {
+      "id": "help_network_vs_permission",
+      "question": "Как отличить сетевую проблему от запрета доступа при одинаковом симптоме?",
+      "aliases": [],
+      "answer": "Отдельно проверь получение ответа и проверку прав: это разные причины отказа.",
+      "variants": [
+        "Не советуй раздавать права, пока неизвестно, дошёл ли запрос до системы.",
+        "Используй безопасное действие только на чтение и оцени его результат без изменения настроек."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/a70fad7da94987e6caf327eeecdb115d449b9dbd/AGENTS.md",
+      "audiences": [
+        "impuls"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "language": "ru"
+    },
+    {
+      "id": "help_reinstall_data_risk",
+      "question": "Стоит ли сразу переустанавливать приложение из-за одной неработающей кнопки?",
+      "aliases": [],
+      "answer": "Не спеши: переустановка может стереть локальные данные, не устранив причину.",
+      "variants": [
+        "Сначала зафиксируй ошибку и попробуй обратимые диагностические шаги.",
+        "Перед очисткой проверь, что настройки и доступ удастся восстановить."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/a70fad7da94987e6caf327eeecdb115d449b9dbd/AGENTS.md",
+      "audiences": [
+        "impuls"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "language": "ru"
+    },
+    {
+      "id": "help_check_after_error",
+      "question": "После ошибки можно ли сразу много раз повторять одно и то же действие?",
+      "aliases": [],
+      "answer": "Сначала проверь, не выполнилась ли операция частично или с задержкой.",
+      "variants": [
+        "Отсутствие уведомления ещё не гарантирует, что запрос не был принят.",
+        "Повтор ответственного действия безопасен лишь после сверки текущего результата."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/a70fad7da94987e6caf327eeecdb115d449b9dbd/AGENTS.md",
+      "audiences": [
+        "impuls"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "language": "ru"
+    },
+    {
+      "id": "help_time_order_unsure",
+      "question": "Можно ли определить последовательность сообщений только по часам на экранах участников?",
+      "aliases": [],
+      "answer": "Часы устройств могут расходиться, а события доходить с задержкой.",
+      "variants": [
+        "При разборе используй единый проверяемый источник временных отметок.",
+        "Если точный порядок не подтверждён, не представляй его как бесспорный факт."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/a70fad7da94987e6caf327eeecdb115d449b9dbd/AGENTS.md",
+      "audiences": [
+        "impuls"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "language": "ru"
+    },
+    {
+      "id": "help_accessible_instructions",
+      "question": "Как объяснить управление человеку, которому неудобны мелкие кнопки?",
+      "aliases": [],
+      "answer": "Опиши действия текстом, не полагаясь исключительно на цвет значка.",
+      "variants": [
+        "Если названия элементов на экране отличаются, уточни видимые подписи вместо выдумывания кнопок.",
+        "Предложи понятный текстовый ориентир или доступную альтернативу без обещания несуществующей функции."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/a70fad7da94987e6caf327eeecdb115d449b9dbd/AGENTS.md",
+      "audiences": [
+        "impuls"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "language": "ru"
+    },
+    {
+      "id": "help_cropped_screen_limit",
+      "question": "Можно ли точно определить настройки по обрезанному скриншоту?",
+      "aliases": [],
+      "answer": "На нём могут отсутствовать название чата, предупреждения и другие важные элементы.",
+      "variants": [
+        "Объясни только то, что видно; скрытые параметры не следует угадывать.",
+        "Уточни контекст безопасно, не требуя целого экрана с личными данными."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/a70fad7da94987e6caf327eeecdb115d449b9dbd/AGENTS.md",
+      "audiences": [
+        "impuls"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "language": "ru"
+    },
+    {
+      "id": "help_one_change_at_time",
+      "question": "Зачем менять лишь одну настройку за одну диагностическую проверку?",
+      "aliases": [],
+      "answer": "Тогда проще увидеть, какой шаг повлиял на результат, и откатить его.",
+      "variants": [
+        "Несколько одновременных изменений мешают понять причину улучшения или ошибки.",
+        "Для теста выбирай обратимый параметр и предварительно проверь право его менять."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/a70fad7da94987e6caf327eeecdb115d449b9dbd/AGENTS.md",
+      "audiences": [
+        "impuls"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "language": "ru"
+    },
+    {
+      "id": "knowledge_partial_download",
+      "question": "Можно ли использовать пакет знаний, если скачалась только часть файла?",
+      "aliases": [],
+      "answer": "Неполные данные нельзя принимать за проверенную версию; оставь предыдущую исправную копию.",
+      "variants": [
+        "Дождись подтверждённой целостности и SHA-256 реальных байтов до активации.",
+        "При обрыве загрузки лучше продолжить работу с валидным локальным снимком."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/a70fad7da94987e6caf327eeecdb115d449b9dbd/AGENTS.md",
+      "audiences": [
+        "impuls"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "language": "ru"
+    },
+    {
+      "id": "knowledge_audience_not_global",
+      "question": "Раз запись находится в общем репозитории, может ли её использовать любой бот?",
+      "aliases": [],
+      "answer": "Нет. У пакета есть аудитория и контекстные условия, которые потребитель обязан соблюдать.",
+      "variants": [
+        "Справка ImPULS не превращается в универсальную команду для других программ.",
+        "Совпадение вопроса не отменяет ограничений языка, назначения и прав."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/a70fad7da94987e6caf327eeecdb115d449b9dbd/AGENTS.md",
+      "audiences": [
+        "impuls"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "language": "ru"
+    },
+    {
+      "id": "knowledge_unmerged_pr_not_ready",
+      "question": "Почему ответ из открытого PR ещё не считается опубликованным?",
+      "aliases": [],
+      "answer": "PR — предложение до проверки и объединения с утверждённой веткой.",
+      "variants": [
+        "Видимость текста в рабочей ветке не доказывает, что он доступен потребителям.",
+        "Разделяй кандидат, проверенный merge и реальный подхват запущенной программой."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/a70fad7da94987e6caf327eeecdb115d449b9dbd/AGENTS.md",
+      "audiences": [
+        "impuls"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "language": "ru"
+    },
+    {
+      "id": "knowledge_manifest_pack_mismatch",
+      "question": "Что делать, если SHA скачанного пакета отличается от manifest?",
+      "aliases": [],
+      "answer": "Не активируй его: реальные байты не совпали с зарегистрированной контрольной суммой.",
+      "variants": [
+        "Перепроверь получение из доверенного источника, не изменяя работающий снимок.",
+        "Если несоответствие повторяется, зафиксируй его и используй последнюю валидную версию."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/a70fad7da94987e6caf327eeecdb115d449b9dbd/AGENTS.md",
+      "audiences": [
+        "impuls"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "language": "ru"
+    },
+    {
+      "id": "knowledge_ci_not_live_test",
+      "question": "Значит ли успешный CI, что живой бот уже отвечает новыми знаниями?",
+      "aliases": [],
+      "answer": "Нет. CI относится к проверенному коду или данным, а не автоматически к развернутому боту.",
+      "variants": [
+        "Нужны отдельная проверка версии потребителя и реальный тест ответа.",
+        "Не путай зелёный PR с подтверждением доставки в BotHost."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/a70fad7da94987e6caf327eeecdb115d449b9dbd/AGENTS.md",
+      "audiences": [
+        "impuls"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "language": "ru"
+    },
+    {
+      "id": "knowledge_source_not_approval",
+      "question": "Доказывает ли публичная ссылка на источник, что найденная инструкция верна?",
+      "aliases": [],
+      "answer": "Ссылка помогает установить происхождение, но не гарантирует актуальность и точность.",
+      "variants": [
+        "Документ может описывать план, а не включённую возможность.",
+        "Сверяй дату и статус источника прежде, чем советовать действие пользователю."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/a70fad7da94987e6caf327eeecdb115d449b9dbd/POLICY.md",
+      "audiences": [
+        "impuls"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "language": "ru"
+    },
+    {
+      "id": "knowledge_failed_update_fallback",
+      "question": "Как вести себя при неудачной загрузке нового пакета знаний?",
+      "aliases": [],
+      "answer": "Продолжай применять последний успешно проверенный снимок.",
+      "variants": [
+        "Ошибка обновления не должна стирать рабочую библиотеку или прерывать обычные ответы.",
+        "Сохрани причину отказа и проверяй новые данные отдельно от живой обработки сообщений."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/a70fad7da94987e6caf327eeecdb115d449b9dbd/AGENTS.md",
+      "audiences": [
+        "impuls"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "language": "ru"
+    },
+    {
+      "id": "knowledge_candidate_privacy",
+      "question": "Почему нельзя напрямую отправлять целые диалоги в публичную базу навыков?",
+      "aliases": [],
+      "answer": "Там могут быть личные сведения, локальные правила и секреты, не предназначенные для GitHub.",
+      "variants": [
+        "Создай оригинальный обезличенный пример вместо копирования исходных фраз.",
+        "Позднее удаление файла не гарантирует исчезновения содержимого из истории git."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/a70fad7da94987e6caf327eeecdb115d449b9dbd/POLICY.md",
+      "audiences": [
+        "impuls"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "language": "ru"
+    },
+    {
+      "id": "privacy_blur_screenshot",
+      "question": "Надёжно ли простое размытие текста на скриншоте перед публикацией?",
+      "aliases": [],
+      "answer": "Размытие может оказаться обратимым или оставить узнаваемый контекст.",
+      "variants": [
+        "Надёжнее полностью исключить чувствительную часть изображения, а не надеяться на фильтр.",
+        "Если обезличивание сомнительно, используй синтетическую иллюстрацию."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/a70fad7da94987e6caf327eeecdb115d449b9dbd/POLICY.md",
+      "audiences": [
+        "impuls"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "language": "ru"
+    },
+    {
+      "id": "privacy_secret_in_url",
+      "question": "Почему опасно выкладывать полную ссылку на страницу с ошибкой?",
+      "aliases": [],
+      "answer": "Адрес может содержать параметры доступа и личные данные, которых не видно в описании.",
+      "variants": [
+        "Перед публикацией проверь весь URL, включая скрытые параметры после знака вопроса.",
+        "Для обращения за помощью зачастую достаточно симптома без исходной ссылки."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/a70fad7da94987e6caf327eeecdb115d449b9dbd/POLICY.md",
+      "audiences": [
+        "impuls"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "language": "ru"
+    },
+    {
+      "id": "privacy_forwarded_private_text",
+      "question": "Становится ли чужое личное сообщение публичным знанием после пересылки?",
+      "aliases": [],
+      "answer": "Нет. Пересылка не даёт права переносить частную беседу в общий репозиторий.",
+      "variants": [
+        "Если нужна языковая ситуация, перепиши её с нуля без уникальных деталей.",
+        "Не превращай чью-то личную цитату в обучающий пример из-за самого факта пересылки."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/a70fad7da94987e6caf327eeecdb115d449b9dbd/POLICY.md",
+      "audiences": [
+        "impuls"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "language": "ru"
+    },
+    {
+      "id": "privacy_small_group_summary",
+      "question": "Безопасно ли публиковать краткое резюме небольшого закрытого чата?",
+      "aliases": [],
+      "answer": "Даже без имён уникальные события могут раскрывать участников.",
+      "variants": [
+        "Убери узнаваемые обстоятельства или откажись от публикации.",
+        "Обобщённый языковой навык не должен позволять восстановить конкретную переписку."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/a70fad7da94987e6caf327eeecdb115d449b9dbd/POLICY.md",
+      "audiences": [
+        "impuls"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "language": "ru"
+    },
+    {
+      "id": "game_disconnect_fairness",
+      "question": "Можно ли считать отключившегося игрока проигравшим без заранее установленного правила?",
+      "aliases": [],
+      "answer": "Нет. Решение о результате должно соответствовать известным условиям партии.",
+      "variants": [
+        "Технический обрыв сам по себе не доказывает поражение, если такая ситуация не оговорена.",
+        "При споре сообщи о неопределённости и обратись к действующему регламенту игры."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/a70fad7da94987e6caf327eeecdb115d449b9dbd/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "impuls"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "language": "ru"
+    },
+    {
+      "id": "game_tie_rule_before_start",
+      "question": "Почему правило ничьей лучше согласовать до начала партии?",
+      "aliases": [],
+      "answer": "Тогда итог не зависит от того, кому выгодно решение после результата.",
+      "variants": [
+        "Если условие забыли определить, не назначай победителя произвольно.",
+        "Заранее обозначь, предусмотрены ли переигровка, равный итог или иной вариант."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/a70fad7da94987e6caf327eeecdb115d449b9dbd/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "impuls"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "language": "ru"
+    },
+    {
+      "id": "raffle_multiple_accounts_eligibility",
+      "question": "Можно ли обвинить участника розыгрыша в обмане только из-за похожих аккаунтов?",
+      "aliases": [],
+      "answer": "Сходство имён ещё не доказывает принадлежность аккаунтов одному человеку.",
+      "variants": [
+        "Проверяй заранее установленные условия участия, не раскрывая персональные данные.",
+        "При недостатке доказательств не выдавай предположение за подтверждённое нарушение."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/a70fad7da94987e6caf327eeecdb115d449b9dbd/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "impuls"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "language": "ru"
+    },
+    {
+      "id": "pulses_unverified_points",
+      "question": "Можно ли назвать текущий баланс Пульсов по старому уведомлению о награде?",
+      "aliases": [],
+      "answer": "Нет. Одно начисление не учитывает возможные другие изменения баланса.",
+      "variants": [
+        "Если нет проверенного текущего значения, честно скажи, что остаток неизвестен.",
+        "Не подменяй состояние счёта догадкой из истории сообщений."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/a70fad7da94987e6caf327eeecdb115d449b9dbd/docs/REQUIREMENTS_21.md",
       "audiences": [
         "impuls"
       ],
