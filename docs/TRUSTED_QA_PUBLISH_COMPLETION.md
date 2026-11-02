@@ -15,3 +15,15 @@ Without `--merge` it is a non-mutating preflight (a draft still must be made rea
 Guards: correct repository and PR marker; pinned exact head; unchanged main SHA during check; exactly two modified files (one already-registered qa.v1 package plus manifest); unchanged existing rows and catalog scope; one new source-backed record; version and SHA-256 of actual byte content; successful **both** `Trusted qa.v1 publisher exact-head` (explicit head checkout/assertion) and `Bot-Knowledge quality` workflows on the same PR head; ready and mergeable PR; guarded GitHub squash merge with expected head SHA; then `Bot-Knowledge quality` **push** run on the actual merge SHA. Branch protection remains authoritative. Report is local JSON with run links, head, version, package SHA, merge SHA and post-main status, never credentials.
 
 For ImPULS export the compatible target is `packs/ru/impuls_help_qa.json` **once its separate registration PR has merged into main**. `reply_catalog.json` and `skills.json` are not qa.v1 and must not be passed as `--section-path`. No consumer integration or BotHost update occurs in this repository.
+
+## 2026-11-02 pinned-source privacy regression
+
+qa.v1 public sources may use immutable GitHub `/blob/<40-hex-commit>/path` URLs.
+Previous generic private-data detection treated 10+ decimal digits within a
+40-character Git commit ID as a phone/identifier and falsely rejected otherwise
+valid reviewed records. The validator now screens a narrowly recognized, public
+`Treninem/Bot-Knowledge` commit-path revision separately from untrusted
+surrounding URL text. No other number, username, credential, query or fragment is
+exempted. Unit tests include true private numbers in URL paths and answer
+strings. This is **only validation hygiene**: human privacy/source review,
+manifest SHA-256 and all exact-head/post-main gates remain mandatory.
