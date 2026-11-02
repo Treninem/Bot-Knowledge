@@ -13,6 +13,7 @@ import json
 import os
 import re
 import sys
+import time
 import urllib.error
 import urllib.request
 from pathlib import Path
@@ -165,21 +166,44 @@ def _put(path: str, content: str, *, token: str, branch: str, sha: str, message:
     return value["commit"]["sha"]
 
 
-def _checks_green(sha: str, *, token: str) -> bool:
+def _checks_state(sha: str, *, token: str) -> str:
     checks = _api(f"/repos/{REPO}/commits/{sha}/check-runs?per_page=100", token=token, accept="application/vnd.github+json")
     rows = checks.get("check_runs", [])
-    if not rows:
-        return False
-    return all(row.get("status") == "completed" and row.get("conclusion") in {"success","neutral","skipped"} for row in rows)
+    required = [row for row in rows if row.get("name") == "validate"]
+    if not required:
+        return "pending"
+    if any(row.get("status") == "completed" and row.get("conclusion") not in {"success", "neutral", "skipped"} for row in rows):
+        return "failed"
+    if any(row.get("status") != "completed" for row in rows):
+        return "pending"
+    return "green" if all(row.get("conclusion") == "success" for row in required) else "failed"
 
 
-def publish(candidate: dict, *, token: str, base: str, branch: str, skip_ci: bool, merge_if_green: bool) -> str:
-    if merge_if_green:
-        raise PublishError("legacy --merge-if-green is unsafe for asynchronous draft PRs; use the isolated complete_trusted_qa_pr.py stage after review")
+def wait_for_reviewed_checks(sha: str, *, token: str, base: str, base_sha: str, timeout_seconds: int = 1200,
+                             interval_seconds: int = 20) -> None:
+    """Wait for the PR's exact head; never approve a run against a moved base."""
+    deadline = time.monotonic() + timeout_seconds
+    while True:
+        current_base = _api(f"/repos/{REPO}/git/ref/heads/{quote(base)}", token=token)["object"]["sha"]
+        if current_base != base_sha:
+            raise PublishError("base main moved; rebase and rerun exact-head checks")
+        state = _checks_state(sha, token=token)
+        if state == "failed":
+            raise PublishError("PR opened, but exact-head checks failed")
+        if state == "green":
+            return
+        if time.monotonic() >= deadline:
+            raise PublishError("PR opened, but exact-head checks are not green before timeout")
+        time.sleep(min(interval_seconds, max(0, deadline - time.monotonic())))
+
+
+def publish(candidate: dict, *, token: str, base: str, branch: str, skip_ci: bool, merge_if_green: bool, report_path: Path | None = None) -> str:
     if os.getenv("BK_TRUSTED_PUBLISHER") != "1":
         raise PublishError("set BK_TRUSTED_PUBLISHER=1 only in isolated maintainer environment")
     if os.getenv("BOT_TOKEN") or os.getenv("IMPULS_BOT_TOKEN"):
         raise PublishError("refusing to run beside bot runtime credentials")
+    if merge_if_green and skip_ci:
+        raise PublishError("cannot auto-merge when CI was deliberately skipped")
     path, pack_text, manifest_text, shas = prepare_changes(candidate, token=token, base=base)
     pack_sha, manifest_sha = shas.split(":")
     base_ref = _api(f"/repos/{REPO}/git/ref/heads/{quote(base)}", token=token)
@@ -193,9 +217,32 @@ def publish(candidate: dict, *, token: str, base: str, branch: str, skip_ci: boo
     head = _put("manifest.json", manifest_text, token=token, branch=branch, sha=mm["sha"], message="manifest: pin reviewed knowledge"+suffix)
     pr = _api(f"/repos/{REPO}/pulls", token=token, method="POST", data={
         "title": f"Knowledge: {candidate['record']['id']}",
-        "head": branch, "base": base, "draft": True,
+        "head": branch, "base": base, "draft": not merge_if_green,
         "body": "Reviewed qa.v1 publication candidate. Source and privacy were validated locally; exact-head checks remain authoritative.",
     })
+    if merge_if_green:
+        # Preserve the existing trusted --merge-if-green entry point, but use
+        # one stronger completion gate with an exact-head workflow, append-only
+        # digest checks, guarded merge and a separate post-main CI receipt.
+        try:
+            from scripts.complete_trusted_qa_pr import FinalizeError, finalize
+        except ModuleNotFoundError:
+            from complete_trusted_qa_pr import FinalizeError, finalize
+        report = {"pr": pr["number"], "head_sha": head, "repository": REPO, "merged": False}
+        failure = None
+        try:
+            finalize(number=pr["number"], expected_head=head, token=token, base=base,
+                     merge=True, ready=False, timeout=1200, post_timeout=1200,
+                     interval=15, report=report)
+        except (FinalizeError, OSError, ValueError, KeyError, TypeError) as exc:
+            failure = str(exc)
+            report["reason"] = failure
+            report["status"] = "merged_post_main_unconfirmed" if report.get("merged") else "blocked"
+        finally:
+            destination = report_path or Path("trusted_qa_publish_report.json")
+            destination.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        if failure:
+            raise PublishError(f"PR {pr['html_url']} retained; trusted completion: {failure}")
     return pr["html_url"]
 
 
@@ -206,12 +253,13 @@ def main() -> None:
     parser.add_argument("--branch", required=True)
     parser.add_argument("--skip-ci", action="store_true")
     parser.add_argument("--merge-if-green", action="store_true")
+    parser.add_argument("--report", type=Path, default=Path("trusted_qa_publish_report.json"))
     args = parser.parse_args()
     token = os.getenv("GITHUB_TOKEN", "")
     if not token:
         raise SystemExit("GITHUB_TOKEN is required only in trusted publisher environment")
     candidate = json.loads(args.input.read_text(encoding="utf-8"))
-    print(publish(candidate, token=token, base=args.base, branch=args.branch, skip_ci=args.skip_ci, merge_if_green=args.merge_if_green))
+    print(publish(candidate, token=token, base=args.base, branch=args.branch, skip_ci=args.skip_ci, merge_if_green=args.merge_if_green, report_path=args.report))
 
 
 if __name__ == "__main__":
