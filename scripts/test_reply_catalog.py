@@ -20,12 +20,13 @@ EXPECTED = {
     "explain_again": 100, "disagreement_reply": 100, "need_support": 100,
     "bored": 100, "need_decision": 100, "boundaries": 100,
     "idea_request": 100, "apology_help": 100, "lost_context": 100,
-    "change_topic": 100, "dark_humor": 100, "rules_explain": 12,
-    "no_sure": 100, "chat_settings": 9, "report_violations": 9,
-    "profile_access": 6, "pulse_navigation": 6,
-    "moderator_commands": 9, "private_panel": 6, "danetka_start": 9,
-    "danetka_off": 9,
+    "change_topic": 100, "dark_humor": 100, "rules_explain": 22,
+    "no_sure": 100, "chat_settings": 19, "report_violations": 19,
+    "profile_access": 16, "pulse_navigation": 16,
+    "moderator_commands": 19, "private_panel": 16, "danetka_start": 19,
+    "danetka_off": 19,
     "friendly_tease": 100, "conversation_followup": 100,
+    "diagnose_problem": 100, "verify_claim": 100,
 }
 FORBIDDEN = {
     "user_id", "chat_id", "telegram_id", "username", "phone", "email",
@@ -102,21 +103,22 @@ class ReplyCatalogueTests(unittest.TestCase):
         options.update(kw)
         return self.catalog.reply(intent, **options)
 
-    def test_exact_27_questions_1875_replies(self):
+    def test_exact_29_questions_2165_replies(self):
         self.assertEqual(self.catalog.coverage, EXPECTED)
-        self.assertEqual(len(EXPECTED), 27)
-        self.assertEqual(sum(EXPECTED.values()), 1875)
+        self.assertEqual(len(EXPECTED), 29)
+        self.assertEqual(sum(EXPECTED.values()), 2165)
 
-    def test_exact_eighteen_full_100_sets(self):
+    def test_exact_twenty_full_100_sets(self):
         self.assertEqual({k for k, v in self.catalog.coverage.items() if v == 100},
                          {"what_discuss", "tell_joke", "explain_again", "bored",
                           "need_decision", "boundaries", "idea_request",
                           "thanks_reply", "farewell_reply", "disagreement_reply",
                           "change_topic", "no_sure", "apology_help",
                           "need_support", "lost_context", "dark_humor",
-                          "friendly_tease", "conversation_followup"})
+                          "friendly_tease", "conversation_followup",
+                          "diagnose_problem", "verify_claim"})
 
-    def test_all_1875_reachable(self):
+    def test_all_2165_reachable(self):
         result_ids = set()
         for record in self.data["sets"]:
             for group in record["groups"]:
@@ -133,7 +135,7 @@ class ReplyCatalogueTests(unittest.TestCase):
                                      audience=record["audiences"][0],
                                      humor_allowed=True, recent=recent)
                 self.assertEqual(exhausted["status"], "repeat_suppressed")
-        self.assertEqual(len(result_ids), 1875)
+        self.assertEqual(len(result_ids), 2165)
 
     def test_normalized_unique_globally(self):
         replies = [v for x in self.data["sets"] for g in x["groups"] for v in g["replies"]]
@@ -169,6 +171,25 @@ class ReplyCatalogueTests(unittest.TestCase):
                 for v in item:
                     walk(v)
         walk(self.data)
+
+    def test_new_contextual_sets_are_explicit_and_scoped(self):
+        general = ("diagnose_problem", "verify_claim")
+        community = ("rules_explain", "chat_settings", "report_violations",
+                     "profile_access", "pulse_navigation", "moderator_commands",
+                     "private_panel", "danetka_start", "danetka_off")
+        for intent in general:
+            self.assertEqual(self.ask(intent)["status"], "group_required")
+            self.assertEqual(self.ask(intent, group="invented")["status"], "wrong_group")
+        records = {item["id"]: item for item in self.data["sets"]}
+        for intent in community:
+            group = records[intent]["groups"][-1]["id"]
+            self.assertEqual(self.ask(intent, group=group)["status"], "wrong_audience")
+            self.assertEqual(self.ask(intent, group=group,
+                                      audience="community_bots")["status"], "ok")
+        self.assertEqual(self.catalog.reply("verify_claim",
+                         local_permission=True, group="sources")["status"], "not_addressed")
+        self.assertEqual(self.catalog.reply("diagnose_problem",
+                         addressed=True, group="symptom")["status"], "not_authorized")
 
     def test_disallow_unsolicited_output(self):
         self.assertEqual(self.catalog.reply("what_discuss")["status"], "not_addressed")
