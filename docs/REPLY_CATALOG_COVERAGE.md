@@ -6,8 +6,8 @@ This candidate adds a **new, separate** SHA-pinned pack. It does not rewrite the
 
 ## Measured coverage
 
-**63 distinct canonical questions, 6300 authored answers, 27 packs total**.
-All 63 questions are complete at 100/100; there are no partial sets in this snapshot. These are reply
+**66 distinct canonical questions, 6600 authored answers, 27 packs total**.
+All 66 questions are complete at 100/100; there are no partial sets in this snapshot. These are reply
 variants, not 443 trained model skills or new executable ImPULS commands.
 
 | Question / intent | Count / 100 | Audience |
@@ -51,14 +51,14 @@ variants, not 443 trained model skills or new executable ImPULS commands.
 | Разбор возможного нарушения (`moderation_reasoning`) | 100 | chat moderators only |
 | Оригинальная короткая история (`micro_story`) | 100 | all AI bots |
 | Разбор противоречивой ситуации (`critical_analysis`) | 100 | all AI bots |
-| С чего начать пользоваться ImPULS? (`impuls_first_steps`) | 30 | community bots only |
-| Как задать ImPULS обычный вопрос? (`impuls_ask_ai`) | 30 | community bots only |
-| Почему ImPULS не отвечает на вопрос? (`impuls_ai_no_reply`) | 30 | community bots only |
-| Где посмотреть, как играть в игры ImPULS? (`impuls_game_help`) | 30 | community bots only |
-| Чем вопрос ImPULS отличается от команды? (`impuls_command_context`) | 30 | community bots only |
-| Может ли ImPULS переносить правила между чатами? (`impuls_chat_isolation`) | 30 | community bots only |
-| Как посмотреть версию и изменения ImPULS? (`impuls_release_info`) | 30 | community bots only |
-| Как понять, какие права у меня есть в ImPULS? (`impuls_check_permissions`) | 30 | community bots only |
+| С чего начать пользоваться ImPULS? (`impuls_first_steps`) | 100 | community bots only |
+| Как задать ImPULS обычный вопрос? (`impuls_ask_ai`) | 100 | community bots only |
+| Почему ImPULS не отвечает на вопрос? (`impuls_ai_no_reply`) | 100 | community bots only |
+| Где посмотреть, как играть в игры ImPULS? (`impuls_game_help`) | 100 | community bots only |
+| Чем вопрос ImPULS отличается от команды? (`impuls_command_context`) | 100 | community bots only |
+| Может ли ImPULS переносить правила между чатами? (`impuls_chat_isolation`) | 100 | community bots only |
+| Как посмотреть версию и изменения ImPULS? (`impuls_release_info`) | 100 | community bots only |
+| Как понять, какие права у меня есть в ImPULS? (`impuls_check_permissions`) | 100 | community bots only |
 
 | Как задать хороший вопрос? (`question_crafting`) | 100 | all AI bots |
 | Как вежливо отказать? (`tactful_refusal`) | 100 | all AI bots |
@@ -77,6 +77,9 @@ variants, not 443 trained model skills or new executable ImPULS commands.
 | Как работает бесплатный розыгрыш ImPULS? (`impuls_raffle_help`) | 100 | community bots only |
 | Как играть в «Цепочку слов» ImPULS? (`impuls_word_chain_help`) | 100 | community bots only |
 | Как работает журнал Пульсов ImPULS? (`impuls_pulse_journal_help`) | 100 | community bots only |
+| Как вернуться к разговору после паузы? (`resume_after_pause`) | 100 | all AI bots |
+| Как подвести итог обсуждения? (`discussion_summary`) | 100 | all AI bots |
+| Что ты умеешь и чего не можешь? (`capability_boundaries`) | 100 | all AI bots |
 ## Source and factual limits
 
 The eight ImPULS-specific question sets are abstract user-facing help, grounded
@@ -98,7 +101,7 @@ not start new duplicate question IDs.
 ## Selection and safety
 
 `scripts/reply_catalog.py` is an offline **opt-in reference selector**:
-it directly indexes the pack's 25 canonical IDs and their groups. It does
+it directly indexes the pack's 66 canonical IDs and their groups. It does
 **not** recognize natural-language intent, configure chats, execute commands,
 read Telegram messages or remember sessions. A caller must independently
 validate explicit address, local permission, audience, and chosen context group.
@@ -120,14 +123,14 @@ mutes, permissions or other actions.
 
 ## Integrity and verification
 
-The manifest version for this completed catalogue is `2026.11.02.22`. The package is pinned by the current manifest SHA-256; size and digest must be checked from actual bytes; all 27 packs must be present and SHA-valid.
+The manifest version for this completed catalogue is `2026.11.02.23`. The package is pinned by the current manifest SHA-256; size and digest must be checked from actual bytes; all 27 packs must be present and SHA-valid.
 The selector's cache identity is `(knowledge_version, pack_sha256)`; it
 does not change any running bot's cache.
 
 `python scripts/validate_pack.py`,
 `python scripts/test_reply_catalog.py --repository -v`, and the separate
 exact-head workflow must complete on the actual PR head SHA before merge.
-Test requirements cover all 6300 reachable responses, normalized duplicates,
+Test requirements cover all 6600 reachable responses, normalized duplicates,
 cross-pack exact matches, 100/100 completeness, opt-in, audience isolation,
 refusal conditions, repeat suppression and tampered SHA/cache snapshots.
 A review of semantic similarity remains necessary: an exact-string test cannot
@@ -260,3 +263,21 @@ Six new independent questions were added at **100/100** each: `rule_exception`, 
 ## 2026-11-02 sourced ImPULS topic batch 2026.11.02.22
 
 Five new community-only ImPULS questions were added at **100/100** each: `impuls_antispam_help`, `impuls_family_help`, `impuls_raffle_help`, `impuls_word_chain_help`, and `impuls_pulse_journal_help`. Exact addition: **+500** original synthetic replies in 50 guarded context groups. Catalogue: **5800 → 6300 replies**, **58 → 63 questions**, all complete at 100/100. Product facts are source-pinned read-only to Treninem/Impuls `4db76f4ad682dd3bbc3da413af3fb53fd8f8a596` / `docs/RELEASES.md`; responses explicitly distinguish source candidates from unverified live BotHost rollout. No ImPULS code, private chats, tokens, sanctions, real balances or deployment actions were added.
+
+## 2026-11-02 conversation continuity batch v2026.11.02.23
+
+Main baseline: `26f9caaa62fc28ed81a9f93bdc89fc09e38c5cc9` (verified 63 questions / 6300 answers). Three new
+independently scoped general intents, each with 10 context groups and 100 original
+Russian replies: `resume_after_pause` (continuation after a break),
+`discussion_summary` (evidence-aware, consent-aware summaries), and
+`capability_boundaries` (truthful limits of model and application access).
+Net authored additions: **+300**, all accepted after normalized exact duplicate
+screening against the previous 6300 responses. The candidate is now
+**66 questions / 6600 replies**, all **66/66 complete 100/100**, with **no partial**
+sets. Existing texts and IDs are untouched. No new ImPULS commands or rights,
+automatic sanctions, private chat material, external actions or live rollout.
+Source pack SHA-256 on actual UTF-8 bytes: `c772564e8db3d05093e3abfa15a5e73a40cc80f18b595016f16f5f88629b0494`;
+manifest version/cache identity is `2026.11.02.23`. Selector still needs
+caller-confirmed intent, group, audience, address and local authorization;
+its data alone does not imply a deployed feature. Human semantic sampling and
+actual exact-head CI plus post-main CI remain publication gates.
