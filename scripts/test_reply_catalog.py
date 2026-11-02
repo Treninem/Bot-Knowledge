@@ -68,6 +68,8 @@ EXPECTED = {
     "firm_reply_to_rudeness": 100, "respond_to_pressure": 100,
     "reply_to_apology": 100, "receive_compliment": 100,
     "respond_to_good_news": 100, "respond_to_disappointment": 100,
+    "birthday_wishes": 100, "condolence_support": 100,
+    "before_big_event_support": 100, "public_quote_consent": 100,
 }
 FORBIDDEN = {
     "user_id", "chat_id", "telegram_id", "username", "phone", "email",
@@ -148,16 +150,16 @@ class ReplyCatalogueTests(unittest.TestCase):
         options.update(kw)
         return self.catalog.reply(intent, **options)
 
-    def test_exact_111_questions_11100_replies(self):
+    def test_exact_115_questions_11500_replies(self):
         self.assertEqual(self.catalog.coverage, EXPECTED)
-        self.assertEqual(len(EXPECTED), 111)
-        self.assertEqual(sum(EXPECTED.values()), 11100)
+        self.assertEqual(len(EXPECTED), 115)
+        self.assertEqual(sum(EXPECTED.values()), 11500)
 
-    def test_exact_one_hundred_seven_full_100_sets(self):
-        self.assertEqual(len(self.catalog.coverage), 111)
+    def test_exact_all_full_100_sets(self):
+        self.assertEqual(len(self.catalog.coverage), 115)
         self.assertTrue(all(value == 100 for key, value in self.catalog.coverage.items() if EXPECTED[key] == 100))
 
-    def test_all_11100_reachable(self):
+    def test_all_11500_reachable(self):
         result_ids = set()
         for record in self.data["sets"]:
             for group in record["groups"]:
@@ -174,7 +176,7 @@ class ReplyCatalogueTests(unittest.TestCase):
                                      audience=record["audiences"][0],
                                      humor_allowed=True, recent=recent)
                 self.assertEqual(exhausted["status"], "repeat_suppressed")
-        self.assertEqual(len(result_ids), 11100)
+        self.assertEqual(len(result_ids), 11500)
 
     def test_scoped_responses_to_apology_and_praise(self):
         """New social replies require explicit context and independent consent."""

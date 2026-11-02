@@ -391,3 +391,18 @@ From verified main `2b6c0564349ac72dffc19d338cd8fe0604a1d090` and current 107 se
 ## 2026-11-02 nuanced social response batch (2026.11.02.47)
 
 Compared to current main `2892bc57acf7212dca631312411568e14e1bc535`, two new canonical language intents have been authored at **100/100**: `respond_to_good_news` (congratulating without unsupported assumptions) and `respond_to_disappointment` (practical, non-patronizing replies without false promises). Added **200 genuinely different synthetic RU answers** in 20 context groups, with explicit `when`/`avoid` boundaries; no personal chats or executable features. Previous 109 sets and 10900 replies are untouched; candidate totals become **111 questions and 11100 answers**, all complete. Intended audience `all_ai_bots`; caller-selected context and local permission are mandatory. JS preflight checked normalized exact uniqueness against existing catalogue and qa.v1, plus within-question 3-word Jaccard <0.58. Pack SHA-256 `a328f994da6133ac4a258f54d5e03d7b08f025bec2bde134032272f62effafbb`, manifest/cache `2026.11.02.47`. Actual exact-head CI, merge, post-main quality and product consumer tests remain distinct gates.
+
+## 2026-11-02: four context-scoped social/help sets
+
+Baseline at main `e14123a7756803437f51dc8ab946351e063899a8`: 111 canonical reply intents / 11100 accepted answers (each full 100/100). This independent series adds **4 intents / 400 manually authored, original synthetic answers**:
+
+| Intent | Exact replies | Audience | Selection scope |
+|---|---:|---|---|
+| `birthday_wishes` | 100/100 | all_ai_bots | confirmed birthday; relationships, privacy and preferred celebration style |
+| `condolence_support` | 100/100 | all_ai_bots | acknowledged loss; timing, silence, work/group audience, no fabricated memories |
+| `before_big_event_support` | 100/100 | all_ai_bots | event explicitly described; examinations, interviews, care visits, stage, sport, change |
+| `public_quote_consent` | 100/100 | all_ai_bots | explicit permission before quoting/sharing; scoped audience and refusal |
+
+New expected catalogue: **115 intents / 11500 answers**, 0 incomplete sets. Existing canonical intents and replies preserved without editing; no privacy-sensitive material, real conversations, permissions, executables or sanctions. Group-level `when`/`avoid` conditions are essential: do not treat all 100 replies as suitable for one context, and do not infer an occasion, loss or consent. The private/original quotes remain unavailable to shared packages. Other work on `packs/ru/impuls_help_qa.json` belongs to the separate ImPULS coordinator PR #88.
+
+Pack SHA-256 over exact UTF-8 bytes: `063f24794af8f9a08539634a5cc720b7c5f687a8c6d8ed295ba6dad545ee11ac`. Manifest/cache version `2026.11.02.53`. This count is a **candidate until PR exact-head tests and post-main checks confirm it**; a PR is not deployment to any bot.
