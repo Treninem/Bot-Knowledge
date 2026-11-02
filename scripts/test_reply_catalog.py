@@ -27,6 +27,11 @@ EXPECTED = {
     "danetka_off": 19,
     "friendly_tease": 100, "conversation_followup": 100,
     "diagnose_problem": 100, "verify_claim": 100,
+    "goal_clarity": 100, "project_plan": 100, "idea_review": 100,
+    "message_draft": 100, "learning_path": 100, "group_discussion": 100,
+    "chat_activities": 100, "moderation_reasoning": 100,
+    "micro_story": 100, "critical_analysis": 100,
+    "impuls_first_steps": 20, "impuls_ask_ai": 20, "impuls_ai_no_reply": 20, "impuls_game_help": 20, "impuls_command_context": 20, "impuls_chat_isolation": 20, "impuls_release_info": 20, "impuls_check_permissions": 20,
 }
 FORBIDDEN = {
     "user_id", "chat_id", "telegram_id", "username", "phone", "email",
@@ -103,12 +108,12 @@ class ReplyCatalogueTests(unittest.TestCase):
         options.update(kw)
         return self.catalog.reply(intent, **options)
 
-    def test_exact_29_questions_2165_replies(self):
+    def test_exact_47_questions_3325_replies(self):
         self.assertEqual(self.catalog.coverage, EXPECTED)
-        self.assertEqual(len(EXPECTED), 29)
-        self.assertEqual(sum(EXPECTED.values()), 2165)
+        self.assertEqual(len(EXPECTED), 47)
+        self.assertEqual(sum(EXPECTED.values()), 3325)
 
-    def test_exact_twenty_full_100_sets(self):
+    def test_exact_thirty_full_100_sets(self):
         self.assertEqual({k for k, v in self.catalog.coverage.items() if v == 100},
                          {"what_discuss", "tell_joke", "explain_again", "bored",
                           "need_decision", "boundaries", "idea_request",
@@ -116,9 +121,13 @@ class ReplyCatalogueTests(unittest.TestCase):
                           "change_topic", "no_sure", "apology_help",
                           "need_support", "lost_context", "dark_humor",
                           "friendly_tease", "conversation_followup",
-                          "diagnose_problem", "verify_claim"})
+                          "diagnose_problem", "verify_claim",
+                          "goal_clarity", "project_plan", "idea_review",
+                          "message_draft", "learning_path", "group_discussion",
+                          "chat_activities", "moderation_reasoning",
+                          "micro_story", "critical_analysis"})
 
-    def test_all_2165_reachable(self):
+    def test_all_3325_reachable(self):
         result_ids = set()
         for record in self.data["sets"]:
             for group in record["groups"]:
@@ -135,7 +144,7 @@ class ReplyCatalogueTests(unittest.TestCase):
                                      audience=record["audiences"][0],
                                      humor_allowed=True, recent=recent)
                 self.assertEqual(exhausted["status"], "repeat_suppressed")
-        self.assertEqual(len(result_ids), 2165)
+        self.assertEqual(len(result_ids), 3325)
 
     def test_normalized_unique_globally(self):
         replies = [v for x in self.data["sets"] for g in x["groups"] for v in g["replies"]]
@@ -305,12 +314,12 @@ class ReplyCatalogueTests(unittest.TestCase):
         technical = [x for x in self.data["sets"]
                      if x["audiences"] == ["community_bots"]
                      and x["id"] != "rules_explain"]
-        self.assertEqual(len(technical), 8)
+        self.assertEqual(len(technical), 16)
         for item in technical:
             source = item["source"]
             self.assertEqual(source["repository"], "Treninem/Impuls")
             self.assertRegex(source["ref"], r"^[0-9a-f]{40}$")
-            self.assertTrue(source["path"].startswith("docs/"))
+            self.assertTrue(source["path"].startswith("docs/") or source["path"] == "README.md")
             self.assertEqual(source["verification"], "source_code_snapshot_not_live_deployment")
 
 
