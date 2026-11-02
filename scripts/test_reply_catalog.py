@@ -319,7 +319,7 @@ class ReplyCatalogueTests(unittest.TestCase):
             source = item["source"]
             self.assertEqual(source["repository"], "Treninem/Impuls")
             self.assertRegex(source["ref"], r"^[0-9a-f]{40}$")
-            self.assertTrue(source["path"].startswith("docs/"))
+            self.assertTrue(source["path"].startswith("docs/") or source["path"] == "README.md")
             self.assertEqual(source["verification"], "source_code_snapshot_not_live_deployment")
 
 
