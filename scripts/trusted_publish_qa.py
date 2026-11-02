@@ -1,0 +1,222 @@
+"""Trusted maintainer publisher for one reviewed qa.v1 record.
+
+This module is deliberately NOT imported by bot runtime. It requires an
+explicit maintainer opt-in and a GitHub token supplied only to the isolated
+publisher process. It never accepts raw chat logs.
+"""
+from __future__ import annotations
+
+import argparse
+import base64
+import hashlib
+import json
+import os
+import re
+import sys
+import urllib.error
+import urllib.request
+from pathlib import Path
+from urllib.parse import quote, urlsplit
+
+REPO = "Treninem/Bot-Knowledge"
+API = "https://api.github.com"
+RAW_KEYS = {"chat_id","user_id","telegram_id","username","first_name","last_name","phone","email",
+            "password","cookie","token","raw_message","raw_chat","chat_history","private_quote"}
+PII = (
+    re.compile(r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b"),
+    re.compile(r"(?<!\d)(?:\+?\d[\s().-]*){10,}(?!\d)"),
+    re.compile(r"\b(?:token|password|secret|api[_-]?key)\s*[:=]", re.I),
+)
+ID = re.compile(r"[A-Za-z0-9][A-Za-z0-9_-]{0,95}\Z")
+
+
+class PublishError(RuntimeError):
+    pass
+
+
+def _api(path: str, *, token: str, method: str = "GET", data: dict | None = None, accept: str = "application/vnd.github+json") -> dict:
+    body = None if data is None else json.dumps(data).encode()
+    request = urllib.request.Request(
+        API + path, data=body, method=method,
+        headers={
+            "Authorization": "Bearer " + token,
+            "Accept": accept,
+            "X-GitHub-Api-Version": "2022-11-28",
+            "User-Agent": "Bot-Knowledge-Trusted-Publisher/1.0",
+            "Content-Type": "application/json",
+        },
+    )
+    try:
+        with urllib.request.urlopen(request, timeout=15) as response:
+            payload = response.read(8 * 1024 * 1024)
+    except urllib.error.HTTPError as exc:
+        detail = exc.read(2000).decode("utf-8", "replace")
+        raise PublishError(f"GitHub HTTP {exc.code}: {detail}") from exc
+    value = json.loads(payload.decode("utf-8")) if payload else {}
+    if not isinstance(value, dict):
+        raise PublishError("unexpected GitHub response")
+    return value
+
+
+def _contents(path: str, *, token: str, ref: str) -> tuple[dict, bytes]:
+    value = _api(f"/repos/{REPO}/contents/{quote(path)}?ref={quote(ref)}", token=token)
+    raw = base64.b64decode(value.get("content", ""), validate=False)
+    return value, raw
+
+
+def _safe_text(value: object, limit: int) -> str:
+    if not isinstance(value, str) or not value.strip() or len(value) > limit:
+        raise PublishError("invalid text")
+    text = value.strip()
+    if any(pattern.search(text) for pattern in PII):
+        raise PublishError("potential personal data or secret")
+    return text
+
+
+def validate_payload(data: dict) -> tuple[str, dict, str]:
+    if not isinstance(data, dict) or set(data) != {"section_path","record","source","origin","reviewed","knowledge_version"}:
+        raise PublishError("candidate fields must be section_path, record, source, origin, reviewed, knowledge_version")
+    if data["reviewed"] is not True or data["origin"] not in {"synthetic","approved_aggregate","verified_source"}:
+        raise PublishError("candidate must be reviewed and have an allowed origin")
+    path = data["section_path"]
+    if not isinstance(path, str) or not re.fullmatch(r"packs/[A-Za-z0-9._/-]+\.json", path) or ".." in path:
+        raise PublishError("unsafe section path")
+    version = data["knowledge_version"]
+    if not isinstance(version, str) or not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9._-]{0,62}", version):
+        raise PublishError("invalid knowledge_version")
+    source = _safe_text(data["source"], 500)
+    parsed = urlsplit(source)
+    if parsed.scheme != "https" or not parsed.hostname or parsed.username or parsed.password:
+        raise PublishError("source must be public HTTPS")
+    record = data["record"]
+    if not isinstance(record, dict) or set(record) - {"id","question","aliases","answer","variants","source","audiences","contexts","language","constraints"}:
+        raise PublishError("unsupported qa.v1 record fields")
+    rid = record.get("id")
+    if not isinstance(rid, str) or not ID.fullmatch(rid):
+        raise PublishError("invalid record id")
+    normalized = {
+        "id": rid,
+        "question": _safe_text(record.get("question"), 500),
+        "aliases": [_safe_text(x, 500) for x in record.get("aliases", [])],
+        "answer": _safe_text(record.get("answer"), 1600),
+        "variants": [_safe_text(x, 1600) for x in record.get("variants", [])],
+        "source": source,
+    }
+    if not isinstance(record.get("aliases", []), list) or len(normalized["aliases"]) > 16:
+        raise PublishError("invalid aliases")
+    if not isinstance(record.get("variants", []), list) or len(normalized["variants"]) > 8:
+        raise PublishError("invalid variants")
+    for optional in ("audiences","contexts","language","constraints"):
+        if optional in record:
+            normalized[optional] = record[optional]
+    raw = json.dumps(normalized, ensure_ascii=False).casefold()
+    if any(key in raw for key in RAW_KEYS):
+        raise PublishError("raw/private metadata marker detected")
+    return path, normalized, version
+
+
+def _normalized_question(text: str) -> str:
+    return " ".join(re.findall(r"[a-zа-яё0-9]+", text.casefold().replace("ё","е")))
+
+
+def prepare_changes(candidate: dict, *, token: str, base: str) -> tuple[str, str, str, str]:
+    path, record, version = validate_payload(candidate)
+    pack_meta, pack_raw = _contents(path, token=token, ref=base)
+    manifest_meta, manifest_raw = _contents("manifest.json", token=token, ref=base)
+    pack = json.loads(pack_raw.decode("utf-8"))
+    manifest = json.loads(manifest_raw.decode("utf-8"))
+    catalog = pack.get("catalog", {})
+    rows_name = catalog.get("records", "records")
+    if catalog.get("adapter") != "qa.v1" or pack.get("schema_version") != 1 or not isinstance(pack.get(rows_name), list):
+        raise PublishError("target is not a supported qa.v1 package")
+    rows = pack[rows_name]
+    qkey = _normalized_question(record["question"])
+    if any(row.get("id") == record["id"] for row in rows):
+        raise PublishError("duplicate record id")
+    if any(_normalized_question(str(row.get("question",""))) == qkey for row in rows):
+        raise PublishError("duplicate canonical question")
+    # Same source/question aliases with a different answer need human resolution,
+    # not an automatic overwrite.
+    aliases = {_normalized_question(x) for x in [record["question"], *record["aliases"]]}
+    for row in rows:
+        existing = {_normalized_question(x) for x in [str(row.get("question","")), *row.get("aliases", [])]}
+        if aliases & existing and str(row.get("answer","")).strip() != record["answer"]:
+            raise PublishError("possible contradiction; keep as candidate for manual resolution")
+    rows.append(record)
+    pack["pack_version"] = version
+    pack_bytes = (json.dumps(pack, ensure_ascii=False, indent=2) + "\n").encode("utf-8")
+    digest = hashlib.sha256(pack_bytes).hexdigest()
+    if manifest.get("schema_version") != 1 or not isinstance(manifest.get("packs"), list):
+        raise PublishError("unsupported manifest")
+    matches = [row for row in manifest["packs"] if row.get("path") == path]
+    if len(matches) != 1:
+        raise PublishError("target package must already be registered exactly once")
+    matches[0]["sha256"] = digest
+    manifest["knowledge_version"] = version
+    manifest_bytes = (json.dumps(manifest, ensure_ascii=False, indent=2) + "\n").encode("utf-8")
+    return path, pack_bytes.decode(), manifest_bytes.decode(), pack_meta["sha"] + ":" + manifest_meta["sha"]
+
+
+def _put(path: str, content: str, *, token: str, branch: str, sha: str, message: str) -> str:
+    value = _api(
+        f"/repos/{REPO}/contents/{quote(path)}", token=token, method="PUT",
+        data={"message": message, "content": base64.b64encode(content.encode()).decode(), "branch": branch, "sha": sha},
+    )
+    return value["commit"]["sha"]
+
+
+def _checks_green(sha: str, *, token: str) -> bool:
+    checks = _api(f"/repos/{REPO}/commits/{sha}/check-runs?per_page=100", token=token, accept="application/vnd.github+json")
+    rows = checks.get("check_runs", [])
+    if not rows:
+        return False
+    return all(row.get("status") == "completed" and row.get("conclusion") in {"success","neutral","skipped"} for row in rows)
+
+
+def publish(candidate: dict, *, token: str, base: str, branch: str, skip_ci: bool, merge_if_green: bool) -> str:
+    if os.getenv("BK_TRUSTED_PUBLISHER") != "1":
+        raise PublishError("set BK_TRUSTED_PUBLISHER=1 only in isolated maintainer environment")
+    if os.getenv("BOT_TOKEN") or os.getenv("IMPULS_BOT_TOKEN"):
+        raise PublishError("refusing to run beside bot runtime credentials")
+    path, pack_text, manifest_text, shas = prepare_changes(candidate, token=token, base=base)
+    pack_sha, manifest_sha = shas.split(":")
+    base_ref = _api(f"/repos/{REPO}/git/ref/heads/{quote(base)}", token=token)
+    base_sha = base_ref["object"]["sha"]
+    _api(f"/repos/{REPO}/git/refs", token=token, method="POST", data={"ref":"refs/heads/"+branch,"sha":base_sha})
+    suffix = " [skip ci]" if skip_ci else ""
+    head = _put(path, pack_text, token=token, branch=branch, sha=pack_sha, message="knowledge: publish reviewed qa.v1 record"+suffix)
+    # Fetch manifest SHA again from branch after the first commit; file content
+    # is unchanged, but this avoids a stale API precondition.
+    mm, _ = _contents("manifest.json", token=token, ref=branch)
+    head = _put("manifest.json", manifest_text, token=token, branch=branch, sha=mm["sha"], message="manifest: pin reviewed knowledge"+suffix)
+    pr = _api(f"/repos/{REPO}/pulls", token=token, method="POST", data={
+        "title": f"Knowledge: {candidate['record']['id']}",
+        "head": branch, "base": base, "draft": True,
+        "body": "Reviewed qa.v1 publication candidate. Source and privacy were validated locally; exact-head checks remain authoritative.",
+    })
+    if merge_if_green:
+        if skip_ci:
+            raise PublishError("cannot auto-merge when CI was deliberately skipped")
+        if not _checks_green(head, token=token):
+            raise PublishError("PR opened, but checks are not green; merge refused")
+        _api(f"/repos/{REPO}/pulls/{pr['number']}/merge", token=token, method="PUT", data={"sha":head,"merge_method":"squash"})
+    return pr["html_url"]
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--input", type=Path, required=True)
+    parser.add_argument("--base", default="main")
+    parser.add_argument("--branch", required=True)
+    parser.add_argument("--skip-ci", action="store_true")
+    parser.add_argument("--merge-if-green", action="store_true")
+    args = parser.parse_args()
+    token = os.getenv("GITHUB_TOKEN", "")
+    if not token:
+        raise SystemExit("GITHUB_TOKEN is required only in trusted publisher environment")
+    candidate = json.loads(args.input.read_text(encoding="utf-8"))
+    print(publish(candidate, token=token, base=args.base, branch=args.branch, skip_ci=args.skip_ci, merge_if_green=args.merge_if_green))
+
+
+if __name__ == "__main__":
+    main()
