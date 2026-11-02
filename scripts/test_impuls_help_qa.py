@@ -65,6 +65,21 @@ class ImpulsPublicHelpTests(unittest.TestCase):
                          "respect_privacy_examples","explain_previous_step"} <= ids)
 
 
+    def test_public_scope_batch_2026_11_02_45(self):
+        """Preserve vetted, synthetic help topics and their isolated audience."""
+        new_ids = ["moderation_media_context","moderation_mass_mentions","moderation_spoilers","moderation_public_shaming","moderation_multiple_rules","moderation_rule_proof","conversation_edited_prompt","conversation_code_block","conversation_conditional_setting","conversation_group_interrupt","conversation_emoji_only","conversation_topic_thread","settings_two_admins","settings_pending_state","settings_testing_vs_live","settings_explain_without_access","settings_revert_uncertainty","learning_conflicting_feedback","learning_withdraw_candidate","learning_copyright_examples","learning_review_vs_merge","learning_one_turn_style","learning_translated_rule","game_two_parallel_sessions","game_chat_message_vs_move","game_pause_claim","raffle_timezone_deadline","raffle_entry_verification","pulses_balance_unknown","pulses_expiry_unknown","privacy_screenshot_metadata","privacy_synthetic_label","help_no_action_receipt","help_missing_permission_scope","help_partial_outage"]
+        records = {r["id"]: r for r in self.pack["records"]}
+        self.assertTrue(set(new_ids) <= records.keys())
+        self.assertGreaterEqual(len(records), 183)
+        self.assertGreaterEqual(sum(1 + len(r.get("variants", [])) for r in records.values()), 524)
+        for key in new_ids:
+            row = records[key]
+            self.assertEqual(row["audiences"], ["impuls"])
+            self.assertEqual(row["contexts"], ["direct", "private", "group_addressed"])
+            self.assertEqual(row["language"], "ru")
+            self.assertEqual(len(row["variants"]), 2)
+            self.assertTrue(row["source"].startswith("https://github.com/Treninem/Bot-Knowledge/blob/c919aaac8f4facae806a274aa000311c7320c5e2/"))
+
     def test_contextual_qa_additions(self):
         """Pinned public sources and genuine context distinctions for the latest batch."""
         new_ids = {
