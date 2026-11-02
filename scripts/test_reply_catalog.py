@@ -56,6 +56,7 @@ EXPECTED = {
     "ask_details_safely": 100,
     "estimate_effort": 100, "decision_record": 100,
     "parallel_work": 100, "scope_control": 100,
+    "suspicious_request": 100, "source_provenance": 100,
 }
 FORBIDDEN = {
     "user_id", "chat_id", "telegram_id", "username", "phone", "email",
@@ -136,16 +137,16 @@ class ReplyCatalogueTests(unittest.TestCase):
         options.update(kw)
         return self.catalog.reply(intent, **options)
 
-    def test_exact_87_questions_8700_replies(self):
+    def test_exact_89_questions_8900_replies(self):
         self.assertEqual(self.catalog.coverage, EXPECTED)
-        self.assertEqual(len(EXPECTED), 87)
-        self.assertEqual(sum(EXPECTED.values()), 8700)
+        self.assertEqual(len(EXPECTED), 89)
+        self.assertEqual(sum(EXPECTED.values()), 8900)
 
-    def test_exact_eighty_seven_full_100_sets(self):
-        self.assertEqual(len(self.catalog.coverage), 87)
+    def test_exact_eighty_nine_full_100_sets(self):
+        self.assertEqual(len(self.catalog.coverage), 89)
         self.assertTrue(all(value == 100 for value in self.catalog.coverage.values()))
 
-    def test_all_8700_reachable(self):
+    def test_all_8900_reachable(self):
         result_ids = set()
         for record in self.data["sets"]:
             for group in record["groups"]:
@@ -162,7 +163,7 @@ class ReplyCatalogueTests(unittest.TestCase):
                                      audience=record["audiences"][0],
                                      humor_allowed=True, recent=recent)
                 self.assertEqual(exhausted["status"], "repeat_suppressed")
-        self.assertEqual(len(result_ids), 8700)
+        self.assertEqual(len(result_ids), 8900)
 
     def test_normalized_unique_globally(self):
         replies = [v for x in self.data["sets"] for g in x["groups"] for v in g["replies"]]
