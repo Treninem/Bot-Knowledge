@@ -5,6 +5,7 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+MAX_CONSUMER_PACK_BYTES = 2 * 1024 * 1024
 FORBIDDEN_KEYS = {
     "user_id", "chat_id", "telegram_id", "username", "phone", "email",
     "token", "cookie", "password", "secret", "first_name", "last_name",
@@ -53,6 +54,8 @@ def main() -> int:
             errors.append(f"missing pack: {relative}")
             continue
         payload = path.read_bytes()
+        if len(payload) > MAX_CONSUMER_PACK_BYTES:
+            errors.append(f"pack exceeds the 2 MiB consumer download limit: {relative}")
         actual = hashlib.sha256(payload).hexdigest()
         expected = str(item.get("sha256", ""))
         if actual != expected:
