@@ -276,7 +276,7 @@ screening against the previous 6300 responses. The candidate is now
 **66 questions / 6600 replies**, all **66/66 complete 100/100**, with **no partial**
 sets. Existing texts and IDs are untouched. No new ImPULS commands or rights,
 automatic sanctions, private chat material, external actions or live rollout.
-Source pack SHA-256 on actual UTF-8 bytes: `17fa9ee98a90ec2d329263dfad1e3b814d2401e0b3bf6d305f2d89a4f9d93d06`;
+Source pack SHA-256 on actual UTF-8 bytes: `c772564e8db3d05093e3abfa15a5e73a40cc80f18b595016f16f5f88629b0494`;
 manifest version/cache identity is `2026.11.02.23`. Selector still needs
 caller-confirmed intent, group, audience, address and local authorization;
 its data alone does not imply a deployed feature. Human semantic sampling and
