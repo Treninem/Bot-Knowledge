@@ -6,8 +6,8 @@ This candidate adds a **new, separate** SHA-pinned pack. It does not rewrite the
 
 ## Measured coverage
 
-**83 distinct canonical questions, 8300 authored answers, 27 packs total**.
-All 83 questions are complete at 100/100; there are no partial sets in this snapshot. These are reply
+**87 distinct canonical questions, 8700 authored answers, 27 packs total**.
+All 87 questions are complete at 100/100; there are no partial sets in this snapshot. These are reply
 variants, not 443 trained model skills or new executable ImPULS commands.
 
 | Question / intent | Count / 100 | Audience |
@@ -97,6 +97,10 @@ variants, not 443 trained model skills or new executable ImPULS commands.
 | Как подобрать подходящий тон ответа? (`tone_adaptation`) | 100 | all AI bots |
 | Как понять непрямой смысл сообщения? (`indirect_meaning`) | 100 | all AI bots |
 | Как уточнять детали, не собирая лишних сведений? (`ask_details_safely`) | 100 | all AI bots |
+| Как оценить объём работы? (`estimate_effort`) | 100 | all AI bots |
+| Как правильно зафиксировать решение? (`decision_record`) | 100 | all AI bots |
+| Как работать параллельно и не мешать друг другу? (`parallel_work`) | 100 | all AI bots |
+| Как не раздувать задачу по ходу работы? (`scope_control`) | 100 | all AI bots |
 ## Source and factual limits
 
 The eight ImPULS-specific question sets are abstract user-facing help, grounded
@@ -317,3 +321,7 @@ This reconciled proposal adds the **other five complete original intents** to fr
 ## 2026-11-02 context-aware expression, implicit meanings and minimal-data intake v2026.11.02.28
 
 Fresh main `e45e6ee46c32814caca9cc639e399fc6009b17f2`, existing **80 questions / 8000 answers**, zero partial. Three complete new independent general RU intents: `tone_adaptation` (register by audience and stakes), `indirect_meaning` (pragmatic hints, sarcasm, boundaries, quoted instructions), and `ask_details_safely` (minimization in support, account, location, documents and personal topics). Each has ten context groups with independently written `when`/`avoid` guards and ten candidate answers; **+300 original accepted responses**, all normalized-distinct from the previous 8000 and each other. Proposed catalogue **83 questions / 8300 answers**, all complete at 100/100 and zero partials. Cross-pool three-word Jaccard near-match sweep: max 0.250, none ≥0.58 (semantic accuracy still needs human judgement). No personal records, unconfirmed ImPULS features, executable actions or client rollout. Actual pack UTF-8 SHA-256 `f84ea33a693f105a708c4fa30a726b3ccd4cccbd488e86aeca5b8ae754719c0c`; manifest version/cache key `2026.11.02.28`; exact-head CI and post-main CI mandatory before publication.
+
+## 2026-11-02 recovered independent work-skills v2026.11.02.29
+
+Verified main baseline `a5ed5ed153cea7d1f4fe29bf0bb14bb057da2ba9`: 83 canonical intents / 8300 replies. Reused four original complete synthetic general skills authored earlier in commit `9cb2432663e01306618f223f8ec7992bb9054ec4` but not previously merged: `estimate_effort`, `decision_record`, `parallel_work`, and `scope_control`; each 10 guarded context groups × 10 Russian responses, **+400** new-to-main unique replies. Result **87 questions / 8700 replies**, all 87 at 100/100, zero partial. Accepted previous 8300 are unchanged. Exact normalization across 8700: no collisions; three-word Jaccard sweep against previous 8300 and between candidate replies: no pairs ≥0.58, max 0.200. This does not prove perfect semantic variety. Synthetic only; no private chats, product-specific commands, sanctions, credentials, powers or live consumer change. Actual UTF-8 SHA-256 `231586e9dd74159824d5ca9e6406ec7d963befae286e2a75e8dcb1b63b8a7ef9`; manifest version/cache identity `2026.11.02.29`. Publication still requires exact-head CI and post-main CI.
