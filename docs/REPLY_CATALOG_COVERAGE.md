@@ -6,8 +6,8 @@ This candidate adds a **new, separate** SHA-pinned pack. It does not rewrite the
 
 ## Measured coverage
 
-**32 distinct canonical questions, 2465 authored answers, 26 packs total**.
-Twenty-three questions are complete at 100/100, and 9 remain partial. These are reply
+**35 distinct canonical questions, 2765 authored answers, 26 packs total**.
+Twenty-six questions are complete at 100/100, and 9 remain partial. These are reply
 variants, not 443 trained model skills or new executable ImPULS commands.
 
 | Question / intent | Count / 100 | Audience |
@@ -44,6 +44,9 @@ variants, not 443 trained model skills or new executable ImPULS commands.
 | Помоги сформулировать цель (`goal_clarity`) | 100 | all AI bots |
 | Помоги составить план (`project_plan`) | 100 | all AI bots |
 | Оцени идею (`idea_review`) | 100 | all AI bots |
+| Написать ясное сообщение (`message_draft`) | 100 | all AI bots |
+| Освоить новый навык (`learning_path`) | 100 | all AI bots |
+| Вести групповое обсуждение (`group_discussion`) | 100 | all AI bots |
 
 ## Source and factual limits
 
@@ -179,3 +182,7 @@ padding incomplete technical FAQ with cosmetic variants.
 ## 2026-11-02 context-aware planning and evaluation batch (2026.11.02.10)
 
 Added **300 original replies in 3 new fully completed (100/100) canonical intents**: goal_clarity, project_plan, idea_review. Each has ten separately scoped contexts and ten authored replies per context; no template multiplication, fake product functions, or live-bot writes. Existing 29 intents and their 2165 replies are preserved. Selector still requires explicit intent, audience, local permission, and caller-validated context; no automatic NLP classifier or consumer deployment is claimed. Exact normalized deduplication was run against the existing catalogue, and the manifest SHA was recomputed over actual UTF-8 source bytes. Human semantic review and exact-head CI remain required before merge.
+
+## Additional 2026-11-02 cross-context batch (2026.11.02.11)
+
+Three more new canonical questions received 100 independently authored replies each: `message_draft` (writing clear requests, questions, updates, refusals, complaints, feedback, coordination, instructions, public announcements, corrections), `learning_path` (ten stages of learning), and `group_discussion` (ten non-enforcement discussion contexts). Added +300 on top of prior +300 in this PR: 35 canonical sets, 2765 total catalogue replies, 26 full and 9 partial. All 600 new replies are written as individual original strings, not generated cartesian permutations; SHA-256 is recalculated on actual UTF-8 bytes and bound to version/cache identity. No bot powers or moderation sanctions are granted; group-specific replies require caller-validated context.
