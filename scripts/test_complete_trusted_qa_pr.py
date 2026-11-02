@@ -1,0 +1,105 @@
+"""Offline, no-network safety tests for trusted reviewed qa.v1 completion."""
+from __future__ import annotations
+
+import copy
+import unittest
+from unittest.mock import patch
+
+try:
+    from scripts import complete_trusted_qa_pr as finalizer
+except ModuleNotFoundError:
+    import complete_trusted_qa_pr as finalizer
+
+
+HEAD = "a" * 40
+BASE = "b" * 40
+
+
+def pr(draft=False):
+    return {
+        "number": 123, "state": "open", "draft": draft, "node_id": "PR_123",
+        "head": {"sha": HEAD, "ref": "trusted/qa-123", "repo": {"full_name": finalizer.REPO}},
+        "base": {"ref": "main", "sha": BASE},
+        "body": "Reviewed qa.v1 publication candidate. Source and privacy were validated locally.",
+        "mergeable": True,
+    }
+
+
+def run(path, name, *, head=HEAD, conclusion="success", status="completed", event="pull_request"):
+    return {"id": 99, "path": path, "name": name, "head_sha": head,
+            "head_branch": "trusted/qa-123", "event": event,
+            "status": status, "conclusion": conclusion, "created_at": "2026-11-02T00:00:00Z"}
+
+
+class GuardTests(unittest.TestCase):
+    def test_guard_accepts_pinned_publisher_pr(self):
+        self.assertEqual(finalizer.guard_pr(pr(), number=123, expected_head=HEAD, base="main"), BASE)
+
+    def test_legacy_or_other_pr_refused(self):
+        for mutation in (
+            lambda p: p["head"].update(sha="c" * 40),
+            lambda p: p["head"]["repo"].update(full_name="someone/other"),
+            lambda p: p.update(body="Some unrelated PR"),
+            lambda p: p["base"].update(ref="develop"),
+            lambda p: p.update(state="closed"),
+        ):
+            value = pr()
+            mutation(value)
+            with self.subTest(value=value), self.assertRaises(finalizer.FinalizeError):
+                finalizer.guard_pr(value, number=123, expected_head=HEAD, base="main")
+
+    def test_exact_head_run_cannot_be_replaced_by_merge_ref(self):
+        merge_run = run(*finalizer.EXACT, head="c" * 40)
+        self.assertIsNone(finalizer.choose_run([merge_run], HEAD, "trusted/qa-123", finalizer.EXACT))
+        good = run(*finalizer.EXACT)
+        self.assertEqual(finalizer.choose_run([merge_run, good], HEAD, "trusted/qa-123", finalizer.EXACT), good)
+
+    def test_wrong_branch_or_workflow_refused(self):
+        fake = run(".github/workflows/other.yml", "Trusted qa.v1 publisher exact-head")
+        self.assertIsNone(finalizer.choose_run([fake], HEAD, "trusted/qa-123", finalizer.EXACT))
+
+    def test_unfinished_ci_times_out_not_green(self):
+        with patch.object(finalizer, "request", return_value={"workflow_runs": [run(*finalizer.EXACT)]}):
+            with self.assertRaisesRegex(finalizer.FinalizeError, "not completed"):
+                finalizer.wait_ci(HEAD, "trusted/qa-123", token="fixture", timeout=0, interval=1)
+
+    def test_failed_ci_does_not_fall_back_to_old_success(self):
+        failure = run(*finalizer.EXACT, conclusion="failure")
+        failure["id"] = 101
+        prior = run(*finalizer.EXACT)
+        prior["id"] = 100
+        quality = run(*finalizer.QUALITY)
+        with patch.object(finalizer, "request", return_value={"workflow_runs": [prior, quality, failure]}):
+            with self.assertRaisesRegex(finalizer.FinalizeError, "failed"):
+                finalizer.wait_ci(HEAD, "trusted/qa-123", token="fixture", timeout=0, interval=1)
+
+    def test_both_exact_and_quality_required(self):
+        a, b = run(*finalizer.EXACT), run(*finalizer.QUALITY)
+        with patch.object(finalizer, "request", return_value={"workflow_runs": [a, b]}):
+            result = finalizer.wait_ci(HEAD, "trusted/qa-123", token="fixture", timeout=0, interval=1)
+        self.assertEqual(result["exact_head"]["conclusion"], "success")
+        self.assertEqual(result["quality"]["conclusion"], "success")
+
+    def test_untrusted_environment_and_bot_credentials_refused(self):
+        with patch.dict("os.environ", {"BK_TRUSTED_PUBLISHER": "1", "IMPULS_BOT_TOKEN": "local-bot"}, clear=True):
+            with self.assertRaises(finalizer.FinalizeError):
+                finalizer.trusted_environment("fixture")
+        with patch.dict("os.environ", {}, clear=True):
+            with self.assertRaises(finalizer.FinalizeError):
+                finalizer.trusted_environment("fixture")
+
+    def test_no_merge_when_main_moves(self):
+        values = iter([pr(), {"object": {"sha": BASE}}])
+        def fetch(path, **kwargs):
+            return next(values)
+        with patch.dict("os.environ", {"BK_TRUSTED_PUBLISHER": "1"}, clear=True):
+            with patch.object(finalizer, "request", side_effect=fetch):
+                with patch.object(finalizer, "verify_append_only", return_value={"path": "packs/ru/knowledge_format.json"}):
+                    with patch.object(finalizer, "wait_ci", return_value={"exact_head": {"conclusion": "success"}}):
+                        with self.assertRaises((StopIteration, finalizer.FinalizeError)):
+                            finalizer.finalize(number=123, expected_head=HEAD, token="fixture", base="main", merge=True,
+                                               ready=True, timeout=0, post_timeout=0, interval=1, report={})
+
+
+if __name__ == "__main__":
+    unittest.main()
