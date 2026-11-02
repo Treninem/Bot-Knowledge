@@ -6,8 +6,8 @@ This candidate adds a **new, separate** SHA-pinned pack. It does not rewrite the
 
 ## Measured coverage
 
-**29 distinct canonical questions, 2165 authored answers, 26 packs total**.
-Twenty questions are complete at 100/100, and 9 remain partial. These are reply
+**32 distinct canonical questions, 2465 authored answers, 26 packs total**.
+Twenty-three questions are complete at 100/100, and 9 remain partial. These are reply
 variants, not 443 trained model skills or new executable ImPULS commands.
 
 | Question / intent | Count / 100 | Audience |
@@ -41,6 +41,9 @@ variants, not 443 trained model skills or new executable ImPULS commands.
 | Поддержать разговор (`conversation_followup`) | 100 | all AI bots |
 | Почему это не работает? (`diagnose_problem`) | 100 | all AI bots |
 | Как проверить достоверность? (`verify_claim`) | 100 | all AI bots |
+| Помоги сформулировать цель (`goal_clarity`) | 100 | all AI bots |
+| Помоги составить план (`project_plan`) | 100 | all AI bots |
+| Оцени идею (`idea_review`) | 100 | all AI bots |
 
 ## Source and factual limits
 
@@ -172,3 +175,7 @@ only after a completed exact-head PR workflow and merge; live consumer integrati
 and post-main CI are separate verification steps. Reviewer must assess meaningful
 similarity beyond string-level deduplication, follow actual test results, and avoid
 padding incomplete technical FAQ with cosmetic variants.
+
+## 2026-11-02 context-aware planning and evaluation batch (2026.11.02.10)
+
+Added **300 original replies in 3 new fully completed (100/100) canonical intents**: goal_clarity, project_plan, idea_review. Each has ten separately scoped contexts and ten authored replies per context; no template multiplication, fake product functions, or live-bot writes. Existing 29 intents and their 2165 replies are preserved. Selector still requires explicit intent, audience, local permission, and caller-validated context; no automatic NLP classifier or consumer deployment is claimed. Exact normalized deduplication was run against the existing catalogue, and the manifest SHA was recomputed over actual UTF-8 source bytes. Human semantic review and exact-head CI remain required before merge.
