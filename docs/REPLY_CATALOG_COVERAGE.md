@@ -6,8 +6,8 @@ This candidate adds a **new, separate** SHA-pinned pack. It does not rewrite the
 
 ## Measured coverage
 
-**47 distinct canonical questions, 4060 authored answers, 26 packs total**.
-Thirty-nine questions are complete at 100/100, and 8 remain partial. These are reply
+**48 distinct canonical questions, 4240 authored answers, 26 packs total**.
+Forty questions are complete at 100/100, and 8 remain partial. These are reply
 variants, not 443 trained model skills or new executable ImPULS commands.
 
 | Question / intent | Count / 100 | Audience |
@@ -51,14 +51,16 @@ variants, not 443 trained model skills or new executable ImPULS commands.
 | Разбор возможного нарушения (`moderation_reasoning`) | 100 | chat moderators only |
 | Оригинальная короткая история (`micro_story`) | 100 | all AI bots |
 | Разбор противоречивой ситуации (`critical_analysis`) | 100 | all AI bots |
-| С чего начать пользоваться ImPULS? (`impuls_first_steps`) | 20 | community bots only |
-| Как задать ImPULS обычный вопрос? (`impuls_ask_ai`) | 20 | community bots only |
-| Почему ImPULS не отвечает на вопрос? (`impuls_ai_no_reply`) | 20 | community bots only |
-| Где посмотреть, как играть в игры ImPULS? (`impuls_game_help`) | 20 | community bots only |
-| Чем вопрос ImPULS отличается от команды? (`impuls_command_context`) | 20 | community bots only |
-| Может ли ImPULS переносить правила между чатами? (`impuls_chat_isolation`) | 20 | community bots only |
-| Как посмотреть версию и изменения ImPULS? (`impuls_release_info`) | 20 | community bots only |
-| Как понять, какие права у меня есть в ImPULS? (`impuls_check_permissions`) | 20 | community bots only |
+| С чего начать пользоваться ImPULS? (`impuls_first_steps`) | 30 | community bots only |
+| Как задать ImPULS обычный вопрос? (`impuls_ask_ai`) | 30 | community bots only |
+| Почему ImPULS не отвечает на вопрос? (`impuls_ai_no_reply`) | 30 | community bots only |
+| Где посмотреть, как играть в игры ImPULS? (`impuls_game_help`) | 30 | community bots only |
+| Чем вопрос ImPULS отличается от команды? (`impuls_command_context`) | 30 | community bots only |
+| Может ли ImPULS переносить правила между чатами? (`impuls_chat_isolation`) | 30 | community bots only |
+| Как посмотреть версию и изменения ImPULS? (`impuls_release_info`) | 30 | community bots only |
+| Как понять, какие права у меня есть в ImPULS? (`impuls_check_permissions`) | 30 | community bots only |
+
+| Как задать хороший вопрос? (`question_crafting`) | 100 | all AI bots |
 
 ## Source and factual limits
 
@@ -103,7 +105,7 @@ mutes, permissions or other actions.
 
 ## Integrity and verification
 
-The manifest version for the latest candidate is `2026.11.02.9`. The package is pinned by the current manifest SHA-256; size and digest must be checked from actual bytes; all 26 packs must be present and SHA-valid.
+The manifest version for the latest candidate is `2026.11.02.16`. The package is pinned by the current manifest SHA-256; size and digest must be checked from actual bytes; all 26 packs must be present and SHA-valid.
 The selector's cache identity is `(knowledge_version, pack_sha256)`; it
 does not change any running bot's cache.
 
@@ -214,3 +216,17 @@ Added **8 new canonical ImPULS FAQs with 20 original, audience-limited, context-
 ## 2026-11-02 reconciliation of older response extension PR #46 (2026.11.02.15)
 
 Older [PR #46](https://github.com/Treninem/Bot-Knowledge/pull/46), exact head `a21bfb79b50ef0804889ca662d8a285f073ac483`, contains **825 prior-authored** candidate replies for nine existing ImPULS question sets, based on an old 883-reply catalogue. Current main had independently gained 10 replies in each. To preserve the 100/100 per-question cap, we selected 10 candidates to exclude per set (90 total) using lexical-overlap scoring against existing records while retaining at least six replies in each new context group. **735 preserved original answers from that existing open PR migrated**, completing all nine sets from 22/19/16 to 100. These 735 were NOT newly authored during this run; they are new only to main after merging this candidate. Existing 3325 replies retained; resulting candidate: **47 questions, 4060 replies, 39 complete 100/100 and 8 partial**. The older extension PR and its different selector code remain open for separate compatibility review; no loss of its branches is claimed. Its eight source-bearing sets use current read-only `Treninem/Impuls` documents at `95dcb0fc0773f970e162a6009a4d889e880a2d0e`. All changes require actual exact-head CI, source SHA/cache, near-duplicate and full-repository regression checks before main merge. This is public synthetic content only, not operational bot permissions or live rollout.
+
+## 2026-11-02 current independent batch v2026.11.02.16
+
+Parent main: `fed2d0cf7bb66be6938c3c5d8d1326000fd0fe34` (after PR #49). **180 newly authored original Russian replies**:
+- Eight unfinished ImPULS-specific questions each get one carefully guarded context group
+  of 10 replies; each moves from 20/100 to 30/100. These are advice on safe use,
+  not unverified new commands or claims about live BotHost.
+- One new universal question `question_crafting` is complete at 100/100 with ten
+  meaningful contexts. It requires independent caller-selected group and authorization.
+- Total catalogue: **48 canonical questions, 4240 replies, 40 complete, 8 partial**.
+
+The manifest SHA-256 changes with the pack bytes, as does the version-keyed cache identity.
+All new replies are synthetic and use no private chat material. Merging requires real
+full-repository validation, exact-head CI and post-main CI. No consumer rollout is claimed.
