@@ -6,8 +6,8 @@ This candidate adds a **new, separate** SHA-pinned pack. It does not rewrite the
 
 ## Measured coverage
 
-**58 distinct canonical questions, 5800 authored answers, 27 packs total**.
-All 58 questions are complete at 100/100; there are no partial sets in this snapshot. These are reply
+**63 distinct canonical questions, 6300 authored answers, 27 packs total**.
+All 63 questions are complete at 100/100; there are no partial sets in this snapshot. These are reply
 variants, not 443 trained model skills or new executable ImPULS commands.
 
 | Question / intent | Count / 100 | Audience |
@@ -72,6 +72,11 @@ variants, not 443 trained model skills or new executable ImPULS commands.
 | Как нормально попросить о помощи? (`ask_for_help`) | 100 | all AI bots |
 | Как нормально признать свою ошибку? (`admit_mistake`) | 100 | all AI bots |
 | Как ответить спокойно в споре? (`calm_conflict_reply`) | 100 | all AI bots |
+| Как работает антиспам ImPULS? (`impuls_antispam_help`) | 100 | community bots only |
+| Как работает семья в ImPULS? (`impuls_family_help`) | 100 | community bots only |
+| Как работает бесплатный розыгрыш ImPULS? (`impuls_raffle_help`) | 100 | community bots only |
+| Как играть в «Цепочку слов» ImPULS? (`impuls_word_chain_help`) | 100 | community bots only |
+| Как работает журнал Пульсов ImPULS? (`impuls_pulse_journal_help`) | 100 | community bots only |
 ## Source and factual limits
 
 The eight ImPULS-specific question sets are abstract user-facing help, grounded
@@ -115,14 +120,14 @@ mutes, permissions or other actions.
 
 ## Integrity and verification
 
-The manifest version for this completed catalogue is `2026.11.02.20`. The package is pinned by the current manifest SHA-256; size and digest must be checked from actual bytes; all 27 packs must be present and SHA-valid.
+The manifest version for this completed catalogue is `2026.11.02.22`. The package is pinned by the current manifest SHA-256; size and digest must be checked from actual bytes; all 27 packs must be present and SHA-valid.
 The selector's cache identity is `(knowledge_version, pack_sha256)`; it
 does not change any running bot's cache.
 
 `python scripts/validate_pack.py`,
 `python scripts/test_reply_catalog.py --repository -v`, and the separate
 exact-head workflow must complete on the actual PR head SHA before merge.
-Test requirements cover all 5800 reachable responses, normalized duplicates,
+Test requirements cover all 6300 reachable responses, normalized duplicates,
 cross-pack exact matches, 100/100 completeness, opt-in, audience isolation,
 refusal conditions, repeat suppression and tampered SHA/cache snapshots.
 A review of semantic similarity remains necessary: an exact-string test cannot
@@ -250,3 +255,8 @@ Built from fresh main after parallel changes. Eight ImPULS-specific sets were al
 ## 2026-11-02 rules/help/communication batch 2026.11.02.20
 
 Six new independent questions were added at **100/100** each: `rule_exception`, `rule_conflict`, `safe_setting_change`, `ask_for_help`, `admit_mistake`, and `calm_conflict_reply`. Exact addition: **+600** original synthetic replies in 60 guarded context groups. Catalogue: **5200 → 5800 replies**, **52 → 58 canonical questions**, all complete at 100/100. These sets are general language/help knowledge, contain no product-specific powers, sanctions, PII, secrets or live-memory claims, and remain read-only reference responses selected by caller-provided context.
+
+
+## 2026-11-02 sourced ImPULS topic batch 2026.11.02.22
+
+Five new community-only ImPULS questions were added at **100/100** each: `impuls_antispam_help`, `impuls_family_help`, `impuls_raffle_help`, `impuls_word_chain_help`, and `impuls_pulse_journal_help`. Exact addition: **+500** original synthetic replies in 50 guarded context groups. Catalogue: **5800 → 6300 replies**, **58 → 63 questions**, all complete at 100/100. Product facts are source-pinned read-only to Treninem/Impuls `4db76f4ad682dd3bbc3da413af3fb53fd8f8a596` / `docs/RELEASES.md`; responses explicitly distinguish source candidates from unverified live BotHost rollout. No ImPULS code, private chats, tokens, sanctions, real balances or deployment actions were added.
