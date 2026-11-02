@@ -32,6 +32,8 @@ EXPECTED = {
     "chat_activities": 100, "moderation_reasoning": 100,
     "micro_story": 100, "critical_analysis": 100,
     "impuls_first_steps": 100, "impuls_ask_ai": 100, "impuls_ai_no_reply": 100, "impuls_game_help": 100, "impuls_command_context": 100, "impuls_chat_isolation": 100, "impuls_release_info": 100, "impuls_check_permissions": 100,
+    "tactful_refusal": 100, "simple_explanation": 100,
+    "clarifying_question": 100, "feedback_reply": 100,
 }
 FORBIDDEN = {
     "user_id", "chat_id", "telegram_id", "username", "phone", "email",
@@ -108,16 +110,16 @@ class ReplyCatalogueTests(unittest.TestCase):
         options.update(kw)
         return self.catalog.reply(intent, **options)
 
-    def test_exact_47_questions_4700_replies(self):
+    def test_exact_51_questions_5100_replies(self):
         self.assertEqual(self.catalog.coverage, EXPECTED)
-        self.assertEqual(len(EXPECTED), 47)
-        self.assertEqual(sum(EXPECTED.values()), 4700)
+        self.assertEqual(len(EXPECTED), 51)
+        self.assertEqual(sum(EXPECTED.values()), 5100)
 
-    def test_exact_forty_seven_full_100_sets(self):
-        self.assertEqual(len(self.catalog.coverage), 47)
+    def test_exact_fifty_one_full_100_sets(self):
+        self.assertEqual(len(self.catalog.coverage), 51)
         self.assertTrue(all(value == 100 for value in self.catalog.coverage.values()))
 
-    def test_all_4700_reachable(self):
+    def test_all_5100_reachable(self):
         result_ids = set()
         for record in self.data["sets"]:
             for group in record["groups"]:
@@ -134,7 +136,7 @@ class ReplyCatalogueTests(unittest.TestCase):
                                      audience=record["audiences"][0],
                                      humor_allowed=True, recent=recent)
                 self.assertEqual(exhausted["status"], "repeat_suppressed")
-        self.assertEqual(len(result_ids), 4700)
+        self.assertEqual(len(result_ids), 5100)
 
     def test_normalized_unique_globally(self):
         replies = [v for x in self.data["sets"] for g in x["groups"] for v in g["replies"]]
