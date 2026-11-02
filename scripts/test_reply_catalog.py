@@ -31,7 +31,7 @@ EXPECTED = {
     "message_draft": 100, "learning_path": 100, "group_discussion": 100,
     "chat_activities": 100, "moderation_reasoning": 100,
     "micro_story": 100, "critical_analysis": 100,
-    "impuls_first_steps": 20, "impuls_ask_ai": 20, "impuls_ai_no_reply": 20, "impuls_game_help": 20, "impuls_command_context": 20, "impuls_chat_isolation": 20, "impuls_release_info": 20, "impuls_check_permissions": 20,
+    "impuls_first_steps": 100, "impuls_ask_ai": 100, "impuls_ai_no_reply": 100, "impuls_game_help": 100, "impuls_command_context": 100, "impuls_chat_isolation": 100, "impuls_release_info": 100, "impuls_check_permissions": 100,
 }
 FORBIDDEN = {
     "user_id", "chat_id", "telegram_id", "username", "phone", "email",
@@ -108,29 +108,16 @@ class ReplyCatalogueTests(unittest.TestCase):
         options.update(kw)
         return self.catalog.reply(intent, **options)
 
-    def test_exact_47_questions_4060_replies(self):
+    def test_exact_47_questions_4700_replies(self):
         self.assertEqual(self.catalog.coverage, EXPECTED)
         self.assertEqual(len(EXPECTED), 47)
-        self.assertEqual(sum(EXPECTED.values()), 4060)
+        self.assertEqual(sum(EXPECTED.values()), 4700)
 
-    def test_exact_thirty_nine_full_100_sets(self):
-        self.assertEqual({k for k, v in self.catalog.coverage.items() if v == 100},
-                         {"what_discuss", "tell_joke", "explain_again", "bored",
-                          "need_decision", "boundaries", "idea_request",
-                          "thanks_reply", "farewell_reply", "disagreement_reply",
-                          "change_topic", "no_sure", "apology_help",
-                          "need_support", "lost_context", "dark_humor",
-                          "friendly_tease", "conversation_followup",
-                          "diagnose_problem", "verify_claim",
-                          "goal_clarity", "project_plan", "idea_review",
-                          "message_draft", "learning_path", "group_discussion",
-                          "chat_activities", "moderation_reasoning",
-                          "micro_story", "critical_analysis",
-                          "rules_explain", "chat_settings", "report_violations",
-                          "profile_access", "pulse_navigation", "moderator_commands",
-                          "private_panel", "danetka_start", "danetka_off"})
+    def test_exact_forty_seven_full_100_sets(self):
+        self.assertEqual(len(self.catalog.coverage), 47)
+        self.assertTrue(all(value == 100 for value in self.catalog.coverage.values()))
 
-    def test_all_4060_reachable(self):
+    def test_all_4700_reachable(self):
         result_ids = set()
         for record in self.data["sets"]:
             for group in record["groups"]:
@@ -147,7 +134,7 @@ class ReplyCatalogueTests(unittest.TestCase):
                                      audience=record["audiences"][0],
                                      humor_allowed=True, recent=recent)
                 self.assertEqual(exhausted["status"], "repeat_suppressed")
-        self.assertEqual(len(result_ids), 4060)
+        self.assertEqual(len(result_ids), 4700)
 
     def test_normalized_unique_globally(self):
         replies = [v for x in self.data["sets"] for g in x["groups"] for v in g["replies"]]
