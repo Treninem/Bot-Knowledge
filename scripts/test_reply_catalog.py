@@ -172,6 +172,25 @@ class ReplyCatalogueTests(unittest.TestCase):
                     walk(v)
         walk(self.data)
 
+    def test_new_contextual_sets_are_explicit_and_scoped(self):
+        general = ("diagnose_problem", "verify_claim")
+        community = ("rules_explain", "chat_settings", "report_violations",
+                     "profile_access", "pulse_navigation", "moderator_commands",
+                     "private_panel", "danetka_start", "danetka_off")
+        for intent in general:
+            self.assertEqual(self.ask(intent)["status"], "group_required")
+            self.assertEqual(self.ask(intent, group="invented")["status"], "wrong_group")
+        records = {item["id"]: item for item in self.data["sets"]}
+        for intent in community:
+            group = records[intent]["groups"][-1]["id"]
+            self.assertEqual(self.ask(intent, group=group)["status"], "wrong_audience")
+            self.assertEqual(self.ask(intent, group=group,
+                                      audience="community_bots")["status"], "ok")
+        self.assertEqual(self.catalog.reply("verify_claim",
+                         local_permission=True, group="sources")["status"], "not_addressed")
+        self.assertEqual(self.catalog.reply("diagnose_problem",
+                         addressed=True, group="symptom")["status"], "not_authorized")
+
     def test_disallow_unsolicited_output(self):
         self.assertEqual(self.catalog.reply("what_discuss")["status"], "not_addressed")
         self.assertEqual(self.catalog.reply("what_discuss", addressed=True)["status"],
