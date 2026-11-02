@@ -19,7 +19,10 @@ from datetime import datetime, timezone
 from pathlib import Path
 from urllib.parse import quote
 
-from validate_qa_v1 import validate_qa_pack
+try:
+    from scripts.validate_qa_v1 import validate_qa_pack
+except ModuleNotFoundError:  # direct python scripts/complete_trusted_qa_pr.py
+    from validate_qa_v1 import validate_qa_pack
 
 REPO = "Treninem/Bot-Knowledge"
 API = "https://api.github.com"
@@ -80,8 +83,8 @@ def guard_pr(pr: dict, *, number: int, expected_head: str, base: str, expected_b
         raise FinalizeError("invalid pinned expected-head SHA")
     if pr.get("number") != number or pr.get("state") != "open":
         raise FinalizeError("PR is missing or no longer open")
-    h, b = pr.get("head", {}), pr.get("base", {})
-    if h.get("sha") != expected_head or h.get("repo", {}).get("full_name") != REPO:
+    h, b = pr.get("head") or {}, pr.get("base") or {}
+    if h.get("sha") != expected_head or (h.get("repo") or {}).get("full_name") != REPO:
         raise FinalizeError("PR head SHA/repository changed; refuse stale approval")
     if b.get("ref") != base or base != "main":
         raise FinalizeError("unexpected PR base")
