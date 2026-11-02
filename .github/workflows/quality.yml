@@ -13,11 +13,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - name: Verify exact source SHA
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+          printf 'BK_QUALITY_CHECKOUT_SHA=%s\n' "$EXPECTED_SHA"
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
       - name: Validate language pack
         run: python scripts/validate_pack.py
+      - name: Reviewed publisher contract
+        run: python -m unittest scripts.test_trusted_publish_qa -q
       - name: Shared skills cache and live GitHub read benchmark
         run: python scripts/benchmark_shared_skills.py
       - name: Ten rounds of reusable communication playbooks
