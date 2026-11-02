@@ -89,16 +89,25 @@ class GuardTests(unittest.TestCase):
                 finalizer.trusted_environment("fixture")
 
     def test_no_merge_when_main_moves(self):
-        values = iter([pr(), {"object": {"sha": BASE}}])
+        calls = []
+        main_lookups = 0
         def fetch(path, **kwargs):
-            return next(values)
+            nonlocal main_lookups
+            calls.append(path)
+            if path.endswith("/pulls/123"):
+                return pr()
+            if path.endswith("/git/ref/heads/main"):
+                main_lookups += 1
+                return {"object": {"sha": BASE if main_lookups == 1 else "c" * 40}}
+            raise AssertionError("unexpected network operation: " + path)
         with patch.dict("os.environ", {"BK_TRUSTED_PUBLISHER": "1"}, clear=True):
             with patch.object(finalizer, "request", side_effect=fetch):
                 with patch.object(finalizer, "verify_append_only", return_value={"path": "packs/ru/knowledge_format.json"}):
                     with patch.object(finalizer, "wait_ci", return_value={"exact_head": {"conclusion": "success"}}):
-                        with self.assertRaises((StopIteration, finalizer.FinalizeError)):
+                        with self.assertRaisesRegex(finalizer.FinalizeError, "main advanced"):
                             finalizer.finalize(number=123, expected_head=HEAD, token="fixture", base="main", merge=True,
-                                               ready=True, timeout=0, post_timeout=0, interval=1, report={})
+                                               ready=False, timeout=0, post_timeout=0, interval=1, report={})
+        self.assertFalse(any("/merge" in path for path in calls))
 
 
 if __name__ == "__main__":
