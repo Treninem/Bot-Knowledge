@@ -89,7 +89,7 @@ class ImpulsPublicHelpTests(unittest.TestCase):
             self.assertEqual(len(row.get("variants", [])), 2)
             self.assertRegex(
                 row["source"],
-                r"^https://github\\.com/Treninem/Bot-Knowledge/blob/[0-9a-f]{40}/"
+                r"^https://github\.com/Treninem/Bot-Knowledge/blob/[0-9a-f]{40}/"
             )
             self.assertEqual(row["audiences"], ["impuls"])
             self.assertEqual(row["language"], "ru")
