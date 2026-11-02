@@ -80,6 +80,62 @@ class GuardTests(unittest.TestCase):
         self.assertEqual(result["exact_head"]["conclusion"], "success")
         self.assertEqual(result["quality"]["conclusion"], "success")
 
+    def test_append_only_manifest_integrity_and_cache_version(self):
+        import hashlib
+        import json
+        pack_path = "packs/ru/knowledge_format.json"
+        old_pack = {"schema_version": 1, "pack_version": "2026.11.02.1",
+                    "catalog": {"adapter": "qa.v1", "records": "records"},
+                    "records": [{"id": "existing", "question": "First?", "answer": "First."}]}
+        new_pack = copy.deepcopy(old_pack)
+        new_pack["pack_version"] = "2026.11.02.2"
+        new_pack["records"].append({"id": "next", "question": "Next?", "answer": "Next.",
+                                    "source": "https://github.com/Treninem/Bot-Knowledge"})
+        raw = (json.dumps(new_pack, ensure_ascii=False, indent=2) + "\n").encode("utf-8")
+        digest = hashlib.sha256(raw).hexdigest()
+        before = {"schema_version": 1, "knowledge_version": "2026.11.02.1",
+                  "packs": [{"path": pack_path, "sha256": "old-digest"},
+                            {"path": "packs/ru/intents.json", "sha256": "unchanged"}]}
+        after = copy.deepcopy(before)
+        after["knowledge_version"] = "2026.11.02.2"
+        after["packs"][0]["sha256"] = digest
+        contents = {
+            ("manifest.json", BASE): (before, b""),
+            ("manifest.json", HEAD): (after, b""),
+            (pack_path, BASE): (old_pack, b""),
+            (pack_path, HEAD): (new_pack, raw),
+        }
+        file_rows = [{"filename": "manifest.json", "status": "modified"},
+                     {"filename": pack_path, "status": "modified"}]
+        def fake_content(path, *, token, ref):
+            return contents[path, ref]
+        with patch.object(finalizer, "request", return_value=file_rows):
+            with patch.object(finalizer, "content", side_effect=fake_content):
+                with patch.object(finalizer, "validate_qa_pack", return_value=2):
+                    good = finalizer.verify_append_only(123, token="fixture", base_sha=BASE, head_sha=HEAD)
+                    self.assertEqual(good["pack_sha256"], digest)
+                    self.assertEqual(good["added_records"], 1)
+                    after["knowledge_version"] = before["knowledge_version"]
+                    with self.assertRaisesRegex(finalizer.FinalizeError, "knowledge_version"):
+                        finalizer.verify_append_only(123, token="fixture", base_sha=BASE, head_sha=HEAD)
+                    after["knowledge_version"] = "2026.11.02.2"
+                    after["packs"][0]["sha256"] = "0" * 64
+                    with self.assertRaisesRegex(finalizer.FinalizeError, "SHA-256"):
+                        finalizer.verify_append_only(123, token="fixture", base_sha=BASE, head_sha=HEAD)
+                    after["packs"][0]["sha256"] = digest
+                    new_pack["catalog"]["audiences"] = ["all_ai_bots"]
+                    with self.assertRaisesRegex(finalizer.FinalizeError, "catalog permissions"):
+                        finalizer.verify_append_only(123, token="fixture", base_sha=BASE, head_sha=HEAD)
+
+    def test_post_main_push_status_must_match_exact_merge_sha(self):
+        post = run(*finalizer.QUALITY, head=HEAD, event="push")
+        post["head_branch"] = "main"
+        merge_ref = run(*finalizer.QUALITY, head="b" * 40, event="push")
+        with patch.object(finalizer, "request", return_value={"workflow_runs": [merge_ref, post]}):
+            result = finalizer.wait_ci(HEAD, "main", token="fixture", timeout=0,
+                                       interval=1, post_main=True)
+        self.assertEqual(result["post_main_quality"]["head_sha"], HEAD)
+
     def test_untrusted_environment_and_bot_credentials_refused(self):
         with patch.dict("os.environ", {"BK_TRUSTED_PUBLISHER": "1", "IMPULS_BOT_TOKEN": "local-bot"}, clear=True):
             with self.assertRaises(finalizer.FinalizeError):
