@@ -123,3 +123,5 @@ Three partial questions (`thanks_reply`, `farewell_reply`, `disagreement_reply`)
 ## 2026-11-02 additional batch 2026.11.02.5
 
 Three further unfinished question sets gained 8 guarded groups and 88 original examples each: `change_topic`, `no_sure`, `apology_help`. Added **264** further replies (1147 → 1411), for **528** additions in this PR relative to its initial main. Three more intents reached 100/100; **13 complete** and **12 partial** remain. All original replies are retained. `default_group` keeps existing short response behavior when the caller omits the group; contextual alternatives require a deliberate choice. Claims about ImPULS functionality were not added in this batch.
+
+Integrity fix: an exact normalized reply collided with `dialogue.json`/`skills.json` and was replaced with a substantively distinct phrase before merge. This was detected by the real exact-head workflow; the earlier failure is not claimed as a pass.
