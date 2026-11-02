@@ -39,7 +39,7 @@ def main() -> None:
     ids = [x["id"] for x in moderation + social + english]
     inputs = [x.get("message", x.get("input", "")) for x in moderation + social + english]
     assert len(ids) == len(set(ids)) == 283
-    assert len(inputs) == len({" ".join(s.casefold().split()) for s in inputs}) == 212
+    assert len(inputs) == len({" ".join(s.casefold().split()) for s in inputs}) == 283
     for case in moderation:
         assert case["audiences"] == ["chat_moderators"]
         assert len(case["required_checks"]) >= 2
