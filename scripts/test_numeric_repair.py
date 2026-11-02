@@ -11,6 +11,7 @@ from pathlib import Path
 
 from numeric_repair import NumericRepair, ROOT, PACK, POLICY, compact, load_pack
 from search_knowledge import KnowledgeSearch
+from index_contract import expected_index_count
 
 book = load_pack()
 cases = book["cases"]
@@ -55,7 +56,7 @@ assert not prior_inputs.intersection(
 )
 engine = NumericRepair()
 index = KnowledgeSearch()
-assert len(index.records) == 1179, len(index.records)
+assert len(index.records) == expected_index_count(), len(index.records)
 for row in cases:
     state = {row["slot"]: row["current"], "other_slot": "untouched"}
     kwargs = dict(language=row["language"], state=state, slot=row["slot"],

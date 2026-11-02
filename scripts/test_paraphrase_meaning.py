@@ -12,6 +12,7 @@ sys.path.insert(0, str(ROOT / "scripts"))
 from paraphrase_meaning import MeaningParaphraser, normalized
 from validate_paraphrases import validate_paraphrase_pack
 from search_knowledge import KnowledgeSearch
+from index_contract import expected_index_count
 
 PACK = "packs/ru/meaning_paraphrases.json"
 
@@ -24,7 +25,7 @@ def main() -> None:
     assert len({e["id"] for e in entries}) == 48
     assert len({(e["language"], normalized(e["source"])) for e in entries}) == 48
     search = KnowledgeSearch()
-    assert len(search.records) == 1179, len(search.records)
+    assert len(search.records) == expected_index_count(), len(search.records)
     for e in entries:
         source, language = e["source"], e["language"]
         for tone in ("neutral", "casual"):

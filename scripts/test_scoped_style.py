@@ -6,6 +6,7 @@ from pathlib import Path
 from dialogue_preferences import ROOT, SCOPED_PACK, PreferenceSession, load_preferences, load_scoped_requests
 from validate_scoped_style import validate_scoped_style
 from search_knowledge import KnowledgeSearch
+from index_contract import expected_index_count
 
 assert validate_scoped_style(ROOT) == [], validate_scoped_style(ROOT)
 book = load_preferences()
@@ -13,7 +14,7 @@ scoped = load_scoped_requests()
 cases = scoped["cases"]
 assert len(cases) == 80
 index = KnowledgeSearch()
-assert len(index.records) == 1179, len(index.records)
+assert len(index.records) == expected_index_count(), len(index.records)
 for row in cases:
     session = PreferenceSession(book, scoped_book=scoped)
     answer = session.observe_scoped(row["input"], language=row["language"], addressed=True)
