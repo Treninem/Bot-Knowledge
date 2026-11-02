@@ -9,7 +9,7 @@ on:
       - 'docs/REPLY_EXTENSIONS_COVERAGE.md'
       - '.github/workflows/reply-extensions.yml'
   push:
-    branches: [main]
+    branches: [main, 'data/context-replies-*']
     paths:
       - 'packs/ru/**'
       - 'manifest.json'
@@ -37,9 +37,23 @@ jobs:
         run: |
           test "$(git rev-parse HEAD)" = "$EXPECTED_HEAD"
           git rev-parse HEAD
+      - name: Report actual extension bytes and counts
+        run: |
+          python - <<'PY'
+          import hashlib, json
+          from pathlib import Path
+          result = []
+          for path in sorted(Path('packs/ru/reply_extensions').glob('*.json')):
+              raw = path.read_bytes()
+              data = json.loads(raw)
+              result.append({'path': path.as_posix(), 'sha256': hashlib.sha256(raw).hexdigest(),
+                             'answers': sum(len(g['replies']) for g in data['groups']),
+                             'groups': len(data['groups'])})
+          print('ACTUAL_EXTENSION_BYTES=' + json.dumps(result, sort_keys=True))
+          PY
       - name: Validate every manifest SHA and package
         run: python scripts/validate_pack.py
-      - name: Test 616 replies and audit the full real repository
+      - name: Test authored replies and audit the full real repository
         run: python scripts/test_reply_extensions.py --repository
       - name: Preserve all base catalogue responses
         run: python scripts/test_reply_catalog.py --repository -v
