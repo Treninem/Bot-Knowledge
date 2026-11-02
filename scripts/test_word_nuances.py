@@ -12,6 +12,7 @@ sys.path.insert(0, str(ROOT / "scripts"))
 from word_nuances import load_word_nuances, choose_word, PACK
 from validate_word_nuances import validate_word_nuances_pack, version_not_newer
 from search_knowledge import KnowledgeSearch
+from index_contract import expected_index_count
 
 
 def main() -> None:
@@ -27,7 +28,7 @@ def main() -> None:
     assert sum(c["language"] == "ru" for c in cases) == 36
     assert sum(c["language"] == "en" for c in cases) == 36
     index = KnowledgeSearch()
-    assert len(index.records) == 1179, len(index.records)
+    assert len(index.records) == expected_index_count(), len(index.records)
     for case in cases:
         search = index.search(case["source"], "all_ai_bots", 20)
         assert search and search[0][0] == case["id"], (case["id"], search)

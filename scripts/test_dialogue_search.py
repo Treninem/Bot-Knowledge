@@ -7,11 +7,12 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 from search_knowledge import KnowledgeSearch, exact_phrase
+from index_contract import expected_index_count
 
 def main() -> None:
     index = KnowledgeSearch()
     triggers = json.loads((ROOT/"packs/ru/dialogue_triggers.json").read_text(encoding="utf-8"))["triggers"]
-    assert len(index.records) == 1179
+    assert len(index.records) == expected_index_count()
     assert len(triggers) == 60
     for trigger in triggers:
         matches = index.search(trigger["input"], "all_ai_bots", limit=20)

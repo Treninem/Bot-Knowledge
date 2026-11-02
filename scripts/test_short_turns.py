@@ -7,6 +7,7 @@ from pathlib import Path
 
 from short_turns import ShortTurns, load_pack, ROOT, PACK
 from search_knowledge import KnowledgeSearch
+from index_contract import expected_index_count
 from validate_short_turns import validate_short_turns
 
 assert validate_short_turns() == [], validate_short_turns()
@@ -14,7 +15,7 @@ cases = load_pack()["cases"]
 assert len(cases) == 48
 engine = ShortTurns()
 index = KnowledgeSearch()
-assert len(index.records) == 1179, len(index.records)
+assert len(index.records) == expected_index_count(), len(index.records)
 assert len({row["id"] for row in cases}) == 48
 assert len({row["input"].casefold() for row in cases}) == 48
 

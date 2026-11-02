@@ -7,13 +7,14 @@ from pathlib import Path
 from dialogue_preferences import ROOT, PACK, PreferenceSession, load_preferences
 from validate_style_preferences import validate_style_preferences
 from search_knowledge import KnowledgeSearch
+from index_contract import expected_index_count
 
 assert validate_style_preferences(ROOT) == [], validate_style_preferences(ROOT)
 book = load_preferences()
 cases = book["cases"]
 assert len(cases) == 80
 index = KnowledgeSearch()
-assert len(index.records) == 1179, len(index.records)
+assert len(index.records) == expected_index_count(), len(index.records)
 
 for row in cases:
     s = PreferenceSession(book)

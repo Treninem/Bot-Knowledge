@@ -9,6 +9,7 @@ from pathlib import Path
 
 from lexical_repair import LexicalRepair, ROOT, PACK, load_pack, compact_message
 from search_knowledge import KnowledgeSearch
+from index_contract import expected_index_count
 from validate_lexical_repairs import validate_lexical_repairs
 
 assert validate_lexical_repairs() == [], validate_lexical_repairs()
@@ -22,7 +23,7 @@ assert Counter((row["language"], row["kind"]) for row in rows) == {
 assert len({row["id"] for row in rows}) == 64
 engine = LexicalRepair()
 index = KnowledgeSearch()
-assert len(index.records) == 1179, len(index.records)
+assert len(index.records) == expected_index_count(), len(index.records)
 
 for row in rows:
     state = {row["slot"]: row["current"], "unused_slot": "unchanged"}

@@ -7,6 +7,7 @@ from composable_style import ROOT, PACK, ComposableStyle, load_composable_style
 from dialogue_preferences import PreferenceSession, load_preferences
 from validate_composable_style import validate_composable_style
 from search_knowledge import KnowledgeSearch
+from index_contract import expected_index_count
 
 assert validate_composable_style() == [], validate_composable_style()
 book = load_composable_style()
@@ -15,7 +16,7 @@ assert len(cases) == 80
 matcher = ComposableStyle()
 assert len(matcher.lookup) == 160
 index = KnowledgeSearch()
-assert len(index.records) == 1179, len(index.records)
+assert len(index.records) == expected_index_count(), len(index.records)
 for row in cases:
     session = PreferenceSession(load_preferences(), composer=matcher)
     result = session.observe_composed(row["input"], language=row["language"], addressed=True)
