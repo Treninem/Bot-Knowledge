@@ -1,0 +1,41 @@
+name: Reviewed skill tools exact-head
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/preflight_skill_manifest.py'
+      - 'scripts/test_preflight_skill_manifest.py'
+      - 'scripts/build_skill_draft.py'
+      - 'scripts/test_build_skill_draft.py'
+      - '.github/workflows/quality.yml'
+      - '.github/workflows/reviewed-skill-tools.yml'
+      - 'docs/LEARNING_PUBLICATION_PIPELINE.md'
+
+permissions:
+  contents: read
+
+jobs:
+  reviewed-skill-tools-head:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Assert actual checkout is the PR head
+        env:
+          EXPECTED_HEAD: ${{ github.event.pull_request.head.sha }}
+        run: |
+          test "$(git rev-parse HEAD)" = "$EXPECTED_HEAD"
+          git rev-parse HEAD
+      - name: Validate all SHA-pinned packages
+        run: python scripts/validate_pack.py
+      - name: Reviewed-skill preflight guards
+        run: python scripts/test_preflight_skill_manifest.py
+      - name: Offline reviewed-skill draft builder
+        run: python scripts/test_build_skill_draft.py
+      - name: Candidate privacy regression
+        run: python scripts/test_candidate_privacy.py
