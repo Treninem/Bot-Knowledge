@@ -221,5 +221,80 @@ class ImpulsPublicHelpTests(unittest.TestCase):
                 self.assertLess(overlap, 0.68)
 
 
+    def test_context_verification_batch_2026_11_02_52(self):
+        """Preserve independent synthetic public-help cases and prevent similar answer collisions."""
+        new_ids = {
+            "moderation_retry_duplicate",
+            "moderation_accessibility_repeat",
+            "moderation_authorized_announcement",
+            "moderation_title_of_file",
+            "moderation_unviewed_link",
+            "moderation_out_of_order",
+            "moderation_alleged_exception",
+            "moderation_reply_to_deleted",
+            "moderation_self_report",
+            "moderation_incomplete_quote",
+            "moderation_poll_is_not_order",
+            "moderation_emotional_caps",
+            "access_admin_forwarded_order",
+            "access_role_at_execution",
+            "access_migrated_group",
+            "access_request_from_guest",
+            "access_private_not_global",
+            "access_only_status_unknown",
+            "game_repeat_move_network",
+            "game_undo_request",
+            "game_previous_round_score",
+            "game_team_assignment_unknown",
+            "game_resumed_after_pause",
+            "raffle_removed_entry",
+            "raffle_edit_after_start",
+            "raffle_private_confirmation",
+            "pulses_pending_reward",
+            "pulses_rating_vs_wallet",
+            "pulses_screenshot_charge",
+            "conversation_mixed_languages",
+            "conversation_topic_same_word",
+            "conversation_question_vs_agreement",
+            "conversation_sad_then_joke",
+            "conversation_here_unknown",
+            "conversation_uncertain_voice_transcript",
+            "conversation_unseen_link_title",
+            "privacy_training_vs_publication",
+            "privacy_git_history",
+            "privacy_shared_screen",
+            "privacy_private_note_in_public_group",
+            "knowledge_sha_not_semantics",
+            "knowledge_merge_ref_vs_head",
+            "knowledge_changed_main_during_review",
+            "knowledge_qa_wrong_audience",
+            "knowledge_publication_not_delivery",
+            "learning_reviewed_not_truth",
+            "help_timeout_repeated",
+            "help_version_conflict",
+        }
+        records = {r["id"]: r for r in self.pack["records"]}
+        self.assertTrue(new_ids <= records.keys())
+        self.assertGreaterEqual(len(records), 318)
+        self.assertGreaterEqual(sum(1 + len(r.get("variants", [])) for r in records.values()), 929)
+        for key in new_ids:
+            row = records[key]
+            self.assertEqual(row["audiences"], ["impuls"])
+            self.assertEqual(row["contexts"], ["direct", "private", "group_addressed"])
+            self.assertEqual(row["language"], "ru")
+            self.assertEqual(len(row["variants"]), 2)
+            self.assertTrue(row["source"].startswith("https://github.com/Treninem/Bot-Knowledge/blob/e14123a7756803437f51dc8ab946351e063899a8/"))
+        def triples(s):
+            words = normalize(s).split()
+            return {" ".join(words[i:i+3]) for i in range(len(words)-2)}
+        earlier = [triples(t) for r in self.pack["records"] if r["id"] not in new_ids
+                   for t in [r["answer"], *r.get("variants", [])]]
+        fresh = [triples(t) for r in self.pack["records"] if r["id"] in new_ids
+                 for t in [r["answer"], *r.get("variants", [])]]
+        for i, candidate in enumerate(fresh):
+            for other in earlier + fresh[:i]:
+                self.assertLess(len(candidate & other) / max(1, len(candidate | other)), 0.68)
+
+
 if __name__ == "__main__":
     unittest.main()
