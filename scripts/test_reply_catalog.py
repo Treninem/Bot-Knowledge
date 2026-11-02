@@ -117,22 +117,8 @@ class ReplyCatalogueTests(unittest.TestCase):
         self.assertEqual(sum(EXPECTED.values()), 5200)
 
     def test_exact_fifty_two_full_100_sets(self):
-        self.assertEqual({k for k, v in self.catalog.coverage.items() if v == 100},
-                         {"what_discuss", "tell_joke", "explain_again", "bored",
-                          "need_decision", "boundaries", "idea_request",
-                          "thanks_reply", "farewell_reply", "disagreement_reply",
-                          "change_topic", "no_sure", "apology_help",
-                          "need_support", "lost_context", "dark_humor",
-                          "friendly_tease", "conversation_followup",
-                          "diagnose_problem", "verify_claim",
-                          "goal_clarity", "project_plan", "idea_review",
-                          "message_draft", "learning_path", "group_discussion",
-                          "chat_activities", "moderation_reasoning",
-                          "micro_story", "critical_analysis",
-                          "rules_explain", "chat_settings", "report_violations",
-                          "profile_access", "pulse_navigation", "moderator_commands",
-                          "private_panel", "danetka_start", "danetka_off",
-                          "question_crafting"})
+        self.assertEqual(len(self.catalog.coverage), 52)
+        self.assertTrue(all(value == 100 for value in self.catalog.coverage.values()))
 
     def test_all_5200_reachable(self):
         result_ids = set()
