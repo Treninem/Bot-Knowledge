@@ -26,20 +26,20 @@ def main() -> None:
     social = load("social_dialogues.json")["cases"]
     english = load("english_dialogues.json")["cases"]
     assert len(moderation) == 63
-    assert len(social) == 44
+    assert len(social) == 116
     assert len(english) == 33
     assert len({x["topic"] for x in moderation}) == 21
     assert Counter(x["classification"] for x in moderation) == {
         "candidate_violation": 21, "allow": 21, "review": 21
     }
     assert Counter(x["kind"] for x in social) == {
-        "congratulations": 10, "support": 10, "humor": 8,
-        "profanity": 5, "conversation": 6, "creative": 5
+        "congratulations": 22, "support": 22, "humor": 20,
+        "profanity": 17, "conversation": 18, "creative": 17
     }
     ids = [x["id"] for x in moderation + social + english]
     inputs = [x.get("message", x.get("input", "")) for x in moderation + social + english]
-    assert len(ids) == len(set(ids)) == 140
-    assert len(inputs) == len({" ".join(s.casefold().split()) for s in inputs}) == 140
+    assert len(ids) == len(set(ids)) == 212
+    assert len(inputs) == len({" ".join(s.casefold().split()) for s in inputs}) == 212
     for case in moderation:
         assert case["audiences"] == ["chat_moderators"]
         assert len(case["required_checks"]) >= 2
