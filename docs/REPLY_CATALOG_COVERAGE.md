@@ -6,8 +6,8 @@ This candidate adds a **new, separate** SHA-pinned pack. It does not rewrite the
 
 ## Measured coverage
 
-**101 distinct canonical questions, 10100 authored answers, 27 packs total**.
-All 99 earlier questions remain complete at 100/100; there are no partial sets in this snapshot. These are reply
+**103 distinct canonical questions, 10300 authored answers, 27 packs total**.
+All 101 earlier questions remain complete at 100/100; there are no partial sets in this snapshot. These are reply
 variants, not 443 trained model skills or new executable ImPULS commands.
 
 | Question / intent | Count / 100 | Audience |
@@ -115,6 +115,8 @@ variants, not 443 trained model skills or new executable ImPULS commands.
 | Как отличить причину от совпадения? (`causality_check`) | 100 | all AI bots |
 | Как честно сравнить варианты? (`fair_comparison`) | 100 | all AI bots |
 | Как проверить общее понимание? (`shared_understanding`) | 100 | all AI bots |
+| Как определить уместность шутки? (`humor_boundaries`) | 100 | all AI bots |
+| Как отвечать на сарказм? (`sarcasm_response`) | 100 | all AI bots |
 ## Source and factual limits
 
 The eight ImPULS-specific question sets are abstract user-facing help, grounded
@@ -369,3 +371,7 @@ Previous candidate branch `ace9944c84071a50c98dca7174aa7ad837615487` had 97 sets
 ## 2026-11-02 fair option comparisons and shared agreement v2026.11.02.36
 
 Dependent base `873ed8541299c257e25ae6579eec5f76383b8227` (PR #66 candidate; **not** yet main), 99 sets and 9900 answers. This separate follow-up branch adds two general RU intents: `fair_comparison` (criteria, total cost, usability, quality, speed, risk, evidence, compatibility, maintenance, decision) and `shared_understanding` (ambiguous yes, group consensus, roles, deadlines, scope, meanings, corrections, asynchronous dialogue, handoff, acceptance). Each comprises ten original guarded context groups with ten authored replies. Proposed +200 accepted new-to-branch answers, 0 exact/near duplicate rejections, resulting **101 canonical questions / 10100 total replies**, counts `fair_comparison`: 100/100 (0 remaining); `shared_understanding`: 100/100 (0 remaining). Existing 9900 retained. Full normalized exact duplicates: 0. Three-word Jaccard screening of new-to-branch candidates against existing and each other: no accepted pair ≥0.58, highest observed 0.300. This does not prove all semantic variation. Only synthetic, no private messages, unconfirmed ImPULS features, sanctions, payments, consumer rollout or secrets. SHA-256 over actual new UTF-8 pack `3f26a275c64de8bce9d5d4b0129f5c69871547c59174dbfd845035fd5e9ae28c`, manifest/cache `2026.11.02.36`. PR #66 must merge and pass post-main CI before this dependent branch can be assessed for merge.
+
+## 2026-11-02 optional humor boundaries and sarcasm response v2026.11.02.37
+
+Dependent candidate base `475a6b641896376ba08595dfd795b35723b86b14` (#67, not main): 101 sets / 10100 replies. Two new all-AI RU intents: `humor_boundaries` (familiar vs unfamiliar company, work, grief, requested dark humor, mixed groups, misinterpretations, disguised insults, self-irony and stop requests); `sarcasm_response` (friendly, ambiguous, criticism, personal, technical, text-only, public, authority asymmetry, repetition, repairs). Each has 10 independent `when` and `avoid` guards and 10 individually authored responses per group; 200 accepted replies and 0 normalized/3-word Jaccard >=.58 rejected. Result **103 sets / 10300 replies** in this dependent branch, old 10100 preserved, all full 100/100, no partial. Max observed 3-gram Jaccard 0.333, no retained pairs >=0.58; heuristic not proof of all semantic nuances. Sensitive context must suppress actual humor, stop requests respected; these 2 intents are guidance, not an unconditional license to generate jokes. No real user content, secrets, actions, sanctions, new ImPULS capabilities or rollout. UTF-8 pack SHA-256 `e708ea3a8f00bd93586adf6e032872c9446d55335472f44c852b937a9da42ceb`, manifest/cache `2026.11.02.37`. Exact-head CI and base post-main gate required before publication.
