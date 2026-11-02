@@ -31,8 +31,10 @@ EXPECTED = {
     "message_draft": 100, "learning_path": 100, "group_discussion": 100,
     "chat_activities": 100, "moderation_reasoning": 100,
     "micro_story": 100, "critical_analysis": 100,
-    "impuls_first_steps": 30, "impuls_ask_ai": 30, "impuls_ai_no_reply": 30, "impuls_game_help": 30, "impuls_command_context": 30, "impuls_chat_isolation": 30, "impuls_release_info": 30, "impuls_check_permissions": 30,
+    "impuls_first_steps": 100, "impuls_ask_ai": 100, "impuls_ai_no_reply": 100, "impuls_game_help": 100, "impuls_command_context": 100, "impuls_chat_isolation": 100, "impuls_release_info": 100, "impuls_check_permissions": 100,
     "question_crafting": 100,
+    "tactful_refusal": 100, "simple_explanation": 100,
+    "clarifying_question": 100, "feedback_reply": 100,
 }
 FORBIDDEN = {
     "user_id", "chat_id", "telegram_id", "username", "phone", "email",
@@ -109,12 +111,12 @@ class ReplyCatalogueTests(unittest.TestCase):
         options.update(kw)
         return self.catalog.reply(intent, **options)
 
-    def test_exact_48_questions_4240_replies(self):
+    def test_exact_52_questions_5200_replies(self):
         self.assertEqual(self.catalog.coverage, EXPECTED)
-        self.assertEqual(len(EXPECTED), 48)
-        self.assertEqual(sum(EXPECTED.values()), 4240)
+        self.assertEqual(len(EXPECTED), 52)
+        self.assertEqual(sum(EXPECTED.values()), 5200)
 
-    def test_exact_forty_full_100_sets(self):
+    def test_exact_fifty_two_full_100_sets(self):
         self.assertEqual({k for k, v in self.catalog.coverage.items() if v == 100},
                          {"what_discuss", "tell_joke", "explain_again", "bored",
                           "need_decision", "boundaries", "idea_request",
@@ -132,7 +134,7 @@ class ReplyCatalogueTests(unittest.TestCase):
                           "private_panel", "danetka_start", "danetka_off",
                           "question_crafting"})
 
-    def test_all_4240_reachable(self):
+    def test_all_5200_reachable(self):
         result_ids = set()
         for record in self.data["sets"]:
             for group in record["groups"]:
@@ -149,7 +151,7 @@ class ReplyCatalogueTests(unittest.TestCase):
                                      audience=record["audiences"][0],
                                      humor_allowed=True, recent=recent)
                 self.assertEqual(exhausted["status"], "repeat_suppressed")
-        self.assertEqual(len(result_ids), 4240)
+        self.assertEqual(len(result_ids), 5200)
 
     def test_normalized_unique_globally(self):
         replies = [v for x in self.data["sets"] for g in x["groups"] for v in g["replies"]]
