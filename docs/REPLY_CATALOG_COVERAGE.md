@@ -6,8 +6,8 @@ This candidate adds a **new, separate** SHA-pinned pack. It does not rewrite the
 
 ## Measured coverage
 
-**66 distinct canonical questions, 6600 authored answers, 27 packs total**.
-All 66 questions are complete at 100/100; there are no partial sets in this snapshot. These are reply
+**69 distinct canonical questions, 6900 authored answers, 27 packs total**.
+All 69 questions are complete at 100/100; there are no partial sets in this snapshot. These are reply
 variants, not 443 trained model skills or new executable ImPULS commands.
 
 | Question / intent | Count / 100 | Audience |
@@ -80,6 +80,9 @@ variants, not 443 trained model skills or new executable ImPULS commands.
 | Как вернуться к разговору после паузы? (`resume_after_pause`) | 100 | all AI bots |
 | Как подвести итог обсуждения? (`discussion_summary`) | 100 | all AI bots |
 | Что ты умеешь и чего не можешь? (`capability_boundaries`) | 100 | all AI bots |
+| Как исправить недопонимание? (`repair_misunderstanding`) | 100 | all AI bots |
+| Как найти компромисс без давления? (`constructive_compromise`) | 100 | all AI bots |
+| Как корректно исправить неверный факт? (`fact_correction`) | 100 | all AI bots |
 ## Source and factual limits
 
 The eight ImPULS-specific question sets are abstract user-facing help, grounded
@@ -101,7 +104,7 @@ not start new duplicate question IDs.
 ## Selection and safety
 
 `scripts/reply_catalog.py` is an offline **opt-in reference selector**:
-it directly indexes the pack's 66 canonical IDs and their groups. It does
+it directly indexes the pack's 69 canonical IDs and their groups. It does
 **not** recognize natural-language intent, configure chats, execute commands,
 read Telegram messages or remember sessions. A caller must independently
 validate explicit address, local permission, audience, and chosen context group.
@@ -123,14 +126,14 @@ mutes, permissions or other actions.
 
 ## Integrity and verification
 
-The manifest version for this completed catalogue is `2026.11.02.23`. The package is pinned by the current manifest SHA-256; size and digest must be checked from actual bytes; all 27 packs must be present and SHA-valid.
+The manifest version for this completed catalogue is `2026.11.02.24`. The package is pinned by the current manifest SHA-256; size and digest must be checked from actual bytes; all 27 packs must be present and SHA-valid.
 The selector's cache identity is `(knowledge_version, pack_sha256)`; it
 does not change any running bot's cache.
 
 `python scripts/validate_pack.py`,
 `python scripts/test_reply_catalog.py --repository -v`, and the separate
 exact-head workflow must complete on the actual PR head SHA before merge.
-Test requirements cover all 6600 reachable responses, normalized duplicates,
+Test requirements cover all 6900 reachable responses, normalized duplicates,
 cross-pack exact matches, 100/100 completeness, opt-in, audience isolation,
 refusal conditions, repeat suppression and tampered SHA/cache snapshots.
 A review of semantic similarity remains necessary: an exact-string test cannot
@@ -281,3 +284,7 @@ manifest version/cache identity is `2026.11.02.23`. Selector still needs
 caller-confirmed intent, group, audience, address and local authorization;
 its data alone does not imply a deployed feature. Human semantic sampling and
 actual exact-head CI plus post-main CI remain publication gates.
+
+## 2026-11-02 semantic repair batch v2026.11.02.24
+
+Verified main baseline `8d785003be3d56c2dbd433c059903b1cec8f9bdc`: 66 canonical questions and 6600 replies. Three new complete intents gained 100 individually authored responses each with ten explicit context/avoid groups: `repair_misunderstanding`, `constructive_compromise`, and `fact_correction`. Exactly **+300** net new original synthetic responses; candidate **69 questions / 6900 replies**, all **69 complete 100/100**, **zero partial**. Prior 6600 answers kept. Across-pool three-gram Jaccard near-match sweep found no similarity at or above 0.52 for those 300 against the prior 6600 and themselves; this is not proof of semantic perfection. No ImPULS repo changes, private messages, external actions, sanctions or live consumer integration. Source data SHA-256 over UTF-8 bytes: `5d364a2925a61b852f8ffce487691b57ef5aeff8ff74e6be63537938fca41b39`; manifest/cache version `2026.11.02.24`. Only ship after actual completed exact-head QA and post-main CI.
