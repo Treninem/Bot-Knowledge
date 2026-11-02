@@ -95,8 +95,15 @@ class KnowledgeSearch:
                     for term in tokens(contents):
                         self.inverted[term].add(index)
 
-    @lru_cache(maxsize=512)
+        # Keep lookup caching owned by this verified snapshot. Decorating the
+        # instance method at class scope would retain retired KnowledgeSearch
+        # instances through the global LRU after a snapshot refresh.
+        self._cached_search = lru_cache(maxsize=512)(self._search_uncached)
+
     def search(self, query: str, audience: str = "all_ai_bots", limit: int = 5) -> tuple[tuple, ...]:
+        return self._cached_search(query, audience, limit)
+
+    def _search_uncached(self, query: str, audience: str, limit: int) -> tuple[tuple, ...]:
         if audience not in AUDIENCES:
             raise ValueError("Unknown audience")
         if not 1 <= limit <= 20:
