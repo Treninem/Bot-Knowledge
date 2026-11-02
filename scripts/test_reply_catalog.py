@@ -316,7 +316,7 @@ class ReplyCatalogueTests(unittest.TestCase):
         technical = [x for x in self.data["sets"]
                      if x["audiences"] == ["community_bots"]
                      and x["id"] != "rules_explain"]
-        self.assertEqual(len(technical), 16)
+        self.assertEqual(len(technical), 21)
         for item in technical:
             source = item["source"]
             self.assertEqual(source["repository"], "Treninem/Impuls")
