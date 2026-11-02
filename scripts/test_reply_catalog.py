@@ -56,7 +56,10 @@ def deep_strings(value):
 def audit_repository(root=ROOT):
     manifest = json.loads((root / "manifest.json").read_text(encoding="utf-8"))
     paths = [p["path"] for p in manifest["packs"]]
-    assert len(paths) == len(set(paths)) == 26, "Pack manifest incomplete or duplicated"
+    actual = sorted(p.relative_to(root).as_posix()
+                    for p in (root / "packs/ru").rglob("*.json"))
+    assert len(paths) == len(set(paths)), "Pack manifest contains duplicate paths"
+    assert sorted(paths) == actual, "Pack manifest does not match real packs/ru JSON files"
     pack = json.loads((root / PACK).read_text(encoding="utf-8"))
     replies = [v for item in pack["sets"] for group in item["groups"]
                for v in group["replies"]]
@@ -69,7 +72,7 @@ def audit_repository(root=ROOT):
         assert hashlib.sha256(raw).hexdigest() == entry["sha256"], rel
         json.loads(raw)
         seen.append(rel)
-    assert len(seen) == 26
+    assert len(seen) == len(actual)
     # Normalized cross-pack exact text collisions: exclude metadata/technical IDs.
     collisions = []
     for rel in seen:
@@ -82,7 +85,8 @@ def audit_repository(root=ROOT):
             if normalized(candidate) in reply_keys:
                 collisions.append((rel, candidate))
     assert not collisions, f"Cross-pack duplicate responses: {collisions[:5]}"
-    print(f"Repository audit: 26/26 real SHA/JSON PASS; {len(replies)} responses; cross-pack exact PASS")
+    print(f"Repository audit: {len(actual)}/{len(actual)} real SHA/JSON PASS; "
+          f"{len(replies)} responses; cross-pack exact PASS")
 
 
 class ReplyCatalogueTests(unittest.TestCase):
