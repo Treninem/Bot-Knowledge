@@ -17,9 +17,9 @@ from reply_catalog import PACK, ROOT, ReplyCatalog, normalized
 EXPECTED = {
     "what_discuss": 100, "tell_joke": 100,
     "thanks_reply": 12, "farewell_reply": 12,
-    "explain_again": 12, "disagreement_reply": 12, "need_support": 12,
-    "bored": 12, "need_decision": 12, "boundaries": 12,
-    "idea_request": 12, "apology_help": 12, "lost_context": 12,
+    "explain_again": 100, "disagreement_reply": 12, "need_support": 12,
+    "bored": 100, "need_decision": 100, "boundaries": 100,
+    "idea_request": 100, "apology_help": 12, "lost_context": 12,
     "change_topic": 12, "dark_humor": 12, "rules_explain": 12,
     "no_sure": 12, "chat_settings": 9, "report_violations": 9,
     "profile_access": 6, "pulse_navigation": 6,
@@ -101,16 +101,17 @@ class ReplyCatalogueTests(unittest.TestCase):
         options.update(kw)
         return self.catalog.reply(intent, **options)
 
-    def test_exact_25_questions_443_replies(self):
+    def test_exact_25_questions_883_replies(self):
         self.assertEqual(self.catalog.coverage, EXPECTED)
         self.assertEqual(len(EXPECTED), 25)
-        self.assertEqual(sum(EXPECTED.values()), 443)
+        self.assertEqual(sum(EXPECTED.values()), 883)
 
-    def test_exact_two_full_100_sets(self):
+    def test_exact_seven_full_100_sets(self):
         self.assertEqual({k for k, v in self.catalog.coverage.items() if v == 100},
-                         {"what_discuss", "tell_joke"})
+                         {"what_discuss", "tell_joke", "explain_again", "bored",
+                          "need_decision", "boundaries", "idea_request"})
 
-    def test_all_443_reachable(self):
+    def test_all_883_reachable(self):
         result_ids = set()
         for record in self.data["sets"]:
             for group in record["groups"]:
@@ -127,11 +128,23 @@ class ReplyCatalogueTests(unittest.TestCase):
                                      audience=record["audiences"][0],
                                      humor_allowed=True, recent=recent)
                 self.assertEqual(exhausted["status"], "repeat_suppressed")
-        self.assertEqual(len(result_ids), 443)
+        self.assertEqual(len(result_ids), 883)
 
     def test_normalized_unique_globally(self):
         replies = [v for x in self.data["sets"] for g in x["groups"] for v in g["replies"]]
         self.assertEqual(len(replies), len({normalized(v) for v in replies}))
+
+    def test_no_trivial_near_duplicates_per_question(self):
+        from difflib import SequenceMatcher
+        for item in self.data["sets"]:
+            answers = [normalized(v) for g in item["groups"] for v in g["replies"]]
+            for index, a in enumerate(answers):
+                for b in answers[index + 1:]:
+                    if min(len(a), len(b)) / max(len(a), len(b)) < .85:
+                        continue
+                    self.assertLess(
+                        SequenceMatcher(None, a, b, autojunk=False).ratio(), .95,
+                        f"near-cosmetic duplicate in {item['id']}: {a!r} / {b!r}")
 
     def test_groups_have_when_avoid(self):
         for item in self.data["sets"]:
