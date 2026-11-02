@@ -2,7 +2,10 @@ from __future__ import annotations
 
 import unittest
 
-from scripts.trusted_publish_qa import PublishError, validate_payload
+try:
+    from scripts.trusted_publish_qa import PublishError, validate_payload
+except ModuleNotFoundError:  # direct `python scripts/test_trusted_publish_qa.py`
+    from trusted_publish_qa import PublishError, validate_payload
 
 
 def candidate():

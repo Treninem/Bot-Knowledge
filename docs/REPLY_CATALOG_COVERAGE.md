@@ -6,8 +6,8 @@ This candidate adds a **new, separate** SHA-pinned pack. It does not rewrite the
 
 ## Measured coverage
 
-**48 distinct canonical questions, 4240 authored answers, 26 packs total**.
-Forty questions are complete at 100/100, and 8 remain partial. These are reply
+**52 distinct canonical questions, 5200 authored answers, 27 packs total**.
+All 52 questions are complete at 100/100; there are no partial sets in this snapshot. These are reply
 variants, not 443 trained model skills or new executable ImPULS commands.
 
 | Question / intent | Count / 100 | Audience |
@@ -61,6 +61,10 @@ variants, not 443 trained model skills or new executable ImPULS commands.
 | Как понять, какие права у меня есть в ImPULS? (`impuls_check_permissions`) | 30 | community bots only |
 
 | Как задать хороший вопрос? (`question_crafting`) | 100 | all AI bots |
+| Как вежливо отказать? (`tactful_refusal`) | 100 | all AI bots |
+| Объясни сложное простыми словами. (`simple_explanation`) | 100 | all AI bots |
+| Помоги задать уточняющий вопрос. (`clarifying_question`) | 100 | all AI bots |
+| Как дать полезную обратную связь? (`feedback_reply`) | 100 | all AI bots |
 
 ## Source and factual limits
 
@@ -105,14 +109,14 @@ mutes, permissions or other actions.
 
 ## Integrity and verification
 
-The manifest version for the latest candidate is `2026.11.02.16`. The package is pinned by the current manifest SHA-256; size and digest must be checked from actual bytes; all 26 packs must be present and SHA-valid.
+The manifest version for this completed catalogue is `2026.11.02.18`. The package is pinned by the current manifest SHA-256; size and digest must be checked from actual bytes; all 27 packs must be present and SHA-valid.
 The selector's cache identity is `(knowledge_version, pack_sha256)`; it
 does not change any running bot's cache.
 
 `python scripts/validate_pack.py`,
 `python scripts/test_reply_catalog.py --repository -v`, and the separate
 exact-head workflow must complete on the actual PR head SHA before merge.
-Test requirements cover all 2165 reachable responses, normalized duplicates,
+Test requirements cover all 5200 reachable responses, normalized duplicates,
 cross-pack exact matches, 100/100 completeness, opt-in, audience isolation,
 refusal conditions, repeat suppression and tampered SHA/cache snapshots.
 A review of semantic similarity remains necessary: an exact-string test cannot
@@ -230,3 +234,8 @@ Parent main: `fed2d0cf7bb66be6938c3c5d8d1326000fd0fe34` (after PR #49). **180 ne
 The manifest SHA-256 changes with the pack bytes, as does the version-keyed cache identity.
 All new replies are synthetic and use no private chat material. Merging requires real
 full-repository validation, exact-head CI and post-main CI. No consumer rollout is claimed.
+
+
+## 2026-11-02 reconciled completion batch 2026.11.02.18
+
+Built from fresh main after parallel changes. Eight ImPULS-specific sets were already 30/100 in main; this candidate preserves those additions and adds exactly **70** missing replies to each (**+560**). Four new general sets add **+400** more replies: `tactful_refusal`, `simple_explanation`, `clarifying_question`, and `feedback_reply`. Net delta vs current main: **+960 replies**, catalogue **4240 → 5200**, **48 → 52 questions**, all **52/52 at 100/100**. No ImPULS code, deployment, private messages, secrets, sanctions or consumer rollout are included.
