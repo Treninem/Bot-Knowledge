@@ -174,6 +174,8 @@ def _checks_green(sha: str, *, token: str) -> bool:
 
 
 def publish(candidate: dict, *, token: str, base: str, branch: str, skip_ci: bool, merge_if_green: bool) -> str:
+    if merge_if_green:
+        raise PublishError("legacy --merge-if-green is unsafe for asynchronous draft PRs; use the isolated complete_trusted_qa_pr.py stage after review")
     if os.getenv("BK_TRUSTED_PUBLISHER") != "1":
         raise PublishError("set BK_TRUSTED_PUBLISHER=1 only in isolated maintainer environment")
     if os.getenv("BOT_TOKEN") or os.getenv("IMPULS_BOT_TOKEN"):
@@ -194,12 +196,6 @@ def publish(candidate: dict, *, token: str, base: str, branch: str, skip_ci: boo
         "head": branch, "base": base, "draft": True,
         "body": "Reviewed qa.v1 publication candidate. Source and privacy were validated locally; exact-head checks remain authoritative.",
     })
-    if merge_if_green:
-        if skip_ci:
-            raise PublishError("cannot auto-merge when CI was deliberately skipped")
-        if not _checks_green(head, token=token):
-            raise PublishError("PR opened, but checks are not green; merge refused")
-        _api(f"/repos/{REPO}/pulls/{pr['number']}/merge", token=token, method="PUT", data={"sha":head,"merge_method":"squash"})
     return pr["html_url"]
 
 
