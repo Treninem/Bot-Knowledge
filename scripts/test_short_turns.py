@@ -12,12 +12,12 @@ from validate_short_turns import validate_short_turns
 
 assert validate_short_turns() == [], validate_short_turns()
 cases = load_pack()["cases"]
-assert len(cases) == 48
+assert len(cases) == 72
 engine = ShortTurns()
 index = KnowledgeSearch()
 assert len(index.records) == expected_index_count(), len(index.records)
-assert len({row["id"] for row in cases}) == 48
-assert len({row["input"].casefold() for row in cases}) == 48
+assert len({row["id"] for row in cases}) == 72
+assert len({row["input"].casefold() for row in cases}) == 72
 
 for row in cases:
     kind = row["pending_kind"] if row["pending_kind"] != "any" else "information"
@@ -95,7 +95,7 @@ for round_number in range(1, 11):
         result = engine.interpret(row["input"], language=row["language"],
                                   pending_kind=kind, allow_multiple=True)
         assert result["status"] == ("needs_clarification" if row["topic"] == "ambiguous" else "recognized")
-    print(f"SHORT_TURNS_PASS {round_number}/10 cases=48")
+    print(f"SHORT_TURNS_PASS {round_number}/10 cases=72")
 for _ in range(1000):
     assert engine.interpret("ага", pending_kind="confirmation")["intent"] == "affirm"
 assert index.search("да", "all_ai_bots")[0][0] == "short_ru_affirm_1"

@@ -19,7 +19,7 @@ def validate_short_turns(root: Path = ROOT) -> list[str]:
     except (ValueError, KeyError, OSError, TypeError) as exc:
         return ["Cannot load short turns: " + str(exc)]
     cases = book.get("cases")
-    if book.get("usage_policy") != POLICY or not isinstance(cases, list) or len(cases) != 48:
+    if book.get("usage_policy") != POLICY or not isinstance(cases, list) or len(cases) != 72:
         return ["Short-turn policy or count invalid"]
     if len((root / PACK).read_bytes()) > 48 * 1024:
         errors.append("Short-turn pack exceeds 48KiB")
@@ -33,7 +33,7 @@ def validate_short_turns(root: Path = ROOT) -> list[str]:
             errors.append("Unknown language or intent")
             continue
         counts[(lang, intent)] += 1
-        if (not re.fullmatch(r"short_(ru|en)_[a-z]+_[12]", rid)
+        if (not re.fullmatch(r"short_(ru|en)_[a-z]+_[1234]", rid)
                 or not rid.startswith(f"short_{lang}_{intent}_") or rid in ids):
             errors.append("Invalid or repeated ID")
         ids.add(rid)
@@ -52,7 +52,7 @@ def validate_short_turns(root: Path = ROOT) -> list[str]:
                 errors.append("Bad short-turn semantic context")
     if set(counts) != {(lang, intent) for lang in ("ru", "en") for intent in INTENTS}:
         errors.append("Missing intent or language")
-    if any(value != 2 for value in counts.values()):
+    if any(value != (4 if lang == 'ru' else 2) for (lang, _), value in counts.items()):
         errors.append("Unbalanced short reply variants")
     manifest = json.loads((root / "manifest.json").read_text(encoding="utf-8"))
     prior_ids, prior_phrases = set(), set()
@@ -81,4 +81,4 @@ if __name__ == "__main__":
     issues = validate_short_turns()
     if issues:
         raise SystemExit("\n".join(issues))
-    print("SHORT_TURNS_VALID cases=48 ru=24 en=24 intents=12 duplicates=0")
+    print("SHORT_TURNS_VALID cases=72 ru=48 en=24 intents=12 duplicates=0")
