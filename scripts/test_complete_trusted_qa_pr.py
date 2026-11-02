@@ -2,13 +2,21 @@
 from __future__ import annotations
 
 import copy
+import json
+import tempfile
 import unittest
+from pathlib import Path
 from unittest.mock import patch
 
 try:
     from scripts import complete_trusted_qa_pr as finalizer
 except ModuleNotFoundError:
     import complete_trusted_qa_pr as finalizer
+
+try:
+    from scripts import trusted_publish_qa as publisher
+except ModuleNotFoundError:
+    import trusted_publish_qa as publisher
 
 
 HEAD = "a" * 40
@@ -135,6 +143,75 @@ class GuardTests(unittest.TestCase):
             result = finalizer.wait_ci(HEAD, "main", token="fixture", timeout=0,
                                        interval=1, post_main=True)
         self.assertEqual(result["post_main_quality"]["head_sha"], HEAD)
+
+    def test_existing_merge_flag_delegates_to_post_main_gate(self):
+        def fake_api(path, **kwargs):
+            if "/git/ref/heads/main" in path:
+                return {"object": {"sha": BASE}}
+            if path.endswith("/git/refs"):
+                return {"ref": "heads/test"}
+            if path.endswith("/pulls") and kwargs.get("method") == "POST":
+                self.assertIs(kwargs["data"]["draft"], False)
+                return {"number": 123, "html_url": "https://github.com/Treninem/Bot-Knowledge/pull/123"}
+            raise AssertionError("unexpected direct GitHub operation " + path)
+
+        def complete(**kwargs):
+            self.assertEqual(kwargs["expected_head"], HEAD)
+            self.assertEqual(kwargs["number"], 123)
+            self.assertIs(kwargs["merge"], True)
+            kwargs["report"].update({"status": "merged_post_main_pass", "merged": True,
+                                     "merge_sha": "d" * 40})
+            return kwargs["report"]
+
+        with tempfile.TemporaryDirectory() as temp:
+            dest = Path(temp) / "receipt.json"
+            with patch.dict("os.environ", {"BK_TRUSTED_PUBLISHER": "1"}, clear=True):
+                with patch.object(publisher, "prepare_changes",
+                                  return_value=("packs/ru/knowledge_format.json", "{}", "{}", "blob1:blob2")):
+                    with patch.object(publisher, "_api", side_effect=fake_api):
+                        with patch.object(publisher, "_put", return_value=HEAD):
+                            with patch.object(publisher, "_contents", return_value=({"sha": "blob2"}, b"")):
+                                with patch.object(finalizer, "finalize", side_effect=complete):
+                                    result = publisher.publish({"record": {"id": "synthetic"}},
+                                                               token="fixture", base="main",
+                                                               branch="trusted/qa-123", skip_ci=False,
+                                                               merge_if_green=True, report_path=dest)
+            self.assertTrue(result.endswith("/123"))
+            receipt = json.loads(dest.read_text(encoding="utf-8"))
+            self.assertEqual(receipt["status"], "merged_post_main_pass")
+            self.assertEqual(receipt["merge_sha"], "d" * 40)
+
+    def test_existing_merge_flag_reports_post_main_uncertainty(self):
+        def fake_api(path, **kwargs):
+            if "/git/ref/heads/main" in path:
+                return {"object": {"sha": BASE}}
+            if path.endswith("/git/refs"):
+                return {}
+            if path.endswith("/pulls"):
+                return {"number": 123, "html_url": "https://github.com/Treninem/Bot-Knowledge/pull/123"}
+            raise AssertionError("unexpected direct GitHub operation")
+
+        def interrupted(**kwargs):
+            kwargs["report"].update({"merged": True, "merge_sha": "d" * 40})
+            raise finalizer.FinalizeError("post-main quality pending")
+
+        with tempfile.TemporaryDirectory() as temp:
+            dest = Path(temp) / "receipt.json"
+            with patch.dict("os.environ", {"BK_TRUSTED_PUBLISHER": "1"}, clear=True):
+                with patch.object(publisher, "prepare_changes",
+                                  return_value=("packs/ru/knowledge_format.json", "{}", "{}", "blob1:blob2")):
+                    with patch.object(publisher, "_api", side_effect=fake_api):
+                        with patch.object(publisher, "_put", return_value=HEAD):
+                            with patch.object(publisher, "_contents", return_value=({"sha": "blob2"}, b"")):
+                                with patch.object(finalizer, "finalize", side_effect=interrupted):
+                                    with self.assertRaisesRegex(publisher.PublishError, "retained"):
+                                        publisher.publish({"record": {"id": "synthetic"}},
+                                                          token="fixture", base="main",
+                                                          branch="trusted/qa-123", skip_ci=False,
+                                                          merge_if_green=True, report_path=dest)
+            receipt = json.loads(dest.read_text(encoding="utf-8"))
+            self.assertEqual(receipt["status"], "merged_post_main_unconfirmed")
+            self.assertEqual(receipt["merge_sha"], "d" * 40)
 
     def test_untrusted_environment_and_bot_credentials_refused(self):
         with patch.dict("os.environ", {"BK_TRUSTED_PUBLISHER": "1", "IMPULS_BOT_TOKEN": "local-bot"}, clear=True):
