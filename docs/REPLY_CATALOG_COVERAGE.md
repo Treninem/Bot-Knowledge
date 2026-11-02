@@ -6,8 +6,8 @@ This candidate adds a **new, separate** SHA-pinned pack. It does not rewrite the
 
 ## Measured coverage
 
-**25 distinct canonical questions, 1147 authored answers, 26 packs total**.
-Ten questions are complete at 100/100, and 15 remain partial. These are reply
+**25 distinct canonical questions, 1411 authored answers, 26 packs total**.
+Thirteen questions are complete at 100/100, and 12 remain partial. These are reply
 variants, not 443 trained model skills or new executable ImPULS commands.
 
 | Question / intent | Count / 100 | Audience |
@@ -23,12 +23,12 @@ variants, not 443 trained model skills or new executable ImPULS commands.
 | Помоги выбрать (`need_decision`) | 100 | all AI bots |
 | Ответить на грубость (`boundaries`) | 100 | all AI bots |
 | Подкинь идею (`idea_request`) | 100 | all AI bots |
-| Помоги извиниться (`apology_help`) | 12 | all AI bots |
+| Помоги извиниться (`apology_help`) | 100 | all AI bots |
 | Помнишь прошлый разговор? (`lost_context`) | 12 | all AI bots |
-| Сменим тему (`change_topic`) | 12 | all AI bots |
+| Сменим тему (`change_topic`) | 100 | all AI bots |
 | Чёрный юмор (`dark_humor`) | 12 | all AI bots, explicit humor opt-in |
 | Объясни правила (`rules_explain`) | 12 | community bots only |
-| Ты уверен? (`no_sure`) | 12 | all AI bots |
+| Ты уверен? (`no_sure`) | 100 | all AI bots |
 | Где настройки ImPULS? (`chat_settings`) | 9 | community bots only |
 | Как пожаловаться? (`report_violations`) | 9 | community bots only |
 | Где мой профиль? (`profile_access`) | 6 | community bots only |
@@ -81,14 +81,14 @@ mutes, permissions or other actions.
 
 ## Integrity and verification
 
-The manifest version is `2026.11.02.4`. The package is pinned by the current manifest SHA-256; size and digest must be checked from actual bytes; all 26 packs must be present and SHA-valid.
+The manifest version is `2026.11.02.5`. The package is pinned by the current manifest SHA-256; size and digest must be checked from actual bytes; all 26 packs must be present and SHA-valid.
 The selector's cache identity is `(knowledge_version, pack_sha256)`; it
 does not change any running bot's cache.
 
 `python scripts/validate_pack.py`,
 `python scripts/test_reply_catalog.py --repository -v`, and the separate
 exact-head workflow must complete on the actual PR head SHA before merge.
-Test requirements cover all 1147 reachable responses, normalized duplicates,
+Test requirements cover all 1411 reachable responses, normalized duplicates,
 cross-pack exact matches, 100/100 completeness, opt-in, audience isolation,
 refusal conditions, repeat suppression and tampered SHA/cache snapshots.
 A review of semantic similarity remains necessary: an exact-string test cannot
@@ -100,8 +100,7 @@ cycle. Candidate-only values must not be reported as shipped to ImPULS.
 
 ## Next unfinished questions
 
-First extend `need_support`, `apology_help`, `lost_context`,
-`change_topic`, `no_sure` and `dark_humor` with useful,
+First extend `need_support`, `lost_context` and `dark_humor` with useful,
 context-distinct answers, then deepen the fact-checked ImPULS FAQ. Count
 existing entries and active PR variants before writing. Aim for 100 each,
 but do not pad with repeated paraphrases or invented functionality.
@@ -119,4 +118,8 @@ technical permissions from text. Every prior reply remains in place.
 
 ## 2026-11-02 contextual batch 2026.11.02.4
 
-Three partial questions (`thanks_reply`, `farewell_reply`, `disagreement_reply`) received 8 distinct guarded groups and 88 original synthetic replies each. Total **+264** (883 -> **1147**). Each moved from 12/100 to 100/100; ten completed sets in main after verified merge. The original 12-item group remains the safe default via an explicit `default_group`, while additional groups require caller-known context. The opt-in selector remains read-only and its SHA/version snapshot changes. Consumer integration, live rollout and repeat policies are unverified.
+Three partial questions (`thanks_reply`, `farewell_reply`, `disagreement_reply`) received 8 distinct guarded groups and 88 original synthetic replies each. Total **+264** (883 -> **1411**). Each moved from 12/100 to 100/100; ten completed sets in main after verified merge. The original 12-item group remains the safe default via an explicit `default_group`, while additional groups require caller-known context. The opt-in selector remains read-only and its SHA/version snapshot changes. Consumer integration, live rollout and repeat policies are unverified.
+
+## 2026-11-02 additional batch 2026.11.02.5
+
+Three further unfinished question sets gained 8 guarded groups and 88 original examples each: `change_topic`, `no_sure`, `apology_help`. Added **264** further replies (1147 → 1411), for **528** additions in this PR relative to its initial main. Three more intents reached 100/100; **13 complete** and **12 partial** remain. All original replies are retained. `default_group` keeps existing short response behavior when the caller omits the group; contextual alternatives require a deliberate choice. Claims about ImPULS functionality were not added in this batch.
