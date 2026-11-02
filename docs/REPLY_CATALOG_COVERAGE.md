@@ -6,8 +6,8 @@ This candidate adds a **new, separate** SHA-pinned pack. It does not rewrite the
 
 ## Measured coverage
 
-**69 distinct canonical questions, 6900 authored answers, 27 packs total**.
-All 69 questions are complete at 100/100; there are no partial sets in this snapshot. These are reply
+**75 distinct canonical questions, 7500 authored answers, 27 packs total**.
+All 75 questions are complete at 100/100; there are no partial sets in this snapshot. These are reply
 variants, not 443 trained model skills or new executable ImPULS commands.
 
 | Question / intent | Count / 100 | Audience |
@@ -83,6 +83,12 @@ variants, not 443 trained model skills or new executable ImPULS commands.
 | Как исправить недопонимание? (`repair_misunderstanding`) | 100 | all AI bots |
 | Как найти компромисс без давления? (`constructive_compromise`) | 100 | all AI bots |
 | Как корректно исправить неверный факт? (`fact_correction`) | 100 | all AI bots |
+| Как расставить приоритеты? (`prioritize_tasks`) | 100 | all AI bots |
+| Как передать задачу другому человеку? (`handoff_task`) | 100 | all AI bots |
+| Как оценить риски перед изменением? (`risk_review`) | 100 | all AI bots |
+| Как составить хороший чек-лист? (`build_checklist`) | 100 | all AI bots |
+| Как правильно проверить изменение? (`verify_change_result`) | 100 | all AI bots |
+| Как нормально описать проблему? (`problem_report`) | 100 | all AI bots |
 ## Source and factual limits
 
 The eight ImPULS-specific question sets are abstract user-facing help, grounded
@@ -126,14 +132,14 @@ mutes, permissions or other actions.
 
 ## Integrity and verification
 
-The manifest version for this completed catalogue is `2026.11.02.24`. The package is pinned by the current manifest SHA-256; size and digest must be checked from actual bytes; all 27 packs must be present and SHA-valid.
+The manifest version for this completed catalogue is `2026.11.02.26`. The package is pinned by the current manifest SHA-256; size and digest must be checked from actual bytes; all 27 packs must be present and SHA-valid.
 The selector's cache identity is `(knowledge_version, pack_sha256)`; it
 does not change any running bot's cache.
 
 `python scripts/validate_pack.py`,
 `python scripts/test_reply_catalog.py --repository -v`, and the separate
 exact-head workflow must complete on the actual PR head SHA before merge.
-Test requirements cover all 6900 reachable responses, normalized duplicates,
+Test requirements cover all 7500 reachable responses, normalized duplicates,
 cross-pack exact matches, 100/100 completeness, opt-in, audience isolation,
 refusal conditions, repeat suppression and tampered SHA/cache snapshots.
 A review of semantic similarity remains necessary: an exact-string test cannot
@@ -288,3 +294,8 @@ actual exact-head CI plus post-main CI remain publication gates.
 ## 2026-11-02 semantic repair batch v2026.11.02.24
 
 Verified main baseline `8d785003be3d56c2dbd433c059903b1cec8f9bdc`: 66 canonical questions and 6600 replies. Three new complete intents gained 100 individually authored responses each with ten explicit context/avoid groups: `repair_misunderstanding`, `constructive_compromise`, and `fact_correction`. Exactly **+300** net new original synthetic responses; candidate **69 questions / 6900 replies**, all **69 complete 100/100**, **zero partial**. Prior 6600 answers kept. Across-pool three-gram Jaccard near-match sweep found no similarity at or above 0.52 for those 300 against the prior 6600 and themselves; this is not proof of semantic perfection. No ImPULS repo changes, private messages, external actions, sanctions or live consumer integration. Source data SHA-256 over UTF-8 bytes: `5d364a2925a61b852f8ffce487691b57ef5aeff8ff74e6be63537938fca41b39`; manifest/cache version `2026.11.02.24`. Only ship after actual completed exact-head QA and post-main CI.
+
+
+## 2026-11-02 practical skills batch 2026.11.02.26
+
+Six new independent questions were added at **100/100** each: `prioritize_tasks`, `handoff_task`, `risk_review`, `build_checklist`, `verify_change_result`, and `problem_report`. Exact addition: **+600** original synthetic replies in guarded context groups. Catalogue: **6900 → 7500 replies**, **69 → 75 canonical questions**, all complete at 100/100. A pre-PR self-check caught an accidental 110-reply set in `verify_change_result`; the extra 10-item group was removed before publication so the canonical 100-reply limit is preserved. No PII, secrets, sanctions, product-specific powers or live-memory claims are introduced.
