@@ -146,5 +146,80 @@ class ImpulsPublicHelpTests(unittest.TestCase):
                 self.assertLess(overlap, 0.68)
 
 
+    def test_public_help_batch_2026_11_02_49(self):
+        """New safe, source-backed context help has fixed size, audience, and distinct language."""
+        new_ids = {
+            "moderation_cropped_screenshot",
+            "moderation_rule_notice_timing",
+            "moderation_impersonated_admin",
+            "moderation_repeat_after_correction",
+            "moderation_quote_education",
+            "moderation_machine_translation",
+            "moderation_critique_vs_harassment",
+            "moderation_proxy_complaint",
+            "moderation_automatic_flag",
+            "moderation_similar_nick",
+            "access_vote_not_authority",
+            "access_shared_device",
+            "access_pending_transfer",
+            "access_old_screen_permission",
+            "access_observer_only",
+            "help_two_similar_options",
+            "help_problem_only_in_private",
+            "help_repeated_failed_step",
+            "help_old_manual_new_client",
+            "help_restart_not_proof",
+            "help_report_without_logs",
+            "help_multiple_symptoms",
+            "conversation_grief_boundaries",
+            "conversation_sarcastic_thanks",
+            "conversation_abbreviation_ambiguous",
+            "conversation_quoted_multiple_people",
+            "conversation_correction_without_shame",
+            "conversation_roleplay_boundary",
+            "conversation_missing_precondition",
+            "game_simultaneous_turns",
+            "game_rules_changed_midround",
+            "game_random_outcome_claim",
+            "game_false_start",
+            "raffle_same_display_name",
+            "raffle_conflicting_deadlines",
+            "raffle_no_audit_result",
+            "pulses_receipt_vs_balance",
+            "pulses_unverified_bonus",
+            "privacy_consent_one_person",
+            "privacy_example_identifiable_details",
+            "learning_fast_correction",
+            "learning_deleted_candidate_cache",
+            "learning_two_sources_disagree",
+            "knowledge_checksum_not_approval",
+            "knowledge_source_version_conflict",
+            "knowledge_valid_but_not_active",
+            "help_untrusted_instruction_in_link",
+        }
+        records = {r["id"]: r for r in self.pack["records"]}
+        self.assertTrue(new_ids <= records.keys())
+        self.assertGreaterEqual(len(records), 270)
+        self.assertGreaterEqual(sum(1 + len(r.get("variants", [])) for r in records.values()), 785)
+        for key in new_ids:
+            row = records[key]
+            self.assertEqual(row["audiences"], ["impuls"])
+            self.assertEqual(row["contexts"], ["direct", "private", "group_addressed"])
+            self.assertEqual(row["language"], "ru")
+            self.assertEqual(len(row["variants"]), 2)
+            self.assertTrue(row["source"].startswith("https://github.com/Treninem/Bot-Knowledge/blob/a08058ef46efc367561c995cab0c2480cebb2640/"))
+        def triples(s):
+            words = normalize(s).split()
+            return {" ".join(words[i:i+3]) for i in range(len(words)-2)}
+        older = [triples(reply) for rec in self.pack["records"] if rec["id"] not in new_ids
+                 for reply in [rec["answer"], *rec.get("variants", [])]]
+        added = [triples(reply) for rec in self.pack["records"] if rec["id"] in new_ids
+                 for reply in [rec["answer"], *rec.get("variants", [])]]
+        for i, current in enumerate(added):
+            for prior in older + added[:i]:
+                overlap = len(current & prior) / max(1, len(current | prior))
+                self.assertLess(overlap, 0.68)
+
+
 if __name__ == "__main__":
     unittest.main()
