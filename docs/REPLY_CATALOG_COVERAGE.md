@@ -6,8 +6,8 @@ This candidate adds a **new, separate** SHA-pinned pack. It does not rewrite the
 
 ## Measured coverage
 
-**25 distinct canonical questions, 1587 authored answers, 26 packs total**.
-Fifteen questions are complete at 100/100, and 10 remain partial. These are reply
+**27 distinct canonical questions, 1875 authored answers, 26 packs total**.
+Eighteen questions are complete at 100/100, and 9 remain partial. These are reply
 variants, not 443 trained model skills or new executable ImPULS commands.
 
 | Question / intent | Count / 100 | Audience |
@@ -26,7 +26,7 @@ variants, not 443 trained model skills or new executable ImPULS commands.
 | Помоги извиниться (`apology_help`) | 100 | all AI bots |
 | Помнишь прошлый разговор? (`lost_context`) | 100 | all AI bots |
 | Сменим тему (`change_topic`) | 100 | all AI bots |
-| Чёрный юмор (`dark_humor`) | 12 | all AI bots, explicit humor opt-in |
+| Чёрный юмор (`dark_humor`) | 100 | all AI bots, explicit humor opt-in |
 | Объясни правила (`rules_explain`) | 12 | community bots only |
 | Ты уверен? (`no_sure`) | 100 | all AI bots |
 | Где настройки ImPULS? (`chat_settings`) | 9 | community bots only |
@@ -37,6 +37,8 @@ variants, not 443 trained model skills or new executable ImPULS commands.
 | Открыть панель (`private_panel`) | 6 | community bots only |
 | Запустить Данетки (`danetka_start`) | 9 | community bots only |
 | Отключить Данетки (`danetka_off`) | 9 | community bots only |
+| Подколи по-доброму (`friendly_tease`) | 100 | all AI bots, explicit humor opt-in |
+| Поддержать разговор (`conversation_followup`) | 100 | all AI bots |
 
 ## Source and factual limits
 
@@ -81,14 +83,14 @@ mutes, permissions or other actions.
 
 ## Integrity and verification
 
-The manifest version is `2026.11.02.6`. The package is pinned by the current manifest SHA-256; size and digest must be checked from actual bytes; all 26 packs must be present and SHA-valid.
+The manifest version is `2026.11.02.7`. The package is pinned by the current manifest SHA-256; size and digest must be checked from actual bytes; all 26 packs must be present and SHA-valid.
 The selector's cache identity is `(knowledge_version, pack_sha256)`; it
 does not change any running bot's cache.
 
 `python scripts/validate_pack.py`,
 `python scripts/test_reply_catalog.py --repository -v`, and the separate
 exact-head workflow must complete on the actual PR head SHA before merge.
-Test requirements cover all 1587 reachable responses, normalized duplicates,
+Test requirements cover all 1875 reachable responses, normalized duplicates,
 cross-pack exact matches, 100/100 completeness, opt-in, audience isolation,
 refusal conditions, repeat suppression and tampered SHA/cache snapshots.
 A review of semantic similarity remains necessary: an exact-string test cannot
@@ -100,7 +102,7 @@ cycle. Candidate-only values must not be reported as shipped to ImPULS.
 
 ## Next unfinished questions
 
-First extend `dark_humor` and reviewed community-specific help with useful,
+Next extend reviewed community-specific help and missing distinct intents with useful,
 context-distinct answers, then deepen the fact-checked ImPULS FAQ. Count
 existing entries and active PR variants before writing. Aim for 100 each,
 but do not pad with repeated paraphrases or invented functionality.
@@ -129,3 +131,7 @@ Integrity fix: an exact normalized reply collided with `dialogue.json`/`skills.j
 ## 2026-11-02 additional batch 2026.11.02.6
 
 `need_support` and `lost_context` gained 8 carefully scoped groups each, **176** new original synthetic replies total (1411 → 1587). Both reached 100/100 with no claim of access to unavailable chat history, and no replacement for crisis interventions. Existing defaults remain available; other groups require local context. This brings the PR total to **704 new replies** vs its base main, **15 full** and **10 partial** sets. Sensitive contexts continue to abstain. All totals are pre-merge until actual CI and GitHub merge are confirmed.
+
+## 2026-11-02 second verified candidate series (2026.11.02.7)
+
+New independently useful, original, synthetic content: `dark_humor` **+88** across eight clearly opt-in fantasy categories, `friendly_tease` **+100** in ten everyday contexts targeting only benign behavior, and `conversation_followup` **+100** with ten conversation-management contexts. Total **+288** (1587 → 1875) and 27 canonical questions; 18 complete at 100/100, 9 partial. Humor has a required `humor_allowed=True` caller flag; groups explicitly state when and avoid conditions, and sensitive/silence flags suppress output. No personal chat logs, product-specific powers or live bot integration were added. This is a separate PR based on the exact merged main after #43.

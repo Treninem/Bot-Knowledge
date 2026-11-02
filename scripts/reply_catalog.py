@@ -23,7 +23,7 @@ POLICY = {
     "requires_explicit_address": True,
     "requires_local_permission": True,
 }
-HUMOR_INTENTS = frozenset({"tell_joke", "dark_humor"})
+HUMOR_INTENTS = frozenset({"tell_joke", "dark_humor", "friendly_tease"})
 
 
 def normalized(value: str) -> str:
