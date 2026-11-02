@@ -34,7 +34,7 @@ class ImpulsPublicHelpTests(unittest.TestCase):
 
     def test_unique_question_and_reply_text(self):
         rows = self.pack["records"]
-        self.assertGreaterEqual(len(rows), 79)
+        self.assertGreaterEqual(len(rows), 124)
         self.assertEqual(len(rows), len({x["id"] for x in rows}))
         self.assertEqual(len(rows), len({normalize(x["question"]) for x in rows}))
         seen = set()
@@ -46,6 +46,16 @@ class ImpulsPublicHelpTests(unittest.TestCase):
             for reply in [row["answer"], *row.get("variants", [])]:
                 self.assertNotIn(normalize(reply), seen)
                 seen.add(normalize(reply))
+
+    def test_new_scoped_topics(self):
+        records = {r["id"]: r for r in self.pack["records"]}
+        essential = {"return_previous_topic", "negated_prohibition", "conflicting_chat_rules",
+                     "claim_owner_text", "learning_cannot_override_fact", "expired_training_token",
+                     "game_turn_priority", "digest_mismatch", "audience_scope",
+                     "version_distinction", "last_good_snapshot"}
+        self.assertTrue(essential <= records.keys())
+        for key in essential:
+            self.assertEqual(len(records[key]["variants"]), 2)
 
     def test_critical_new_questions(self):
         ids = {r["id"] for r in self.pack["records"]}
