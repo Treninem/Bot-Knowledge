@@ -20,11 +20,11 @@ EXPECTED = {
     "explain_again": 100, "disagreement_reply": 100, "need_support": 100,
     "bored": 100, "need_decision": 100, "boundaries": 100,
     "idea_request": 100, "apology_help": 100, "lost_context": 100,
-    "change_topic": 100, "dark_humor": 100, "rules_explain": 22,
-    "no_sure": 100, "chat_settings": 19, "report_violations": 19,
-    "profile_access": 16, "pulse_navigation": 16,
-    "moderator_commands": 19, "private_panel": 16, "danetka_start": 19,
-    "danetka_off": 19,
+    "change_topic": 100, "dark_humor": 100, "rules_explain": 100,
+    "no_sure": 100, "chat_settings": 100, "report_violations": 100,
+    "profile_access": 100, "pulse_navigation": 100,
+    "moderator_commands": 100, "private_panel": 100, "danetka_start": 100,
+    "danetka_off": 100,
     "friendly_tease": 100, "conversation_followup": 100,
     "diagnose_problem": 100, "verify_claim": 100,
     "goal_clarity": 100, "project_plan": 100, "idea_review": 100,
@@ -108,12 +108,12 @@ class ReplyCatalogueTests(unittest.TestCase):
         options.update(kw)
         return self.catalog.reply(intent, **options)
 
-    def test_exact_47_questions_3325_replies(self):
+    def test_exact_47_questions_4060_replies(self):
         self.assertEqual(self.catalog.coverage, EXPECTED)
         self.assertEqual(len(EXPECTED), 47)
-        self.assertEqual(sum(EXPECTED.values()), 3325)
+        self.assertEqual(sum(EXPECTED.values()), 4060)
 
-    def test_exact_thirty_full_100_sets(self):
+    def test_exact_thirty_nine_full_100_sets(self):
         self.assertEqual({k for k, v in self.catalog.coverage.items() if v == 100},
                          {"what_discuss", "tell_joke", "explain_again", "bored",
                           "need_decision", "boundaries", "idea_request",
@@ -125,9 +125,12 @@ class ReplyCatalogueTests(unittest.TestCase):
                           "goal_clarity", "project_plan", "idea_review",
                           "message_draft", "learning_path", "group_discussion",
                           "chat_activities", "moderation_reasoning",
-                          "micro_story", "critical_analysis"})
+                          "micro_story", "critical_analysis",
+                          "rules_explain", "chat_settings", "report_violations",
+                          "profile_access", "pulse_navigation", "moderator_commands",
+                          "private_panel", "danetka_start", "danetka_off"})
 
-    def test_all_3325_reachable(self):
+    def test_all_4060_reachable(self):
         result_ids = set()
         for record in self.data["sets"]:
             for group in record["groups"]:
@@ -144,7 +147,7 @@ class ReplyCatalogueTests(unittest.TestCase):
                                      audience=record["audiences"][0],
                                      humor_allowed=True, recent=recent)
                 self.assertEqual(exhausted["status"], "repeat_suppressed")
-        self.assertEqual(len(result_ids), 3325)
+        self.assertEqual(len(result_ids), 4060)
 
     def test_normalized_unique_globally(self):
         replies = [v for x in self.data["sets"] for g in x["groups"] for v in g["replies"]]

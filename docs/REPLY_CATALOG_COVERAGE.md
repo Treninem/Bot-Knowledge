@@ -6,8 +6,8 @@ This candidate adds a **new, separate** SHA-pinned pack. It does not rewrite the
 
 ## Measured coverage
 
-**47 distinct canonical questions, 3325 authored answers, 26 packs total**.
-Thirty questions are complete at 100/100, and 17 remain partial. These are reply
+**47 distinct canonical questions, 4060 authored answers, 26 packs total**.
+Thirty-nine questions are complete at 100/100, and 8 remain partial. These are reply
 variants, not 443 trained model skills or new executable ImPULS commands.
 
 | Question / intent | Count / 100 | Audience |
@@ -27,16 +27,16 @@ variants, not 443 trained model skills or new executable ImPULS commands.
 | Помнишь прошлый разговор? (`lost_context`) | 100 | all AI bots |
 | Сменим тему (`change_topic`) | 100 | all AI bots |
 | Чёрный юмор (`dark_humor`) | 100 | all AI bots, explicit humor opt-in |
-| Объясни правила (`rules_explain`) | 22 | community bots only |
+| Объясни правила (`rules_explain`) | 100 | community bots only |
 | Ты уверен? (`no_sure`) | 100 | all AI bots |
-| Где настройки ImPULS? (`chat_settings`) | 19 | community bots only |
-| Как пожаловаться? (`report_violations`) | 19 | community bots only |
-| Где мой профиль? (`profile_access`) | 16 | community bots only |
-| Где Пульсы? (`pulse_navigation`) | 16 | community bots only |
-| Команды модератора (`moderator_commands`) | 19 | community bots only |
-| Открыть панель (`private_panel`) | 16 | community bots only |
-| Запустить Данетки (`danetka_start`) | 19 | community bots only |
-| Отключить Данетки (`danetka_off`) | 19 | community bots only |
+| Где настройки ImPULS? (`chat_settings`) | 100 | community bots only |
+| Как пожаловаться? (`report_violations`) | 100 | community bots only |
+| Где мой профиль? (`profile_access`) | 100 | community bots only |
+| Где Пульсы? (`pulse_navigation`) | 100 | community bots only |
+| Команды модератора (`moderator_commands`) | 100 | community bots only |
+| Открыть панель (`private_panel`) | 100 | community bots only |
+| Запустить Данетки (`danetka_start`) | 100 | community bots only |
+| Отключить Данетки (`danetka_off`) | 100 | community bots only |
 | Подколи по-доброму (`friendly_tease`) | 100 | all AI bots, explicit humor opt-in |
 | Поддержать разговор (`conversation_followup`) | 100 | all AI bots |
 | Почему это не работает? (`diagnose_problem`) | 100 | all AI bots |
@@ -210,3 +210,7 @@ New completed intents: `micro_story` **100 original two-sentence miniature stori
 ## 2026-11-02 newly verified ImPULS-oriented help topics (2026.11.02.14)
 
 Added **8 new canonical ImPULS FAQs with 20 original, audience-limited, context-scoped replies each** (+160). Their 80-response remainder per question is explicitly unfinished; 47 questions / 3325 catalogue replies overall, 30 complete and 17 partial. Source reference: read-only `Treninem/Impuls` main `95dcb0fc0773f970e162a6009a4d889e880a2d0e`, user-facing `README.md` and `docs/COMMANDS_MATRIX_V30.md`. Grounded subjects: starting with group/DM commands, asking AI questions, diagnosing silence, games help, questions vs explicit commands, per-chat isolation, release navigation, checking roles. User-facing documentation describes candidate features, not verified live BotHost behavior. No private source text, identities, tokens, or undocumented settings were copied. These community-only variants cannot be served by a generic AI audience and require local verified permission and explicit caller context. In this PR total newly authored replies **1160** across 18 new questions, ten at 100/100, eight at 20/100; pre-existing nine partial sets were not modified because overlapping extension work remains open.
+
+## 2026-11-02 reconciliation of older response extension PR #46 (2026.11.02.15)
+
+Older [PR #46](https://github.com/Treninem/Bot-Knowledge/pull/46), exact head `a21bfb79b50ef0804889ca662d8a285f073ac483`, contains **825 prior-authored** candidate replies for nine existing ImPULS question sets, based on an old 883-reply catalogue. Current main had independently gained 10 replies in each. To preserve the 100/100 per-question cap, we selected 10 candidates to exclude per set (90 total) using lexical-overlap scoring against existing records while retaining at least six replies in each new context group. **735 preserved original answers from that existing open PR migrated**, completing all nine sets from 22/19/16 to 100. These 735 were NOT newly authored during this run; they are new only to main after merging this candidate. Existing 3325 replies retained; resulting candidate: **47 questions, 4060 replies, 39 complete 100/100 and 8 partial**. The older extension PR and its different selector code remain open for separate compatibility review; no loss of its branches is claimed. Its eight source-bearing sets use current read-only `Treninem/Impuls` documents at `95dcb0fc0773f970e162a6009a4d889e880a2d0e`. All changes require actual exact-head CI, source SHA/cache, near-duplicate and full-repository regression checks before main merge. This is public synthetic content only, not operational bot permissions or live rollout.
