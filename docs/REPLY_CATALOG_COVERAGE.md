@@ -6,18 +6,18 @@ This candidate adds a **new, separate** SHA-pinned pack. It does not rewrite the
 
 ## Measured coverage
 
-**25 distinct canonical questions, 883 authored answers, 26 packs total**.
-Seven questions are complete at 100/100, and 18 remain partial. These are reply
+**25 distinct canonical questions, 1147 authored answers, 26 packs total**.
+Ten questions are complete at 100/100, and 15 remain partial. These are reply
 variants, not 443 trained model skills or new executable ImPULS commands.
 
 | Question / intent | Count / 100 | Audience |
 |---|---:|---|
 | О чём поговорим? (`what_discuss`) | 100 | all AI bots |
 | Пошути (`tell_joke`) | 100 | all AI bots, explicit humor opt-in |
-| Спасибо (`thanks_reply`) | 12 | all AI bots |
-| Пока (`farewell_reply`) | 12 | all AI bots |
+| Спасибо (`thanks_reply`) | 100 | all AI bots |
+| Пока (`farewell_reply`) | 100 | all AI bots |
 | Не понял (`explain_again`) | 100 | all AI bots |
-| Я не согласен (`disagreement_reply`) | 12 | all AI bots |
+| Я не согласен (`disagreement_reply`) | 100 | all AI bots |
 | Мне тяжело (`need_support`) | 12 | all AI bots |
 | Мне скучно (`bored`) | 100 | all AI bots |
 | Помоги выбрать (`need_decision`) | 100 | all AI bots |
@@ -81,16 +81,14 @@ mutes, permissions or other actions.
 
 ## Integrity and verification
 
-The manifest version is `2026.11.02.3`. The new package SHA-256 is
-`dcf8658c802ee0d525c52721725742e3281e6084354b0a1830812b4af53b9784`.
-Source bytes are 158,706 UTF-8 bytes; all 26 packs must be present and SHA-valid.
+The manifest version is `2026.11.02.4`. The package is pinned by the current manifest SHA-256; size and digest must be checked from actual bytes; all 26 packs must be present and SHA-valid.
 The selector's cache identity is `(knowledge_version, pack_sha256)`; it
 does not change any running bot's cache.
 
 `python scripts/validate_pack.py`,
 `python scripts/test_reply_catalog.py --repository -v`, and the separate
 exact-head workflow must complete on the actual PR head SHA before merge.
-Test requirements cover all 883 reachable responses, normalized duplicates,
+Test requirements cover all 1147 reachable responses, normalized duplicates,
 cross-pack exact matches, 100/100 completeness, opt-in, audience isolation,
 refusal conditions, repeat suppression and tampered SHA/cache snapshots.
 A review of semantic similarity remains necessary: an exact-string test cannot
@@ -102,8 +100,8 @@ cycle. Candidate-only values must not be reported as shipped to ImPULS.
 
 ## Next unfinished questions
 
-First extend `thanks_reply`, `farewell_reply`, `disagreement_reply`,
-`need_support`, `apology_help` and `lost_context` with useful,
+First extend `need_support`, `apology_help`, `lost_context`,
+`change_topic`, `no_sure` and `dark_humor` with useful,
 context-distinct answers, then deepen the fact-checked ImPULS FAQ. Count
 existing entries and active PR variants before writing. Aim for 100 each,
 but do not pad with repeated paraphrases or invented functionality.
@@ -118,3 +116,7 @@ cumulative catalogue: **883**, full sets: **7**, partial sets: **18**.
 These are language examples, not operational moderation authority. The new
 context groups require explicit caller selection; do not infer sensitive or
 technical permissions from text. Every prior reply remains in place.
+
+## 2026-11-02 contextual batch 2026.11.02.4
+
+Three partial questions (`thanks_reply`, `farewell_reply`, `disagreement_reply`) received 8 distinct guarded groups and 88 original synthetic replies each. Total **+264** (883 -> **1147**). Each moved from 12/100 to 100/100; ten completed sets in main after verified merge. The original 12-item group remains the safe default via an explicit `default_group`, while additional groups require caller-known context. The opt-in selector remains read-only and its SHA/version snapshot changes. Consumer integration, live rollout and repeat policies are unverified.

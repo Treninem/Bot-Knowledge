@@ -16,8 +16,8 @@ from reply_catalog import PACK, ROOT, ReplyCatalog, normalized
 
 EXPECTED = {
     "what_discuss": 100, "tell_joke": 100,
-    "thanks_reply": 12, "farewell_reply": 12,
-    "explain_again": 100, "disagreement_reply": 12, "need_support": 12,
+    "thanks_reply": 100, "farewell_reply": 100,
+    "explain_again": 100, "disagreement_reply": 100, "need_support": 12,
     "bored": 100, "need_decision": 100, "boundaries": 100,
     "idea_request": 100, "apology_help": 12, "lost_context": 12,
     "change_topic": 12, "dark_humor": 12, "rules_explain": 12,
@@ -101,17 +101,18 @@ class ReplyCatalogueTests(unittest.TestCase):
         options.update(kw)
         return self.catalog.reply(intent, **options)
 
-    def test_exact_25_questions_883_replies(self):
+    def test_exact_25_questions_1147_replies(self):
         self.assertEqual(self.catalog.coverage, EXPECTED)
         self.assertEqual(len(EXPECTED), 25)
-        self.assertEqual(sum(EXPECTED.values()), 883)
+        self.assertEqual(sum(EXPECTED.values()), 1147)
 
-    def test_exact_seven_full_100_sets(self):
+    def test_exact_ten_full_100_sets(self):
         self.assertEqual({k for k, v in self.catalog.coverage.items() if v == 100},
                          {"what_discuss", "tell_joke", "explain_again", "bored",
-                          "need_decision", "boundaries", "idea_request"})
+                          "need_decision", "boundaries", "idea_request",
+                          "thanks_reply", "farewell_reply", "disagreement_reply"})
 
-    def test_all_883_reachable(self):
+    def test_all_1147_reachable(self):
         result_ids = set()
         for record in self.data["sets"]:
             for group in record["groups"]:
@@ -128,7 +129,7 @@ class ReplyCatalogueTests(unittest.TestCase):
                                      audience=record["audiences"][0],
                                      humor_allowed=True, recent=recent)
                 self.assertEqual(exhausted["status"], "repeat_suppressed")
-        self.assertEqual(len(result_ids), 883)
+        self.assertEqual(len(result_ids), 1147)
 
     def test_normalized_unique_globally(self):
         replies = [v for x in self.data["sets"] for g in x["groups"] for v in g["replies"]]
@@ -185,6 +186,23 @@ class ReplyCatalogueTests(unittest.TestCase):
         self.assertEqual(self.ask("danetka_start",
                                   audience="community_bots")["status"], "group_required")
         self.assertEqual(self.ask("what_discuss", group="invented")["status"], "wrong_group")
+
+    def test_legacy_default_for_expanded_intents(self):
+        for intent in ('thanks_reply', 'farewell_reply', 'disagreement_reply'):
+            self.assertEqual(self.ask(intent)['status'], 'ok')
+            self.assertEqual(self.ask(intent)['source_id'].split(':')[1],
+                             self.data['sets'][next(i for i, x in enumerate(self.data['sets'])
+                                               if x['id'] == intent)]['default_group'])
+
+    def test_invalid_default_group_rejected(self):
+        pack = json.loads(self.raw)
+        pack['sets'][2]['default_group'] = 'not_a_real_group'
+        tampered = (json.dumps(pack, ensure_ascii=False) + '\n').encode('utf-8')
+        (self.root / PACK).write_bytes(tampered)
+        self.manifest['packs'][0]['sha256'] = hashlib.sha256(tampered).hexdigest()
+        self._save_manifest()
+        with self.assertRaisesRegex(ValueError, 'Unknown default response group'):
+            ReplyCatalog(self.root)
 
     def test_single_group_default(self):
         self.assertEqual(self.ask("thanks_reply")["status"], "ok")
