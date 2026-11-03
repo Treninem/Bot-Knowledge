@@ -65,7 +65,8 @@ class ImpulsPublicHelpTests(unittest.TestCase):
             self.assertTrue(rec["source"].startswith("https://github.com/Treninem/Bot-Knowledge/blob/19281aa8995986205840a7c17bb5ed3d75f90077/"))
             for phrase in [rec["question"], *rec["aliases"]]:
                 self.assertEqual(alias_index[normalize(phrase)], {ident})
-        self.assertEqual(sum(1 + len(r.get("variants", [])) for r in records.values()), 1280)
+        self.assertEqual(sum(1 + len(records[k].get("variants", [])) for k in ids), 120)
+        self.assertGreaterEqual(sum(1 + len(r.get("variants", [])) for r in records.values()), 1280)
 
 
     def test_report_moderation_qa_2026_11_03_62(self):
@@ -86,7 +87,8 @@ class ImpulsPublicHelpTests(unittest.TestCase):
             self.assertTrue(row["source"].startswith("https://github.com/Treninem/Bot-Knowledge/blob/7db630da37f838d5c448212010ad0dd9a3f06cdf/"))
             for query in [row["question"], *row["aliases"]]:
                 self.assertEqual(index[normalize(query)], {ident})
-        self.assertEqual(sum(1 + len(r.get("variants", [])) for r in records.values()), 1376)
+        self.assertEqual(sum(1 + len(records[k].get("variants", [])) for k in ids), 96)
+        self.assertGreaterEqual(sum(1 + len(r.get("variants", [])) for r in records.values()), 1376)
 
 
     def test_new_scoped_topics(self):
