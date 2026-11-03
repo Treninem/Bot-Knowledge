@@ -36,4 +36,10 @@ def expected_index_count(root: Path = ROOT) -> int:
             if not isinstance(values, list):
                 raise AssertionError("invalid indexed collection")
             count += sum(isinstance(x, dict) for x in values)
+        catalog = payload.get("catalog")
+        if isinstance(catalog, dict) and catalog.get("adapter") == "qa.v1":
+            rows = payload.get(catalog.get("records", "records"), [])
+            if not isinstance(rows, list):
+                raise AssertionError("invalid qa.v1 indexed collection")
+            count += sum(isinstance(x, dict) for x in rows)
     return count
