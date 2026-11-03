@@ -28,6 +28,15 @@ def main() -> None:
         # A specialized semantic rule may outrank a valid general dialogue case.
         # Require actual indexed retrieval without altering existing ranking.
         assert r["id"] in {item[0] for item in hits},(r["id"],hits)
+    newer=[r for r in p["cases"] if r["id"].startswith("talk_t8_")]
+    assert len(newer)==36, len(newer)
+    assert len({r["id"] for r in newer})==len(newer)
+    assert {r["kind"] for r in newer}=={"congratulations","support","humor","profanity","conversation","creative"}
+    for r in newer:
+        assert r["context"] and r["avoid"] and r["audiences"]==["all_ai_bots"]
+        hits=search.search(r["input"],"all_ai_bots",limit=20)
+        assert r["id"] in {item[0] for item in hits},(r["id"],hits)
+    print("SOCIAL_CONTEXT_T8_SEARCH_OK 36/36")
     print("SOCIAL_CONTEXT_T7_SEARCH_OK 48/48")
 
 if __name__=="__main__":
