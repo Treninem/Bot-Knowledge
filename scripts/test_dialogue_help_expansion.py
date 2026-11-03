@@ -67,5 +67,17 @@ def main() -> None:
             assert hits and hits[0][0] == row["id"], (row["id"], phrase, hits)
     print("UNIVERSAL_DIALOGUE_QA_T10_OK 42/42")
 
+    newest = [r for r in pack["records"] if r["id"].startswith("dlg_t11_")]
+    assert len(newest) == 40, len(newest)
+    assert len({r["id"] for r in newest}) == len(newest)
+    for row in newest:
+        assert row["audiences"] == ["all_ai_bots"]
+        assert row["contexts"] == ["direct", "private", "group_addressed"]
+        assert len(row["aliases"]) == len(row["variants"]) == 2
+        for phrase in [row["question"], *row["aliases"]]:
+            hits = index.search(phrase, audience="all_ai_bots", limit=5)
+            assert hits and hits[0][0] == row["id"], (row["id"], phrase, hits)
+    print("UNIVERSAL_DIALOGUE_QA_T11_OK 40/40")
+
 if __name__ == "__main__":
     main()
