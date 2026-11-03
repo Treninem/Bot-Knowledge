@@ -36,7 +36,7 @@ def main() -> None:
         assert all(row[key].strip() for key in ("context", "input", "response", "avoid"))
         assert row["kind"] in KINDS
         assert not re.search(
-            r"(?i)https?://|@\\w+|\\b\\d{9,}\\b|(?:api[_-]?key|access[_-]?token)\\s*[:=]",
+            r"(?i)https?://|@\w+|\b\d{9,}\b|(?:api[_-]?key|access[_-]?token)\s*[:=]",
             json.dumps(row, ensure_ascii=False),
         )
         # A language response must not encode a live moderation sanction.
