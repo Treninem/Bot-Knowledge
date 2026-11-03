@@ -27,7 +27,7 @@ def main():
         assert r["kind"] in {"conversation","support","slang","sarcasm","context","rules","deception","creative"}
         assert r["language"]=="en" and r["audiences"]==["all_ai_bots"]
         assert all(r[k].strip() for k in ("input","response","meaning_ru","avoid"))
-        assert not re.search(r"(?i)https?://|@\\w+|\\b\\d{10,}\\b",json.dumps(r,ensure_ascii=False))
+        assert not re.search(r"(?i)https?://|@\w+|\b\d{10,}\b",json.dumps(r,ensure_ascii=False))
         assert not any(k in r for k in ("action","sanction","auto_apply","ban","mute"))
         hits=search.search(r["input"],audience="all_ai_bots",limit=20)
         assert any(hit[0]==r["id"] for hit in hits),r["id"]
