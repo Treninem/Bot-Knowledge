@@ -10,7 +10,7 @@ ROOT = Path(__file__).resolve().parents[1]
 PREFIX = "talk_t24_"
 EXPECTED = {"congratulations":6,"support":6,"humor":6,"profanity":6,"conversation":6,"creative":6}
 def norm(value):
-    return re.sub(r"[^\\w]+", " ", value.casefold().replace("ё","е")).strip()
+    return re.sub(r"[^\w]+", " ", value.casefold().replace("ё","е")).strip()
 def main():
     rel = "packs/ru/social_dialogues.json"
     raw = (ROOT/rel).read_bytes()
@@ -31,7 +31,7 @@ def main():
     search = KnowledgeSearch()
     for r in chosen:
         assert r["audiences"]==["all_ai_bots"] and r["context"] and r["avoid"]
-        assert not re.search(r"(?:@\\w+|\\b\\d{9,}\\b|(?:access_token|api[_-]?key)\\s*[:=])", str(r), re.I)
+        assert not re.search(r"(?:@\w+|\b\d{9,}\b|(?:access_token|api[_-]?key)\s*[:=])", str(r), re.I)
         assert any(hit[0]==r["id"] for hit in search.search(r["input"], audience="all_ai_bots", limit=20)),r["id"]
     print("T24_SOCIAL_OK accepted=36 sha256=%s" % hashlib.sha256(raw).hexdigest())
 if __name__=="__main__":
