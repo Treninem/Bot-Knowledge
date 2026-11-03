@@ -42,6 +42,17 @@ def main() -> None:
             assert hits and hits[0][0] == row["id"], (row["id"], phrase, hits)
             checked += 1
     print(f"UNIVERSAL_DIALOGUE_QA_T8_OK records={len(expanded)} checks={len(expanded) * 3}")
+    newer = [r for r in pack["records"] if r["id"].startswith("dlg_t9_")]
+    assert len(newer) == 29, len(newer)
+    assert len({r["id"] for r in newer}) == len(newer)
+    for row in newer:
+        assert row["audiences"] == ["all_ai_bots"]
+        assert row["contexts"] == ["direct", "private", "group_addressed"]
+        assert len(row["aliases"]) == len(row["variants"]) == 2
+        for phrase in [row["question"], *row["aliases"]]:
+            hits = index.search(phrase, audience="all_ai_bots", limit=5)
+            assert hits and hits[0][0] == row["id"], (row["id"], phrase, hits)
+    print("UNIVERSAL_DIALOGUE_QA_T9_OK 29/29")
     print(f"UNIVERSAL_DIALOGUE_QA_SEARCH_OK records={len(selected)} aliases={checked - len(selected)} checks={checked}")
 
 if __name__ == "__main__":
