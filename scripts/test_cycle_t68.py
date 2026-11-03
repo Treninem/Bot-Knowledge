@@ -24,6 +24,8 @@ class T68(unittest.TestCase):
             self.assertEqual(len({normal(x) for x in answers}),len(answers))
             for x in current:
                 self.assertEqual(x["audiences"],["all_ai_bots"])
+                if filename=="social_dialogues.json":
+                    self.assertIn(x["kind"], {"conversation","support","humor","creative","congratulations","profanity"})
                 self.assertNotIn("sanction",x)
                 self.assertTrue(x[key].strip())
                 if filename=="dialogue_help_qa.json":
