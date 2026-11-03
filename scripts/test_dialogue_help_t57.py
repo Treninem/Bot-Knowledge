@@ -38,7 +38,7 @@ def main():
         assert len(record["variants"]) == len(record["aliases"]) == 2
         assert all(x.strip() for x in [record["answer"], *record["variants"]])
         assert not any(k in record for k in ("action", "ban", "mute", "execute", "auto_apply"))
-        assert not re.search(r"(?i)https?://|@\\w+|\\b\\d{10,}\\b", " ".join(
+        assert not re.search(r"(?i)https?://|@\w+|\b\d{10,}\b", " ".join(
             [record["question"], *record["aliases"], record["answer"], *record["variants"]]
         ))
         for query in [record["question"], *record["aliases"]]:
