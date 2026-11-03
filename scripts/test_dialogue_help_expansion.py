@@ -79,5 +79,27 @@ def main() -> None:
             assert hits and hits[0][0] == row["id"], (row["id"], phrase, hits)
     print("UNIVERSAL_DIALOGUE_QA_T11_OK 40/40")
 
+    # Prevent accidental duplicate canonical questions and alias collisions,
+    # including case, punctuation, yo/e and cosmetic-emoji differences.
+    from copy import deepcopy
+    from validate_qa_v1 import normalize_question, validate_qa_pack
+    assert normalize_question("  Ёж, привет! 😀  ") == normalize_question("еж привет")
+    assert validate_qa_pack(pack) == len(pack["records"])
+    cases = []
+    second_record = deepcopy(pack)
+    second_record["records"][-1]["aliases"].append(pack["records"][0]["question"].upper() + " 😃")
+    cases.append(second_record)
+    same_record = deepcopy(pack)
+    same_record["records"][0]["aliases"][0] = pack["records"][0]["question"] + " 🙂"
+    cases.append(same_record)
+    for invalid in cases:
+        try:
+            validate_qa_pack(invalid)
+        except ValueError as exc:
+            assert str(exc) == "duplicate_normalized_question_or_alias", str(exc)
+        else:
+            raise AssertionError("duplicate alias was not rejected")
+    print("QA_NORMALIZED_QUERY_DEDUP_OK 2_negative + current_pack")
+
 if __name__ == "__main__":
     main()
