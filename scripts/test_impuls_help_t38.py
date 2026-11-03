@@ -25,7 +25,7 @@ def main():
         assert r["constraints"]=={"read_only":True,"requires_direct_address":True,"no_personal_data":True}
         assert len(r["variants"])==2 and len(r["aliases"])==2
         assert r["source"].startswith("https://github.com/Treninem/Bot-Knowledge/")
-        assert not re.search(r"@\\w+|\\b\\d{9,}\\b|(?:access_token|api[_-]?key)\\s*[:=]",str(r),re.I)
+        assert not re.search(r"@\w+|\b\d{9,}\b|(?:access_token|api[_-]?key)\s*[:=]",str(r),re.I)
         for q in [r["question"],*r["aliases"]]:
             assert any(h[0]==r["id"] for h in search.search(q,audience="impuls",limit=20)),(r["id"],q)
             assert all(h[0]!=r["id"] for h in search.search(q,audience="all_ai_bots",limit=20)),(r["id"],q)
