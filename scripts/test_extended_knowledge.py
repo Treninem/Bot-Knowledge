@@ -25,13 +25,13 @@ def main() -> None:
     moderation = load("moderation_cases.json")["cases"]
     social = load("social_dialogues.json")["cases"]
     english = load("english_dialogues.json")["cases"]
-    assert len(moderation) == 63
+    assert len(moderation) == 126  # established 63 + T70 63 safe contexts
     assert len(social) >= 329  # preserve audited baseline and permit reviewed additions
     assert len(english) >= 138  # audited baseline; compatible additive English packs
     assert len([x for x in english if x["id"].startswith("en_t14_")]) == 32
     assert len({x["topic"] for x in moderation}) == 21
     assert Counter(x["classification"] for x in moderation) == {
-        "candidate_violation": 21, "allow": 21, "review": 21
+        "candidate_violation": 42, "allow": 42, "review": 42
     }
     base_social_counts = {
         "congratulations": 56, "support": 60, "humor": 53,
