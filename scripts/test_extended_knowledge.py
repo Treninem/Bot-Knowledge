@@ -27,7 +27,8 @@ def main() -> None:
     english = load("english_dialogues.json")["cases"]
     assert len(moderation) == 63
     assert len(social) >= 329  # preserve audited baseline and permit reviewed additions
-    assert len(english) == 138
+    assert len(english) >= 138  # audited baseline, allow verified additions
+    assert len([x for x in english if x["id"].startswith("en_t14_")]) == 32
     assert len({x["topic"] for x in moderation}) == 21
     assert Counter(x["classification"] for x in moderation) == {
         "candidate_violation": 21, "allow": 21, "review": 21
