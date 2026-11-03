@@ -1,0 +1,5 @@
+# Social dialogue expansion — 2026-11-03 (.73)
+
+Source main `b786dae904e7c10424cad3dcd9d48f2cef21fbe4` with 329 cases. Added 48 original, entirely synthetic, context-bound cases: 8 each in congratulations, support, humor, profanity, conversation and creative. Result: 377 cases; +48 new response texts. These are not 100/100 reply_catalog sets, because their contexts and user utterances are distinct. No private chat, usernames, IDs, tokens, unverified ImPULS functions or executable moderation actions.
+
+Pre-PR checks: exact duplicate IDs/inputs/responses (NFKC, casefold, ё/е, punctuation, whitespace): 0; token-Jaccard >=0.70 input or >=0.72 response compared to prior social cases: 0. Maximum input overlap 0.600; answer overlap 0.217. Manifest updated to .73 with actual hash `2efeef41d73417e059504248524f208d9d578719afb28c1ea02e870008c840f4`. Pack is 252152 UTF-8 bytes, below 2 MiB. Dedicated retrieval tests and existing Python validation must pass on exact head SHA; merge and consumer rollout are separate gates.
