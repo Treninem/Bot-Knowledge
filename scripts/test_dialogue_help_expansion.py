@@ -55,5 +55,17 @@ def main() -> None:
     print("UNIVERSAL_DIALOGUE_QA_T9_OK 29/29")
     print(f"UNIVERSAL_DIALOGUE_QA_SEARCH_OK records={len(selected)} aliases={checked - len(selected)} checks={checked}")
 
+    latest = [r for r in pack["records"] if r["id"].startswith("dlg_t10_")]
+    assert len(latest) == 42, len(latest)
+    assert len({r["id"] for r in latest}) == len(latest)
+    for row in latest:
+        assert row["audiences"] == ["all_ai_bots"]
+        assert row["contexts"] == ["direct", "private", "group_addressed"]
+        assert len(row["aliases"]) == len(row["variants"]) == 2
+        for phrase in [row["question"], *row["aliases"]]:
+            hits = index.search(phrase, audience="all_ai_bots", limit=5)
+            assert hits and hits[0][0] == row["id"], (row["id"], phrase, hits)
+    print("UNIVERSAL_DIALOGUE_QA_T10_OK 42/42")
+
 if __name__ == "__main__":
     main()
