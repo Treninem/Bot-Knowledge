@@ -15,7 +15,7 @@ from functools import lru_cache
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-AUDIENCES = {"all_ai_bots", "chat_moderators", "community_bots"}
+AUDIENCES = {"all_ai_bots", "chat_moderators", "community_bots", "impuls"}
 WORDS = re.compile(r"[a-zа-яё0-9]+", re.IGNORECASE)
 
 def exact_phrase(text: str) -> str:
@@ -93,6 +93,53 @@ class KnowledgeSearch:
                     if isinstance(record["expression"], str) and record["expression"].strip():
                         self.exact[exact_phrase(record["expression"])].add(index)
                     for term in tokens(contents):
+                        self.inverted[term].add(index)
+
+            # Dynamically discover registered qa.v1 catalogs without a fixed
+            # pack-name list. These are reference hits, never actions.
+            catalog = pack.get("catalog")
+            if isinstance(catalog, dict) and catalog.get("adapter") == "qa.v1":
+                collection_name = catalog.get("records", "records")
+                qa_rows = pack.get(collection_name, [])
+                if not isinstance(qa_rows, list):
+                    raise ValueError("Invalid qa.v1 collection: " + rel)
+                default_audiences = catalog.get("audiences", ["all_ai_bots"])
+                default_contexts = catalog.get("contexts", ["direct"])
+                for item in qa_rows:
+                    if not isinstance(item, dict):
+                        raise ValueError("Invalid qa.v1 record: " + rel)
+                    audiences = item.get("audiences", default_audiences)
+                    contexts = item.get("contexts", default_contexts)
+                    if (not isinstance(audiences, list) or not audiences
+                            or not set(audiences) <= AUDIENCES):
+                        raise ValueError("Bad qa.v1 audience: " + rel)
+                    if (not isinstance(contexts, list) or not contexts
+                            or not set(contexts) <= {"direct", "private", "group_addressed"}):
+                        raise ValueError("Bad qa.v1 context: " + rel)
+                    question = item.get("question")
+                    answer = item.get("answer")
+                    aliases = item.get("aliases", [])
+                    variants = item.get("variants", [])
+                    if (not isinstance(question, str) or not question.strip()
+                            or not isinstance(answer, str) or not answer.strip()
+                            or not isinstance(aliases, list) or not isinstance(variants, list)
+                            or any(not isinstance(x, str) for x in aliases + variants)):
+                        raise ValueError("Invalid qa.v1 searchable fields: " + rel)
+                    searchable = " ".join([question, answer, *aliases, *variants])
+                    record = {
+                        "id": item.get("id", ""),
+                        "pack": rel,
+                        "audiences": audiences,
+                        "topic": catalog.get("id", ""),
+                        "expression": question,
+                        "preview": answer[:220],
+                    }
+                    index = len(self.records)
+                    self.records.append(record)
+                    for phrase in [question, *aliases]:
+                        if phrase.strip():
+                            self.exact[exact_phrase(phrase)].add(index)
+                    for term in tokens(searchable):
                         self.inverted[term].add(index)
 
         # Keep lookup caching owned by this verified snapshot. Decorating the
