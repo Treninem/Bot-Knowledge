@@ -23,6 +23,6 @@ def main():
         k=normalized(r["input"])
         if k in unique: raise ValueError("T17 duplicate")
         unique.add(k)
-        if not any(x[0]==r["id"] for x in index.search(r["input"],audience="all_ai_bots",limit=40)): raise ValueError("T17 missing: "+r["id"])
+        if not any(x[0]==r["id"] for x in index.search(r["input"],audience="all_ai_bots",limit=20)): raise ValueError("T17 missing: "+r["id"])
     print("T17_SOCIAL_OK cases="+str(len(chosen))+" retrieval="+str(len(unique)))
 if __name__=="__main__": main()
