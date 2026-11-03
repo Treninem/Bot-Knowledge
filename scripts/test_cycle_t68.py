@@ -32,6 +32,7 @@ class T68(unittest.TestCase):
                     self.assertEqual(x["contexts"],["direct","private","group_addressed"])
                     self.assertTrue(x["constraints"]["read_only"])
                     self.assertEqual(len(x["variants"]),2)
+                    self.assertEqual(len(x["aliases"]),2)
                 else:
                     self.assertTrue(x["avoid"].strip())
                     self.assertTrue((x.get("context") or x.get("meaning_ru")).strip())
