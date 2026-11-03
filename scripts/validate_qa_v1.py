@@ -11,6 +11,7 @@ import hashlib
 import json
 import math
 import re
+import unicodedata
 from html import escape
 from pathlib import Path
 from urllib.parse import urlsplit
@@ -36,6 +37,16 @@ PRIVATE_MARKERS = re.compile(
     r"(?<!\d)\d{10,}(?!\d)|\b(?:token|password|secret|api[_-]?key|пароль|токен)\s*[:=]",
     re.IGNORECASE,
 )
+
+
+def normalize_question(value: str) -> str:
+    """Fold NFKC, case, ё/е, punctuation and emoji for same-pack deduplication.
+
+    Lexical/semantic near matches still need human review; this only catches
+    identical normalized questions and aliases without crossing audiences.
+    """
+    value = unicodedata.normalize("NFKC", value).casefold().replace("ё", "е")
+    return " ".join("".join(char if char.isalnum() else " " for char in value).split())
 
 
 def _text(value, limit: int, required: bool = True) -> str:
@@ -144,6 +155,7 @@ def validate_qa_pack(pack: dict, metadata: dict | None = None) -> int:
     audiences = _strings(metadata.get("audiences", ["all_ai_bots"]), 12, 64)
     contexts = _strings(metadata.get("contexts", ["direct"]), 3, 32)
     seen: set[str] = set()
+    seen_queries: set[str] = set()
     for row in rows:
         if not isinstance(row, dict):
             raise ValueError("invalid_record")
@@ -153,8 +165,13 @@ def validate_qa_pack(pack: dict, metadata: dict | None = None) -> int:
         if not ID.fullmatch(identifier) or identifier in seen:
             raise ValueError("duplicate_or_invalid_record_id")
         seen.add(identifier)
-        _text(field("question"), 500)
-        _strings(field("aliases", []), 16, 500)
+        question = _text(field("question"), 500)
+        aliases = _strings(field("aliases", []), 16, 500)
+        for phrase in (question, *aliases):
+            normalized = normalize_question(phrase)
+            if not normalized or normalized in seen_queries:
+                raise ValueError("duplicate_normalized_question_or_alias")
+            seen_queries.add(normalized)
         answers = (_text(field("answer"), 1600),) + _strings(field("variants", []), 8, 1600)
         if any(len(escape(answer)) > 2000 for answer in answers):
             raise ValueError("escaped_answer_limit")
