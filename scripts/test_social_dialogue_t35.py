@@ -10,7 +10,7 @@ PREFIX = "talk_t35_"
 EXPECTED = {"congratulations":8, "support":8, "humor":8, "profanity":8, "conversation":8, "creative":8}
 
 def norm(s):
-    return " ".join(re.findall(r"[^\\W_]+", s.casefold().replace("ё", "е"), re.U))
+    return " ".join(re.findall(r"[^\W_]+", s.casefold().replace("ё", "е"), re.U))
 
 def tok(s):
     return {x for x in norm(s).split() if len(x) >= 4}
@@ -37,7 +37,7 @@ def test_new_social_contexts():
     idx=KnowledgeSearch()
     for item in current:
         assert item["audiences"]==["all_ai_bots"] and item["context"] and item["avoid"]
-        assert not re.search(r"@\\w+|\\b\\d{9,}\\b|(?:api[_-]?key|access_token)\\s*[:=]",str(item),re.I)
+        assert not re.search(r"@\w+|\b\d{9,}\b|(?:api[_-]?key|access_token)\s*[:=]",str(item),re.I)
         assert all(jac(item["input"],x["input"])<.58 for x in previous)
         assert any(hit[0]==item["id"] for hit in idx.search(item["input"],audience="all_ai_bots",limit=20)),item["id"]
 
