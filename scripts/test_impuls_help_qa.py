@@ -47,6 +47,27 @@ class ImpulsPublicHelpTests(unittest.TestCase):
                 self.assertNotIn(normalize(reply), seen)
                 seen.add(normalize(reply))
 
+    def test_warning_qa_batch_2026_11_03_61(self):
+        """Each synthetic user paraphrase maps to one public, scoped warning answer."""
+        ids = ["warn_meaning","warn_vs_mute","warn_vs_ban","warn_why_no_reason","warn_count_unknown","warn_limit_unknown","warn_ban_threshold","warn_expiry","warn_enabled","warn_first_offense","warn_duplicate_notice","warn_delayed_notice","warn_issued_by_whom","warn_private_count","warn_chat_isolation","warn_old_status","warn_deleted_notice","warn_no_screenshot","warn_private_appeal","warn_appeal_pending","warn_apology_effect","warn_admin_cannot_see","warn_cancel_unknown","warn_overturned","warn_private_chat_scope","warn_state_ack","warn_updated_policy","warn_repeat_complaint","warn_moderator_rights","warn_which_section","warn_bk_section_fallback","warn_hypothetical","warn_two_rules","warn_public_ranking","warn_no_logs","warn_emotional_support","warn_minimal_question","warn_status_different","warn_explain_rule","warn_authority_claim"]
+        records = {r["id"]: r for r in self.pack["records"]}
+        self.assertTrue(set(ids) <= set(records))
+        alias_index = {}
+        for rec in self.pack["records"]:
+            for phrase in [rec["question"], *rec.get("aliases", [])]:
+                alias_index.setdefault(normalize(phrase), set()).add(rec["id"])
+        for ident in ids:
+            rec = records[ident]
+            self.assertEqual(rec["audiences"], ["impuls"])
+            self.assertEqual(rec["contexts"], ["direct", "private", "group_addressed"])
+            self.assertEqual(len(rec["variants"]), 2)
+            self.assertEqual(len(rec["aliases"]), 2)
+            self.assertTrue(rec["source"].startswith("https://github.com/Treninem/Bot-Knowledge/blob/19281aa8995986205840a7c17bb5ed3d75f90077/"))
+            for phrase in [rec["question"], *rec["aliases"]]:
+                self.assertEqual(alias_index[normalize(phrase)], {ident})
+        self.assertEqual(sum(1 + len(r.get("variants", [])) for r in records.values()), 1280)
+
+
     def test_new_scoped_topics(self):
         records = {r["id"]: r for r in self.pack["records"]}
         essential = {"return_previous_topic", "negated_prohibition", "conflicting_chat_rules",
