@@ -29,6 +29,6 @@ def main():
         assert row["language"]=="en" and row["audiences"]==["all_ai_bots"] and row["meaning_ru"] and row["avoid"]
         assert not re.search(r"@\w+|\b\d{9,}\b|(?:api[_-]?key|access_token)\s*[:=]",str(row),re.I)
         assert all(sim(row["input"],x["input"])<.70 for x in previous)
-        assert any(hit[0]==row["id"] for hit in search.search(row["input"],audience="all_ai_bots",limit=25)),row["id"]
+        assert any(hit[0]==row["id"] for hit in search.search(row["input"],audience="all_ai_bots",limit=20)),row["id"]
     print("T37_ENGLISH_OK",len(rows))
 if __name__=="__main__":main()
