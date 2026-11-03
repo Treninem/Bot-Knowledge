@@ -47,6 +47,24 @@ class ImpulsPublicHelpTests(unittest.TestCase):
                 self.assertNotIn(normalize(reply), seen)
                 seen.add(normalize(reply))
 
+    def test_moderation_clarity_batch_2026_11_03_64(self):
+        ids = ["notice_under_review","deleted_without_warning","warning_without_deletion","remark_or_formal_warning","group_notice_recipient","warning_after_restart","warning_wrong_author","reported_vs_verified","review_reason_without_quote","no_evidence_not_automatic_clear","conflicting_witness_accounts","before_bot_joined","single_incident_multiple_reports","ban_word_not_command","other_users_not_punished","filter_signal_not_verdict","short_phrase_missing_context","moderation_joke_in_serious_appeal","repeat_due_to_lag","private_evidence_public_claim","cannot_recover_from_public_bk","visibility_not_permission","statistics_not_case_proof","role_changed_after_event","moderation_not_personal_label","suspicious_link_unknown_destination","calm_dispute_before_decision","warning_prevent_repeat","ask_review_without_public_accusation","response_to_case_without_access","hypothetical_warning_example","ask_explanation_not_sanction","old_screenshot_new_status","manual_report_not_auto_action"]
+        rows = {r["id"]: r for r in self.pack["records"]}
+        self.assertTrue(set(ids) <= set(rows))
+        self.assertEqual(sum(1 + len(rows[k].get("variants", [])) for k in ids), 102)
+        queries = {}
+        for row in self.pack["records"]:
+            for q in [row["question"], *row.get("aliases", [])]:
+                queries.setdefault(normalize(q), set()).add(row["id"])
+        for key in ids:
+            record = rows[key]
+            self.assertEqual(record["audiences"], ["impuls"])
+            self.assertEqual(record["contexts"], ["direct", "private", "group_addressed"])
+            self.assertEqual(len(record["variants"]), 2)
+            self.assertEqual(len(record["aliases"]), 2)
+            for q in [record["question"], *record["aliases"]]:
+                self.assertEqual(queries[normalize(q)], {key})
+
     def test_warning_qa_batch_2026_11_03_61(self):
         """Each synthetic user paraphrase maps to one public, scoped warning answer."""
         ids = ["warn_meaning","warn_vs_mute","warn_vs_ban","warn_why_no_reason","warn_count_unknown","warn_limit_unknown","warn_ban_threshold","warn_expiry","warn_enabled","warn_first_offense","warn_duplicate_notice","warn_delayed_notice","warn_issued_by_whom","warn_private_count","warn_chat_isolation","warn_old_status","warn_deleted_notice","warn_no_screenshot","warn_private_appeal","warn_appeal_pending","warn_apology_effect","warn_admin_cannot_see","warn_cancel_unknown","warn_overturned","warn_private_chat_scope","warn_state_ack","warn_updated_policy","warn_repeat_complaint","warn_moderator_rights","warn_which_section","warn_bk_section_fallback","warn_hypothetical","warn_two_rules","warn_public_ranking","warn_no_logs","warn_emotional_support","warn_minimal_question","warn_status_different","warn_explain_rule","warn_authority_claim"]
