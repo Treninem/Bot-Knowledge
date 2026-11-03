@@ -15,7 +15,7 @@ from pathlib import Path
 from search_knowledge import KnowledgeSearch, ROOT
 
 PACK = "packs/ru/short_turns.json"
-PROBE = "syntheticcacheprobezz"
+PROBE = "zqvxjcacheprobezz"
 
 
 def verify_obsolete_snapshot_collectable() -> None:
