@@ -71,6 +71,7 @@ EXPECTED = {
     "birthday_wishes": 100, "condolence_support": 100,
     "before_big_event_support": 100, "public_quote_consent": 100,
     "offer_help_without_pressure": 100, "repair_hurtful_joke": 100,
+    "mixed_feelings_reply": 100, "plans_changed_reply": 100,
 }
 FORBIDDEN = {
     "user_id", "chat_id", "telegram_id", "username", "phone", "email",
@@ -151,16 +152,16 @@ class ReplyCatalogueTests(unittest.TestCase):
         options.update(kw)
         return self.catalog.reply(intent, **options)
 
-    def test_exact_117_questions_11700_replies(self):
+    def test_exact_119_questions_11900_replies(self):
         self.assertEqual(self.catalog.coverage, EXPECTED)
-        self.assertEqual(len(EXPECTED), 117)
-        self.assertEqual(sum(EXPECTED.values()), 11700)
+        self.assertEqual(len(EXPECTED), 119)
+        self.assertEqual(sum(EXPECTED.values()), 11900)
 
     def test_exact_all_full_100_sets(self):
-        self.assertEqual(len(self.catalog.coverage), 117)
+        self.assertEqual(len(self.catalog.coverage), 119)
         self.assertTrue(all(value == 100 for key, value in self.catalog.coverage.items() if EXPECTED[key] == 100))
 
-    def test_all_11700_reachable(self):
+    def test_all_11900_reachable(self):
         result_ids = set()
         for record in self.data["sets"]:
             for group in record["groups"]:
@@ -177,7 +178,7 @@ class ReplyCatalogueTests(unittest.TestCase):
                                      audience=record["audiences"][0],
                                      humor_allowed=True, recent=recent)
                 self.assertEqual(exhausted["status"], "repeat_suppressed")
-        self.assertEqual(len(result_ids), 11700)
+        self.assertEqual(len(result_ids), 11900)
 
     def test_scoped_responses_to_apology_and_praise(self):
         """New social replies require explicit context and independent consent."""
@@ -199,6 +200,14 @@ class ReplyCatalogueTests(unittest.TestCase):
         self.assertEqual(self.ask("respond_to_disappointment", group="wants_quiet")["status"], "ok")
         self.assertEqual(self.catalog.reply("respond_to_disappointment", addressed=False,
                          local_permission=True, group="minor_setback")["status"], "not_addressed")
+
+    def test_mixed_emotions_and_changed_plans_scoped(self):
+        for intent in ("mixed_feelings_reply", "plans_changed_reply"):
+            self.assertEqual(self.catalog.coverage[intent], 100)
+            self.assertEqual(self.ask(intent)["status"], "group_required")
+            self.assertEqual(self.ask(intent, group="absent")["status"], "wrong_group")
+        self.assertEqual(self.ask("mixed_feelings_reply", group="decision_with_regret")["status"], "ok")
+        self.assertEqual(self.ask("plans_changed_reply", group="reschedule_unknown_date")["status"], "ok")
 
     def test_normalized_unique_globally(self):
         replies = [v for x in self.data["sets"] for g in x["groups"] for v in g["replies"]]
