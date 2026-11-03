@@ -18,7 +18,8 @@ def main():
     assert validate_qa_pack(pack)==len(pack["records"])
     rows=[r for r in pack["records"] if r["id"].startswith("help_t15_")]
     assert len(rows)==29, len(rows)
-    assert len(pack["records"])==607, len(pack["records"])
+    # T15 contributes 29 stable records; later independent batches may extend the pack.
+    assert len(pack["records"])>=607, len(pack["records"])
     phrases=[q for r in rows for q in [r["question"], *r["aliases"]]]
     assert len(phrases)==87
     assert len(set(map(normalize_question, phrases)))==87
