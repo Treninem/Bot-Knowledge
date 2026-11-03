@@ -28,7 +28,7 @@ def main():
             key = normalize_question(phrase)
             assert key not in seen, (row["id"], phrase)
             seen.add(key)
-            hits = search.search(phrase, audience="all_ai_bots", limit=5, context=row["contexts"][0])
+            hits = search.search(phrase, audience="all_ai_bots", limit=5)
             assert hits and hits[0][0] == row["id"], (row["id"], phrase, hits)
             checks += 1
     print(f"T43_OK questions={len(rows)} original_answers={len(rows)*3} queries={checks}")
