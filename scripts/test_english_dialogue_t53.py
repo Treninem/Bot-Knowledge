@@ -7,7 +7,7 @@ ROOT = Path(__file__).resolve().parents[1]
 REL = "packs/ru/english_dialogues.json"
 KINDS = ("dark_humor", "profanity", "context")
 def norm(s):
-    return " ".join(re.findall(r"[^\\W_]+", s.casefold()))
+    return " ".join(re.findall(r"[^\W_]+", s.casefold()))
 def main():
     raw = (ROOT / REL).read_bytes()
     pack = json.loads(raw)
@@ -26,7 +26,7 @@ def main():
     for x in rows:
         assert x["language"] == "en" and x["audiences"] == ["all_ai_bots"]
         assert all(x[k].strip() for k in ("input", "response", "meaning_ru", "avoid"))
-        assert not re.search(r"@\\w+|\\b\\d{9,}\\b|(?:api[_-]?key|access_token)\\s*[:=]", str(x), re.I)
+        assert not re.search(r"@\w+|\b\d{9,}\b|(?:api[_-]?key|access_token)\s*[:=]", str(x), re.I)
         assert any(h[0] == x["id"] for h in search.search(x["input"], audience="all_ai_bots", limit=20)), x["id"]
     print(f"T53_ENGLISH_OK added={len(rows)} total={len(pack['cases'])}")
 if __name__ == "__main__": main()
