@@ -20,7 +20,7 @@ KIND_COUNTS = {
 EXPECTED_IDS = {f"{PREFIX}{i:03d}" for i in range(1, 61)}
 
 def norm(value: str) -> str:
-    return re.sub(r"[^\\w]+", " ", value.casefold().replace("ё", "е")).strip()
+    return re.sub(r"[^\w]+", " ", value.casefold().replace("ё", "е")).strip()
 
 def tokens(value: str) -> set[str]:
     return {x for x in norm(value).split() if len(x) >= 4}
@@ -50,7 +50,7 @@ def main() -> None:
     for r in chosen:
         assert r["context"] and r["avoid"] and r["response"]
         assert r["audiences"] == ["all_ai_bots"]
-        assert not re.search(r"(?:@\\w+|\\b\\d{9,}\\b|(?:api[_-]?key|access_token)\\s*[:=])", str(r), re.I), "T19 private marker"
+        assert not re.search(r"(?:@\w+|\b\d{9,}\b|(?:api[_-]?key|access_token)\s*[:=])", str(r), re.I), "T19 private marker"
         assert all(jaccard(r["input"], old["input"]) < .80 for old in past), "T19 close input"
         hits = search.search(r["input"], audience="all_ai_bots", limit=30)
         assert any(hit[0] == r["id"] for hit in hits), "T19 retrieval " + r["id"]
