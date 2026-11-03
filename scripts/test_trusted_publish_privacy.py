@@ -41,6 +41,12 @@ class PrivacyTests(unittest.TestCase):
         with self.assertRaises(PublishError):
             validate_payload(payload)
 
+    def test_telegram_deep_link_in_optional_metadata_is_rejected(self):
+        payload = copy.deepcopy(self.payload)
+        payload["record"]["contexts"] = ["tg://user?id=123456789"]
+        with self.assertRaises(PublishError):
+            validate_payload(payload)
+
 
 if __name__ == "__main__":
     unittest.main()
