@@ -26,15 +26,15 @@ def main() -> None:
     social = load("social_dialogues.json")["cases"]
     english = load("english_dialogues.json")["cases"]
     assert len(moderation) == 63
-    assert len(social) == 281
+    assert len(social) == 329
     assert len(english) == 33
     assert len({x["topic"] for x in moderation}) == 21
     assert Counter(x["classification"] for x in moderation) == {
         "candidate_violation": 21, "allow": 21, "review": 21
     }
     assert Counter(x["kind"] for x in social) == {
-        "congratulations": 48, "support": 52, "humor": 45,
-        "profanity": 43, "conversation": 50, "creative": 43
+        "congratulations": 56, "support": 60, "humor": 53,
+        "profanity": 51, "conversation": 58, "creative": 51
     }
     newest = {"talk_small_boundary_win", "talk_first_mentor", "talk_renovation_finished", "talk_first_public_demo", "talk_paid_back_debt", "talk_conflict_resolved", "talk_justified_criticism_hurts", "talk_regret_rude_reply", "talk_plan_changed_without_notice", "talk_notification_fatigue", "talk_two_good_choices", "talk_no_money_to_lend", "talk_joke_thermos", "talk_joke_battery", "talk_joke_browser_tabs", "talk_joke_furniture_manual", "talk_joke_postbox", "talk_joke_metronome", "talk_swear_softened_request", "talk_swear_frustration_no_target", "talk_swear_firm_boundary", "talk_swear_group_optin", "talk_swear_keep_mild_word", "talk_swear_quoted_not_consent", "talk_context_second_item_first", "talk_context_no_age_assumption", "talk_context_wait_until_finished", "talk_context_negation_matters", "talk_context_no_private_name", "talk_context_evidence_vs_advice", "talk_story_unplayed_note", "talk_story_single_stop_tram", "talk_story_watchman_empty_gate", "talk_story_two_timers", "talk_story_ticket_to_nowhere", "talk_story_workshop_key"}
     new_rows = [x for x in social if x["id"] in newest]
@@ -47,6 +47,17 @@ def main() -> None:
     assert len(contextual_ids) == len(contextual_rows) == 58
     assert all(x["context"].strip() and x["response"].strip() and x["avoid"].strip()
                and x["audiences"] == ["all_ai_bots"] for x in contextual_rows)
+    # Synthetic original social situations, 03.11.2026.
+    batch_ids = set(["talk_first_subtitles","talk_old_camera","talk_mapped_trails","talk_accessible_chart","talk_signs_first_chat","talk_complete_rehearsal","talk_first_podcast","talk_new_boardgame","talk_missed_last_train","talk_team_silence_after_work","talk_bad_drum_lesson","talk_boundary_at_night","talk_no_joy_after_finish","talk_lost_old_notebook","talk_volunteer_no_place","talk_two_reviewers_conflict","talk_humor_parking_machine","talk_humor_shoelaces","talk_humor_compass","talk_humor_jacket_zipper","talk_humor_long_receipt","talk_humor_microwave","talk_humor_paperclip","talk_humor_sundial","talk_swear_neutral_rewrite","talk_swear_quotation_no_style","talk_swear_firm_deadline","talk_swear_joy_exclamation","talk_swear_unwanted_nickname","talk_swear_professional_switch","talk_swear_optout_now","talk_swear_caps_unclear","talk_context_repair_count","talk_context_yes_second_only","talk_context_missing_old_attachment","talk_context_quote_command","talk_context_no_live_claim","talk_context_shipping_not_free","talk_context_ideas_not_chosen","talk_context_one_english_turn","talk_story_extra_stair","talk_story_bread_news","talk_story_empty_box","talk_story_wooden_radio","talk_story_star_window","talk_story_museum_failed_drawings","talk_story_borrowed_hour","talk_story_tailor_moths"])
+    batch = [item for item in social if item["id"] in batch_ids]
+    assert len(batch) == len(batch_ids) == 48
+    assert Counter(item["kind"] for item in batch) == {
+        "congratulations": 8, "support": 8, "humor": 8,
+        "profanity": 8, "conversation": 8, "creative": 8
+    }
+    assert all(item["audiences"] == ["all_ai_bots"] and item["context"].strip()
+               and item["avoid"].strip() and item["response"].strip() for item in batch)
+    print("SOCIAL_CONTEXT_20261103_OK cases=48")
     # Universal qa.v1 lookup contract: fresh questions and approved aliases must
     # resolve unambiguously within their own existing all-bot reference section.
     general_qa = load("knowledge_format.json")["records"]
@@ -71,8 +82,8 @@ def main() -> None:
     print("GENERAL_QA_LOOKUP_PASS questions=29 paraphrases=58")
     ids = [x["id"] for x in moderation + social + english]
     inputs = [x.get("message", x.get("input", "")) for x in moderation + social + english]
-    assert len(ids) == len(set(ids)) == 377
-    assert len(inputs) == len({" ".join(s.casefold().split()) for s in inputs}) == 377
+    assert len(ids) == len(set(ids)) == 425
+    assert len(inputs) == len({" ".join(s.casefold().split()) for s in inputs}) == 425
     for case in moderation:
         assert case["audiences"] == ["chat_moderators"]
         assert len(case["required_checks"]) >= 2
