@@ -68,6 +68,27 @@ class ImpulsPublicHelpTests(unittest.TestCase):
         self.assertEqual(sum(1 + len(r.get("variants", [])) for r in records.values()), 1280)
 
 
+    def test_report_moderation_qa_2026_11_03_62(self):
+        """Public report/help aliases are unambiguous and preserve read-only scope."""
+        ids = ["report_start","report_not_ban","report_not_ticket","report_current_status","report_group_scope","report_duplicate","report_no_target","report_unknown_author","report_no_private_chat","report_without_proof","report_not_vote","report_technical_vs_rule","report_retracted","report_false_accusation","report_against_moderator","report_after_exit","report_reply_is_not_resolution","report_wrong_chat","report_screenshot_unsafe","report_same_word_multiple_meanings","modstat_meaning","modstat_private","mod_history_command","mod_case_meaning","mod_reports_listing","mod_clear_risk","conflict_signal_not_ban","conflict_review_boundaries","mod_live_status_unknown","report_help_without_rights","report_after_edit","report_not_public_storage"]
+        records = {row["id"]: row for row in self.pack["records"]}
+        self.assertTrue(set(ids) <= set(records))
+        index = {}
+        for row in self.pack["records"]:
+            for query in [row["question"], *row.get("aliases", [])]:
+                index.setdefault(normalize(query), set()).add(row["id"])
+        for ident in ids:
+            row = records[ident]
+            self.assertEqual(row["audiences"], ["impuls"])
+            self.assertEqual(row["contexts"], ["direct", "private", "group_addressed"])
+            self.assertEqual(len(row["variants"]), 2)
+            self.assertEqual(len(row["aliases"]), 2)
+            self.assertTrue(row["source"].startswith("https://github.com/Treninem/Bot-Knowledge/blob/7db630da37f838d5c448212010ad0dd9a3f06cdf/"))
+            for query in [row["question"], *row["aliases"]]:
+                self.assertEqual(index[normalize(query)], {ident})
+        self.assertEqual(sum(1 + len(r.get("variants", [])) for r in records.values()), 1376)
+
+
     def test_new_scoped_topics(self):
         records = {r["id"]: r for r in self.pack["records"]}
         essential = {"return_previous_topic", "negated_prohibition", "conflicting_chat_rules",
