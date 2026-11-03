@@ -49,6 +49,10 @@ jobs:
         run: python scripts/validate_qa_v1.py
       - name: ImPULS public qa.v1 help scope, hash and duplicate checks
         run: python -m unittest scripts.test_impuls_help_qa -q
+      - name: ImPULS help gap paraphrases and audience isolation
+        run: |
+          python -m scripts.test_impuls_help_gaps
+          python -O -m scripts.test_impuls_help_gaps
       - name: Trusted qa.v1 publisher input guards
         run: python scripts/test_trusted_publish_qa.py
       - name: Trusted qa.v1 completion offline safety tests
