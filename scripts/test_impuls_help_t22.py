@@ -34,9 +34,9 @@ def main() -> None:
             norm = normalize_question(phrase)
             assert norm not in seen
             seen.add(norm)
-            hits = index.search(phrase, audience="impuls", limit=50)
+            hits = index.search(phrase, audience="impuls", limit=20)
             assert any(h[0] == r["id"] for h in hits), (r["id"], phrase)
-            assert all(h[0] != r["id"] for h in index.search(phrase, audience="all_ai_bots", limit=50))
+            assert all(h[0] != r["id"] for h in index.search(phrase, audience="all_ai_bots", limit=20))
     print(f"T22_HELP_OK questions={len(new)} answers={len(new)*3} aliases={len(new)*2} sha256={hashlib.sha256(raw).hexdigest()}")
 
 if __name__ == "__main__":
