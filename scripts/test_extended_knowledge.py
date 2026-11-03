@@ -95,13 +95,13 @@ def main() -> None:
     new_qa = load("dialogue_help_qa.json")
     assert new_qa["catalog"]["adapter"] == "qa.v1"
     assert new_qa["catalog"]["audiences"] == ["all_ai_bots"]
-    assert len(new_qa["records"]) == 30
+    assert len(new_qa["records"]) >= 30  # Retain baseline, allow new reviewed qa.v1 topics
     assert all(len(q["aliases"]) == 2 and len(q["variants"]) == 2
                and q["audiences"] == ["all_ai_bots"]
                for q in new_qa["records"])
     new_phrases = [normalize_general_q(p)
                    for q in new_qa["records"] for p in [q["question"], *q["aliases"]]]
-    assert len(new_phrases) == len(set(new_phrases)) == 90
+    assert len(new_phrases) == len(set(new_phrases)) == 3 * len(new_qa["records"])
     index = KnowledgeSearch()
     from index_contract import expected_index_count
     assert len(index.records) == expected_index_count()
