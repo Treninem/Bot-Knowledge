@@ -27,7 +27,7 @@ def main():
     for x in rows:
         assert x["audiences"] == ["all_ai_bots"]
         assert all(x[k].strip() for k in ("context", "input", "response", "avoid"))
-        assert not re.search(r"(?i)https?://|@\\w+|\\b\\d{9,}\\b|(?:api[_-]?key|access[_-]?token)\\s*[:=]", str(x))
+        assert not re.search(r"(?i)https?://|@\w+|\b\d{9,}\b|(?:api[_-]?key|access[_-]?token)\s*[:=]", str(x))
         assert any(hit[0] == x["id"] for hit in search.search(x["input"], audience="all_ai_bots", limit=20)), x["id"]
     print(f"T51_SOCIAL_OK new={len(rows)} total={len(data['cases'])}")
 if __name__ == "__main__":
