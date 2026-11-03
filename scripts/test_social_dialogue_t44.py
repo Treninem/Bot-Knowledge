@@ -9,7 +9,7 @@ ROOT = Path(__file__).resolve().parents[1]
 REL = "packs/ru/social_dialogues.json"
 KINDS = ("congratulations", "support", "humor", "profanity", "conversation", "creative")
 def norm(v):
-    return " ".join(re.findall(r"[^\\W_]+", v.casefold().replace("ё", "е")))
+    return " ".join(re.findall(r"[^\W_]+", v.casefold().replace("ё", "е")))
 def main():
     raw = (ROOT / REL).read_bytes()
     pack = json.loads(raw)
@@ -26,7 +26,7 @@ def main():
     for x in rows:
         assert x["audiences"] == ["all_ai_bots"]
         assert all(x[k].strip() for k in ("context", "input", "response", "avoid"))
-        assert not re.search(r"@\\w+|\\b\\d{9,}\\b|(?:api[_-]?key|access_token)\\s*[:=]", str(x), re.I)
+        assert not re.search(r"@\w+|\b\d{9,}\b|(?:api[_-]?key|access_token)\s*[:=]", str(x), re.I)
         assert any(h[0] == x["id"] for h in search.search(x["input"], audience="all_ai_bots", limit=20)), x["id"]
     print(f"T44_SOCIAL_OK rows={len(rows)} pack_bytes={len(raw)}")
 if __name__ == "__main__":
