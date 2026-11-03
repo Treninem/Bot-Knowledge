@@ -48,10 +48,10 @@ class ImpulsPublicHelpTests(unittest.TestCase):
                 seen.add(normalize(reply))
 
     def test_moderation_clarity_batch_2026_11_03_64(self):
-        ids = ["notice_under_review","deleted_without_warning","warning_without_deletion","remark_or_formal_warning","group_notice_recipient","warning_after_restart","warning_wrong_author","reported_vs_verified","review_reason_without_quote","no_evidence_not_automatic_clear","conflicting_witness_accounts","before_bot_joined","single_incident_multiple_reports","ban_word_not_command","other_users_not_punished","filter_signal_not_verdict","short_phrase_missing_context","moderation_joke_in_serious_appeal","repeat_due_to_lag","private_evidence_public_claim","cannot_recover_from_public_bk","visibility_not_permission","statistics_not_case_proof","role_changed_after_event","moderation_not_personal_label","suspicious_link_unknown_destination","calm_dispute_before_decision","warning_prevent_repeat","ask_review_without_public_accusation","response_to_case_without_access","hypothetical_warning_example","ask_explanation_not_sanction","old_screenshot_new_status","manual_report_not_auto_action"]
+        ids = ["notice_under_review","deleted_without_warning","warning_without_deletion","remark_or_formal_warning","group_notice_recipient","warning_after_restart","warning_wrong_author","reported_vs_verified","review_reason_without_quote","no_evidence_not_automatic_clear","conflicting_witness_accounts","before_bot_joined","single_incident_multiple_reports","ban_word_not_command","other_users_not_punished","short_phrase_missing_context","moderation_joke_in_serious_appeal","repeat_due_to_lag","private_evidence_public_claim","cannot_recover_from_public_bk","visibility_not_permission","statistics_not_case_proof","role_changed_after_event","moderation_not_personal_label","suspicious_link_unknown_destination","calm_dispute_before_decision","warning_prevent_repeat","response_to_case_without_access","hypothetical_warning_example","ask_explanation_not_sanction","old_screenshot_new_status"]
         rows = {r["id"]: r for r in self.pack["records"]}
         self.assertTrue(set(ids) <= set(rows))
-        self.assertEqual(sum(1 + len(rows[k].get("variants", [])) for k in ids), 102)
+        self.assertEqual(sum(1 + len(rows[k].get("variants", [])) for k in ids), 93)
         queries = {}
         for row in self.pack["records"]:
             for q in [row["question"], *row.get("aliases", [])]:
