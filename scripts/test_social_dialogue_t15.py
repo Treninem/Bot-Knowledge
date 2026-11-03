@@ -19,7 +19,7 @@ def main():
     assert len(raw)<2*1024*1024
     pack=json.loads(raw)
     rows=[r for r in pack["cases"] if r["id"].startswith("talk_t15_")]
-    assert len(rows)==36 and len(pack["cases"])==665
+    assert len(rows)==36 and len(pack["cases"])>=665  # baseline retention; additional reviewed cases allowed
     assert len({r["id"] for r in rows})==36
     assert len({normalize(r["input"]) for r in rows})==36
     assert {k:sum(x["kind"]==k for x in rows) for k in {"congratulations","support","humor","profanity","conversation","creative"}}=={k:6 for k in {"congratulations","support","humor","profanity","conversation","creative"}}
