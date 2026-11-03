@@ -113,6 +113,20 @@ def main() -> None:
         isolated = index.search(impuls_q, audience, 20)
         assert "warn_bk_section_fallback" not in {x[0] for x in isolated}
     print("QA_V1_DYNAMIC_SEARCH_AND_AUDIENCE_SCOPE_OK")
+    # Real local search: new inputs and independently phrased questions.
+    social_search_probes = [
+        ("Сделал субтитры к своему видео, теперь его можно смотреть без звука.", "talk_first_subtitles"),
+        ("Первый выпуск подкаста записал и смонтировал сам", "talk_first_podcast"),
+        ("Я попросил не звонить ночью, а человек обиделся", "talk_boundary_at_night"),
+        ("Пошути про длинный чек", "talk_humor_long_receipt"),
+        ("Кто-то написал капсом, это оскорбление?", "talk_swear_caps_unclear"),
+        ("Было три попытки вместо четырёх", "talk_context_repair_count"),
+        ("Детектив про лишнюю ступеньку в театре", "talk_story_extra_stair"),
+    ]
+    for query, expected_id in social_search_probes:
+        matches = index.search(query, "all_ai_bots", 20)
+        assert expected_id in {row[0] for row in matches}, (query, matches)
+    print("NEW_SOCIAL_SEARCH_PARAPHRASES_OK queries=7")
     # Ten different retrieval and permission scenarios (not ten dummy repeats).
     probes = [
         ("Перешли мне код из SMS", "chat_moderators", "mod_fraud_bait_1"),
