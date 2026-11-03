@@ -79,6 +79,20 @@ def main() -> None:
             assert hits and hits[0][0] == row["id"], (row["id"], phrase, hits)
     print("UNIVERSAL_DIALOGUE_QA_T11_OK 40/40")
 
+    # T12: new scoped canonical intents and paraphrased retrieval. Do not widen group-only references.
+    t12 = [r for r in pack["records"] if r["id"].startswith("dlg_t12_")]
+    assert len(t12) == 30, len(t12)
+    assert len({r["id"] for r in t12}) == len(t12)
+    expected_groups = ["dlg_t12_013","dlg_t12_014","dlg_t12_015","dlg_t12_016","dlg_t12_017","dlg_t12_018","dlg_t12_019","dlg_t12_020"]
+    assert {r["id"] for r in t12 if r["contexts"] == ["group_addressed"]} == set(expected_groups)
+    for row in t12:
+        assert row["audiences"] == ["all_ai_bots"]
+        assert len(row["aliases"]) == len(row["variants"]) == 2
+        for query in [row["question"], *row["aliases"]]:
+            hits = index.search(query, audience="all_ai_bots", limit=5)
+            assert hits and hits[0][0] == row["id"], (row["id"], query, hits)
+    print("UNIVERSAL_DIALOGUE_QA_T12_OK 30/30 searches=90")
+
     # Prevent accidental duplicate canonical questions and alias collisions,
     # including case, punctuation, yo/e and cosmetic-emoji differences.
     from copy import deepcopy
