@@ -40,7 +40,14 @@ class ImpulsPublicHelpTests(unittest.TestCase):
         seen = set()
         for row in rows:
             self.assertEqual(row.get("audiences", ["impuls"]), ["impuls"])
-            self.assertEqual(row.get("contexts", ["direct"]), ["direct", "private", "group_addressed"])
+            contexts = row.get("contexts", ["direct"])
+            if row["id"].startswith("help_t14_"):
+                # Product menus have deliberately narrower group/private scopes.
+                self.assertIn(contexts, (
+                    ["group_addressed"], ["private"],
+                    ["direct", "private", "group_addressed"]))
+            else:
+                self.assertEqual(contexts, ["direct", "private", "group_addressed"])
             self.assertNotIn("action", row)
             self.assertNotIn("auto_apply", row)
             for reply in [row["answer"], *row.get("variants", [])]:
