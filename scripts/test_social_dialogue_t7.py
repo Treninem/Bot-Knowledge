@@ -59,5 +59,17 @@ def main() -> None:
         assert r["id"] in {item[0] for item in hits}, (r["id"], hits)
     print("SOCIAL_CONTEXT_T11_SEARCH_OK 48/48")
 
+    t12 = [r for r in p["cases"] if r["id"].startswith("talk_t12_")]
+    assert len(t12) == 60, len(t12)
+    assert len({r["id"] for r in t12}) == 60
+    assert all(sum(r["kind"] == k for r in t12) == 10 for k in ("congratulations", "support", "humor", "profanity", "conversation", "creative"))
+    normalized_inputs = [r["input"].casefold().replace("ё", "е").strip() for r in p["cases"]]
+    assert len(normalized_inputs) == len(set(normalized_inputs))
+    for r in t12:
+        assert r["context"] and r["response"] and r["avoid"] and r["audiences"] == ["all_ai_bots"]
+        hits = search.search(r["input"], "all_ai_bots", limit=50)
+        assert r["id"] in {h[0] for h in hits}, (r["id"], hits)
+    print("SOCIAL_CONTEXT_T12_SEARCH_OK 60/60")
+
 if __name__=="__main__":
     main()
