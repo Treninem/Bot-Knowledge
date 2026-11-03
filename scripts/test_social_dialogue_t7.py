@@ -71,5 +71,18 @@ def main() -> None:
         assert r["id"] in {h[0] for h in hits}, (r["id"], hits)
     print("SOCIAL_CONTEXT_T12_SEARCH_OK 60/60")
 
+
+    # T13: context-safe original synthetic social cases and local search.
+    t13 = [r for r in p["cases"] if r["id"].startswith("talk_t13_")]
+    assert len(t13) == 42, len(t13)
+    assert len({r["id"] for r in t13}) == len(t13)
+    assert {r["kind"] for r in t13} == {"congratulations", "support", "humor", "profanity", "conversation", "creative"}
+    for row in t13:
+        assert row["context"] and row["response"] and row["avoid"]
+        assert row["audiences"] == ["all_ai_bots"]
+        hits = search.search(row["input"], "all_ai_bots", limit=20)
+        assert row["id"] in {item[0] for item in hits}, (row["id"], hits)
+    print("SOCIAL_CONTEXT_T13_OK 42/42")
+
 if __name__=="__main__":
     main()
