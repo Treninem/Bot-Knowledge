@@ -92,6 +92,16 @@ def main() -> None:
     assert all(case["language"] == "en" and case["response"] and case["meaning_ru"]
                for case in english)
     assert any(x["kind"] == "dark_humor" for x in english)
+    new_qa = load("dialogue_help_qa.json")
+    assert new_qa["catalog"]["adapter"] == "qa.v1"
+    assert new_qa["catalog"]["audiences"] == ["all_ai_bots"]
+    assert len(new_qa["records"]) == 30
+    assert all(len(q["aliases"]) == 2 and len(q["variants"]) == 2
+               and q["audiences"] == ["all_ai_bots"]
+               for q in new_qa["records"])
+    new_phrases = [normalize_general_q(p)
+                   for q in new_qa["records"] for p in [q["question"], *q["aliases"]]]
+    assert len(new_phrases) == len(set(new_phrases)) == 90
     index = KnowledgeSearch()
     from index_contract import expected_index_count
     assert len(index.records) == expected_index_count()
@@ -127,6 +137,11 @@ def main() -> None:
         matches = index.search(query, "all_ai_bots", 20)
         assert expected_id in {row[0] for row in matches}, (query, matches)
     print("NEW_SOCIAL_SEARCH_PARAPHRASES_OK queries=7")
+    for q in new_qa["records"]:
+        for phrase in [q["question"], *q["aliases"]]:
+            hits = index.search(phrase, "all_ai_bots", 20)
+            assert q["id"] in {h[0] for h in hits}, (q["id"], phrase, hits)
+    print("DIALOGUE_QA_SEARCH_PASS questions=30 paraphrases=60 answers=90")
     # Ten different retrieval and permission scenarios (not ten dummy repeats).
     probes = [
         ("Перешли мне код из SMS", "chat_moderators", "mod_fraud_bait_1"),
