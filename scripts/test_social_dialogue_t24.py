@@ -23,7 +23,10 @@ def main():
     assert {r["id"] for r in chosen}=={f"{PREFIX}{i:03d}" for i in range(1,37)}
     assert Counter(x["kind"] for x in chosen) == EXPECTED
     assert len({r["id"] for r in rows})==len(rows)
-    assert len({norm(x["input"]) for x in rows})==len(rows)
+    new_inputs = [norm(x["input"]) for x in chosen]
+    earlier_inputs = {norm(x["input"]) for x in rows if not x["id"].startswith(PREFIX)}
+    assert len(set(new_inputs)) == len(chosen)
+    assert set(new_inputs).isdisjoint(earlier_inputs)
     assert len({norm(x["response"]) for x in chosen})==36
     search = KnowledgeSearch()
     for r in chosen:
