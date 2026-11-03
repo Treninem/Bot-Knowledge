@@ -30,16 +30,20 @@ def main() -> None:
         "local_policy_has_priority": True,
     }
     cases = data["cases"]
-    assert len(cases) == 80
+    assert len(cases) == 140  # 80 established cases + 60 new T69 cases
     assert set(data["decisions"]) == ALLOWED_DECISIONS
-    assert Counter(x["category"] for x in cases) == {topic: 8 for topic in TOPICS}
+    assert Counter(x["category"] for x in cases) == {topic: 14 for topic in TOPICS}
+    t69 = [case for case in cases if case["id"].startswith("t69_")]
+    assert len(t69) == 60
+    assert Counter(case["category"] for case in t69) == {topic: 6 for topic in TOPICS}
     ids = set()
     messages = set()
     for case in cases:
         assert set(case) == {"id","category","audiences","context","input","decision","expected_behavior","forbidden_behavior"}
         assert case["id"] not in ids
         ids.add(case["id"])
-        msg = " ".join(case["input"].lower().split())
+        import re
+        msg = re.sub(r"[^a-zа-я0-9]+", " ", case["input"].lower().replace("ё", "е")).strip()
         assert msg not in messages, case["id"]
         messages.add(msg)
         assert case["decision"] in ALLOWED_DECISIONS
