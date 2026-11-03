@@ -93,6 +93,21 @@ def main() -> None:
             assert hits and hits[0][0] == row["id"], (row["id"], query, hits)
     print("UNIVERSAL_DIALOGUE_QA_T12_OK 30/30 searches=90")
 
+
+    # T13: independently authored, scoped question and alias retrieval.
+    t13 = [r for r in pack["records"] if r["id"].startswith("dlg_t13_")]
+    assert len(t13) == 32, len(t13)
+    assert len({r["id"] for r in t13}) == len(t13)
+    expected_groups = {"dlg_t13_026", "dlg_t13_027", "dlg_t13_028", "dlg_t13_029", "dlg_t13_030", "dlg_t13_031", "dlg_t13_032"}
+    assert {r["id"] for r in t13 if r["contexts"] == ["group_addressed"]} == expected_groups
+    for row in t13:
+        assert row["audiences"] == ["all_ai_bots"]
+        assert len(row["aliases"]) == len(row["variants"]) == 2
+        for phrase in [row["question"], *row["aliases"]]:
+            hits = index.search(phrase, audience="all_ai_bots", limit=5)
+            assert hits and hits[0][0] == row["id"], (row["id"], phrase, hits)
+    print("UNIVERSAL_DIALOGUE_QA_T13_OK 32/32 searches=96")
+
     # Prevent accidental duplicate canonical questions and alias collisions,
     # including case, punctuation, yo/e and cosmetic-emoji differences.
     from copy import deepcopy
