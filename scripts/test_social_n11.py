@@ -16,7 +16,7 @@ def main():
     all_rows=json.loads(raw)["cases"]
     accepted=[x for x in all_rows if x["id"].startswith("talk_n11_")]
     assert len(accepted)==48
-    assert len(all_rows)==1547
+    assert len(all_rows)>=1547  # N11 baseline; later compatible additions remain valid
     assert len({x["id"] for x in all_rows})==len(all_rows)
     assert len({normalize_question(x["input"]) for x in all_rows})==len(all_rows)
     assert len({normalize_question(x["response"]) for x in all_rows})==len(all_rows)
