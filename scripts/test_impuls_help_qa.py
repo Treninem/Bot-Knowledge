@@ -91,6 +91,28 @@ class ImpulsPublicHelpTests(unittest.TestCase):
         self.assertGreaterEqual(sum(1 + len(r.get("variants", [])) for r in records.values()), 1376)
 
 
+    def test_rules_qa_2026_11_03_63(self):
+        """Rule meaning, scope and conflicts stay separate from action authority."""
+        ids = ["rule_recommendation","rule_not_published","rule_request_version","rule_pinned_conflict","rule_chat_claim","rule_suggestion","rule_exception_one_time","rule_exception_person","rule_discretion","rule_inconsistent_enforcement","rule_chat_dm","rule_channel_discussion","rule_topic_scope","rule_time_zone","rule_vague_spam","rule_absent_link_ban","rule_contextual_quote","rule_no_sanction_list","rule_first_time","rule_unavailable_in_outage","rule_chat_copy","rule_screenshot_old","rule_change_request_no_rights","rule_bk_not_override","rule_no_hidden_punishment","rule_explicit_exception","rule_moderator_statement","rule_other_platform","rule_joke_permission","rule_proposal_vs_active","rule_untrusted_forward","rule_no_action_on_explanation","rule_temporary_restriction","rule_human_review_edge"]
+        rows = {row["id"]: row for row in self.pack["records"]}
+        self.assertTrue(set(ids) <= rows.keys())
+        by_phrase = {}
+        for row in self.pack["records"]:
+            for phrase in [row["question"], *row.get("aliases", [])]:
+                by_phrase.setdefault(normalize(phrase), set()).add(row["id"])
+        for ident in ids:
+            row = rows[ident]
+            self.assertEqual(row["audiences"], ["impuls"])
+            self.assertEqual(row["contexts"], ["direct", "private", "group_addressed"])
+            self.assertEqual(len(row["variants"]), 2)
+            self.assertEqual(len(row["aliases"]), 2)
+            self.assertTrue(row["source"].startswith("https://github.com/Treninem/Bot-Knowledge/blob/cac1609db2de4db3502af01dcf773be0d10d01a1/"))
+            for phrase in [row["question"], *row["aliases"]]:
+                self.assertEqual(by_phrase[normalize(phrase)], {ident})
+        self.assertEqual(sum(1 + len(rows[ident].get("variants", [])) for ident in ids), 102)
+        self.assertGreaterEqual(sum(1 + len(r.get("variants", [])) for r in rows.values()), 1478)
+
+
     def test_new_scoped_topics(self):
         records = {r["id"]: r for r in self.pack["records"]}
         essential = {"return_previous_topic", "negated_prohibition", "conflicting_chat_rules",
