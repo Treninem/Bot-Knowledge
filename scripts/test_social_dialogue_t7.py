@@ -67,7 +67,7 @@ def main() -> None:
     assert len(normalized_inputs) == len(set(normalized_inputs))
     for r in t12:
         assert r["context"] and r["response"] and r["avoid"] and r["audiences"] == ["all_ai_bots"]
-        hits = search.search(r["input"], "all_ai_bots", limit=50)
+        hits = search.search(r["input"], "all_ai_bots", limit=20)
         assert r["id"] in {h[0] for h in hits}, (r["id"], hits)
     print("SOCIAL_CONTEXT_T12_SEARCH_OK 60/60")
 
