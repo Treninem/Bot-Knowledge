@@ -27,7 +27,7 @@ def main() -> None:
     english = load("english_dialogues.json")["cases"]
     assert len(moderation) == 63
     assert len(social) >= 329  # preserve audited baseline and permit reviewed additions
-    assert len(english) == 106
+    assert len(english) == 138
     assert len({x["topic"] for x in moderation}) == 21
     assert Counter(x["classification"] for x in moderation) == {
         "candidate_violation": 21, "allow": 21, "review": 21
@@ -111,13 +111,25 @@ def main() -> None:
                    for q in new_qa["records"] for p in [q["question"], *q["aliases"]]]
     assert len(new_phrases) == len(set(new_phrases)) == 3 * len(new_qa["records"])
     index = KnowledgeSearch()
-    newer_en = [x for x in english if x["id"].startswith(("en_t11_", "en_t12_"))]
+    newer_en = [x for x in english if x["id"].startswith(("en_t11_", "en_t12_", "en_t13_"))]
     for case in newer_en:
         assert case["language"] == "en" and case["meaning_ru"] and case["avoid"]
         assert case["audiences"] == ["all_ai_bots"]
         hits = index.search(case["input"], "all_ai_bots", 20)
         assert case["id"] in {hit[0] for hit in hits}, (case["id"], hits)
     print("ENGLISH_T11_SEARCH_OK 41/41")
+
+
+    # T13 bilingual meaning / safe context and exact English lookup.
+    t13_english = [x for x in english if x["id"].startswith("en_t13_")]
+    assert len(t13_english) == 32, len(t13_english)
+    assert len({x["id"] for x in t13_english}) == len(t13_english)
+    for row in t13_english:
+        assert row["language"] == "en" and row["meaning_ru"] and row["avoid"]
+        assert row["audiences"] == ["all_ai_bots"]
+        hits = index.search(row["input"], "all_ai_bots", 20)
+        assert row["id"] in {hit[0] for hit in hits}, (row["id"], hits)
+    print("ENGLISH_T13_SEARCH_OK 32/32")
 
     from index_contract import expected_index_count
     assert len(index.records) == expected_index_count()
