@@ -1,0 +1,32 @@
+name: Greeting catalogue exact-head
+on:
+  pull_request:
+    paths:
+      - 'packs/ru/dialogue.json'
+      - 'manifest.json'
+      - 'scripts/greeting_catalog.py'
+      - 'scripts/test_greeting_catalog.py'
+      - '.github/workflows/greeting-catalog.yml'
+permissions:
+  contents: read
+jobs:
+  greeting-exact-head:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Assert tested SHA equals PR head
+        env:
+          EXPECTED_HEAD: ${{ github.event.pull_request.head.sha }}
+        run: |
+          test "$(git rev-parse HEAD)" = "$EXPECTED_HEAD"
+          git rev-parse HEAD
+      - name: Validate all manifest packages
+        run: python scripts/validate_pack.py
+      - name: Greeting behaviour, integrity and cross-pack deduplication
+        run: python scripts/test_greeting_catalog.py --repository -v
