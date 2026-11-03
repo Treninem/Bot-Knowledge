@@ -29,6 +29,7 @@ PII = (
     re.compile(r"\b(?:token|password|secret|api[_-]?key)\s*[:=]", re.I),
     re.compile(r"(?<![\w@])@[A-Za-z][A-Za-z0-9_]{4,31}\b"),
     re.compile(r"\b(?:https?://)?(?:www\.)?(?:t\.me|telegram\.me|telegram\.dog)/[^\s\"']+", re.I),
+    re.compile(r"\btg://(?:resolve|user|privatepost|join)\b[^\s\"']*", re.I),
 )
 ID = re.compile(r"[A-Za-z0-9][A-Za-z0-9_-]{0,95}\Z")
 
