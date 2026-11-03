@@ -27,7 +27,7 @@ def main() -> None:
     english = load("english_dialogues.json")["cases"]
     assert len(moderation) == 63
     assert len(social) >= 329  # preserve audited baseline and permit reviewed additions
-    assert len(english) == 74
+    assert len(english) == 106
     assert len({x["topic"] for x in moderation}) == 21
     assert Counter(x["classification"] for x in moderation) == {
         "candidate_violation": 21, "allow": 21, "review": 21
@@ -96,6 +96,10 @@ def main() -> None:
                for case in english)
     assert any(x["kind"] == "dark_humor" for x in english)
     assert len([x for x in english if x["id"].startswith("en_t11_")]) == 41
+    t12 = [x for x in english if x["id"].startswith("en_t12_")]
+    assert len(t12) == 32, len(t12)
+    assert len({x["id"] for x in t12}) == 32
+    assert all(x["language"] == "en" and x["meaning_ru"] and x["avoid"] and x["audiences"] == ["all_ai_bots"] for x in t12)
     new_qa = load("dialogue_help_qa.json")
     assert new_qa["catalog"]["adapter"] == "qa.v1"
     assert new_qa["catalog"]["audiences"] == ["all_ai_bots"]
@@ -107,7 +111,7 @@ def main() -> None:
                    for q in new_qa["records"] for p in [q["question"], *q["aliases"]]]
     assert len(new_phrases) == len(set(new_phrases)) == 3 * len(new_qa["records"])
     index = KnowledgeSearch()
-    newer_en = [x for x in english if x["id"].startswith("en_t11_")]
+    newer_en = [x for x in english if x["id"].startswith(("en_t11_", "en_t12_"))]
     for case in newer_en:
         assert case["language"] == "en" and case["meaning_ru"] and case["avoid"]
         assert case["audiences"] == ["all_ai_bots"]
