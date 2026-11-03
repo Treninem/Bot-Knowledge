@@ -39,5 +39,15 @@ def main() -> None:
     print("SOCIAL_CONTEXT_T8_SEARCH_OK 36/36")
     print("SOCIAL_CONTEXT_T7_SEARCH_OK 48/48")
 
+    recent=[r for r in p["cases"] if r["id"].startswith("talk_t10_")]
+    assert len(recent)==36, len(recent)
+    assert len({r["id"] for r in recent})==len(recent)
+    assert {r["kind"] for r in recent}=={"congratulations","support","humor","profanity","conversation","creative"}
+    for r in recent:
+        assert r["context"] and r["avoid"] and r["audiences"]==["all_ai_bots"]
+        hits=search.search(r["input"],"all_ai_bots",limit=20)
+        assert r["id"] in {x[0] for x in hits},(r["id"],hits)
+    print("SOCIAL_CONTEXT_T10_SEARCH_OK 36/36")
+
 if __name__=="__main__":
     main()
