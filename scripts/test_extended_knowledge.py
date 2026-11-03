@@ -47,6 +47,28 @@ def main() -> None:
     assert len(contextual_ids) == len(contextual_rows) == 58
     assert all(x["context"].strip() and x["response"].strip() and x["avoid"].strip()
                and x["audiences"] == ["all_ai_bots"] for x in contextual_rows)
+    # Universal qa.v1 lookup contract: fresh questions and approved aliases must
+    # resolve unambiguously within their own existing all-bot reference section.
+    general_qa = load("knowledge_format.json")["records"]
+    general_ids = {"ref_partial_snapshot", "ref_checksum_failed", "ref_unchanged_pack_digest", "ref_failed_refresh", "ref_stale_snapshot_limits", "ref_published_not_enabled", "ref_runtime_rights_required", "ref_readonly_cannot_sanction", "ref_case_needs_review", "ref_explicit_group_address", "ref_audience_isolation", "ref_no_live_case_lookup", "ref_public_git_retention", "ref_external_instruction_boundary", "ref_conflicting_public_sources", "ref_unverified_source", "ref_multiple_hits", "ref_section_discovery", "ref_alias_ambiguity", "ref_semantic_duplicate", "ref_rejected_candidate", "ref_reviewed_publication", "ref_exact_head_not_merge_ref", "ref_post_merge_recheck", "ref_ci_vs_live_deployment", "ref_large_pack", "ref_record_identity", "ref_rules_local_priority", "ref_fact_plan_separation"}
+    assert len(general_qa) == 40 and len(general_ids) == 29
+    def normalize_general_q(value: str) -> str:
+        return " ".join("".join(c if c.isalnum() else " " for c in value.casefold().replace("ё", "е")).split())
+    general_index = {}
+    for entry in general_qa:
+        for phrase in [entry["question"], *entry.get("aliases", [])]:
+            key = normalize_general_q(phrase)
+            assert key not in general_index, (key, entry["id"])
+            general_index[key] = entry["id"]
+    for entry in general_qa:
+        if entry["id"] not in general_ids:
+            continue
+        assert len(entry["aliases"]) == 2 and len(entry["variants"]) == 2
+        for phrase in [entry["question"], *entry["aliases"]]:
+            assert general_index[normalize_general_q(phrase)] == entry["id"]
+        assert entry["source"].startswith("https://github.com/Treninem/Bot-Knowledge/blob/8f7a88548b93db24dcbe6bff1f44f662802f780d/")
+    assert len([entry for entry in general_qa if entry["id"] in general_ids]) == 29
+    print("GENERAL_QA_LOOKUP_PASS questions=29 paraphrases=58")
     ids = [x["id"] for x in moderation + social + english]
     inputs = [x.get("message", x.get("input", "")) for x in moderation + social + english]
     assert len(ids) == len(set(ids)) == 377
