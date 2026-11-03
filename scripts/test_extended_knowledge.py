@@ -27,7 +27,7 @@ def main() -> None:
     english = load("english_dialogues.json")["cases"]
     assert len(moderation) == 63
     assert len(social) >= 329  # preserve audited baseline and permit reviewed additions
-    assert len(english) == 33
+    assert len(english) == 74
     assert len({x["topic"] for x in moderation}) == 21
     assert Counter(x["classification"] for x in moderation) == {
         "candidate_violation": 21, "allow": 21, "review": 21
@@ -95,6 +95,7 @@ def main() -> None:
     assert all(case["language"] == "en" and case["response"] and case["meaning_ru"]
                for case in english)
     assert any(x["kind"] == "dark_humor" for x in english)
+    assert len([x for x in english if x["id"].startswith("en_t11_")]) == 41
     new_qa = load("dialogue_help_qa.json")
     assert new_qa["catalog"]["adapter"] == "qa.v1"
     assert new_qa["catalog"]["audiences"] == ["all_ai_bots"]
@@ -106,6 +107,14 @@ def main() -> None:
                    for q in new_qa["records"] for p in [q["question"], *q["aliases"]]]
     assert len(new_phrases) == len(set(new_phrases)) == 3 * len(new_qa["records"])
     index = KnowledgeSearch()
+    newer_en = [x for x in english if x["id"].startswith("en_t11_")]
+    for case in newer_en:
+        assert case["language"] == "en" and case["meaning_ru"] and case["avoid"]
+        assert case["audiences"] == ["all_ai_bots"]
+        hits = index.search(case["input"], "all_ai_bots", 20)
+        assert case["id"] in {hit[0] for hit in hits}, (case["id"], hits)
+    print("ENGLISH_T11_SEARCH_OK 41/41")
+
     from index_contract import expected_index_count
     assert len(index.records) == expected_index_count()
     assert len(index.records) >= 360
