@@ -25,7 +25,7 @@ def main():
         assert x["audiences"]==["all_ai_bots"]
         assert x["kind"] in ("congratulations","support","humor","profanity","conversation","creative")
         assert all(x[k].strip() for k in ("context","input","response","avoid"))
-        assert not re.search(r"(?i)https?://|@\\w+|\\b\\d{10,}\\b", json.dumps(x,ensure_ascii=False))
+        assert not re.search(r"(?i)https?://|@\w+|\b\d{10,}\b", json.dumps(x,ensure_ascii=False))
         hits=lookup.search(x["input"],audience="all_ai_bots",limit=20)
         assert any(hit[0]==x["id"] for hit in hits),x["id"]
     print("N11_SOCIAL_OK accepted="+str(len(accepted)))
