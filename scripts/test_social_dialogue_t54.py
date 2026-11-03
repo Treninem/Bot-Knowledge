@@ -41,7 +41,7 @@ def main() -> None:
         )
         # A language response must not encode a live moderation sanction.
         assert not any(key in row for key in ("action", "auto_apply", "sanction", "ban", "mute"))
-        hits = search.search(row["input"], audience="all_ai_bots", limit=100)
+        hits = search.search(row["input"], audience="all_ai_bots", limit=20)
         assert any(hit[0] == row["id"] for hit in hits), row["id"]
     print(f"T54_SOCIAL_OK added={len(rows)} total={len(cases)}")
 
