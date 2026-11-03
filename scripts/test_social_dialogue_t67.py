@@ -15,7 +15,7 @@ def main():
     assert len(raw)<2*1024*1024
     assert hashlib.sha256(raw).hexdigest()==next(r["sha256"] for r in manifest["packs"] if r["path"]==REL)
     cases=json.loads(raw)["cases"]
-    assert len(cases)==1702
+    assert len(cases)>=1702  # pinned T67 baseline; later verified editions may append cases
     assert len(set(r["id"] for r in cases))==len(cases)
     for key in ("input","response"):
         phrases=[normalize_question(r[key]) for r in cases]

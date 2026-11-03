@@ -17,7 +17,7 @@ def main():
     rows=pack["cases"]
     added=[r for r in rows if r["id"].startswith(PREFIX)]
     assert len(added)==EXPECTED
-    assert len(rows)==933
+    assert len(rows)>=933  # pinned T66 baseline; later verified editions may append cases
     assert len({r["id"] for r in rows})==len(rows)
     for k in ("input","response"):
         normalized=[normalize_question(r[k]) for r in rows]
