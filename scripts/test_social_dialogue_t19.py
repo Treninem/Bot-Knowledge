@@ -52,7 +52,7 @@ def main() -> None:
         assert r["audiences"] == ["all_ai_bots"]
         assert not re.search(r"(?:@\w+|\b\d{9,}\b|(?:api[_-]?key|access_token)\s*[:=])", str(r), re.I), "T19 private marker"
         assert all(jaccard(r["input"], old["input"]) < .80 for old in past), "T19 close input"
-        hits = search.search(r["input"], audience="all_ai_bots", limit=30)
+        hits = search.search(r["input"], audience="all_ai_bots", limit=20)
         assert any(hit[0] == r["id"] for hit in hits), "T19 retrieval " + r["id"]
     print(f"T19_SOCIAL_OK accepted={len(chosen)} bytes={len(raw)} SHA256={entry['sha256']}")
 
