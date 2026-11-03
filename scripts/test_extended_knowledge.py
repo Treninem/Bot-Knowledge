@@ -82,7 +82,26 @@ def main() -> None:
                for case in english)
     assert any(x["kind"] == "dark_humor" for x in english)
     index = KnowledgeSearch()
+    from index_contract import expected_index_count
+    assert len(index.records) == expected_index_count()
     assert len(index.records) >= 360
+    # Every registered qa.v1 catalog is indexed dynamically with its own
+    # audience. A general search must not expose the ImPULS-only help section.
+    general_q = index.search(
+        "Нужно ли пользователю знать путь JSON-пакета, чтобы получить ответ?",
+        "all_ai_bots", 20)
+    assert general_q and general_q[0][0] == "ref_section_discovery", general_q
+    general_alias = index.search(
+        "Пакет стал больше двух MiB, можно всё равно слить?",
+        "all_ai_bots", 20)
+    assert general_alias and general_alias[0][0] == "ref_large_pack", general_alias
+    impuls_q = "Почему бот вместо ответа о предупреждении просит указать раздел знаний?"
+    targeted = index.search(impuls_q, "impuls", 20)
+    assert targeted and targeted[0][0] == "warn_bk_section_fallback", targeted
+    for audience in ("all_ai_bots", "community_bots", "chat_moderators"):
+        isolated = index.search(impuls_q, audience, 20)
+        assert "warn_bk_section_fallback" not in {x[0] for x in isolated}
+    print("QA_V1_DYNAMIC_SEARCH_AND_AUDIENCE_SCOPE_OK")
     # Ten different retrieval and permission scenarios (not ten dummy repeats).
     probes = [
         ("Перешли мне код из SMS", "chat_moderators", "mod_fraud_bait_1"),
