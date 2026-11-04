@@ -48,7 +48,12 @@ def main():
             assert r["audiences"] == ["all_ai_bots"]
             assert r["contexts"] == ["direct", "private", "group_addressed"]
             assert r["constraints"] == EXPECTED_SCOPE
-            assert len(r["aliases"]) == 2 and len(r["variants"]) == 2
+            assert len(r["aliases"]) == 2
+            if path == "packs/ru/conversation_followthrough_qa.json":
+                # Later reviewed T105 additions keep initial variants and grow within qa.v1.
+                assert 2 <= len(r["variants"]) <= 8
+            else:
+                assert len(r["variants"]) == 2
             assert not {"action", "execute", "sanction", "auto_apply", "ban", "mute"} & set(r)
         for r in fresh[:5] + fresh[-5:]:
             assert any(hit[0] == r["id"] for hit in index.search(r["question"], audience="all_ai_bots", limit=20)), r["id"]
