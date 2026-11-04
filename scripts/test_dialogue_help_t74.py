@@ -30,7 +30,7 @@ def main():
         assert r["constraints"] == {"read_only":True,"requires_direct_address":True,"no_personal_data":True}
         assert r["language"] == "ru" and "REQUIREMENTS_21.md" in r["source"]
         assert not set(r) & {"action","sanction","auto_apply","execute","ban","mute"}
-        hits = search.search(r["question"],audience="all_ai_bots",limit=30)
+        hits = search.search(r["question"],audience="all_ai_bots",limit=20)
         assert any(hit[0] == r["id"] for hit in hits),r["id"]
     print(f"T74 QA PASS: {EXPECTED} records, {EXPECTED*3} answers")
 if __name__ == "__main__":
