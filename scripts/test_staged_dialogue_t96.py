@@ -141,5 +141,41 @@ class StagedDialogueT96(unittest.TestCase):
                         visit(value)
             visit(payload)
 
+
+    def test_08_no_near_duplicate_responses(self):
+        """Use an inverted bigram index, avoiding a quadratic full scan."""
+        from collections import defaultdict
+        existing = [value for _, row in self.others
+                    for value in [row.get("answer", ""), *row.get("variants", [])]
+                    if isinstance(value, str)]
+        for name in ("reply_catalog.json", "social_dialogues.json"):
+            data = json.loads((ROOT / "packs/ru" / name).read_text(encoding="utf-8"))
+            def collect(obj, field=""):
+                if isinstance(obj, str):
+                    if field in {"replies", "answer", "variants", "responses", "reply", "text", "response"}:
+                        existing.append(obj)
+                elif isinstance(obj, list):
+                    for item in obj:
+                        collect(item, field)
+                elif isinstance(obj, dict):
+                    for key, item in obj.items():
+                        collect(item, key)
+            collect(data)
+        gram_sets = [bigrams(v) for v in existing]
+        inverted = defaultdict(list)
+        for i, grams in enumerate(gram_sets):
+            for gram in grams:
+                inverted[gram].append(i)
+        for row in self.rows:
+            for response in [row["answer"], *row["variants"]]:
+                words = bigrams(response)
+                counts = defaultdict(int)
+                for gram in words:
+                    for i in inverted[gram]:
+                        counts[i] += 1
+                for i, intersection in counts.items():
+                    similarity = intersection / len(words | gram_sets[i])
+                    self.assertLess(similarity, 0.50, (row["id"], similarity, existing[i]))
+
 if __name__ == "__main__":
     unittest.main()
