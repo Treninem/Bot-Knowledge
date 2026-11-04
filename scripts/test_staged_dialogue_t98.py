@@ -129,5 +129,20 @@ class T98StageChecks(unittest.TestCase):
                              for row in self.t98["entries"]), 1)
 
 
+    def test_09_context_conditions_are_specific(self) -> None:
+        use_conditions = [candidate["context_note"]
+                          for row in self.t98["entries"]
+                          for candidate in row["replies"]]
+        avoid_conditions = [row["replies"][0]["avoid"]
+                            for row in self.t98["entries"]]
+        self.assertEqual(len(use_conditions), 90)
+        self.assertEqual(len(set(use_conditions)), 90)
+        self.assertEqual(len(avoid_conditions), 45)
+        self.assertEqual(len(set(avoid_conditions)), 45)
+        for row in self.t98["entries"]:
+            self.assertEqual(row["replies"][0]["avoid"], row["replies"][1]["avoid"])
+
+
+
 if __name__ == "__main__":
     unittest.main()
