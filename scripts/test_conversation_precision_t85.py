@@ -43,7 +43,7 @@ def main():
         assert len(record["aliases"]) == 2 and 3 <= len(record["variants"]) <= 8
         assert not set(record).intersection({"execute", "action", "sanction", "mute", "ban", "auto_apply"})
         assert any(hit[0] == record["id"] for hit in index.search(record["question"], audience="all_ai_bots", limit=20)), record["id"]
-    print("T85 PASS: 48 RU intents, 96 aliases, 288 replies after T111")
+    print("T85 PASS: 48 RU intents, 96 aliases, 336 replies after T112")
 
 if __name__ == "__main__":
     main()
