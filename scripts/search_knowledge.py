@@ -87,6 +87,8 @@ class KnowledgeSearch:
                         "preview": (item.get("expression") or item.get("response") or item.get("reason")
                                     or item.get("source") or item.get("input") or item.get("message")
                                     or (item.get("examples") or [""])[0])[:220],
+                        # Legacy records do not share the qa.v1 context contract.
+                        "contexts": None,
                     }
                     index = len(self.records)
                     self.records.append(record)
@@ -133,6 +135,7 @@ class KnowledgeSearch:
                         "topic": catalog.get("id", ""),
                         "expression": question,
                         "preview": answer[:220],
+                        "contexts": tuple(contexts),
                     }
                     index = len(self.records)
                     self.records.append(record)
@@ -147,27 +150,40 @@ class KnowledgeSearch:
         # instances through the global LRU after a snapshot refresh.
         self._cached_search = lru_cache(maxsize=512)(self._search_uncached)
 
-    def search(self, query: str, audience: str = "all_ai_bots", limit: int = 5) -> tuple[tuple, ...]:
-        return self._cached_search(query, audience, limit)
+    def search(self, query: str, audience: str = "all_ai_bots", limit: int = 5,
+               *, context: str | None = None) -> tuple[tuple, ...]:
+        """Filter qa.v1 replies by caller-supplied context; None keeps old behaviour."""
+        return self._cached_search(query, audience, limit, context)
 
-    def _search_uncached(self, query: str, audience: str, limit: int) -> tuple[tuple, ...]:
+    def _search_uncached(self, query: str, audience: str, limit: int,
+                         context: str | None) -> tuple[tuple, ...]:
         if audience not in AUDIENCES:
             raise ValueError("Unknown audience")
         if not 1 <= limit <= 20:
             raise ValueError("Invalid limit")
+        if context is not None and context not in {"direct", "private", "group_addressed"}:
+            raise ValueError("Unknown context")
         terms = tokens(query)
         exact_matches = self.exact.get(exact_phrase(query), ())
         if not terms and not exact_matches:
             return ()
         allowed = {"all_ai_bots", audience}
+
+        def eligible(i: int) -> bool:
+            record = self.records[i]
+            scoped = record["contexts"]
+            return bool(allowed.intersection(record["audiences"])) and (
+                context is None or scoped is None or context in scoped
+            )
+
         scores: dict[int, int] = defaultdict(int)
         for term in terms:
             for i in self.inverted.get(term, ()):
-                if allowed.intersection(self.records[i]["audiences"]):
+                if eligible(i):
                     scores[i] += 1
         # Rank an exact phrase above loose token overlap, after audience filtering.
         for i in exact_matches:
-            if allowed.intersection(self.records[i]["audiences"]):
+            if eligible(i):
                 scores[i] += max(10, 3 * len(terms))
         ranked = sorted(scores, key=lambda i: (-scores[i], self.records[i]["id"]))
         return tuple((self.records[i]["id"], self.records[i]["pack"],
@@ -179,10 +195,12 @@ def main() -> None:
     parser.add_argument("--query", required=True)
     parser.add_argument("--audience", choices=sorted(AUDIENCES), default="all_ai_bots")
     parser.add_argument("--limit", type=int, default=5)
+    parser.add_argument("--context", choices=("direct", "private", "group_addressed"),
+                        default=None, help="Optional qa.v1 reply context")
     args = parser.parse_args()
     started = time.perf_counter()
     index = KnowledgeSearch()
-    result = index.search(args.query, args.audience, args.limit)
+    result = index.search(args.query, args.audience, args.limit, context=args.context)
     elapsed_ms = round((time.perf_counter() - started) * 1000, 3)
     print(json.dumps({"query": args.query, "audience": args.audience,
                       "loaded_records": len(index.records),
