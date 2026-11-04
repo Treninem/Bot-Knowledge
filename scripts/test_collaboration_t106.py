@@ -1,4 +1,4 @@
-"""T106/T107: expanded context-scoped additions to 74 collaboration intents."""
+"""T106–T109: expanded context-scoped additions to 74 collaboration intents."""
 import hashlib
 import json
 import re
@@ -29,14 +29,14 @@ class CollaborationT106(unittest.TestCase):
         self.assertEqual([r["id"] for r in records[37:]], [f"collab_t83_{n:03d}" for n in range(1, 38)])
         for rec in records:
             self.assertEqual(len(rec["aliases"]), 2)
-            self.assertEqual(len(rec["variants"]), 6)
+            self.assertEqual(len(rec["variants"]), 8)
             self.assertEqual(rec["audiences"], ["all_ai_bots"])
             self.assertEqual(rec["contexts"], ["direct", "private", "group_addressed"])
             self.assertEqual(rec["constraints"], {"read_only": True, "requires_direct_address": True, "no_personal_data": True})
 
     def test_normalized_answer_uniqueness(self):
         answers = [a for r in self.pack["records"] for a in [r["answer"], *r["variants"]]]
-        self.assertEqual(len(answers), 518)
+        self.assertEqual(len(answers), 666)
         normalized = [normalize_question(a) for a in answers]
         self.assertEqual(len(set(normalized)), len(normalized))
 

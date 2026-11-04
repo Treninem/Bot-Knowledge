@@ -14,12 +14,12 @@ class CollaborationT79Tests(unittest.TestCase):
         self.assertEqual(len(set(x["id"] for x in rows)),37)
         questions=set(); answers=set()
         for r in rows:
-            self.assertEqual(len(r["aliases"]),2); self.assertEqual(len(r["variants"]),6)
+            self.assertEqual(len(r["aliases"]),2); self.assertEqual(len(r["variants"]),8)
             self.assertEqual(r["audiences"],["all_ai_bots"])
             self.assertEqual(r["constraints"],{"read_only":True,"requires_direct_address":True,"no_personal_data":True})
             for q in [r["question"],*r["aliases"]]: self.assertNotIn(n(q),questions); questions.add(n(q))
             for a in [r["answer"],*r["variants"]]: self.assertNotIn(n(a),answers); answers.add(n(a))
-        self.assertEqual(len(answers),259); self.assertEqual(len(questions),111)
+        self.assertEqual(len(answers),333); self.assertEqual(len(questions),111)
     def test_no_existing_qa_key_collisions(self):
         new=json.loads(PACK.read_text(encoding="utf-8"))
         keys={n(q) for r in new["records"] for q in [r["question"],*r["aliases"]]}
