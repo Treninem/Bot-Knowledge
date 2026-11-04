@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Offline checks for unregistered neutral help qa.v1 T103–T104.
+"""Offline checks for unregistered neutral help qa.v1 T103–T105.
 
 Run: python -B scripts/test_staged_neutral_help_t103.py
 This script cannot prove semantic quality, consumer E2E or exact-head CI.
@@ -38,7 +38,7 @@ class NeutralHelpT103(unittest.TestCase):
     def test_counts(self):
         self.assertEqual(len(self.records), 27)
         self.assertEqual(len(self.queries), 81)
-        self.assertEqual(len(self.answers), 189)
+        self.assertEqual(len(self.answers), 243)
 
     def test_canonical_ids_unique(self):
         ids = [rec["id"] for rec in self.records]
@@ -57,7 +57,7 @@ class NeutralHelpT103(unittest.TestCase):
         self.assertEqual(self.data["catalog"]["id"], "neutral_help_t103")
         for row in self.records:
             self.assertEqual(len(row["aliases"]), 2)
-            self.assertEqual(len(row["variants"]), 6)
+            self.assertEqual(len(row["variants"]), 8)
             self.assertTrue(all(35 <= len(s) <= 1600 for s in [row["answer"], *row["variants"]]))
             self.assertTrue(row["source"].startswith("https://"))
 
