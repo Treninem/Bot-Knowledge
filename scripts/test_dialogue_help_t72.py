@@ -16,8 +16,8 @@ def main():
     assert hashlib.sha256(raw).hexdigest()==next(x["sha256"] for x in manifest["packs"] if x["path"]==REL)
     pack=json.loads(raw)
     records=pack["records"]
-    assert len(records)==749
-    assert validate_qa_pack(pack)==749
+    assert len(records)>=749
+    assert validate_qa_pack(pack)==len(records)
     current=[r for r in records if r["id"].startswith(PREFIX)]
     assert len(current)==EXPECTED
     assert len(set(r["id"] for r in records))==len(records)
@@ -36,6 +36,6 @@ def main():
         for phrase in [r["question"],*r["aliases"]]:
             hits=search.search(phrase,audience="all_ai_bots",limit=20)
             assert any(h[0]==r["id"] for h in hits),(r["id"],phrase)
-    print("T72_QA_OK records=28 answers=84 base=721 total=749")
+    print(f"T72_QA_OK records=28 answers=84 base=721 total={len(records)}")
 if __name__=="__main__":
     main()

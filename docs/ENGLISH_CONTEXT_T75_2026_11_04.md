@@ -1,6 +1,7 @@
-# T75 — Natural English scope and conversational meaning
-Base main: `a214f949ef5830167e348b2ce2de774b6ead0d11`. English pack previously 1030 cases.
-Created 60 original English inputs and answers with distinct Russian meaning notes and explicit `avoid` usage conditions; rejected 2 exact normalized duplicates and replaced 3 semantic near duplicates during second review. Classes: {"conversation":10,"context":8,"support":9,"slang":7,"sarcasm":6,"rules":6,"deception":6,"creative":8}.
-All synthetic `all_ai_bots` knowledge, no personal data, sanctions, executable instructions or ImPULS capability claims.
-Expected total 1090, UTF-8 size 577150 (<2 MiB), SHA-256 `c53992d1976df2951602cce3a38610b40fd3020aa4e21c02e8d8fd9870b9ae5c`. Candidate manifest/cache version `2026.11.04.008` is **provisional on independent branch** until T74 #199 merges: reconcile to latest main and increment version before opening T75 PR.
-Local JS UTF-8/SHA known vector tests, exact normalized dedup and size passed. Real Python tests and six exact-head Actions **not run yet**, because branch is a safe checkpoint only. Existing T71 test remains additive. No live bots modified.
+# T75 — Natural English context, sarcasm, help and creativity
+Current base main: `9cce6137a68ce1e09a744e136cb89e94cc852381` (post-T74). Previous English cases: 1030; new verified synthetic candidates: **60**; expected total: **1090**.
+Original responses by class: 10 conversation, 8 context, 9 support, 7 slang, 6 sarcasm, 6 rules, 6 deception, 8 creative.
+Two exact normalized candidate collisions rejected; another three semantic near-duplicates were replaced with distinct meanings after cross-pack review.
+No real user conversations, names, IDs, sanctions, executable commands, or unverified ImPULS feature claims. Every case has `language=en`, `audiences=["all_ai_bots"]`, an English response, Russian meaning and an explicit `avoid` constraint.
+Updated English pack `2026.11.04.009` size **577150 UTF-8 bytes**, SHA-256 `4f0d9352ad8d17a34b90a6669a269390ce5d3bf526e06d142b616149ea83a786`, and manifest/cache version `2026.11.04.009`. Preflight JS: SHA-256 known UTF-8 vectors, normalized input/answer uniqueness, JSON and pack size passed. Python suite via `quality.yml` includes `test_english_dialogue_t75.py`; do **not** merge without six exact-head checks and post-main CI.
+No consumer integration/deployment. Prior 119 100/100 reply-catalog intents unchanged.
