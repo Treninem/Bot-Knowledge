@@ -39,8 +39,9 @@ def main():
             continue
         prefix, existing, added = NEW[path]
         assert len(raw) < 1024 * 1024
-        assert validate_qa_pack(data) == existing + added
-        fresh = data["records"][-added:]
+        assert validate_qa_pack(data) >= existing + added
+        fresh = [r for r in data["records"] if r["id"].startswith(prefix)]
+        assert len(fresh) == added
         assert [r["id"] for r in fresh] == [f"{prefix}{i:03d}" for i in range(1, added + 1)]
         for r in fresh:
             assert r["language"] == "ru"

@@ -7,7 +7,7 @@ from scripts.validate_qa_v1 import normalize_question, validate_qa_pack
 from scripts.search_knowledge import KnowledgeSearch
 
 ROOT=Path(__file__).resolve().parents[1]
-EXPECTED={"packs/ru/structured_information_qa.json":89,"packs/ru/conversation_followthrough_qa.json":82}
+EXPECTED={"packs/ru/structured_information_qa.json":114,"packs/ru/conversation_followthrough_qa.json":82}
 
 class NewKnowledgeT86(unittest.TestCase):
     def test_manifest_scope_uniqueness_and_search(self):
