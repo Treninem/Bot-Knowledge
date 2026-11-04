@@ -5,6 +5,7 @@ on:
       - 'packs/ru/conversation_precision_qa.json'
       - 'manifest.json'
       - 'scripts/test_conversation_precision_t77.py'
+      - 'scripts/test_conversation_precision_t82.py'
       - '.github/workflows/conversation-t77.yml'
 permissions:
   contents: read
@@ -26,4 +27,6 @@ jobs:
       - name: Verify all pack SHA and contracts
         run: python scripts/validate_pack.py
       - name: Test T77 new contexts and local search
-        run: python -m scripts.test_conversation_precision_t77
+        run: |
+          python -m scripts.test_conversation_precision_t77
+          python -m scripts.test_conversation_precision_t82
