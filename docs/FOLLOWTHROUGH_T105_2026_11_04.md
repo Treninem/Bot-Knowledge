@@ -2,7 +2,18 @@
 
 **Branch** `bk/t105-followthrough-existing-qa-20261104` from **main** `23871ed224cbe0d9636c841fd48e3f43bdd3ed1b`. **Status:** Draft / BLOCKED; not merged and not delivered to ImPULS. Pending manifest changes are not published knowledge.
 
-## Verified candidate delta
+## T105b second checkpoint — latest verified data (2026-11-04)
+
+- Continued the **same existing registered pack**, not a new pack: **+40 additional original Russian replies** over another 20 stable questions (`follow_t86_021`–`032`, `follow_t88_001`–`008`). This run's registered-pack PR candidate total is now **+80 replies across 40 distinct existing intents**, all **40 × 5/100**, **95 missing each / 3,800 missing in these active sets**; the other **42** records in this pack remain at **3 replies each**. **0 sets completed 100/100**. Original pack 246 → proposed **326** reply strings over 82 records.
+- Latest data commit [`6ef52da1fd783bf78bfe5aad1bcdcff97d2772c3`](https://github.com/Treninem/Bot-Knowledge/commit/6ef52da1fd783bf78bfe5aad1bcdcff97d2772c3); updated pack blob `d266cc252bb51d5ff81e31b589aab1330cee02bf`. Manifest repinned in [`5d8244c3062f41b0429f33330cb55c8c989e475b`](https://github.com/Treninem/Bot-Knowledge/commit/5d8244c3062f41b0429f33330cb55c8c989e475b) at **SHA-256 `a4d2e470e0eb762f5ac376133672959f6e8f90a35b6801fe8472f9f4e10b067f`**, `knowledge_version=2026.11.04.028`. Main remains at `.026`.
+- Fresh connector/JS checks on exact branch: all 82 records and existing fields retained, 80 new normalized unique answer strings, 326 unique answers in the pack, 246 distinct normalized question/alias forms, 0 exact text overlap of the 80 new replies with ten other QA packs (2,221 records), 0 schema limit/context/privacy guard errors. Checks are lexical/structural, not complete semantic acceptance.
+- **Proposed pack size 123,997 bytes**, compared with 108,355 bytes in main. Proposed all-38-pack snapshot **7,534,900 / 8,388,608 bytes** (**853,708 bytes headroom**, +15,638 bytes versus main including manifest difference). No live consumer/cache change; Draft PR is not published knowledge.
+- Offline Python test amended for 80 new replies and first 40 records with 4 variants each; **not executed**. Full `validate_pack.py`, Windows `D:` checkout, large non-QA catalogs, exact-head CI, ImPULS consumer E2E and post-main remain unverified. No paid Actions, no merge.
+- Latest owner coordination: leave #224 publisher functions `scripts/trusted_publish_qa.py` and `scripts/prepare_knowledge_candidate.py` unchanged. If #214 merges manifest .027, re-check base and reconcile version/SHA before any merge of this PR.
+
+---
+
+## T105a first checkpoint — historical data
 
 - Updated existing `packs/ru/conversation_followthrough_qa.json` only: **20 existing stable intents** `follow_t86_001`–`020`, **+40 manually authored synthetic Russian response variants** (+2 each). Zero new canonical intents, aliases, or packs. Previously 3 replies per selected intent → **5/100 each**, **95 missing per selected intent**. Other 62 records in this existing pack remain unchanged.
 - Original full pack: **82 records / 246 reply strings**; proposed pack: **82 records / 286 reply strings**. **0 completed 100/100 sets**; 20 partial sets actively advanced. Distinct treatment of topic recovery, corrections, direct/group address, tone change, listening, prioritization, and criticism.
@@ -16,7 +27,7 @@
 
 **Not run:** local Python/validate_pack on full exact checkout (Windows `D:` unavailable in this environment), full large non-QA reply/social catalog semantic screening, ImPULS consumer E2E, exact-head CI, post-main CI. Offline Python test `scripts/test_followthrough_expansion_t105.py` was **authored but not executed**; it checks all manifest SHA-256 hashes, snapshot cap and cross-pack duplication when run on a real checkout.
 
-**Coordination:** do not modify `scripts/trusted_publish_qa.py` or `scripts/prepare_knowledge_candidate.py` (separate #224). No personal Telegram chats/IDs/tokens or private code. No GitHub Actions dispatched, no paid services, no ImPULS/BonHost edits. #214 separately proposes manifest .027; re-check fresh main, resolve manifest version/hash coherently, re-validate, and obtain exact-head CI before considering merge.
+**Coordination:** do not modify `scripts/trusted_publish_qa.py` or `scripts/prepare_knowledge_candidate.py` (separate #224). No personal Telegram chats/IDs/tokens or private code. No GitHub Actions dispatched, no paid services, no ImPULS/BotHost edits. #214 separately proposes manifest .027; re-check fresh main, resolve manifest version/hash coherently, re-validate, and obtain exact-head CI before considering merge.
 
 ## Remaining / next action
 
