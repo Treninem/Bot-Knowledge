@@ -7,7 +7,7 @@ class ModerateT81(unittest.TestCase):
     def test_integrity_scope_and_variants(self):
         p=PACK.read_bytes();d=json.loads(p); m=json.loads((ROOT/"manifest.json").read_text(encoding="utf-8"))
         self.assertEqual(hashlib.sha256(p).hexdigest(),next(x["sha256"] for x in m["packs"] if x["path"]=="packs/ru/moderation_explanations_qa.json"))
-        self.assertLess(len(p),1024*1024);self.assertEqual(len(d["records"]),30)
+        self.assertLess(len(p),1024*1024);self.assertEqual(len(d["records"]),50)
         self.assertEqual(d["catalog"]["audiences"],["chat_moderators","community_bots"])
         qs=set();ans=set();ids=set()
         for r in d["records"]:
@@ -19,7 +19,18 @@ class ModerateT81(unittest.TestCase):
             self.assertEqual((len(r["aliases"]),len(r["variants"])),(2,2))
             for q in [r["question"],*r["aliases"]]:self.assertNotIn(norm(q),qs);qs.add(norm(q))
             for a in [r["answer"],*r["variants"]]:self.assertNotIn(norm(a),ans);ans.add(norm(a))
-        self.assertEqual((len(qs),len(ans)),(90,90))
+        self.assertEqual((len(qs),len(ans)),(150,150))
+    def test_t93_rephrasing_search_and_scope(self):
+        from scripts.search_knowledge import KnowledgeSearch
+        search=KnowledgeSearch(ROOT)
+        data=json.loads(PACK.read_text(encoding="utf-8"))
+        for row in data["records"]:
+            if not row["id"].startswith("modexp_t93_"):
+                continue
+            for audience in ("chat_moderators","community_bots"):
+                for phrase in [row["question"],*row["aliases"]]:
+                    self.assertEqual(search.search(phrase,audience=audience)[0][0],row["id"])
+            self.assertNotIn(row["id"],[x[0] for x in search.search(row["question"],audience="impuls")])
     def test_no_existing_qa_keys(self):
         new=json.loads(PACK.read_text(encoding="utf-8")); keys={norm(q) for r in new["records"] for q in [r["question"],*r["aliases"]]}
         for name in ("dialogue_help_qa","impuls_help_qa","conversation_precision_qa","collaborative_dialogue_qa","english_pragmatics_qa","english_conversation_nuance_qa"):
