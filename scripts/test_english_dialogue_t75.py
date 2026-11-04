@@ -27,9 +27,9 @@ def main():
         assert r["audiences"] == ["all_ai_bots"] and r["language"] == "en"
         assert r["kind"] in {"conversation","context","support","slang","sarcasm","rules","deception","creative"}
         assert all(isinstance(r[k],str) and r[k].strip() for k in ("input","response","meaning_ru","avoid"))
-        assert not re.search(r"https?://|@[A-Za-z0-9_]+|\\b\\d{10,}\\b|token\\s*[:=]|password\\s*[:=]",json.dumps(r,ensure_ascii=False),re.I)
+        assert not re.search(r"https?://|@[A-Za-z0-9_]+|\b\\d{10,}\b|token\s*[:=]|password\s*[:=]",json.dumps(r,ensure_ascii=False),re.I)
         assert not set(r) & {"action","sanction","auto_apply","execute","ban","mute"}
-        hits = lookup.search(r["input"],audience="all_ai_bots",limit=30)
+        hits = lookup.search(r["input"],audience="all_ai_bots",limit=20)
         assert any(hit[0] == r["id"] for hit in hits),r["id"]
     print(f"T75 EN PASS: {EXPECTED} new, total {len(cases)}")
 if __name__ == "__main__":
