@@ -5,6 +5,7 @@ on:
       - 'packs/ru/english_pragmatics_qa.json'
       - 'manifest.json'
       - 'scripts/test_english_pragmatics_t78.py'
+      - 'scripts/test_english_pragmatics_t84.py'
       - '.github/workflows/english-t78.yml'
 permissions:
   contents: read
@@ -26,4 +27,6 @@ jobs:
       - name: Validate versioned packages
         run: python scripts/validate_pack.py
       - name: Check original English nuance and retrieval
-        run: python -m scripts.test_english_pragmatics_t78
+        run: |
+          python -m scripts.test_english_pragmatics_t78
+          python -m scripts.test_english_pragmatics_t84
