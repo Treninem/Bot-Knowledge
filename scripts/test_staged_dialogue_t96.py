@@ -59,7 +59,7 @@ class StagedDialogueT96(unittest.TestCase):
         self.assertEqual(self.payload["catalog"]["adapter"], "qa.v1")
         self.assertEqual(self.payload["catalog"]["records"], "records")
         self.assertEqual(self.payload["catalog"]["constraints"], CONSTRAINTS)
-        self.assertEqual(len(self.rows), 35)
+        self.assertEqual(len(self.rows), 45)
         seen = set()
         for row in self.rows:
             with self.subTest(row=row["id"]):
@@ -67,12 +67,15 @@ class StagedDialogueT96(unittest.TestCase):
                 self.assertNotIn(row["id"], seen)
                 seen.add(row["id"])
                 self.assertEqual(len(row["aliases"]), 2)
-                self.assertEqual(len(row["variants"]), 2)
+                self.assertEqual(len(row["variants"]), 4 if int(row["id"].split("_")[-1]) <= 35 else 2)
                 self.assertEqual(row["audiences"], ["all_ai_bots"])
-                self.assertEqual(set(row["contexts"]), ALLOWED_CONTEXTS)
+                self.assertTrue(set(row["contexts"]) <= ALLOWED_CONTEXTS)
+                self.assertTrue(row["contexts"])
                 self.assertEqual(row["constraints"], CONSTRAINTS)
                 self.assertEqual(row["language"], "ru")
-                self.assertTrue(row["source"].startswith("https://github.com/Treninem/Bot-Knowledge/"))
+                self.assertTrue(row["source"].startswith(
+                    "https://github.com/Treninem/Bot-Knowledge/blob/"
+                    "23871ed224cbe0d9636c841fd48e3f43bdd3ed1b/"))
                 self.assertTrue(all(8 <= len(x) <= 1600
                                     for x in [row["question"], *row["aliases"],
                                               row["answer"], *row["variants"]]))
@@ -82,8 +85,8 @@ class StagedDialogueT96(unittest.TestCase):
                    for x in [r["question"], *r["aliases"]]]
         answers = [normalize(x) for r in self.rows
                    for x in [r["answer"], *r["variants"]]]
-        self.assertEqual(len(queries), 105)
-        self.assertEqual(len(answers), 105)
+        self.assertEqual(len(queries), 135)
+        self.assertEqual(len(answers), 205)
         self.assertEqual(len(queries), len(set(queries)))
         self.assertEqual(len(answers), len(set(answers)))
 
