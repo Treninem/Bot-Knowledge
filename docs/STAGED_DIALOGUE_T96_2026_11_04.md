@@ -1,5 +1,14 @@
 # T96 — staged conversational QA: progress and acceptance gates (2026-11-04)
 
+## T104 checkpoint — 2026-11-04 (latest)
+
+- **Branch:** `bk/t96-staged-dialogue-repairs-20261104`, continuing [Draft PR #222](https://github.com/Treninem/Bot-Knowledge/pull/222). Pinned main for comparison: `23871ed224cbe0d9636c841fd48e3f43bdd3ed1b` / manifest `.026`. ImPULS read-only and unmodified.
+- **New T104 data:** **90 original synthetic Russian contextual responses**, two per existing `dialogue_t96_001`–`045`, in `staging/ru/dialogue_repair_t104_context_delta.json`. Data commit [`ede1aa7972b8326048ad6fbf078bb8e8052a6985`](https://github.com/Treninem/Bot-Knowledge/commit/ede1aa7972b8326048ad6fbf078bb8e8052a6985), Git blob `8938003b605ca43418d801d2367f60f0a1884d58`. Every candidate contains a specific `context_note` and `avoid`. Scope and stable IDs match the original record. All are read-only language suggestions, not actions.
+- **Precise staged progress:** **765 → 855 total candidates**, **45 partial sets × 19/100**, **81 missing per set / 3,645 outstanding**; **0 new canonical intents**, **0 complete 100/100 sets**. The stage is outside manifest; registered consumer growth **0 bytes**.
+- **Executed through fresh connected GitHub reads and in-process JS checks:** all eight T96/T97/T98/T99/T100/T101/T102/T104 files parsed; **855/855 unique** after Unicode, case, ё/е, punctuation and whitespace normalization; all 45 intent IDs, audiences/contexts and two per-intent replies match; no exact duplicate in prior staged pool, no token/email/ban-command pattern. New/prior lexical Jaccard max **0.40** and **0 pairs ≥ 0.70**. These checks do not establish meaning-level uniqueness or user acceptance.
+- Wrote `scripts/test_staged_dialogue_t104.py` (seven offline test methods), with raw regex escaping corrected in [`268bcbb3db9bd5b04b8c43de11960120701b5485`](https://github.com/Treninem/Bot-Knowledge/commit/268bcbb3db9bd5b04b8c43de11960120701b5485). **Python tests NOT executed**. Full catalogs `reply_catalog.json` (~1.99 MB) and `social_dialogues.json` (~1.16 MB) could not be completely parsed from this connector (truncated responses); cross-catalog semantic review and consumer ImPULS #383 E2E remain incomplete.
+- **BLOCKED:** exact-head green CI and full checked-out Python/schema tests are missing. No paid GitHub Actions were dispatched; no ready/merge, no BotHost deployment, no changes to ImPULS, and no PR/issues closed. Do not inflate accepted or published totals using staging candidates.
+
 ## T102 checkpoint — 2026-11-04 (latest)
 
 - **Scope:** continued existing PR [#222](https://github.com/Treninem/Bot-Knowledge/pull/222), branch `bk/t96-staged-dialogue-repairs-20261104`, main pinned during work at `23871ed224cbe0d9636c841fd48e3f43bdd3ed1b`. The separate ImPULS repository was read-only/not modified.
