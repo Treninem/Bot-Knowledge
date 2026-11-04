@@ -29,6 +29,8 @@ jobs:
         run: python scripts/validate_pack.py
       - name: Reviewed publisher contract
         run: python -m unittest scripts.test_trusted_publish_qa -q
+      - name: T76 Telegram identifier privacy regression for reviewed QA
+        run: python -m unittest scripts.test_trusted_publish_privacy -q
       - name: Shared skills cache and live GitHub read benchmark
         run: python scripts/benchmark_shared_skills.py
       - name: Ten rounds of reusable communication playbooks
@@ -239,3 +241,16 @@ jobs:
 
       - name: T68 original contextual QA, English and social SHA, audience and dedup
         run: python -m scripts.test_cycle_t68
+
+      - name: T73 thirty original context boundaries, SHA and audience isolation
+        run: python -m scripts.test_context_t73
+      - name: T72 context-precise RU question answers, SHA and scope
+        run: python -m scripts.test_dialogue_help_t72
+      - name: T74 universal QA SHA and scoped indexed search
+        run: python -m scripts.test_dialogue_help_t74
+      - name: T71 English natural replies, SHA, original contexts and indexed lookup
+        run: python -m scripts.test_english_dialogue_t71
+      - name: T75 original English contexts, privacy and local retrieval
+        run: python -m scripts.test_english_dialogue_t75
+      - name: T70 moderation context, scope, dedup and exact SHA
+        run: python scripts/test_moderation_t70.py

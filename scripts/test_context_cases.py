@@ -30,9 +30,9 @@ def main() -> None:
         "local_policy_has_priority": True,
     }
     cases = data["cases"]
-    assert len(cases) == 140  # 80 established cases + 60 new T69 cases
+    assert len(cases) == 170  # 80 established + T69 60 + T73 30 cases
     assert set(data["decisions"]) == ALLOWED_DECISIONS
-    assert Counter(x["category"] for x in cases) == {topic: 14 for topic in TOPICS}
+    assert Counter(x["category"] for x in cases) == {topic: 17 for topic in TOPICS}
     t69 = [case for case in cases if case["id"].startswith("t69_")]
     assert len(t69) == 60
     assert Counter(case["category"] for case in t69) == {topic: 6 for topic in TOPICS}
