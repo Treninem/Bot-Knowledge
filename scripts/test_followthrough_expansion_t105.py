@@ -17,9 +17,9 @@ ROOT = Path(__file__).resolve().parents[1]
 PACK = "packs/ru/conversation_followthrough_qa.json"
 SENSITIVE = re.compile(
     r"(?i)(?:ghp_[a-z0-9]{12,}|sk-[a-z0-9]{12,}|"
-    r"bearer\\s+[a-z0-9._-]{12,}|"
-    r"[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,}|"
-    r"\\b(?:chat_id|user_id|bot_token|ban_chat_member|kick_chat_member)\\b)"
+    r"bearer\s+[a-z0-9._-]{12,}|"
+    r"[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}|"
+    r"\b(?:chat_id|user_id|bot_token|ban_chat_member|kick_chat_member)\b)"
 )
 
 def read(path):
