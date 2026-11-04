@@ -46,20 +46,22 @@ class T97StageChecks(unittest.TestCase):
             with self.subTest(intent=item["intent_id"]):
                 ref = by_id[item["intent_id"]]
                 self.assertEqual(item["contexts"], ref["contexts"])
-                self.assertTrue(8 <= len(item["reply"]) <= 1600)
+                self.assertTrue(all(8 <= len(text) <= 1600 for text in [item["reply"], *item["additional_replies"]]))
+                self.assertEqual(len(item["additional_replies"]), 1 if int(item["intent_id"].split("_")[-1]) <= 35 else 3)
+                self.assertEqual(len(ref["variants"]) + 1 + len(item["additional_replies"]), 8)
                 self.assertEqual(ref["language"], "ru")
                 self.assertTrue(ref["constraints"]["read_only"])
         self.assertEqual(by_id["dialogue_t96_041"]["contexts"], ["group_addressed"])
 
     def test_unique_normalized_replies(self):
         answers = [x for r in self.rows for x in [r["answer"], *r["variants"]]]
-        answers.extend(e["reply"] for e in self.extra)
-        self.assertEqual(len(answers), 340)
-        self.assertEqual(len({normalize(v) for v in answers}), 340)
+        answers.extend(x for e in self.extra for x in [e["reply"], *e["additional_replies"]])
+        self.assertEqual(len(answers), 405)
+        self.assertEqual(len({normalize(v) for v in answers}), 405)
 
     def test_lexical_near_duplicates(self):
         original = [x for r in self.rows for x in [r["answer"], *r["variants"]]]
-        all_text = original + [e["reply"] for e in self.extra]
+        all_text = original + [x for e in self.extra for x in [e["reply"], *e["additional_replies"]]]
         grams = [bigrams(s) for s in all_text]
         for i in range(len(original), len(all_text)):
             for j in range(i):
@@ -68,7 +70,7 @@ class T97StageChecks(unittest.TestCase):
                 self.assertLess(score, 0.45, (i, j, score))
 
     def test_no_exact_registered_qa_repeats(self):
-        candidate = {normalize(e["reply"]) for e in self.extra}
+        candidate = {normalize(x) for e in self.extra for x in [e["reply"], *e["additional_replies"]]}
         for p in self.manifest["packs"]:
             path = p["path"]
             if not path.endswith("_qa.json"):
