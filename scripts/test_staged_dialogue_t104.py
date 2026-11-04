@@ -17,7 +17,7 @@ FILES = [
     "staging/ru/dialogue_repair_t102_context_delta.json",
     "staging/ru/dialogue_repair_t104_context_delta.json",
 ]
-SECRET = re.compile(r"(?i)(ghp_[a-z0-9]{12,}|sk-[a-z0-9]{12,}|bearer\\s+[a-z0-9._-]{12,}|[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,}|\\b(?:ban_chat_member|kick_chat_member|bot_token|chat_id|user_id)\\b)")
+SECRET = re.compile(r"(?i)(ghp_[a-z0-9]{12,}|sk-[a-z0-9]{12,}|bearer\s+[a-z0-9._-]{12,}|[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}|\b(?:ban_chat_member|kick_chat_member|bot_token|chat_id|user_id)\b)")
 
 def read(path):
     return json.loads((ROOT / path).read_text(encoding="utf-8"))
