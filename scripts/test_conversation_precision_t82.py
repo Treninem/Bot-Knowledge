@@ -43,7 +43,7 @@ def main():
         assert r["language"] == "ru" and len(r["aliases"]) == 2 and 3 <= len(r["variants"]) <= 8
         assert not (set(r) & {"execute", "action", "sanction", "mute", "ban", "auto_apply"})
         assert any(hit[0] == r["id"] for hit in index.search(r["question"], audience="all_ai_bots", limit=20)), r["id"]
-    print("T82 PASS: 42 new intents, 84 aliases, 168 responses after T110")
+    print("T82 PASS: 42 new intents, 84 aliases, 210 responses after T110")
 
 if __name__ == "__main__":
     main()
