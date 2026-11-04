@@ -1,0 +1,7 @@
+# T116 — moderation fairness QA, continued 2026-11-05
+
+- Draft #228 base main `23871ed224cbe0d9636c841fd48e3f43bdd3ed1b`; predecessor exact head `0ab18d6f440d1632bc056e443f155a76ff132691`; this checkpoint adds **72 synthetic RU contextual replies** across the same 36 T87 intent IDs, 2 per record, no new canonical questions. T115+T116 this run = 144 accepted draft candidates.
+- Current Draft: **36 × 7/100 = 252 replies**, 93 missing per intent (3,348 total), 0 completed 100/100. Original main 108, cumulative PR delta +144. Do not report earlier data as new.
+- Existing `packs/ru/moderation_dialogue_fairness_qa.json` (purpose moderation_language) only for community_bots/chat_moderators, read-only, direct-address contexts. No new moderation authority, sanctions or private chat excerpts.
+- Manifest `2026.11.05.039`, pack real UTF-8 bytes 85035, digest SHA-256 `45df79ed2fbbdb2b6175e6b398eda33ae04e77210b8ffdb50547e3b1b0cfb46e`; JS SHA known vector and prior manifest hash checked; 252 normalized unique replies, zero same-intent Jaccard ≥0.75 among newly added and older texts. Test expectation updated to 6 variants, **offline Python not executed**. New exact-head CI and consumer load tests still BLOCKED; commit deliberately skips paid Actions. Consumer budget 4 MiB not resolved.
+- Protected #224 publisher scripts and private ImPULS untouched. Further 2 variants/intent possible under qa.v1, but only if genuinely different. Next test and compatibility verification before merge.

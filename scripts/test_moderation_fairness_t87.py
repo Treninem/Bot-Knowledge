@@ -22,7 +22,7 @@ class FairnessT87(unittest.TestCase):
             self.assertEqual(row["audiences"],["chat_moderators","community_bots"])
             self.assertEqual(row["constraints"],{"read_only":True,"requires_direct_address":True,"no_personal_data":True})
             self.assertEqual(len(row["aliases"]),2)
-            self.assertEqual(len(row["variants"]),4)
+            self.assertEqual(len(row["variants"]),6)
             self.assertFalse(set(row)&{"action","execute","ban","mute","sanction","permissions"})
             for q in [row["question"],*row["aliases"]]:
                 n=normalize_question(q)
