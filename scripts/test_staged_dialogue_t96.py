@@ -118,5 +118,28 @@ class StagedDialogueT96(unittest.TestCase):
         self.assertTrue(all(r["constraints"]["read_only"] for r in self.rows))
 
 
+
+    def test_07_no_exact_cross_format_repeats(self):
+        """Check all response strings in large conversational catalogs."""
+        wanted_q = {normalize(v) for r in self.rows
+                    for v in [r["question"], *r["aliases"]]}
+        wanted_a = {normalize(v) for r in self.rows
+                    for v in [r["answer"], *r["variants"]]}
+        for name in ("reply_catalog.json", "social_dialogues.json", "dialogue.json"):
+            payload = json.loads((ROOT / "packs/ru" / name).read_text(encoding="utf-8"))
+            def visit(item):
+                if isinstance(item, str) and 7 < len(item) < 300:
+                    value = normalize(item)
+                    self.assertNotIn(value, wanted_q, (name, item))
+                    self.assertNotIn(value, wanted_a, (name, item))
+                elif isinstance(item, dict):
+                    for key, value in item.items():
+                        if key not in {"source", "title", "description", "when", "avoid"}:
+                            visit(value)
+                elif isinstance(item, list):
+                    for value in item:
+                        visit(value)
+            visit(payload)
+
 if __name__ == "__main__":
     unittest.main()
