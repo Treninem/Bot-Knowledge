@@ -44,7 +44,7 @@ class CollaborationT106(unittest.TestCase):
         prohibited = {"action","execute","sanction","mute","ban","auto_apply","chat_id","user_id","token"}
         for rec in self.pack["records"]:
             self.assertTrue(prohibited.isdisjoint(rec))
-            self.assertFalse(any(re.search(r"(?<!\\w)@[A-Za-z0-9_]{4,}|\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}\\b", x)
+            self.assertFalse(any(re.search(r"(?<!\w)@[A-Za-z0-9_]{4,}|\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b", x)
                                  for x in [rec["answer"], *rec["variants"]]))
 
 if __name__ == "__main__":
