@@ -1,0 +1,1130 @@
+{
+  "$schema": "https://raw.githubusercontent.com/Treninem/Bot-Knowledge/main/schema/qa.v1.schema.json",
+  "schema_version": 1,
+  "language": "ru",
+  "pack_version": "2026.11.04.019",
+  "catalog": {
+    "schema_version": 1,
+    "id": "structured_information_qa",
+    "title": "Понимание чисел, таблиц и ограничений данных",
+    "description": "Оригинальные обезличенные контекстные подсказки; только чтение, без выполнения действий и санкций.",
+    "purpose": "information_explanation",
+    "language": "ru",
+    "tags": [
+      "numbers",
+      "tables",
+      "data",
+      "uncertainty",
+      "conversation"
+    ],
+    "adapter": "qa.v1",
+    "records": "records",
+    "audiences": [
+      "all_ai_bots"
+    ],
+    "contexts": [
+      "direct",
+      "private",
+      "group_addressed"
+    ],
+    "constraints": {
+      "read_only": true,
+      "requires_direct_address": true,
+      "no_personal_data": true
+    }
+  },
+  "records": [
+    {
+      "id": "struct_t86_001",
+      "question": "Как читать число «1,234», если неясно, запятая это или разделитель тысяч?",
+      "aliases": [
+        "В таблице написано 1,234 без указания формата",
+        "Как не перепутать дробь и тысячи в зарубежных данных?"
+      ],
+      "answer": "Не назначай числу смысл по догадке: выясни формат исходной таблицы.",
+      "variants": [
+        "В русской записи это может означать 1,234, а в другой локали — 1234; покажи обе трактовки до уточнения.",
+        "Если от трактовки зависит расчёт, останови вычисление и попроси пример соседних значений."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/b3ff785098b44bc2d7d4846260a682d402dbaeb8/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "constraints": {
+        "read_only": true,
+        "requires_direct_address": true,
+        "no_personal_data": true
+      },
+      "language": "ru"
+    },
+    {
+      "id": "struct_t86_002",
+      "question": "Чем отличается рост на 5% от роста на 5 процентных пунктов?",
+      "aliases": [
+        "Показатель был 20%, стал 25% — какой рост?",
+        "Почему процент и процентный пункт не одно и то же?"
+      ],
+      "answer": "С 20% до 25% — это плюс пять процентных пунктов, но относительный рост составляет 25%.",
+      "variants": [
+        "При отчёте сначала назови оба исходных значения, чтобы разница не выглядела двусмысленно.",
+        "Для долей и ставок используй процентные пункты, если сравниваешь абсолютную разницу между процентами."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/b3ff785098b44bc2d7d4846260a682d402dbaeb8/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "constraints": {
+        "read_only": true,
+        "requires_direct_address": true,
+        "no_personal_data": true
+      },
+      "language": "ru"
+    },
+    {
+      "id": "struct_t86_003",
+      "question": "Что делать, если для доли известен числитель, но не указан общий объём?",
+      "aliases": [
+        "Есть число успешных случаев, но нет общего количества",
+        "Можно посчитать процент без знаменателя?"
+      ],
+      "answer": "Надёжный процент без общего количества не вычислить.",
+      "variants": [
+        "Можно сообщить число наблюдений без процентного вывода.",
+        "Если нужно сравнение, запроси знаменатели для обеих групп: иначе доли могут вводить в заблуждение."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/b3ff785098b44bc2d7d4846260a682d402dbaeb8/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "constraints": {
+        "read_only": true,
+        "requires_direct_address": true,
+        "no_personal_data": true
+      },
+      "language": "ru"
+    },
+    {
+      "id": "struct_t86_004",
+      "question": "Можно ли восстановить точное значение по округлённой цифре на экране?",
+      "aliases": [
+        "На графике написано 2,5 тыс. — сколько точно?",
+        "Как не выдавать округление за точный исходник?"
+      ],
+      "answer": "Отметка «2,5 тыс.» не позволяет узнать точное число единиц.",
+      "variants": [
+        "Для предварительной оценки можно использовать приблизительно 2500, указав округление.",
+        "Для точного отчёта потребуется первичная таблица или неокруглённое значение."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/b3ff785098b44bc2d7d4846260a682d402dbaeb8/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "constraints": {
+        "read_only": true,
+        "requires_direct_address": true,
+        "no_personal_data": true
+      },
+      "language": "ru"
+    },
+    {
+      "id": "struct_t86_005",
+      "question": "Почему нельзя убирать нули в начале кода или индекса?",
+      "aliases": [
+        "Таблица превратила 0042 в 42",
+        "Сохрани ведущие нули в идентификаторе"
+      ],
+      "answer": "Код «0042» — строковый идентификатор, а не число для вычисления.",
+      "variants": [
+        "При экспорте назначь столбцу текстовый формат.",
+        "Сравнивай такие значения как строки, иначе два разных кода могут ошибочно совпасть."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/b3ff785098b44bc2d7d4846260a682d402dbaeb8/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "constraints": {
+        "read_only": true,
+        "requires_direct_address": true,
+        "no_personal_data": true
+      },
+      "language": "ru"
+    },
+    {
+      "id": "struct_t86_006",
+      "question": "Как посчитать итог, если одна категория входит в другую?",
+      "aliases": [
+        "Сложить все строки, хотя часть из них подкатегории",
+        "Как избежать двойного счёта в сводке?"
+      ],
+      "answer": "Сначала установи, какие строки являются подмножествами других.",
+      "variants": [
+        "Итог по независимым категориям можно суммировать, а включённые подстроки нельзя прибавлять повторно.",
+        "Покажи дерево категорий или отметь, какие значения уже вошли в общий итог."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/b3ff785098b44bc2d7d4846260a682d402dbaeb8/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "constraints": {
+        "read_only": true,
+        "requires_direct_address": true,
+        "no_personal_data": true
+      },
+      "language": "ru"
+    },
+    {
+      "id": "struct_t86_007",
+      "question": "Как различать стоимость дороги за день и стоимость одной поездки?",
+      "aliases": [
+        "В оплате написано плюс 300 за рабочий день",
+        "Как не удвоить транспортные расходы при двух поездках?"
+      ],
+      "answer": "Фраза «за день» задаёт одну надбавку за день, а не за каждое перемещение.",
+      "variants": [
+        "Если поездок несколько, не меняй правило расчёта без уточнения.",
+        "Отдельно представь рабочую оплату и ежедневную надбавку, чтобы их не перепутать с вычетом."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/b3ff785098b44bc2d7d4846260a682d402dbaeb8/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "constraints": {
+        "read_only": true,
+        "requires_direct_address": true,
+        "no_personal_data": true
+      },
+      "language": "ru"
+    },
+    {
+      "id": "struct_t86_008",
+      "question": "Можно ли называть минимумом значение из неполной выборки?",
+      "aliases": [
+        "Нашли самое маленькое число среди нескольких строк",
+        "В таблице показаны не все дни — это абсолютный минимум?"
+      ],
+      "answer": "Укажи, что минимум найден только среди доступных записей.",
+      "variants": [
+        "Не распространяй его на пропущенные дни или другие выборки.",
+        "Если требуется общий минимум, запроси полный набор либо обозначь ограничение данных."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/b3ff785098b44bc2d7d4846260a682d402dbaeb8/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "constraints": {
+        "read_only": true,
+        "requires_direct_address": true,
+        "no_personal_data": true
+      },
+      "language": "ru"
+    },
+    {
+      "id": "struct_t86_009",
+      "question": "Как сравнивать значения, если одна строка в килограммах, а другая в граммах?",
+      "aliases": [
+        "Две массы записаны в разных единицах",
+        "Сортировка чисел без учёта единицы измерения"
+      ],
+      "answer": "Сначала приведи обе массы к одной единице.",
+      "variants": [
+        "В сравнении подпиши единицу у каждого результата, даже если она очевидна из формулы.",
+        "Без преобразования чисел сортировка может показать неверного лидера."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/b3ff785098b44bc2d7d4846260a682d402dbaeb8/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "constraints": {
+        "read_only": true,
+        "requires_direct_address": true,
+        "no_personal_data": true
+      },
+      "language": "ru"
+    },
+    {
+      "id": "struct_t86_010",
+      "question": "Как понимать дату 04/11, если формат страны неизвестен?",
+      "aliases": [
+        "Непонятно, дата записана месяц/день или день/месяц",
+        "04/11 — это апрель или ноябрь?"
+      ],
+      "answer": "Запись 04/11 неоднозначна без соглашения о формате.",
+      "variants": [
+        "Лучше попросить дату с названием месяца или в формате ГГГГ-ММ-ДД.",
+        "Не переносить неоднозначную дату в напоминание или дедлайн без подтверждения."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/b3ff785098b44bc2d7d4846260a682d402dbaeb8/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "constraints": {
+        "read_only": true,
+        "requires_direct_address": true,
+        "no_personal_data": true
+      },
+      "language": "ru"
+    },
+    {
+      "id": "struct_t86_011",
+      "question": "Что указать при расчёте времени между городами с разными часовыми поясами?",
+      "aliases": [
+        "Сравни время встречи в двух странах",
+        "Почему недостаточно просто вычесть часы на циферблате?"
+      ],
+      "answer": "Уточни дату и часовые пояса обеих точек: смещение может меняться сезонно.",
+      "variants": [
+        "Сначала переведи обе отметки в единую временную шкалу, затем вычисляй интервал.",
+        "При неопределённой дате дай правило пересчёта, но не выдавай конкретное местное время."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/b3ff785098b44bc2d7d4846260a682d402dbaeb8/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "constraints": {
+        "read_only": true,
+        "requires_direct_address": true,
+        "no_personal_data": true
+      },
+      "language": "ru"
+    },
+    {
+      "id": "struct_t86_012",
+      "question": "Можно ли делать вывод по скриншоту, где обрезана подпись показателя?",
+      "aliases": [
+        "Цифра видна, но название метрики отрезано",
+        "Как трактовать значение с обрезанного снимка?"
+      ],
+      "answer": "Число без подписи не доказывает, что это нужный показатель.",
+      "variants": [
+        "Попроси участок изображения с названием метрики и единицей измерения.",
+        "Если отвечаешь предварительно, отдели видимую цифру от предположения о её назначении."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/b3ff785098b44bc2d7d4846260a682d402dbaeb8/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "constraints": {
+        "read_only": true,
+        "requires_direct_address": true,
+        "no_personal_data": true
+      },
+      "language": "ru"
+    },
+    {
+      "id": "struct_t86_013",
+      "question": "Как читать график, у которого не подписана вертикальная ось?",
+      "aliases": [
+        "На диаграмме нет единицы по оси Y",
+        "Можно ли оценить величину изменения по рисунку без шкалы?"
+      ],
+      "answer": "По форме линии можно увидеть направление, но не надёжную величину изменения.",
+      "variants": [
+        "Уточни, какая метрика и шкала представлены по вертикали.",
+        "Не превращай визуальный наклон линии в числовой процент без исходных данных."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/b3ff785098b44bc2d7d4846260a682d402dbaeb8/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "constraints": {
+        "read_only": true,
+        "requires_direct_address": true,
+        "no_personal_data": true
+      },
+      "language": "ru"
+    },
+    {
+      "id": "struct_t86_014",
+      "question": "Что делать, если в таблице заголовок объединяет несколько столбцов?",
+      "aliases": [
+        "Сложная шапка таблицы с общими подзаголовками",
+        "Как не приписать столбцу чужое название?"
+      ],
+      "answer": "Читай заголовок как иерархию: общий уровень плюс конкретный подзаголовок.",
+      "variants": [
+        "При переносе данных распиши полное имя каждого столбца.",
+        "Если границы объединённых ячеек не видны, попроси исходную таблицу."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/b3ff785098b44bc2d7d4846260a682d402dbaeb8/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "constraints": {
+        "read_only": true,
+        "requires_direct_address": true,
+        "no_personal_data": true
+      },
+      "language": "ru"
+    },
+    {
+      "id": "struct_t86_015",
+      "question": "Как проверить итог, который не совпадает с суммой видимых строк?",
+      "aliases": [
+        "Итого больше суммы перечисленных позиций",
+        "Почему сумма строк и итог могут отличаться?"
+      ],
+      "answer": "Сначала пересчитай видимые позиции и отметь расхождение числом.",
+      "variants": [
+        "Проверь, нет ли скрытых строк, налогов, округления или другого периода.",
+        "Пока причина неизвестна, не объявляй исходную таблицу заведомо ошибочной."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/b3ff785098b44bc2d7d4846260a682d402dbaeb8/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "constraints": {
+        "read_only": true,
+        "requires_direct_address": true,
+        "no_personal_data": true
+      },
+      "language": "ru"
+    },
+    {
+      "id": "struct_t86_016",
+      "question": "Как вычислять среднее при пропущенных значениях?",
+      "aliases": [
+        "В журнале дней есть пустые клетки",
+        "Учитывать ли пустую ячейку как ноль при среднем?"
+      ],
+      "answer": "Пустое значение и ноль — разные состояния.",
+      "variants": [
+        "Для среднего по известным наблюдениям дели сумму на число известных наблюдений.",
+        "Если пропуски должны считаться нулями по правилу задачи, явно укажи это условие."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/b3ff785098b44bc2d7d4846260a682d402dbaeb8/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "constraints": {
+        "read_only": true,
+        "requires_direct_address": true,
+        "no_personal_data": true
+      },
+      "language": "ru"
+    },
+    {
+      "id": "struct_t86_017",
+      "question": "Когда медиана полезнее среднего для небольшой выборки?",
+      "aliases": [
+        "Одна необычно большая сумма и несколько обычных",
+        "Чем заменить среднее при сильном выбросе?"
+      ],
+      "answer": "При сильно выделяющемся значении медиана часто лучше отражает типичную запись.",
+      "variants": [
+        "Покажи и медиану, и среднее, если оба показателя информативны.",
+        "Для нечётного числа элементов медиана — центральное значение упорядоченного ряда; для чётного — среднее двух центральных."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/b3ff785098b44bc2d7d4846260a682d402dbaeb8/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "constraints": {
+        "read_only": true,
+        "requires_direct_address": true,
+        "no_personal_data": true
+      },
+      "language": "ru"
+    },
+    {
+      "id": "struct_t86_018",
+      "question": "Как считать уникальных участников, если один человек встречается в нескольких строках?",
+      "aliases": [
+        "В журнале 20 действий, но участников меньше",
+        "Число событий и количество уникальных пользователей"
+      ],
+      "answer": "Отдельно считай события и уникальные обезличенные идентификаторы.",
+      "variants": [
+        "Без устойчивого критерия совпадения записей точное число людей неизвестно.",
+        "В отчёте подпиши оба показателя, чтобы количество действий не превратилось в аудиторию."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/b3ff785098b44bc2d7d4846260a682d402dbaeb8/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "constraints": {
+        "read_only": true,
+        "requires_direct_address": true,
+        "no_personal_data": true
+      },
+      "language": "ru"
+    },
+    {
+      "id": "struct_t86_019",
+      "question": "Можно ли вычислить скорость, если известно расстояние, но нет длительности?",
+      "aliases": [
+        "Есть километры, но нет времени поездки",
+        "Как рассчитать километры в час без часов?"
+      ],
+      "answer": "Для средней скорости нужны расстояние и затраченное время.",
+      "variants": [
+        "Можешь назвать только пройденное расстояние, не предполагая скорость.",
+        "Если дан диапазон времени, вычисли соответствующий диапазон средних скоростей."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/b3ff785098b44bc2d7d4846260a682d402dbaeb8/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "constraints": {
+        "read_only": true,
+        "requires_direct_address": true,
+        "no_personal_data": true
+      },
+      "language": "ru"
+    },
+    {
+      "id": "struct_t86_020",
+      "question": "Почему сумма нескольких месяцев не равна месячному значению?",
+      "aliases": [
+        "Сложили показатели разных периодов и сравнили с одним месяцем",
+        "Как верно сопоставить месячные и квартальные данные?"
+      ],
+      "answer": "Приведи показатели к одному периоду, прежде чем сравнивать.",
+      "variants": [
+        "Для накопительных метрик нельзя автоматически складывать снимки на разные даты.",
+        "Укажи, что именно измеряет число: поток за период или состояние на момент."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/b3ff785098b44bc2d7d4846260a682d402dbaeb8/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "constraints": {
+        "read_only": true,
+        "requires_direct_address": true,
+        "no_personal_data": true
+      },
+      "language": "ru"
+    },
+    {
+      "id": "struct_t86_021",
+      "question": "Что отвечать на просьбу перевести валюту по неизвестному курсу?",
+      "aliases": [
+        "Пересчитай стоимость, но курс не указан",
+        "Почему нельзя подставлять приблизительный обменный курс как точный?"
+      ],
+      "answer": "Укажи, что точная конвертация зависит от даты, курса и возможной комиссии.",
+      "variants": [
+        "Если актуальные данные недоступны, предложи формулу с явно заданным курсом.",
+        "Не смешивай рыночный, банковский и фактический курс покупки без пометки."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/b3ff785098b44bc2d7d4846260a682d402dbaeb8/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "constraints": {
+        "read_only": true,
+        "requires_direct_address": true,
+        "no_personal_data": true
+      },
+      "language": "ru"
+    },
+    {
+      "id": "struct_t86_022",
+      "question": "Как сравнить цены, если одна указана с налогом, а другая без?",
+      "aliases": [
+        "Два предложения с разным включением НДС",
+        "Сравнение полной и неполной стоимости"
+      ],
+      "answer": "Пересчитай обе цены на одинаковую основу: обе итоговые либо обе без налога.",
+      "variants": [
+        "Укажи, какие обязательные платежи уже включены.",
+        "Если размер налога неизвестен, не объявляй более дешёвое предложение окончательно выгоднее."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/b3ff785098b44bc2d7d4846260a682d402dbaeb8/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "constraints": {
+        "read_only": true,
+        "requires_direct_address": true,
+        "no_personal_data": true
+      },
+      "language": "ru"
+    },
+    {
+      "id": "struct_t86_023",
+      "question": "Как проверять два последовательных процента скидки?",
+      "aliases": [
+        "Сначала минус 10%, затем минус 20%",
+        "Можно сложить проценты двух скидок?"
+      ],
+      "answer": "Последовательные скидки считаются от меняющейся базы, их нельзя просто сложить.",
+      "variants": [
+        "Покажи расчёт на исходной цене: после первой скидки применяй вторую к остатку.",
+        "Если условия акции неясны, уточни, действительно ли скидки суммируются последовательно."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/b3ff785098b44bc2d7d4846260a682d402dbaeb8/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "constraints": {
+        "read_only": true,
+        "requires_direct_address": true,
+        "no_personal_data": true
+      },
+      "language": "ru"
+    },
+    {
+      "id": "struct_t86_024",
+      "question": "Как различить площадь и длину при сравнении размеров помещения?",
+      "aliases": [
+        "Одну комнату дали в метрах, вторую в квадратных метрах",
+        "Можно сравнить две стороны с площадью?"
+      ],
+      "answer": "Метры длины и квадратные метры площади — разные величины.",
+      "variants": [
+        "Для площади прямоугольника потребуются две стороны, а не одна.",
+        "Не конвертируй длину в площадь без геометрии объекта."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/b3ff785098b44bc2d7d4846260a682d402dbaeb8/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "constraints": {
+        "read_only": true,
+        "requires_direct_address": true,
+        "no_personal_data": true
+      },
+      "language": "ru"
+    },
+    {
+      "id": "struct_t86_025",
+      "question": "Как считать границы пересекающихся числовых интервалов?",
+      "aliases": [
+        "Есть диапазоны 1–5 и 5–10",
+        "Входит ли граничное число в оба промежутка?"
+      ],
+      "answer": "Уточни, включены ли концы диапазонов, иначе общий элемент неопределён.",
+      "variants": [
+        "При замкнутых промежутках точка 5 принадлежит обоим.",
+        "Для непересекающихся категорий заранее выбери соглашение вроде [1,5) и [5,10)."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/b3ff785098b44bc2d7d4846260a682d402dbaeb8/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "constraints": {
+        "read_only": true,
+        "requires_direct_address": true,
+        "no_personal_data": true
+      },
+      "language": "ru"
+    },
+    {
+      "id": "struct_t86_026",
+      "question": "Чем отличается отсутствие данных от измеренного нуля?",
+      "aliases": [
+        "В отчёте прочерк рядом с нулём",
+        "Можно заменить пропущенную строку на ноль?"
+      ],
+      "answer": "Ноль означает измеренное отсутствие величины, а прочерк может означать отсутствие измерения.",
+      "variants": [
+        "В таблице используй отдельные обозначения для нуля и пропуска.",
+        "Не называй пропуск улучшением или ухудшением показателя."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/b3ff785098b44bc2d7d4846260a682d402dbaeb8/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "constraints": {
+        "read_only": true,
+        "requires_direct_address": true,
+        "no_personal_data": true
+      },
+      "language": "ru"
+    },
+    {
+      "id": "struct_t86_027",
+      "question": "Как не потерять знак минус при переносе чисел из изображения?",
+      "aliases": [
+        "На фото перед суммой стоит едва видимый минус",
+        "Сумма могла быть отрицательной, но знак плохо различим"
+      ],
+      "answer": "Не делай окончательный расчёт, пока знак не прочитан уверенно.",
+      "variants": [
+        "При сомнительном символе укажи два возможных результата.",
+        "Попроси исходный файл или более чёткий фрагмент вместо молчаливого исправления."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/b3ff785098b44bc2d7d4846260a682d402dbaeb8/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "constraints": {
+        "read_only": true,
+        "requires_direct_address": true,
+        "no_personal_data": true
+      },
+      "language": "ru"
+    },
+    {
+      "id": "struct_t86_028",
+      "question": "Как сортировать смешанные числа и текстовые коды?",
+      "aliases": [
+        "Столбец содержит 2, 10 и 02 как коды",
+        "Почему числовая сортировка меняет порядок идентификаторов?"
+      ],
+      "answer": "Выбери тип данных по смыслу столбца, а не по внешнему виду символов.",
+      "variants": [
+        "Если это коды, сохраняй написание и сортируй как текст по объявленному правилу.",
+        "Если это количества, сначала проверь, что 02 действительно означает число 2."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/b3ff785098b44bc2d7d4846260a682d402dbaeb8/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "constraints": {
+        "read_only": true,
+        "requires_direct_address": true,
+        "no_personal_data": true
+      },
+      "language": "ru"
+    },
+    {
+      "id": "struct_t86_029",
+      "question": "Что делать, если измерения имеют разную точность?",
+      "aliases": [
+        "Одна величина дана до сотых, другая приблизительная",
+        "Можно выдавать итог с шестью знаками после запятой?"
+      ],
+      "answer": "Не показывай ложную точность, которую исходные измерения не поддерживают.",
+      "variants": [
+        "Укажи диапазон или разумное округление итогового результата.",
+        "При решении с допуском сравни отклонение с заданной погрешностью."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/b3ff785098b44bc2d7d4846260a682d402dbaeb8/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "constraints": {
+        "read_only": true,
+        "requires_direct_address": true,
+        "no_personal_data": true
+      },
+      "language": "ru"
+    },
+    {
+      "id": "struct_t86_030",
+      "question": "Можно ли считать две линии на графике причиной и следствием друг друга?",
+      "aliases": [
+        "Показатели росли одновременно",
+        "Если величины совпадают по времени, одна вызвала другую?"
+      ],
+      "answer": "Совпадение динамики ещё не устанавливает причинную связь.",
+      "variants": [
+        "Поищи альтернативные объяснения и временной порядок событий.",
+        "Говори о связи как о наблюдении, если эксперимент или другие доказательства причинности отсутствуют."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/b3ff785098b44bc2d7d4846260a682d402dbaeb8/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "constraints": {
+        "read_only": true,
+        "requires_direct_address": true,
+        "no_personal_data": true
+      },
+      "language": "ru"
+    },
+    {
+      "id": "struct_t86_031",
+      "question": "Как выбрать лучший вариант, если таблица содержит только цену?",
+      "aliases": [
+        "Самый дешёвый точно самый выгодный?",
+        "Нужно выбрать по цене, но нет данных о качестве"
+      ],
+      "answer": "По таблице можно выбрать самый дешёвый вариант, не лучший вообще.",
+      "variants": [
+        "Если важны срок службы или обслуживание, запроси эти параметры отдельно.",
+        "Назови критерий своего вывода: «минимальная цена среди перечисленных»."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/b3ff785098b44bc2d7d4846260a682d402dbaeb8/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "constraints": {
+        "read_only": true,
+        "requires_direct_address": true,
+        "no_personal_data": true
+      },
+      "language": "ru"
+    },
+    {
+      "id": "struct_t86_032",
+      "question": "Как сравнивать значения, взятые в разные даты?",
+      "aliases": [
+        "Две цены сняты в разные дни",
+        "Можно ли сказать, что одно предложение дороже другого сейчас?"
+      ],
+      "answer": "Сравнение показывает различие на указанные даты, но не гарантирует текущую разницу.",
+      "variants": [
+        "Для решения на сегодня проверь оба актуальных значения.",
+        "Если доступна только история, так её и обозначь."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/b3ff785098b44bc2d7d4846260a682d402dbaeb8/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "constraints": {
+        "read_only": true,
+        "requires_direct_address": true,
+        "no_personal_data": true
+      },
+      "language": "ru"
+    },
+    {
+      "id": "struct_t86_033",
+      "question": "Как обработать дробные часы работы без потери минут?",
+      "aliases": [
+        "Отработано 6 часов 45 минут",
+        "Как перевести часы с минутами в оплату по часовому тарифу?"
+      ],
+      "answer": "Переведи минуты в долю часа: 45 минут — это 0,75 часа.",
+      "variants": [
+        "Не записывай 6:45 как 6,45 часа: это даст неверную оплату.",
+        "Если действуют правила округления смен, применяй их только после явного указания."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/b3ff785098b44bc2d7d4846260a682d402dbaeb8/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "constraints": {
+        "read_only": true,
+        "requires_direct_address": true,
+        "no_personal_data": true
+      },
+      "language": "ru"
+    },
+    {
+      "id": "struct_t86_034",
+      "question": "Что делать с повторяющейся строкой в выгрузке?",
+      "aliases": [
+        "Одна покупка встречается дважды",
+        "Дубликат записи или два одинаковых события?"
+      ],
+      "answer": "Совпадение суммы не доказывает дублирование операции.",
+      "variants": [
+        "Сверь дату, назначение и устойчивый идентификатор без публичного раскрытия личных данных.",
+        "До проверки покажи оба итога: с потенциальным дублем и без него."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/b3ff785098b44bc2d7d4846260a682d402dbaeb8/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "constraints": {
+        "read_only": true,
+        "requires_direct_address": true,
+        "no_personal_data": true
+      },
+      "language": "ru"
+    },
+    {
+      "id": "struct_t86_035",
+      "question": "Как определить, что сравниваются значения из разных версий файла?",
+      "aliases": [
+        "Два отчёта имеют одинаковое название и разные цифры",
+        "Как не смешать старую и новую редакции таблицы?"
+      ],
+      "answer": "Сначала сопоставь дату, версию и источник каждого файла.",
+      "variants": [
+        "Для итогового расчёта выбери подтверждённую редакцию и зафиксируй её.",
+        "Не переноси отдельную строку из старой таблицы в новую без проверки структуры."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/b3ff785098b44bc2d7d4846260a682d402dbaeb8/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "constraints": {
+        "read_only": true,
+        "requires_direct_address": true,
+        "no_personal_data": true
+      },
+      "language": "ru"
+    },
+    {
+      "id": "struct_t86_036",
+      "question": "Что делать, если текст распознан со снимка с возможными ошибками?",
+      "aliases": [
+        "В распознанной таблице цифра 8 похожа на 3",
+        "Можно доверять вычислению по нечеткой фотографии?"
+      ],
+      "answer": "Отдели уверенно читаемые значения от сомнительных.",
+      "variants": [
+        "Проверь спорные символы по исходному изображению до расчёта.",
+        "Если качество не позволяет прочитать число, лучше оставить ячейку неизвестной."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/b3ff785098b44bc2d7d4846260a682d402dbaeb8/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "constraints": {
+        "read_only": true,
+        "requires_direct_address": true,
+        "no_personal_data": true
+      },
+      "language": "ru"
+    },
+    {
+      "id": "struct_t86_037",
+      "question": "Как представить погрешность результата, если исходные величины приблизительные?",
+      "aliases": [
+        "Два измерения записаны как «около»",
+        "Как не получить точный итог из приблизительных входных данных?"
+      ],
+      "answer": "Обозначь результат как оценку, а не строгое измерение.",
+      "variants": [
+        "По возможности приведи разумный диапазон, учитывающий разброс входных величин.",
+        "Если нужна инженерная точность, запроси допустимую погрешность каждого исходного значения."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/b3ff785098b44bc2d7d4846260a682d402dbaeb8/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "constraints": {
+        "read_only": true,
+        "requires_direct_address": true,
+        "no_personal_data": true
+      },
+      "language": "ru"
+    },
+    {
+      "id": "struct_t86_038",
+      "question": "Как различить «на столько же» и «во столько раз» в сравнении?",
+      "aliases": [
+        "Показатель вырос на 20 и в 20 раз — это разное?",
+        "Как объяснить абсолютную разницу и кратность?"
+      ],
+      "answer": "«На 20» говорит о разнице величин, а «в 20 раз» — об их отношении.",
+      "variants": [
+        "Приведи исходную и конечную величину, чтобы было понятно, какая операция нужна.",
+        "При исходном нуле кратность обычным делением не определена; не выдавай её за бесконечный рост."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/b3ff785098b44bc2d7d4846260a682d402dbaeb8/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "constraints": {
+        "read_only": true,
+        "requires_direct_address": true,
+        "no_personal_data": true
+      },
+      "language": "ru"
+    },
+    {
+      "id": "struct_t86_039",
+      "question": "Что делать, когда в таблице нет единицы измерения у одного столбца?",
+      "aliases": [
+        "Значение есть, но неясно, рубли это или тысячи рублей",
+        "Как не подставить масштаб по соседним колонкам?"
+      ],
+      "answer": "Не угадывай единицу по величине числа.",
+      "variants": [
+        "Найди легенду, заголовок или исходный документ с определением столбца.",
+        "Пока единица не подтверждена, не объединяй столбец с другими в расчёте."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/b3ff785098b44bc2d7d4846260a682d402dbaeb8/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "constraints": {
+        "read_only": true,
+        "requires_direct_address": true,
+        "no_personal_data": true
+      },
+      "language": "ru"
+    }
+  ]
+}
