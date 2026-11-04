@@ -41,7 +41,8 @@ class NewKnowledgeT86(unittest.TestCase):
                     self.assertNotIn(norm,all_a)
                     all_a.add(norm)
                 self.assertTrue(any(hit[0]==r["id"] for hit in index.search(r["question"],audience="all_ai_bots",limit=20)),r["id"])
-                self.assertFalse(any(hit[0]==r["id"] for hit in index.search(r["question"],audience="nonexistent_consumer",limit=20)),r["id"])
+                with self.assertRaises(ValueError):
+                    index.search(r["question"],audience="nonexistent_consumer",limit=20)
 
 if __name__=="__main__":
     unittest.main()
