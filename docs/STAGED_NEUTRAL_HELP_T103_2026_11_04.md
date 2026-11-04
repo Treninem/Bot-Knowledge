@@ -1,6 +1,6 @@
 # T103 — unregistered general-help QA candidates (2026-11-04)
 
-**Status: Draft / BLOCKED.** Branch `bk/t103-neutral-help-qa-20261104`, base main `23871ed224cbe0d9636c841fd48e3f43bdd3ed1b`. This is an independent synthetic general-help batch, not a change to ImPULS and not an update to consumer snapshots. Existing T96–T102 dialogue progress is separately preserved in [PR #222](https://github.com/Treninem/Bot-Knowledge/pull/222).
+**Status: Draft / BLOCKED.** **Tracking:** [Draft PR #223](https://github.com/Treninem/Bot-Knowledge/pull/223). Branch `bk/t103-neutral-help-qa-20261104`, base main `23871ed224cbe0d9636c841fd48e3f43bdd3ed1b`. This is an independent synthetic general-help batch, not a change to ImPULS and not an update to consumer snapshots. Existing T96–T102 dialogue progress is separately preserved in [PR #222](https://github.com/Treninem/Bot-Knowledge/pull/222).
 
 ## Durable counters
 
