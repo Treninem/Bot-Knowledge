@@ -52,8 +52,12 @@ candidate canonical questions against those QA questions returned **0
 candidates at or above 0.22**. Independently scanned **13,106** textual
 entries in `reply_catalog`, **9,862** in `social_dialogues`, and
 **123** in `dialogue`; exact normalized collisions with candidate queries
-and responses: **0**. These screens are not proof against all semantic
-paraphrases; editorial review remains necessary.
+and responses: **0**. A separate bigram-indexed comparison of **105 candidate response strings**
+against **20,509 existing response strings** from QA, reply-catalog and
+social-dialogue packages found **0 scores >= 0.50**; the greatest score was
+**0.3077** (a common polite-refusal pattern). This is a lexical similarity
+screen, not proof against all semantic paraphrases; editorial review remains
+necessary.
 
 The same preflight found 35 unique IDs, 105 normalized distinct questions
 and aliases, 105 normalized distinct response strings, required read-only /
@@ -61,9 +65,9 @@ direct-address / no-personal-data scope markers for all records, supported
 contexts and valid pinned provenance. Privacy marker screen found no candidate
 emails, obvious tokens or long phone-like strings.
 
-`scripts/test_staged_dialogue_t96.py` records seven offline tests for exact
+`scripts/test_staged_dialogue_t96.py` records eight offline tests for exact
 schema/scope, JSON format, normalized uniqueness, cross-pack questions/answers,
-near matches, privacy and cross-format string duplicates. **Python test script
+near matches, privacy, cross-format string duplicates, and near-duplicate response screening. **Python test script
 has been authored but NOT RUN on D:**; it must run on a real checkout.
 Likewise `python -B scripts/validate_pack.py` and ImPULS #383 integration
 have NOT run in this session. No paid Actions were launched, so exact-head
