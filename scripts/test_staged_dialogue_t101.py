@@ -134,7 +134,7 @@ class StagedDialogueT101(unittest.TestCase):
                 self.assertGreaterEqual(len(item["avoid"]), 10)
 
     def test_no_private_ids_or_sanction_commands(self):
-        forbidden = re.compile(r"(?i)\\b(?:user_id|chat_id|bot_token|ban_chat_member|kick_chat_member)\\b")
+        forbidden = re.compile(r"(?i)\b(?:user_id|chat_id|bot_token|ban_chat_member|kick_chat_member)\b")
         for entry in self.deltas[-1]["entries"]:
             for item in entry["replies"]:
                 self.assertIsNone(forbidden.search(item["text"]))
