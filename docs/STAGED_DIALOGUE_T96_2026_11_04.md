@@ -14,7 +14,7 @@
 ## Scope, compatibility, size
 
 - `qa.v1` schema and stable IDs preserved; `all_ai_bots`, `read_only`, `requires_direct_address`, `no_personal_data` and restricted `group_addressed` case `041` preserved.
-- **No registered packages added**, no manifest or package SHA-256 changed, **consumer snapshot byte delta = 0**. Historical GitHub main estimate: `7,519,262 / 8,388,608` bytes, headroom `869,346` bytes. This is a historical baseline, **not** a fresh complete consumer build on D:; calculate it again before any registration.
+- **No registered packages added**, no manifest or package SHA-256 changed, **consumer snapshot byte delta = 0**. Fresh GitHub tree read at pinned main SHA verified all 38 registered paths: **7,513,573 package bytes + 5,689 manifest bytes = 7,519,262 / 8,388,608 bytes**, headroom **869,346 bytes**. The Git tree was not truncated and no registered path was missing. This is **not** an ImPULS #383 consumer build on D:; consumer integration, transfer overhead and newer main revisions still require independent checks before registration.
 - The staged 295 responses are **not yet accessible to ImPULS, AuroraFox or live BotHost**. No edits to Treninem/Impuls, no automatic sanctions, no source Telegram conversations, user identifiers or credentials.
 - BK PR [#214](https://github.com/Treninem/Bot-Knowledge/pull/214) owns the pending `.027` version and three special ImPULS help answers. BK [#219](https://github.com/Treninem/Bot-Knowledge/pull/219) owns moderation additions; [#220](https://github.com/Treninem/Bot-Knowledge/pull/220) and [#221](https://github.com/Treninem/Bot-Knowledge/pull/221) are distinct consumer budget/search changes. None were edited.
 
