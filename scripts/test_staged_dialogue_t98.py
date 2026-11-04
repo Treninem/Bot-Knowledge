@@ -121,8 +121,8 @@ class T98StageChecks(unittest.TestCase):
 
     def test_08_privacy_and_isolated_group_scope(self) -> None:
         combined = " ".join(self.new)
-        self.assertNotRegex(combined, r"(?i)\\b(?:ghp_[a-z0-9]{10,}|sk-[a-z0-9]{10,})\\b")
-        self.assertNotRegex(combined, r"(?i)\\b[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,}\\b")
+        self.assertNotRegex(combined, r"(?i)\b(?:ghp_[a-z0-9]{10,}|sk-[a-z0-9]{10,})\b")
+        self.assertNotRegex(combined, r"(?i)\b[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}\b")
         by_id = {row["intent_id"]: row for row in self.t98["entries"]}
         self.assertEqual(by_id["dialogue_t96_041"]["contexts"], ["group_addressed"])
         self.assertEqual(sum(row["contexts"] == ["group_addressed"]
