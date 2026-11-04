@@ -18,19 +18,19 @@ def main():
     assert len(pack["records"]) == 132
     assert len({r["id"] for r in pack["records"]}) == 132
     variants = [len(r["variants"]) for r in pack["records"]]
-    assert variants[:42] == [5] * 42
-    assert variants[42:] == [4] * 90
-    assert sum(variants) == 570
+    assert variants[:42] == [8] * 42
+    assert variants[42:] == [5] * 90
+    assert sum(variants) == 786
     replies = [a for r in pack["records"] for a in (r["answer"], *r["variants"])]
-    assert len(replies) == 702
-    assert len({normalize_question(a) for a in replies}) == 702
+    assert len(replies) == 918
+    assert len({normalize_question(a) for a in replies}) == 918
     for r in pack["records"]:
         assert r["audiences"] == ["all_ai_bots"]
         assert r["contexts"] == ["direct", "private", "group_addressed"]
         assert r["constraints"] == {"read_only": True, "requires_direct_address": True, "no_personal_data": True}
         assert r["language"] == "ru"
         assert not set(r).intersection({"action", "execute", "auto_apply", "sanction", "ban", "mute"})
-    print("T110 PASS: 132 intents, 702 total replies, 306 added versus base")
+    print("T110 PASS: 132 intents, 918 total replies, 522 added versus base")
 
 if __name__ == "__main__":
     main()
