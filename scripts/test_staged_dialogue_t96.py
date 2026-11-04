@@ -109,8 +109,8 @@ class StagedDialogueT96(unittest.TestCase):
     def test_06_privacy_and_no_action_claims(self):
         text = " ".join(" ".join([r["question"], *r["aliases"],
                                 r["answer"], *r["variants"]]) for r in self.rows)
-        self.assertNotRegex(text, r"(?i)\\b(?:ghp_[a-z0-9]{10,}|sk-[a-z0-9]{10,})\\b")
-        self.assertNotRegex(text, r"(?i)\\b[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,}\\b")
+        self.assertNotRegex(text, r"(?i)\b(?:ghp_[a-z0-9]{10,}|sk-[a-z0-9]{10,})\b")
+        self.assertNotRegex(text, r"(?i)\b[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}\b")
         forbidden = {"user_id", "chat_id", "telegram_id", "username", "token",
                      "secret", "password", "action", "auto_apply"}
         for row in self.rows:
