@@ -9,7 +9,7 @@ class EnglishNuanceT80(unittest.TestCase):
         payload=PACK.read_bytes(); data=json.loads(payload); manifest=json.loads((ROOT/"manifest.json").read_text(encoding="utf-8"))
         expected=next(p["sha256"] for p in manifest["packs"] if p["path"]=="packs/ru/english_conversation_nuance_qa.json")
         self.assertEqual(hashlib.sha256(payload).hexdigest(),expected); self.assertLess(len(payload),1024*1024)
-        rows=data["records"]; self.assertEqual(len(rows),32); self.assertEqual(len({r["id"] for r in rows}),32)
+        rows=data["records"]; self.assertEqual(len(rows),62); self.assertEqual(len({r["id"] for r in rows}),62)
         qs=set(); answers=set()
         for r in rows:
             self.assertEqual((len(r["aliases"]),len(r["variants"])),(2,2))
@@ -17,7 +17,7 @@ class EnglishNuanceT80(unittest.TestCase):
             self.assertTrue(all(r["constraints"].values()))
             for q in [r["question"],*r["aliases"]]: self.assertNotIn(norm(q),qs); qs.add(norm(q))
             for answer in [r["answer"],*r["variants"]]: self.assertNotIn(norm(answer),answers); answers.add(norm(answer))
-        self.assertEqual((len(qs),len(answers)),(96,96))
+        self.assertEqual((len(qs),len(answers)),(186,186))
     def test_cross_pack_queries(self):
         data=json.loads(PACK.read_text(encoding="utf-8")); qs={norm(q) for r in data["records"] for q in [r["question"],*r["aliases"]]}
         for f in ["english_pragmatics_qa.json","collaborative_dialogue_qa.json","dialogue_help_qa.json","conversation_precision_qa.json","impuls_help_qa.json"]:
