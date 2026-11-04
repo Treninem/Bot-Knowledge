@@ -42,7 +42,7 @@ class FollowthroughT105(unittest.TestCase):
         self.assertEqual(self.pack["catalog"]["adapter"], "qa.v1")
         self.assertEqual(self.pack["pack_version"], "2026.11.04.024")
         self.assertEqual(len(self.rows), 82)
-        self.assertEqual(len(self.new), 246)
+        self.assertEqual(len(self.new), 328)
         self.assertEqual(self.manifest["knowledge_version"], "2026.11.04.028")
 
     def test_stable_ids_and_scope(self):
@@ -56,7 +56,7 @@ class FollowthroughT105(unittest.TestCase):
             self.assertEqual(row["constraints"]["no_personal_data"], True)
 
     def test_nine_answer_qa_limit_not_exceeded(self):
-        self.assertTrue(all(len(row["variants"]) == 5 for row in self.rows))
+        self.assertTrue(all(len(row["variants"]) == 6 for row in self.rows))
         self.assertTrue(all(len(row["variants"]) <= 8 for row in self.rows))
         self.assertTrue(all(35 <= len(s) <= 1600 for s in self.new))
 

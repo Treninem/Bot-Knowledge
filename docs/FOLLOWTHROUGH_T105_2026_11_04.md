@@ -2,7 +2,17 @@
 
 **Branch** `bk/t105-followthrough-existing-qa-20261104` from **main** `23871ed224cbe0d9636c841fd48e3f43bdd3ed1b`. **Status:** Draft / BLOCKED; not merged and not delivered to ImPULS. Pending manifest changes are not published knowledge.
 
-## T105c — current checkpoint (2026-11-04, Draft / BLOCKED)
+## T105d — latest checkpoint (2026-11-04, Draft / BLOCKED)
+
+- Added **82 unique original synthetic Russian replies**, one for each of the 82 existing canonical questions. Each now has **7/100**, **93 missing** (7,626 across all); **0 sets 100/100**. In the PR: 574 candidates vs 246 main replies (**+328** cumulatively; only **+82** this cycle).
+- Exact base `23871ed224cbe0d9636c841fd48e3f43bdd3ed1b`, previous head `635d22c0915948515254bdfe36572915ced5ea41`. Proposed manifest version `2026.11.04.028`; new actual pack SHA-256 `2bb7b4b28936139eafea2ba8afe48416cee71ef986b3be0b84970d2c2ccf5810`, pack bytes **181445**, snapshot **7592352 / 8,388,608**, headroom **796256**. Main remains `.026` as of preflight. No consumer/cache delivery.
+- In-process preflight using exact GitHub file reads: JSON parsed, 82 unchanged stable IDs/questions/aliases/original replies, 574 unique normalized answers in pack, no high-similarity additions within intent (max Jaccard 0.261, threshold 0.65), basic privacy scan clear, qa.v1 limit (6 ≤ 8 variants), SHA-256 self-checked on `abc` and previous pack hash. Exact cross-QA comparisons against 10 other QA packs were run before this commit on these exact candidates: **0 exact matches**. Full non-QA catalogs not semantically inspected.
+- Old GitHub exact-head `validate` failed at `scripts/test_new_dialogue_skills_t86.py` because it still asserted `len(variants) == 2` for the expanded pack (actual 5). This checkpoint adjusts the test to permit 2–8 only in this pack, and updates T105 test to 328 new/6 variants. No local Windows D: Python run, no paid workflow dispatch, no ImPULS E2E. Keep Draft / BLOCKED until current exact-head verification, consumer checks and merge gate.
+- PR #224 owns publisher files; `scripts/trusted_publish_qa.py` and `scripts/prepare_knowledge_candidate.py` remain untouched. No private messages or identifiers used.
+
+---
+
+## T105c — historical checkpoint (2026-11-04, Draft / BLOCKED)
 
 - Started at exact main base `23871ed224cbe0d9636c841fd48e3f43bdd3ed1b`, prior PR head `9b9d74a141ee1c28d8d4978e66aa84212b785009`. This cycle added **166 new original, synthetically authored context-specific Russian replies to the 82 existing canonical questions**: +84 for the 42 previously untouched records, then +82 across all 82 records. No new question IDs, aliases, topics, packages or consumers. No real chats or identifying data.
 - The 82 existing records are now **82 × 6/100 replies (1 answer + 5 variants)**. Exactly **94 missing per intent, 7,708 missing total**, **0 completed sets**. Registered pack progressed from main **246 replies** to **492 candidates** in this PR (**+246 relative to main**, not +492). Earlier +80 from this PR are not counted as new this run.
