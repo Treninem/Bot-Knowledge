@@ -27,7 +27,7 @@ class CollaborationT83(unittest.TestCase):
             self.assertEqual(r["audiences"],["all_ai_bots"])
             self.assertEqual(r["contexts"],["direct","private","group_addressed"])
             self.assertEqual(r["constraints"],{"read_only":True,"requires_direct_address":True,"no_personal_data":True})
-            self.assertEqual(len(r["aliases"]),2);self.assertEqual(len(r["variants"]),2)
+            self.assertEqual(len(r["aliases"]),2);self.assertEqual(len(r["variants"]),4)
             self.assertFalse(set(r)&{"action","execute","sanction","mute","ban","auto_apply"})
             self.assertTrue(any(z[0]==r["id"] for z in ix.search(r["question"],audience="all_ai_bots",limit=20)))
 if __name__=="__main__": unittest.main()
