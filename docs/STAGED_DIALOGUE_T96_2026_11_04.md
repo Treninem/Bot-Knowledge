@@ -1,89 +1,36 @@
-# T96 — safe staged conversational QA (2026-11-04)
+# T96 — staged conversational QA: progress and acceptance gates (2026-11-04)
 
-Status: **Draft / BLOCKED; not published to consumers**. Base main at last read:
-`23871ed224cbe0d9636c841fd48e3f43bdd3ed1b` / manifest
-`2026.11.04.026`. Active branch:
-`bk/t96-staged-dialogue-repairs-20261104`. PR:
-https://github.com/Treninem/Bot-Knowledge/pull/222
+**Status: Draft / BLOCKED.** PR [#222](https://github.com/Treninem/Bot-Knowledge/pull/222), branch `bk/t96-staged-dialogue-repairs-20261104`. Latest pinned **main** observed during this cycle: `23871ed224cbe0d9636c841fd48e3f43bdd3ed1b`, manifest `2026.11.04.026`, 38 registered packages. Recheck the branch heads before future edits; historical reports do not establish current state.
 
-## Context and risk gates
+## Durable partial-set progress
 
-The owner prohibits paid GitHub Actions and paid services. Parallel BK
-PR #214 owns the next manifest version `.027` and three ImPULS help records;
-#219 separately edits the moderation pack and manifest; #220/#221 are
-independent validator/search drafts. Do not rewrite their changes or claim
-that #383 or the live BotHost has consumed this data.
+- Active stable IDs: `dialogue_t96_001` … `dialogue_t96_045`; **45 distinct intents**, **90 aliases**.
+- Previous T96 checkpoint: **205** distinct staged response strings; 35 intents at 5/100 and 10 intents at 3/100.
+- **This cycle added 90 original responses:** **+2 per each of the 45 existing intents**, no new canonical questions and no aliases. No previous replies were counted as new.
+- **Current staged total: 295 responses**. Intents `001`–`035`: **7/100 each**, **93 remaining each**. Intents `036`–`045`: **5/100 each**, **95 remaining each**. **Total outstanding to the illustrative 100/intent target: 4,205**. **New 100/100 sets this cycle: 0**.
+- New responses cover different situational conditions: assent versus resignation, uncertain tone, public versus private address, correcting a consequential error, boundaries on consent, handling partial replies, disagreement, factual provenance, spoiler/truncated-chat evidence, and leaving conversations without pressure.
+- Current file: `staging/ru/dialogue_repair_t96.qa.v1.json`, **92,756 UTF-8 bytes** after addition; Git blob SHA at the data checkpoint: `aa3382d9c43fca3c5c74170f97cdbb719f1bab18` (commit `5a6c27227ac643d08cdb8caf71b49ea747b27034`). Stage remains entirely outside the manifest.
 
-The staged data is in `staging/ru/dialogue_repair_t96.qa.v1.json` using
-the existing `qa.v1` shape. It is **not** in `manifest.packs`: no new registered
-pack, no manifest/cache/version edit, and **zero consumer snapshot-byte growth**.
-This also means that **zero new answers are available from live consumers**
-until explicit acceptance, packaging and consumer verification.
+## Scope, compatibility, size
 
-## Exact staged counts and durable continuation
+- `qa.v1` schema and stable IDs preserved; `all_ai_bots`, `read_only`, `requires_direct_address`, `no_personal_data` and restricted `group_addressed` case `041` preserved.
+- **No registered packages added**, no manifest or package SHA-256 changed, **consumer snapshot byte delta = 0**. Historical GitHub main estimate: `7,519,262 / 8,388,608` bytes, headroom `869,346` bytes. This is a historical baseline, **not** a fresh complete consumer build on D:; calculate it again before any registration.
+- The staged 295 responses are **not yet accessible to ImPULS, AuroraFox or live BotHost**. No edits to Treninem/Impuls, no automatic sanctions, no source Telegram conversations, user identifiers or credentials.
+- BK PR [#214](https://github.com/Treninem/Bot-Knowledge/pull/214) owns the pending `.027` version and three special ImPULS help answers. BK [#219](https://github.com/Treninem/Bot-Knowledge/pull/219) owns moderation additions; [#220](https://github.com/Treninem/Bot-Knowledge/pull/220) and [#221](https://github.com/Treninem/Bot-Knowledge/pull/221) are distinct consumer budget/search changes. None were edited.
 
-- **45 distinct canonical intents**, **90 search aliases**, **205 original answer
-  strings** (including variants). The ten newly created intent IDs are
-  `dialogue_t96_036` through `dialogue_t96_045`.
-- In this revision, **35 existing IDs** `001`–`035` each grew
-  **3 → 5 replies**, producing **70** additional candidate replies.
-  Ten new intents received **3** replies each, adding another **30**.
-  **New candidate answers this run: 100**. Existing 105 are *not* counted
-  again. New canonical questions this run: **10**; aliases: **20**.
-- Unfinished target: `001`–`035` are **5/100** (95 remain each);
-  `036`–`045` are **3/100** (97 remain each). Total missing to
-  aspirational full sets: **4,295**. No new set is 100/100.
-- Cases: constructive disagreement, uncertainty, social context, group
-  address, joking, respecting silence, non-duplicative help, unknown
-  consent, incomplete answers, clipped screenshots, disagreement without
-  pressure, partial group decisions, boundaries and emotional support.
-- Existing baseline `reply_catalog.json` remains untouched; earlier
-  verified main tally of 119 × 100 = 11,900 belongs to other sets.
-  Do not interpret staged data as an increment to those sets.
-- The staged JSON is **70,687 UTF-8 bytes**. The last independently measured
-  base snapshot was **7,519,262 / 8,388,608 bytes**, with **869,346 bytes**
-  available. The staged file is excluded from that snapshot. Recompute
-  actual bytes and manifest hashing on the latest base *before* publication.
+## Verification actually performed
 
-## Tests, evidence and limitations
+- Connected GitHub files reread at pinned refs; parsed all **45 records / 295 replies**, validated IDs, contexts, constraints, language, audiences, answer counts and allowed lengths.
+- **295/295 replies unique** after casefold, ё/е, punctuation and whitespace normalization. All 135 canonical/alias strings were previously unique, and this run did not change them.
+- Pairwise candidate word-bigram Jaccard: **no pairs ≥ 0.45** (lexical check only, not proof of unique semantics).
+- Compared complete contents of **11 registered qa.v1 packs**, plus latest available PR #214 help-pack overlay and #219 moderation-pack overlay: **3,222 reference records** (includes overlay copies), **0 normalized exact ID/question/answer collisions**; 0 canonical-question pairs reached word-bigram Jaccard 0.50.
+- `dialogue.json` read and searched, no exact collision. Attempts to read huge `reply_catalog.json` and `social_dialogues.json` through this GitHub connector returned **empty file content**; full cross-format tests therefore remain **unverified**.
+- Updated `scripts/test_staged_dialogue_t96.py` to expect **295** replies and added checks for strong within-stage lexical similarity and group-only context (**10 test functions defined**). **Python tests NOT executed on a complete checkout**; D: is not accessible in this environment. `python scripts/validate_pack.py`, full consumer ImPULS #383 integration, exact-head CI and post-main CI were **not performed**.
+- User prohibits paid GitHub Actions. Commits use `[skip ci]`; do not launch paid workflows, disable protections or describe these GitHub-read checks as live bot tests.
 
-Connected GitHub-read preflight, pinned to the base SHA above and the
-current T96 branch snapshot:
+## Required next actions
 
-- Parsed **all 45** records; **135 distinct normalized question/alias
-  strings**, **205 distinct normalized answer strings**, unique IDs.
-  Read-only, no-personal-data and direct-address markers and allowed
-  audience/context values checked. One new case is restricted to
-  `group_addressed` explicitly; others allow all three contexts.
-- Compared with **2,303 records from all 11 registered `*_qa.json` packs**
-  in pinned main: **0 exact normalized question collisions**, **0 exact
-  normalized response collisions**, **0 duplicate IDs**.
-- Also checked current head overlays of BK #214 (help) and #219
-  (moderation), and the small `dialogue.json` pack: **0 exact collisions
-  observed**. No new canonical question had word-bigram Jaccard ≥ 0.30
-  with main QA questions. These are lexical tests, *not* semantic proof.
-- The large `reply_catalog.json` and `social_dialogues.json` were
-  **not fully re-parsed in this revision**: the connected file response was
-  truncated. A prior 35-intent preflight covered them, but the new
-  100 candidates need the full local tests below. Do not report that
-  step as complete.
-- Updated `scripts/test_staged_dialogue_t96.py` with counters, schema
-  scope and full-snapshot comparisons. **Python tests NOT RUN on D:** or
-  on a full checkout; likewise `scripts/validate_pack.py` and #383
-  consumer integration NOT RUN. GitHub exact-head CI NOT RUN: paid Actions
-  are prohibited. No merge/post-main or BotHost tests.
-
-## Required next steps
-
-1. On a fresh local `D:` checkout with exact branch SHA, execute
-   `python -B scripts/test_staged_dialogue_t96.py`,
-   `python -B scripts/validate_pack.py`, and the dedicated schema checker
-   for staged qa.v1. Inspect potential semantic near-duplicates manually.
-2. Compare with updated main, all open PRs and exact consumer #383
-   snapshot handling. Confirm sizes and all SHA-256 against file bytes.
-3. When version ownership and required checks are resolved, move accepted
-   records to an **existing registered qa.v1 pack**, preserve intent IDs,
-   update manifest/version/hash, rerun tests, and only then consider
-   a guarded ready/merge. Do not weaken required checks or pay for CI.
-4. Keep partial-set counters above in the PR or replacement progress note.
-   Never double-count candidates as published records.
+1. On a fresh local checkout of the exact PR head, run `python -B scripts/test_staged_dialogue_t96.py`, `python -B scripts/validate_pack.py`, full JSON Schema validation, privacy checks, and complete lexical/semantic comparisons with response and social catalogs.
+2. Resolve any failures; independently confirm #383 consumer snapshot size and lookup behavior on supported versions and compare all active PRs against fresh main.
+3. Only after acceptance, migrate **accepted** stage records into a compatible existing registered `qa.v1` package, update manifest hash/version without colliding with #214/#219, complete exact-head and post-main checks under approved no-cost conditions; do not bypass required checks. No automatic merge for this blocked draft.
+4. Continue stable partial intents `001`…`045` before introducing needless duplicate intents; prioritize substantive context coverage over cosmetic rewrites. Update this journal with precise additions, rejects and next verified counts.
