@@ -2,7 +2,17 @@
 
 **Branch** `bk/t105-followthrough-existing-qa-20261104` from **main** `23871ed224cbe0d9636c841fd48e3f43bdd3ed1b`. **Status:** Draft / BLOCKED; not merged and not delivered to ImPULS. Pending manifest changes are not published knowledge.
 
-## T105d — latest checkpoint (2026-11-04, Draft / BLOCKED)
+## T105e — new quality-checked candidate checkpoint (2026-11-04; Draft / BLOCKED)
+
+- This checkpoint authored **164 new original synthetic Russian contextual variants** (2 for each of the same 82 stable canonical questions); prior 574 replies preserved. Each set now has **9/100**, **91 missing** (7,462 overall). **0 sets completed**. PR stages **738 answer strings total**, **+492 above 246 in main**, but only **+164 are newly added in T105e**.
+- Exact base main: `23871ed224cbe0d9636c841fd48e3f43bdd3ed1b`; parent head: `35efb9c20df2d957483477d98cef66d531df3508`; new head is the resulting commit, to be verified after push. Schema qa.v1 maximum reached: one answer + eight variants. No new packages, IDs, consumers or permissions. Continuation beyond 9/100 needs a reviewed compatible representation; do not fake 100/100.
+- Actual UTF-8 SHA-256 `59e934d1ce5991d39b42afa13cddc4bea0850d129be7dd2eccc4479dab9023a6`; package bytes **210816**; pending manifest `.028`, snapshot **7621723/8388608** bytes, headroom **766885**. Main is not published by this draft.
+- Executed in-process JS preflight on actual exact GitHub data: 738/738 normalized-unique within pack, 164 new variant lengths/guard checks, maximum new-to-prior within-intent token Jaccard 0.333, original 82 stable records and context guards preserved, SHA-256 self-checked on `abc` and previous manifest digest. Separate preceding 164-candidate QA comparison against 2,221 entries in 10 other registered QA files found 0 exact overlaps; this commit's wording was independently rechecked within its pack, not against all other packages. No raw private chats used.
+- Updated T105 offline test to expect 492 PR-new variants and eight variants per record. Windows D: exact checkout / consumer E2E still not run; automated exact-head CI on new commit must be evaluated before considering readiness or merge. Do not manually invoke paid workflows. #224 publisher scripts remain untouched.
+
+---
+
+## T105d — historical checkpoint (2026-11-04, Draft / BLOCKED)
 
 - Added **82 unique original synthetic Russian replies**, one for each of the 82 existing canonical questions. Each now has **7/100**, **93 missing** (7,626 across all); **0 sets 100/100**. In the PR: 574 candidates vs 246 main replies (**+328** cumulatively; only **+82** this cycle).
 - Exact base `23871ed224cbe0d9636c841fd48e3f43bdd3ed1b`, previous head `635d22c0915948515254bdfe36572915ced5ea41`. Proposed manifest version `2026.11.04.028`; new actual pack SHA-256 `2bb7b4b28936139eafea2ba8afe48416cee71ef986b3be0b84970d2c2ccf5810`, pack bytes **181445**, snapshot **7592352 / 8,388,608**, headroom **796256**. Main remains `.026` as of preflight. No consumer/cache delivery.
