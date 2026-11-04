@@ -17,7 +17,7 @@ def main():
     pack=json.loads(raw)
     records=pack["records"]
     assert len(records)>=749
-    assert validate_qa_pack(pack)==749
+    assert validate_qa_pack(pack)==len(records)
     current=[r for r in records if r["id"].startswith(PREFIX)]
     assert len(current)==EXPECTED
     assert len(set(r["id"] for r in records))==len(records)
