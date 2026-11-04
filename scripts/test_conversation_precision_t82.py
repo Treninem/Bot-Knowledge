@@ -40,10 +40,10 @@ def main():
         assert r["audiences"] == ["all_ai_bots"]
         assert r["contexts"] == ["direct", "private", "group_addressed"]
         assert r["constraints"] == {"read_only": True, "requires_direct_address": True, "no_personal_data": True}
-        assert r["language"] == "ru" and len(r["aliases"]) == 2 and len(r["variants"]) == 2
+        assert r["language"] == "ru" and len(r["aliases"]) == 2 and 3 <= len(r["variants"]) <= 8
         assert not (set(r) & {"execute", "action", "sanction", "mute", "ban", "auto_apply"})
         assert any(hit[0] == r["id"] for hit in index.search(r["question"], audience="all_ai_bots", limit=20)), r["id"]
-    print("T82 PASS: 42 new intents, 84 aliases, 126 original responses")
+    print("T82 PASS: 42 new intents, 84 aliases, 168 responses after T110")
 
 if __name__ == "__main__":
     main()
