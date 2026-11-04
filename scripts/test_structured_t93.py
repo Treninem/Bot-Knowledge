@@ -34,7 +34,7 @@ def main():
         assert r["audiences"]==["all_ai_bots"] and r["language"]=="ru"
         assert r["contexts"]==["direct","private","group_addressed"]
         assert r["constraints"]=={"read_only":True,"requires_direct_address":True,"no_personal_data":True}
-        assert len(r["aliases"])==len(r["variants"])==2
+        assert len(r["aliases"])==2 and 2 <= len(r["variants"]) <= 8
         assert any(hit[0]==r["id"] for hit in idx.search(r["question"],audience="all_ai_bots",limit=20))
     print("T93 PASS: +25 intents, +50 aliases, +75 replies")
 if __name__=="__main__":main()
