@@ -67,7 +67,7 @@ class StagedDialogueT96(unittest.TestCase):
                 self.assertNotIn(row["id"], seen)
                 seen.add(row["id"])
                 self.assertEqual(len(row["aliases"]), 2)
-                self.assertEqual(len(row["variants"]), 4 if int(row["id"].split("_")[-1]) <= 35 else 2)
+                self.assertEqual(len(row["variants"]), 6 if int(row["id"].split("_")[-1]) <= 35 else 4)
                 self.assertEqual(row["audiences"], ["all_ai_bots"])
                 self.assertTrue(set(row["contexts"]) <= ALLOWED_CONTEXTS)
                 self.assertTrue(row["contexts"])
@@ -86,7 +86,7 @@ class StagedDialogueT96(unittest.TestCase):
         answers = [normalize(x) for r in self.rows
                    for x in [r["answer"], *r["variants"]]]
         self.assertEqual(len(queries), 135)
-        self.assertEqual(len(answers), 205)
+        self.assertEqual(len(answers), 295)
         self.assertEqual(len(queries), len(set(queries)))
         self.assertEqual(len(answers), len(set(answers)))
 
@@ -179,6 +179,27 @@ class StagedDialogueT96(unittest.TestCase):
                 for i, intersection in counts.items():
                     similarity = intersection / len(words | gram_sets[i])
                     self.assertLess(similarity, 0.50, (row["id"], similarity, existing[i]))
+
+
+    def test_09_no_strong_near_duplicates_inside_staging(self):
+        """Reject cosmetic rewrites even if punctuation or word order differs."""
+        candidates = [(r["id"], value) for r in self.rows
+                      for value in [r["answer"], *r["variants"]]]
+        grams = [(identifier, value, bigrams(value)) for identifier, value in candidates]
+        for i, (left_id, left_text, left_grams) in enumerate(grams):
+            for right_id, right_text, right_grams in grams[:i]:
+                union = left_grams | right_grams
+                score = len(left_grams & right_grams) / len(union) if union else 0.0
+                self.assertLess(score, 0.50,
+                                (left_id, right_id, score, left_text, right_text))
+
+    def test_10_specific_group_context_does_not_leak(self):
+        by_id = {row["id"]: row for row in self.rows}
+        self.assertEqual(by_id["dialogue_t96_041"]["contexts"], ["group_addressed"])
+        self.assertEqual(len([r for r in self.rows
+                              if r["contexts"] == ["group_addressed"]]), 1)
+        self.assertTrue(all(r["constraints"]["requires_direct_address"]
+                            for r in self.rows))
 
 if __name__ == "__main__":
     unittest.main()
