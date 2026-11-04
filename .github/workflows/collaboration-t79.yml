@@ -1,0 +1,21 @@
+name: Collaboration QA T79
+on:
+  pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Verify actual checkout SHA
+        run: git rev-parse HEAD
+      - name: Validate packs and manifest checksums
+        run: python scripts/validate_pack.py
+      - name: Check T79 distinct intents and QA keys
+        run: python -m unittest scripts.test_collaboration_qa_t79 -q
