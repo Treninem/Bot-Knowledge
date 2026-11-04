@@ -4,6 +4,7 @@ Status: **Draft candidate only; not published to consumers.** Base `main`:
 `23871ed224cbe0d9636c841fd48e3f43bdd3ed1b`, manifest
 `2026.11.04.026`. Staging branch:
 `bk/t96-staged-dialogue-repairs-20261104`.
+Draft PR: https://github.com/Treninem/Bot-Knowledge/pull/222 (BLOCKED; no CI / merge).
 
 ## Why staged, rather than added to manifest now
 
