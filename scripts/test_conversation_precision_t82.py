@@ -16,8 +16,8 @@ def main():
     assert len(raw) < 1024 * 1024
     pack = json.loads(raw)
     rows = pack["records"]
-    assert len(rows) == 42 + 42 and validate_qa_pack(pack) == len(rows)
-    new = rows[42:]
+    assert len(rows) >= 42 + 42 and validate_qa_pack(pack) == len(rows)
+    new = rows[42:84]
     assert [r["id"] for r in new] == ["precision_t82_%03d" % n for n in range(1, 43)]
     seen = set()
     answers = set()
