@@ -2,6 +2,18 @@
 
 **Status: Draft / BLOCKED.** **Tracking:** [Draft PR #223](https://github.com/Treninem/Bot-Knowledge/pull/223). Branch `bk/t103-neutral-help-qa-20261104`, base main `23871ed224cbe0d9636c841fd48e3f43bdd3ed1b`. This is an independent synthetic general-help batch, not a change to ImPULS and not an update to consumer snapshots. Existing T96–T102 dialogue progress is separately preserved in [PR #222](https://github.com/Treninem/Bot-Knowledge/pull/222).
 
+## T104 checkpoint — 2026-11-04 (latest)
+
+- Continued the same Draft PR #223 and stable IDs `help_t103_001`–`027` from the existing GitHub branch. Source data blob before edit: `f475c128a2c10a3573ed58c8325da48186dc2384`.
+- Added **81 newly authored synthetic Russian help replies** (3 per each of 27 existing intents) in the original staging qa.v1 pack. **108 → 189 candidates**, **27 partial sets × 7/100**, **93 still needed per intent / 2,511 total**; **0 completed sets** and **0 newly created canonical questions**. Candidates span wrong-chat mistakes, incident reporting, authentication secrecy, group permissions, message delivery, feature status, version mismatches, explicit consent, privacy, links, duplicate notifications, games, clarifications, disagreement, uncertainty, moderation explanation, and factual caution. Context is embedded in response wording; no permissions or consumer capabilities asserted.
+- GitHub data commit: [`fd0ed9f739cbbdb514833d3eada0cb87c57a80e2`](https://github.com/Treninem/Bot-Knowledge/commit/fd0ed9f739cbbdb514833d3eada0cb87c57a80e2); new Git blob `2a7b696ebb50c4e1d3956bf3a359b5b512c68147`.
+- **Checks actually executed in in-process JavaScript on newly written JSON:** all 27 records parsed, 189/189 normalized unique replies, 81/81 distinct normalized question/alias phrases, required IDs preserved, every record has 6 variants (schema allows up to 8), 0 private-token/email/ban-command patterns from checked expressions, reply lengths 61–176 characters. These do **not** demonstrate semantic uniqueness or successful Python execution.
+- Offline Python test source was adjusted to expect 189 answers and six variants per record; execution remains **unconfirmed**. The file is deliberately outside manifest, so no changes to SHA-256/cache/version or live consumer snapshot. Paid CI forbidden. **Draft / BLOCKED**, not eligible for merge absent verified full checks and exact-head green CI.
+
+## Prior T103 counters (historical)
+
+The original 108 / 4-per-intent measurements below are preserved only for audit. Current total is the T104 checkpoint above.
+
 ## Durable counters
 
 - **27 distinct new canonical questions**, **54 new query aliases**, **108 new reply candidates**, four per question (one answer plus three variants), in `staging/ru/neutral_help_t103.qa.v1.json`. Data blob `f475c128a2c10a3573ed58c8325da48186dc2384`, initial data commit `c239b52ed22b920f725a9ea3028c79b7535f57af`.
