@@ -2,7 +2,7 @@
   "$schema": "https://raw.githubusercontent.com/Treninem/Bot-Knowledge/main/schema/qa.v1.schema.json",
   "schema_version": 1,
   "language": "ru",
-  "pack_version": "2026.11.04.019",
+  "pack_version": "2026.11.04.021",
   "catalog": {
     "schema_version": 1,
     "id": "structured_information_qa",
@@ -1111,6 +1111,706 @@
         "Пока единица не подтверждена, не объединяй столбец с другими в расчёте."
       ],
       "source": "https://github.com/Treninem/Bot-Knowledge/blob/b3ff785098b44bc2d7d4846260a682d402dbaeb8/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "constraints": {
+        "read_only": true,
+        "requires_direct_address": true,
+        "no_personal_data": true
+      },
+      "language": "ru"
+    },
+    {
+      "id": "struct_t88_001",
+      "question": "Как отличить ноль в отчёте от категории «не применимо»?",
+      "aliases": [
+        "Значение 0 и N/A стоят в одном столбце",
+        "Можно ли считать «не применимо» нулём?"
+      ],
+      "answer": "Ноль означает измеренное значение, а «не применимо» — отсутствие самого основания для измерения.",
+      "variants": [
+        "В расчёт среднего включай настоящий ноль; пометку N/A учитывай отдельно по правилам методики.",
+        "Если оба обозначения уже смешаны при экспорте, не восстанавливай их по догадке: запроси исходные статусы."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/ae55e30fb9a081d26f29728f363e28c80cb1866f/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "constraints": {
+        "read_only": true,
+        "requires_direct_address": true,
+        "no_personal_data": true
+      },
+      "language": "ru"
+    },
+    {
+      "id": "struct_t88_002",
+      "question": "Почему два местных времени 02:30 могут относиться к разным моментам?",
+      "aliases": [
+        "Повторяющийся час при переходе на зимнее время",
+        "Как не перепутать одинаковые часы при смене времени?"
+      ],
+      "answer": "При осеннем переводе часов одна местная отметка может встречаться дважды; нужен часовой пояс и смещение для каждого события.",
+      "variants": [
+        "Для журналов лучше использовать момент в UTC и исходное локальное отображение.",
+        "Если смещения потеряны, порядок двух событий по одной надписи 02:30 доказать нельзя."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/ae55e30fb9a081d26f29728f363e28c80cb1866f/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "constraints": {
+        "read_only": true,
+        "requires_direct_address": true,
+        "no_personal_data": true
+      },
+      "language": "ru"
+    },
+    {
+      "id": "struct_t88_003",
+      "question": "Как читать итог таблицы, если строки были отфильтрованы?",
+      "aliases": [
+        "Сумма внизу и видимые строки расходятся после фильтра",
+        "Итог учитывает скрытые фильтром строки?"
+      ],
+      "answer": "Сначала проверь, считает ли формула только видимые строки или весь исходный диапазон.",
+      "variants": [
+        "Если нужен итог по отобранным записям, пересчитай его на явном подмножестве.",
+        "В пояснении укажи действовавший фильтр, иначе две одинаково подписанные суммы будут несопоставимы."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/ae55e30fb9a081d26f29728f363e28c80cb1866f/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "constraints": {
+        "read_only": true,
+        "requires_direct_address": true,
+        "no_personal_data": true
+      },
+      "language": "ru"
+    },
+    {
+      "id": "struct_t88_004",
+      "question": "Чем скользящие семь дней отличаются от календарной недели?",
+      "aliases": [
+        "Отчёт за последние семь суток и за неделю",
+        "Как сравнивать rolling 7 days с понедельником–воскресеньем?"
+      ],
+      "answer": "Скользящее окно отсчитывается от выбранного момента, а календарная неделя имеет фиксированные границы.",
+      "variants": [
+        "Подпиши начало и конец каждого окна прежде, чем сравнивать значения.",
+        "Если окна перекрываются, одинаковые события могут входить в оба отчёта: не складывай такие итоги."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/ae55e30fb9a081d26f29728f363e28c80cb1866f/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "constraints": {
+        "read_only": true,
+        "requires_direct_address": true,
+        "no_personal_data": true
+      },
+      "language": "ru"
+    },
+    {
+      "id": "struct_t88_005",
+      "question": "Что уточнить в записи «отношение 2 к 3» перед выводом?",
+      "aliases": [
+        "Соотношение двух категорий без указания порядка",
+        "2:3 это доля первой категории или второй?"
+      ],
+      "answer": "Назови числитель и знаменатель: отношение А к Б — не то же самое, что Б к А.",
+      "variants": [
+        "Для доли А в сумме А+Б результат составит две пятых, а не две трети.",
+        "Если сравниваемые группы пересекаются, сначала проверь, допустимо ли вообще складывать их объёмы."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/ae55e30fb9a081d26f29728f363e28c80cb1866f/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "constraints": {
+        "read_only": true,
+        "requires_direct_address": true,
+        "no_personal_data": true
+      },
+      "language": "ru"
+    },
+    {
+      "id": "struct_t88_006",
+      "question": "Включает ли ограничение «не позже 18:00» ровно 18:00?",
+      "aliases": [
+        "Срок до 18:00 включительно или нет",
+        "Как понимать верхнюю временную границу?"
+      ],
+      "answer": "По обычному смыслу «не позже 18:00» допускает ровно 18:00, но конкретные правила приёма могут задавать точность до секунд.",
+      "variants": [
+        "Раздели время отправки и время получения системой, если от этого зависит выполнение условия.",
+        "При договорном или автоматическом дедлайне проверь указанный часовой пояс и правило включения границы."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/ae55e30fb9a081d26f29728f363e28c80cb1866f/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "constraints": {
+        "read_only": true,
+        "requires_direct_address": true,
+        "no_personal_data": true
+      },
+      "language": "ru"
+    },
+    {
+      "id": "struct_t88_007",
+      "question": "Почему для исторической цены нужен курс на дату операции?",
+      "aliases": [
+        "Пересчитать старый платёж по сегодняшнему курсу",
+        "Какую дату курса брать для прошлого расхода?"
+      ],
+      "answer": "Текущий курс не описывает автоматически стоимость обмена в день старой операции.",
+      "variants": [
+        "Укажи дату и источник исторического курса, прежде чем считать эквивалент.",
+        "Если известна фактическая сумма списания, используй её как отдельный факт, не подменяя справочным курсом."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/ae55e30fb9a081d26f29728f363e28c80cb1866f/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "constraints": {
+        "read_only": true,
+        "requires_direct_address": true,
+        "no_personal_data": true
+      },
+      "language": "ru"
+    },
+    {
+      "id": "struct_t88_008",
+      "question": "Можно ли заполнять пропуски предыдущим известным значением без оговорки?",
+      "aliases": [
+        "Временной ряд: пустую ячейку заменили прошлым числом",
+        "Последнее наблюдение вместо пропущенного показателя"
+      ],
+      "answer": "Это допустимый метод оценки лишь при явном допущении, что значение сохранялось до следующего измерения.",
+      "variants": [
+        "Пометь заполненные записи как рассчитанные, а не наблюдавшиеся.",
+        "Для резко меняющихся параметров такой перенос может скрыть события; покажи результат также без заполнения."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/ae55e30fb9a081d26f29728f363e28c80cb1866f/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "constraints": {
+        "read_only": true,
+        "requires_direct_address": true,
+        "no_personal_data": true
+      },
+      "language": "ru"
+    },
+    {
+      "id": "struct_t88_009",
+      "question": "Почему число жалоб нельзя прямо считать частотой проблем?",
+      "aliases": [
+        "Зарегистрировано больше обращений после запуска формы",
+        "Как отделить количество заявок от распространённости ошибки?"
+      ],
+      "answer": "Число обращений зависит и от количества пользователей, и от доступности способа пожаловаться.",
+      "variants": [
+        "Для частоты нужен общий объём сопоставимых случаев и единый период наблюдения.",
+        "Рост обращений после упрощения формы сам по себе не доказывает, что неполадок стало больше."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/ae55e30fb9a081d26f29728f363e28c80cb1866f/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "constraints": {
+        "read_only": true,
+        "requires_direct_address": true,
+        "no_personal_data": true
+      },
+      "language": "ru"
+    },
+    {
+      "id": "struct_t88_010",
+      "question": "Как составить топ-10, если несколько результатов делят десятое место?",
+      "aliases": [
+        "Рейтинг с одинаковыми значениями на пороге десятки",
+        "Два участника имеют одинаковый балл на последней позиции"
+      ],
+      "answer": "Заранее выбери правило: включить все равные результаты либо применять прозрачный дополнительный критерий.",
+      "variants": [
+        "Не разводи участников с одинаковым результатом по местам произвольно.",
+        "Подпиши, почему список содержит больше десяти строк или почему применён дополнительный показатель."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/ae55e30fb9a081d26f29728f363e28c80cb1866f/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "constraints": {
+        "read_only": true,
+        "requires_direct_address": true,
+        "no_personal_data": true
+      },
+      "language": "ru"
+    },
+    {
+      "id": "struct_t88_011",
+      "question": "Как трактовать отрицательную строку расхода при суммировании?",
+      "aliases": [
+        "В отчёте покупка минус возврат",
+        "Отрицательный платёж — скидка, возврат или ошибка?"
+      ],
+      "answer": "Минус может обозначать возврат, корректировку или сторнирование; один знак не раскрывает тип операции.",
+      "variants": [
+        "Сохрани отдельные суммы покупок и возвратов, а чистый расход покажи дополнительно.",
+        "Если нет описания транзакции, не утверждай, что отрицательное значение означает доход."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/ae55e30fb9a081d26f29728f363e28c80cb1866f/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "constraints": {
+        "read_only": true,
+        "requires_direct_address": true,
+        "no_personal_data": true
+      },
+      "language": "ru"
+    },
+    {
+      "id": "struct_t88_012",
+      "question": "Можно ли объединять прогнозные и фактические значения в один итог?",
+      "aliases": [
+        "Часть месяца факт, оставшееся время прогноз",
+        "План и выполненная работа в одной колонке"
+      ],
+      "answer": "Можно показать оценку полного периода, но обязательно отдели подтверждённую часть от прогнозируемой.",
+      "variants": [
+        "В итоговой строке обозначь «факт плюс прогноз», а не «выполнено».",
+        "Если прогноз изменится, обновляй оценку, не переписывая прошлые фактические наблюдения."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/ae55e30fb9a081d26f29728f363e28c80cb1866f/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "constraints": {
+        "read_only": true,
+        "requires_direct_address": true,
+        "no_personal_data": true
+      },
+      "language": "ru"
+    },
+    {
+      "id": "struct_t88_013",
+      "question": "Что означает показатель «на тысячу жителей»?",
+      "aliases": [
+        "В таблице 8 случаев на 1000 человек",
+        "Как перевести нормированную частоту в число случаев?"
+      ],
+      "answer": "Это нормированная частота, а не обязательно восемь событий в каждой конкретной тысяче людей.",
+      "variants": [
+        "Для примерного числа событий нужен численный размер группы и одинаковый период.",
+        "При разных возрастных составах даже нормированные показатели могут требовать дополнительной стандартизации."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/ae55e30fb9a081d26f29728f363e28c80cb1866f/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "constraints": {
+        "read_only": true,
+        "requires_direct_address": true,
+        "no_personal_data": true
+      },
+      "language": "ru"
+    },
+    {
+      "id": "struct_t88_014",
+      "question": "Как считать дни между датами, если начальная дата включена?",
+      "aliases": [
+        "Срок с первого по третье число",
+        "Два или три дня в интервале от 1 до 3?"
+      ],
+      "answer": "Уточни, речь о прошедшем времени между границами или о количестве календарных дат включительно.",
+      "variants": [
+        "Если считаются даты с первого по третье включительно, их три.",
+        "Если вычисляется длительность от начала первого дня до начала третьего, пройдёт двое суток при обычных календарных условиях."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/ae55e30fb9a081d26f29728f363e28c80cb1866f/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "constraints": {
+        "read_only": true,
+        "requires_direct_address": true,
+        "no_personal_data": true
+      },
+      "language": "ru"
+    },
+    {
+      "id": "struct_t88_015",
+      "question": "Почему нельзя усреднять средние двух групп без размеров групп?",
+      "aliases": [
+        "Средние оценки двух команд разные по численности",
+        "Как правильно объединить средние показатели?"
+      ],
+      "answer": "Общее среднее требует весов: количества наблюдений в каждой группе.",
+      "variants": [
+        "Если численности неизвестны, простое среднее двух средних может исказить результат.",
+        "Покажи обе групповые оценки отдельно, пока не появятся данные об их весах."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/ae55e30fb9a081d26f29728f363e28c80cb1866f/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "constraints": {
+        "read_only": true,
+        "requires_direct_address": true,
+        "no_personal_data": true
+      },
+      "language": "ru"
+    },
+    {
+      "id": "struct_t88_016",
+      "question": "Как меняется процент при исключении части строк из выборки?",
+      "aliases": [
+        "После фильтра процент вырос, хотя число успехов не изменилось",
+        "Почему доля выросла без новых успешных случаев?"
+      ],
+      "answer": "Процент меняется не только при изменении числителя, но и при изменении знаменателя.",
+      "variants": [
+        "Сообщи исходное и отфильтрованное число наблюдений рядом с долей.",
+        "Не сравнивай новый процент со старым как улучшение, пока не проверена одинаковость выборок."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/ae55e30fb9a081d26f29728f363e28c80cb1866f/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "constraints": {
+        "read_only": true,
+        "requires_direct_address": true,
+        "no_personal_data": true
+      },
+      "language": "ru"
+    },
+    {
+      "id": "struct_t88_017",
+      "question": "Что именно обещает цена с пометкой «от 500 рублей»?",
+      "aliases": [
+        "В объявлении указана только начальная цена",
+        "Значит ли «от 500», что любой заказ обойдётся в 500?"
+      ],
+      "answer": "Это нижняя граница предложения, а не подтверждённая цена конкретной комплектации.",
+      "variants": [
+        "Для оценки полной стоимости нужны объём услуги, опции и обязательные платежи.",
+        "Если условия расчёта скрыты, не превращай стартовую цену в окончательный счёт."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/ae55e30fb9a081d26f29728f363e28c80cb1866f/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "constraints": {
+        "read_only": true,
+        "requires_direct_address": true,
+        "no_personal_data": true
+      },
+      "language": "ru"
+    },
+    {
+      "id": "struct_t88_018",
+      "question": "Как учитывать отменённый заказ в отчёте о продажах?",
+      "aliases": [
+        "Созданные заказы смешаны с оплаченными и отменёнными",
+        "Почему число заявок не равно выручке?"
+      ],
+      "answer": "Создание заказа, получение оплаты и окончательная выручка — разные события.",
+      "variants": [
+        "Показывай отдельно созданные, оплаченные, отменённые и возвращённые операции.",
+        "Если есть частичные возвраты, чистая выручка потребует их вычитания без потери исходной суммы продаж."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/ae55e30fb9a081d26f29728f363e28c80cb1866f/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "constraints": {
+        "read_only": true,
+        "requires_direct_address": true,
+        "no_personal_data": true
+      },
+      "language": "ru"
+    },
+    {
+      "id": "struct_t88_019",
+      "question": "Что делать, если источник задним числом пересчитал старые показатели?",
+      "aliases": [
+        "Прошломесячный отчёт теперь показывает другое число",
+        "Как объяснить отличие двух выгрузок одной даты?"
+      ],
+      "answer": "Проверь историю пересчёта и версию набора данных; дата события не равна дате обновления отчёта.",
+      "variants": [
+        "Сохрани обе версии с датами выгрузки, если нужен воспроизводимый анализ.",
+        "Не называй предыдущую цифру фальшивой без подтверждения причины пересчёта."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/ae55e30fb9a081d26f29728f363e28c80cb1866f/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "constraints": {
+        "read_only": true,
+        "requires_direct_address": true,
+        "no_personal_data": true
+      },
+      "language": "ru"
+    },
+    {
+      "id": "struct_t88_020",
+      "question": "Можно ли сравнивать два графика с разными масштабами осей на глаз?",
+      "aliases": [
+        "Одинаковая кривая кажется круче после изменения масштаба",
+        "Графики с разным диапазоном вертикальной оси"
+      ],
+      "answer": "Сначала сравни численные диапазоны осей, а не визуальную крутизну линий.",
+      "variants": [
+        "Если возможно, перестрой графики в одном масштабе и подпиши единицы.",
+        "Обрезанная ось может усилить зрительное впечатление от небольшой разницы; покажи абсолютные значения."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/ae55e30fb9a081d26f29728f363e28c80cb1866f/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "constraints": {
+        "read_only": true,
+        "requires_direct_address": true,
+        "no_personal_data": true
+      },
+      "language": "ru"
+    },
+    {
+      "id": "struct_t88_021",
+      "question": "Когда маленькую группу нельзя подробно разбивать в публичном отчёте?",
+      "aliases": [
+        "В таблице очень мало наблюдений по отдельной категории",
+        "Может ли обезличенная статистика раскрывать человека?"
+      ],
+      "answer": "Даже без имён редкая комбинация признаков иногда позволяет догадаться о конкретном участнике.",
+      "variants": [
+        "Объедини мелкие категории или скрой слишком малые ячейки, сохранив смысл итогов.",
+        "Не публикуй исходные записи или точные уникальные сочетания лишь ради подробной диаграммы."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/ae55e30fb9a081d26f29728f363e28c80cb1866f/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "constraints": {
+        "read_only": true,
+        "requires_direct_address": true,
+        "no_personal_data": true
+      },
+      "language": "ru"
+    },
+    {
+      "id": "struct_t88_022",
+      "question": "Почему улучшение общей доли может скрывать ухудшение внутри групп?",
+      "aliases": [
+        "Общий процент вырос, но в каждом подразделении упал",
+        "Как состав групп влияет на итоговый показатель?"
+      ],
+      "answer": "Проверь доли отдельно по сопоставимым группам: изменение их весов способно перевернуть общий вывод.",
+      "variants": [
+        "Покажи групповые показатели вместе с размерами групп до и после.",
+        "Не объявляй единый процент доказательством улучшения для каждой категории."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/ae55e30fb9a081d26f29728f363e28c80cb1866f/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "constraints": {
+        "read_only": true,
+        "requires_direct_address": true,
+        "no_personal_data": true
+      },
+      "language": "ru"
+    },
+    {
+      "id": "struct_t88_023",
+      "question": "Можно ли считать пересекающиеся интервалы неопределённости доказательством равенства?",
+      "aliases": [
+        "Два результата имеют перекрывающиеся доверительные интервалы",
+        "Если интервалы пересеклись, значит различий нет?"
+      ],
+      "answer": "Перекрытие не доказывает равенство эффектов; это лишь одна часть картины неопределённости.",
+      "variants": [
+        "Для проверки различия нужен подходящий анализ сравнения с учётом метода и выборок.",
+        "Если данных мало, сформулируй вывод как неопределённый, а не как подтверждённое совпадение."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/ae55e30fb9a081d26f29728f363e28c80cb1866f/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "constraints": {
+        "read_only": true,
+        "requires_direct_address": true,
+        "no_personal_data": true
+      },
+      "language": "ru"
+    },
+    {
+      "id": "struct_t88_024",
+      "question": "Как объяснить категорию «прочее» в круговой диаграмме?",
+      "aliases": [
+        "Большая доля скрыта в прочих категориях",
+        "Можно ли узнать состав сегмента «другое» по графику?"
+      ],
+      "answer": "Надпись «прочее» объединяет несколько категорий и без расшифровки не показывает их состав.",
+      "variants": [
+        "Попроси таблицу распределения исходных категорий или критерий объединения.",
+        "Не приписывай этому сегменту конкретные причины или группы без данных."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/ae55e30fb9a081d26f29728f363e28c80cb1866f/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "constraints": {
+        "read_only": true,
+        "requires_direct_address": true,
+        "no_personal_data": true
+      },
+      "language": "ru"
+    },
+    {
+      "id": "struct_t88_025",
+      "question": "Чем девяностый процентиль отличается от максимума?",
+      "aliases": [
+        "90-й процентиль ошибочно назвали рекордом",
+        "Если 90% значений меньше порога, это максимум?"
+      ],
+      "answer": "Девяностый процентиль описывает распределение, а максимум — самое большое наблюдение.",
+      "variants": [
+        "Без размера выборки и метода расчёта процентиль может быть приблизительным.",
+        "Единичный выброс способен сильно менять максимум, почти не затрагивая выбранный процентиль."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/ae55e30fb9a081d26f29728f363e28c80cb1866f/docs/REQUIREMENTS_21.md",
       "audiences": [
         "all_ai_bots"
       ],
