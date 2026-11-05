@@ -15,8 +15,8 @@ SPECS = {
 }
 SENSITIVE = re.compile(
     r"(?i)(ghp_[a-z0-9]{12,}|sk-[a-z0-9]{12,}|bot_token|chat_id|"
-    r"user_id|bearer\\s+|https://t\\.me/|"
-    r"[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,})"
+    r"user_id|bearer\s+|https://t\.me/|"
+    r"[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,})"
 )
 
 def norm(value: str) -> str:
