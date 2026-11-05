@@ -74,6 +74,20 @@ class StagedDialogueT126(unittest.TestCase):
                     self.assertTrue(isinstance(r[f], str) and r[f].strip())
                 self.assertFalse(PRIVATE.search(r["text"]))
 
+    def test_no_near_duplicate_staged_replies(self):
+        # Lexical screen only: it does not substitute for independent semantic review.
+        token_sets = []
+        for entry in self.stage["entries"]:
+            for reply in entry["replies"]:
+                tokens = {word for word in normalize(reply["text"]).split() if len(word) > 2}
+                self.assertTrue(tokens, entry["intent_id"])
+                token_sets.append((entry["intent_id"], tokens))
+        for i, (left_id, left) in enumerate(token_sets):
+            for right_id, right in token_sets[:i]:
+                overlap = len(left & right)
+                similarity = overlap / (len(left | right) or 1)
+                self.assertLess(similarity, 0.78, (left_id, right_id, similarity))
+
     def test_unique_against_all_registered_qa(self):
         proposed = [normalize(r["text"]) for r in self.proposed]
         self.assertEqual(len(proposed), len(set(proposed)))
