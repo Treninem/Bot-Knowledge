@@ -21,10 +21,10 @@ def main():
     manifest = json.loads((ROOT / "manifest.json").read_text("utf-8"))
     assert hashlib.sha256(data).hexdigest() == next(
         x["sha256"] for x in manifest["packs"] if x["path"] == PATH)
-    assert validate_qa_pack(pack) == 14
+    assert validate_qa_pack(pack) == 30
     assert pack["catalog"]["audiences"] == ["all_ai_bots"]
     rows = pack["records"]
-    assert len(rows) == 14 and len({r["id"] for r in rows}) == 14
+    assert len(rows) == 30 and len({r["id"] for r in rows}) == 30
     assert all(len(r["variants"]) == 8 for r in rows)
     assert all(r["audiences"] == ["all_ai_bots"] and
                set(r["contexts"]) == {"direct", "private", "group_addressed"}
@@ -33,7 +33,7 @@ def main():
                                       "requires_direct_address": True,
                                       "no_personal_data": True} for r in rows)
     answers = [s for r in rows for s in [r["answer"], *r["variants"]]]
-    assert len(answers) == 126 and len({norm(s) for s in answers}) == 126
+    assert len(answers) == 270 and len({norm(s) for s in answers}) == 270
     assert not any(re.search(
         r"(?i)(ghp_|sk-|bot_token|chat_id|user_id|bearer\\s+)", s
     ) for s in answers)
@@ -57,7 +57,7 @@ def main():
                 normalize_question(s) for s in [r["question"], *r.get("aliases", [])]), p
             assert not answer_keys.intersection(
                 norm(s) for s in [r["answer"], *r.get("variants", [])]), p
-    print("T162 PASS: 14 existing choice intents, 126 distinct replies, SHA and scoped search")
+    print("T164 PASS: 30 choice intents, 270 distinct replies, SHA and scoped search")
 
 if __name__ == "__main__":
     main()
