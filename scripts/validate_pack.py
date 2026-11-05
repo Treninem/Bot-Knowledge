@@ -6,10 +6,34 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 MAX_CONSUMER_PACK_BYTES = 2 * 1024 * 1024
+# Conservative cap for the whole downloaded snapshot in ImPULS #383.
+# Including the manifest itself leaves a small extra safety margin.
+MAX_CONSUMER_SNAPSHOT_BYTES = 8 * 1024 * 1024
 FORBIDDEN_KEYS = {
     "user_id", "chat_id", "telegram_id", "username", "phone", "email",
     "token", "cookie", "password", "secret", "first_name", "last_name",
 }
+
+
+def evaluate_snapshot_budget(
+    manifest_bytes: int,
+    pack_bytes: list[int],
+    *,
+    limit: int = MAX_CONSUMER_SNAPSHOT_BYTES,
+) -> tuple[int, int]:
+    """Report exact snapshot size and remaining bytes, including manifest bytes.
+
+    A negative remainder means the planned snapshot exceeds the conservative
+    ImPULS #383 consumer cap. No network requests or consumer state changes.
+    """
+    if type(limit) is not int or limit <= 0:
+        raise ValueError("invalid snapshot limit")
+    if type(manifest_bytes) is not int or manifest_bytes < 0:
+        raise ValueError("invalid manifest byte length")
+    if any(type(size) is not int or size < 0 for size in pack_bytes):
+        raise ValueError("invalid pack byte length")
+    total = manifest_bytes + sum(pack_bytes)
+    return total, limit - total
 
 
 def read_json(path: Path):
@@ -29,7 +53,9 @@ def walk_keys(value, path="root"):
 def main() -> int:
     errors: list[str] = []
     manifest_path = ROOT / "manifest.json"
-    manifest = read_json(manifest_path)
+    manifest_payload = manifest_path.read_bytes()
+    manifest = json.loads(manifest_payload.decode("utf-8"))
+    pack_sizes: list[int] = []
 
     if manifest.get("schema_version") != 1:
         errors.append("schema_version must be 1")
@@ -54,6 +80,7 @@ def main() -> int:
             errors.append(f"missing pack: {relative}")
             continue
         payload = path.read_bytes()
+        pack_sizes.append(len(payload))
         if len(payload) > MAX_CONSUMER_PACK_BYTES:
             errors.append(f"pack exceeds the 2 MiB consumer download limit: {relative}")
         actual = hashlib.sha256(payload).hexdigest()
@@ -256,6 +283,18 @@ def main() -> int:
 
     from validate_lexical_repairs import validate_lexical_repairs
     errors.extend(validate_lexical_repairs(ROOT))
+
+    snapshot_size, snapshot_remaining = evaluate_snapshot_budget(
+        len(manifest_payload), pack_sizes
+    )
+    print(
+        f"Consumer snapshot: {snapshot_size}/{MAX_CONSUMER_SNAPSHOT_BYTES} bytes "
+        f"(including manifest; remaining {snapshot_remaining})"
+    )
+    if snapshot_remaining < 0:
+        errors.append(
+            f"consumer snapshot exceeds 8 MiB by {-snapshot_remaining} bytes"
+        )
 
     if errors:
         print("Bot-Knowledge validation: FAIL")
