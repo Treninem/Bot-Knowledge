@@ -25,7 +25,7 @@ def main():
     assert pack["catalog"]["audiences"] == ["all_ai_bots"]
     rows = pack["records"]
     assert len(rows) == 14 and len({r["id"] for r in rows}) == 14
-    assert all(len(r["variants"]) == 5 for r in rows)
+    assert all(len(r["variants"]) == 8 for r in rows)
     assert all(r["audiences"] == ["all_ai_bots"] and
                set(r["contexts"]) == {"direct", "private", "group_addressed"}
                for r in rows)
@@ -33,7 +33,7 @@ def main():
                                       "requires_direct_address": True,
                                       "no_personal_data": True} for r in rows)
     answers = [s for r in rows for s in [r["answer"], *r["variants"]]]
-    assert len(answers) == 84 and len({norm(s) for s in answers}) == 84
+    assert len(answers) == 126 and len({norm(s) for s in answers}) == 126
     assert not any(re.search(
         r"(?i)(ghp_|sk-|bot_token|chat_id|user_id|bearer\\s+)", s
     ) for s in answers)
@@ -57,7 +57,7 @@ def main():
                 normalize_question(s) for s in [r["question"], *r.get("aliases", [])]), p
             assert not answer_keys.intersection(
                 norm(s) for s in [r["answer"], *r.get("variants", [])]), p
-    print("T162 PASS: 14 original choice intents, 84 distinct replies, SHA and scoped search")
+    print("T162 PASS: 14 existing choice intents, 126 distinct replies, SHA and scoped search")
 
 if __name__ == "__main__":
     main()
