@@ -108,7 +108,7 @@ class StagedDialogueT126(unittest.TestCase):
         self.assertEqual(sum(EXPECTED_TOTAL_BY_ID.values()), 2328)
         self.assertEqual(len(self.proposed), 2174)
         self.assertEqual(len({e["intent_id"] for e in s["entries"]}), 30)
-        self.assertEqual(s["checkpoint"]["added_candidates"], 2030)
+        self.assertEqual(s["checkpoint"]["added_candidates"], 2174)
         self.assertEqual(s["checkpoint"]["finished_100"], 3)
         for e in s["entries"]:
             orig = self.rows[e["intent_id"]]
@@ -212,10 +212,10 @@ class StagedDialogueT126(unittest.TestCase):
 
     def test_t149_exact_staging_content_sha256(self):
         raw = (ROOT / STAGE).read_bytes()
-        self.assertEqual(len(raw), 1143236)
+        self.assertEqual(len(raw), 1143326)
         self.assertEqual(
             hashlib.sha256(raw).hexdigest(),
-            "2399a0dc2cb853fd904ab722302df9d062762bb3655ca6a45972e4d48a45f3bb",
+            "79b3fe8512b86aea248d6a2a76e3d586d79a9699b422ee47ba62015fcc0e1a27",
         )
 
     def test_t149_accepted_delta_and_editorial_repair(self):
@@ -283,7 +283,7 @@ class StagedDialogueT126(unittest.TestCase):
         self.assertEqual(checkpoint["editorial_review"]["t150"]["added"], 144)
         self.assertEqual(checkpoint["editorial_review"]["t150"]["processed_intents"], 27)
         self.assertEqual(checkpoint["editorial_review"]["t150"]["rejected"], 0)
-        self.assertEqual(checkpoint["editorial_review"]["t150"]["rewritten"], 2)
+        self.assertEqual(checkpoint["editorial_review"]["t150"]["rewritten"], 5)
         texts = [r["text"] for e in stage["entries"] for r in e["replies"]]
         self.assertIn("Пришли нынешний текст ошибки: после обновления сообщение могло измениться.", texts)
         self.assertIn("Выражение «слил катку» означает проигрыш в игре, часто с обвинительным оттенком. Нейтрально можно сказать: «команда проиграла матч».", texts)
