@@ -27,6 +27,12 @@ jobs:
           python-version: "3.12"
       - name: Validate language pack
         run: python scripts/validate_pack.py
+      - name: T142 staged dialogue integrity and source-SHA review
+        run: |
+          if test -f staging/ru/dialogue_t125_context_pool.json; then
+            python -m unittest scripts.test_staged_dialogue_t126 -q
+            python scripts/test_dialogue_t125.py
+          fi
       - name: Reviewed publisher contract
         run: python -m unittest scripts.test_trusted_publish_qa -q
       - name: T76 Telegram identifier privacy regression for reviewed QA
@@ -119,12 +125,6 @@ jobs:
         run: python scripts/test_build_skill_draft.py
       - name: Validate dynamic qa.v1 packages
         run: python scripts/validate_qa_v1.py
-      - name: T142 staged dialogue integrity and source-SHA review
-        run: |
-          if test -f staging/ru/dialogue_t125_context_pool.json; then
-            python -m unittest scripts.test_staged_dialogue_t126 -q
-            python scripts/test_dialogue_t125.py
-          fi
       - name: Universal dialogue qa.v1 alias retrieval and context boundaries
         run: python -m scripts.test_dialogue_help_expansion
       - name: T29 scoped natural clarification QA and search
