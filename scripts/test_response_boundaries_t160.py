@@ -65,10 +65,10 @@ def main():
   assert entry["intent_id"]==original["id"] and entry["question"]==original["question"]
   assert entry["registered_reply_count"]==9 and entry["staged_reply_count"]==5
   assert len(entry["replies"])==5
-  assert sum((r["id"].startswith(entry["intent_id"]+"_t167_") or r["id"].startswith(entry["intent_id"]+"_t171_")) for r in entry["replies"])==3
+  assert sum(r["id"].startswith(entry["intent_id"]+"_t167_") for r in entry["replies"])==3
   assert sum(r["id"].startswith(entry["intent_id"]+"_t171_") for r in entry["replies"])==2
   for r in entry["replies"]:
-   assert r["id"] not in stage_ids and r["id"].startswith(entry["intent_id"]+"_t167_")
+   assert r["id"] not in stage_ids and (r["id"].startswith(entry["intent_id"]+"_t167_") or r["id"].startswith(entry["intent_id"]+"_t171_"))
    stage_ids.add(r["id"])
    assert r["language"]=="ru" and r["style"]=="neutral"
    assert r["context"] in {"direct","private","group_addressed"}
