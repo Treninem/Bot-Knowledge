@@ -27,9 +27,9 @@ def normalize(s):
 EXPECTED_STAGE_BY_ID = {
     "dlg_greet_no_rules": 100,
     "dlg_greet_after_pause": 100,
-    "dlg_bye_without_pressure": 71,
-    "dlg_resume_topic_after_aside": 68,
-    "dlg_ambiguous_not_that": 68,
+    "dlg_bye_without_pressure": 83,
+    "dlg_resume_topic_after_aside": 76,
+    "dlg_ambiguous_not_that": 76,
     "dlg_correct_only_number": 74,
     "dlg_two_distinct_questions": 68,
     "dlg_unclear_pronoun": 68,
@@ -37,31 +37,31 @@ EXPECTED_STAGE_BY_ID = {
     "dlg_serious_after_humor": 65,
     "dlg_dark_humor_grief": 64,
     "dlg_swear_not_automatic_abuse": 64,
-    "dlg_firm_without_harassment": 70,
+    "dlg_firm_without_harassment": 76,
     "dlg_possible_sarcasm": 73,
-    "dlg_missing_attachment": 69,
-    "dlg_stale_current_claim": 71,
-    "dlg_conflicting_sources": 65,
-    "dlg_one_reply_preference": 70,
+    "dlg_missing_attachment": 75,
+    "dlg_stale_current_claim": 77,
+    "dlg_conflicting_sources": 71,
+    "dlg_one_reply_preference": 76,
     "dlg_slang_translation": 100,
     "dlg_fiction_vs_fact": 65,
     "dlg_hypothetical_rule": 65,
-    "dlg_public_privacy_minimum": 65,
+    "dlg_public_privacy_minimum": 71,
     "dlg_correct_without_fake_action": 74,
     "dlg_unavailable_feature": 69,
-    "dlg_group_rule_scope": 77,
-    "dlg_citation_not_permission": 74,
-    "dlg_no_assumed_traits": 69,
-    "dlg_listening_not_advice": 74,
+    "dlg_group_rule_scope": 83,
+    "dlg_citation_not_permission": 80,
+    "dlg_no_assumed_traits": 75,
+    "dlg_listening_not_advice": 80,
     "dlg_no_fake_button": 74,
-    "dlg_quote_not_directed": 69,
+    "dlg_quote_not_directed": 75,
 }
 EXPECTED_TOTAL_BY_ID = {
     "dlg_greet_no_rules": 109,
     "dlg_greet_after_pause": 105,
-    "dlg_bye_without_pressure": 76,
-    "dlg_resume_topic_after_aside": 73,
-    "dlg_ambiguous_not_that": 73,
+    "dlg_bye_without_pressure": 88,
+    "dlg_resume_topic_after_aside": 81,
+    "dlg_ambiguous_not_that": 81,
     "dlg_correct_only_number": 79,
     "dlg_two_distinct_questions": 73,
     "dlg_unclear_pronoun": 73,
@@ -69,24 +69,24 @@ EXPECTED_TOTAL_BY_ID = {
     "dlg_serious_after_humor": 70,
     "dlg_dark_humor_grief": 69,
     "dlg_swear_not_automatic_abuse": 69,
-    "dlg_firm_without_harassment": 75,
+    "dlg_firm_without_harassment": 81,
     "dlg_possible_sarcasm": 78,
-    "dlg_missing_attachment": 74,
-    "dlg_stale_current_claim": 76,
-    "dlg_conflicting_sources": 70,
-    "dlg_one_reply_preference": 75,
+    "dlg_missing_attachment": 80,
+    "dlg_stale_current_claim": 82,
+    "dlg_conflicting_sources": 76,
+    "dlg_one_reply_preference": 81,
     "dlg_slang_translation": 105,
     "dlg_fiction_vs_fact": 70,
     "dlg_hypothetical_rule": 70,
-    "dlg_public_privacy_minimum": 70,
+    "dlg_public_privacy_minimum": 76,
     "dlg_correct_without_fake_action": 79,
     "dlg_unavailable_feature": 74,
-    "dlg_group_rule_scope": 82,
-    "dlg_citation_not_permission": 79,
-    "dlg_no_assumed_traits": 74,
-    "dlg_listening_not_advice": 79,
+    "dlg_group_rule_scope": 88,
+    "dlg_citation_not_permission": 85,
+    "dlg_no_assumed_traits": 80,
+    "dlg_listening_not_advice": 85,
     "dlg_no_fake_button": 79,
-    "dlg_quote_not_directed": 74,
+    "dlg_quote_not_directed": 80,
 }
 
 class StagedDialogueT126(unittest.TestCase):
@@ -105,10 +105,10 @@ class StagedDialogueT126(unittest.TestCase):
         self.assertEqual(s["stage_type"], "supplemental_contextual_reply_pool")
         self.assertEqual(s["source_pack"], PACK)
         self.assertEqual(len(s["entries"]), 30)
-        self.assertEqual(sum(EXPECTED_TOTAL_BY_ID.values()), 2328)
-        self.assertEqual(len(self.proposed), 2174)
+        self.assertEqual(sum(EXPECTED_TOTAL_BY_ID.values()), 2422)
+        self.assertEqual(len(self.proposed), 2268)
         self.assertEqual(len({e["intent_id"] for e in s["entries"]}), 30)
-        self.assertEqual(s["checkpoint"]["added_candidates"], 2174)
+        self.assertEqual(s["checkpoint"]["added_candidates"], 2268)
         self.assertEqual(s["checkpoint"]["finished_100"], 3)
         for e in s["entries"]:
             orig = self.rows[e["intent_id"]]
@@ -202,7 +202,7 @@ class StagedDialogueT126(unittest.TestCase):
         self.assertEqual(self.stage["checkpoint"]["greeting"]["ready_chat_utterances"], 100)
         self.assertEqual(self.stage["checkpoint"]["greeting"]["registered_qa_guidance_not_direct_replies"], 9)
         self.assertEqual(self.stage["checkpoint"]["greeting"]["combined_text_count"], 109)
-        self.assertEqual(len(self.proposed), 2174)
+        self.assertEqual(len(self.proposed), 2268)
         self.assertEqual(self.stage["checkpoint"]["remaining_intents"]["count"], 27)
         for entry in self.stage["entries"]:
             self.assertEqual(
@@ -212,10 +212,10 @@ class StagedDialogueT126(unittest.TestCase):
 
     def test_t149_exact_staging_content_sha256(self):
         raw = (ROOT / STAGE).read_bytes()
-        self.assertEqual(len(raw), 1143326)
+        self.assertEqual(len(raw), 1190914)
         self.assertEqual(
             hashlib.sha256(raw).hexdigest(),
-            "79b3fe8512b86aea248d6a2a76e3d586d79a9699b422ee47ba62015fcc0e1a27",
+            "7e1873fb618bb4a333d609ab63c528b28aa48a76f79f9eb76d094cc239737262",
         )
 
     def test_t149_accepted_delta_and_editorial_repair(self):
@@ -229,12 +229,12 @@ class StagedDialogueT126(unittest.TestCase):
         self.assertEqual(review["rewritten_meta_instructions"], 53)
         self.assertEqual(checkpoint["finished_100"], 3)
         self.assertEqual(checkpoint["remaining_intents"]["count"], 27)
-        self.assertEqual(sum(e["staged_reply_count"] for e in self.stage["entries"]), 2174)
+        self.assertEqual(sum(e["staged_reply_count"] for e in self.stage["entries"]), 2268)
         done = {e["intent_id"] for e in self.stage["entries"] if e["staged_reply_count"] == 100}
         self.assertEqual(done, {"dlg_greet_no_rules", "dlg_greet_after_pause", "dlg_slang_translation"})
         self.assertEqual(
             sum(checkpoint["remaining_intents"]["missing_by_intent"].values()),
-            3000 - 2174,
+            3000 - 2268,
         )
         rewrites = {
             "dlg_greet_after_pause": "Продолжим? Назови текущую задачу.",
@@ -287,7 +287,17 @@ class StagedDialogueT126(unittest.TestCase):
         texts = [r["text"] for e in stage["entries"] for r in e["replies"]]
         self.assertIn("Пришли нынешний текст ошибки: после обновления сообщение могло измениться.", texts)
         self.assertIn("Выражение «слил катку» означает проигрыш в игре, часто с обвинительным оттенком. Нейтрально можно сказать: «команда проиграла матч».", texts)
-        self.assertEqual(len(texts), 2174)
+        self.assertGreaterEqual(len(texts), 2174)  # T150 baseline; later staged cycles may add more
+
+
+    def test_t151_progress_and_non_activation(self):
+        review = self.stage["checkpoint"]["editorial_review"]["t151"]
+        self.assertEqual(review["added"], 94)
+        self.assertEqual(review["processed_intents"], 14)
+        self.assertEqual(review["rejected"], 0)
+        self.assertFalse(review["consumer_loaded"])
+        self.assertEqual(len(self.proposed), 2268)
+        self.assertEqual(sum(100 - e["staged_reply_count"] for e in self.stage["entries"]), 732)
 
 if __name__ == "__main__":
     unittest.main()
