@@ -22,5 +22,24 @@ def main():
  assert len(replies)==186 and len({norm(s) for s in replies})==186
  assert not any(re.search(r"(?i)(ghp_|sk-|bot_token|chat_id|user_id|bearer\\s+)",s) for s in replies)
  assert all(normalize_question(r["question"]) for r in rows)
+
+ # Registered qa.v1 must be discoverable through the exact, SHA-checked local index.
+ from scripts.search_knowledge import KnowledgeSearch
+ index=KnowledgeSearch(ROOT)
+ for row in rows:
+  for ctx in ("direct","private","group_addressed"):
+   hits=index.search(row["question"],audience="all_ai_bots",limit=20,context=ctx)
+   assert any(h[0]==row["id"] and h[1]==PATH for h in hits), (row["id"],ctx)
+ # Also enforce no cross-pack exact duplicates in the current manifest snapshot.
+ qset={normalize_question(r["question"]) for r in rows}
+ aset={norm(s) for s in replies}
+ for entry in manifest["packs"]:
+  p=entry["path"]
+  if p==PATH or not p.endswith("_qa.json"):
+   continue
+  existing=json.loads((ROOT/p).read_text("utf-8"))
+  for other in existing.get("records",[]):
+   assert not qset.intersection(normalize_question(s) for s in (other["question"],*other.get("aliases",[]))),p
+   assert not aset.intersection(norm(s) for s in (other["answer"],*other.get("variants",[]))),p
  print("T160 PASS: 31 new intents, 186 distinct RU replies, manifest SHA, scopes")
 if __name__=="__main__":main()
