@@ -24,6 +24,71 @@ def normalize(s):
     s = "".join(" " if unicodedata.category(c)[0] in {"P", "S"} else c for c in s)
     return " ".join(s.split())
 
+EXPECTED_STAGE_BY_ID = {
+    "dlg_greet_no_rules": 66,
+    "dlg_greet_after_pause": 17,
+    "dlg_bye_without_pressure": 16,
+    "dlg_resume_topic_after_aside": 17,
+    "dlg_ambiguous_not_that": 17,
+    "dlg_correct_only_number": 17,
+    "dlg_two_distinct_questions": 17,
+    "dlg_unclear_pronoun": 17,
+    "dlg_short_preserve_caveat": 17,
+    "dlg_serious_after_humor": 17,
+    "dlg_dark_humor_grief": 17,
+    "dlg_swear_not_automatic_abuse": 17,
+    "dlg_firm_without_harassment": 17,
+    "dlg_possible_sarcasm": 15,
+    "dlg_missing_attachment": 16,
+    "dlg_stale_current_claim": 18,
+    "dlg_conflicting_sources": 18,
+    "dlg_one_reply_preference": 18,
+    "dlg_slang_translation": 18,
+    "dlg_fiction_vs_fact": 18,
+    "dlg_hypothetical_rule": 18,
+    "dlg_public_privacy_minimum": 18,
+    "dlg_correct_without_fake_action": 18,
+    "dlg_unavailable_feature": 18,
+    "dlg_group_rule_scope": 18,
+    "dlg_citation_not_permission": 18,
+    "dlg_no_assumed_traits": 18,
+    "dlg_listening_not_advice": 18,
+    "dlg_no_fake_button": 18,
+    "dlg_quote_not_directed": 18
+}
+EXPECTED_TOTAL_BY_ID = {
+    "dlg_greet_no_rules": 75,
+    "dlg_greet_after_pause": 22,
+    "dlg_bye_without_pressure": 21,
+    "dlg_resume_topic_after_aside": 22,
+    "dlg_ambiguous_not_that": 22,
+    "dlg_correct_only_number": 22,
+    "dlg_two_distinct_questions": 22,
+    "dlg_unclear_pronoun": 22,
+    "dlg_short_preserve_caveat": 22,
+    "dlg_serious_after_humor": 22,
+    "dlg_dark_humor_grief": 22,
+    "dlg_swear_not_automatic_abuse": 22,
+    "dlg_firm_without_harassment": 22,
+    "dlg_possible_sarcasm": 20,
+    "dlg_missing_attachment": 21,
+    "dlg_stale_current_claim": 23,
+    "dlg_conflicting_sources": 23,
+    "dlg_one_reply_preference": 23,
+    "dlg_slang_translation": 23,
+    "dlg_fiction_vs_fact": 23,
+    "dlg_hypothetical_rule": 23,
+    "dlg_public_privacy_minimum": 23,
+    "dlg_correct_without_fake_action": 23,
+    "dlg_unavailable_feature": 23,
+    "dlg_group_rule_scope": 23,
+    "dlg_citation_not_permission": 23,
+    "dlg_no_assumed_traits": 23,
+    "dlg_listening_not_advice": 23,
+    "dlg_no_fake_button": 23,
+    "dlg_quote_not_directed": 23
+}
+
 class StagedDialogueT126(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
@@ -37,11 +102,13 @@ class StagedDialogueT126(unittest.TestCase):
         s = self.stage
         self.assertEqual(s["schema_version"], 1)
         self.assertFalse(s["consumer_registered"])
+        self.assertEqual(s["stage_type"], "supplemental_contextual_reply_pool")
         self.assertEqual(s["source_pack"], PACK)
         self.assertEqual(len(s["entries"]), 30)
-        self.assertEqual(len(self.proposed), 360)
+        self.assertEqual(sum(EXPECTED_TOTAL_BY_ID.values()), 724)
+        self.assertEqual(len(self.proposed), 570)
         self.assertEqual(len({e["intent_id"] for e in s["entries"]}), 30)
-        self.assertEqual(s["checkpoint"]["added_candidates"], 360)
+        self.assertEqual(s["checkpoint"]["added_candidates"], 570)
         self.assertEqual(s["checkpoint"]["finished_100"], 0)
         for e in s["entries"]:
             orig = self.rows[e["intent_id"]]
@@ -49,8 +116,8 @@ class StagedDialogueT126(unittest.TestCase):
             self.assertEqual(e["registered_reply_count"], 1 + len(orig["variants"]))
             self.assertEqual(e["staged_reply_count"], len(e["replies"]))
         g = next(e for e in s["entries"] if e["intent_id"] == "dlg_greet_no_rules")
-        self.assertEqual((g["registered_reply_count"], g["staged_reply_count"]), (9, 42))
-        self.assertEqual({e["intent_id"]: e["staged_reply_count"] for e in s["entries"]}, {"dlg_greet_no_rules":42,"dlg_greet_after_pause":11,"dlg_bye_without_pressure":11,"dlg_resume_topic_after_aside":11,"dlg_ambiguous_not_that":11,"dlg_correct_only_number":11,"dlg_two_distinct_questions":11,"dlg_unclear_pronoun":11,"dlg_short_preserve_caveat":11,"dlg_serious_after_humor":11,"dlg_dark_humor_grief":11,"dlg_swear_not_automatic_abuse":11,"dlg_firm_without_harassment":11,"dlg_possible_sarcasm":10,"dlg_missing_attachment":11,"dlg_stale_current_claim":11,"dlg_conflicting_sources":11,"dlg_one_reply_preference":11,"dlg_slang_translation":11,"dlg_fiction_vs_fact":11,"dlg_hypothetical_rule":11,"dlg_public_privacy_minimum":11,"dlg_correct_without_fake_action":11,"dlg_unavailable_feature":11,"dlg_group_rule_scope":11,"dlg_citation_not_permission":11,"dlg_no_assumed_traits":11,"dlg_listening_not_advice":11,"dlg_no_fake_button":11,"dlg_quote_not_directed":11})
+        self.assertEqual((g["registered_reply_count"], g["staged_reply_count"]), (9, 66))
+        self.assertEqual({e["intent_id"]: e["staged_reply_count"] for e in s["entries"]}, EXPECTED_STAGE_BY_ID)
 
     def test_source_blob_and_manifest_unchanged(self):
         raw = (ROOT / PACK).read_bytes()
@@ -63,8 +130,7 @@ class StagedDialogueT126(unittest.TestCase):
     def test_scopes_and_no_secrets(self):
         for e in self.stage["entries"]:
             key = e["intent_id"]
-            expected_total = (51 if key == "dlg_greet_no_rules"
-                              else 15 if key == "dlg_possible_sarcasm" else 16)
+            expected_total = EXPECTED_TOTAL_BY_ID[key]
             self.assertEqual(e["registered_reply_count"] + e["staged_reply_count"],
                              expected_total, key)
             expected_missing = 100 - expected_total
@@ -78,6 +144,7 @@ class StagedDialogueT126(unittest.TestCase):
                 self.assertEqual(r["style"], "neutral")
                 self.assertTrue(r["read_only"])
                 self.assertIn(r["context"], ("direct", "private", "group_addressed"))
+                self.assertEqual(set(r), {"text", "context_note", "avoid", "context", "language", "style", "read_only"})
                 for f in ("text", "context_note", "avoid"):
                     self.assertTrue(isinstance(r[f], str) and r[f].strip())
                 self.assertFalse(PRIVATE.search(r["text"]))
