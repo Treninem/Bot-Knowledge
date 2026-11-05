@@ -132,9 +132,12 @@ class StagedDialogueT126(unittest.TestCase):
         self.assertTrue(all("—" not in text and "«" not in text for text in texts))
 
     def test_no_decorative_outer_quotes_in_replies(self):
-        # QA examples are candidate direct utterances, not quoted speech demonstrations.
-        # A real inner quotation remains intact; only whole-utterance wrappers are banned.
-        wrapper = re.compile(r'^\\s*[«“\"](?:[^\\n]|\\n)+[»”\"][.!?]?\\s*
+        # Each answer is a direct utterance; decorative whole-sentence quotes are invalid.
+        wrapper = re.compile(r'[«“"].+[»”"][.!?]?')
+        for reply in self.proposed:
+            self.assertIsNone(wrapper.fullmatch(reply["text"].strip()), reply["text"])
+
+    def test_source_blob_and_manifest_unchanged(self):
         raw = (ROOT / PACK).read_bytes()
         git_blob = hashlib.sha1(b"blob " + str(len(raw)).encode() + b"\0" + raw).hexdigest()
         self.assertEqual(git_blob, self.stage["source_pack_blob_sha"])
