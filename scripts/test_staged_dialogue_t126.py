@@ -31,9 +31,9 @@ EXPECTED_STAGE_BY_ID = {
     "dlg_resume_topic_after_aside": 100,
     "dlg_ambiguous_not_that": 100,
     "dlg_correct_only_number": 100,
-    "dlg_two_distinct_questions": 68,
-    "dlg_unclear_pronoun": 68,
-    "dlg_short_preserve_caveat": 71,
+    "dlg_two_distinct_questions": 100,
+    "dlg_unclear_pronoun": 100,
+    "dlg_short_preserve_caveat": 100,
     "dlg_serious_after_humor": 65,
     "dlg_dark_humor_grief": 64,
     "dlg_swear_not_automatic_abuse": 64,
@@ -63,9 +63,9 @@ EXPECTED_TOTAL_BY_ID = {
     "dlg_resume_topic_after_aside": 105,
     "dlg_ambiguous_not_that": 105,
     "dlg_correct_only_number": 105,
-    "dlg_two_distinct_questions": 73,
-    "dlg_unclear_pronoun": 73,
-    "dlg_short_preserve_caveat": 76,
+    "dlg_two_distinct_questions": 105,
+    "dlg_unclear_pronoun": 105,
+    "dlg_short_preserve_caveat": 105,
     "dlg_serious_after_humor": 70,
     "dlg_dark_humor_grief": 69,
     "dlg_swear_not_automatic_abuse": 69,
@@ -105,11 +105,11 @@ class StagedDialogueT126(unittest.TestCase):
         self.assertEqual(s["stage_type"], "supplemental_contextual_reply_pool")
         self.assertEqual(s["source_pack"], PACK)
         self.assertEqual(len(s["entries"]), 30)
-        self.assertEqual(sum(EXPECTED_TOTAL_BY_ID.values()), 2619)
-        self.assertEqual(len(self.proposed), 2465)
+        self.assertEqual(sum(EXPECTED_TOTAL_BY_ID.values()), 2712)
+        self.assertEqual(len(self.proposed), 2558)
         self.assertEqual(len({e["intent_id"] for e in s["entries"]}), 30)
-        self.assertEqual(s["checkpoint"]["added_candidates"], 2465)
-        self.assertEqual(s["checkpoint"]["finished_100"], 12)
+        self.assertEqual(s["checkpoint"]["added_candidates"], 2558)
+        self.assertEqual(s["checkpoint"]["finished_100"], 15)
         for e in s["entries"]:
             orig = self.rows[e["intent_id"]]
             self.assertEqual(e["question"], orig["question"])
@@ -118,7 +118,7 @@ class StagedDialogueT126(unittest.TestCase):
         g = next(e for e in s["entries"] if e["intent_id"] == "dlg_greet_no_rules")
         self.assertEqual((g["registered_reply_count"], g["staged_reply_count"]), (9, 100))
         self.assertEqual({e["intent_id"]: e["staged_reply_count"] for e in s["entries"]}, EXPECTED_STAGE_BY_ID)
-        self.assertEqual(sum(1 for e in s["entries"] if e["staged_reply_count"] == 100), 12)
+        self.assertEqual(sum(1 for e in s["entries"] if e["staged_reply_count"] == 100), 15)
         self.assertTrue(all(e["staged_reply_count"] <= 100 for e in s["entries"]))
 
     def test_t139_editorial_direct_greeting_outputs(self):
@@ -202,8 +202,8 @@ class StagedDialogueT126(unittest.TestCase):
         self.assertEqual(self.stage["checkpoint"]["greeting"]["ready_chat_utterances"], 100)
         self.assertEqual(self.stage["checkpoint"]["greeting"]["registered_qa_guidance_not_direct_replies"], 9)
         self.assertEqual(self.stage["checkpoint"]["greeting"]["combined_text_count"], 109)
-        self.assertEqual(len(self.proposed), 2465)
-        self.assertEqual(self.stage["checkpoint"]["remaining_intents"]["count"], 18)
+        self.assertEqual(len(self.proposed), 2558)
+        self.assertEqual(self.stage["checkpoint"]["remaining_intents"]["count"], 15)
         for entry in self.stage["entries"]:
             self.assertEqual(
                 self.stage["checkpoint"]["remaining_intents"]["missing_by_intent"].get(entry["intent_id"], 0),
@@ -212,10 +212,10 @@ class StagedDialogueT126(unittest.TestCase):
 
     def test_t149_exact_staging_content_sha256(self):
         raw = (ROOT / STAGE).read_bytes()
-        self.assertEqual(len(raw), 1304109)
+        self.assertEqual(len(raw), 1359636)
         self.assertEqual(
             hashlib.sha256(raw).hexdigest(),
-            "4cf133972faf74323d47468fa1b4051c21c820b00bba3dfe3303f404f9034572",
+            "6e37edf603d17ac43c79b7755ffca13107b84c8a4d273f6d35e037c69e285abb",
         )
 
     def test_t149_accepted_delta_and_editorial_repair(self):
@@ -227,14 +227,14 @@ class StagedDialogueT126(unittest.TestCase):
         )
         self.assertEqual(review["t149b"]["edited_direct_utterances"] + review["t149e"]["rewritten"], 19)
         self.assertEqual(review["rewritten_meta_instructions"], 53)
-        self.assertEqual(checkpoint["finished_100"], 12)
-        self.assertEqual(checkpoint["remaining_intents"]["count"], 18)
-        self.assertEqual(sum(e["staged_reply_count"] for e in self.stage["entries"]), 2465)
+        self.assertEqual(checkpoint["finished_100"], 15)
+        self.assertEqual(checkpoint["remaining_intents"]["count"], 15)
+        self.assertEqual(sum(e["staged_reply_count"] for e in self.stage["entries"]), 2558)
         done = {e["intent_id"] for e in self.stage["entries"] if e["staged_reply_count"] == 100}
-        self.assertEqual(done, {"dlg_greet_no_rules", "dlg_greet_after_pause", "dlg_slang_translation", "dlg_bye_without_pressure", "dlg_resume_topic_after_aside", "dlg_ambiguous_not_that", "dlg_correct_only_number", "dlg_group_rule_scope", "dlg_listening_not_advice", "dlg_citation_not_permission", "dlg_one_reply_preference", "dlg_missing_attachment"})
+        self.assertEqual(done, {"dlg_greet_no_rules", "dlg_greet_after_pause", "dlg_slang_translation", "dlg_bye_without_pressure", "dlg_resume_topic_after_aside", "dlg_ambiguous_not_that", "dlg_correct_only_number", "dlg_group_rule_scope", "dlg_listening_not_advice", "dlg_citation_not_permission", "dlg_one_reply_preference", "dlg_missing_attachment", "dlg_unclear_pronoun", "dlg_two_distinct_questions", "dlg_short_preserve_caveat"})
         self.assertEqual(
             sum(checkpoint["remaining_intents"]["missing_by_intent"].values()),
-            3000 - 2465,
+            3000 - 2558,
         )
         rewrites = {
             "dlg_greet_after_pause": "Продолжим? Назови текущую задачу.",
@@ -249,10 +249,10 @@ class StagedDialogueT126(unittest.TestCase):
         review = self.stage["checkpoint"]["editorial_review"]["t152"]
         self.assertEqual((review["added"], review["rejected"], review["processed_intents"]), (91, 0, 4))
         self.assertFalse(review["consumer_loaded"])
-        self.assertEqual(self.stage["checkpoint"]["added_candidates"], 2465)
-        self.assertEqual(self.stage["checkpoint"]["finished_100"], 12)
-        self.assertEqual(self.stage["checkpoint"]["remaining_intents"]["count"], 18)
-        self.assertEqual(sum(self.stage["checkpoint"]["remaining_intents"]["missing_by_intent"].values()), 535)
+        self.assertEqual(self.stage["checkpoint"]["added_candidates"], 2558)
+        self.assertEqual(self.stage["checkpoint"]["finished_100"], 15)
+        self.assertEqual(self.stage["checkpoint"]["remaining_intents"]["count"], 15)
+        self.assertEqual(sum(self.stage["checkpoint"]["remaining_intents"]["missing_by_intent"].values()), 442)
         for intent in ("dlg_bye_without_pressure", "dlg_resume_topic_after_aside",
                        "dlg_ambiguous_not_that", "dlg_correct_only_number"):
             self.assertEqual(next(e for e in self.stage["entries"] if e["intent_id"] == intent)["staged_reply_count"], 100)
@@ -261,10 +261,22 @@ class StagedDialogueT126(unittest.TestCase):
         review = self.stage["checkpoint"]["editorial_review"]["t152b"]
         self.assertEqual((review["added"], review["rejected"], review["processed_intents"]), (106, 0, 5))
         self.assertFalse(review["consumer_loaded"])
-        self.assertEqual(self.stage["checkpoint"]["added_candidates"], 2465)
-        self.assertEqual(self.stage["checkpoint"]["finished_100"], 12)
-        self.assertEqual(self.stage["checkpoint"]["remaining_intents"]["count"], 18)
-        self.assertEqual(sum(self.stage["checkpoint"]["remaining_intents"]["missing_by_intent"].values()), 535)
+        self.assertEqual(self.stage["checkpoint"]["added_candidates"], 2558)
+        self.assertEqual(self.stage["checkpoint"]["finished_100"], 15)
+        self.assertEqual(self.stage["checkpoint"]["remaining_intents"]["count"], 15)
+        self.assertEqual(sum(self.stage["checkpoint"]["remaining_intents"]["missing_by_intent"].values()), 442)
+
+    def test_t153_three_completed_sets(self):
+        review = self.stage["checkpoint"]["editorial_review"]["t153"]
+        self.assertEqual((review["added"], review["rejected"], review["processed_intents"]), (93, 0, 3))
+        self.assertFalse(review["consumer_loaded"])
+        self.assertEqual(self.stage["checkpoint"]["added_candidates"], 2558)
+        self.assertEqual(self.stage["checkpoint"]["finished_100"], 15)
+        self.assertEqual(self.stage["checkpoint"]["remaining_intents"]["count"], 15)
+        self.assertEqual(sum(self.stage["checkpoint"]["remaining_intents"]["missing_by_intent"].values()), 442)
+        for intent in ("dlg_unclear_pronoun", "dlg_two_distinct_questions",
+                       "dlg_short_preserve_caveat"):
+            self.assertEqual(next(e for e in self.stage["entries"] if e["intent_id"] == intent)["staged_reply_count"], 100)
 
     def test_t147_no_obvious_meta_instructions_as_user_replies(self):
         # Conservative lint, not a semantic proof; policy documentation
@@ -317,8 +329,8 @@ class StagedDialogueT126(unittest.TestCase):
         self.assertEqual(review["processed_intents"], 14)
         self.assertEqual(review["rejected"], 0)
         self.assertFalse(review["consumer_loaded"])
-        self.assertEqual(len(self.proposed), 2465)
-        self.assertEqual(sum(100 - e["staged_reply_count"] for e in self.stage["entries"]), 535)
+        self.assertEqual(len(self.proposed), 2558)
+        self.assertEqual(sum(100 - e["staged_reply_count"] for e in self.stage["entries"]), 442)
 
 if __name__ == "__main__":
     unittest.main()
