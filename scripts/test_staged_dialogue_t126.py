@@ -210,6 +210,14 @@ class StagedDialogueT126(unittest.TestCase):
                 100 - entry["staged_reply_count"],
             )
 
+    def test_t149_exact_staging_content_sha256(self):
+        raw = (ROOT / STAGE).read_bytes()
+        self.assertEqual(len(raw), 1067807)
+        self.assertEqual(
+            hashlib.sha256(raw).hexdigest(),
+            "7afa7be8b9157c1034bffb0187577ded8c19afa80c0586e9f2e41bb7de422802",
+        )
+
     def test_t149_accepted_delta_and_editorial_repair(self):
         checkpoint = self.stage["checkpoint"]
         review = checkpoint["editorial_review"]
