@@ -15,11 +15,11 @@ def main():
     assert validate_qa_pack(pack)==24
     rows=pack["records"]
     assert len({r["id"] for r in rows})==24
-    assert all(r["id"].startswith("bk_recovery_") and len(r["variants"])==4 for r in rows)
+    assert all(r["id"].startswith("bk_recovery_") and len(r["variants"])==8 for r in rows)
     assert all(r["audiences"]==["all_ai_bots"] and set(r["contexts"])=={"direct","private","group_addressed"} for r in rows)
     assert all(r["constraints"]=={"read_only":True,"requires_direct_address":True,"no_personal_data":True} for r in rows)
     ans=[a for r in rows for a in [r["answer"],*r["variants"]]]
-    assert len(ans)==120 and len({norm(a) for a in ans})==120
+    assert len(ans)==216 and len({norm(a) for a in ans})==216
     assert not any(re.search(r"(?i)(ghp_|sk-|bot_token|chat_id|user_id|bearer\\s+)",a) for a in ans)
-    print("T158 PASS: 24 questions, 120 RU replies, SHA, scopes, uniqueness")
+    print("T158 PASS: 24 questions, 216 RU replies, SHA, scopes, uniqueness")
 if __name__=="__main__":main()
