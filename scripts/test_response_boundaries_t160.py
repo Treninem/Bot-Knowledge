@@ -14,12 +14,12 @@ def main():
  assert validate_qa_pack(pack)==31
  rows=pack["records"]
  assert len({r["id"] for r in rows})==31
- assert all(len(r["variants"])==5 for r in rows)
+ assert all(len(r["variants"])==8 for r in rows)
  assert all(r["audiences"]==["all_ai_bots"] and set(r["contexts"])=={"direct","private","group_addressed"} for r in rows)
  assert all(r["constraints"]=={"read_only":True,"requires_direct_address":True,"no_personal_data":True} for r in rows)
  assert all(r["source"].endswith("/AGENTS.md") for r in rows)
  replies=[s for r in rows for s in [r["answer"],*r["variants"]]]
- assert len(replies)==186 and len({norm(s) for s in replies})==186
+ assert len(replies)==279 and len({norm(s) for s in replies})==279
  assert not any(re.search(r"(?i)(ghp_|sk-|bot_token|chat_id|user_id|bearer\\s+)",s) for s in replies)
  assert all(normalize_question(r["question"]) for r in rows)
 
@@ -41,5 +41,5 @@ def main():
   for other in existing.get("records",[]):
    assert not qset.intersection(normalize_question(s) for s in (other["question"],*other.get("aliases",[]))),p
    assert not aset.intersection(norm(s) for s in (other["answer"],*other.get("variants",[]))),p
- print("T160 PASS: 31 new intents, 186 distinct RU replies, manifest SHA, scopes")
+ print("T160 PASS: 31 existing intents, 279 distinct RU replies (93 newly added), manifest SHA, scopes")
 if __name__=="__main__":main()
