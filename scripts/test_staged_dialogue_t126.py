@@ -25,39 +25,7 @@ def normalize(s):
     return " ".join(s.split())
 
 EXPECTED_STAGE_BY_ID = {
-    "dlg_greet_no_rules": 66,
-    "dlg_greet_after_pause": 17,
-    "dlg_bye_without_pressure": 16,
-    "dlg_resume_topic_after_aside": 17,
-    "dlg_ambiguous_not_that": 17,
-    "dlg_correct_only_number": 17,
-    "dlg_two_distinct_questions": 17,
-    "dlg_unclear_pronoun": 17,
-    "dlg_short_preserve_caveat": 17,
-    "dlg_serious_after_humor": 17,
-    "dlg_dark_humor_grief": 17,
-    "dlg_swear_not_automatic_abuse": 17,
-    "dlg_firm_without_harassment": 17,
-    "dlg_possible_sarcasm": 15,
-    "dlg_missing_attachment": 16,
-    "dlg_stale_current_claim": 18,
-    "dlg_conflicting_sources": 18,
-    "dlg_one_reply_preference": 18,
-    "dlg_slang_translation": 18,
-    "dlg_fiction_vs_fact": 18,
-    "dlg_hypothetical_rule": 18,
-    "dlg_public_privacy_minimum": 18,
-    "dlg_correct_without_fake_action": 18,
-    "dlg_unavailable_feature": 18,
-    "dlg_group_rule_scope": 18,
-    "dlg_citation_not_permission": 18,
-    "dlg_no_assumed_traits": 18,
-    "dlg_listening_not_advice": 18,
-    "dlg_no_fake_button": 18,
-    "dlg_quote_not_directed": 18
-}
-EXPECTED_TOTAL_BY_ID = {
-    "dlg_greet_no_rules": 75,
+    "dlg_greet_no_rules": 91,
     "dlg_greet_after_pause": 22,
     "dlg_bye_without_pressure": 21,
     "dlg_resume_topic_after_aside": 22,
@@ -88,6 +56,38 @@ EXPECTED_TOTAL_BY_ID = {
     "dlg_no_fake_button": 23,
     "dlg_quote_not_directed": 23
 }
+EXPECTED_TOTAL_BY_ID = {
+    "dlg_greet_no_rules": 100,
+    "dlg_greet_after_pause": 27,
+    "dlg_bye_without_pressure": 26,
+    "dlg_resume_topic_after_aside": 27,
+    "dlg_ambiguous_not_that": 27,
+    "dlg_correct_only_number": 27,
+    "dlg_two_distinct_questions": 27,
+    "dlg_unclear_pronoun": 27,
+    "dlg_short_preserve_caveat": 27,
+    "dlg_serious_after_humor": 27,
+    "dlg_dark_humor_grief": 27,
+    "dlg_swear_not_automatic_abuse": 27,
+    "dlg_firm_without_harassment": 27,
+    "dlg_possible_sarcasm": 25,
+    "dlg_missing_attachment": 26,
+    "dlg_stale_current_claim": 28,
+    "dlg_conflicting_sources": 28,
+    "dlg_one_reply_preference": 28,
+    "dlg_slang_translation": 28,
+    "dlg_fiction_vs_fact": 28,
+    "dlg_hypothetical_rule": 28,
+    "dlg_public_privacy_minimum": 28,
+    "dlg_correct_without_fake_action": 28,
+    "dlg_unavailable_feature": 28,
+    "dlg_group_rule_scope": 28,
+    "dlg_citation_not_permission": 28,
+    "dlg_no_assumed_traits": 28,
+    "dlg_listening_not_advice": 28,
+    "dlg_no_fake_button": 28,
+    "dlg_quote_not_directed": 28
+}
 
 class StagedDialogueT126(unittest.TestCase):
     @classmethod
@@ -105,19 +105,21 @@ class StagedDialogueT126(unittest.TestCase):
         self.assertEqual(s["stage_type"], "supplemental_contextual_reply_pool")
         self.assertEqual(s["source_pack"], PACK)
         self.assertEqual(len(s["entries"]), 30)
-        self.assertEqual(sum(EXPECTED_TOTAL_BY_ID.values()), 724)
-        self.assertEqual(len(self.proposed), 570)
+        self.assertEqual(sum(EXPECTED_TOTAL_BY_ID.values()), 894)
+        self.assertEqual(len(self.proposed), 740)
         self.assertEqual(len({e["intent_id"] for e in s["entries"]}), 30)
-        self.assertEqual(s["checkpoint"]["added_candidates"], 570)
-        self.assertEqual(s["checkpoint"]["finished_100"], 0)
+        self.assertEqual(s["checkpoint"]["added_candidates"], 740)
+        self.assertEqual(s["checkpoint"]["finished_100"], 1)
         for e in s["entries"]:
             orig = self.rows[e["intent_id"]]
             self.assertEqual(e["question"], orig["question"])
             self.assertEqual(e["registered_reply_count"], 1 + len(orig["variants"]))
             self.assertEqual(e["staged_reply_count"], len(e["replies"]))
         g = next(e for e in s["entries"] if e["intent_id"] == "dlg_greet_no_rules")
-        self.assertEqual((g["registered_reply_count"], g["staged_reply_count"]), (9, 66))
+        self.assertEqual((g["registered_reply_count"], g["staged_reply_count"]), (9, 91))
         self.assertEqual({e["intent_id"]: e["staged_reply_count"] for e in s["entries"]}, EXPECTED_STAGE_BY_ID)
+        self.assertEqual(sum(1 for e in s["entries"] if e["registered_reply_count"] + e["staged_reply_count"] == 100), 1)
+        self.assertTrue(all(e["registered_reply_count"] + e["staged_reply_count"] <= 100 for e in s["entries"]))
 
     def test_source_blob_and_manifest_unchanged(self):
         raw = (ROOT / PACK).read_bytes()
