@@ -26,7 +26,7 @@ def normalize(s):
 
 EXPECTED_STAGE_BY_ID = {
     "dlg_greet_no_rules": 100,
-    "dlg_greet_after_pause": 67,
+    "dlg_greet_after_pause": 100,
     "dlg_bye_without_pressure": 59,
     "dlg_resume_topic_after_aside": 60,
     "dlg_ambiguous_not_that": 60,
@@ -39,14 +39,14 @@ EXPECTED_STAGE_BY_ID = {
     "dlg_swear_not_automatic_abuse": 60,
     "dlg_firm_without_harassment": 65,
     "dlg_possible_sarcasm": 68,
-    "dlg_missing_attachment": 57,
-    "dlg_stale_current_claim": 58,
-    "dlg_conflicting_sources": 53,
-    "dlg_one_reply_preference": 58,
-    "dlg_slang_translation": 58,
-    "dlg_fiction_vs_fact": 53,
-    "dlg_hypothetical_rule": 53,
-    "dlg_public_privacy_minimum": 53,
+    "dlg_missing_attachment": 65,
+    "dlg_stale_current_claim": 66,
+    "dlg_conflicting_sources": 61,
+    "dlg_one_reply_preference": 66,
+    "dlg_slang_translation": 66,
+    "dlg_fiction_vs_fact": 61,
+    "dlg_hypothetical_rule": 61,
+    "dlg_public_privacy_minimum": 61,
     "dlg_correct_without_fake_action": 58,
     "dlg_unavailable_feature": 53,
     "dlg_group_rule_scope": 59,
@@ -58,7 +58,7 @@ EXPECTED_STAGE_BY_ID = {
 }
 EXPECTED_TOTAL_BY_ID = {
     "dlg_greet_no_rules": 109,
-    "dlg_greet_after_pause": 72,
+    "dlg_greet_after_pause": 105,
     "dlg_bye_without_pressure": 64,
     "dlg_resume_topic_after_aside": 65,
     "dlg_ambiguous_not_that": 65,
@@ -71,14 +71,14 @@ EXPECTED_TOTAL_BY_ID = {
     "dlg_swear_not_automatic_abuse": 65,
     "dlg_firm_without_harassment": 70,
     "dlg_possible_sarcasm": 73,
-    "dlg_missing_attachment": 62,
-    "dlg_stale_current_claim": 63,
-    "dlg_conflicting_sources": 58,
-    "dlg_one_reply_preference": 63,
-    "dlg_slang_translation": 63,
-    "dlg_fiction_vs_fact": 58,
-    "dlg_hypothetical_rule": 58,
-    "dlg_public_privacy_minimum": 58,
+    "dlg_missing_attachment": 70,
+    "dlg_stale_current_claim": 71,
+    "dlg_conflicting_sources": 66,
+    "dlg_one_reply_preference": 71,
+    "dlg_slang_translation": 71,
+    "dlg_fiction_vs_fact": 66,
+    "dlg_hypothetical_rule": 66,
+    "dlg_public_privacy_minimum": 66,
     "dlg_correct_without_fake_action": 63,
     "dlg_unavailable_feature": 58,
     "dlg_group_rule_scope": 64,
@@ -105,8 +105,8 @@ class StagedDialogueT126(unittest.TestCase):
         self.assertEqual(s["stage_type"], "supplemental_contextual_reply_pool")
         self.assertEqual(s["source_pack"], PACK)
         self.assertEqual(len(s["entries"]), 30)
-        self.assertEqual(sum(EXPECTED_TOTAL_BY_ID.values()), 1957)
-        self.assertEqual(len(self.proposed), 1803)
+        self.assertEqual(sum(EXPECTED_TOTAL_BY_ID.values()), 2054)
+        self.assertEqual(len(self.proposed), 1900)
         self.assertEqual(len({e["intent_id"] for e in s["entries"]}), 30)
         self.assertEqual(s["checkpoint"]["added_candidates"], 1693)
         self.assertEqual(s["checkpoint"]["finished_100"], 1)
@@ -202,7 +202,7 @@ class StagedDialogueT126(unittest.TestCase):
         self.assertEqual(self.stage["checkpoint"]["greeting"]["ready_chat_utterances"], 100)
         self.assertEqual(self.stage["checkpoint"]["greeting"]["registered_qa_guidance_not_direct_replies"], 9)
         self.assertEqual(self.stage["checkpoint"]["greeting"]["combined_text_count"], 109)
-        self.assertEqual(len(self.proposed), 1803)
+        self.assertEqual(len(self.proposed), 1900)
         self.assertEqual(self.stage["checkpoint"]["remaining_intents"]["count"], 29)
         for entry in self.stage["entries"]:
             self.assertEqual(
@@ -239,7 +239,7 @@ class StagedDialogueT126(unittest.TestCase):
         )
         for reply in self.proposed:
             self.assertFalse(any(x in reply["text"] for x in stale_fragments), reply["text"])
-        self.assertEqual(self.stage["checkpoint"]["editorial_review"]["rewritten_meta_instructions"], 34)
+        self.assertEqual(self.stage["checkpoint"]["editorial_review"]["rewritten_meta_instructions"], 49)
 
 if __name__ == "__main__":
     unittest.main()
