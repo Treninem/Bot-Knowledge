@@ -215,7 +215,7 @@ class StagedDialogueT126(unittest.TestCase):
         # belongs in qa.v1, while staging stores candidate chat utterances.
         meta = re.compile(
             r"^(?:Если (?:человек|пользователь|собеседник|вопрос|контекст)\b"
-            r"|Не (?:стоит|надо|используй)\b|Вместо\b)",
+            r"|Не (?:стоит|надо|используй)\b)",
             re.IGNORECASE,
         )
         for reply in self.proposed:
@@ -233,12 +233,13 @@ class StagedDialogueT126(unittest.TestCase):
             "Сначала установи грамматическую цель грубого слова",
             "Если попросили «без приколов», убери",
             "Для разбора таблицы попроси нужные строки",
+            "Вместо фиктивного пути опиши цель настройки",
             "При разборе цитаты с матом сначала проверь",
             "Если инструкция требует копии данных, оставь",
         )
         for reply in self.proposed:
             self.assertFalse(any(x in reply["text"] for x in stale_fragments), reply["text"])
-        self.assertEqual(self.stage["checkpoint"]["editorial_review"]["rewritten_meta_instructions"], 33)
+        self.assertEqual(self.stage["checkpoint"]["editorial_review"]["rewritten_meta_instructions"], 34)
 
 if __name__ == "__main__":
     unittest.main()
