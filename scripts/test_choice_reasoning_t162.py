@@ -57,7 +57,53 @@ def main():
                 normalize_question(s) for s in [r["question"], *r.get("aliases", [])]), p
             assert not answer_keys.intersection(
                 norm(s) for s in [r["answer"], *r.get("variants", [])]), p
-    print("T164 PASS: 30 choice intents, 270 distinct replies, SHA and scoped search")
+
+    # T166 supplemental pool is deliberately NOT consumer-registered.
+    stage_path = "staging/ru/choice_t166_context_pool.json"
+    staging = json.loads((ROOT / stage_path).read_text("utf-8"))
+    assert staging["schema_version"] == 1
+    assert staging["stage_type"] == "supplemental_contextual_reply_pool"
+    assert staging["source_pack"] == PATH and staging["consumer_registered"] is False
+    assert staging["source_pack_manifest_sha256"] == hashlib.sha256(data).hexdigest()
+    git_blob = hashlib.sha1(b"blob " + str(len(data)).encode() + b"\0" + data).hexdigest()
+    assert staging["source_pack_blob_sha"] == git_blob
+    assert stage_path not in {m["path"] for m in manifest["packs"]}
+    assert staging["constraints"] == {"read_only": True, "requires_direct_address": True, "no_personal_data": True}
+    assert staging["audiences"] == ["all_ai_bots"] and staging["language"] == "ru"
+    progress = staging["checkpoint"]
+    assert progress["base_main_sha"] == "ade6cc1f9a0b05bef517f6e22d2dbf625b985565"
+    assert progress["added_candidates"] == 90 and progress["registered_count"] == 270
+    assert progress["finished_100"] == 0 and progress["partial_intents"] == 30
+    assert progress["remaining_total"] == 2640 and progress["remaining_per_intent"] == 88
+    assert len(staging["entries"]) == 30
+    additional = []
+    ids = set()
+    for original, entry in zip(rows, staging["entries"]):
+        assert entry["intent_id"] == original["id"] and entry["question"] == original["question"]
+        assert entry["registered_reply_count"] == 9 and entry["staged_reply_count"] == 3
+        assert len(entry["replies"]) == 3
+        for r in entry["replies"]:
+            assert r["id"] not in ids and r["id"].startswith(entry["intent_id"] + "_t166_")
+            ids.add(r["id"])
+            assert r["language"] == "ru" and r["style"] == "neutral"
+            assert r["context"] in {"direct", "private", "group_addressed"}
+            assert r["audiences"] == ["all_ai_bots"] and r["read_only"] is True
+            assert r["context_note"].strip() and r["avoid"].strip()
+            assert len(r["text"]) <= 1600
+            assert not re.search(r"(?i)(ghp_[a-z0-9]{12,}|sk-[a-z0-9]{12,}|bot_token|chat_id|user_id|https://t\.me/|[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,})",r["text"])
+            additional.append(r["text"])
+    assert len(additional) == 90
+    assert len({norm(s) for s in answers + additional}) == 360
+    stage_keys = {norm(s) for s in additional}
+    for entry in manifest["packs"]:
+        p = entry["path"]
+        if p == PATH or not p.endswith("_qa.json"):
+            continue
+        other = json.loads((ROOT / p).read_text("utf-8"))
+        for record in other.get("records", []):
+            assert not stage_keys.intersection(
+                norm(s) for s in [record["answer"], *record.get("variants", [])]), p
+    print("T166 PASS: 30 choice intents, 270 registered + 90 unregistered scoped candidates; SHA, privacy, uniqueness")
 
 if __name__ == "__main__":
     main()
