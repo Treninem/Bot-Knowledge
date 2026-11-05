@@ -26,19 +26,19 @@ def normalize(s):
 
 EXPECTED_STAGE_BY_ID = {
     "dlg_greet_no_rules": 100,
-    "dlg_greet_after_pause": 53,
-    "dlg_bye_without_pressure": 51,
-    "dlg_resume_topic_after_aside": 52,
-    "dlg_ambiguous_not_that": 52,
-    "dlg_correct_only_number": 58,
-    "dlg_two_distinct_questions": 52,
-    "dlg_unclear_pronoun": 52,
-    "dlg_short_preserve_caveat": 57,
-    "dlg_serious_after_humor": 52,
-    "dlg_dark_humor_grief": 52,
-    "dlg_swear_not_automatic_abuse": 52,
-    "dlg_firm_without_harassment": 57,
-    "dlg_possible_sarcasm": 60,
+    "dlg_greet_after_pause": 67,
+    "dlg_bye_without_pressure": 59,
+    "dlg_resume_topic_after_aside": 60,
+    "dlg_ambiguous_not_that": 60,
+    "dlg_correct_only_number": 66,
+    "dlg_two_distinct_questions": 60,
+    "dlg_unclear_pronoun": 60,
+    "dlg_short_preserve_caveat": 65,
+    "dlg_serious_after_humor": 60,
+    "dlg_dark_humor_grief": 60,
+    "dlg_swear_not_automatic_abuse": 60,
+    "dlg_firm_without_harassment": 65,
+    "dlg_possible_sarcasm": 68,
     "dlg_missing_attachment": 57,
     "dlg_stale_current_claim": 58,
     "dlg_conflicting_sources": 53,
@@ -58,19 +58,19 @@ EXPECTED_STAGE_BY_ID = {
 }
 EXPECTED_TOTAL_BY_ID = {
     "dlg_greet_no_rules": 109,
-    "dlg_greet_after_pause": 58,
-    "dlg_bye_without_pressure": 56,
-    "dlg_resume_topic_after_aside": 57,
-    "dlg_ambiguous_not_that": 57,
-    "dlg_correct_only_number": 63,
-    "dlg_two_distinct_questions": 57,
-    "dlg_unclear_pronoun": 57,
-    "dlg_short_preserve_caveat": 62,
-    "dlg_serious_after_humor": 57,
-    "dlg_dark_humor_grief": 57,
-    "dlg_swear_not_automatic_abuse": 57,
-    "dlg_firm_without_harassment": 62,
-    "dlg_possible_sarcasm": 65,
+    "dlg_greet_after_pause": 72,
+    "dlg_bye_without_pressure": 64,
+    "dlg_resume_topic_after_aside": 65,
+    "dlg_ambiguous_not_that": 65,
+    "dlg_correct_only_number": 71,
+    "dlg_two_distinct_questions": 65,
+    "dlg_unclear_pronoun": 65,
+    "dlg_short_preserve_caveat": 70,
+    "dlg_serious_after_humor": 65,
+    "dlg_dark_humor_grief": 65,
+    "dlg_swear_not_automatic_abuse": 65,
+    "dlg_firm_without_harassment": 70,
+    "dlg_possible_sarcasm": 73,
     "dlg_missing_attachment": 62,
     "dlg_stale_current_claim": 63,
     "dlg_conflicting_sources": 58,
@@ -105,8 +105,8 @@ class StagedDialogueT126(unittest.TestCase):
         self.assertEqual(s["stage_type"], "supplemental_contextual_reply_pool")
         self.assertEqual(s["source_pack"], PACK)
         self.assertEqual(len(s["entries"]), 30)
-        self.assertEqual(sum(EXPECTED_TOTAL_BY_ID.values()), 1847)
-        self.assertEqual(len(self.proposed), 1693)
+        self.assertEqual(sum(EXPECTED_TOTAL_BY_ID.values()), 1957)
+        self.assertEqual(len(self.proposed), 1803)
         self.assertEqual(len({e["intent_id"] for e in s["entries"]}), 30)
         self.assertEqual(s["checkpoint"]["added_candidates"], 1693)
         self.assertEqual(s["checkpoint"]["finished_100"], 1)
@@ -202,7 +202,7 @@ class StagedDialogueT126(unittest.TestCase):
         self.assertEqual(self.stage["checkpoint"]["greeting"]["ready_chat_utterances"], 100)
         self.assertEqual(self.stage["checkpoint"]["greeting"]["registered_qa_guidance_not_direct_replies"], 9)
         self.assertEqual(self.stage["checkpoint"]["greeting"]["combined_text_count"], 109)
-        self.assertEqual(len(self.proposed), 1693)
+        self.assertEqual(len(self.proposed), 1803)
         self.assertEqual(self.stage["checkpoint"]["remaining_intents"]["count"], 29)
         for entry in self.stage["entries"]:
             self.assertEqual(
