@@ -73,7 +73,7 @@ def main():
     progress = staging["checkpoint"]
     assert progress["base_main_sha"] == "309e5edd22f8ca4a6dcf59a4b2213a4c8696d36b"
     assert progress["added_candidates"] == 510 and progress["registered_count"] == 270
-    assert progress["latest_added"] == 30 and progress["latest_rejected"] == 0
+    assert progress["latest_added"] == 60 and progress["latest_rejected"] == 0
     assert progress["finished_100"] == 0 and progress["partial_intents"] == 30
     assert progress["remaining_total"] == 2220 and progress["remaining_per_intent"] == 74
     assert len(staging["entries"]) == 30

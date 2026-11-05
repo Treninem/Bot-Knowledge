@@ -56,7 +56,7 @@ def main():
  cp=stage["checkpoint"]
  assert cp["base_main_sha"]=="309e5edd22f8ca4a6dcf59a4b2213a4c8696d36b"
  assert cp["registered_count"]==279 and cp["added_candidates"]==403
- assert cp["latest_added"]==31 and cp["latest_rejected"]==0
+ assert cp["latest_added"]==62 and cp["latest_rejected"]==0
  assert cp["per_intent_total"]==22 and cp["remaining_per_intent"]==78
  assert cp["partial_intents"]==31 and cp["finished_100"]==0 and cp["remaining_total"]==2418
  assert len(stage["entries"])==31

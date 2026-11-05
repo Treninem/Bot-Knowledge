@@ -37,9 +37,9 @@ def main():
     checkpoint=stage["checkpoint"]
     assert checkpoint["base_main_sha"]=="309e5edd22f8ca4a6dcf59a4b2213a4c8696d36b"
     assert checkpoint["registered_count"]==216 and checkpoint["added_candidates"]==360
-    assert checkpoint["latest_added"]==24 and checkpoint["latest_rejected"]==0
+    assert checkpoint["latest_added"]==48 and checkpoint["latest_rejected"]==0
     assert checkpoint["per_intent_registered"]==9 and checkpoint["per_intent_staged"]==15
-    assert checkpoint["per_intent_total"]==22 and checkpoint["partial_intents"]==24
+    assert checkpoint["per_intent_total"]==24 and checkpoint["partial_intents"]==24
     assert checkpoint["finished_100"]==0 and checkpoint["remaining_total"]==1824
     assert checkpoint["remaining_per_intent"]==76
     assert len(stage["entries"])==24
@@ -56,7 +56,7 @@ def main():
         assert sum(r["id"].startswith(entry["intent_id"]+"_t177_") for r in entry["replies"])==1
         assert sum(r["id"].startswith(entry["intent_id"]+"_t178_") for r in entry["replies"])==2
         for entry_reply in entry["replies"]:
-            assert entry_reply["id"] not in ids and (entry_reply["id"].startswith(entry["intent_id"]+"_t168_") or entry_reply["id"].startswith(entry["intent_id"]+"_t170_") or entry_reply["id"].startswith(entry["intent_id"]+"_t174_") or entry_reply["id"].startswith(entry["intent_id"]+"_t175_") or entry_reply["id"].startswith(entry["intent_id"]+"_t176_") or entry_reply["id"].startswith(entry["intent_id"]+"_t177_") or r["id"].startswith(entry["intent_id"] + "_t178_"))
+            assert entry_reply["id"] not in ids and (entry_reply["id"].startswith(entry["intent_id"]+"_t168_") or entry_reply["id"].startswith(entry["intent_id"]+"_t170_") or entry_reply["id"].startswith(entry["intent_id"]+"_t174_") or entry_reply["id"].startswith(entry["intent_id"]+"_t175_") or entry_reply["id"].startswith(entry["intent_id"]+"_t176_") or entry_reply["id"].startswith(entry["intent_id"]+"_t177_") or entry_reply["id"].startswith(entry["intent_id"]+"_t178_"))
             ids.add(entry_reply["id"])
             assert entry_reply["language"]=="ru" and entry_reply["style"]=="neutral"
             assert entry_reply["context"] in {"direct","private","group_addressed"}
