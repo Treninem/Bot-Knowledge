@@ -41,5 +41,46 @@ def main():
   for other in existing.get("records",[]):
    assert not qset.intersection(normalize_question(s) for s in (other["question"],*other.get("aliases",[]))),p
    assert not aset.intersection(norm(s) for s in (other["answer"],*other.get("variants",[]))),p
- print("T160 PASS: 31 existing intents, 279 distinct RU replies (93 newly added), manifest SHA, scopes")
+
+ # T167: supplemental context pool, not a consumer pack.
+ stage_path="staging/ru/boundaries_t167_context_pool.json"
+ stage=json.loads((ROOT/stage_path).read_text("utf-8"))
+ assert stage["schema_version"]==1 and stage["stage_type"]=="supplemental_contextual_reply_pool"
+ assert stage["consumer_registered"] is False and stage["source_pack"]==PATH
+ gitblob=hashlib.sha1(b"blob "+str(len(raw)).encode()+b"\0"+raw).hexdigest()
+ assert stage["source_pack_blob_sha"]==gitblob
+ assert stage["source_pack_manifest_sha256"]==hashlib.sha256(raw).hexdigest()
+ assert stage_path not in {x["path"] for x in manifest["packs"]}
+ assert stage["constraints"]=={"read_only":True,"requires_direct_address":True,"no_personal_data":True}
+ assert stage["audiences"]==["all_ai_bots"] and stage["language"]=="ru"
+ cp=stage["checkpoint"]
+ assert cp["base_main_sha"]=="fd42092327dddbb0927906eafaa1b92ed59d59b1"
+ assert cp["registered_count"]==279 and cp["added_candidates"]==93
+ assert cp["per_intent_total"]==12 and cp["remaining_per_intent"]==88
+ assert cp["partial_intents"]==31 and cp["finished_100"]==0 and cp["remaining_total"]==2728
+ assert len(stage["entries"])==31
+ extra=[]; stage_ids=set()
+ for original,entry in zip(rows,stage["entries"]):
+  assert entry["intent_id"]==original["id"] and entry["question"]==original["question"]
+  assert entry["registered_reply_count"]==9 and entry["staged_reply_count"]==3
+  assert len(entry["replies"])==3
+  for r in entry["replies"]:
+   assert r["id"] not in stage_ids and r["id"].startswith(entry["intent_id"]+"_t167_")
+   stage_ids.add(r["id"])
+   assert r["language"]=="ru" and r["style"]=="neutral"
+   assert r["context"] in {"direct","private","group_addressed"}
+   assert r["audiences"]==["all_ai_bots"] and r["read_only"] is True
+   assert r["context_note"].strip() and r["avoid"].strip()
+   assert 0<len(r["text"])<=1600
+   assert not re.search(r"(?i)(ghp_[a-z0-9]{12,}|sk-[a-z0-9]{12,}|bot_token|chat_id|user_id|https://t\.me/|[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,})",r["text"])
+   extra.append(r["text"])
+ assert len(extra)==93 and len({norm(s) for s in replies+extra})==372
+ stage_keys={norm(s) for s in extra}
+ for item in manifest["packs"]:
+  otherpath=item["path"]
+  if otherpath==PATH or not otherpath.endswith("_qa.json"):continue
+  other=json.loads((ROOT/otherpath).read_text("utf-8"))
+  for row in other.get("records",[]):
+   assert not stage_keys.intersection(norm(s) for s in [row["answer"],*row.get("variants",[])]),otherpath
+ print("T167 PASS: 31 intents, 279 registered + 93 scoped staged replies, source SHA, privacy, uniqueness")
 if __name__=="__main__":main()
