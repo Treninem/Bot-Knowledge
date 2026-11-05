@@ -28,7 +28,7 @@ def main():
  index=KnowledgeSearch(ROOT)
  for row in rows:
   for ctx in ("direct","private","group_addressed"):
-   hits=index.search(row["question"],audience="all_ai_bots",limit=22,context=ctx)
+   hits=index.search(row["question"],audience="all_ai_bots",limit=20,context=ctx)
    assert any(h[0]==row["id"] and h[1]==PATH for h in hits), (row["id"],ctx)
  # Also enforce no cross-pack exact duplicates in the current manifest snapshot.
  qset={normalize_question(r["question"]) for r in rows}

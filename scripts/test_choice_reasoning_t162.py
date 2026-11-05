@@ -102,7 +102,7 @@ def main():
             assert not re.search(r"(?i)(ghp_[a-z0-9]{12,}|sk-[a-z0-9]{12,}|bot_token|chat_id|user_id|https://t\.me/|[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,})",r["text"])
             additional.append(r["text"])
     assert len(additional) == 510
-    assert len({norm(s) for s in answers + additional}) == 720
+    assert len({norm(s) for s in answers + additional}) == 780
     stage_keys = {norm(s) for s in additional}
     for entry in manifest["packs"]:
         p = entry["path"]
