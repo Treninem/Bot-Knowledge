@@ -26,38 +26,6 @@ def normalize(s):
 
 EXPECTED_STAGE_BY_ID = {
     "dlg_greet_no_rules": 91,
-    "dlg_greet_after_pause": 43,
-    "dlg_bye_without_pressure": 42,
-    "dlg_resume_topic_after_aside": 43,
-    "dlg_ambiguous_not_that": 43,
-    "dlg_correct_only_number": 43,
-    "dlg_two_distinct_questions": 43,
-    "dlg_unclear_pronoun": 43,
-    "dlg_short_preserve_caveat": 43,
-    "dlg_serious_after_humor": 43,
-    "dlg_dark_humor_grief": 43,
-    "dlg_swear_not_automatic_abuse": 43,
-    "dlg_firm_without_harassment": 43,
-    "dlg_possible_sarcasm": 41,
-    "dlg_missing_attachment": 42,
-    "dlg_stale_current_claim": 44,
-    "dlg_conflicting_sources": 44,
-    "dlg_one_reply_preference": 44,
-    "dlg_slang_translation": 44,
-    "dlg_fiction_vs_fact": 44,
-    "dlg_hypothetical_rule": 44,
-    "dlg_public_privacy_minimum": 44,
-    "dlg_correct_without_fake_action": 44,
-    "dlg_unavailable_feature": 44,
-    "dlg_group_rule_scope": 44,
-    "dlg_citation_not_permission": 44,
-    "dlg_no_assumed_traits": 44,
-    "dlg_listening_not_advice": 44,
-    "dlg_no_fake_button": 44,
-    "dlg_quote_not_directed": 44,
-}
-EXPECTED_TOTAL_BY_ID = {
-    "dlg_greet_no_rules": 100,
     "dlg_greet_after_pause": 48,
     "dlg_bye_without_pressure": 47,
     "dlg_resume_topic_after_aside": 48,
@@ -88,6 +56,38 @@ EXPECTED_TOTAL_BY_ID = {
     "dlg_no_fake_button": 49,
     "dlg_quote_not_directed": 49,
 }
+EXPECTED_TOTAL_BY_ID = {
+    "dlg_greet_no_rules": 100,
+    "dlg_greet_after_pause": 53,
+    "dlg_bye_without_pressure": 52,
+    "dlg_resume_topic_after_aside": 53,
+    "dlg_ambiguous_not_that": 53,
+    "dlg_correct_only_number": 53,
+    "dlg_two_distinct_questions": 53,
+    "dlg_unclear_pronoun": 53,
+    "dlg_short_preserve_caveat": 53,
+    "dlg_serious_after_humor": 53,
+    "dlg_dark_humor_grief": 53,
+    "dlg_swear_not_automatic_abuse": 53,
+    "dlg_firm_without_harassment": 53,
+    "dlg_possible_sarcasm": 51,
+    "dlg_missing_attachment": 52,
+    "dlg_stale_current_claim": 54,
+    "dlg_conflicting_sources": 54,
+    "dlg_one_reply_preference": 54,
+    "dlg_slang_translation": 54,
+    "dlg_fiction_vs_fact": 54,
+    "dlg_hypothetical_rule": 54,
+    "dlg_public_privacy_minimum": 54,
+    "dlg_correct_without_fake_action": 54,
+    "dlg_unavailable_feature": 54,
+    "dlg_group_rule_scope": 54,
+    "dlg_citation_not_permission": 54,
+    "dlg_no_assumed_traits": 54,
+    "dlg_listening_not_advice": 54,
+    "dlg_no_fake_button": 54,
+    "dlg_quote_not_directed": 54,
+}
 
 class StagedDialogueT126(unittest.TestCase):
     @classmethod
@@ -105,10 +105,10 @@ class StagedDialogueT126(unittest.TestCase):
         self.assertEqual(s["stage_type"], "supplemental_contextual_reply_pool")
         self.assertEqual(s["source_pack"], PACK)
         self.assertEqual(len(s["entries"]), 30)
-        self.assertEqual(sum(EXPECTED_TOTAL_BY_ID.values()), 1503)
-        self.assertEqual(len(self.proposed), 1349)
+        self.assertEqual(sum(EXPECTED_TOTAL_BY_ID.values()), 1648)
+        self.assertEqual(len(self.proposed), 1494)
         self.assertEqual(len({e["intent_id"] for e in s["entries"]}), 30)
-        self.assertEqual(s["checkpoint"]["added_candidates"], 1349)
+        self.assertEqual(s["checkpoint"]["added_candidates"], 1494)
         self.assertEqual(s["checkpoint"]["finished_100"], 1)
         for e in s["entries"]:
             orig = self.rows[e["intent_id"]]
@@ -120,6 +120,16 @@ class StagedDialogueT126(unittest.TestCase):
         self.assertEqual({e["intent_id"]: e["staged_reply_count"] for e in s["entries"]}, EXPECTED_STAGE_BY_ID)
         self.assertEqual(sum(1 for e in s["entries"] if e["registered_reply_count"] + e["staged_reply_count"] == 100), 1)
         self.assertTrue(all(e["registered_reply_count"] + e["staged_reply_count"] <= 100 for e in s["entries"]))
+
+    def test_t139_editorial_direct_greeting_outputs(self):
+        # These are utterances for a chat, not meta-instructions printed to the user.
+        greeting = next(e for e in self.stage["entries"] if e["intent_id"] == "dlg_greet_no_rules")
+        texts = [greeting["replies"][i]["text"] for i in (0, 1, 18, 19, 20)]
+        self.assertEqual(texts, [
+            "Привет!", "Привет! Я слушаю.", "И тебе привет!",
+            "Здравствуй!", "Доброе утро!",
+        ])
+        self.assertTrue(all("—" not in text and "«" not in text for text in texts))
 
     def test_source_blob_and_manifest_unchanged(self):
         raw = (ROOT / PACK).read_bytes()
