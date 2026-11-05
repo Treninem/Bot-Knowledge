@@ -25,7 +25,7 @@ def normalize(s):
     return " ".join(s.split())
 
 EXPECTED_STAGE_BY_ID = {
-    "dlg_greet_no_rules": 91,
+    "dlg_greet_no_rules": 100,
     "dlg_greet_after_pause": 53,
     "dlg_bye_without_pressure": 51,
     "dlg_resume_topic_after_aside": 52,
@@ -57,7 +57,7 @@ EXPECTED_STAGE_BY_ID = {
     "dlg_quote_not_directed": 53,
 }
 EXPECTED_TOTAL_BY_ID = {
-    "dlg_greet_no_rules": 100,
+    "dlg_greet_no_rules": 109,
     "dlg_greet_after_pause": 58,
     "dlg_bye_without_pressure": 56,
     "dlg_resume_topic_after_aside": 57,
@@ -105,10 +105,10 @@ class StagedDialogueT126(unittest.TestCase):
         self.assertEqual(s["stage_type"], "supplemental_contextual_reply_pool")
         self.assertEqual(s["source_pack"], PACK)
         self.assertEqual(len(s["entries"]), 30)
-        self.assertEqual(sum(EXPECTED_TOTAL_BY_ID.values()), 1838)
-        self.assertEqual(len(self.proposed), 1684)
+        self.assertEqual(sum(EXPECTED_TOTAL_BY_ID.values()), 1847)
+        self.assertEqual(len(self.proposed), 1693)
         self.assertEqual(len({e["intent_id"] for e in s["entries"]}), 30)
-        self.assertEqual(s["checkpoint"]["added_candidates"], 1684)
+        self.assertEqual(s["checkpoint"]["added_candidates"], 1693)
         self.assertEqual(s["checkpoint"]["finished_100"], 1)
         for e in s["entries"]:
             orig = self.rows[e["intent_id"]]
@@ -116,10 +116,10 @@ class StagedDialogueT126(unittest.TestCase):
             self.assertEqual(e["registered_reply_count"], 1 + len(orig["variants"]))
             self.assertEqual(e["staged_reply_count"], len(e["replies"]))
         g = next(e for e in s["entries"] if e["intent_id"] == "dlg_greet_no_rules")
-        self.assertEqual((g["registered_reply_count"], g["staged_reply_count"]), (9, 91))
+        self.assertEqual((g["registered_reply_count"], g["staged_reply_count"]), (9, 100))
         self.assertEqual({e["intent_id"]: e["staged_reply_count"] for e in s["entries"]}, EXPECTED_STAGE_BY_ID)
-        self.assertEqual(sum(1 for e in s["entries"] if e["registered_reply_count"] + e["staged_reply_count"] == 100), 1)
-        self.assertTrue(all(e["registered_reply_count"] + e["staged_reply_count"] <= 100 for e in s["entries"]))
+        self.assertEqual(sum(1 for e in s["entries"] if e["staged_reply_count"] == 100), 1)
+        self.assertTrue(all(e["staged_reply_count"] <= 100 for e in s["entries"]))
 
     def test_t139_editorial_direct_greeting_outputs(self):
         # These are utterances for a chat, not meta-instructions printed to the user.
@@ -151,7 +151,7 @@ class StagedDialogueT126(unittest.TestCase):
             expected_total = EXPECTED_TOTAL_BY_ID[key]
             self.assertEqual(e["registered_reply_count"] + e["staged_reply_count"],
                              expected_total, key)
-            expected_missing = 100 - expected_total
+            expected_missing = 100 - e["staged_reply_count"]
             if key == "dlg_greet_no_rules":
                 saved_missing = self.stage["checkpoint"]["greeting"]["remaining"]
             else:
@@ -191,6 +191,35 @@ class StagedDialogueT126(unittest.TestCase):
             for row in load(path)["records"]:
                 old.update(normalize(s) for s in [row["answer"], *row.get("variants", [])])
         self.assertFalse(old.intersection(proposed))
+
+
+    def test_t147_direct_replies_are_not_qa_guidance(self):
+        # Old qa.v1 answers provide *instructions* about dialogue, not direct
+        # greeting utterances. They must not fill a ready-to-send 100 quota.
+        greeting = next(e for e in self.stage["entries"]
+                        if e["intent_id"] == "dlg_greet_no_rules")
+        self.assertEqual(len(greeting["replies"]), 100)
+        self.assertEqual(self.stage["checkpoint"]["greeting"]["ready_chat_utterances"], 100)
+        self.assertEqual(self.stage["checkpoint"]["greeting"]["registered_qa_guidance_not_direct_replies"], 9)
+        self.assertEqual(self.stage["checkpoint"]["greeting"]["combined_text_count"], 109)
+        self.assertEqual(len(self.proposed), 1693)
+        self.assertEqual(self.stage["checkpoint"]["remaining_intents"]["count"], 29)
+        for entry in self.stage["entries"]:
+            self.assertEqual(
+                self.stage["checkpoint"]["remaining_intents"]["missing_by_intent"].get(entry["intent_id"], 0),
+                100 - entry["staged_reply_count"],
+            )
+
+    def test_t147_no_obvious_meta_instructions_as_user_replies(self):
+        # Conservative lint, not a semantic proof; policy documentation
+        # belongs in qa.v1, while staging stores candidate chat utterances.
+        meta = re.compile(
+            r"^(?:Если (?:человек|пользователь|собеседник|вопрос|контекст)\\b"
+            r"|Не (?:стоит|надо|используй)\\b|Вместо\\b)",
+            re.IGNORECASE,
+        )
+        for reply in self.proposed:
+            self.assertIsNone(meta.search(reply["text"]), reply["text"])
 
 if __name__ == "__main__":
     unittest.main()
