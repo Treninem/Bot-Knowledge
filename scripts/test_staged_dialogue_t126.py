@@ -39,9 +39,9 @@ class StagedDialogueT126(unittest.TestCase):
         self.assertFalse(s["consumer_registered"])
         self.assertEqual(s["source_pack"], PACK)
         self.assertEqual(len(s["entries"]), 30)
-        self.assertEqual(len(self.proposed), 105)
+        self.assertEqual(len(self.proposed), 163)
         self.assertEqual(len({e["intent_id"] for e in s["entries"]}), 30)
-        self.assertEqual(s["checkpoint"]["added_candidates"], 105)
+        self.assertEqual(s["checkpoint"]["added_candidates"], 163)
         self.assertEqual(s["checkpoint"]["finished_100"], 0)
         for e in s["entries"]:
             orig = self.rows[e["intent_id"]]
@@ -50,7 +50,7 @@ class StagedDialogueT126(unittest.TestCase):
             self.assertEqual(e["staged_reply_count"], len(e["replies"]))
         g = next(e for e in s["entries"] if e["intent_id"] == "dlg_greet_no_rules")
         self.assertEqual((g["registered_reply_count"], g["staged_reply_count"]), (9, 18))
-        self.assertTrue(all(e["staged_reply_count"] == 3 for e in s["entries"] if e is not g))
+        self.assertTrue(all(e["staged_reply_count"] == 5 for e in s["entries"] if e is not g))
 
     def test_source_blob_and_manifest_unchanged(self):
         raw = (ROOT / PACK).read_bytes()
@@ -63,7 +63,7 @@ class StagedDialogueT126(unittest.TestCase):
     def test_scopes_and_no_secrets(self):
         for e in self.stage["entries"]:
             self.assertEqual(e["registered_reply_count"] + e["staged_reply_count"] + (
-                73 if e["intent_id"] == "dlg_greet_no_rules" else 92
+                73 if e["intent_id"] == "dlg_greet_no_rules" else 90
             ), 100)
             for r in e["replies"]:
                 self.assertEqual(r["language"], "ru")
