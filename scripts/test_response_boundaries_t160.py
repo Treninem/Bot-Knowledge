@@ -19,7 +19,7 @@ def main():
  assert all(r["constraints"]=={"read_only":True,"requires_direct_address":True,"no_personal_data":True} for r in rows)
  assert all(r["source"].endswith("/AGENTS.md") for r in rows)
  replies=[s for r in rows for s in [r["answer"],*r["variants"]]]
- assert len(replies)==279 and len({norm(s) for s in replies})==186
+ assert len(replies)==279 and len({norm(s) for s in replies})==279
  assert not any(re.search(r"(?i)(ghp_|sk-|bot_token|chat_id|user_id|bearer\\s+)",s) for s in replies)
  assert all(normalize_question(r["question"]) for r in rows)
 
