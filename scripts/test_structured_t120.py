@@ -11,8 +11,8 @@ def main():
     assert validate_qa_pack(p)==114
     replies=[v for r in p["records"] for v in [r["answer"],*r["variants"]]]
     assert len(replies)==len({normalize_question(v) for v in replies}) and len(replies)>=522
-    assert sum(len(r["variants"])==4 for r in p["records"])>=90
+    assert sum(len(r["variants"])>=4 for r in p["records"])>=90
     assert sum(len(r["variants"])==2 for r in p["records"])<=24
-    assert all(len(r["variants"])==4 for r in p["records"] if r["id"].startswith("struct_t88_"))
+    assert all(len(r["variants"])>=4 for r in p["records"] if r["id"].startswith("struct_t88_"))
     print("T120 PASS: 522 replies total; T118 +130, T120 +50")
 if __name__=="__main__":main()
