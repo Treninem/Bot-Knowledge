@@ -214,12 +214,31 @@ class StagedDialogueT126(unittest.TestCase):
         # Conservative lint, not a semantic proof; policy documentation
         # belongs in qa.v1, while staging stores candidate chat utterances.
         meta = re.compile(
-            r"^(?:Если (?:человек|пользователь|собеседник|вопрос|контекст)\\b"
-            r"|Не (?:стоит|надо|используй)\\b|Вместо\\b)",
+            r"^(?:Если (?:человек|пользователь|собеседник|вопрос|контекст)\b"
+            r"|Не (?:стоит|надо|используй)\b|Вместо\b)",
             re.IGNORECASE,
         )
         for reply in self.proposed:
             self.assertIsNone(meta.search(reply["text"]), reply["text"])
+
+
+    def test_t148_bot_directives_are_not_staged_as_user_utterances(self):
+        # Targeted regression for actual editorial defects fixed in T148.
+        # Heuristic only: human language quality still needs spot checks.
+        stale_fragments = (
+            "Если видна лишь последняя реплика, ответь",
+            "Если отступление изменило исходные данные",
+            "После «не то» на черновое изображение уточни",
+            "Когда один вопрос срочный и касается безопасности, начни",
+            "Сначала установи грамматическую цель грубого слова",
+            "Если попросили «без приколов», убери",
+            "Для разбора таблицы попроси нужные строки",
+            "При разборе цитаты с матом сначала проверь",
+            "Если инструкция требует копии данных, оставь",
+        )
+        for reply in self.proposed:
+            self.assertFalse(any(x in reply["text"] for x in stale_fragments), reply["text"])
+        self.assertEqual(self.stage["checkpoint"]["editorial_review"]["rewritten_meta_instructions"], 33)
 
 if __name__ == "__main__":
     unittest.main()
