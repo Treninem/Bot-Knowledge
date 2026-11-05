@@ -214,7 +214,7 @@ class StagedDialogueT126(unittest.TestCase):
         review = self.stage["checkpoint"]["editorial_review"]["t157"]
         self.assertEqual((review["added"], review["rejected"], review["processed_intents"]), (142, 0, 4))
         self.assertFalse(review["consumer_loaded"])
-        self.assertEqual(review["editorial_rewrites_after_ci"], 1)
+        self.assertEqual(review["editorial_rewrites_after_ci"], 2)
         self.assertEqual(self.stage["checkpoint"]["remaining_intents"]["count"], 0)
         for key in ("dlg_serious_after_humor", "dlg_dark_humor_grief",
                     "dlg_swear_not_automatic_abuse", "dlg_hypothetical_rule"):
@@ -222,10 +222,10 @@ class StagedDialogueT126(unittest.TestCase):
 
     def test_t149_exact_staging_content_sha256(self):
         raw = (ROOT / STAGE).read_bytes()
-        self.assertEqual(len(raw), 1609687)
+        self.assertEqual(len(raw), 1609690)
         self.assertEqual(
             hashlib.sha256(raw).hexdigest(),
-            "cc169e4ed1fc0a982b641199edd44dd031e4b55978bb5f9866fb67e90c1701e4",
+            "544a76959ca2ef709820dcf1771789dc7a0ad95e010125dad241df86f9e13875",
         )
 
     def test_t149_accepted_delta_and_editorial_repair(self):
