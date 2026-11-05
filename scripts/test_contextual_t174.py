@@ -9,9 +9,9 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 SPECS = {
-    "staging/ru/choice_t166_context_pool.json": (30, 9, 21, 1, 2100),
-    "staging/ru/recovery_t168_context_pool.json": (24, 9, 19, 1, 1728),
-    "staging/ru/boundaries_t167_context_pool.json": (31, 9, 17, 1, 2294),
+    "staging/ru/choice_t166_context_pool.json": (30, 9, 22, 1, 2070),
+    "staging/ru/recovery_t168_context_pool.json": (24, 9, 20, 1, 1704),
+    "staging/ru/boundaries_t167_context_pool.json": (31, 9, 18, 1, 2263),
 }
 SENSITIVE = re.compile(
     r"(?i)(ghp_[a-z0-9]{12,}|sk-[a-z0-9]{12,}|bot_token|chat_id|"
@@ -37,8 +37,8 @@ def main():
         stage = json.loads((ROOT / path).read_text("utf-8"))
         checkpoint = stage["checkpoint"]
         assert checkpoint["base_main_sha"] == "309e5edd22f8ca4a6dcf59a4b2213a4c8696d36b"
-        assert checkpoint["updated_in"] == "T181"
-        assert checkpoint["latest_base_main_sha"] == "27022b752320ac807df0cded40e40a2a29335e19"
+        assert checkpoint["updated_in"] == "T182"
+        assert checkpoint["latest_base_main_sha"] == "52484d7725c20e5985a72693864ca34518738fc5"
         assert checkpoint["registered_count"] == intents * base
         assert checkpoint["added_candidates"] == intents * stage_expected
         assert checkpoint["latest_added"] == intents * new_each
@@ -53,7 +53,7 @@ def main():
         for row in stage["entries"]:
             assert row["registered_reply_count"] == base
             assert row["staged_reply_count"] == stage_expected == len(row["replies"])
-            new = [r for r in row["replies"] if "_t181_" in r["id"]]
+            new = [r for r in row["replies"] if "_t182_" in r["id"]]
             assert len(new) == new_each, row["intent_id"]
             assert len({r["context_note"] for r in new}) == new_each
             for r in row["replies"]:
@@ -68,7 +68,7 @@ def main():
                 assert 0 < len(r["text"]) <= 1600
                 all_stage.append(r["text"])
             fresh.extend(r["text"] for r in new)
-    assert len(fresh) == 85 and len(all_stage) == 1613
+    assert len(fresh) == 85 and len(all_stage) == 1698
     assert len({norm(t) for t in all_stage}) == len(all_stage)
     all_registered = set()
     for pack in manifest["packs"]:
@@ -78,7 +78,7 @@ def main():
         for row in obj.get("records", []):
             all_registered.update(norm(t) for t in [row["answer"], *row.get("variants", [])])
     assert set(map(norm, all_stage)).isdisjoint(all_registered)
-    print("T181 PASS: 85 existing intents, 85 new contextual RU replies, 1613 staged unique; registered cross-pack exact dedup")
+    print("T182 PASS: 85 existing intents, 85 new contextual RU replies, 1698 staged unique; registered cross-pack exact dedup")
 
 
 if __name__ == "__main__":
