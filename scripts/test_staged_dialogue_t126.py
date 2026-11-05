@@ -131,6 +131,70 @@ class StagedDialogueT126(unittest.TestCase):
         ])
         self.assertTrue(all("—" not in text and "«" not in text for text in texts))
 
+    def test_no_decorative_outer_quotes_in_replies(self):
+        # QA examples are candidate direct utterances, not quoted speech demonstrations.
+        # A real inner quotation remains intact; only whole-utterance wrappers are banned.
+        wrapper = re.compile(r'^\\s*[«“\"](?:[^\\n]|\\n)+[»”\"][.!?]?\\s*
+        raw = (ROOT / PACK).read_bytes()
+        git_blob = hashlib.sha1(b"blob " + str(len(raw)).encode() + b"\0" + raw).hexdigest()
+        self.assertEqual(git_blob, self.stage["source_pack_blob_sha"])
+        manifests = {p["path"]: p["sha256"] for p in self.manifest["packs"]}
+        self.assertEqual(hashlib.sha256(raw).hexdigest(), manifests[PACK])
+        self.assertNotIn(STAGE, manifests)
+
+    def test_scopes_and_no_secrets(self):
+        for e in self.stage["entries"]:
+            key = e["intent_id"]
+            expected_total = EXPECTED_TOTAL_BY_ID[key]
+            self.assertEqual(e["registered_reply_count"] + e["staged_reply_count"],
+                             expected_total, key)
+            expected_missing = 100 - expected_total
+            if key == "dlg_greet_no_rules":
+                saved_missing = self.stage["checkpoint"]["greeting"]["remaining"]
+            else:
+                saved_missing = self.stage["checkpoint"]["remaining_intents"]["missing_by_intent"][key]
+            self.assertEqual(saved_missing, expected_missing, key)
+            for r in e["replies"]:
+                self.assertEqual(r["language"], "ru")
+                self.assertEqual(r["style"], "neutral")
+                self.assertTrue(r["read_only"])
+                self.assertIn(r["context"], ("direct", "private", "group_addressed"))
+                self.assertEqual(set(r), {"text", "context_note", "avoid", "context", "language", "style", "read_only"})
+                for f in ("text", "context_note", "avoid"):
+                    self.assertTrue(isinstance(r[f], str) and r[f].strip())
+                self.assertFalse(PRIVATE.search(r["text"]))
+
+    def test_no_near_duplicate_staged_replies(self):
+        # Lexical screen only: it does not substitute for independent semantic review.
+        token_sets = []
+        for entry in self.stage["entries"]:
+            for reply in entry["replies"]:
+                tokens = {word for word in normalize(reply["text"]).split() if len(word) > 2}
+                self.assertTrue(tokens, entry["intent_id"])
+                token_sets.append((entry["intent_id"], tokens))
+        for i, (left_id, left) in enumerate(token_sets):
+            for right_id, right in token_sets[:i]:
+                overlap = len(left & right)
+                similarity = overlap / (len(left | right) or 1)
+                self.assertLess(similarity, 0.78, (left_id, right_id, similarity))
+
+    def test_unique_against_all_registered_qa(self):
+        proposed = [normalize(r["text"]) for r in self.proposed]
+        self.assertEqual(len(proposed), len(set(proposed)))
+        old = set()
+        qa_paths = [p["path"] for p in self.manifest["packs"] if p["path"].endswith("_qa.json")]
+        self.assertGreaterEqual(len(qa_paths), 11)
+        for path in qa_paths:
+            for row in load(path)["records"]:
+                old.update(normalize(s) for s in [row["answer"], *row.get("variants", [])])
+        self.assertFalse(old.intersection(proposed))
+
+if __name__ == "__main__":
+    unittest.main()
+)
+        for reply in self.proposed:
+            self.assertIsNone(wrapper.match(reply["text"]), reply["text"])
+
     def test_source_blob_and_manifest_unchanged(self):
         raw = (ROOT / PACK).read_bytes()
         git_blob = hashlib.sha1(b"blob " + str(len(raw)).encode() + b"\0" + raw).hexdigest()
