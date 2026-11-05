@@ -38,6 +38,7 @@ def main():
         checkpoint = stage["checkpoint"]
         assert checkpoint["base_main_sha"] == "309e5edd22f8ca4a6dcf59a4b2213a4c8696d36b"
         assert checkpoint["updated_in"] == "T179"
+        assert checkpoint["latest_base_main_sha"] == "007fa32d8a42fe9f99b01c767c37993ff57fdffd"
         assert checkpoint["registered_count"] == intents * base
         assert checkpoint["added_candidates"] == intents * stage_expected
         assert checkpoint["latest_added"] == intents * new_each
