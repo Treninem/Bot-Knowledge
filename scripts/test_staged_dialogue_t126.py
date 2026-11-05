@@ -62,9 +62,17 @@ class StagedDialogueT126(unittest.TestCase):
 
     def test_scopes_and_no_secrets(self):
         for e in self.stage["entries"]:
-            self.assertEqual(e["registered_reply_count"] + e["staged_reply_count"] + (
-                (100 - e["registered_reply_count"] - e["staged_reply_count"])
-            ), 100)
+            key = e["intent_id"]
+            expected_total = (51 if key == "dlg_greet_no_rules"
+                              else 15 if key == "dlg_possible_sarcasm" else 16)
+            self.assertEqual(e["registered_reply_count"] + e["staged_reply_count"],
+                             expected_total, key)
+            expected_missing = 100 - expected_total
+            if key == "dlg_greet_no_rules":
+                saved_missing = self.stage["checkpoint"]["greeting"]["remaining"]
+            else:
+                saved_missing = self.stage["checkpoint"]["remaining_intents"]["missing_by_intent"][key]
+            self.assertEqual(saved_missing, expected_missing, key)
             for r in e["replies"]:
                 self.assertEqual(r["language"], "ru")
                 self.assertEqual(r["style"], "neutral")
