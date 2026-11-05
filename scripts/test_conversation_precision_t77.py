@@ -16,7 +16,7 @@ def main():
     assert len(pack["records"])>=42 and validate_qa_pack(pack)==len(pack["records"])
     assert len({r["id"] for r in rows})==42
     assert len({normalize_question(q) for r in rows for q in (r["question"],*r["aliases"])})==126
-    assert len({normalize_question(a) for r in rows for a in (r["answer"],*r["variants"])})==126
+    assert len({normalize_question(a) for r in rows for a in (r["answer"],*r["variants"])})==378
     seen=set()
     for p in manifest["packs"]:
         if p["path"]==REL: continue
@@ -29,10 +29,10 @@ def main():
     for r in rows:
         assert r["audiences"]==["all_ai_bots"] and r["contexts"]==["direct","private","group_addressed"]
         assert r["constraints"]=={"read_only":True,"requires_direct_address":True,"no_personal_data":True}
-        assert r["language"]=="ru" and len(r["aliases"])==2 and len(r["variants"])==2
+        assert r["language"]=="ru" and len(r["aliases"])==2 and 4 <= len(r["variants"]) <= 8
         assert not (set(r)&{"action","sanction","auto_apply","execute","ban","mute"})
         hits=idx.search(r["question"],audience="all_ai_bots",limit=20)
         assert any(h[0]==r["id"] for h in hits),r["id"]
-    print("T77 PASS: 42 original questions, 84 aliases, 126 responses")
+    print("T77 PASS: 42 original questions, 84 aliases, 378 responses")
 
 if __name__=="__main__": main()
