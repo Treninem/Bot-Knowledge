@@ -65,7 +65,7 @@ def main():
     assert staging["stage_type"] == "supplemental_contextual_reply_pool"
     assert staging["source_pack"] == PATH and staging["consumer_registered"] is False
     assert staging["source_pack_manifest_sha256"] == hashlib.sha256(data).hexdigest()
-    git_blob = hashlib.sha1(b"blob " + str(len(data)).encode() + b"\\0" + data).hexdigest()
+    git_blob = hashlib.sha1(b"blob " + str(len(data)).encode() + b"\0" + data).hexdigest()
     assert staging["source_pack_blob_sha"] == git_blob
     assert stage_path not in {m["path"] for m in manifest["packs"]}
     assert staging["constraints"] == {"read_only": True, "requires_direct_address": True, "no_personal_data": True}
@@ -90,7 +90,7 @@ def main():
             assert r["audiences"] == ["all_ai_bots"] and r["read_only"] is True
             assert r["context_note"].strip() and r["avoid"].strip()
             assert len(r["text"]) <= 1600
-            assert not re.search(r"(?i)(ghp_[a-z0-9]{12,}|sk-[a-z0-9]{12,}|bot_token|chat_id|user_id|https://t\\.me/|[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,})",r["text"])
+            assert not re.search(r"(?i)(ghp_[a-z0-9]{12,}|sk-[a-z0-9]{12,}|bot_token|chat_id|user_id|https://t\.me/|[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,})",r["text"])
             additional.append(r["text"])
     assert len(additional) == 90
     assert len({norm(s) for s in answers + additional}) == 360
