@@ -105,7 +105,10 @@ def main() -> None:
     assert new_qa["catalog"]["adapter"] == "qa.v1"
     assert new_qa["catalog"]["audiences"] == ["all_ai_bots"]
     assert len(new_qa["records"]) >= 30  # Retain baseline, allow new reviewed qa.v1 topics
-    assert all(len(q["aliases"]) == 2 and len(q["variants"]) == 2
+    # Reviewed qa.v1 topics may expand from 2 to 8 variants without
+    # changing the original two aliases, audience, or safety boundaries.
+    assert all(len(q["aliases"]) == 2 and 2 <= len(q["variants"]) <= 8
+               and len({normalize_general_q(v) for v in q["variants"]}) == len(q["variants"])
                and q["audiences"] == ["all_ai_bots"]
                for q in new_qa["records"])
     new_phrases = [normalize_general_q(p)
@@ -170,7 +173,9 @@ def main() -> None:
         for phrase in [q["question"], *q["aliases"]]:
             hits = index.search(phrase, "all_ai_bots", 20)
             assert q["id"] in {h[0] for h in hits}, (q["id"], phrase, hits)
-    print("DIALOGUE_QA_SEARCH_PASS questions=30 paraphrases=60 answers=90")
+    print(f"DIALOGUE_QA_SEARCH_PASS questions={len(new_qa['records'])} "
+          f"paraphrases={sum(len(x['aliases']) for x in new_qa['records'])} "
+          f"answers={sum(1 + len(x['variants']) for x in new_qa['records'])}")
     # Ten different retrieval and permission scenarios (not ten dummy repeats).
     probes = [
         ("Перешли мне код из SMS", "chat_moderators", "mod_fraud_bait_1"),
