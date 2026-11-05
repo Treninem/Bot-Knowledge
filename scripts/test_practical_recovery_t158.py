@@ -1,4 +1,4 @@
-"""T158 registered practical recovery QA: exact SHA, scopes and uniqueness."""
+"""T158/T170: registered recovery and staged contextual continuation."""
 import hashlib, json, re, unicodedata
 from pathlib import Path
 from scripts.validate_qa_v1 import validate_qa_pack
@@ -22,7 +22,7 @@ def main():
     assert len(ans)==216 and len({norm(a) for a in ans})==216
     assert not any(re.search(r"(?i)(ghp_|sk-|bot_token|chat_id|user_id|bearer\\s+)",a) for a in ans)
 
-    # T168: supplemental scoped candidates are NOT consumer registered.
+    # T168/T170: supplemental scoped candidates are NOT consumer registered.
     stage_path="staging/ru/recovery_t168_context_pool.json"
     stage=json.loads((ROOT/stage_path).read_text("utf-8"))
     assert stage["schema_version"]==1 and stage["language"]=="ru"
@@ -35,20 +35,23 @@ def main():
     assert stage["constraints"]=={"read_only":True,"requires_direct_address":True,"no_personal_data":True}
     assert stage["audiences"]==["all_ai_bots"]
     checkpoint=stage["checkpoint"]
-    assert checkpoint["base_main_sha"]=="207d884c6c4e3de895e8414b33e5613cf7ada613"
-    assert checkpoint["registered_count"]==216 and checkpoint["added_candidates"]==72
-    assert checkpoint["per_intent_registered"]==9 and checkpoint["per_intent_staged"]==3
-    assert checkpoint["per_intent_total"]==12 and checkpoint["partial_intents"]==24
-    assert checkpoint["finished_100"]==0 and checkpoint["remaining_total"]==2112
-    assert checkpoint["remaining_per_intent"]==88
+    assert checkpoint["base_main_sha"]=="b580c71c2b823133fae52dbb4ff949b91a1234b1"
+    assert checkpoint["registered_count"]==216 and checkpoint["added_candidates"]==144
+    assert checkpoint["latest_added"]==72 and checkpoint["latest_rejected"]==0
+    assert checkpoint["per_intent_registered"]==9 and checkpoint["per_intent_staged"]==6
+    assert checkpoint["per_intent_total"]==15 and checkpoint["partial_intents"]==24
+    assert checkpoint["finished_100"]==0 and checkpoint["remaining_total"]==2040
+    assert checkpoint["remaining_per_intent"]==85
     assert len(stage["entries"])==24
     candidates=[]; ids=set()
     for prior,entry in zip(rows,stage["entries"]):
         assert entry["intent_id"]==prior["id"] and entry["question"]==prior["question"]
-        assert entry["registered_reply_count"]==9 and entry["staged_reply_count"]==3
-        assert len(entry["replies"])==3
+        assert entry["registered_reply_count"]==9 and entry["staged_reply_count"]==6
+        assert len(entry["replies"])==6
+        assert sum(r["id"].startswith(entry["intent_id"]+"_t168_") for r in entry["replies"])==3
+        assert sum(r["id"].startswith(entry["intent_id"]+"_t170_") for r in entry["replies"])==3
         for entry_reply in entry["replies"]:
-            assert entry_reply["id"] not in ids and entry_reply["id"].startswith(entry["intent_id"]+"_t168_")
+            assert entry_reply["id"] not in ids and (entry_reply["id"].startswith(entry["intent_id"]+"_t168_") or entry_reply["id"].startswith(entry["intent_id"]+"_t170_"))
             ids.add(entry_reply["id"])
             assert entry_reply["language"]=="ru" and entry_reply["style"]=="neutral"
             assert entry_reply["context"] in {"direct","private","group_addressed"}
@@ -57,7 +60,7 @@ def main():
             assert 0<len(entry_reply["text"])<=1600
             assert not re.search(r"(?i)(ghp_[a-z0-9]{12,}|sk-[a-z0-9]{12,}|bot_token|chat_id|user_id|https://t\.me/|[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,})",entry_reply["text"])
             candidates.append(entry_reply["text"])
-    assert len(candidates)==72 and len({norm(s) for s in ans+candidates})==288
+    assert len(candidates)==144 and len({norm(s) for s in ans+candidates})==360
     staged_keys={norm(s) for s in candidates}
     for item in mf["packs"]:
         path=item["path"]
@@ -66,5 +69,5 @@ def main():
         for record in other.get("records",[]):
             assert not staged_keys.intersection(
                 norm(s) for s in [record["answer"],*record.get("variants",[])]),path
-    print("T168 PASS: 24 questions, 216 registered + 72 staged scoped replies, SHA, privacy, uniqueness")
+    print("T170 PASS: 24 questions, 216 registered + 144 staged scoped replies, SHA, privacy, uniqueness")
 if __name__=="__main__":main()
