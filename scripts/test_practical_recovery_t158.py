@@ -35,25 +35,26 @@ def main():
     assert stage["constraints"]=={"read_only":True,"requires_direct_address":True,"no_personal_data":True}
     assert stage["audiences"]==["all_ai_bots"]
     checkpoint=stage["checkpoint"]
-    assert checkpoint["base_main_sha"]=="309e5edd22f8ca4a6dcf59a4b2213a4c8696d36b"
-    assert checkpoint["registered_count"]==216 and checkpoint["added_candidates"]==240
+    assert checkpoint["base_main_sha"]=="53d21e767706431c3a901251f543da3849a00af7"
+    assert checkpoint["registered_count"]==216 and checkpoint["added_candidates"]==264
     assert checkpoint["latest_added"]==24 and checkpoint["latest_rejected"]==0
-    assert checkpoint["per_intent_registered"]==9 and checkpoint["per_intent_staged"]==10
-    assert checkpoint["per_intent_total"]==19 and checkpoint["partial_intents"]==24
-    assert checkpoint["finished_100"]==0 and checkpoint["remaining_total"]==1944
-    assert checkpoint["remaining_per_intent"]==81
+    assert checkpoint["per_intent_registered"]==9 and checkpoint["per_intent_staged"]==11
+    assert checkpoint["per_intent_total"]==20 and checkpoint["partial_intents"]==24
+    assert checkpoint["finished_100"]==0 and checkpoint["remaining_total"]==1920
+    assert checkpoint["remaining_per_intent"]==80
     assert len(stage["entries"])==24
     candidates=[]; ids=set()
     for prior,entry in zip(rows,stage["entries"]):
         assert entry["intent_id"]==prior["id"] and entry["question"]==prior["question"]
-        assert entry["registered_reply_count"]==9 and entry["staged_reply_count"]==10
-        assert len(entry["replies"])==10
+        assert entry["registered_reply_count"]==9 and entry["staged_reply_count"]==11
+        assert len(entry["replies"])==11
         assert sum(r["id"].startswith(entry["intent_id"]+"_t168_") for r in entry["replies"])==3
         assert sum(r["id"].startswith(entry["intent_id"]+"_t170_") for r in entry["replies"])==3
         assert sum(r["id"].startswith(entry["intent_id"]+"_t174_") for r in entry["replies"])==3
         assert sum(r["id"].startswith(entry["intent_id"]+"_t175_") for r in entry["replies"])==1
+        assert sum(r["id"].startswith(entry["intent_id"]+"_t176_") for r in entry["replies"])==1
         for entry_reply in entry["replies"]:
-            assert entry_reply["id"] not in ids and (entry_reply["id"].startswith(entry["intent_id"]+"_t168_") or entry_reply["id"].startswith(entry["intent_id"]+"_t170_") or entry_reply["id"].startswith(entry["intent_id"]+"_t174_") or entry_reply["id"].startswith(entry["intent_id"]+"_t175_"))
+            assert entry_reply["id"] not in ids and (entry_reply["id"].startswith(entry["intent_id"]+"_t168_") or entry_reply["id"].startswith(entry["intent_id"]+"_t170_") or entry_reply["id"].startswith(entry["intent_id"]+"_t174_") or entry_reply["id"].startswith(entry["intent_id"]+"_t175_") or entry_reply["id"].startswith(entry["intent_id"]+"_t176_"))
             ids.add(entry_reply["id"])
             assert entry_reply["language"]=="ru" and entry_reply["style"]=="neutral"
             assert entry_reply["context"] in {"direct","private","group_addressed"}
@@ -62,7 +63,7 @@ def main():
             assert 0<len(entry_reply["text"])<=1600
             assert not re.search(r"(?i)(ghp_[a-z0-9]{12,}|sk-[a-z0-9]{12,}|bot_token|chat_id|user_id|https://t\.me/|[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,})",entry_reply["text"])
             candidates.append(entry_reply["text"])
-    assert len(candidates)==240 and len({norm(s) for s in ans+candidates})==456
+    assert len(candidates)==264 and len({norm(s) for s in ans+candidates})==480
     staged_keys={norm(s) for s in candidates}
     for item in mf["packs"]:
         path=item["path"]
@@ -71,5 +72,5 @@ def main():
         for record in other.get("records",[]):
             assert not staged_keys.intersection(
                 norm(s) for s in [record["answer"],*record.get("variants",[])]),path
-    print("T175 PASS: 24 recovery intents, 216 registered + 240 staged; SHA, privacy and uniqueness")
+    print("T176 PASS: 24 recovery intents, 216 registered + 264 staged; SHA, privacy and uniqueness")
 if __name__=="__main__":main()
