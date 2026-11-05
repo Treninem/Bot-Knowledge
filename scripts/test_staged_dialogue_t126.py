@@ -108,7 +108,7 @@ class StagedDialogueT126(unittest.TestCase):
         self.assertEqual(sum(EXPECTED_TOTAL_BY_ID.values()), 2150)
         self.assertEqual(len(self.proposed), 1996)
         self.assertEqual(len({e["intent_id"] for e in s["entries"]}), 30)
-        self.assertEqual(s["checkpoint"]["added_candidates"], 1693)
+        self.assertEqual(s["checkpoint"]["added_candidates"], 1996)
         self.assertEqual(s["checkpoint"]["finished_100"], 2)
         for e in s["entries"]:
             orig = self.rows[e["intent_id"]]
@@ -209,6 +209,33 @@ class StagedDialogueT126(unittest.TestCase):
                 self.stage["checkpoint"]["remaining_intents"]["missing_by_intent"].get(entry["intent_id"], 0),
                 100 - entry["staged_reply_count"],
             )
+
+    def test_t149_accepted_delta_and_editorial_repair(self):
+        checkpoint = self.stage["checkpoint"]
+        review = checkpoint["editorial_review"]
+        self.assertEqual(
+            review["t149a"]["added"] + review["t149b"]["added"] + review["t149c"]["accepted"],
+            303,
+        )
+        self.assertEqual(review["t149b"]["edited_direct_utterances"], 15)
+        self.assertEqual(review["rewritten_meta_instructions"], 49)
+        self.assertEqual(checkpoint["finished_100"], 2)
+        self.assertEqual(checkpoint["remaining_intents"]["count"], 28)
+        self.assertEqual(sum(e["staged_reply_count"] for e in self.stage["entries"]), 1996)
+        done = {e["intent_id"] for e in self.stage["entries"] if e["staged_reply_count"] == 100}
+        self.assertEqual(done, {"dlg_greet_no_rules", "dlg_greet_after_pause"})
+        self.assertEqual(
+            sum(checkpoint["remaining_intents"]["missing_by_intent"].values()),
+            3000 - 1996,
+        )
+        rewrites = {
+            "dlg_greet_after_pause": "Продолжим? Назови текущую задачу.",
+            "dlg_bye_without_pressure": "Хорошо, на этом остановимся.",
+            "dlg_serious_after_humor": "Без оправданий и шуток: что именно нужно исправить?",
+        }
+        for key, wanted in rewrites.items():
+            actual = next(e for e in self.stage["entries"] if e["intent_id"] == key)
+            self.assertIn(wanted, [r["text"] for r in actual["replies"]])
 
     def test_t147_no_obvious_meta_instructions_as_user_replies(self):
         # Conservative lint, not a semantic proof; policy documentation
