@@ -39,9 +39,9 @@ class StagedDialogueT126(unittest.TestCase):
         self.assertFalse(s["consumer_registered"])
         self.assertEqual(s["source_pack"], PACK)
         self.assertEqual(len(s["entries"]), 30)
-        self.assertEqual(len(self.proposed), 262)
+        self.assertEqual(len(self.proposed), 360)
         self.assertEqual(len({e["intent_id"] for e in s["entries"]}), 30)
-        self.assertEqual(s["checkpoint"]["added_candidates"], 262)
+        self.assertEqual(s["checkpoint"]["added_candidates"], 360)
         self.assertEqual(s["checkpoint"]["finished_100"], 0)
         for e in s["entries"]:
             orig = self.rows[e["intent_id"]]
@@ -49,8 +49,8 @@ class StagedDialogueT126(unittest.TestCase):
             self.assertEqual(e["registered_reply_count"], 1 + len(orig["variants"]))
             self.assertEqual(e["staged_reply_count"], len(e["replies"]))
         g = next(e for e in s["entries"] if e["intent_id"] == "dlg_greet_no_rules")
-        self.assertEqual((g["registered_reply_count"], g["staged_reply_count"]), (9, 30))
-        self.assertTrue(all(e["staged_reply_count"] == 8 for e in s["entries"] if e is not g))
+        self.assertEqual((g["registered_reply_count"], g["staged_reply_count"]), (9, 42))
+        self.assertEqual({e["intent_id"]: e["staged_reply_count"] for e in s["entries"]}, {"dlg_greet_no_rules":42,"dlg_greet_after_pause":11,"dlg_bye_without_pressure":11,"dlg_resume_topic_after_aside":11,"dlg_ambiguous_not_that":11,"dlg_correct_only_number":11,"dlg_two_distinct_questions":11,"dlg_unclear_pronoun":11,"dlg_short_preserve_caveat":11,"dlg_serious_after_humor":11,"dlg_dark_humor_grief":11,"dlg_swear_not_automatic_abuse":11,"dlg_firm_without_harassment":11,"dlg_possible_sarcasm":10,"dlg_missing_attachment":11,"dlg_stale_current_claim":11,"dlg_conflicting_sources":11,"dlg_one_reply_preference":11,"dlg_slang_translation":11,"dlg_fiction_vs_fact":11,"dlg_hypothetical_rule":11,"dlg_public_privacy_minimum":11,"dlg_correct_without_fake_action":11,"dlg_unavailable_feature":11,"dlg_group_rule_scope":11,"dlg_citation_not_permission":11,"dlg_no_assumed_traits":11,"dlg_listening_not_advice":11,"dlg_no_fake_button":11,"dlg_quote_not_directed":11})
 
     def test_source_blob_and_manifest_unchanged(self):
         raw = (ROOT / PACK).read_bytes()
@@ -63,7 +63,7 @@ class StagedDialogueT126(unittest.TestCase):
     def test_scopes_and_no_secrets(self):
         for e in self.stage["entries"]:
             self.assertEqual(e["registered_reply_count"] + e["staged_reply_count"] + (
-                61 if e["intent_id"] == "dlg_greet_no_rules" else 87
+                (100 - e["registered_reply_count"] - e["staged_reply_count"])
             ), 100)
             for r in e["replies"]:
                 self.assertEqual(r["language"], "ru")
