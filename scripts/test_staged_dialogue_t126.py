@@ -11,9 +11,9 @@ ROOT = Path(__file__).resolve().parents[1]
 STAGE = "staging/ru/dialogue_t125_context_pool.json"
 PACK = "packs/ru/dialogue_help_qa.json"
 PRIVATE = re.compile(
-    r"(?i)(ghp_[a-z0-9]{12,}|sk-[a-z0-9]{12,}|bearer\\s+[a-z0-9._-]{12,}"
-    r"|[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,}|https://t\\.me/"
-    r"|\\b(?:bot_token|chat_id|user_id|ban_chat_member|kick_chat_member)\\b)"
+    r"(?i)(ghp_[a-z0-9]{12,}|sk-[a-z0-9]{12,}|bearer\s+[a-z0-9._-]{12,}"
+    r"|[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}|https://t\.me/"
+    r"|\b(?:bot_token|chat_id|user_id|ban_chat_member|kick_chat_member)\b)"
 )
 
 def load(path):
@@ -54,7 +54,7 @@ class StagedDialogueT126(unittest.TestCase):
 
     def test_source_blob_and_manifest_unchanged(self):
         raw = (ROOT / PACK).read_bytes()
-        git_blob = hashlib.sha1(b"blob " + str(len(raw)).encode() + b"\\0" + raw).hexdigest()
+        git_blob = hashlib.sha1(b"blob " + str(len(raw)).encode() + b"\0" + raw).hexdigest()
         self.assertEqual(git_blob, self.stage["source_pack_blob_sha"])
         manifests = {p["path"]: p["sha256"] for p in self.manifest["packs"]}
         self.assertEqual(hashlib.sha256(raw).hexdigest(), manifests[PACK])
