@@ -1,4 +1,4 @@
-"""T160: new universal response-boundary QA, SHA, exact/near duplicates and scope."""
+"""T160/T171: response-boundary QA, staged continuation and scope."""
 import hashlib, json, re, unicodedata
 from pathlib import Path
 from scripts.validate_qa_v1 import validate_qa_pack, normalize_question
@@ -42,7 +42,7 @@ def main():
    assert not qset.intersection(normalize_question(s) for s in (other["question"],*other.get("aliases",[]))),p
    assert not aset.intersection(norm(s) for s in (other["answer"],*other.get("variants",[]))),p
 
- # T167: supplemental context pool, not a consumer pack.
+ # T167/T171: supplemental context pool, not a consumer pack.
  stage_path="staging/ru/boundaries_t167_context_pool.json"
  stage=json.loads((ROOT/stage_path).read_text("utf-8"))
  assert stage["schema_version"]==1 and stage["stage_type"]=="supplemental_contextual_reply_pool"
@@ -54,16 +54,19 @@ def main():
  assert stage["constraints"]=={"read_only":True,"requires_direct_address":True,"no_personal_data":True}
  assert stage["audiences"]==["all_ai_bots"] and stage["language"]=="ru"
  cp=stage["checkpoint"]
- assert cp["base_main_sha"]=="fd42092327dddbb0927906eafaa1b92ed59d59b1"
- assert cp["registered_count"]==279 and cp["added_candidates"]==93
- assert cp["per_intent_total"]==12 and cp["remaining_per_intent"]==88
- assert cp["partial_intents"]==31 and cp["finished_100"]==0 and cp["remaining_total"]==2728
+ assert cp["base_main_sha"]=="6f2aa480375a21cb4d81f00a4c3ee448eda1cbfb"
+ assert cp["registered_count"]==279 and cp["added_candidates"]==155
+ assert cp["latest_added"]==62 and cp["latest_rejected"]==0
+ assert cp["per_intent_total"]==14 and cp["remaining_per_intent"]==86
+ assert cp["partial_intents"]==31 and cp["finished_100"]==0 and cp["remaining_total"]==2666
  assert len(stage["entries"])==31
  extra=[]; stage_ids=set()
  for original,entry in zip(rows,stage["entries"]):
   assert entry["intent_id"]==original["id"] and entry["question"]==original["question"]
-  assert entry["registered_reply_count"]==9 and entry["staged_reply_count"]==3
-  assert len(entry["replies"])==3
+  assert entry["registered_reply_count"]==9 and entry["staged_reply_count"]==5
+  assert len(entry["replies"])==5
+  assert sum((r["id"].startswith(entry["intent_id"]+"_t167_") or r["id"].startswith(entry["intent_id"]+"_t171_")) for r in entry["replies"])==3
+  assert sum(r["id"].startswith(entry["intent_id"]+"_t171_") for r in entry["replies"])==2
   for r in entry["replies"]:
    assert r["id"] not in stage_ids and r["id"].startswith(entry["intent_id"]+"_t167_")
    stage_ids.add(r["id"])
@@ -74,7 +77,7 @@ def main():
    assert 0<len(r["text"])<=1600
    assert not re.search(r"(?i)(ghp_[a-z0-9]{12,}|sk-[a-z0-9]{12,}|bot_token|chat_id|user_id|https://t\.me/|[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,})",r["text"])
    extra.append(r["text"])
- assert len(extra)==93 and len({norm(s) for s in replies+extra})==372
+ assert len(extra)==155 and len({norm(s) for s in replies+extra})==434
  stage_keys={norm(s) for s in extra}
  for item in manifest["packs"]:
   otherpath=item["path"]
@@ -82,5 +85,5 @@ def main():
   other=json.loads((ROOT/otherpath).read_text("utf-8"))
   for row in other.get("records",[]):
    assert not stage_keys.intersection(norm(s) for s in [row["answer"],*row.get("variants",[])]),otherpath
- print("T167 PASS: 31 intents, 279 registered + 93 scoped staged replies, source SHA, privacy, uniqueness")
+ print("T171 PASS: 31 intents, 279 registered + 155 staged replies, source SHA, privacy, uniqueness")
 if __name__=="__main__":main()
