@@ -1,7 +1,7 @@
 """T199: staged contextual choice/recovery additions and opt-in boundaries."""
 import json, unittest, unicodedata
 from pathlib import Path
-from scripts.staged_context_selector import StagedContextPool
+from scripts.staged_context_selector import StagedContextSelector
 ROOT=Path(__file__).resolve().parents[1]
 SPECS=[("staging/ru/choice_t166_context_pool.json",30,37,46),("staging/ru/recovery_t168_context_pool.json",24,35,44)]
 def norm(s):
@@ -15,7 +15,7 @@ class T199(unittest.TestCase):
             self.assertFalse(data["consumer_registered"])
             self.assertEqual(data["checkpoint"]["per_intent_total"],total)
             self.assertEqual(len(data["entries"]),n)
-            pool=StagedContextPool.from_file(ROOT/path)
+            pool=StagedContextSelector(ROOT,path)
             for e in data["entries"]:
                 self.assertEqual(len(e["replies"]),staged)
                 added=[x for x in e["replies"] if "_t199_" in x["id"]]
