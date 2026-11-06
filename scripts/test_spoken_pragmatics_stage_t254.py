@@ -25,7 +25,7 @@ class T254(unittest.TestCase):
  def test_current_inventory_uniqueness_and_provenance(self):
   cp=self.payload["checkpoint"]
   self.assertEqual((cp["stage_id"],cp["processed_intents"],cp["registered_count"],cp["prior_accepted"],cp["added_in_current"],cp["added_candidates"],cp["now_per_intent"],cp["remaining_per_intent"],cp["remaining_total"],cp["finished_100"],cp["partial_intents"]),
-                   ("T254",24,216,192,72,264,20,80,1920,0,24))
+                   ("T255",24,216,264,96,360,24,76,1824,0,24))
   by_id={r["id"]:r for r in self.source["records"]}
   self.assertEqual(len(by_id),24)
   texts=set();identifiers=set()
@@ -34,9 +34,9 @@ class T254(unittest.TestCase):
     self.assertNotIn(norm(s),texts);texts.add(norm(s))
   for e in self.payload["entries"]:
    self.assertEqual(e["question"],by_id[e["intent_id"]]["question"])
-   self.assertEqual((e["registered_reply_count"],e["staged_reply_count"],len(e["replies"])),(9,11,11))
+   self.assertEqual((e["registered_reply_count"],e["staged_reply_count"],len(e["replies"])),(9,15,15))
    prior=[by_id[e["intent_id"]]["answer"],*by_id[e["intent_id"]]["variants"]]
-   for i,r in enumerate(e["replies"]):
+   for i,r in enumerate(e["replies"][:11]):
     group="t251" if i<2 else "t252" if i<4 else "t253" if i<8 else "t254"
     index=(i%2+1) if i<4 else i-3 if i<8 else i-7
     self.assertEqual(r["id"],f"{e['intent_id']}_{group}_{index:02d}")
@@ -48,7 +48,7 @@ class T254(unittest.TestCase):
     self.assertIsNone(re.search(r"(?i)(ghp_[a-z0-9]{12,}|sk-[a-z0-9]{12,}|bot_token|chat_id|user_id|https://t\\.me/)",r["text"]))
     if i>=8:self.assertTrue(all(sim(r["text"],old)<0.78 for old in prior))
     prior.append(r["text"])
-  self.assertEqual((len(identifiers),len(texts)),(264,480))
+  self.assertEqual((len(identifiers),len(texts)),(264,480))  # T254 historical prefix only; T255 validates all 576
   m=json.loads((ROOT/"manifest.json").read_text("utf-8"))
   registry={p["path"]:p["sha256"] for p in m["packs"]}
   self.assertNotIn(PATH,registry)
