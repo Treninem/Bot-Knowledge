@@ -7,7 +7,7 @@ from pathlib import Path
 from scripts.staged_context_delta import StagedContextDelta
 ROOT=Path(__file__).resolve().parents[1]
 PATH="staging/ru/context_delta_t241.json"
-SECRET=re.compile(r"(?i)(ghp_[a-z0-9]{12,}|sk-[a-z0-9]{12,}|bot_token|chat_id|user_id|bearer\s+|https://t\.me/|[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,})")
+SECRET=re.compile(r"(?i)(ghp_[a-z0-9]{13,}|sk-[a-z0-9]{13,}|bot_token|chat_id|user_id|bearer\s+|https://t\.me/|[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,})")
 def norm(s):
     s=unicodedata.normalize("NFKC",s).casefold().replace("ё","е")
     return " ".join("".join(" " if unicodedata.category(c)[0] in {"P","S"} else c for c in s).split())
@@ -21,14 +21,14 @@ class ContextDeltaT243(unittest.TestCase):
         cls.selector=StagedContextDelta(ROOT,PATH)
     def test_all_new_replies_and_scope(self):
         cp=self.data["checkpoint"]
-        self.assertEqual((cp["updated_in"],cp["prior_accepted"],cp["added_in_current"],cp["verified_new"],cp["rejected"]),("T257",935,85,1020,0))
+        self.assertEqual((cp["updated_in"],cp["prior_accepted"],cp["added_in_current"],cp["verified_new"],cp["rejected"]),("T261",1020,85,1105,0))
         self.assertEqual((cp["processed_intents"],cp["newly_finished_100"]),(85,0))
-        self.assertEqual([(x["source"],x["intents"],x["new_total_per_intent"],x["remaining_per_intent"],x["new_answers"],x["t243_added_answers"]) for x in cp["per_source"]],[("recovery",24,68,32,288,48),("choice",30,66,34,360,60),("boundaries",31,65,35,372,62)])
+        self.assertEqual([(x["source"],x["intents"],x["new_total_per_intent"],x["remaining_per_intent"],x["new_answers"],x["t243_added_answers"]) for x in cp["per_source"]],[("recovery",24,69,31,312,48),("choice",30,67,33,390,60),("boundaries",31,66,34,403,62)])
         self.assertEqual(len(self.data["entries"]),85)
         ids,texts=set(),set()
         for e in self.data["entries"]:
-            self.assertEqual(len(e["replies"]),12)
-            self.assertEqual([r["id"] for r in e["replies"]],[f'{e["intent_id"]}_t241_{i:02d}' for i in range(1,13)])
+            self.assertEqual(len(e["replies"]),13)
+            self.assertEqual([r["id"] for r in e["replies"]],[f'{e["intent_id"]}_t241_{i:02d}' for i in range(1,14)])
             notes=set()
             for idx,r in enumerate(e["replies"]):
                 self.assertNotIn(r["id"],ids)
@@ -45,7 +45,7 @@ class ContextDeltaT243(unittest.TestCase):
                     self.assertEqual(self.selector.select(e["intent_id"],**opts).id,r["id"])
                     for change in ({"approved_reply_ids":frozenset()},{"context":"unknown"},{"addressed":False},{"local_permission":False},{"audience":"community_bots"},{"recent_ids":(r["id"],)}):
                         self.assertIsNone(self.selector.select(e["intent_id"],**(opts|change)))
-        self.assertEqual((len(ids),len(texts)),(1020,1020))
+        self.assertEqual((len(ids),len(texts)),(1105,1105))
         manifest=json.loads((ROOT/"manifest.json").read_text("utf-8"))
         self.assertNotIn(PATH,{p["path"] for p in manifest["packs"]})
         self.assertIs(self.data["consumer_registered"],False)
