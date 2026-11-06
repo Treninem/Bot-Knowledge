@@ -105,15 +105,16 @@ def main() -> None:
     assert new_qa["catalog"]["adapter"] == "qa.v1"
     assert new_qa["catalog"]["audiences"] == ["all_ai_bots"]
     assert len(new_qa["records"]) >= 30  # Retain baseline, allow new reviewed qa.v1 topics
-    # Reviewed qa.v1 topics may expand from 2 to 8 variants without
-    # changing the original two aliases, audience, or safety boundaries.
-    assert all(len(q["aliases"]) == 2 and 2 <= len(q["variants"]) <= 8
+    # Reviewed qa.v1 topics may expand to 8 variants. Three independently
+    # reviewed topics gained two additional aliases without changing the
+    # canonical question, meaning, audience or safety boundaries.
+    assert all(2 <= len(q["aliases"]) <= 4 and 2 <= len(q["variants"]) <= 8
                and len({normalize_general_q(v) for v in q["variants"]}) == len(q["variants"])
                and q["audiences"] == ["all_ai_bots"]
                for q in new_qa["records"])
     new_phrases = [normalize_general_q(p)
                    for q in new_qa["records"] for p in [q["question"], *q["aliases"]]]
-    assert len(new_phrases) == len(set(new_phrases)) == 3 * len(new_qa["records"])
+    assert len(new_phrases) == len(set(new_phrases)) == sum(1 + len(q["aliases"]) for q in new_qa["records"])
     index = KnowledgeSearch()
     newer_en = [x for x in english if x["id"].startswith(("en_t11_", "en_t12_", "en_t13_"))]
     for case in newer_en:
