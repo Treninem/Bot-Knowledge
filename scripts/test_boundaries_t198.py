@@ -22,18 +22,18 @@ def main():
     cp = stage["checkpoint"]
     assert stage["consumer_registered"] is False
     assert stage["audiences"] == ["all_ai_bots"]
-    assert cp["updated_in"] == "T203" and cp["latest_added"] == 62
-    assert cp["added_candidates"] == 1271
+    assert cp["updated_in"] == "T206" and cp["latest_added"] == 93
+    assert cp["added_candidates"] == 1364
     assert cp["registered_count"] == 279
-    assert cp["per_intent_staged"] == 41 and cp["per_intent_total"] == 50
-    assert cp["remaining_per_intent"] == 50 and cp["remaining_total"] == 1550
+    assert cp["per_intent_staged"] == 44 and cp["per_intent_total"] == 53
+    assert cp["remaining_per_intent"] == 47 and cp["remaining_total"] == 1457
     assert cp["partial_intents"] == len(stage["entries"]) == 31
     assert cp["finished_100"] == 0
     selector = StagedContextSelector(ROOT, PATH)
     ids, normalized, newest = set(), set(), []
     for entry in stage["entries"]:
         assert entry["registered_reply_count"] == 9
-        assert entry["staged_reply_count"] == len(entry["replies"]) == 41
+        assert entry["staged_reply_count"] == len(entry["replies"]) == 44
         recent = [r for r in entry["replies"] if "_t198_" in r["id"]]
         assert [r["id"] for r in recent] == [
             entry["intent_id"] + "_t198_01",
@@ -74,7 +74,7 @@ def main():
                 {"direct", "private", "group_addressed"} - {r["context"]}
             ).pop()}) is None
             newest.append(norm(r["text"]))
-    assert len(ids) == len(normalized) == 1271
+    assert len(ids) == len(normalized) == 1364
     assert len(newest) == len(set(newest)) == 93
 
     # Cross-check only newly authored T198 answers with every registered QA
@@ -87,7 +87,7 @@ def main():
         original = {norm(t) for row in data["records"]
                     for t in [row["answer"], *row.get("variants", [])]}
         assert not original.intersection(newest), p["path"]
-    print("T198 OK: +93 new scoped RU responses, 31 intents now 48/100; consent and SHA safety")
+    print("T198 OK: +93 new scoped RU responses, 31 intents now 53/100; consent and SHA safety")
 
 if __name__ == "__main__":
     main()
