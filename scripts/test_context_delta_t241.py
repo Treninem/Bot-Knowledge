@@ -10,9 +10,9 @@ from scripts.staged_context_delta import StagedContextDelta
 ROOT = Path(__file__).resolve().parents[1]
 DELTA = "staging/ru/context_delta_t241.json"
 COUNTS = {
-    "recovery_t168_context_pool.json": (24, 47, 8, 64),
-    "choice_t166_context_pool.json": (30, 45, 8, 62),
-    "boundaries_t167_context_pool.json": (31, 44, 8, 61),
+    "recovery_t168_context_pool.json": (24, 47, 10, 66),
+    "choice_t166_context_pool.json": (30, 45, 10, 64),
+    "boundaries_t167_context_pool.json": (31, 44, 10, 63),
 }
 PRIVATE = re.compile(
     r"(?i)(ghp_[a-z0-9]{12,}|sk-[a-z0-9]{12,}|bot_token|chat_id|user_id|"
@@ -42,9 +42,9 @@ class T241(unittest.TestCase):
         self.assertNotIn(DELTA, {p["path"] for p in manifest["packs"]})
         self.assertIs(data["consumer_registered"], False)
         selector = StagedContextDelta(ROOT, DELTA)
-        self.assertEqual(data["checkpoint"]["verified_new"], 680)
-        self.assertEqual(data["checkpoint"]["prior_accepted"], 595)
-        self.assertEqual(data["checkpoint"]["added_in_current"], 85)
+        self.assertEqual(data["checkpoint"]["verified_new"], 850)
+        self.assertEqual(data["checkpoint"]["prior_accepted"], 680)
+        self.assertEqual(data["checkpoint"]["added_in_current"], 170)
         self.assertEqual(data["checkpoint"]["rejected"], 0)
         self.assertEqual(len(data["entries"]), 85)
 
@@ -104,7 +104,7 @@ class T241(unittest.TestCase):
                 self.assertIsNone(selector.select(entry["intent_id"], **(args | {"context": "unsupported"})))
                 self.assertIsNone(selector.select(entry["intent_id"], **(args | {"recent_ids": (rid,)})))
         self.assertEqual(source_counts, {k: v[0] for k, v in COUNTS.items()})
-        self.assertEqual((len(seen_ids), len(seen_texts)), (680, 680))
+        self.assertEqual((len(seen_ids), len(seen_texts)), (850, 850))
         with self.assertRaises(ValueError):
             StagedContextDelta(ROOT, "staging/ru/unknown.json")
         self.assertIsNone(selector.select("unknown_intent", approved_reply_ids=frozenset({"x"}),
