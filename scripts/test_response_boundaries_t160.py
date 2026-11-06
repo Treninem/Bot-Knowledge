@@ -55,16 +55,16 @@ def main():
  assert stage["audiences"]==["all_ai_bots"] and stage["language"]=="ru"
  cp=stage["checkpoint"]
  assert cp["base_main_sha"]=="309e5edd22f8ca4a6dcf59a4b2213a4c8696d36b"
- assert cp["registered_count"]==279 and cp["added_candidates"]==744
- assert cp["latest_added"]==62 and cp["latest_rejected"]==0
- assert cp["per_intent_total"]==33 and cp["remaining_per_intent"]==67
- assert cp["partial_intents"]==31 and cp["finished_100"]==0 and cp["remaining_total"]==2077
+ assert cp["registered_count"]==279 and cp["added_candidates"]==775
+ assert cp["latest_added"]==31 and cp["latest_rejected"]==0
+ assert cp["per_intent_total"]==34 and cp["remaining_per_intent"]==66
+ assert cp["partial_intents"]==31 and cp["finished_100"]==0 and cp["remaining_total"]==2046
  assert len(stage["entries"])==31
  extra=[]; stage_ids=set()
  for original,entry in zip(rows,stage["entries"]):
   assert entry["intent_id"]==original["id"] and entry["question"]==original["question"]
-  assert entry["registered_reply_count"]==9 and entry["staged_reply_count"]==24
-  assert len(entry["replies"])==24
+  assert entry["registered_reply_count"]==9 and entry["staged_reply_count"]==25
+  assert len(entry["replies"])==25
   assert sum(r["id"].startswith(entry["intent_id"]+"_t167_") for r in entry["replies"])==3
   assert sum(r["id"].startswith(entry["intent_id"]+"_t171_") for r in entry["replies"])==2
   assert sum(r["id"].startswith(entry["intent_id"]+"_t174_") for r in entry["replies"])==2
@@ -80,7 +80,7 @@ def main():
   assert sum(r["id"].startswith(entry["intent_id"]+"_t184_") for r in entry["replies"])==2
   assert sum(r["id"].startswith(entry["intent_id"]+"_t185_") for r in entry["replies"])==2
   for r in entry["replies"]:
-   assert r["id"] not in stage_ids and (r["id"].startswith(entry["intent_id"]+"_t167_") or r["id"].startswith(entry["intent_id"]+"_t171_") or r["id"].startswith(entry["intent_id"]+"_t174_") or r["id"].startswith(entry["intent_id"]+"_t175_") or r["id"].startswith(entry["intent_id"]+"_t176_") or r["id"].startswith(entry["intent_id"]+"_t177_") or r["id"].startswith(entry["intent_id"] + "_t178_") or r["id"].startswith(entry["intent_id"] + "_t179_") or r["id"].startswith(entry["intent_id"] + "_t180_") or r["id"].startswith(entry["intent_id"] + "_t181_") or r["id"].startswith(entry["intent_id"] + "_t182_") or r["id"].startswith(entry["intent_id"] + "_t183_") or r["id"].startswith(entry["intent_id"] + "_t184_") or r["id"].startswith(entry["intent_id"] + "_t185_"))
+   assert r["id"] not in stage_ids and (r["id"].startswith(entry["intent_id"]+"_t167_") or r["id"].startswith(entry["intent_id"]+"_t171_") or r["id"].startswith(entry["intent_id"]+"_t174_") or r["id"].startswith(entry["intent_id"]+"_t175_") or r["id"].startswith(entry["intent_id"]+"_t176_") or r["id"].startswith(entry["intent_id"]+"_t177_") or r["id"].startswith(entry["intent_id"] + "_t178_") or r["id"].startswith(entry["intent_id"] + "_t179_") or r["id"].startswith(entry["intent_id"] + "_t180_") or r["id"].startswith(entry["intent_id"] + "_t181_") or r["id"].startswith(entry["intent_id"] + "_t182_") or r["id"].startswith(entry["intent_id"] + "_t183_") or r["id"].startswith(entry["intent_id"] + "_t184_") or r["id"].startswith(entry["intent_id"] + "_t185_") or r["id"].startswith(entry["intent_id"] + "_t188_"))
    stage_ids.add(r["id"])
    assert r["language"]=="ru" and r["style"]=="neutral"
    assert r["context"] in {"direct","private","group_addressed"}
@@ -89,7 +89,7 @@ def main():
    assert 0<len(r["text"])<=1600
    assert not re.search(r"(?i)(ghp_[a-z0-9]{12,}|sk-[a-z0-9]{12,}|bot_token|chat_id|user_id|https://t\.me/|[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,})",r["text"])
    extra.append(r["text"])
- assert len(extra)==744 and len({norm(s) for s in replies+extra})==1023
+ assert len(extra)==775 and len({norm(s) for s in replies+extra})==1054
  stage_keys={norm(s) for s in extra}
  for item in manifest["packs"]:
   otherpath=item["path"]
@@ -97,5 +97,5 @@ def main():
   other=json.loads((ROOT/otherpath).read_text("utf-8"))
   for row in other.get("records",[]):
    assert not stage_keys.intersection(norm(s) for s in [row["answer"],*row.get("variants",[])]),otherpath
- print("T185 PASS: 31 boundary intents, 279 registered + 744 staged; source SHA, privacy and uniqueness")
+ print("T188 PASS: 31 boundary intents, 279 registered + 775 staged; source SHA, privacy and uniqueness")
 if __name__=="__main__":main()
