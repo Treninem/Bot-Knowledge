@@ -12,15 +12,15 @@ class T202(unittest.TestCase):
   o=json.loads((ROOT/PATH).read_text("utf-8"))
   self.assertFalse(o["consumer_registered"])
   self.assertEqual(o["checkpoint"]["latest_added"],60)
-  self.assertEqual(o["checkpoint"]["remaining_total"],1530)
+  self.assertEqual(o["checkpoint"]["remaining_total"],1470)
   self.assertEqual(len(o["entries"]),30)
   selector=StagedContextSelector(ROOT,PATH)
   seen=set();ids=set();added=0
   for e in o["entries"]:
-   self.assertEqual(e["staged_reply_count"],40)
+   self.assertEqual(e["staged_reply_count"],42)
    new=[r for r in e["replies"] if "_t202_" in r["id"]]
    self.assertEqual(len(new),2)
-   self.assertEqual(len({norm(r["context_note"]) for r in e["replies"]}),40)
+   self.assertEqual(len({norm(r["context_note"]) for r in e["replies"]}),42)
    for r in e["replies"]:
     self.assertNotIn(r["id"],ids);ids.add(r["id"])
     t=norm(r["text"]);self.assertNotIn(t,seen);seen.add(t)
