@@ -11,7 +11,7 @@ from scripts.staged_context_selector import StagedContextSelector
 
 ROOT = Path(__file__).resolve().parents[1]
 PATH = "staging/ru/recovery_t168_context_pool.json"
-SECRET = re.compile(r"(?i)(ghp_[a-z0-9]{12,}|sk-[a-z0-9]{12,}|bot_token|chat_id|user_id|bearer\\s+|https://t\\.me/|[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,})")
+SECRET = re.compile(r"(?i)(ghp_[a-z0-9]{12,}|sk-[a-z0-9]{12,}|bot_token|chat_id|user_id|bearer\s+|https://t\.me/|[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,})")
 
 
 def norm(value):
