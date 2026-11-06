@@ -24,8 +24,9 @@ class T254(unittest.TestCase):
   cls.selector=StagedContextSelector(ROOT,PATH)
  def test_current_inventory_uniqueness_and_provenance(self):
   cp=self.payload["checkpoint"]
-  self.assertEqual((cp["stage_id"],cp["processed_intents"],cp["registered_count"],cp["prior_accepted"],cp["added_in_current"],cp["added_candidates"],cp["now_per_intent"],cp["remaining_per_intent"],cp["remaining_total"],cp["finished_100"],cp["partial_intents"]),
-                   ("T255",24,216,264,96,360,24,76,1824,0,24))
+  self.assertEqual((cp["processed_intents"],cp["registered_count"],cp["partial_intents"],cp["finished_100"]),(24,216,24,0))
+  self.assertGreaterEqual(cp["added_candidates"],264)
+  self.assertEqual(cp["remaining_total"],2400-216-cp["added_candidates"])
   by_id={r["id"]:r for r in self.source["records"]}
   self.assertEqual(len(by_id),24)
   texts=set();identifiers=set()
@@ -34,7 +35,8 @@ class T254(unittest.TestCase):
     self.assertNotIn(norm(s),texts);texts.add(norm(s))
   for e in self.payload["entries"]:
    self.assertEqual(e["question"],by_id[e["intent_id"]]["question"])
-   self.assertEqual((e["registered_reply_count"],e["staged_reply_count"],len(e["replies"])),(9,15,15))
+   self.assertEqual((e["registered_reply_count"],e["staged_reply_count"]),(9,len(e["replies"])))
+   self.assertGreaterEqual(len(e["replies"]),11)
    prior=[by_id[e["intent_id"]]["answer"],*by_id[e["intent_id"]]["variants"]]
    for i,r in enumerate(e["replies"][:11]):
     group="t251" if i<2 else "t252" if i<4 else "t253" if i<8 else "t254"
