@@ -26,10 +26,10 @@ class TestT261(unittest.TestCase):
 
     def test_inventory_privacy_unique_contexts_and_checksum_contract(self):
         cp=self.data["checkpoint"]
-        self.assertEqual(tuple(cp[k] for k in ("updated_in","prior_accepted","added_in_current","verified_new","rejected","processed_intents","newly_finished_100")),("T262",1105,85,1190,0,85,0))
-        expected={"recovery":(24,70, 30, 336,24),"choice":(30,68, 32, 420,30),"boundaries":(31,67, 33, 434,31)}
+        self.assertEqual(tuple(cp[k] for k in ("updated_in","prior_accepted","added_in_current","verified_new","rejected","processed_intents","newly_finished_100")),("T265",1190,85,1275,0,85,0))
+        expected={"recovery":(24,71,29, 360,24),"choice":(30,69,31, 450,30),"boundaries":(31,68,32, 465,31)}
         self.assertEqual({g["source"]:(g["intents"],g["new_total_per_intent"],g["remaining_per_intent"],g["new_answers"],g["t261_added_answers"]) for g in cp["per_source"]},expected)
-        self.assertEqual(sum(n*remain for n,_,remain,_,_ in expected.values()),2703)
+        self.assertEqual(sum(n*remain for n,_,remain,_,_ in expected.values()),2618)
         self.assertIs(self.data["consumer_registered"],False)
         self.assertEqual(self.data["constraints"],{"read_only":True,"requires_direct_address":True,"no_personal_data":True})
         manifest=json.loads((ROOT/"manifest.json").read_text("utf-8"))
@@ -38,7 +38,7 @@ class TestT261(unittest.TestCase):
         texts=set();ids=set()
         for entry in self.data["entries"]:
             self.assertEqual(len(entry["replies"]),14)
-            self.assertEqual([r["id"] for r in entry["replies"]],[f'{entry["intent_id"]}_t241_{i:02d}' for i in range(1, 15)])
+            self.assertEqual([r["id"] for r in entry["replies"]],[f'{entry["intent_id"]}_t241_{i:02d}' for i in range(1, 16)])
             notes=set()
             for r in entry["replies"]:
                 self.assertNotIn(r["id"],ids);ids.add(r["id"])
@@ -50,7 +50,7 @@ class TestT261(unittest.TestCase):
                 self.assertIsNone(PRIVATE.search(r["text"]))
             latest=entry["replies"][12]
             self.assertLess(max(sim(latest["text"],prior["text"]) for prior in entry["replies"][:12]),0.78)
-        self.assertEqual((len(ids),len(texts)),(1190,1190))
+        self.assertEqual((len(ids),len(texts)),(1275,1275))
 
     def test_exact_selection_never_implies_sanction_or_action(self):
         for entry in self.data["entries"]:
