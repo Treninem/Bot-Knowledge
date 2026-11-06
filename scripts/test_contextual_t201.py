@@ -11,17 +11,17 @@ class T201(unittest.TestCase):
     def test_incremental_contexts_and_opt_in(self):
         data=json.loads((ROOT/PATH).read_text("utf-8"))
         self.assertFalse(data["consumer_registered"])
-        self.assertEqual(data["checkpoint"]["per_intent_total"],51)
+        self.assertEqual(data["checkpoint"]["per_intent_total"],54)
         self.assertEqual(data["checkpoint"]["latest_added"],72)
-        self.assertEqual(data["checkpoint"]["remaining_total"],1176)
+        self.assertEqual(data["checkpoint"]["remaining_total"],1104)
         self.assertEqual(len(data["entries"]),24)
         selector=StagedContextSelector(ROOT,PATH)
         all_ids=set();all_texts=set();count=0
         for entry in data["entries"]:
-            self.assertEqual(len(entry["replies"]),42)
+            self.assertEqual(len(entry["replies"]),45)
             new=[r for r in entry["replies"] if "_t201_" in r["id"]]
             self.assertEqual(len(new),3)
-            self.assertEqual(len({norm(r["context_note"]) for r in entry["replies"]}),42)
+            self.assertEqual(len({norm(r["context_note"]) for r in entry["replies"]}),45)
             for r in entry["replies"]:
                 self.assertNotIn(r["id"],all_ids);all_ids.add(r["id"])
                 self.assertNotIn(norm(r["text"]),all_texts);all_texts.add(norm(r["text"]))
