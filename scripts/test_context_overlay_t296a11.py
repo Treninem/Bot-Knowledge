@@ -62,7 +62,7 @@ class TestContextOverlayT296A11(unittest.TestCase):
     def test_parent_blob_and_stage_not_manifest_registered(self):
         import hashlib
         before = (ROOT / PARENT).read_bytes()
-        git_blob = hashlib.sha1(b"blob " + str(len(before)).encode() + b"\\0" + before).hexdigest()
+        git_blob = hashlib.sha1(b"blob " + str(len(before)).encode() + bytes([0]) + before).hexdigest()
         self.assertEqual(self.stage["parent_delta_blob_sha"], git_blob)
         self.assertEqual(self.stage["checkpoint"]["total_staged_with_parent"], 2975)
         self.assertEqual(self.stage["checkpoint"]["added_in_current"], 170)
