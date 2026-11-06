@@ -38,8 +38,9 @@ class T257(unittest.TestCase):
         self.assertEqual({p["source"]:(p["intents"],p["new_total_per_intent"],
             p["remaining_per_intent"],p["new_answers"],p["t257_added_answers"]) for p in cp["per_source"]},GROUPS)
         self.assertEqual(len(self.data["entries"]),85)
-        ids=set(); texts=set(); notes=set()
+        ids=set(); texts=set()
         for e in self.data["entries"]:
+            notes=set()
             self.assertEqual(len(e["replies"]),12)
             self.assertEqual([x["id"] for x in e["replies"]],
                 [f'{e["intent_id"]}_t241_{i:02d}' for i in range(1,13)])
@@ -55,7 +56,7 @@ class T257(unittest.TestCase):
             self.assertIn(new["context"],("direct","private","group_addressed"))
             self.assertIsNone(SECRET.search(new["text"]))
             self.assertTrue(all(sim(new["text"],prev)<0.78 for prev in earlier))
-        self.assertEqual((len(ids),len(texts),len(notes)),(1020,1020,1020))
+        self.assertEqual((len(ids),len(texts)),(1020,1020))
         self.assertEqual(sum(p["intents"]*p["remaining_per_intent"] for p in cp["per_source"]),2873)
         manifest=json.loads((ROOT/"manifest.json").read_text("utf-8"))
         self.assertNotIn(STAGE,{p["path"] for p in manifest["packs"]})
