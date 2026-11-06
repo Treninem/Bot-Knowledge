@@ -12,7 +12,7 @@ class TestContextOverlayT292(unittest.TestCase):
         cls.previous = json.loads((ROOT / PARENT).read_text("utf-8"))
 
     def test_count_and_global_uniqueness(self):
-        self.assertEqual(self.s.checkpoint["remaining_total"],1598)
+        self.assertEqual(self.s.checkpoint["remaining_total"],1513)
         self.assertEqual(len(self.data["entries"]),85)
         replies = [r for e in self.data["entries"] for r in e["replies"]]
         self.assertEqual(len(replies),85)
