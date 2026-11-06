@@ -23,26 +23,26 @@ class ContextDeltaT245(unittest.TestCase):
         d = json.loads((ROOT / PATH).read_text("utf-8"))
         cp = d["checkpoint"]
         self.assertEqual((cp["updated_in"], cp["prior_accepted"], cp["added_in_current"], cp["verified_new"], cp["rejected"]),
-                         ("T245", 595, 85, 680, 0))
+                         ("T246", 680, 170, 850, 0))
         self.assertEqual([(x["source"], x["intents"], x["new_total_per_intent"], x["remaining_per_intent"], x["t245_added_answers"]) for x in cp["per_source"]],
-                         [("recovery", 24, 64, 36, 24), ("choice", 30, 62, 38, 30), ("boundaries", 31, 61, 39, 31)])
+                         [("recovery", 24, 66, 34, 24), ("choice", 30, 64, 36, 30), ("boundaries", 31, 63, 37, 31)])
         selector = StagedContextDelta(ROOT, PATH)
         self.assertEqual(len(d["entries"]), 85)
         ids, texts, notes = set(), set(), set()
         for e in d["entries"]:
-            self.assertEqual(len(e["replies"]), 8)
+            self.assertEqual(len(e["replies"]), 10)
             self.assertEqual([r["id"] for r in e["replies"]],
-                             [f'{e["intent_id"]}_t241_{i:02d}' for i in range(1, 9)])
-            new = e["replies"][-1]
+                             [f'{e["intent_id"]}_t241_{i:02d}' for i in range(1, 11)])
+            new = e["replies"][7]
             self.assertNotIn(new["id"], ids)
             self.assertNotIn(norm(new["text"]), texts)
-            self.assertNotIn(norm(new["context_note"]), {norm(r["context_note"]) for r in e["replies"][:-1]})
+            self.assertNotIn(norm(new["context_note"]), {norm(r["context_note"]) for r in e["replies"][:7]})
             self.assertEqual((new["language"], new["style"], new["audiences"], new["read_only"]),
                              ("ru", "neutral", ["all_ai_bots"], True))
             self.assertIn(new["context"], ("direct", "private", "group_addressed"))
             self.assertTrue(new["avoid"].strip())
             self.assertIsNone(PRIVATE.search(new["text"]))
-            self.assertTrue(all(similarity(new["text"], old["text"]) < .78 for old in e["replies"][:-1]))
+            self.assertTrue(all(similarity(new["text"], old["text"]) < .78 for old in e["replies"][:7]))
             ids.add(new["id"])
             texts.add(norm(new["text"]))
             args = dict(approved_reply_ids=frozenset({new["id"]}),
