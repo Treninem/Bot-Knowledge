@@ -33,7 +33,7 @@ class TestT266(unittest.TestCase):
             "registered_count", "prior_accepted", "added_in_current", "added_candidates",
             "previous_per_intent", "now_per_intent", "remaining_per_intent",
             "remaining_total", "partial_intents", "finished_100", "rejected")),
-            ("T267", "T267", 24, 216, 984, 96, 1080, 50, 54, 46, 1104, 24, 0, 0))
+            ("T269", "T269", 24, 216, 1080, 144, 1224, 54, 60, 40, 960, 24, 0, 0))
         self.assertFalse(self.stage["consumer_registered"])
         self.assertEqual(self.stage["constraints"],
                          {"read_only": True, "requires_direct_address": True, "no_personal_data": True})
@@ -54,7 +54,7 @@ class TestT266(unittest.TestCase):
             source = originals[entry["intent_id"]]
             self.assertEqual(entry["question"], source["question"])
             self.assertEqual((entry["registered_reply_count"], entry["staged_reply_count"],
-                              len(entry["replies"])), (9, 45, 45))
+                              len(entry["replies"])), (9, 51, 51))
             notes = set()
             earlier = [source["answer"], *source["variants"]]
             for i, reply in enumerate(entry["replies"]):
@@ -78,7 +78,7 @@ class TestT266(unittest.TestCase):
                     self.assertLess(max(sim(reply["text"], old) for old in earlier), 0.78)
                     accepted += 1
                 earlier.append(reply["text"])
-        self.assertEqual((accepted, len(ids), len(seen)), (96, 1080, 1296))
+        self.assertEqual((accepted, len(ids), len(seen)), (96, 1224, 1440))
 
     def test_new_batch_only_with_explicit_scoped_approval(self):
         for entry in self.stage["entries"]:

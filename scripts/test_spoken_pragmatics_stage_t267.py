@@ -20,7 +20,7 @@ class TestT267(unittest.TestCase):
  def test_inventory_and_scope(self):
   cp=self.stage["checkpoint"]
   keys=("stage_id","updated_in","processed_intents","registered_count","prior_accepted","added_in_current","added_candidates","previous_per_intent","now_per_intent","remaining_per_intent","remaining_total","partial_intents","finished_100","rejected")
-  self.assertEqual(tuple(cp[k] for k in keys),("T267","T267",24,216,984,96,1080,50,54,46,1104,24,0,0))
+  self.assertEqual(tuple(cp[k] for k in keys),("T269","T269",24,216,1080,144,1224,54,60,40,960,24,0,0))
   self.assertFalse(self.stage["consumer_registered"])
   registry={p["path"]:p["sha256"] for p in json.loads((ROOT/"manifest.json").read_text("utf-8"))["packs"]}
   self.assertNotIn(STAGE,registry)
@@ -35,7 +35,7 @@ class TestT267(unittest.TestCase):
   for e in self.stage["entries"]:
    old=origins[e["intent_id"]]
    self.assertEqual(e["question"],old["question"])
-   self.assertEqual((e["registered_reply_count"],e["staged_reply_count"],len(e["replies"])),(9,45,45))
+   self.assertEqual((e["registered_reply_count"],e["staged_reply_count"],len(e["replies"])),(9,51,51))
    prior=[old["answer"],*old["variants"]];notes=set()
    for i,r in enumerate(e["replies"]):
     self.assertNotIn(r["id"],ids);ids.add(r["id"])
@@ -45,11 +45,11 @@ class TestT267(unittest.TestCase):
     self.assertIn(r["context"],("direct","private","group_addressed"))
     self.assertTrue(r["avoid"].strip())
     self.assertIsNone(re.search(r"(?i)(ghp_[a-z0-9]{12,}|sk-[a-z0-9]{12,}|bot_token|chat_id|user_id|https://t\\.me/)",r["text"]))
-    if i>=41:
+    if 41 <= i < 45:
      self.assertEqual(r["id"],f'{e["intent_id"]}_t267_{i-40:02d}')
      self.assertLess(max(sim(r["text"],x) for x in prior),.78);count+=1
     prior.append(r["text"])
-  self.assertEqual((count,len(ids),len(texts)),(96,1080,1296))
+  self.assertEqual((count,len(ids),len(texts)),(96,1224,1440))
  def test_requires_trusted_approval_and_context(self):
   for e in self.stage["entries"]:
    for r in e["replies"][41:]:
