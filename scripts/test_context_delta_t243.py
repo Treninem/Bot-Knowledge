@@ -21,14 +21,14 @@ class ContextDeltaT243(unittest.TestCase):
         cls.selector=StagedContextDelta(ROOT,PATH)
     def test_all_new_replies_and_scope(self):
         cp=self.data["checkpoint"]
-        self.assertEqual((cp["updated_in"],cp["prior_accepted"],cp["added_in_current"],cp["verified_new"],cp["rejected"]),("T243",340,170,510,0))
+        self.assertEqual((cp["updated_in"],cp["prior_accepted"],cp["added_in_current"],cp["verified_new"],cp["rejected"]),("T244",510,85,595,0))
         self.assertEqual((cp["processed_intents"],cp["newly_finished_100"]),(85,0))
-        self.assertEqual([(x["source"],x["intents"],x["new_total_per_intent"],x["remaining_per_intent"],x["new_answers"],x["t243_added_answers"]) for x in cp["per_source"]],[("recovery",24,62,38,144,48),("choice",30,60,40,180,60),("boundaries",31,59,41,186,62)])
+        self.assertEqual([(x["source"],x["intents"],x["new_total_per_intent"],x["remaining_per_intent"],x["new_answers"],x["t243_added_answers"]) for x in cp["per_source"]],[("recovery",24,63,37,168,48),("choice",30,61,39,210,60),("boundaries",31,60,40,217,62)])
         self.assertEqual(len(self.data["entries"]),85)
         ids,texts=set(),set()
         for e in self.data["entries"]:
-            self.assertEqual(len(e["replies"]),6)
-            self.assertEqual([r["id"] for r in e["replies"]],[f'{e["intent_id"]}_t241_{i:02d}' for i in range(1,7)])
+            self.assertEqual(len(e["replies"]),7)
+            self.assertEqual([r["id"] for r in e["replies"]],[f'{e["intent_id"]}_t241_{i:02d}' for i in range(1,8)])
             notes=set()
             for idx,r in enumerate(e["replies"]):
                 self.assertNotIn(r["id"],ids)
@@ -39,13 +39,13 @@ class ContextDeltaT243(unittest.TestCase):
                 self.assertIn(r["context"],("direct","private","group_addressed"))
                 self.assertIsNone(SECRET.search(r["text"]))
                 ids.add(r["id"]);texts.add(norm(r["text"]));notes.add(norm(r["context_note"]))
-                if idx>=4:
+                if 4<=idx<6:
                     self.assertTrue(all(sim(r["text"],o["text"])<0.78 for o in e["replies"][:idx]))
                     opts=dict(approved_reply_ids=frozenset({r["id"]}),audience="all_ai_bots",context=r["context"],addressed=True,local_permission=True)
                     self.assertEqual(self.selector.select(e["intent_id"],**opts).id,r["id"])
                     for change in ({"approved_reply_ids":frozenset()},{"context":"unknown"},{"addressed":False},{"local_permission":False},{"audience":"community_bots"},{"recent_ids":(r["id"],)}):
                         self.assertIsNone(self.selector.select(e["intent_id"],**(opts|change)))
-        self.assertEqual((len(ids),len(texts)),(510,510))
+        self.assertEqual((len(ids),len(texts)),(595,595))
         manifest=json.loads((ROOT/"manifest.json").read_text("utf-8"))
         self.assertNotIn(PATH,{p["path"] for p in manifest["packs"]})
         self.assertIs(self.data["consumer_registered"],False)
