@@ -34,12 +34,12 @@ class SpokenPragmaticsT249(unittest.TestCase):
    self.assertEqual(r["constraints"],data["catalog"]["constraints"])
    self.assertEqual(r["source"],f"https://github.com/Treninem/Bot-Knowledge/blob/{SOURCE_SHA}/AGENTS.md")
    answers=[r["answer"],*r["variants"]]
-   self.assertEqual(len(answers),6)
+   self.assertEqual(len(answers),9)
    for i,s in enumerate(answers):
     self.assertTrue(s.strip())
     self.assertNotIn(norm(s),texts);texts.add(norm(s))
     self.assertTrue(all(sim(s,other)<0.78 for other in answers[:i]))
     self.assertIsNone(re.search(r"(?i)(ghp_[a-z0-9]{12,}|bot_token|chat_id|user_id|bearer\\s+|https://t\\.me/|[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,})",s))
-  self.assertEqual((len(ids),len(q),len(texts)),(24,24,144))
+  self.assertEqual((len(ids),len(q),len(texts)),(24,24,216))
 if __name__=="__main__":
  unittest.main()
