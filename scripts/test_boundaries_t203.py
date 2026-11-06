@@ -11,16 +11,16 @@ class T203(unittest.TestCase):
  def test_new_contexts_are_gated(self):
   o=json.loads((ROOT/PATH).read_text("utf-8"))
   self.assertFalse(o["consumer_registered"])
-  self.assertEqual(o["checkpoint"]["latest_added"],62)
-  self.assertEqual(o["checkpoint"]["per_intent_total"],50)
-  self.assertEqual(o["checkpoint"]["remaining_total"],1550)
+  self.assertEqual(o["checkpoint"]["latest_added"],93)
+  self.assertEqual(o["checkpoint"]["per_intent_total"],53)
+  self.assertEqual(o["checkpoint"]["remaining_total"],1457)
   self.assertEqual(len(o["entries"]),31)
   selector=StagedContextSelector(ROOT,PATH)
   ids=set();texts=set();fresh=0
   for e in o["entries"]:
    self.assertEqual(e["registered_reply_count"],9)
-   self.assertEqual(e["staged_reply_count"],41)
-   self.assertEqual(len({norm(r["context_note"]) for r in e["replies"]}),41)
+   self.assertEqual(e["staged_reply_count"],44)
+   self.assertEqual(len({norm(r["context_note"]) for r in e["replies"]}),44)
    new=[r for r in e["replies"] if "_t203_" in r["id"]]
    self.assertEqual(len(new),2)
    for r in e["replies"]:
