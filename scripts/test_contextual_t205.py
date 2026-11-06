@@ -23,19 +23,19 @@ class T205(unittest.TestCase):
         self.assertEqual(d["constraints"], {
             "read_only": True, "requires_direct_address": True, "no_personal_data": True})
         self.assertEqual(d["audiences"], ["all_ai_bots"])
-        self.assertEqual((cp["registered_count"], cp["added_candidates"]), (270, 1260))
-        self.assertEqual((cp["per_intent_total"], cp["remaining_per_intent"]), (51, 49))
+        self.assertEqual((cp["registered_count"], cp["added_candidates"]), (270, 1320))
+        self.assertEqual((cp["per_intent_total"], cp["remaining_per_intent"]), (53, 47))
         self.assertEqual((cp["remaining_total"], cp["partial_intents"], cp["finished_100"]),
-                         (1470, 30, 0))
+                         (1410, 30, 0))
         self.assertEqual((cp["updated_in"], cp["latest_added"], cp["latest_rejected"]),
-                         ("T205", 60, 0))
+                         ("T208", 60, 0))
         self.assertEqual(len(d["entries"]), 30)
         selector = StagedContextSelector(ROOT, PATH)
         all_ids, all_texts, fresh_count = set(), set(), 0
         for entry in d["entries"]:
             self.assertEqual(entry["registered_reply_count"], 9)
-            self.assertEqual(entry["staged_reply_count"], 42)
-            self.assertEqual(len(entry["replies"]), 42)
+            self.assertEqual(entry["staged_reply_count"], 44)
+            self.assertEqual(len(entry["replies"]), 44)
             notes = [norm(r["context_note"]) for r in entry["replies"]]
             self.assertEqual(len(notes), len(set(notes)))
             recent = [r for r in entry["replies"] if "_t205_" in r["id"]]
@@ -67,7 +67,7 @@ class T205(unittest.TestCase):
                                {"local_permission": False}, {"audience": "chat_moderators"}):
                     self.assertIsNone(selector.select(entry["intent_id"], **(args | change)))
                 fresh_count += 1
-        self.assertEqual((fresh_count, len(all_ids)), (60, 1260))
+        self.assertEqual((fresh_count, len(all_ids)), (60, 1320))
 
 
 if __name__ == "__main__":
