@@ -10,7 +10,7 @@ from scripts.staged_context_selector import StagedContextSelector
 
 ROOT = Path(__file__).resolve().parents[1]
 STAGE = "staging/ru/boundaries_t167_context_pool.json"
-PRIVATE = re.compile(r"(?i)(ghp_[a-z0-9]{12,}|sk-[a-z0-9]{12,}|bearer\\s+|https://t\\.me/|[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,})")
+PRIVATE = re.compile(r"(?i)(ghp_[a-z0-9]{12,}|sk-[a-z0-9]{12,}|bearer\s+|https://t\.me/|[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,})")
 
 
 def main():
