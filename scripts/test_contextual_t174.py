@@ -56,6 +56,18 @@ def main():
             new = [r for r in row["replies"] if "_t185_" in r["id"]]
             assert len(new) == new_each, row["intent_id"]
             assert len({r["context_note"] for r in new}) == new_each
+            # Different wording alone is not a distinct context. Stop repeated
+            # scenarios in one canonical intent, even when reply texts differ.
+            context_notes = [norm(r["context_note"]) for r in row["replies"]]
+            assert len(set(context_notes)) == len(context_notes), row["intent_id"]
+            # Lexical near-duplicate guard complements, never replaces,
+            # editorial semantic review of the synthetic replies.
+            seen_tokens = []
+            for r in row["replies"]:
+                words = set(norm(r["text"]).split())
+                for earlier in seen_tokens:
+                    assert len(words & earlier) / len(words | earlier) < 0.78, row["intent_id"]
+                seen_tokens.append(words)
             for r in row["replies"]:
                 assert r["id"].startswith(row["intent_id"] + "_")
                 assert r["id"] not in identifiers, r["id"]
