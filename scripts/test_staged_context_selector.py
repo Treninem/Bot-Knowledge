@@ -256,6 +256,40 @@ class StagedSelectorTests(unittest.TestCase):
                     total += 1
         self.assertEqual(total, 31)
 
+    def test_t189_new_replies_require_explicit_approval_and_correct_context(self):
+        # Every new candidate must remain opt-in, including when an intent already
+        # has older reviewed stage examples. This does not activate any consumer.
+        total = 0
+        for path, pool in self.all_pools:
+            data = json.loads((ROOT / path).read_text("utf-8"))
+            for entry in data["entries"]:
+                recent = [r for r in entry["replies"] if "_t189_" in r["id"]]
+                self.assertEqual(len(recent), 1, entry["intent_id"])
+                for item in recent:
+                    approval = frozenset({item["id"]})
+                    opts = dict(
+                        approved_reply_ids=approval,
+                        audience="all_ai_bots",
+                        context=item["context"],
+                        addressed=True,
+                        local_permission=True,
+                    )
+                    accepted = pool.select(entry["intent_id"], **opts)
+                    self.assertIsNotNone(accepted)
+                    self.assertEqual(accepted.id, item["id"])
+                    self.assertEqual(accepted.text, item["text"])
+                    self.assertIsNone(pool.select(
+                        entry["intent_id"], **{**opts, "approved_reply_ids": frozenset()}))
+                    self.assertIsNone(pool.select(
+                        entry["intent_id"], **{**opts, "addressed": False}))
+                    self.assertIsNone(pool.select(
+                        entry["intent_id"], **{**opts, "local_permission": False}))
+                    for wrong in {"direct", "private", "group_addressed"} - {item["context"]}:
+                        self.assertIsNone(pool.select(
+                            entry["intent_id"], **{**opts, "context": wrong}))
+                    total += 1
+        self.assertEqual(total, 85)
+
     def test_reject_unknown_path(self):
         for path in ("../manifest.json", "packs/ru/choice_reasoning_qa.json",
                      "staging/ru/dialogue_t125_context_pool.json"):
