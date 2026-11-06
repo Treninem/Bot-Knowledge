@@ -119,7 +119,7 @@ def main():
         for record in other.get("records", []):
             assert not stage_keys.intersection(
                 norm(s) for s in [record["answer"], *record.get("variants", [])]), p
-    print("T191 PASS: 30 choice intents, 270 registered + 1050 staged; source SHA, privacy, scope and uniqueness")
+    print("T199 PASS: 30 choice intents, 270 registered + 1110 staged; source SHA, privacy, scope and uniqueness")
 
 if __name__ == "__main__":
     main()
