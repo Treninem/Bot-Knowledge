@@ -32,25 +32,25 @@ class ContextDeltaT242(unittest.TestCase):
 
     def test_checkpoint_and_all_ids_are_stable(self):
         cp = self.data["checkpoint"]
-        self.assertEqual((cp["prior_accepted"], cp["added_in_current"], cp["verified_new"]), (170, 170, 340))
+        self.assertEqual((cp["prior_accepted"], cp["added_in_current"], cp["verified_new"]), (340, 170, 510))
         self.assertEqual((cp["processed_intents"], cp["newly_finished_100"]), (85, 0))
         self.assertEqual(len(self.data["entries"]), 85)
         self.assertEqual([(r["source"], r["new_answers"], r["t242_added_answers"])
                           for r in cp["per_source"]],
-                         [("recovery", 96, 48), ("choice", 120, 60), ("boundaries", 124, 62)])
+                         [("recovery", 144, 48), ("choice", 180, 60), ("boundaries", 186, 62)])
         ids = [x["id"] for e in self.data["entries"] for x in e["replies"]]
-        self.assertEqual((len(ids), len(set(ids))), (340, 340))
+        self.assertEqual((len(ids), len(set(ids))), (510, 510))
         for e in self.data["entries"]:
-            self.assertEqual(len(e["replies"]), 4)
+            self.assertEqual(len(e["replies"]), 6)
             self.assertEqual([x["id"] for x in e["replies"]],
-                             [e["intent_id"] + "_t241_0" + str(n) for n in range(1, 5)])
+                             [e["intent_id"] + "_t241_0" + str(n) for n in range(1, 7)])
 
     def test_current_batch_has_distinct_text_context_and_no_secrets(self):
         existing, fresh = set(), set()
         for e in self.data["entries"]:
             for old in e["replies"][:2]:
                 existing.add(norm(old["text"]))
-            for new in e["replies"][2:]:
+            for new in e["replies"][2:4]:
                 self.assertIn(new["context"], ("direct", "private", "group_addressed"))
                 self.assertEqual((new["language"], new["style"], new["audiences"], new["read_only"]),
                                  ("ru", "neutral", ["all_ai_bots"], True))
