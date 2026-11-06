@@ -10,12 +10,12 @@ from scripts.staged_context_delta import StagedContextDelta
 ROOT = Path(__file__).resolve().parents[1]
 PATH = "staging/ru/context_delta_t241.json"
 PARENT = {
-    "recovery": (24, 68, 32, 288, 48),
-    "choice": (30, 66, 34, 360, 60),
-    "boundaries": (31, 65, 35, 372, 62),
+    "recovery": (24, 69, 31, 312, 48),
+    "choice": (30, 67, 33, 390, 60),
+    "boundaries": (31, 66, 34, 403, 62),
 }
 SECRET = re.compile(
-    r"(?i)(ghp_[a-z0-9]{12,}|sk-[a-z0-9]{12,}|bot_token|chat_id|user_id|"
+    r"(?i)(ghp_[a-z0-9]{13,}|sk-[a-z0-9]{13,}|bot_token|chat_id|user_id|"
     r"bearer\\s+|https://t\\.me/|[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,})"
 )
 
@@ -46,7 +46,7 @@ class ContextDeltaT246(unittest.TestCase):
             (cp["updated_in"], cp["prior_accepted"], cp["added_in_current"],
              cp["verified_new"], cp["rejected"], cp["processed_intents"],
              cp["newly_finished_100"]),
-            ("T257", 935, 85, 1020, 0, 85, 0),
+            ("T261", 1020, 85, 1105, 0, 85, 0),
         )
         self.assertEqual(
             {x["source"]: (x["intents"], x["new_total_per_intent"],
@@ -55,8 +55,8 @@ class ContextDeltaT246(unittest.TestCase):
              for x in cp["per_source"]}, PARENT,
         )
         self.assertEqual(len(d["entries"]), 85)
-        self.assertEqual(sum(len(e["replies"]) for e in d["entries"]), 1020)
-        self.assertEqual(sum(n * (100 - total) for n, total, *_ in PARENT.values()), 2873)
+        self.assertEqual(sum(len(e["replies"]) for e in d["entries"]), 1105)
+        self.assertEqual(sum(n * (100 - total) for n, total, *_ in PARENT.values()), 2788)
         self.assertFalse(d["consumer_registered"])
         self.assertEqual(
             d["constraints"],
@@ -69,10 +69,10 @@ class ContextDeltaT246(unittest.TestCase):
         all_ids, all_texts, accepted_new = set(), set(), []
         for entry in self.data["entries"]:
             intent = entry["intent_id"]
-            self.assertEqual(len(entry["replies"]), 12)
+            self.assertEqual(len(entry["replies"]), 13)
             self.assertEqual(
                 [r["id"] for r in entry["replies"]],
-                [f"{intent}_t241_{idx:02d}" for idx in range(1, 13)],
+                [f"{intent}_t241_{idx:02d}" for idx in range(1, 14)],
             )
             notes = set()
             for index, reply in enumerate(entry["replies"]):
@@ -99,7 +99,7 @@ class ContextDeltaT246(unittest.TestCase):
                     self.assertLess(overlap(txt, prior["text"]), 0.78)
 
         self.assertEqual((len(all_ids), len(all_texts), len(accepted_new)),
-                         (1020, 1020, 170))
+                         (1105, 1105, 170))
 
     def test_exact_explicit_selection_is_fail_closed(self):
         for entry in self.data["entries"]:

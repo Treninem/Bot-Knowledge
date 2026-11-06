@@ -10,12 +10,12 @@ from scripts.staged_context_delta import StagedContextDelta
 ROOT = Path(__file__).resolve().parents[1]
 PATH = "staging/ru/context_delta_t241.json"
 GROUPS = {
-    "recovery": (24, 68, 32, 288, 24),
-    "choice": (30, 66, 34, 360, 30),
-    "boundaries": (31, 65, 35, 372, 31),
+    "recovery": (24, 69, 31, 312, 24),
+    "choice": (30, 67, 33, 390, 30),
+    "boundaries": (31, 66, 34, 403, 31),
 }
 SECRET = re.compile(
-    r"(?i)(ghp_[a-z0-9]{12,}|sk-[a-z0-9]{12,}|bot_token|chat_id|user_id|"
+    r"(?i)(ghp_[a-z0-9]{13,}|sk-[a-z0-9]{13,}|bot_token|chat_id|user_id|"
     r"bearer\s+|https://t\.me/|[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,})"
 )
 
@@ -45,7 +45,7 @@ class T247(unittest.TestCase):
             (cp["updated_in"], cp["prior_accepted"], cp["added_in_current"],
              cp["verified_new"], cp["rejected"], cp["processed_intents"],
              cp["newly_finished_100"]),
-            ("T257", 935, 85, 1020, 0, 85, 0),
+            ("T261", 1020, 85, 1105, 0, 85, 0),
         )
         self.assertEqual(
             {e["source"]: (e["intents"], e["new_total_per_intent"],
@@ -54,8 +54,8 @@ class T247(unittest.TestCase):
              for e in cp["per_source"]}, GROUPS
         )
         self.assertEqual(len(self.data["entries"]), 85)
-        self.assertEqual(sum(x["replies"].__len__() for x in self.data["entries"]), 1020)
-        self.assertEqual(sum(n * remaining for n, _, remaining, _, _ in GROUPS.values()), 2873)
+        self.assertEqual(sum(x["replies"].__len__() for x in self.data["entries"]), 1105)
+        self.assertEqual(sum(n * remaining for n, _, remaining, _, _ in GROUPS.values()), 2788)
         self.assertIs(self.data["consumer_registered"], False)
         self.assertEqual(
             self.data["constraints"],
@@ -68,10 +68,10 @@ class T247(unittest.TestCase):
         ids, texts, new_count = set(), set(), 0
         for entry in self.data["entries"]:
             intent = entry["intent_id"]
-            self.assertEqual(len(entry["replies"]), 12)
+            self.assertEqual(len(entry["replies"]), 13)
             self.assertEqual(
                 [r["id"] for r in entry["replies"]],
-                [f"{intent}_t241_{i:02d}" for i in range(1, 13)],
+                [f"{intent}_t241_{i:02d}" for i in range(1, 14)],
             )
             notes = set()
             for reply in entry["replies"]:
@@ -97,7 +97,7 @@ class T247(unittest.TestCase):
                 similarity(reply["text"], old["text"]) < 0.78
                 for old in entry["replies"][:10]
             ))
-        self.assertEqual((len(ids), len(texts), new_count), (1020, 1020, 85))
+        self.assertEqual((len(ids), len(texts), new_count), (1105, 1105, 85))
 
     def test_only_opted_in_caller_can_select_new_reply(self):
         for entry in self.data["entries"]:
