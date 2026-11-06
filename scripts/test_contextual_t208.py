@@ -27,12 +27,12 @@ class T208(unittest.TestCase):
         self.assertEqual(stage["constraints"], {
             "read_only": True, "requires_direct_address": True, "no_personal_data": True})
         expected = {
-            "registered_count": 270, "added_candidates": 1320,
-            "per_intent_registered": 9, "per_intent_staged": 44,
-            "per_intent_total": 53, "target_per_intent": 100,
+            "registered_count": 270, "added_candidates": 1350,
+            "per_intent_registered": 9, "per_intent_staged": 45,
+            "per_intent_total": 54, "target_per_intent": 100,
             "finished_100": 0, "partial_intents": 30,
-            "remaining_per_intent": 47, "remaining_total": 1410,
-            "updated_in": "T208", "latest_added": 60, "latest_rejected": 0,
+            "remaining_per_intent": 46, "remaining_total": 1380,
+            "updated_in": "T240", "latest_added": 30, "latest_rejected": 0,
         }
         for field, value in expected.items():
             self.assertEqual(cp[field], value, field)
@@ -42,7 +42,7 @@ class T208(unittest.TestCase):
         for entry in stage["entries"]:
             self.assertEqual(entry["registered_reply_count"], 9)
             self.assertEqual(entry["staged_reply_count"], len(entry["replies"]))
-            self.assertEqual(len(entry["replies"]), 44)
+            self.assertEqual(len(entry["replies"]), 45)
             recent = [r for r in entry["replies"] if "_t208_" in r["id"]]
             self.assertEqual(len(recent), 2)
             context_notes = [norm(r["context_note"]) for r in entry["replies"]]
@@ -80,7 +80,7 @@ class T208(unittest.TestCase):
                 ):
                     self.assertIsNone(selector.select(entry["intent_id"], **(kwargs | change)))
                 fresh += 1
-        self.assertEqual((fresh, len(all_ids), len(all_answers)), (60, 1320, 1320))
+        self.assertEqual((fresh, len(all_ids), len(all_answers)), (60, 1350, 1350))
 
 
 if __name__ == "__main__":
