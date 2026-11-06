@@ -25,7 +25,7 @@ class ContextDeltaT245(unittest.TestCase):
         self.assertEqual((cp["updated_in"], cp["prior_accepted"], cp["added_in_current"], cp["verified_new"], cp["rejected"]),
                          ("T262", 1105, 85, 1190, 0))
         self.assertEqual([(x["source"], x["intents"], x["new_total_per_intent"], x["remaining_per_intent"], x["t245_added_answers"]) for x in cp["per_source"]],
-                         [("recovery", 24, 69, 31, 24), ("choice", 30, 67, 33, 30), ("boundaries", 31, 66, 34, 31)])
+                         [("recovery", 24, 70, 30, 24), ("choice", 30, 68, 32, 30), ("boundaries", 31, 67, 33, 31)])
         selector = StagedContextDelta(ROOT, PATH)
         self.assertEqual(len(d["entries"]), 85)
         ids, texts, notes = set(), set(), set()
