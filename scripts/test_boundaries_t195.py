@@ -37,15 +37,15 @@ def main():
         "read_only": True, "requires_direct_address": True, "no_personal_data": True
     }
     checkpoint = data["checkpoint"]
-    assert checkpoint["updated_in"] == "T195"
-    assert checkpoint["latest_base_main_sha"] == "ba898f907be800cf0fe18f44e2ab4e3fa111c12f"
+    assert checkpoint["updated_in"] == "T197"
+    assert checkpoint["latest_base_main_sha"] == "0e9060cfcebdd735a9313c987a65854a39b28b80"
     assert checkpoint["registered_count"] == 279
-    assert checkpoint["added_candidates"] == 1054
-    assert checkpoint["latest_added"] == 93 and checkpoint["latest_rejected"] == 0
+    assert checkpoint["added_candidates"] == 1116
+    assert checkpoint["latest_added"] == 62 and checkpoint["latest_rejected"] == 0
     assert checkpoint["partial_intents"] == 31 and checkpoint["finished_100"] == 0
-    assert checkpoint["per_intent_total"] == 43
-    assert checkpoint["remaining_per_intent"] == 57
-    assert checkpoint["remaining_total"] == 1767
+    assert checkpoint["per_intent_total"] == 45
+    assert checkpoint["remaining_per_intent"] == 55
+    assert checkpoint["remaining_total"] == 1705
     assert len(data["entries"]) == len(registered) == 31
 
     ids, texts, newest = set(), set(), []
@@ -54,7 +54,7 @@ def main():
         assert original["id"] == entry["intent_id"]
         assert original["question"] == entry["question"]
         assert entry["registered_reply_count"] == 9
-        assert entry["staged_reply_count"] == len(entry["replies"]) == 34
+        assert entry["staged_reply_count"] == len(entry["replies"]) == 36
         fresh = [r for r in entry["replies"] if "_t195_" in r["id"]]
         assert len(fresh) == 3
         assert {r["id"] for r in fresh} == {
@@ -97,7 +97,7 @@ def main():
             for other_ctx in {"direct", "private", "group_addressed"} - {r["context"]}:
                 assert selector.select(**{**params, "context": other_ctx}) is None
             newest.append(norm(r["text"]))
-    assert len(newest) == 93 and len(texts) == 1054
+    assert len(newest) == 93 and len(texts) == 1116
 
     # No exact normalized copy from registered QA packages (not just the source pack).
     for entry in manifest["packs"]:
@@ -107,7 +107,7 @@ def main():
         for record in other.get("records", []):
             for reply in [record["answer"], *record.get("variants", [])]:
                 assert norm(reply) not in newest
-    print("T195 PASS: 31 intents, +93 staged, 1054 unique; scope, opt-in and registered QA isolation")
+    print("T195 PASS: 31 intents, +93 T195 staged, 1116 cumulative unique; scope, opt-in and registered QA isolation")
 
 if __name__ == "__main__":
     main()
