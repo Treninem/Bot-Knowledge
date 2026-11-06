@@ -26,7 +26,7 @@ class TestT260(unittest.TestCase):
         cls.selector=StagedContextSelector(ROOT,STAGE)
     def test_integrity_and_all_96_new_distinct_scenarios(self):
         cp=self.stage["checkpoint"]
-        self.assertEqual(tuple(cp[x] for x in ("stage_id","updated_in","processed_intents","registered_count","prior_accepted","added_in_current","added_candidates","previous_per_intent","now_per_intent","remaining_per_intent","remaining_total","partial_intents","finished_100","rejected")),("T260","T260",24,216,624,96,720,35,39,61,1464,24,0,0))
+        self.assertEqual(tuple(cp[x] for x in ("stage_id","updated_in","processed_intents","registered_count","prior_accepted","added_in_current","added_candidates","previous_per_intent","now_per_intent","remaining_per_intent","remaining_total","partial_intents","finished_100","rejected")),("T263","T263",24,216,720,72,792,39,42,58,1392,24,0,0))
         self.assertFalse(self.stage["consumer_registered"])
         self.assertEqual(self.stage["constraints"],GUARDS)
         manifest=json.loads((ROOT/"manifest.json").read_text("utf-8"))
@@ -44,7 +44,7 @@ class TestT260(unittest.TestCase):
         self.assertEqual(len(self.stage["entries"]),24)
         for e in self.stage["entries"]:
             self.assertEqual(e["question"],source[e["intent_id"]]["question"])
-            self.assertEqual((e["registered_reply_count"],e["staged_reply_count"],len(e["replies"])),(9,30,30))
+            self.assertEqual((e["registered_reply_count"],e["staged_reply_count"],len(e["replies"])),(9,33,33))
             notes=set()
             older=[source[e["intent_id"]]["answer"],*source[e["intent_id"]]["variants"]]
             for index,reply in enumerate(e["replies"]):
@@ -56,14 +56,14 @@ class TestT260(unittest.TestCase):
                 self.assertEqual((reply["language"],reply["style"],reply["audiences"],reply["read_only"]),("ru","neutral",["all_ai_bots"],True))
                 self.assertIn(reply["context"],("direct","private","group_addressed"))
                 self.assertIsNone(SECRET.search(reply["text"]))
-                if index>=26:
+                if 26<=index<30:
                     self.assertEqual(reply["id"],f'{e["intent_id"]}_t260_{index-25:02d}')
                     score=max(sim(reply["text"],old) for old in older)
                     max_similarity=max(max_similarity,score)
                     self.assertLess(score,0.78)
                     new_count+=1
                 older.append(reply["text"])
-        self.assertEqual((new_count,len(ids),len(seen)),(96,720,936))
+        self.assertEqual((new_count,len(ids),len(seen)),(96,792,1008))
         self.assertLess(max_similarity,0.78)
     def test_selection_requires_independent_approval_and_address(self):
         for e in self.stage["entries"]:
