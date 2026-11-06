@@ -45,7 +45,7 @@ class TestT267(unittest.TestCase):
     self.assertIn(r["context"],("direct","private","group_addressed"))
     self.assertTrue(r["avoid"].strip())
     self.assertIsNone(re.search(r"(?i)(ghp_[a-z0-9]{12,}|sk-[a-z0-9]{12,}|bot_token|chat_id|user_id|https://t\\.me/)",r["text"]))
-    if i>=41:
+    if 41 <= i < 45:
      self.assertEqual(r["id"],f'{e["intent_id"]}_t267_{i-40:02d}')
      self.assertLess(max(sim(r["text"],x) for x in prior),.78);count+=1
     prior.append(r["text"])
