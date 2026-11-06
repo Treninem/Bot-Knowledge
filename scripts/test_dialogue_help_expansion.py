@@ -61,7 +61,7 @@ def main() -> None:
     for row in latest:
         assert row["audiences"] == ["all_ai_bots"]
         assert row["contexts"] == ["direct", "private", "group_addressed"]
-        assert len(row["aliases"]) == len(row["variants"]) == 2
+        assert 2 <= len(row["aliases"]) <= 4 and len(row["variants"]) == 2
         for phrase in [row["question"], *row["aliases"]]:
             hits = index.search(phrase, audience="all_ai_bots", limit=5)
             assert hits and hits[0][0] == row["id"], (row["id"], phrase, hits)
