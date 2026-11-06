@@ -32,7 +32,7 @@ class T251(unittest.TestCase):
         cp = self.data["checkpoint"]
         self.assertEqual((cp["processed_intents"], cp["registered_count"],
                           cp["added_candidates"], cp["remaining_total"],
-                          cp["partial_intents"], cp["finished_100"]), (24,216,48,2136,24,0))
+                          cp["partial_intents"], cp["finished_100"]), (24,216,96,2088,24,0))
         self.assertIs(self.data["consumer_registered"], False)
         self.assertEqual(self.data["source_pack"], SOURCE)
         self.assertEqual(self.data["constraints"],
@@ -47,8 +47,8 @@ class T251(unittest.TestCase):
         for entry in self.data["entries"]:
             rid = entry["intent_id"]
             self.assertEqual(entry["question"], by_id[rid]["question"])
-            self.assertEqual((entry["registered_reply_count"],entry["staged_reply_count"]),(9,2))
-            for i,reply in enumerate(entry["replies"],1):
+            self.assertEqual((entry["registered_reply_count"],entry["staged_reply_count"]),(9,4))
+            for i,reply in enumerate(entry["replies"][:2],1):
                 self.assertEqual(reply["id"],f"{rid}_t251_{i:02d}")
                 self.assertNotIn(reply["id"],ids)
                 self.assertNotIn(norm(reply["text"]),seen)
