@@ -10,7 +10,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 SPECS = {
     "staging/ru/choice_t166_context_pool.json": (30, 9, 38, 1, 1590),
-    "staging/ru/recovery_t168_context_pool.json": (24, 9, 36, 1, 1320),
+    "staging/ru/recovery_t168_context_pool.json": (24, 9, 39, 3, 1248),
     "staging/ru/boundaries_t167_context_pool.json": (31, 9, 39, 3, 1612),
 }
 SENSITIVE = re.compile(
@@ -37,8 +37,8 @@ def main():
         stage = json.loads((ROOT / path).read_text("utf-8"))
         checkpoint = stage["checkpoint"]
         assert checkpoint["base_main_sha"] == "309e5edd22f8ca4a6dcf59a4b2213a4c8696d36b"
-        assert checkpoint["updated_in"] == ("T198" if "boundaries_" in path else "T200")
-        assert checkpoint["latest_base_main_sha"] == ("8af3debe037343c30a471c09e674bcf3b6154f91" if "boundaries_" in path else "b84dfb0a48dab3965daa01e0ae4b5d90ddc02509")
+        assert checkpoint["updated_in"] == ("T198" if "boundaries_" in path else "T201" if "recovery_" in path else "T200")
+        assert checkpoint["latest_base_main_sha"] == ("8af3debe037343c30a471c09e674bcf3b6154f91" if "boundaries_" in path else "e5c4b1c35ea097af536a915b24710a371d5c2777" if "recovery_" in path else "b84dfb0a48dab3965daa01e0ae4b5d90ddc02509")
         assert checkpoint["registered_count"] == intents * base
         assert checkpoint["added_candidates"] == intents * stage_expected
         assert checkpoint["latest_added"] == intents * new_each
@@ -53,7 +53,7 @@ def main():
         for row in stage["entries"]:
             assert row["registered_reply_count"] == base
             assert row["staged_reply_count"] == stage_expected == len(row["replies"])
-            new = [r for r in row["replies"] if ("_t198_" in r["id"] if "boundaries_" in path else "_t200_" in r["id"])]
+            new = [r for r in row["replies"] if ("_t198_" in r["id"] if "boundaries_" in path else "_t201_" in r["id"] if "recovery_" in path else "_t200_" in r["id"])]
             assert len(new) == new_each, row["intent_id"]
             assert len({r["context_note"] for r in new}) == new_each
             # Different wording alone is not a distinct context. Stop repeated
@@ -80,7 +80,7 @@ def main():
                 assert 0 < len(r["text"]) <= 1600
                 all_stage.append(r["text"])
             fresh.extend(r["text"] for r in new)
-    assert len(fresh) == 147 and len(all_stage) == 3213
+    assert len(fresh) == 195 and len(all_stage) == 3285
     assert len({norm(t) for t in all_stage}) == len(all_stage)
     all_registered = set()
     for pack in manifest["packs"]:
@@ -90,7 +90,7 @@ def main():
         for row in obj.get("records", []):
             all_registered.update(norm(t) for t in [row["answer"], *row.get("variants", [])])
     assert set(map(norm, all_stage)).isdisjoint(all_registered)
-    print("T200 PASS: 54 new choice/recovery + 93 prior boundary additions; 3213 staged unique; registered cross-pack exact dedup")
+    print("T201 PASS: 72 new recovery + 30 prior choice + 93 prior boundary additions; 3285 staged unique; registered cross-pack exact dedup")
 
 
 if __name__ == "__main__":
