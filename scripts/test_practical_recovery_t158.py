@@ -36,18 +36,18 @@ def main():
     assert stage["audiences"]==["all_ai_bots"]
     checkpoint=stage["checkpoint"]
     assert checkpoint["base_main_sha"]=="309e5edd22f8ca4a6dcf59a4b2213a4c8696d36b"
-    assert checkpoint["registered_count"]==216 and checkpoint["added_candidates"]==768
-    assert checkpoint["latest_added"]==48 and checkpoint["latest_rejected"]==0
-    assert checkpoint["per_intent_registered"]==9 and checkpoint["per_intent_staged"]==32
-    assert checkpoint["per_intent_total"]==41 and checkpoint["partial_intents"]==24
-    assert checkpoint["finished_100"]==0 and checkpoint["remaining_total"]==1416
-    assert checkpoint["remaining_per_intent"]==59
+    assert checkpoint["registered_count"]==216 and checkpoint["added_candidates"]==792
+    assert checkpoint["latest_added"]==24 and checkpoint["latest_rejected"]==0
+    assert checkpoint["per_intent_registered"]==9 and checkpoint["per_intent_staged"]==33
+    assert checkpoint["per_intent_total"]==42 and checkpoint["partial_intents"]==24
+    assert checkpoint["finished_100"]==0 and checkpoint["remaining_total"]==1392
+    assert checkpoint["remaining_per_intent"]==58
     assert len(stage["entries"])==24
     candidates=[]; ids=set()
     for prior,entry in zip(rows,stage["entries"]):
         assert entry["intent_id"]==prior["id"] and entry["question"]==prior["question"]
-        assert entry["registered_reply_count"]==9 and entry["staged_reply_count"]==32
-        assert len(entry["replies"])==32
+        assert entry["registered_reply_count"]==9 and entry["staged_reply_count"]==33
+        assert len(entry["replies"])==33
         assert sum(r["id"].startswith(entry["intent_id"]+"_t168_") for r in entry["replies"])==3
         assert sum(r["id"].startswith(entry["intent_id"]+"_t170_") for r in entry["replies"])==3
         assert sum(r["id"].startswith(entry["intent_id"]+"_t174_") for r in entry["replies"])==3
@@ -63,7 +63,7 @@ def main():
         assert sum(r["id"].startswith(entry["intent_id"]+"_t184_") for r in entry["replies"])==2
         assert sum(r["id"].startswith(entry["intent_id"]+"_t185_") for r in entry["replies"])==2
         for entry_reply in entry["replies"]:
-            assert entry_reply["id"] not in ids and (entry_reply["id"].startswith(entry["intent_id"]+"_t168_") or entry_reply["id"].startswith(entry["intent_id"]+"_t170_") or entry_reply["id"].startswith(entry["intent_id"]+"_t174_") or entry_reply["id"].startswith(entry["intent_id"]+"_t175_") or entry_reply["id"].startswith(entry["intent_id"]+"_t176_") or entry_reply["id"].startswith(entry["intent_id"]+"_t177_") or entry_reply["id"].startswith(entry["intent_id"]+"_t178_") or entry_reply["id"].startswith(entry["intent_id"]+"_t179_") or entry_reply["id"].startswith(entry["intent_id"]+"_t180_") or entry_reply["id"].startswith(entry["intent_id"]+"_t181_") or entry_reply["id"].startswith(entry["intent_id"]+"_t182_") or entry_reply["id"].startswith(entry["intent_id"]+"_t183_") or entry_reply["id"].startswith(entry["intent_id"]+"_t184_") or entry_reply["id"].startswith(entry["intent_id"]+"_t185_") or entry_reply["id"].startswith(entry["intent_id"]+"_t187_") or entry_reply["id"].startswith(entry["intent_id"] + "_t189_") or entry_reply["id"].startswith(entry["intent_id"] + "_t190_") or entry_reply["id"].startswith(entry["intent_id"] + "_t191_") or entry_reply["id"].startswith(entry["intent_id"] + "_t192_"))
+            assert entry_reply["id"] not in ids and (entry_reply["id"].startswith(entry["intent_id"]+"_t168_") or entry_reply["id"].startswith(entry["intent_id"]+"_t170_") or entry_reply["id"].startswith(entry["intent_id"]+"_t174_") or entry_reply["id"].startswith(entry["intent_id"]+"_t175_") or entry_reply["id"].startswith(entry["intent_id"]+"_t176_") or entry_reply["id"].startswith(entry["intent_id"]+"_t177_") or entry_reply["id"].startswith(entry["intent_id"]+"_t178_") or entry_reply["id"].startswith(entry["intent_id"]+"_t179_") or entry_reply["id"].startswith(entry["intent_id"]+"_t180_") or entry_reply["id"].startswith(entry["intent_id"]+"_t181_") or entry_reply["id"].startswith(entry["intent_id"]+"_t182_") or entry_reply["id"].startswith(entry["intent_id"]+"_t183_") or entry_reply["id"].startswith(entry["intent_id"]+"_t184_") or entry_reply["id"].startswith(entry["intent_id"]+"_t185_") or entry_reply["id"].startswith(entry["intent_id"]+"_t187_") or entry_reply["id"].startswith(entry["intent_id"] + "_t189_") or entry_reply["id"].startswith(entry["intent_id"] + "_t190_") or entry_reply["id"].startswith(entry["intent_id"] + "_t191_") or entry_reply["id"].startswith(entry["intent_id"] + "_t192_") or entry_reply["id"].startswith(entry["intent_id"] + "_t193_"))
             ids.add(entry_reply["id"])
             assert entry_reply["language"]=="ru" and entry_reply["style"]=="neutral"
             assert entry_reply["context"] in {"direct","private","group_addressed"}
@@ -72,7 +72,7 @@ def main():
             assert 0<len(entry_reply["text"])<=1600
             assert not re.search(r"(?i)(ghp_[a-z0-9]{12,}|sk-[a-z0-9]{12,}|bot_token|chat_id|user_id|https://t\.me/|[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,})",entry_reply["text"])
             candidates.append(entry_reply["text"])
-    assert len(candidates)==768 and len({norm(s) for s in ans+candidates})==984
+    assert len(candidates)==792 and len({norm(s) for s in ans+candidates})==1008
     staged_keys={norm(s) for s in candidates}
     for item in mf["packs"]:
         path=item["path"]
@@ -81,5 +81,5 @@ def main():
         for record in other.get("records",[]):
             assert not staged_keys.intersection(
                 norm(s) for s in [record["answer"],*record.get("variants",[])]),path
-    print("T191 PASS: 24 recovery intents, 216 registered + 768 staged; SHA, privacy and uniqueness")
+    print("T191 PASS: 24 recovery intents, 216 registered + 792 staged; SHA, privacy and uniqueness")
 if __name__=="__main__":main()
