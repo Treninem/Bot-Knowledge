@@ -10,11 +10,11 @@ from scripts.staged_context_delta import StagedContextDelta
 ROOT=Path(__file__).resolve().parents[1]
 STAGE="staging/ru/context_delta_t241.json"
 GROUPS={
-    "recovery":(24,68,32,288,24),
-    "choice":(30,66,34,360,30),
-    "boundaries":(31,65,35,372,31),
+    "recovery":(24,69,31,312,24),
+    "choice":(30,67,33,390,30),
+    "boundaries":(31,66,34,403,31),
 }
-SECRET=re.compile(r"(?i)(ghp_[a-z0-9]{12,}|sk-[a-z0-9]{12,}|bot_token|chat_id|user_id|bearer\s+|https://t\.me/|[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,})")
+SECRET=re.compile(r"(?i)(ghp_[a-z0-9]{13,}|sk-[a-z0-9]{13,}|bot_token|chat_id|user_id|bearer\s+|https://t\.me/|[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,})")
 
 def norm(v):
     v=unicodedata.normalize("NFKC",v).casefold().replace("ё","е")
@@ -34,16 +34,16 @@ class T257(unittest.TestCase):
         cp=self.data["checkpoint"]
         self.assertEqual((cp["updated_in"],cp["prior_accepted"],cp["added_in_current"],
             cp["verified_new"],cp["rejected"],cp["processed_intents"],cp["newly_finished_100"]),
-            ("T257",935,85,1020,0,85,0))
+            ("T261",1020,85,1105,0,85,0))
         self.assertEqual({p["source"]:(p["intents"],p["new_total_per_intent"],
             p["remaining_per_intent"],p["new_answers"],p["t257_added_answers"]) for p in cp["per_source"]},GROUPS)
         self.assertEqual(len(self.data["entries"]),85)
         ids=set(); texts=set()
         for e in self.data["entries"]:
             notes=set()
-            self.assertEqual(len(e["replies"]),12)
+            self.assertEqual(len(e["replies"]),13)
             self.assertEqual([x["id"] for x in e["replies"]],
-                [f'{e["intent_id"]}_t241_{i:02d}' for i in range(1,13)])
+                [f'{e["intent_id"]}_t241_{i:02d}' for i in range(1,14)])
             earlier=[r["text"] for r in e["replies"][:11]]
             for r in e["replies"]:
                 self.assertNotIn(r["id"],ids);ids.add(r["id"])
@@ -56,8 +56,8 @@ class T257(unittest.TestCase):
             self.assertIn(new["context"],("direct","private","group_addressed"))
             self.assertIsNone(SECRET.search(new["text"]))
             self.assertTrue(all(sim(new["text"],prev)<0.78 for prev in earlier))
-        self.assertEqual((len(ids),len(texts)),(1020,1020))
-        self.assertEqual(sum(p["intents"]*p["remaining_per_intent"] for p in cp["per_source"]),2873)
+        self.assertEqual((len(ids),len(texts)),(1105,1105))
+        self.assertEqual(sum(p["intents"]*p["remaining_per_intent"] for p in cp["per_source"]),2788)
         manifest=json.loads((ROOT/"manifest.json").read_text("utf-8"))
         self.assertNotIn(STAGE,{p["path"] for p in manifest["packs"]})
         self.assertFalse(self.data["consumer_registered"])
