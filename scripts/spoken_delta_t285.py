@@ -78,7 +78,7 @@ class SpokenDeltaT285:
         self._rows = {}
         for entry in data.get("entries", []):
             ident = entry.get("intent_id")
-            if ident not in canonical or ident in self._rows or
+            if (ident not in canonical or ident in self._rows or
                 entry.get("question") != canonical[ident]["question"] or
                 entry.get("registered_reply_count") != 9 or
                 entry.get("parent_staged_reply_count") != 77 or
