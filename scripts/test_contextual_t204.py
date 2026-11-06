@@ -33,13 +33,13 @@ class T204(unittest.TestCase):
         self.assertEqual(stage["audiences"], ["all_ai_bots"])
         self.assertEqual(stage["constraints"], {
             "read_only": True, "requires_direct_address": True, "no_personal_data": True})
-        self.assertEqual(progress["updated_in"], "T206")
-        self.assertEqual(progress["latest_added"], 72)
+        self.assertEqual(progress["updated_in"], "T240")
+        self.assertEqual(progress["latest_added"], 48)
         self.assertEqual(progress["latest_rejected"], 0)
         self.assertEqual(progress["registered_count"], 216)
-        self.assertEqual(progress["added_candidates"], 1080)
-        self.assertEqual(progress["per_intent_total"], 54)
-        self.assertEqual(progress["remaining_total"], 1104)
+        self.assertEqual(progress["added_candidates"], 1128)
+        self.assertEqual(progress["per_intent_total"], 56)
+        self.assertEqual(progress["remaining_total"], 1056)
         self.assertEqual(progress["finished_100"], 0)
         self.assertEqual(progress["partial_intents"], 24)
         self.assertEqual(len(stage["entries"]), 24)
@@ -48,8 +48,8 @@ class T204(unittest.TestCase):
         texts, ids, new_count = set(), set(), 0
         for entry in stage["entries"]:
             self.assertEqual(entry["registered_reply_count"], 9)
-            self.assertEqual(entry["staged_reply_count"], 45)
-            self.assertEqual(len(entry["replies"]), 45)
+            self.assertEqual(entry["staged_reply_count"], 47)
+            self.assertEqual(len(entry["replies"]), 47)
             notes = [norm(r["context_note"]) for r in entry["replies"]]
             self.assertEqual(len(notes), len(set(notes)))
             fresh = [r for r in entry["replies"] if "_t204_" in r["id"]]
@@ -80,7 +80,7 @@ class T204(unittest.TestCase):
                     self.assertIsNone(selector.select(entry["intent_id"], **(options | change)))
                 new_count += 1
         self.assertEqual(new_count, 72)
-        self.assertEqual(len(ids), 1080)
+        self.assertEqual(len(ids), 1128)
 
 
 if __name__ == "__main__":
