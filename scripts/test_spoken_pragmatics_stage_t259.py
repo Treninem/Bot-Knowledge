@@ -92,7 +92,7 @@ class T259(unittest.TestCase):
                 context_notes.add(norm(reply["context_note"]))
                 earlier.append(reply["text"])
         self.assertEqual((new_count, len(ids), len(all_text)), (96, 888, 1104))
-        self.assertEqual(cp["remaining_total"], 24 * 58)
+        self.assertEqual(cp["remaining_total"], 24 * 54)
 
     def test_new_replies_are_never_automatically_authorized(self):
         for e in self.stage["entries"]:

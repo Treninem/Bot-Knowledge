@@ -11,7 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 STAGE = "staging/ru/spoken_pragmatics_t251_context_pool.json"
 SOURCE = "packs/ru/spoken_pragmatics_qa.json"
 GUARDS = {"read_only": True, "requires_direct_address": True, "no_personal_data": True}
-SECRET = re.compile(r"(?i)(ghp_[a-z0-9]{12,}|sk-[a-z0-9]{12,}|bot_token|chat_id|user_id|bearer\\s+|https://t\\.me/|[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,})")
+SECRET = re.compile(r"(?i)(ghp_[a-z0-9]{12,}|sk-[a-z0-9]{12,}|bot_token|chat_id|user_id|bearer\s+|https://t\.me/|[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,})")
 
 def normalize(value):
     value = unicodedata.normalize("NFKC", value).casefold().replace("ё", "е")

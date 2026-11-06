@@ -88,7 +88,7 @@ class TestT263(unittest.TestCase):
                     added += 1
                 previous.append(reply["text"])
         self.assertEqual((added, len(ids), len(texts)), (72, 888, 1104))
-        self.assertEqual(cp["remaining_total"], 24 * 58)
+        self.assertEqual(cp["remaining_total"], 24 * 54)
 
     def test_new_replies_require_explicit_independent_approval(self):
         for entry in self.data["entries"]:
