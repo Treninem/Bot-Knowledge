@@ -26,12 +26,12 @@ class T206(unittest.TestCase):
         self.assertEqual(data["constraints"], {
             "read_only": True, "requires_direct_address": True, "no_personal_data": True})
         expected = {
-            "registered_count": 216, "added_candidates": 1080,
-            "per_intent_registered": 9, "per_intent_staged": 45,
-            "per_intent_total": 54, "target_per_intent": 100,
+            "registered_count": 216, "added_candidates": 1152,
+            "per_intent_registered": 9, "per_intent_staged": 48,
+            "per_intent_total": 57, "target_per_intent": 100,
             "finished_100": 0, "partial_intents": 24,
-            "remaining_per_intent": 46, "remaining_total": 1104,
-            "updated_in": "T206", "latest_added": 72, "latest_rejected": 0,
+            "remaining_per_intent": 43, "remaining_total": 1032,
+            "updated_in": "T209", "latest_added": 72, "latest_rejected": 0,
         }
         for key, value in expected.items():
             self.assertEqual(checkpoint[key], value, key)
@@ -40,12 +40,12 @@ class T206(unittest.TestCase):
         ids, texts, fresh = set(), set(), 0
         for entry in data["entries"]:
             self.assertEqual(entry["registered_reply_count"], 9)
-            self.assertEqual(entry["staged_reply_count"], 45)
-            self.assertEqual(len(entry["replies"]), 45)
+            self.assertEqual(entry["staged_reply_count"], 48)
+            self.assertEqual(len(entry["replies"]), 48)
             new = [r for r in entry["replies"] if "_t206_" in r["id"]]
             self.assertEqual(len(new), 3)
             notes = [norm(r["context_note"]) for r in entry["replies"]]
-            self.assertEqual(len(set(notes)), 45)
+            self.assertEqual(len(set(notes)), 48)
             for r in entry["replies"]:
                 self.assertNotIn(r["id"], ids)
                 self.assertNotIn(norm(r["text"]), texts)
@@ -78,7 +78,7 @@ class T206(unittest.TestCase):
                 ):
                     self.assertIsNone(pool.select(entry["intent_id"], **(args | override)))
                 fresh += 1
-        self.assertEqual((fresh, len(ids), len(texts)), (72, 1080, 1080))
+        self.assertEqual((fresh, len(ids), len(texts)), (72, 1152, 1152))
 
 
 if __name__ == "__main__":
