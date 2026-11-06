@@ -9,9 +9,9 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 SPECS = {
-    "staging/ru/choice_t166_context_pool.json": (30, 9, 33, 1, 1740),
-    "staging/ru/recovery_t168_context_pool.json": (24, 9, 31, 1, 1440),
-    "staging/ru/boundaries_t167_context_pool.json": (31, 9, 29, 1, 1922),
+    "staging/ru/choice_t166_context_pool.json": (30, 9, 34, 2, 1710),
+    "staging/ru/recovery_t168_context_pool.json": (24, 9, 32, 2, 1416),
+    "staging/ru/boundaries_t167_context_pool.json": (31, 9, 30, 2, 1891),
 }
 SENSITIVE = re.compile(
     r"(?i)(ghp_[a-z0-9]{12,}|sk-[a-z0-9]{12,}|bot_token|chat_id|"
@@ -80,7 +80,7 @@ def main():
                 assert 0 < len(r["text"]) <= 1600
                 all_stage.append(r["text"])
             fresh.extend(r["text"] for r in new)
-    assert len(fresh) == 85 and len(all_stage) == 2633
+    assert len(fresh) == 170 and len(all_stage) == 2718
     assert len({norm(t) for t in all_stage}) == len(all_stage)
     all_registered = set()
     for pack in manifest["packs"]:
@@ -90,7 +90,7 @@ def main():
         for row in obj.get("records", []):
             all_registered.update(norm(t) for t in [row["answer"], *row.get("variants", [])])
     assert set(map(norm, all_stage)).isdisjoint(all_registered)
-    print("T192 PASS: 85 new across 85 intents, 2633 staged unique; registered cross-pack exact dedup")
+    print("T192 PASS: 170 new across 85 intents, 2718 staged unique; registered cross-pack exact dedup")
 
 
 if __name__ == "__main__":
