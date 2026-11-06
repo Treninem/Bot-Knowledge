@@ -44,7 +44,7 @@ class TestT260(unittest.TestCase):
         self.assertEqual(len(self.stage["entries"]),24)
         for e in self.stage["entries"]:
             self.assertEqual(e["question"],source[e["intent_id"]]["question"])
-            self.assertEqual((e["registered_reply_count"],e["staged_reply_count"],len(e["replies"])),(9,41,41))
+            self.assertEqual((e["registered_reply_count"],e["staged_reply_count"],len(e["replies"])),(9,45,45))
             notes=set()
             older=[source[e["intent_id"]]["answer"],*source[e["intent_id"]]["variants"]]
             for index,reply in enumerate(e["replies"]):
@@ -63,7 +63,7 @@ class TestT260(unittest.TestCase):
                     self.assertLess(score,0.78)
                     new_count+=1
                 older.append(reply["text"])
-        self.assertEqual((new_count,len(ids),len(seen)),(96,984,1200))
+        self.assertEqual((new_count,len(ids),len(seen)),(96,1080,1296))
         self.assertLess(max_similarity,0.78)
     def test_selection_requires_independent_approval_and_address(self):
         for e in self.stage["entries"]:
