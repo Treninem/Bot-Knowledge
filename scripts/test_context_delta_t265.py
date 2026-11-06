@@ -21,8 +21,8 @@ class T265(unittest.TestCase):
         cls.selector=StagedContextDelta(ROOT,PATH)
     def test_full_counts_and_contextual_uniqueness(self):
         d=self.data; cp=d["checkpoint"]
-        self.assertEqual((cp["updated_in"],cp["prior_accepted"],cp["added_in_current"],cp["verified_new"],cp["processed_intents"],cp["newly_finished_100"],cp["rejected"]),("T265",1190,85,1275,85,0,0))
-        self.assertEqual({x["source"]:(x["intents"],x["new_total_per_intent"],x["remaining_per_intent"],x["new_answers"],x["t265_added_answers"]) for x in cp["per_source"]},{"recovery":(24,71,29,360,24),"choice":(30,69,31,450,30),"boundaries":(31,68,32,465,31)})
+        self.assertEqual((cp["updated_in"],cp["prior_accepted"],cp["added_in_current"],cp["verified_new"],cp["processed_intents"],cp["newly_finished_100"],cp["rejected"]),("T268",1275,85,1360,85,0,0))
+        self.assertEqual({x["source"]:(x["intents"],x["new_total_per_intent"],x["remaining_per_intent"],x["new_answers"],x["t265_added_answers"]) for x in cp["per_source"]},{"recovery":(24,72,28,384,24),"choice":(30,70,30,480,30),"boundaries":(31,69,31,496,31)})
         self.assertFalse(d["consumer_registered"])
         self.assertEqual(d["constraints"],{"read_only":True,"requires_direct_address":True,"no_personal_data":True})
         manifest=json.loads((ROOT/"manifest.json").read_text("utf-8"))
@@ -31,8 +31,8 @@ class T265(unittest.TestCase):
         self.assertEqual(len(d["entries"]),85)
         for e in d["entries"]:
             replies=e["replies"]
-            self.assertEqual(len(replies),15)
-            self.assertEqual([r["id"] for r in replies],[f'{e["intent_id"]}_t241_{i:02d}' for i in range(1,16)])
+            self.assertEqual(len(replies),16)
+            self.assertEqual([r["id"] for r in replies],[f'{e["intent_id"]}_t241_{i:02d}' for i in range(1, 17)])
             notes=set()
             for r in replies:
                 self.assertNotIn(r["id"],ids);ids.add(r["id"])
@@ -42,8 +42,8 @@ class T265(unittest.TestCase):
                 self.assertIn(r["context"],("private","direct","group_addressed"))
                 self.assertTrue(r["avoid"].strip())
                 self.assertIsNone(BAD.search(r["text"]))
-            self.assertTrue(all(sim(replies[-1]["text"],r["text"])<.78 for r in replies[:-1]))
-        self.assertEqual((len(ids),len(texts)),(1275,1275))
+            self.assertTrue(all(sim(replies[14]["text"],r["text"])<.78 for r in replies[:14]))
+        self.assertEqual((len(ids),len(texts)),(1360,1360))
     def test_new_replies_require_local_approval(self):
         for e in self.data["entries"]:
             r=e["replies"][-1]
