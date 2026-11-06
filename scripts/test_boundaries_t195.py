@@ -32,7 +32,7 @@ def main():
     assert data["source_pack"] == SRC and data["consumer_registered"] is False
     assert data["source_pack_manifest_sha256"] == expected
     assert data["source_pack_blob_sha"] == hashlib.sha1(
-        b"blob " + str(len(source)).encode() + b"\\0" + source).hexdigest()
+        b"blob " + str(len(source)).encode() + b"\0" + source).hexdigest()
     assert data["constraints"] == {
         "read_only": True, "requires_direct_address": True, "no_personal_data": True
     }
