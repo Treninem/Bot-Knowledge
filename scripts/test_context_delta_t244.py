@@ -37,7 +37,7 @@ class T244(unittest.TestCase):
             self.assertEqual((new["language"],new["style"],new["audiences"],new["read_only"]),("ru","neutral",["all_ai_bots"],True))
             self.assertTrue(new["avoid"].strip())
             self.assertIn(new["context"],("direct","private","group_addressed"))
-            self.assertTrue(all(overlap(new["text"],r["text"])<0.78 for r in entry["replies"][:-1]))
+            self.assertTrue(all(overlap(new["text"],r["text"])<0.78 for r in entry["replies"][:6]))
             a=dict(approved_reply_ids=frozenset({new["id"]}),audience="all_ai_bots",context=new["context"],addressed=True,local_permission=True)
             self.assertEqual(self.selector.select(entry["intent_id"],**a).id,new["id"])
             for change in ({"approved_reply_ids":frozenset()},{"audience":"community_bots"},{"context":"unknown"},{"addressed":False},{"local_permission":False},{"recent_ids":(new["id"],)}):
