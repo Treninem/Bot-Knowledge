@@ -39,7 +39,7 @@ class TestT263(unittest.TestCase):
                 "prior_accepted", "added_in_current", "added_candidates",
                 "previous_per_intent", "now_per_intent", "remaining_per_intent",
                 "remaining_total", "partial_intents", "finished_100", "rejected")),
-            ("T266", "T266", 24, 216, 888, 96, 984, 46, 50, 50, 1200, 24, 0, 0))
+            ("T267", "T267", 24, 216, 984, 96, 1080, 50, 54, 46, 1104, 24, 0, 0))
         self.assertFalse(stage["consumer_registered"])
         self.assertEqual(stage["constraints"], {
             "read_only": True, "requires_direct_address": True, "no_personal_data": True})
@@ -62,7 +62,7 @@ class TestT263(unittest.TestCase):
             self.assertEqual(entry["question"], origin["question"])
             self.assertEqual(
                 (entry["registered_reply_count"], entry["staged_reply_count"], len(entry["replies"])),
-                (9, 41, 41))
+                (9, 45, 45))
             previous = [origin["answer"], *origin["variants"]]
             notes = set()
             for index, reply in enumerate(entry["replies"]):
@@ -87,8 +87,8 @@ class TestT263(unittest.TestCase):
                     self.assertTrue(all(overlap(reply["text"], old) < 0.78 for old in previous))
                     added += 1
                 previous.append(reply["text"])
-        self.assertEqual((added, len(ids), len(texts)), (72, 984, 1200))
-        self.assertEqual(cp["remaining_total"], 24 * 50)
+        self.assertEqual((added, len(ids), len(texts)), (72, 1080, 1296))
+        self.assertEqual(cp["remaining_total"], 24 * 46)
 
     def test_new_replies_require_explicit_independent_approval(self):
         for entry in self.data["entries"]:

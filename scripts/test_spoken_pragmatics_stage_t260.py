@@ -26,7 +26,7 @@ class TestT260(unittest.TestCase):
         cls.selector=StagedContextSelector(ROOT,STAGE)
     def test_integrity_and_all_96_new_distinct_scenarios(self):
         cp=self.stage["checkpoint"]
-        self.assertEqual(tuple(cp[x] for x in ("stage_id","updated_in","processed_intents","registered_count","prior_accepted","added_in_current","added_candidates","previous_per_intent","now_per_intent","remaining_per_intent","remaining_total","partial_intents","finished_100","rejected")),("T266","T266",24,216,888,96,984,46,50,50,1200,24,0,0))
+        self.assertEqual(tuple(cp[x] for x in ("stage_id","updated_in","processed_intents","registered_count","prior_accepted","added_in_current","added_candidates","previous_per_intent","now_per_intent","remaining_per_intent","remaining_total","partial_intents","finished_100","rejected")),("T267","T267",24,216,984,96,1080,50,54,46,1104,24,0,0))
         self.assertFalse(self.stage["consumer_registered"])
         self.assertEqual(self.stage["constraints"],GUARDS)
         manifest=json.loads((ROOT/"manifest.json").read_text("utf-8"))
