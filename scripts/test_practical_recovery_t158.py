@@ -36,18 +36,18 @@ def main():
     assert stage["audiences"]==["all_ai_bots"]
     checkpoint=stage["checkpoint"]
     assert checkpoint["base_main_sha"]=="309e5edd22f8ca4a6dcf59a4b2213a4c8696d36b"
-    assert checkpoint["registered_count"]==216 and checkpoint["added_candidates"]==744
-    assert checkpoint["latest_added"]==24 and checkpoint["latest_rejected"]==0
-    assert checkpoint["per_intent_registered"]==9 and checkpoint["per_intent_staged"]==31
-    assert checkpoint["per_intent_total"]==40 and checkpoint["partial_intents"]==24
-    assert checkpoint["finished_100"]==0 and checkpoint["remaining_total"]==1440
-    assert checkpoint["remaining_per_intent"]==60
+    assert checkpoint["registered_count"]==216 and checkpoint["added_candidates"]==768
+    assert checkpoint["latest_added"]==48 and checkpoint["latest_rejected"]==0
+    assert checkpoint["per_intent_registered"]==9 and checkpoint["per_intent_staged"]==32
+    assert checkpoint["per_intent_total"]==41 and checkpoint["partial_intents"]==24
+    assert checkpoint["finished_100"]==0 and checkpoint["remaining_total"]==1416
+    assert checkpoint["remaining_per_intent"]==59
     assert len(stage["entries"])==24
     candidates=[]; ids=set()
     for prior,entry in zip(rows,stage["entries"]):
         assert entry["intent_id"]==prior["id"] and entry["question"]==prior["question"]
-        assert entry["registered_reply_count"]==9 and entry["staged_reply_count"]==31
-        assert len(entry["replies"])==31
+        assert entry["registered_reply_count"]==9 and entry["staged_reply_count"]==32
+        assert len(entry["replies"])==32
         assert sum(r["id"].startswith(entry["intent_id"]+"_t168_") for r in entry["replies"])==3
         assert sum(r["id"].startswith(entry["intent_id"]+"_t170_") for r in entry["replies"])==3
         assert sum(r["id"].startswith(entry["intent_id"]+"_t174_") for r in entry["replies"])==3
@@ -72,7 +72,7 @@ def main():
             assert 0<len(entry_reply["text"])<=1600
             assert not re.search(r"(?i)(ghp_[a-z0-9]{12,}|sk-[a-z0-9]{12,}|bot_token|chat_id|user_id|https://t\.me/|[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,})",entry_reply["text"])
             candidates.append(entry_reply["text"])
-    assert len(candidates)==744 and len({norm(s) for s in ans+candidates})==960
+    assert len(candidates)==768 and len({norm(s) for s in ans+candidates})==984
     staged_keys={norm(s) for s in candidates}
     for item in mf["packs"]:
         path=item["path"]
@@ -81,5 +81,5 @@ def main():
         for record in other.get("records",[]):
             assert not staged_keys.intersection(
                 norm(s) for s in [record["answer"],*record.get("variants",[])]),path
-    print("T191 PASS: 24 recovery intents, 216 registered + 744 staged; SHA, privacy and uniqueness")
+    print("T191 PASS: 24 recovery intents, 216 registered + 768 staged; SHA, privacy and uniqueness")
 if __name__=="__main__":main()
