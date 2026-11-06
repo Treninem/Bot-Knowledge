@@ -45,3 +45,8 @@ Only three exact allowlisted stage paths can load. Each stage must be marked `co
 Even successful CI does **not** prove semantic quality of every staged reply or consumer integration. Require independent contextual review, actual consumer testing, validated safe routing, explicit user approval for production deployment and exact-head/post-main GitHub checks before claiming any live capability. This task makes no ImPULS/production changes.
 
 Files: Python opt-in helper, Python unittest, documentation and a single added quality job step. No JSON/manifest package changes. `knowledge_version=2026.11.05.036` and 41 existing package SHA remain intact.
+
+
+## T251: отдельный набор разговорной прагматики
+
+Добавлен четвёртый явно разрешённый staging-путь `staging/ru/spoken_pragmatics_t251_context_pool.json` для 24 проверенных канонических разговорных намерений. Он закрепляет SHA-256 и Git blob SHA зарегистрированного `spoken_pragmatics_qa.json`, но не включён в `manifest.json` и не доставляется потребителям. Вызов `StagedContextSelector` требует точного одобренного reply ID, подтверждённого контекста, адресации, разрешения, аудитории и подавления недавних повторов. Исходные три пула и их проверки не изменены. См. `docs/SPOKEN_PRAGMATICS_T251_2026_11_06.md`.

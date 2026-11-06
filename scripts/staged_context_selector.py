@@ -18,6 +18,7 @@ _ALLOWED = frozenset({
     "staging/ru/choice_t166_context_pool.json",
     "staging/ru/recovery_t168_context_pool.json",
     "staging/ru/boundaries_t167_context_pool.json",
+    "staging/ru/spoken_pragmatics_t251_context_pool.json",
 })
 _CONTEXTS = frozenset({"direct", "private", "group_addressed"})
 _GUARDS = {"read_only": True, "requires_direct_address": True, "no_personal_data": True}
