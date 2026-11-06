@@ -30,6 +30,9 @@ PII = (
     re.compile(r"(?<![\w@])@[A-Za-z][A-Za-z0-9_]{4,31}\b"),
     re.compile(r"\b(?:https?://)?(?:www\.)?(?:t\.me|telegram\.me|telegram\.dog)/[^\s\"']+", re.I),
     re.compile(r"\btg://(?:resolve|user|privatepost|join)\b[^\s\"']*", re.I),
+    # A named person's home is private location context even without an ID.
+    re.compile(r"\b(?:у\s+[а-яёa-z][а-яёa-z-]{2,}\s+дома|в\s+квартире\s+[а-яёa-z][а-яёa-z-]{2,})\b", re.I),
+    re.compile(r"\bat\s+[a-z][a-z'-]{2,}'s\s+(?:home|house)\b", re.I),
 )
 ID = re.compile(r"[A-Za-z0-9][A-Za-z0-9_-]{0,95}\Z")
 QA_AUDIENCES = frozenset({"all_ai_bots", "community_bots", "chat_moderators", "impuls"})
