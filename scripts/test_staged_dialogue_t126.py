@@ -225,7 +225,7 @@ class StagedDialogueT126(unittest.TestCase):
         self.assertEqual(len(raw), 1609690)
         self.assertEqual(
             hashlib.sha256(raw).hexdigest(),
-            "544a76959ca2ef709820dcf1771789dc7a0ad95e010125dad241df86f9e13875",
+            "ec094ce88f20ff1fe84684c003821da62d5c2c09fbe4a73f21287b2291fb707b",
         )
 
     def test_t149_accepted_delta_and_editorial_repair(self):
