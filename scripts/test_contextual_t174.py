@@ -11,7 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 SPECS = {
     "staging/ru/choice_t166_context_pool.json": (30, 9, 35, 1, 1680),
     "staging/ru/recovery_t168_context_pool.json": (24, 9, 33, 1, 1392),
-    "staging/ru/boundaries_t167_context_pool.json": (31, 9, 33, 2, 1798),
+    "staging/ru/boundaries_t167_context_pool.json": (31, 9, 34, 3, 1767),
 }
 SENSITIVE = re.compile(
     r"(?i)(ghp_[a-z0-9]{12,}|sk-[a-z0-9]{12,}|bot_token|chat_id|"
@@ -80,7 +80,7 @@ def main():
                 assert 0 < len(r["text"]) <= 1600
                 all_stage.append(r["text"])
             fresh.extend(r["text"] for r in new)
-    assert len(fresh) == 116 and len(all_stage) == 2865
+    assert len(fresh) == 147 and len(all_stage) == 2896
     assert len({norm(t) for t in all_stage}) == len(all_stage)
     all_registered = set()
     for pack in manifest["packs"]:
@@ -90,7 +90,7 @@ def main():
         for row in obj.get("records", []):
             all_registered.update(norm(t) for t in [row["answer"], *row.get("variants", [])])
     assert set(map(norm, all_stage)).isdisjoint(all_registered)
-    print("T195 PASS: 62 new boundaries + 54 prior latest across 85 intents, 2865 staged unique; registered cross-pack exact dedup")
+    print("T195 PASS: 93 new boundaries + 54 prior latest across 85 intents, 2896 staged unique; registered cross-pack exact dedup")
 
 
 if __name__ == "__main__":
