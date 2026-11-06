@@ -36,13 +36,13 @@ class ContextDeltaT245(unittest.TestCase):
             new = e["replies"][7]
             self.assertNotIn(new["id"], ids)
             self.assertNotIn(norm(new["text"]), texts)
-            self.assertNotIn(norm(new["context_note"]), {norm(r["context_note"]) for r in e["replies"][:-1]})
+            self.assertNotIn(norm(new["context_note"]), {norm(r["context_note"]) for r in e["replies"][:7]})
             self.assertEqual((new["language"], new["style"], new["audiences"], new["read_only"]),
                              ("ru", "neutral", ["all_ai_bots"], True))
             self.assertIn(new["context"], ("direct", "private", "group_addressed"))
             self.assertTrue(new["avoid"].strip())
             self.assertIsNone(PRIVATE.search(new["text"]))
-            self.assertTrue(all(similarity(new["text"], old["text"]) < .78 for old in e["replies"][:-1]))
+            self.assertTrue(all(similarity(new["text"], old["text"]) < .78 for old in e["replies"][:7]))
             ids.add(new["id"])
             texts.add(norm(new["text"]))
             args = dict(approved_reply_ids=frozenset({new["id"]}),
