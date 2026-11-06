@@ -41,7 +41,9 @@ def main():
         assert row["audiences"] == ["all_ai_bots"]
         assert row["contexts"] == ["direct", "private", "group_addressed"]
         assert row["language"] == "ru"
-        assert len(row["aliases"]) == len(row["variants"]) == 2
+        # T56_024 gained two verified input aliases; its two reply variants stay fixed.
+        assert len(row["aliases"]) == (4 if row["id"] == "dlg_t56_024" else 2)
+        assert len(row["variants"]) == 2
         assert row["source"].endswith("/docs/REQUIREMENTS_21.md")
         texts = [row["question"], *row["aliases"], row["answer"], *row["variants"]]
         assert all(t.strip() for t in texts)
