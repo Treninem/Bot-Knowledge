@@ -366,7 +366,7 @@ class StagedSelectorTests(unittest.TestCase):
             data = json.loads((ROOT / path).read_text("utf-8"))
             for entry in data["entries"]:
                 recent = [r for r in entry["replies"] if "_t192_" in r["id"]]
-                self.assertEqual(len(recent), 1, entry["intent_id"])
+                self.assertEqual(len(recent), 2, entry["intent_id"])
                 for item in recent:
                     approval = frozenset({item["id"]})
                     opts = dict(
@@ -390,7 +390,7 @@ class StagedSelectorTests(unittest.TestCase):
                         self.assertIsNone(pool.select(
                             entry["intent_id"], **{**opts, "context": wrong}))
                     total += 1
-        self.assertEqual(total, 85)
+        self.assertEqual(total, 170)
 
     def test_reject_unknown_path(self):
         for path in ("../manifest.json", "packs/ru/choice_reasoning_qa.json",
