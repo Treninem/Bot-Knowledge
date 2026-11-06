@@ -137,23 +137,24 @@ class StagedContextDelta:
             raise ValueError("delta does not cover every asserted canonical intent")
         cp = payload.get("checkpoint", {})
         counts = {
-            "recovery": (24, 56, 48),
-            "choice": (30, 54, 60),
-            "boundaries": (31, 53, 62),
+            "recovery": (24, 56, 96, 48),
+            "choice": (30, 54, 120, 60),
+            "boundaries": (31, 53, 124, 62),
         }
-        if (cp.get("updated_in") != "T241" or cp.get("verified_new") != 170
+        if (cp.get("updated_in") != "T242" or cp.get("verified_new") != 340
                 or cp.get("rejected") != 0 or cp.get("processed_intents") != 85
                 or cp.get("newly_finished_100") != 0
-                or sum(len(v) for v in self._by_intent.values()) != 170):
+                or cp.get("prior_accepted") != 170 or cp.get("added_in_current") != 170
+                or sum(len(v) for v in self._by_intent.values()) != 340):
             raise ValueError("delta checkpoint disagrees with content")
         for row in cp.get("per_source", []):
             spec = counts.pop(row.get("source"), None)
             if spec is None:
                 raise ValueError("duplicate or unknown source inventory")
-            n, before, new = spec
+            n, before, new, additional = spec
             if (row.get("intents"), row.get("baseline_total_per_intent"),
                     row.get("new_total_per_intent"), row.get("remaining_per_intent"),
-                    row.get("new_answers")) != (n, before, before + 2, 98 - before, new):
+                    row.get("new_answers"), row.get("t242_added_answers")) != (n, before, before + 4, 96 - before, new, additional):
                 raise ValueError("incorrect per-source counts")
         if counts:
             raise ValueError("missing per-source counts")
