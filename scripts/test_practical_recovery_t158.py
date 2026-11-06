@@ -39,7 +39,7 @@ def main():
     assert checkpoint["registered_count"]==216 and checkpoint["added_candidates"]==840
     assert checkpoint["latest_added"]==48 and checkpoint["latest_rejected"]==0
     assert checkpoint["per_intent_registered"]==9 and checkpoint["per_intent_staged"]==35
-    assert checkpoint["per_intent_total"]==42 and checkpoint["partial_intents"]==24
+    assert checkpoint["per_intent_total"]==44 and checkpoint["partial_intents"]==24
     assert checkpoint["finished_100"]==0 and checkpoint["remaining_total"]==1344
     assert checkpoint["remaining_per_intent"]==56
     assert len(stage["entries"])==24
@@ -81,5 +81,5 @@ def main():
         for record in other.get("records",[]):
             assert not staged_keys.intersection(
                 norm(s) for s in [record["answer"],*record.get("variants",[])]),path
-    print("T191 PASS: 24 recovery intents, 216 registered + 792 staged; SHA, privacy and uniqueness")
+    print("T199 PASS: 24 recovery intents, 216 registered + 840 staged; SHA, privacy and uniqueness")
 if __name__=="__main__":main()
