@@ -141,11 +141,11 @@ class StagedContextDelta:
             "choice": (30, 54, 120, 60),
             "boundaries": (31, 53, 124, 62),
         }
-        if (cp.get("updated_in") != "T245" or cp.get("verified_new") != 680
+        if (cp.get("updated_in") != "T246" or cp.get("verified_new") != 850
                 or cp.get("rejected") != 0 or cp.get("processed_intents") != 85
                 or cp.get("newly_finished_100") != 0
-                or cp.get("prior_accepted") != 595 or cp.get("added_in_current") != 85
-                or sum(len(v) for v in self._by_intent.values()) != 680):
+                or cp.get("prior_accepted") != 680 or cp.get("added_in_current") != 170
+                or sum(len(v) for v in self._by_intent.values()) != 850):
             raise ValueError("delta checkpoint disagrees with content")
         for row in cp.get("per_source", []):
             spec = counts.pop(row.get("source"), None)
@@ -154,7 +154,8 @@ class StagedContextDelta:
             n, before, old_new, old_additional = spec
             if (row.get("intents"), row.get("baseline_total_per_intent"),
                     row.get("new_total_per_intent"), row.get("remaining_per_intent"),
-                    row.get("new_answers"), row.get("t242_added_answers"), row.get("t243_added_answers"), row.get("t244_added_answers"), row.get("t245_added_answers")) != (n, before, before + 8, 92 - before, old_new + 4 * n, old_additional, 2 * n, n, n):
+                    row.get("new_answers"), row.get("t242_added_answers"), row.get("t243_added_answers"), row.get("t244_added_answers"), row.get("t245_added_answers"),
+                    row.get("t246_added_answers")) != (n, before, before + 10, 90 - before, old_new + 6 * n, old_additional, 2 * n, n, n, 2 * n):
                 raise ValueError("incorrect per-source counts")
         if counts:
             raise ValueError("missing per-source counts")
