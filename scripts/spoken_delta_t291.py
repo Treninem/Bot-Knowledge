@@ -16,7 +16,7 @@ class SpokenDeltaT291:
         if path != DELTA:
             raise ValueError("unreviewed stage path")
         root = Path(root).resolve(strict=True)
-        self.parent = SpokenDeltaT289(root)
+        self.parent = SpokenDeltaT290(root)
         parent_bytes = (root / PARENT).read_bytes()
         stage = json.loads((root / DELTA).read_bytes())
         raw = (root / DELTA).read_bytes()
