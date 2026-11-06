@@ -47,6 +47,14 @@ class PrivacyTests(unittest.TestCase):
         with self.assertRaises(PublishError):
             validate_payload(payload)
 
+    def test_private_home_location_without_id_is_rejected(self):
+        for text in ("Встреча у Лиды дома.", "Соберёмся в квартире Нины.",
+                     "Meet at Clara's house."):
+            payload = copy.deepcopy(self.payload)
+            payload["record"]["answer"] = text
+            with self.subTest(text=text), self.assertRaises(PublishError):
+                validate_payload(payload)
+
 
 if __name__ == "__main__":
     unittest.main()

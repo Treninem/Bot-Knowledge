@@ -30,8 +30,15 @@ PII = (
     re.compile(r"(?<![\w@])@[A-Za-z][A-Za-z0-9_]{4,31}\b"),
     re.compile(r"\b(?:https?://)?(?:www\.)?(?:t\.me|telegram\.me|telegram\.dog)/[^\s\"']+", re.I),
     re.compile(r"\btg://(?:resolve|user|privatepost|join)\b[^\s\"']*", re.I),
+    # A named person's home is private location context even without an ID.
+    re.compile(r"\b(?:у\s+[а-яёa-z][а-яёa-z-]{2,}\s+дома|в\s+квартире\s+[а-яёa-z][а-яёa-z-]{2,})\b", re.I),
+    re.compile(r"\bat\s+[a-z][a-z'-]{2,}'s\s+(?:home|house)\b", re.I),
 )
 ID = re.compile(r"[A-Za-z0-9][A-Za-z0-9_-]{0,95}\Z")
+QA_AUDIENCES = frozenset({"all_ai_bots", "community_bots", "chat_moderators", "impuls"})
+QA_CONTEXTS = frozenset({"direct", "private", "group_addressed"})
+QA_LANGUAGES = frozenset({"ru", "en", "multilingual"})
+QA_CONSTRAINTS = {"read_only": True, "requires_direct_address": True, "no_personal_data": True}
 
 
 class PublishError(RuntimeError):
@@ -77,6 +84,22 @@ def _safe_text(value: object, limit: int) -> str:
     return text
 
 
+def _scope_list(value: object, allowed: frozenset[str], maximum: int, field: str) -> list[str]:
+    if (not isinstance(value, list) or not 1 <= len(value) <= maximum
+            or any(not isinstance(item, str) or item not in allowed for item in value)
+            or len(set(value)) != len(value)):
+        raise PublishError(f"invalid {field}")
+    return list(value)
+
+
+def _safe_constraints(value: object) -> dict[str, bool]:
+    if (not isinstance(value, dict) or set(value) != set(QA_CONSTRAINTS)
+            or any(type(value[key]) is not bool or value[key] is not expected
+                   for key, expected in QA_CONSTRAINTS.items())):
+        raise PublishError("invalid constraints")
+    return dict(QA_CONSTRAINTS)
+
+
 def validate_payload(data: dict) -> tuple[str, dict, str]:
     if not isinstance(data, dict) or set(data) != {"section_path","record","source","origin","reviewed","knowledge_version"}:
         raise PublishError("candidate fields must be section_path, record, source, origin, reviewed, knowledge_version")
@@ -110,9 +133,16 @@ def validate_payload(data: dict) -> tuple[str, dict, str]:
         raise PublishError("invalid aliases")
     if not isinstance(record.get("variants", []), list) or len(normalized["variants"]) > 8:
         raise PublishError("invalid variants")
-    for optional in ("audiences","contexts","language","constraints"):
-        if optional in record:
-            normalized[optional] = record[optional]
+    if "audiences" in record:
+        normalized["audiences"] = _scope_list(record["audiences"], QA_AUDIENCES, 12, "audiences")
+    if "contexts" in record:
+        normalized["contexts"] = _scope_list(record["contexts"], QA_CONTEXTS, 3, "contexts")
+    if "language" in record:
+        if not isinstance(record["language"], str) or record["language"] not in QA_LANGUAGES:
+            raise PublishError("invalid language")
+        normalized["language"] = record["language"]
+    if "constraints" in record:
+        normalized["constraints"] = _safe_constraints(record["constraints"])
     raw = json.dumps(normalized, ensure_ascii=False).casefold()
     if any(pattern.search(raw) for pattern in PII):
         raise PublishError("potential personal data or secret")
@@ -132,9 +162,32 @@ def prepare_changes(candidate: dict, *, token: str, base: str) -> tuple[str, str
     pack = json.loads(pack_raw.decode("utf-8"))
     manifest = json.loads(manifest_raw.decode("utf-8"))
     catalog = pack.get("catalog", {})
+    if not isinstance(catalog, dict):
+        raise PublishError("invalid target catalog")
+    if manifest.get("schema_version") != 1 or not isinstance(manifest.get("packs"), list):
+        raise PublishError("unsupported manifest")
+    target_entries = [row for row in manifest["packs"] if isinstance(row, dict) and row.get("path") == path]
+    if len(target_entries) != 1:
+        raise PublishError("target package must already be registered exactly once")
+    if target_entries[0].get("sha256") != hashlib.sha256(pack_raw).hexdigest():
+        raise PublishError("target package SHA-256 differs from manifest")
+    declared = target_entries[0].get("catalog")
+    if declared is not None and declared != catalog:
+        raise PublishError("target catalog metadata conflicts with manifest")
     rows_name = catalog.get("records", "records")
     if catalog.get("adapter") != "qa.v1" or pack.get("schema_version") != 1 or not isinstance(pack.get(rows_name), list):
         raise PublishError("target is not a supported qa.v1 package")
+    section_audiences = _scope_list(catalog.get("audiences", ["all_ai_bots"]), QA_AUDIENCES, 12, "target audiences")
+    section_contexts = _scope_list(catalog.get("contexts", ["direct"]), QA_CONTEXTS, 3, "target contexts")
+    section_language = catalog.get("language")
+    if not isinstance(section_language, str) or section_language not in QA_LANGUAGES:
+        raise PublishError("invalid target language")
+    _safe_constraints(catalog.get("constraints"))
+    if (set(record.get("audiences", section_audiences)) - set(section_audiences)
+            or set(record.get("contexts", section_contexts)) - set(section_contexts)):
+        raise PublishError("record scope exceeds target catalog")
+    if section_language != "multilingual" and record.get("language", section_language) != section_language:
+        raise PublishError("record language differs from target catalog")
     rows = pack[rows_name]
     qkey = _normalized_question(record["question"])
     if any(row.get("id") == record["id"] for row in rows):
@@ -152,12 +205,7 @@ def prepare_changes(candidate: dict, *, token: str, base: str) -> tuple[str, str
     pack["pack_version"] = version
     pack_bytes = (json.dumps(pack, ensure_ascii=False, indent=2) + "\n").encode("utf-8")
     digest = hashlib.sha256(pack_bytes).hexdigest()
-    if manifest.get("schema_version") != 1 or not isinstance(manifest.get("packs"), list):
-        raise PublishError("unsupported manifest")
-    matches = [row for row in manifest["packs"] if row.get("path") == path]
-    if len(matches) != 1:
-        raise PublishError("target package must already be registered exactly once")
-    matches[0]["sha256"] = digest
+    target_entries[0]["sha256"] = digest
     manifest["knowledge_version"] = version
     manifest_bytes = (json.dumps(manifest, ensure_ascii=False, indent=2) + "\n").encode("utf-8")
     return path, pack_bytes.decode(), manifest_bytes.decode(), pack_meta["sha"] + ":" + manifest_meta["sha"]
