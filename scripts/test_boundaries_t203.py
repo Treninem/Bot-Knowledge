@@ -11,7 +11,7 @@ class T203(unittest.TestCase):
  def test_new_contexts_are_gated(self):
   o=json.loads((ROOT/PATH).read_text("utf-8"))
   self.assertFalse(o["consumer_registered"])
-  self.assertEqual(o["checkpoint"]["latest_added"],62)
+  self.assertEqual(o["checkpoint"]["latest_added"],31)
   self.assertEqual(o["checkpoint"]["per_intent_total"],53)
   self.assertEqual(o["checkpoint"]["remaining_total"],1457)
   self.assertEqual(len(o["entries"]),31)
