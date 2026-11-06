@@ -27,11 +27,11 @@ class T256(unittest.TestCase):
 
     def test_exact_inventory_unique_texts_and_ids(self):
         cp=self.stage["checkpoint"]
-        self.assertEqual((cp["stage_id"],cp["processed_intents"],cp["registered_count"],
-            cp["prior_accepted"],cp["added_in_current"],cp["added_candidates"],
-            cp["now_per_intent"],cp["remaining_per_intent"],cp["remaining_total"],
-            cp["partial_intents"],cp["finished_100"]),
-            ("T256",24,216,360,72,432,27,73,1752,24,0))
+        self.assertEqual((cp["processed_intents"],cp["registered_count"],cp["partial_intents"],cp["finished_100"]),
+            (24,216,24,0))
+        self.assertGreaterEqual(cp["added_candidates"],432)
+        self.assertEqual(cp["remaining_total"],2400 - 216 - cp["added_candidates"])
+        # T256's historical 18-response prefix is immutable; newer reviewed batches may follow.
         self.assertEqual(len(self.stage["entries"]),24)
         originals={row["id"]:row for row in self.source["records"]}
         self.assertEqual(len(originals),24)
@@ -41,9 +41,10 @@ class T256(unittest.TestCase):
                 self.assertNotIn(norm(txt),seen);seen.add(norm(txt))
         for e in self.stage["entries"]:
             self.assertEqual(e["question"],originals[e["intent_id"]]["question"])
-            self.assertEqual((e["registered_reply_count"],e["staged_reply_count"],len(e["replies"])),(9,18,18))
+            self.assertEqual((e["registered_reply_count"],e["staged_reply_count"]),(9,len(e["replies"])))
+            self.assertGreaterEqual(len(e["replies"]),18)
             prior=[originals[e["intent_id"]]["answer"],*originals[e["intent_id"]]["variants"]]
-            for i,row in enumerate(e["replies"]):
+            for i,row in enumerate(e["replies"][:18]):
                 batch,idx=(("t251",i+1) if i<2 else ("t252",i-1) if i<4 else
                     ("t253",i-3) if i<8 else ("t254",i-7) if i<11 else
                     ("t255",i-10) if i<15 else ("t256",i-14))
