@@ -45,7 +45,7 @@ class T206(unittest.TestCase):
             new = [r for r in entry["replies"] if "_t206_" in r["id"]]
             self.assertEqual(len(new), 3)
             notes = [norm(r["context_note"]) for r in entry["replies"]]
-            self.assertEqual(len(set(notes)), 45)
+            self.assertEqual(len(set(notes)), 47)
             for r in entry["replies"]:
                 self.assertNotIn(r["id"], ids)
                 self.assertNotIn(norm(r["text"]), texts)
