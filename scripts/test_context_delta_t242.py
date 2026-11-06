@@ -32,18 +32,18 @@ class ContextDeltaT242(unittest.TestCase):
 
     def test_checkpoint_and_all_ids_are_stable(self):
         cp = self.data["checkpoint"]
-        self.assertEqual((cp["prior_accepted"], cp["added_in_current"], cp["verified_new"]), (850, 85, 935))
+        self.assertEqual((cp["prior_accepted"], cp["added_in_current"], cp["verified_new"]), (935, 85, 1020))
         self.assertEqual((cp["processed_intents"], cp["newly_finished_100"]), (85, 0))
         self.assertEqual(len(self.data["entries"]), 85)
         self.assertEqual([(r["source"], r["new_answers"], r["t242_added_answers"])
                           for r in cp["per_source"]],
-                         [("recovery", 264, 48), ("choice", 330, 60), ("boundaries", 341, 62)])
+                         [("recovery", 288, 48), ("choice", 360, 60), ("boundaries", 372, 62)])
         ids = [x["id"] for e in self.data["entries"] for x in e["replies"]]
-        self.assertEqual((len(ids), len(set(ids))), (935, 935))
+        self.assertEqual((len(ids), len(set(ids))), (1020, 1020))
         for e in self.data["entries"]:
-            self.assertEqual(len(e["replies"]), 11)
+            self.assertEqual(len(e["replies"]), 12)
             self.assertEqual([x["id"] for x in e["replies"]],
-                             [f'{e["intent_id"]}_t241_{n:02d}' for n in range(1, 12)])
+                             [f'{e["intent_id"]}_t241_{n:02d}' for n in range(1, 13)])
 
     def test_current_batch_has_distinct_text_context_and_no_secrets(self):
         existing, fresh = set(), set()
