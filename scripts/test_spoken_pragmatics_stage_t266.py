@@ -33,7 +33,7 @@ class TestT266(unittest.TestCase):
             "registered_count", "prior_accepted", "added_in_current", "added_candidates",
             "previous_per_intent", "now_per_intent", "remaining_per_intent",
             "remaining_total", "partial_intents", "finished_100", "rejected")),
-            ("T266", "T266", 24, 216, 888, 96, 984, 46, 50, 50, 1200, 24, 0, 0))
+            ("T267", "T267", 24, 216, 984, 96, 1080, 50, 54, 46, 1104, 24, 0, 0))
         self.assertFalse(self.stage["consumer_registered"])
         self.assertEqual(self.stage["constraints"],
                          {"read_only": True, "requires_direct_address": True, "no_personal_data": True})
@@ -54,7 +54,7 @@ class TestT266(unittest.TestCase):
             source = originals[entry["intent_id"]]
             self.assertEqual(entry["question"], source["question"])
             self.assertEqual((entry["registered_reply_count"], entry["staged_reply_count"],
-                              len(entry["replies"])), (9, 41, 41))
+                              len(entry["replies"])), (9, 45, 45))
             notes = set()
             earlier = [source["answer"], *source["variants"]]
             for i, reply in enumerate(entry["replies"]):
@@ -73,12 +73,12 @@ class TestT266(unittest.TestCase):
                                   reply["read_only"]), ("ru", "neutral", ["all_ai_bots"], True))
                 self.assertTrue(reply["avoid"].strip())
                 self.assertIsNone(SECRET.search(reply["text"]))
-                if i >= 37:
+                if 37 <= i < 41:
                     self.assertEqual(reply["id"], f'{entry["intent_id"]}_t266_{i - 36:02d}')
                     self.assertLess(max(sim(reply["text"], old) for old in earlier), 0.78)
                     accepted += 1
                 earlier.append(reply["text"])
-        self.assertEqual((accepted, len(ids), len(seen)), (96, 984, 1200))
+        self.assertEqual((accepted, len(ids), len(seen)), (96, 1080, 1296))
 
     def test_new_batch_only_with_explicit_scoped_approval(self):
         for entry in self.stage["entries"]:

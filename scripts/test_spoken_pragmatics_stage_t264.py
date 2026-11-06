@@ -30,8 +30,8 @@ class TestT264(unittest.TestCase):
 
     def test_inventory_sha_context_and_language(self):
         cp = self.stage["checkpoint"]
-        self.assertEqual((cp["stage_id"], cp["updated_in"], cp["prior_accepted"], cp["added_in_current"], cp["added_candidates"]), ("T266", "T266", 888, 96, 984))
-        self.assertEqual((cp["processed_intents"], cp["registered_count"], cp["now_per_intent"], cp["remaining_per_intent"], cp["remaining_total"], cp["partial_intents"], cp["finished_100"]), (24, 216, 50, 50, 1200, 24, 0))
+        self.assertEqual((cp["stage_id"], cp["updated_in"], cp["prior_accepted"], cp["added_in_current"], cp["added_candidates"]), ("T267", "T267", 984, 96, 1080))
+        self.assertEqual((cp["processed_intents"], cp["registered_count"], cp["now_per_intent"], cp["remaining_per_intent"], cp["remaining_total"], cp["partial_intents"], cp["finished_100"]), (24, 216, 54, 46, 1104, 24, 0))
         self.assertFalse(self.stage["consumer_registered"])
         self.assertEqual(self.stage["constraints"], GUARDS)
         published = {p["path"]: p["sha256"] for p in json.loads((ROOT / "manifest.json").read_text("utf-8"))["packs"]}
@@ -51,7 +51,7 @@ class TestT264(unittest.TestCase):
         for entry in self.stage["entries"]:
             origin = origins[entry["intent_id"]]
             self.assertEqual(entry["question"], origin["question"])
-            self.assertEqual((entry["registered_reply_count"], entry["staged_reply_count"], len(entry["replies"])), (9, 41, 41))
+            self.assertEqual((entry["registered_reply_count"], entry["staged_reply_count"], len(entry["replies"])), (9, 45, 45))
             prior = [origin["answer"], *origin["variants"]]
             notes = set()
             for i, reply in enumerate(entry["replies"]):
@@ -76,7 +76,7 @@ class TestT264(unittest.TestCase):
                     self.assertLess(score, 0.78)
                     new += 1
                 prior.append(reply["text"])
-        self.assertEqual((new, len(ids), len(seen)), (96, 984, 1200))
+        self.assertEqual((new, len(ids), len(seen)), (96, 1080, 1296))
         self.assertLess(max_overlap, 0.78)
 
     def test_selector_fail_closed_for_all_96(self):
