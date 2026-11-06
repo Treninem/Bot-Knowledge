@@ -39,7 +39,7 @@ class T259(unittest.TestCase):
              cp["added_candidates"], cp["previous_per_intent"], cp["now_per_intent"],
              cp["remaining_per_intent"], cp["remaining_total"], cp["partial_intents"],
              cp["finished_100"], cp["rejected"]),
-            (("T260", "T260", 24, 216, 624, 96, 720, 35, 39, 61, 1464, 24, 0, 0))
+            (("T263", "T263", 24, 216, 720, 72, 792, 39, 42, 58, 1392, 24, 0, 0))
         )
         self.assertEqual(len(self.stage["entries"]), 24)
         self.assertFalse(self.stage["consumer_registered"])
@@ -65,7 +65,7 @@ class T259(unittest.TestCase):
             self.assertEqual(e["question"], canonical["question"])
             self.assertEqual(
                 (e["registered_reply_count"], e["staged_reply_count"], len(e["replies"])),
-                (9, 30, 30)
+                (9, 33, 33)
             )
             earlier = [canonical["answer"], *canonical["variants"]]
             context_notes = set()
@@ -91,8 +91,8 @@ class T259(unittest.TestCase):
                     new_count += 1
                 context_notes.add(norm(reply["context_note"]))
                 earlier.append(reply["text"])
-        self.assertEqual((new_count, len(ids), len(all_text)), (96, 720, 936))
-        self.assertEqual(cp["remaining_total"], 24 * 61)
+        self.assertEqual((new_count, len(ids), len(all_text)), (96, 792, 1008))
+        self.assertEqual(cp["remaining_total"], 24 * 58)
 
     def test_new_replies_are_never_automatically_authorized(self):
         for e in self.stage["entries"]:
