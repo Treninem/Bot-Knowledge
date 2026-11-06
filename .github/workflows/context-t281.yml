@@ -1,0 +1,28 @@
+name: T281 contextual read-only inventory
+on:
+  pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  validate-t281:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Verify exact checkout SHA
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+          echo "BK_T281_CHECKOUT_SHA=$EXPECTED_SHA"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate registered pack hashes and schema
+        run: python scripts/validate_pack.py
+      - name: Validate staged parent chain and T281 opt-in gate
+        run: python -m unittest scripts.test_context_overlay_t281 -q
