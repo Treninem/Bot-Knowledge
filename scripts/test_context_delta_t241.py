@@ -10,9 +10,9 @@ from scripts.staged_context_delta import StagedContextDelta
 ROOT = Path(__file__).resolve().parents[1]
 DELTA = "staging/ru/context_delta_t241.json"
 COUNTS = {
-    "recovery_t168_context_pool.json": (24, 47, 13, 69),
-    "choice_t166_context_pool.json": (30, 45, 13, 67),
-    "boundaries_t167_context_pool.json": (31, 44, 13, 66),
+    "recovery_t168_context_pool.json": (24, 47, 14, 70),
+    "choice_t166_context_pool.json": (30, 45, 14, 68),
+    "boundaries_t167_context_pool.json": (31, 44, 14, 67),
 }
 PRIVATE = re.compile(
     r"(?i)(ghp_[a-z0-9]{13,}|sk-[a-z0-9]{13,}|bot_token|chat_id|user_id|"
@@ -42,8 +42,8 @@ class T241(unittest.TestCase):
         self.assertNotIn(DELTA, {p["path"] for p in manifest["packs"]})
         self.assertIs(data["consumer_registered"], False)
         selector = StagedContextDelta(ROOT, DELTA)
-        self.assertEqual(data["checkpoint"]["verified_new"], 1105)
-        self.assertEqual(data["checkpoint"]["prior_accepted"], 1020)
+        self.assertEqual(data["checkpoint"]["verified_new"], 1190)
+        self.assertEqual(data["checkpoint"]["prior_accepted"], 1105)
         self.assertEqual(data["checkpoint"]["added_in_current"], 85)
         self.assertEqual(data["checkpoint"]["rejected"], 0)
         self.assertEqual(len(data["entries"]), 85)
@@ -104,7 +104,7 @@ class T241(unittest.TestCase):
                 self.assertIsNone(selector.select(entry["intent_id"], **(args | {"context": "unsupported"})))
                 self.assertIsNone(selector.select(entry["intent_id"], **(args | {"recent_ids": (rid,)})))
         self.assertEqual(source_counts, {k: v[0] for k, v in COUNTS.items()})
-        self.assertEqual((len(seen_ids), len(seen_texts)), (1105, 1105))
+        self.assertEqual((len(seen_ids), len(seen_texts)), (1190, 1190))
         with self.assertRaises(ValueError):
             StagedContextDelta(ROOT, "staging/ru/unknown.json")
         self.assertIsNone(selector.select("unknown_intent", approved_reply_ids=frozenset({"x"}),
