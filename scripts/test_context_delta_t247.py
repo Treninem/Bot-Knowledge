@@ -68,7 +68,7 @@ class T247(unittest.TestCase):
         ids, texts, new_count = set(), set(), 0
         for entry in self.data["entries"]:
             intent = entry["intent_id"]
-            self.assertEqual(len(entry["replies"]), 14)
+            self.assertEqual(len(entry["replies"]), 15)
             self.assertEqual(
                 [r["id"] for r in entry["replies"]],
                 [f"{intent}_t241_{i:02d}" for i in range(1, 16)],

@@ -37,7 +37,7 @@ class TestT261(unittest.TestCase):
         self.assertEqual(len(self.data["entries"]),85)
         texts=set();ids=set()
         for entry in self.data["entries"]:
-            self.assertEqual(len(entry["replies"]),14)
+            self.assertEqual(len(entry["replies"]),15)
             self.assertEqual([r["id"] for r in entry["replies"]],[f'{entry["intent_id"]}_t241_{i:02d}' for i in range(1, 16)])
             notes=set()
             for r in entry["replies"]:

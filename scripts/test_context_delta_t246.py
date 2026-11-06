@@ -69,7 +69,7 @@ class ContextDeltaT246(unittest.TestCase):
         all_ids, all_texts, accepted_new = set(), set(), []
         for entry in self.data["entries"]:
             intent = entry["intent_id"]
-            self.assertEqual(len(entry["replies"]), 14)
+            self.assertEqual(len(entry["replies"]), 15)
             self.assertEqual(
                 [r["id"] for r in entry["replies"]],
                 [f"{intent}_t241_{idx:02d}" for idx in range(1, 16)],
