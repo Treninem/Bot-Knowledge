@@ -16,18 +16,18 @@ PRIVATE = re.compile(r"(?i)(ghp_[a-z0-9]{12,}|sk-[a-z0-9]{12,}|bearer\s+|https:/
 def main():
     data = json.loads((ROOT / STAGE).read_text(encoding="utf-8"))
     assert data["consumer_registered"] is False
-    assert data["checkpoint"]["updated_in"] == "T207"
-    assert data["checkpoint"]["added_candidates"] == 1333
-    assert data["checkpoint"]["latest_added"] == 62
-    assert data["checkpoint"]["per_intent_total"] == 52
-    assert data["checkpoint"]["remaining_total"] == 1488
+    assert data["checkpoint"]["updated_in"] == "T240"
+    assert data["checkpoint"]["added_candidates"] == 1364
+    assert data["checkpoint"]["latest_added"] == 31
+    assert data["checkpoint"]["per_intent_total"] == 53
+    assert data["checkpoint"]["remaining_total"] == 1457
     assert len(data["entries"]) == 31
 
     selector = StagedContextSelector(ROOT, STAGE)
     all_ids, all_texts, newest = set(), set(), []
     for entry in data["entries"]:
         assert entry["registered_reply_count"] == 9
-        assert entry["staged_reply_count"] == len(entry["replies"]) == 43
+        assert entry["staged_reply_count"] == len(entry["replies"]) == 44
         recent = [r for r in entry["replies"] if "_t197_" in r["id"]]
         assert len(recent) == 2, entry["intent_id"]
         assert [r["id"] for r in recent] == [
@@ -66,9 +66,9 @@ def main():
             assert selector.select(**{**kwargs, "local_permission": False}) is None
             assert selector.select(**{**kwargs, "audience": "impuls"}) is None
             newest.append(norm(reply["text"]))
-    assert len(all_ids) == len(all_texts) == 1333
+    assert len(all_ids) == len(all_texts) == 1364
     assert len(newest) == len(set(newest)) == 62
-    print("T197 OK: 62 T197 scoped proposals preserved, 31 intents now at 52/100; no consumer activation")
+    print("T197 OK: 62 T197 scoped proposals preserved, 31 intents now at 53/100; no consumer activation")
 
 
 if __name__ == "__main__":

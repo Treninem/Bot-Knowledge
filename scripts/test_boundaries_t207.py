@@ -25,12 +25,12 @@ class T207(unittest.TestCase):
         self.assertEqual(data["constraints"], {
             "read_only": True, "requires_direct_address": True, "no_personal_data": True})
         expectations = {
-            "registered_count": 279, "added_candidates": 1333,
-            "per_intent_registered": 9, "per_intent_staged": 43,
-            "per_intent_total": 52, "target_per_intent": 100,
+            "registered_count": 279, "added_candidates": 1364,
+            "per_intent_registered": 9, "per_intent_staged": 44,
+            "per_intent_total": 53, "target_per_intent": 100,
             "finished_100": 0, "partial_intents": 31,
-            "remaining_per_intent": 48, "remaining_total": 1488,
-            "updated_in": "T207", "latest_added": 62, "latest_rejected": 0,
+            "remaining_per_intent": 47, "remaining_total": 1457,
+            "updated_in": "T240", "latest_added": 31, "latest_rejected": 0,
         }
         for field, expected in expectations.items():
             self.assertEqual(c[field], expected, field)
@@ -40,11 +40,11 @@ class T207(unittest.TestCase):
         for e in data["entries"]:
             self.assertEqual(e["registered_reply_count"], 9)
             self.assertEqual(e["staged_reply_count"], len(e["replies"]))
-            self.assertEqual(len(e["replies"]), 43)
+            self.assertEqual(len(e["replies"]), 44)
             fresh = [x for x in e["replies"] if "_t207_" in x["id"]]
             self.assertEqual(len(fresh), 2)
             notes = [norm(r["context_note"]) for r in e["replies"]]
-            self.assertEqual(len(set(notes)), 43)
+            self.assertEqual(len(set(notes)), 44)
             for reply in e["replies"]:
                 self.assertNotIn(reply["id"], all_ids)
                 self.assertNotIn(norm(reply["text"]), all_texts)
@@ -77,7 +77,7 @@ class T207(unittest.TestCase):
                 ):
                     self.assertIsNone(selector.select(e["intent_id"], **(kwargs | override)))
                 accepted += 1
-        self.assertEqual((accepted, len(all_ids), len(all_texts)), (62, 1333, 1333))
+        self.assertEqual((accepted, len(all_ids), len(all_texts)), (62, 1364, 1364))
 
 
 if __name__ == "__main__":
