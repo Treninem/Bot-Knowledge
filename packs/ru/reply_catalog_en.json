@@ -1,0 +1,81 @@
+{
+  "schema_version": 1,
+  "language": "en",
+  "pack_version": "2026.11.05.037",
+  "usage_policy": {
+    "synthetic_only": true,
+    "personal_data_allowed": false,
+    "automatic_actions_allowed": false,
+    "automatic_sanctions_allowed": false,
+    "requires_explicit_address": true,
+    "requires_local_permission": true
+  },
+  "catalog": {
+    "schema_version": 1,
+    "id": "reply_catalog_en",
+    "title": "Everyday conversation replies",
+    "description": "Reviewed English conversation prompts with exact opt-in binding.",
+    "purpose": "language_examples",
+    "language": "en",
+    "adapter": "reply_catalog.v1",
+    "records": "sets",
+    "contexts": [
+      "direct",
+      "private",
+      "group_addressed"
+    ],
+    "audiences": [
+      "all_ai_bots"
+    ],
+    "constraints": {
+      "read_only": true,
+      "requires_direct_address": true,
+      "no_personal_data": true
+    }
+  },
+  "sets": [
+    {
+      "id": "everyday_topics_en",
+      "question": "What shall we talk about?",
+      "section": "conversation",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "groups": [
+        {
+          "id": "daily",
+          "when": "The person explicitly invites an everyday, low-pressure topic.",
+          "avoid": "They request silence, a specific factual answer, or a sensitive discussion.",
+          "replies": [
+            "We could talk about a small habit that makes an ordinary day easier.",
+            "What's one everyday task you'd like to make simpler?",
+            "How about a quiet way to reset between busy moments?",
+            "What was a pleasant surprise in your day, however small?"
+          ],
+          "binding": {
+            "label": "Everyday topic",
+            "aliases": [
+              "Let's talk about everyday things",
+              "Suggest a topic about an ordinary day"
+            ],
+            "choices": [
+              "everyday"
+            ],
+            "contexts": [
+              "direct",
+              "private",
+              "group_addressed"
+            ],
+            "requires_humor": false,
+            "requires": [],
+            "avoid_cues": [
+              "I don't want to discuss everyday life",
+              "не хочу говорить о повседневном"
+            ],
+            "preserve_topic": false
+          }
+        }
+      ]
+    }
+  ]
+}
