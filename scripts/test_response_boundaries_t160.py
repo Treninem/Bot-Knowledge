@@ -97,5 +97,5 @@ def main():
   other=json.loads((ROOT/otherpath).read_text("utf-8"))
   for row in other.get("records",[]):
    assert not stage_keys.intersection(norm(s) for s in [row["answer"],*row.get("variants",[])]),otherpath
- print("T184 PASS: 31 boundary intents, 279 registered + 744 staged; source SHA, privacy and uniqueness")
+ print("T185 PASS: 31 boundary intents, 279 registered + 744 staged; source SHA, privacy and uniqueness")
 if __name__=="__main__":main()

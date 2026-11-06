@@ -78,7 +78,7 @@ def main():
         for row in obj.get("records", []):
             all_registered.update(norm(t) for t in [row["answer"], *row.get("variants", [])])
     assert set(map(norm, all_stage)).isdisjoint(all_registered)
-    print("T184 PASS: 85 existing intents, 170 new contextual RU replies, 2208 staged unique; registered cross-pack exact dedup")
+    print("T185 PASS: 85 existing intents, 170 new contextual RU replies, 2208 staged unique; registered cross-pack exact dedup")
 
 
 if __name__ == "__main__":

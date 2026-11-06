@@ -109,7 +109,7 @@ def main():
             assert not re.search(r"(?i)(ghp_[a-z0-9]{12,}|sk-[a-z0-9]{12,}|bot_token|chat_id|user_id|https://t\.me/|[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,})",r["text"])
             additional.append(r["text"])
     assert len(additional) == 840
-    assert len({norm(s) for s in answers + additional}) == 1050
+    assert len({norm(s) for s in answers + additional}) == 1110
     stage_keys = {norm(s) for s in additional}
     for entry in manifest["packs"]:
         p = entry["path"]
@@ -119,7 +119,7 @@ def main():
         for record in other.get("records", []):
             assert not stage_keys.intersection(
                 norm(s) for s in [record["answer"], *record.get("variants", [])]), p
-    print("T184 PASS: 30 choice intents, 270 registered + 840 staged; source SHA, privacy, scope and uniqueness")
+    print("T185 PASS: 30 choice intents, 270 registered + 840 staged; source SHA, privacy, scope and uniqueness")
 
 if __name__ == "__main__":
     main()

@@ -72,7 +72,7 @@ def main():
             assert 0<len(entry_reply["text"])<=1600
             assert not re.search(r"(?i)(ghp_[a-z0-9]{12,}|sk-[a-z0-9]{12,}|bot_token|chat_id|user_id|https://t\.me/|[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,})",entry_reply["text"])
             candidates.append(entry_reply["text"])
-    assert len(candidates)==624 and len({norm(s) for s in ans+candidates})==792
+    assert len(candidates)==624 and len({norm(s) for s in ans+candidates})==840
     staged_keys={norm(s) for s in candidates}
     for item in mf["packs"]:
         path=item["path"]
@@ -81,5 +81,5 @@ def main():
         for record in other.get("records",[]):
             assert not staged_keys.intersection(
                 norm(s) for s in [record["answer"],*record.get("variants",[])]),path
-    print("T184 PASS: 24 recovery intents, 216 registered + 624 staged; SHA, privacy and uniqueness")
+    print("T185 PASS: 24 recovery intents, 216 registered + 624 staged; SHA, privacy and uniqueness")
 if __name__=="__main__":main()
