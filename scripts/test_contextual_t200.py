@@ -3,7 +3,7 @@ import json,unittest,unicodedata
 from pathlib import Path
 from scripts.staged_context_selector import StagedContextSelector
 ROOT=Path(__file__).resolve().parents[1]
-SPECS=[("staging/ru/choice_t166_context_pool.json",30,40,49),("staging/ru/recovery_t168_context_pool.json",24,42,51)]
+SPECS=[("staging/ru/choice_t166_context_pool.json",30,42,51),("staging/ru/recovery_t168_context_pool.json",24,42,51)]
 def norm(s):
     s=unicodedata.normalize("NFKC",s).casefold().replace("ё","е")
     return " ".join("".join(" " if unicodedata.category(c)[0] in ("P","S") else c for c in s).split())
