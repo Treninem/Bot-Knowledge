@@ -30,17 +30,17 @@ class TestT262(unittest.TestCase):
         self.assertEqual(
             tuple(cp[k] for k in ("updated_in", "prior_accepted", "added_in_current",
                 "verified_new", "rejected", "processed_intents", "newly_finished_100")),
-            ("T265", 1190, 85, 1275, 0, 85, 0))
+            ("T268", 1275, 85, 1360, 0, 85, 0))
         expected = {
-            "recovery": (24, 71,29, 360, 24),
-            "choice": (30, 69,31, 450, 30),
-            "boundaries": (31, 68,32, 465, 31),
+            "recovery": (24, 72,28,384, 24),
+            "choice": (30, 70,30,480, 30),
+            "boundaries": (31, 69,31,496, 31),
         }
         self.assertEqual(
             {row["source"]: (row["intents"], row["new_total_per_intent"],
               row["remaining_per_intent"], row["new_answers"], row["t262_added_answers"])
               for row in cp["per_source"]}, expected)
-        self.assertEqual(sum(n * remain for n, _, remain, _, _ in expected.values()), 2618)
+        self.assertEqual(sum(n * remain for n, _, remain, _, _ in expected.values()), 2533)
         self.assertIs(stage["consumer_registered"], False)
         self.assertEqual(stage["constraints"],
             {"read_only": True, "requires_direct_address": True, "no_personal_data": True})
@@ -50,9 +50,9 @@ class TestT262(unittest.TestCase):
         self.assertEqual(len(stage["entries"]), 85)
         for entry in stage["entries"]:
             replies = entry["replies"]
-            self.assertEqual(len(replies), 15)
+            self.assertEqual(len(replies), 16)
             self.assertEqual([r["id"] for r in replies],
-                [f'{entry["intent_id"]}_t241_{i:02d}' for i in range(1, 16)])
+                [f'{entry["intent_id"]}_t241_{i:02d}' for i in range(1, 17)])
             notes = set()
             for row in replies:
                 self.assertNotIn(row["id"], ids)
@@ -70,7 +70,7 @@ class TestT262(unittest.TestCase):
                  ("ru", "neutral", ["all_ai_bots"], True))
             self.assertIn(latest["context"], ("direct", "private", "group_addressed"))
             self.assertLess(max(similarity(latest["text"], old["text"]) for old in replies[:13]), 0.78)
-        self.assertEqual((len(ids), len(texts), new_count), (1275, 1275, 85))
+        self.assertEqual((len(ids), len(texts), new_count), (1360, 1360, 85))
 
     def test_explicit_reply_id_opt_in_and_fail_closed(self):
         for entry in self.data["entries"]:

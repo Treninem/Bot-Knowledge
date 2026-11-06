@@ -23,16 +23,16 @@ class ContextDeltaT245(unittest.TestCase):
         d = json.loads((ROOT / PATH).read_text("utf-8"))
         cp = d["checkpoint"]
         self.assertEqual((cp["updated_in"], cp["prior_accepted"], cp["added_in_current"], cp["verified_new"], cp["rejected"]),
-                         ("T265", 1190, 85, 1275, 0))
+                         ("T268", 1275, 85, 1360, 0))
         self.assertEqual([(x["source"], x["intents"], x["new_total_per_intent"], x["remaining_per_intent"], x["t245_added_answers"]) for x in cp["per_source"]],
-                         [("recovery", 24, 71,29, 24), ("choice", 30, 69,31, 30), ("boundaries", 31, 68,32, 31)])
+                         [("recovery", 24, 72,28, 24), ("choice", 30, 70,30, 30), ("boundaries", 31, 69,31, 31)])
         selector = StagedContextDelta(ROOT, PATH)
         self.assertEqual(len(d["entries"]), 85)
         ids, texts, notes = set(), set(), set()
         for e in d["entries"]:
-            self.assertEqual(len(e["replies"]), 15)
+            self.assertEqual(len(e["replies"]), 16)
             self.assertEqual([r["id"] for r in e["replies"]],
-                             [f'{e["intent_id"]}_t241_{i:02d}' for i in range(1, 16)])
+                             [f'{e["intent_id"]}_t241_{i:02d}' for i in range(1, 17)])
             new = e["replies"][7]
             self.assertNotIn(new["id"], ids)
             self.assertNotIn(norm(new["text"]), texts)

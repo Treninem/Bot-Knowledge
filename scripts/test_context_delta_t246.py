@@ -10,9 +10,9 @@ from scripts.staged_context_delta import StagedContextDelta
 ROOT = Path(__file__).resolve().parents[1]
 PATH = "staging/ru/context_delta_t241.json"
 PARENT = {
-    "recovery": (24, 71,29, 360, 48),
-    "choice": (30, 69,31, 450, 60),
-    "boundaries": (31, 68,32, 465, 62),
+    "recovery": (24, 72,28,384, 48),
+    "choice": (30, 70,30,480, 60),
+    "boundaries": (31, 69,31,496, 62),
 }
 SECRET = re.compile(
     r"(?i)(ghp_[a-z0-9]{13,}|sk-[a-z0-9]{13,}|bot_token|chat_id|user_id|"
@@ -46,7 +46,7 @@ class ContextDeltaT246(unittest.TestCase):
             (cp["updated_in"], cp["prior_accepted"], cp["added_in_current"],
              cp["verified_new"], cp["rejected"], cp["processed_intents"],
              cp["newly_finished_100"]),
-            ("T265", 1190, 85, 1275, 0, 85, 0),
+            ("T268", 1275, 85, 1360, 0, 85, 0),
         )
         self.assertEqual(
             {x["source"]: (x["intents"], x["new_total_per_intent"],
@@ -55,8 +55,8 @@ class ContextDeltaT246(unittest.TestCase):
              for x in cp["per_source"]}, PARENT,
         )
         self.assertEqual(len(d["entries"]), 85)
-        self.assertEqual(sum(len(e["replies"]) for e in d["entries"]), 1275)
-        self.assertEqual(sum(n * (100 - total) for n, total, *_ in PARENT.values()), 2618)
+        self.assertEqual(sum(len(e["replies"]) for e in d["entries"]), 1360)
+        self.assertEqual(sum(n * (100 - total) for n, total, *_ in PARENT.values()), 2533)
         self.assertFalse(d["consumer_registered"])
         self.assertEqual(
             d["constraints"],
@@ -69,10 +69,10 @@ class ContextDeltaT246(unittest.TestCase):
         all_ids, all_texts, accepted_new = set(), set(), []
         for entry in self.data["entries"]:
             intent = entry["intent_id"]
-            self.assertEqual(len(entry["replies"]), 15)
+            self.assertEqual(len(entry["replies"]), 16)
             self.assertEqual(
                 [r["id"] for r in entry["replies"]],
-                [f"{intent}_t241_{idx:02d}" for idx in range(1, 16)],
+                [f"{intent}_t241_{idx:02d}" for idx in range(1, 17)],
             )
             notes = set()
             for index, reply in enumerate(entry["replies"]):
@@ -99,7 +99,7 @@ class ContextDeltaT246(unittest.TestCase):
                     self.assertLess(overlap(txt, prior["text"]), 0.78)
 
         self.assertEqual((len(all_ids), len(all_texts), len(accepted_new)),
-                         (1275, 1275, 170))
+                         (1360, 1360, 170))
 
     def test_exact_explicit_selection_is_fail_closed(self):
         for entry in self.data["entries"]:

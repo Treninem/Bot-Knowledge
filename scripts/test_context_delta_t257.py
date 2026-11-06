@@ -10,9 +10,9 @@ from scripts.staged_context_delta import StagedContextDelta
 ROOT=Path(__file__).resolve().parents[1]
 STAGE="staging/ru/context_delta_t241.json"
 GROUPS={
-    "recovery":(24,71,29, 360,24),
-    "choice":(30,69,31, 450,30),
-    "boundaries":(31,68,32, 465,31),
+    "recovery":(24,72,28,384,24),
+    "choice":(30,70,30,480,30),
+    "boundaries":(31,69,31,496,31),
 }
 SECRET=re.compile(r"(?i)(ghp_[a-z0-9]{13,}|sk-[a-z0-9]{13,}|bot_token|chat_id|user_id|bearer\s+|https://t\.me/|[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,})")
 
@@ -34,16 +34,16 @@ class T257(unittest.TestCase):
         cp=self.data["checkpoint"]
         self.assertEqual((cp["updated_in"],cp["prior_accepted"],cp["added_in_current"],
             cp["verified_new"],cp["rejected"],cp["processed_intents"],cp["newly_finished_100"]),
-            ("T265",1190,85,1275,0,85,0))
+            ("T268",1275,85,1360,0,85,0))
         self.assertEqual({p["source"]:(p["intents"],p["new_total_per_intent"],
             p["remaining_per_intent"],p["new_answers"],p["t257_added_answers"]) for p in cp["per_source"]},GROUPS)
         self.assertEqual(len(self.data["entries"]),85)
         ids=set(); texts=set()
         for e in self.data["entries"]:
             notes=set()
-            self.assertEqual(len(e["replies"]),15)
+            self.assertEqual(len(e["replies"]),16)
             self.assertEqual([x["id"] for x in e["replies"]],
-                [f'{e["intent_id"]}_t241_{i:02d}' for i in range(1, 16)])
+                [f'{e["intent_id"]}_t241_{i:02d}' for i in range(1, 17)])
             earlier=[r["text"] for r in e["replies"][:11]]
             for r in e["replies"]:
                 self.assertNotIn(r["id"],ids);ids.add(r["id"])
@@ -56,8 +56,8 @@ class T257(unittest.TestCase):
             self.assertIn(new["context"],("direct","private","group_addressed"))
             self.assertIsNone(SECRET.search(new["text"]))
             self.assertTrue(all(sim(new["text"],prev)<0.78 for prev in earlier))
-        self.assertEqual((len(ids),len(texts)),(1275,1275))
-        self.assertEqual(sum(p["intents"]*p["remaining_per_intent"] for p in cp["per_source"]),2618)
+        self.assertEqual((len(ids),len(texts)),(1360,1360))
+        self.assertEqual(sum(p["intents"]*p["remaining_per_intent"] for p in cp["per_source"]),2533)
         manifest=json.loads((ROOT/"manifest.json").read_text("utf-8"))
         self.assertNotIn(STAGE,{p["path"] for p in manifest["packs"]})
         self.assertFalse(self.data["consumer_registered"])
