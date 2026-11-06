@@ -72,17 +72,17 @@ def main():
     assert staging["audiences"] == ["all_ai_bots"] and staging["language"] == "ru"
     progress = staging["checkpoint"]
     assert progress["base_main_sha"] == "309e5edd22f8ca4a6dcf59a4b2213a4c8696d36b"
-    assert progress["added_candidates"] == 990 and progress["registered_count"] == 270
-    assert progress["latest_added"] == 30 and progress["latest_rejected"] == 0
+    assert progress["added_candidates"] == 1020 and progress["registered_count"] == 270
+    assert progress["latest_added"] == 60 and progress["latest_rejected"] == 0
     assert progress["finished_100"] == 0 and progress["partial_intents"] == 30
-    assert progress["remaining_total"] == 1740 and progress["remaining_per_intent"] == 58
+    assert progress["remaining_total"] == 1710 and progress["remaining_per_intent"] == 57
     assert len(staging["entries"]) == 30
     additional = []
     ids = set()
     for original, entry in zip(rows, staging["entries"]):
         assert entry["intent_id"] == original["id"] and entry["question"] == original["question"]
-        assert entry["registered_reply_count"] == 9 and entry["staged_reply_count"] == 33
-        assert len(entry["replies"]) == 33
+        assert entry["registered_reply_count"] == 9 and entry["staged_reply_count"] == 34
+        assert len(entry["replies"]) == 34
         assert sum(r["id"].startswith(entry["intent_id"] + "_t166_") for r in entry["replies"]) == 3
         assert sum(r["id"].startswith(entry["intent_id"] + "_t169_") for r in entry["replies"]) == 3
         assert sum(r["id"].startswith(entry["intent_id"] + "_t172_") for r in entry["replies"]) == 3
@@ -108,8 +108,8 @@ def main():
             assert len(r["text"]) <= 1600
             assert not re.search(r"(?i)(ghp_[a-z0-9]{12,}|sk-[a-z0-9]{12,}|bot_token|chat_id|user_id|https://t\.me/|[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,})",r["text"])
             additional.append(r["text"])
-    assert len(additional) == 990
-    assert len({norm(s) for s in answers + additional}) == 1260
+    assert len(additional) == 1020
+    assert len({norm(s) for s in answers + additional}) == 1290
     stage_keys = {norm(s) for s in additional}
     for entry in manifest["packs"]:
         p = entry["path"]
@@ -119,7 +119,7 @@ def main():
         for record in other.get("records", []):
             assert not stage_keys.intersection(
                 norm(s) for s in [record["answer"], *record.get("variants", [])]), p
-    print("T191 PASS: 30 choice intents, 270 registered + 990 staged; source SHA, privacy, scope and uniqueness")
+    print("T191 PASS: 30 choice intents, 270 registered + 1020 staged; source SHA, privacy, scope and uniqueness")
 
 if __name__ == "__main__":
     main()
