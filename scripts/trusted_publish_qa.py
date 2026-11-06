@@ -131,6 +131,22 @@ def prepare_changes(candidate: dict, *, token: str, base: str) -> tuple[str, str
     manifest_meta, manifest_raw = _contents("manifest.json", token=token, ref=base)
     pack = json.loads(pack_raw.decode("utf-8"))
     manifest = json.loads(manifest_raw.decode("utf-8"))
+    if manifest.get("schema_version") != 1 or not isinstance(manifest.get("packs"), list):
+        raise PublishError("unsupported manifest")
+    matches = [row for row in manifest["packs"] if isinstance(row, dict) and row.get("path") == path]
+    if len(matches) != 1:
+        raise PublishError("target package must already be registered exactly once")
+    expected_sha = matches[0].get("sha256")
+    if not isinstance(expected_sha, str) or not re.fullmatch(r"[0-9a-f]{64}", expected_sha):
+        raise PublishError("manifest SHA invalid")
+    if hashlib.sha256(pack_raw).hexdigest() != expected_sha:
+        raise PublishError("manifest SHA mismatch; refusing to bless altered base content")
+    current_version = manifest.get("knowledge_version")
+    version_pattern = r"[0-9]{4}\.[0-9]{1,2}\.[0-9]{1,2}\.[0-9]+"
+    if not isinstance(current_version, str) or not re.fullmatch(version_pattern, current_version) \
+            or not re.fullmatch(version_pattern, version) \
+            or tuple(map(int, version.split("."))) <= tuple(map(int, current_version.split("."))):
+        raise PublishError("knowledge_version must increase numerically")
     catalog = pack.get("catalog", {})
     rows_name = catalog.get("records", "records")
     if catalog.get("adapter") != "qa.v1" or pack.get("schema_version") != 1 or not isinstance(pack.get(rows_name), list):
@@ -152,11 +168,6 @@ def prepare_changes(candidate: dict, *, token: str, base: str) -> tuple[str, str
     pack["pack_version"] = version
     pack_bytes = (json.dumps(pack, ensure_ascii=False, indent=2) + "\n").encode("utf-8")
     digest = hashlib.sha256(pack_bytes).hexdigest()
-    if manifest.get("schema_version") != 1 or not isinstance(manifest.get("packs"), list):
-        raise PublishError("unsupported manifest")
-    matches = [row for row in manifest["packs"] if row.get("path") == path]
-    if len(matches) != 1:
-        raise PublishError("target package must already be registered exactly once")
     matches[0]["sha256"] = digest
     manifest["knowledge_version"] = version
     manifest_bytes = (json.dumps(manifest, ensure_ascii=False, indent=2) + "\n").encode("utf-8")
