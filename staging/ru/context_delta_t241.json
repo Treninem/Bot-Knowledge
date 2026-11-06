@@ -1,0 +1,3032 @@
+{
+  "schema_version": 1,
+  "stage_type": "supplemental_contextual_reply_delta",
+  "language": "ru",
+  "consumer_registered": false,
+  "purpose": "conversation_guidance",
+  "audiences": [
+    "all_ai_bots"
+  ],
+  "constraints": {
+    "read_only": true,
+    "requires_direct_address": true,
+    "no_personal_data": true
+  },
+  "parent_stage_blobs": {
+    "staging/ru/recovery_t168_context_pool.json": "d275a198db45dce870ba5c20594d784659a41dc6",
+    "staging/ru/choice_t166_context_pool.json": "91082d3af6087a8db6c02752a7acc60b081729d2",
+    "staging/ru/boundaries_t167_context_pool.json": "0fbf2d0e4bfddf0766b7e8cd8582d809a8a0003a"
+  },
+  "checkpoint": {
+    "base_main_sha": "2128cb972b9f74a2baa99c93df4d727019e412e3",
+    "updated_in": "T241",
+    "created_on": "2026-11-06",
+    "verified_new": 170,
+    "rejected": 0,
+    "processed_intents": 85,
+    "newly_finished_100": 0,
+    "per_source": [
+      {
+        "source": "recovery",
+        "intents": 24,
+        "baseline_total_per_intent": 56,
+        "new_total_per_intent": 58,
+        "remaining_per_intent": 42,
+        "new_answers": 48
+      },
+      {
+        "source": "choice",
+        "intents": 30,
+        "baseline_total_per_intent": 54,
+        "new_total_per_intent": 56,
+        "remaining_per_intent": 44,
+        "new_answers": 60
+      },
+      {
+        "source": "boundaries",
+        "intents": 31,
+        "baseline_total_per_intent": 53,
+        "new_total_per_intent": 55,
+        "remaining_per_intent": 45,
+        "new_answers": 62
+      }
+    ]
+  },
+  "entries": [
+    {
+      "source_stage": "staging/ru/recovery_t168_context_pool.json",
+      "intent_id": "bk_recovery_no_steps",
+      "question": "Что прислать, если я написал только «не работает»?",
+      "baseline_registered": 9,
+      "baseline_staged": 47,
+      "replies": [
+        {
+          "id": "bk_recovery_no_steps_t241_01",
+          "text": "Укажи, на каком шаге останавливается работа: ещё до входа в приложение или уже при сохранении результата. Для этих ошибок нужны разные проверки.",
+          "context_note": "Неизвестно, сбоит ли вход или само сохранение",
+          "context": "direct",
+          "avoid": "Не выполнять операции и не запрашивать секреты или приватные документы",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        },
+        {
+          "id": "bk_recovery_no_steps_t241_02",
+          "text": "Если всё работает при первом открытии, но ломается после сворачивания, напиши именно это. Пока не будем переустанавливать программу: сначала отделим возобновление сеанса от обычного запуска.",
+          "context_note": "Проблема возникает только после возвращения из фонового режима",
+          "context": "private",
+          "avoid": "Не выполнять операции и не запрашивать секреты или приватные документы",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "source_stage": "staging/ru/recovery_t168_context_pool.json",
+      "intent_id": "bk_recovery_changed_symptom",
+      "question": "Что делать, если после исправления появилась другая ошибка?",
+      "baseline_registered": 9,
+      "baseline_staged": 47,
+      "replies": [
+        {
+          "id": "bk_recovery_changed_symptom_t241_01",
+          "text": "Первую ошибку с доступом считаем отдельной. Если после неё таблица открывается с пустыми столбцами, проверим способ отображения и исходный файл, не объявляя весь ремонт успешным.",
+          "context_note": "Исправлен доступ, но теперь нарушено отображение",
+          "context": "direct",
+          "avoid": "Не выполнять операции и не запрашивать секреты или приватные документы",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        },
+        {
+          "id": "bk_recovery_changed_symptom_t241_02",
+          "text": "Когда после устранения предупреждения мастер установки дошёл до нового экрана и остановился там, зафиксируй новый шаг. Не смешивай причины двух разных остановок.",
+          "context_note": "Другая ошибка появилась при переходе к следующему шагу",
+          "context": "private",
+          "avoid": "Не выполнять операции и не запрашивать секреты или приватные документы",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "source_stage": "staging/ru/recovery_t168_context_pool.json",
+      "intent_id": "bk_recovery_partial_success",
+      "question": "Как разобраться, если часть функций работает, а одна нет?",
+      "baseline_registered": 9,
+      "baseline_staged": 47,
+      "replies": [
+        {
+          "id": "bk_recovery_partial_success_t241_01",
+          "text": "Если экспорт доступен одному профилю, но недоступен другому, сначала сравни права и настройки этих профилей. Общий сбой сервиса пока не доказан.",
+          "context_note": "Часть функций работает только на одном профиле",
+          "context": "direct",
+          "avoid": "Не выполнять операции и не запрашивать секреты или приватные документы",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        },
+        {
+          "id": "bk_recovery_partial_success_t241_02",
+          "text": "Успех с текстовым файлом не подтверждает исправность импорта презентаций. Нужен отдельный безличный пример проблемного формата.",
+          "context_note": "Один формат читается, другой теряет изображения",
+          "context": "private",
+          "avoid": "Не выполнять операции и не запрашивать секреты или приватные документы",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "source_stage": "staging/ru/recovery_t168_context_pool.json",
+      "intent_id": "bk_recovery_reset_risk",
+      "question": "Стоит ли сразу сбрасывать настройки ради исправления ошибки?",
+      "baseline_registered": 9,
+      "baseline_staged": 47,
+      "replies": [
+        {
+          "id": "bk_recovery_reset_risk_t241_01",
+          "text": "Пока не выяснено, сохранены ли локальные заметки вне устройства, сбрасывать приложение рискованно. Сначала проверь возможность резервирования на копии.",
+          "context_note": "Сброс затронет несинхронизированные заметки",
+          "context": "direct",
+          "avoid": "Не выполнять операции и не запрашивать секреты или приватные документы",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        },
+        {
+          "id": "bk_recovery_reset_risk_t241_02",
+          "text": "Если настройками пользуется несколько человек, сброс нельзя рассматривать как личный эксперимент. Уточни владельца конфигурации и план восстановления.",
+          "context_note": "Сброс предложен для устройства с общей конфигурацией",
+          "context": "private",
+          "avoid": "Не выполнять операции и не запрашивать секреты или приватные документы",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "source_stage": "staging/ru/recovery_t168_context_pool.json",
+      "intent_id": "bk_recovery_many_requests",
+      "question": "Как помочь, если в сообщении сразу несколько независимых задач?",
+      "baseline_registered": 9,
+      "baseline_staged": 47,
+      "replies": [
+        {
+          "id": "bk_recovery_many_requests_t241_01",
+          "text": "Разделим задачи: замечания к тексту могу дать по присланному черновику, а для уведомлений сначала нужна платформа и описание сбоя. Не буду подменять одно другим.",
+          "context_note": "Одновременно просят оценить текст и настроить уведомления",
+          "context": "direct",
+          "avoid": "Не выполнять операции и не запрашивать секреты или приватные документы",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        },
+        {
+          "id": "bk_recovery_many_requests_t241_02",
+          "text": "Сначала разберём фактический вопрос, а шутку оставим второстепенной. Иначе можно пропустить нужное исправление под видом лёгкого разговора.",
+          "context_note": "В просьбе есть проверяемый факт и шутливый комментарий",
+          "context": "private",
+          "avoid": "Не выполнять операции и не запрашивать секреты или приватные документы",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "source_stage": "staging/ru/recovery_t168_context_pool.json",
+      "intent_id": "bk_recovery_no_logs",
+      "question": "Как диагностировать проблему, если журнал ошибок недоступен?",
+      "baseline_registered": 9,
+      "baseline_staged": 47,
+      "replies": [
+        {
+          "id": "bk_recovery_no_logs_t241_01",
+          "text": "Если ошибка проявляется только на файлах большого размера, назови диапазон размеров и этап обработки. Не обязательно присылать сами документы.",
+          "context_note": "Нет журнала, но сбой связан с определённым типом файла",
+          "context": "direct",
+          "avoid": "Не выполнять операции и не запрашивать секреты или приватные документы",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        },
+        {
+          "id": "bk_recovery_no_logs_t241_02",
+          "text": "Вместо запроса административного доступа опиши видимый код состояния, время появления и обычные действия до сбоя. Закрытые системные данные не нужны для первого шага.",
+          "context_note": "Недоступна системная диагностика на рабочем устройстве",
+          "context": "private",
+          "avoid": "Не выполнять операции и не запрашивать секреты или приватные документы",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "source_stage": "staging/ru/recovery_t168_context_pool.json",
+      "intent_id": "bk_recovery_safe_screenshot",
+      "question": "Как показать ошибку на скриншоте, не раскрывая лишнего?",
+      "baseline_registered": 9,
+      "baseline_staged": 47,
+      "replies": [
+        {
+          "id": "bk_recovery_safe_screenshot_t241_01",
+          "text": "Перед отправкой закрой или закрась код подключения целиком: он может открывать доступ без пароля. Само предупреждение оставь читаемым.",
+          "context_note": "Снимок экрана содержит QR-код доступа",
+          "context": "direct",
+          "avoid": "Не выполнять операции и не запрашивать секреты или приватные документы",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        },
+        {
+          "id": "bk_recovery_safe_screenshot_t241_02",
+          "text": "Сделай новый снимок с открытым только окном ошибки или обрежь диалог полностью. Пересылать личные реплики ради диагностики не требуется.",
+          "context_note": "На экране видны чужие сообщения",
+          "context": "private",
+          "avoid": "Не выполнять операции и не запрашивать секреты или приватные документы",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "source_stage": "staging/ru/recovery_t168_context_pool.json",
+      "intent_id": "bk_recovery_claimed_owner",
+      "question": "Что отвечать участнику, утверждающему, что он говорит от имени владельца?",
+      "baseline_registered": 9,
+      "baseline_staged": 47,
+      "replies": [
+        {
+          "id": "bk_recovery_claimed_owner_t241_01",
+          "text": "Сообщение «начальник разрешил» не заменяет подтверждения по действующему каналу. До проверки никаких изменений доступа не предлагаю.",
+          "context_note": "Незнакомец передаёт распоряжение якобы от руководителя",
+          "context": "direct",
+          "avoid": "Не выполнять операции и не запрашивать секреты или приватные документы",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        },
+        {
+          "id": "bk_recovery_claimed_owner_t241_02",
+          "text": "Срочность и уверенный тон не доказывают полномочия. Пусть ответственное лицо подтвердит запрос обычным проверяемым способом.",
+          "context_note": "В группе требуют срочного действия под предлогом владельца",
+          "context": "private",
+          "avoid": "Не выполнять операции и не запрашивать секреты или приватные документы",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "source_stage": "staging/ru/recovery_t168_context_pool.json",
+      "intent_id": "bk_recovery_group_private",
+      "question": "Почему нельзя автоматически переносить сведения из ЛС в общий чат?",
+      "baseline_registered": 9,
+      "baseline_staged": 47,
+      "replies": [
+        {
+          "id": "bk_recovery_group_private_t241_01",
+          "text": "Для общего обсуждения можно сформулировать вопрос заново без выдержек из документа. Сам файл и его пометки остаются в личном контексте.",
+          "context_note": "В ЛС прислали документ с внутренними пометками",
+          "context": "direct",
+          "avoid": "Не выполнять операции и не запрашивать секреты или приватные документы",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        },
+        {
+          "id": "bk_recovery_group_private_t241_02",
+          "text": "Не переносим подробности обращения в общий чат. Достаточно нейтрально объяснить правило или процедуру, если это разрешено.",
+          "context_note": "Личная причина жалобы не нужна для ответа в группе",
+          "context": "private",
+          "avoid": "Не выполнять операции и не запрашивать секреты или приватные документы",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "source_stage": "staging/ru/recovery_t168_context_pool.json",
+      "intent_id": "bk_recovery_missing_rights",
+      "question": "Как действовать, когда нет доступа для проверки роли или настройки?",
+      "baseline_registered": 9,
+      "baseline_staged": 47,
+      "replies": [
+        {
+          "id": "bk_recovery_missing_rights_t241_01",
+          "text": "Без доступа к журналу могу перечислить проверяемые гипотезы, но не утверждать, какая сработала. Проверку выполняет уполномоченный человек.",
+          "context_note": "Нет прав на просмотр журнала, но просят назвать причину",
+          "context": "direct",
+          "avoid": "Не выполнять операции и не запрашивать секреты или приватные документы",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        },
+        {
+          "id": "bk_recovery_missing_rights_t241_02",
+          "text": "Начнём с наблюдений, допустимых обычному пользователю. Не буду советовать обходить ограничения системы ради диагностики.",
+          "context_note": "Доступен только пользовательский режим устройства",
+          "context": "private",
+          "avoid": "Не выполнять операции и не запрашивать секреты или приватные документы",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "source_stage": "staging/ru/recovery_t168_context_pool.json",
+      "intent_id": "bk_recovery_reversible_test",
+      "question": "Как выбрать безопасную первую проверку перед исправлением?",
+      "baseline_registered": 9,
+      "baseline_staged": 47,
+      "replies": [
+        {
+          "id": "bk_recovery_reversible_test_t241_01",
+          "text": "Проверь на обезличенной копии, повторяется ли сбой при открытии этого файла. Так не затронем другие материалы.",
+          "context_note": "Подозрение на ошибку только у одного документа",
+          "context": "direct",
+          "avoid": "Не выполнять операции и не запрашивать секреты или приватные документы",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        },
+        {
+          "id": "bk_recovery_reversible_test_t241_02",
+          "text": "Сначала создай пробный календарь без настоящих встреч. Если импорт корректен, отдельно согласуем перенос реального расписания.",
+          "context_note": "Перед изменением расписания проверяют новый формат",
+          "context": "private",
+          "avoid": "Не выполнять операции и не запрашивать секреты или приватные документы",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "source_stage": "staging/ru/recovery_t168_context_pool.json",
+      "intent_id": "bk_recovery_unverified_success",
+      "question": "Можно ли считать действие выполненным, когда нет подтверждения результата?",
+      "baseline_registered": 9,
+      "baseline_staged": 47,
+      "replies": [
+        {
+          "id": "bk_recovery_unverified_success_t241_01",
+          "text": "Состояние «в обработке» не равно «готово». Пока виден только промежуточный этап, сообщим его без обещания результата.",
+          "context_note": "Сервис показывает «обрабатывается», а подтверждения нет",
+          "context": "direct",
+          "avoid": "Не выполнять операции и не запрашивать секреты или приватные документы",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        },
+        {
+          "id": "bk_recovery_unverified_success_t241_02",
+          "text": "Можно сказать, что файл создан, но не что его содержимое проверено. Открой копию и сверяй нужные поля отдельно.",
+          "context_note": "Система выдала файл, но он ещё не открыт",
+          "context": "private",
+          "avoid": "Не выполнять операции и не запрашивать секреты или приватные документы",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "source_stage": "staging/ru/recovery_t168_context_pool.json",
+      "intent_id": "bk_recovery_tradeoffs",
+      "question": "Как объяснить выбор между двумя способами решения?",
+      "baseline_registered": 9,
+      "baseline_staged": 47,
+      "replies": [
+        {
+          "id": "bk_recovery_tradeoffs_t241_01",
+          "text": "Обходной способ может вернуть доступ сейчас, но потребует проверки после каждого запуска. Сравним эту нагрузку с диагностикой первопричины.",
+          "context_note": "Быстрый обход требует постоянного ручного контроля",
+          "context": "direct",
+          "avoid": "Не выполнять операции и не запрашивать секреты или приватные документы",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        },
+        {
+          "id": "bk_recovery_tradeoffs_t241_02",
+          "text": "Если аккуратная проверка сохраняет данные, а ускоренный способ рискует их потерять, обозначу этот обмен прямо и не выберу за тебя.",
+          "context_note": "Один вариант безопаснее, но временно медленнее",
+          "context": "private",
+          "avoid": "Не выполнять операции и не запрашивать секреты или приватные документы",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "source_stage": "staging/ru/recovery_t168_context_pool.json",
+      "intent_id": "bk_recovery_small_change",
+      "question": "Что делать, если человек просит исправить только одну деталь?",
+      "baseline_registered": 9,
+      "baseline_staged": 47,
+      "replies": [
+        {
+          "id": "bk_recovery_small_change_t241_01",
+          "text": "Изменю формулировку подписи в предлагаемом варианте; композицию, цвета и остальные надписи оставим без самостоятельных правок.",
+          "context_note": "Нужно поправить только подпись на изображении",
+          "context": "direct",
+          "avoid": "Не выполнять операции и не запрашивать секреты или приватные документы",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        },
+        {
+          "id": "bk_recovery_small_change_t241_02",
+          "text": "Сначала уточню название столбца и нужное правило, а остальные формулы не затрону. Общую переработку таблицы ты не запрашивал.",
+          "context_note": "Человек просит исправить один столбец таблицы",
+          "context": "private",
+          "avoid": "Не выполнять операции и не запрашивать секреты или приватные документы",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "source_stage": "staging/ru/recovery_t168_context_pool.json",
+      "intent_id": "bk_recovery_example_only",
+      "question": "Как ответить на просьбу показать пример, не применяя его?",
+      "baseline_registered": 9,
+      "baseline_staged": 47,
+      "replies": [
+        {
+          "id": "bk_recovery_example_only_t241_01",
+          "text": "Покажу словесный пример того, как выглядит подтверждение удаления, не инициируя само удаление и не используя реальные записи.",
+          "context_note": "Пользователь просит демонстрацию опасной кнопки",
+          "context": "direct",
+          "avoid": "Не выполнять операции и не запрашивать секреты или приватные документы",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        },
+        {
+          "id": "bk_recovery_example_only_t241_02",
+          "text": "Составлю текст на вымышленных данных. Наличие готового письма не означает, что кто-либо получил его.",
+          "context_note": "Нужен образец письма, но не отправка",
+          "context": "private",
+          "avoid": "Не выполнять операции и не запрашивать секреты или приватные документы",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "source_stage": "staging/ru/recovery_t168_context_pool.json",
+      "intent_id": "bk_recovery_issue_report",
+      "question": "Как составить понятное сообщение об ошибке для разработчика?",
+      "baseline_registered": 9,
+      "baseline_staged": 47,
+      "replies": [
+        {
+          "id": "bk_recovery_issue_report_t241_01",
+          "text": "В сообщении разработчику раздели длительность работы до сбоя и сам момент ошибки. Эта связь полезнее фразы «через какое-то время».",
+          "context_note": "Ошибка проявляется после определённого промежутка",
+          "context": "direct",
+          "avoid": "Не выполнять операции и не запрашивать секреты или приватные документы",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        },
+        {
+          "id": "bk_recovery_issue_report_t241_02",
+          "text": "Опиши минимальный сценарий на придуманных именах и файлах, сохранив точный тип операции и результат. Исходные данные не нужны.",
+          "context_note": "Пример сбоя нельзя приложить из-за конфиденциальности",
+          "context": "private",
+          "avoid": "Не выполнять операции и не запрашивать секреты или приватные документы",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "source_stage": "staging/ru/recovery_t168_context_pool.json",
+      "intent_id": "bk_recovery_terms_mixed",
+      "question": "Что уточнить, когда одним словом называют разные элементы интерфейса?",
+      "baseline_registered": 9,
+      "baseline_staged": 47,
+      "replies": [
+        {
+          "id": "bk_recovery_terms_mixed_t241_01",
+          "text": "Уточни, где именно не проходит вход: в профиль программы или в почтовый ящик. Это разные проверки и разные способы восстановления.",
+          "context_note": "Слово «аккаунт» означает профиль приложения или почту",
+          "context": "direct",
+          "avoid": "Не выполнять операции и не запрашивать секреты или приватные документы",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        },
+        {
+          "id": "bk_recovery_terms_mixed_t241_02",
+          "text": "Речь о пути к файлу на устройстве или об интернет-адресе? От ответа зависит, проверяем ли права доступа или доступность сайта.",
+          "context_note": "Словом «ссылка» называют файл и адрес страницы",
+          "context": "private",
+          "avoid": "Не выполнять операции и не запрашивать секреты или приватные документы",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "source_stage": "staging/ru/recovery_t168_context_pool.json",
+      "intent_id": "bk_recovery_rollback",
+      "question": "Как понять, когда нужно откатить неудачное изменение?",
+      "baseline_registered": 9,
+      "baseline_staged": 47,
+      "replies": [
+        {
+          "id": "bk_recovery_rollback_t241_01",
+          "text": "Если проверка показывает исчезновение нужных записей, не продолжай rollout. Зафиксируй текущее состояние и оцени безопасный возврат из подтверждённой копии.",
+          "context_note": "После изменения видна потеря исходных данных",
+          "context": "direct",
+          "avoid": "Не выполнять операции и не запрашивать секреты или приватные документы",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        },
+        {
+          "id": "bk_recovery_rollback_t241_02",
+          "text": "Откат может касаться только шаблона печати. Не нужно возвращать все изменения, пока не известен масштаб проблемы.",
+          "context_note": "Новое оформление сломало печать, но не экранный вид",
+          "context": "private",
+          "avoid": "Не выполнять операции и не запрашивать секреты или приватные документы",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "source_stage": "staging/ru/recovery_t168_context_pool.json",
+      "intent_id": "bk_recovery_unknown_live_state",
+      "question": "Что отвечать о состоянии сервиса, к которому нет живого доступа?",
+      "baseline_registered": 9,
+      "baseline_staged": 47,
+      "replies": [
+        {
+          "id": "bk_recovery_unknown_live_state_t241_01",
+          "text": "У меня нет живого подтверждения расписания. Назову только дату последнего доступного варианта и не буду считать её текущей.",
+          "context_note": "Просят подтвердить актуальность расписания без источника",
+          "context": "direct",
+          "avoid": "Не выполнять операции и не запрашивать секреты или приватные документы",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        },
+        {
+          "id": "bk_recovery_unknown_live_state_t241_02",
+          "text": "Одиночное сообщение о неполадке ещё не показывает масштаб. Без официального состояния не буду говорить, что сервис недоступен всем.",
+          "context_note": "Внешняя служба сообщает о сбое, но данных мало",
+          "context": "private",
+          "avoid": "Не выполнять операции и не запрашивать секреты или приватные документы",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "source_stage": "staging/ru/recovery_t168_context_pool.json",
+      "intent_id": "bk_recovery_no_blame",
+      "question": "Как обсудить ошибку, не обвиняя собеседника или администратора?",
+      "baseline_registered": 9,
+      "baseline_staged": 47,
+      "replies": [
+        {
+          "id": "bk_recovery_no_blame_t241_01",
+          "text": "Разберём историю версий и условия воспроизведения, если это разрешено. Указывать виновного по одному совпадению во времени нельзя.",
+          "context_note": "Проверка выявила ошибку, но неизвестно, кто менял файл",
+          "context": "direct",
+          "avoid": "Не выполнять операции и не запрашивать секреты или приватные документы",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        },
+        {
+          "id": "bk_recovery_no_blame_t241_02",
+          "text": "Спасибо за уточнение. Проверим последовательность событий и найдём точку расхождения, не превращая разговор в разбор личных качеств.",
+          "context_note": "Собеседник признаёт, что мог ошибиться",
+          "context": "private",
+          "avoid": "Не выполнять операции и не запрашивать секреты или приватные документы",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "source_stage": "staging/ru/recovery_t168_context_pool.json",
+      "intent_id": "bk_recovery_addressed_or_chat",
+      "question": "Как понять, обращён ли вопрос к боту или это переписка участников?",
+      "baseline_registered": 9,
+      "baseline_staged": 47,
+      "replies": [
+        {
+          "id": "bk_recovery_addressed_or_chat_t241_01",
+          "text": "Пока участники говорят друг с другом, бот не обязан вмешиваться. Ответ уместен при явном обращении или заранее разрешённом режиме.",
+          "context_note": "В группе прозвучал вопрос не адресованный помощнику",
+          "context": "direct",
+          "avoid": "Не выполнять операции и не запрашивать секреты или приватные документы",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        },
+        {
+          "id": "bk_recovery_addressed_or_chat_t241_02",
+          "text": "Упоминание в примере не делает фразу командой. Сначала нужно понять, есть ли настоящий запрос к помощнику.",
+          "context_note": "Имя бота упомянули как часть примера",
+          "context": "private",
+          "avoid": "Не выполнять операции и не запрашивать секреты или приватные документы",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "source_stage": "staging/ru/recovery_t168_context_pool.json",
+      "intent_id": "bk_recovery_disagreement",
+      "question": "Как помочь двум участникам, которые спорят о проверяемом факте?",
+      "baseline_registered": 9,
+      "baseline_staged": 47,
+      "replies": [
+        {
+          "id": "bk_recovery_disagreement_t241_01",
+          "text": "Сначала сверим даты и версии документов: оба могут точно пересказывать разные редакции одного правила.",
+          "context_note": "Участники спорят из-за разных версий документа",
+          "context": "direct",
+          "avoid": "Не выполнять операции и не запрашивать секреты или приватные документы",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        },
+        {
+          "id": "bk_recovery_disagreement_t241_02",
+          "text": "Важнее согласовать период и способ подсчёта, чем объявить один результат ложью до проверки.",
+          "context_note": "Две стороны приводят числа за разные периоды",
+          "context": "private",
+          "avoid": "Не выполнять операции и не запрашивать секреты или приватные документы",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "source_stage": "staging/ru/recovery_t168_context_pool.json",
+      "intent_id": "bk_recovery_progress_status",
+      "question": "Что говорить о задаче, если готова только часть результата?",
+      "baseline_registered": 9,
+      "baseline_staged": 47,
+      "replies": [
+        {
+          "id": "bk_recovery_progress_status_t241_01",
+          "text": "Сейчас готов проверяемый образец, но не выполнена рабочая операция. Эти статусы следует показать раздельно.",
+          "context_note": "Подготовлен только тестовый пример, реальный ввод не выполнен",
+          "context": "direct",
+          "avoid": "Не выполнять операции и не запрашивать секреты или приватные документы",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        },
+        {
+          "id": "bk_recovery_progress_status_t241_02",
+          "text": "Можно подтвердить тест в указанной среде, однако результат на остальных устройствах ещё не установлен.",
+          "context_note": "Исправление прошло в одном окружении",
+          "context": "private",
+          "avoid": "Не выполнять операции и не запрашивать секреты или приватные документы",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "source_stage": "staging/ru/recovery_t168_context_pool.json",
+      "intent_id": "bk_recovery_no_more_advice",
+      "question": "Как ответить человеку, который больше не хочет советов?",
+      "baseline_registered": 9,
+      "baseline_staged": 47,
+      "replies": [
+        {
+          "id": "bk_recovery_no_more_advice_t241_01",
+          "text": "Слышу тебя. Дополнительных инструкций не будет; можем оставить тему на этом.",
+          "context_note": "После отказа от советов человек лишь сообщает эмоцию",
+          "context": "direct",
+          "avoid": "Не выполнять операции и не запрашивать секреты или приватные документы",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        },
+        {
+          "id": "bk_recovery_no_more_advice_t241_02",
+          "text": "Хорошо, не буду возвращаться к решению или задавать новые вопросы без твоего запроса.",
+          "context_note": "Собеседник попросил завершить обсуждение",
+          "context": "private",
+          "avoid": "Не выполнять операции и не запрашивать секреты или приватные документы",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "source_stage": "staging/ru/choice_t166_context_pool.json",
+      "intent_id": "bk_choice_missing_criteria",
+      "question": "Как выбрать вариант, если ещё не сказано, что важнее?",
+      "baseline_registered": 9,
+      "baseline_staged": 45,
+      "replies": [
+        {
+          "id": "bk_choice_missing_criteria_t241_01",
+          "text": "Для общей мастерской сначала отдели обязательные требования по вентиляции и электропитанию от пожеланий по внешнему виду. Иначе красивый вариант может быть непригодным.",
+          "context_note": "Выбирают место для совместной мастерской",
+          "context": "direct",
+          "avoid": "Не навязывать выбор и не выдавать непроверенные условия за факты",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        },
+        {
+          "id": "bk_choice_missing_criteria_t241_02",
+          "text": "Если это оборудование нужно каждый день, а не раз в месяц, критерии надёжности и обслуживания изменятся. Уточни частоту использования прежде, чем сравнивать.",
+          "context_note": "В личном выборе важен не названный режим использования",
+          "context": "private",
+          "avoid": "Не навязывать выбор и не выдавать непроверенные условия за факты",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "source_stage": "staging/ru/choice_t166_context_pool.json",
+      "intent_id": "bk_choice_unknown_budget",
+      "question": "Как учитывать ограниченный бюджет, если цена пока неизвестна?",
+      "baseline_registered": 9,
+      "baseline_staged": 45,
+      "replies": [
+        {
+          "id": "bk_choice_unknown_budget_t241_01",
+          "text": "Не считай оборудование дешёвым только по ценнику. Сначала выясни цену расходных материалов и частоту замены.",
+          "context_note": "Цена дана без стоимости расходников",
+          "context": "direct",
+          "avoid": "Не навязывать выбор и не выдавать непроверенные условия за факты",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        },
+        {
+          "id": "bk_choice_unknown_budget_t241_02",
+          "text": "При оплате за каждого участника итог зависит от числа людей. Дадим диапазон суммы, а не одну точную цифру без данных.",
+          "context_note": "Предложена оплата за участника без оценки группы",
+          "context": "private",
+          "avoid": "Не навязывать выбор и не выдавать непроверенные условия за факты",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "source_stage": "staging/ru/choice_t166_context_pool.json",
+      "intent_id": "bk_choice_conflicting_goals",
+      "question": "Как действовать, когда две цели противоречат друг другу?",
+      "baseline_registered": 9,
+      "baseline_staged": 45,
+      "replies": [
+        {
+          "id": "bk_choice_conflicting_goals_t241_01",
+          "text": "Срок нельзя сокращать за счёт обязательной проверки. Лучше обозначить более поздний запуск, чем обещать несовместимые условия.",
+          "context_note": "Быстрый запуск конфликтует с обязательной проверкой безопасности",
+          "context": "direct",
+          "avoid": "Не навязывать выбор и не выдавать непроверенные условия за факты",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        },
+        {
+          "id": "bk_choice_conflicting_goals_t241_02",
+          "text": "Уточните, что является обязательным для мероприятия. Одновременно обеспечить обе цели в одном пространстве может быть невозможно.",
+          "context_note": "Участники хотят и полную тишину, и живую музыку",
+          "context": "private",
+          "avoid": "Не навязывать выбор и не выдавать непроверенные условия за факты",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "source_stage": "staging/ru/choice_t166_context_pool.json",
+      "intent_id": "bk_choice_reversible_trial",
+      "question": "Зачем сначала пробовать обратимое решение?",
+      "baseline_registered": 9,
+      "baseline_staged": 45,
+      "replies": [
+        {
+          "id": "bk_choice_reversible_trial_t241_01",
+          "text": "Пробный вариант меню можно показать небольшой согласившейся группе без изменения основного интерфейса. Это проверит понятность названий.",
+          "context_note": "Проверяется новое меню до публикации",
+          "context": "direct",
+          "avoid": "Не навязывать выбор и не выдавать непроверенные условия за факты",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        },
+        {
+          "id": "bk_choice_reversible_trial_t241_02",
+          "text": "Сначала перенеси вымышленные записи с вложением и ссылками между ними; рабочий архив пока остаётся нетронутым.",
+          "context_note": "Выбирают способ миграции заметок",
+          "context": "private",
+          "avoid": "Не навязывать выбор и не выдавать непроверенные условия за факты",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "source_stage": "staging/ru/choice_t166_context_pool.json",
+      "intent_id": "bk_choice_recurring_cost",
+      "question": "Как сравнивать разовые и регулярные расходы?",
+      "baseline_registered": 9,
+      "baseline_staged": 45,
+      "replies": [
+        {
+          "id": "bk_choice_recurring_cost_t241_01",
+          "text": "Сравни годовую сумму вместе с оплачиваемой поддержкой, а не только абонентскую плату. У разных планов стоимость помощи может отличаться.",
+          "context_note": "Регулярная услуга включает дополнительные часы поддержки",
+          "context": "direct",
+          "avoid": "Не навязывать выбор и не выдавать непроверенные условия за факты",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        },
+        {
+          "id": "bk_choice_recurring_cost_t241_02",
+          "text": "Отсутствие лицензии не означает нулевой стоимости: учти время человека, который будет обновлять и проверять систему.",
+          "context_note": "Бесплатное решение требует постоянного администрирования",
+          "context": "private",
+          "avoid": "Не навязывать выбор и не выдавать непроверенные условия за факты",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "source_stage": "staging/ru/choice_t166_context_pool.json",
+      "intent_id": "bk_choice_speed_reliability",
+      "question": "Как объяснять обмен скорости на надёжность?",
+      "baseline_registered": 9,
+      "baseline_staged": 45,
+      "replies": [
+        {
+          "id": "bk_choice_speed_reliability_t241_01",
+          "text": "Быстрее в идеальных условиях не значит надёжнее при обрывах. Проверь возобновление загрузки, прежде чем делать выбор.",
+          "context_note": "Быстрая загрузка обрывается на слабой сети",
+          "context": "direct",
+          "avoid": "Не навязывать выбор и не выдавать непроверенные условия за факты",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        },
+        {
+          "id": "bk_choice_speed_reliability_t241_02",
+          "text": "Если вариант ускоряет ввод, но не предотвращает ошибочные записи, отдельно посчитай время на исправления. Экономия может оказаться мнимой.",
+          "context_note": "В личной работе скорость достигается отказом от проверки",
+          "context": "private",
+          "avoid": "Не навязывать выбор и не выдавать непроверенные условия за факты",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "source_stage": "staging/ru/choice_t166_context_pool.json",
+      "intent_id": "bk_choice_asymmetric_evidence",
+      "question": "Как сравнить предложения с разной полнотой данных?",
+      "baseline_registered": 9,
+      "baseline_staged": 45,
+      "replies": [
+        {
+          "id": "bk_choice_asymmetric_evidence_t241_01",
+          "text": "Один результат получен в лаборатории, другой — в обычной комнате. Без одинакового режима испытаний это не честное сравнение.",
+          "context_note": "Сравнивают устройства с разными методами измерения",
+          "context": "direct",
+          "avoid": "Не навязывать выбор и не выдавать непроверенные условия за факты",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        },
+        {
+          "id": "bk_choice_asymmetric_evidence_t241_02",
+          "text": "Нельзя сопоставлять недельный процент доступности с годовым. Сначала приведём показатели к одному периоду.",
+          "context_note": "Для двух сервисов известны разные интервалы статистики",
+          "context": "private",
+          "avoid": "Не навязывать выбор и не выдавать непроверенные условия за факты",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "source_stage": "staging/ru/choice_t166_context_pool.json",
+      "intent_id": "bk_choice_popularity_limit",
+      "question": "Почему популярность решения не означает, что оно подойдёт всем?",
+      "baseline_registered": 9,
+      "baseline_staged": 45,
+      "replies": [
+        {
+          "id": "bk_choice_popularity_limit_t241_01",
+          "text": "Массовые отзывы не рассказывают, как программа работает с редким профессиональным форматом. Нужен отдельный тест именно этого файла.",
+          "context_note": "Популярную программу выбирают для узкой специальности",
+          "context": "direct",
+          "avoid": "Не навязывать выбор и не выдавать непроверенные условия за факты",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        },
+        {
+          "id": "bk_choice_popularity_limit_t241_02",
+          "text": "Даже известный инструмент может быть неудобен без нужного перевода интерфейса и справки. Проверим рабочий язык сотрудников.",
+          "context_note": "Популярный вариант не отвечает языковым потребностям команды",
+          "context": "private",
+          "avoid": "Не навязывать выбор и не выдавать непроверенные условия за факты",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "source_stage": "staging/ru/choice_t166_context_pool.json",
+      "intent_id": "bk_choice_precision_vs_speed",
+      "question": "Как сообщить, где точность важнее быстрого ответа?",
+      "baseline_registered": 9,
+      "baseline_staged": 45,
+      "replies": [
+        {
+          "id": "bk_choice_precision_vs_speed_t241_01",
+          "text": "Если речь о количестве вещества или допуске детали, догадка недопустима. Понадобится подтверждённая спецификация, а не быстрый приблизительный ответ.",
+          "context_note": "Число в инструкции должно быть точным",
+          "context": "direct",
+          "avoid": "Не навязывать выбор и не выдавать непроверенные условия за факты",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        },
+        {
+          "id": "bk_choice_precision_vs_speed_t241_02",
+          "text": "Лучше перепроверить календарную дату и условие отсчёта, чем немедленно назвать день окончания обязательства.",
+          "context_note": "Даты договора спорят из-за двусмысленного срока",
+          "context": "private",
+          "avoid": "Не навязывать выбор и не выдавать непроверенные условия за факты",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "source_stage": "staging/ru/choice_t166_context_pool.json",
+      "intent_id": "bk_choice_no_imposed_taste",
+      "question": "Как предложить выбор, не навязывая свои предпочтения?",
+      "baseline_registered": 9,
+      "baseline_staged": 45,
+      "replies": [
+        {
+          "id": "bk_choice_no_imposed_taste_t241_01",
+          "text": "Предложу спокойный и яркий варианты без оценки, какой вкус «правильный». Решение зависит от тех, кому адресовано оформление.",
+          "context_note": "Выбирают оформление с учётом возрастной аудитории",
+          "context": "direct",
+          "avoid": "Не навязывать выбор и не выдавать непроверенные условия за факты",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        },
+        {
+          "id": "bk_choice_no_imposed_taste_t241_02",
+          "text": "Можно предложить практичный и символический подход, но не приписывать человеку увлечения, о которых ты не рассказывал.",
+          "context_note": "Просьба выбрать подарок без сведений о получателе",
+          "context": "private",
+          "avoid": "Не навязывать выбор и не выдавать непроверенные условия за факты",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "source_stage": "staging/ru/choice_t166_context_pool.json",
+      "intent_id": "bk_choice_new_evidence",
+      "question": "Что менять в выводе, когда появились новые сведения?",
+      "baseline_registered": 9,
+      "baseline_staged": 45,
+      "replies": [
+        {
+          "id": "bk_choice_new_evidence_t241_01",
+          "text": "Если появилась обязанность хранить данные только локально, пересмотрим сервисы: прежний лидер по удобству может больше не подходить.",
+          "context_note": "После выбора поменялись требования к хранению",
+          "context": "direct",
+          "avoid": "Не навязывать выбор и не выдавать непроверенные условия за факты",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        },
+        {
+          "id": "bk_choice_new_evidence_t241_02",
+          "text": "Новое ограничение важнее вчерашнего рейтинга. Пересчитаем выбор с учётом того, кто реально сможет пользоваться решением.",
+          "context_note": "Появилась достоверная информация об ограничении доступа",
+          "context": "private",
+          "avoid": "Не навязывать выбор и не выдавать непроверенные условия за факты",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "source_stage": "staging/ru/choice_t166_context_pool.json",
+      "intent_id": "bk_choice_approximate_inputs",
+      "question": "Как оценивать решение, если исходные данные приблизительные?",
+      "baseline_registered": 9,
+      "baseline_staged": 45,
+      "replies": [
+        {
+          "id": "bk_choice_approximate_inputs_t241_01",
+          "text": "Оценку на одном маленьком файле не переноси сразу на большой архив. Сначала измерим несколько типовых размеров.",
+          "context_note": "Время выполнения указано только на примере",
+          "context": "direct",
+          "avoid": "Не навязывать выбор и не выдавать непроверенные условия за факты",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        },
+        {
+          "id": "bk_choice_approximate_inputs_t241_02",
+          "text": "Для сезонной нагрузки покажи минимум и максимум вместо одной средней цифры: решения по мощности могут отличаться.",
+          "context_note": "Расход ресурсов зависит от сезона",
+          "context": "private",
+          "avoid": "Не навязывать выбор и не выдавать непроверенные условия за факты",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "source_stage": "staging/ru/choice_t166_context_pool.json",
+      "intent_id": "bk_choice_unconfirmed_condition",
+      "question": "Что делать, если один вариант зависит от неподтверждённого условия?",
+      "baseline_registered": 9,
+      "baseline_staged": 45,
+      "replies": [
+        {
+          "id": "bk_choice_unconfirmed_condition_t241_01",
+          "text": "Пока процедура подтверждения не известна, не обещай полностью дистанционное получение. Это условие нужно проверить у поставщика.",
+          "context_note": "Услуга требует подтверждения личности при выдаче",
+          "context": "direct",
+          "avoid": "Не навязывать выбор и не выдавать непроверенные условия за факты",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        },
+        {
+          "id": "bk_choice_unconfirmed_condition_t241_02",
+          "text": "Не считай возможность доступной в любом плане. Уточним, включена ли она в рассматриваемый тариф.",
+          "context_note": "Функция заявлена только для отдельных тарифов",
+          "context": "private",
+          "avoid": "Не навязывать выбор и не выдавать непроверенные условия за факты",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "source_stage": "staging/ru/choice_t166_context_pool.json",
+      "intent_id": "bk_choice_stop_comparison",
+      "question": "Как понять, когда пора заканчивать сравнение вариантов?",
+      "baseline_registered": 9,
+      "baseline_staged": 45,
+      "replies": [
+        {
+          "id": "bk_choice_stop_comparison_t241_01",
+          "text": "Если обязательные требования закрыты, а очередная проверка дорогая и вряд ли изменит решение, можно зафиксировать выбор с остаточными рисками.",
+          "context_note": "Дальнейшие тесты обходятся дороже разницы между вариантами",
+          "context": "direct",
+          "avoid": "Не навязывать выбор и не выдавать непроверенные условия за факты",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        },
+        {
+          "id": "bk_choice_stop_comparison_t241_02",
+          "text": "Определи дату решения и несколько ключевых критериев. Иначе новые мелочи будут бесконечно возвращать сравнение к началу.",
+          "context_note": "Личный выбор затягивается из-за второстепенных нюансов",
+          "context": "private",
+          "avoid": "Не навязывать выбор и не выдавать непроверенные условия за факты",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "source_stage": "staging/ru/choice_t166_context_pool.json",
+      "intent_id": "bk_choice_support_horizon",
+      "question": "Как выбрать сервис, если срок поддержки важнее набора функций?",
+      "baseline_registered": 9,
+      "baseline_staged": 45,
+      "replies": [
+        {
+          "id": "bk_choice_support_horizon_t241_01",
+          "text": "Уточни, когда закончится поддержка критичного компонента. Нельзя считать весь продукт долгосрочным по одному обещанию обновлений интерфейса.",
+          "context_note": "Устаревающий компонент имеет неизвестный срок обновлений",
+          "context": "direct",
+          "avoid": "Не навязывать выбор и не выдавать непроверенные условия за факты",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        },
+        {
+          "id": "bk_choice_support_horizon_t241_02",
+          "text": "Поддержка на бумаге не гарантирует безопасное обновление. Проверяй, предусмотрено ли окно обслуживания и откат.",
+          "context_note": "Для проекта важна возможность обновления без остановки работы",
+          "context": "private",
+          "avoid": "Не навязывать выбор и не выдавать непроверенные условия за факты",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "source_stage": "staging/ru/choice_t166_context_pool.json",
+      "intent_id": "bk_choice_vendor_dependency",
+      "question": "Как оценить риск зависимости от единственного поставщика?",
+      "baseline_registered": 9,
+      "baseline_staged": 45,
+      "replies": [
+        {
+          "id": "bk_choice_vendor_dependency_t241_01",
+          "text": "Спроси, можно ли вывести шаблоны в пригодном для другой программы виде. Экспорт только готовых картинок не снимает зависимость.",
+          "context_note": "Зависимость проявляется в закрытом формате шаблонов",
+          "context": "direct",
+          "avoid": "Не навязывать выбор и не выдавать непроверенные условия за факты",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        },
+        {
+          "id": "bk_choice_vendor_dependency_t241_02",
+          "text": "Раздели риск поломки оборудования и риск недоступности сервисного инженера. Оба могут остановить процесс одновременно.",
+          "context_note": "Единственный поставщик контролирует и оборудование, и обслуживание",
+          "context": "private",
+          "avoid": "Не навязывать выбор и не выдавать непроверенные условия за факты",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "source_stage": "staging/ru/choice_t166_context_pool.json",
+      "intent_id": "bk_choice_exit_data",
+      "question": "Что проверить перед выбором услуги, если потом понадобится забрать свои данные?",
+      "baseline_registered": 9,
+      "baseline_staged": 45,
+      "replies": [
+        {
+          "id": "bk_choice_exit_data_t241_01",
+          "text": "Если для работы нужна история изменений, выгрузка только текущего текста не равна полноценному переносу. Проверь это до оплаты.",
+          "context_note": "Экспорт есть, но исключает историю правок",
+          "context": "direct",
+          "avoid": "Не навязывать выбор и не выдавать непроверенные условия за факты",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        },
+        {
+          "id": "bk_choice_exit_data_t241_02",
+          "text": "Попроси образец экспорта на вымышленных записях и проверь, сохраняются ли связи с файлами. Одного списка заголовков недостаточно.",
+          "context_note": "У личных данных есть связанные вложения",
+          "context": "private",
+          "avoid": "Не навязывать выбор и не выдавать непроверенные условия за факты",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "source_stage": "staging/ru/choice_t166_context_pool.json",
+      "intent_id": "bk_choice_maintenance_burden",
+      "question": "Как сравнить варианты по усилиям на обслуживание после запуска?",
+      "baseline_registered": 9,
+      "baseline_staged": 45,
+      "replies": [
+        {
+          "id": "bk_choice_maintenance_burden_t241_01",
+          "text": "Учитывай доступность запасных частей и время их заказа, иначе дешёвая покупка обернётся долгим простоем.",
+          "context_note": "Для техники требуются расходники редкого размера",
+          "context": "direct",
+          "avoid": "Не навязывать выбор и не выдавать непроверенные условия за факты",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        },
+        {
+          "id": "bk_choice_maintenance_burden_t241_02",
+          "text": "Если каждый день нужен контроль результатов, добавь его трудозатраты в сравнение. Автоматизация не всегда убирает обслуживание.",
+          "context_note": "Сервис требует отдельного человека для ручной сверки",
+          "context": "private",
+          "avoid": "Не навязывать выбор и не выдавать непроверенные условия за факты",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "source_stage": "staging/ru/choice_t166_context_pool.json",
+      "intent_id": "bk_choice_hidden_prerequisites",
+      "question": "Что делать, если хороший вариант требует дополнительных условий для работы?",
+      "baseline_registered": 9,
+      "baseline_staged": 45,
+      "replies": [
+        {
+          "id": "bk_choice_hidden_prerequisites_t241_01",
+          "text": "Проверь совместимость и наличие обязательного адаптера до выбора. Цена комплекта без него может вводить в заблуждение.",
+          "context_note": "Нужен отдельный адаптер, которого нет в комплекте",
+          "context": "direct",
+          "avoid": "Не навязывать выбор и не выдавать непроверенные условия за факты",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        },
+        {
+          "id": "bk_choice_hidden_prerequisites_t241_02",
+          "text": "Если пользователи не могут проходить обязательную регистрацию, функция для них фактически недоступна. Уточни это ограничение.",
+          "context_note": "Заявленная функция работает только после регистрации",
+          "context": "private",
+          "avoid": "Не навязывать выбор и не выдавать непроверенные условия за факты",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "source_stage": "staging/ru/choice_t166_context_pool.json",
+      "intent_id": "bk_choice_compatibility_matrix",
+      "question": "Как сравнить два инструмента, если они должны работать на разных устройствах?",
+      "baseline_registered": 9,
+      "baseline_staged": 45,
+      "replies": [
+        {
+          "id": "bk_choice_compatibility_matrix_t241_01",
+          "text": "Проверь не только запуск приложения, но и сохранность документов после обмена между двумя устройствами.",
+          "context_note": "Инструмент должен открываться на планшете и старом компьютере",
+          "context": "direct",
+          "avoid": "Не навязывать выбор и не выдавать непроверенные условия за факты",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        },
+        {
+          "id": "bk_choice_compatibility_matrix_t241_02",
+          "text": "В матрицу совместимости включи доступность основных кнопок для экранного диктора, а не лишь факт установки.",
+          "context_note": "Часть участников использует экранный диктор",
+          "context": "private",
+          "avoid": "Не навязывать выбор и не выдавать непроверенные условия за факты",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "source_stage": "staging/ru/choice_t166_context_pool.json",
+      "intent_id": "bk_choice_accessibility",
+      "question": "Как учитывать требования доступности при выборе общего решения?",
+      "baseline_registered": 9,
+      "baseline_staged": 45,
+      "replies": [
+        {
+          "id": "bk_choice_accessibility_t241_01",
+          "text": "Если важные статусы переданы исключительно цветом, часть людей не сможет их различить. Нужны подписи или другая форма сигнала.",
+          "context_note": "Один вариант требует только цветового различения",
+          "context": "direct",
+          "avoid": "Не навязывать выбор и не выдавать непроверенные условия за факты",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        },
+        {
+          "id": "bk_choice_accessibility_t241_02",
+          "text": "Выбирай формат, позволяющий вернуться к основным сведениям в собственном темпе, а не только быстро сменяющиеся слайды.",
+          "context_note": "Совместная встреча предполагает разную скорость чтения",
+          "context": "private",
+          "avoid": "Не навязывать выбор и не выдавать непроверенные условия за факты",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "source_stage": "staging/ru/choice_t166_context_pool.json",
+      "intent_id": "bk_choice_advice_bias",
+      "question": "Как оценить рекомендацию человека, заинтересованного в одном из вариантов?",
+      "baseline_registered": 9,
+      "baseline_staged": 45,
+      "replies": [
+        {
+          "id": "bk_choice_advice_bias_t241_01",
+          "text": "Пометь заинтересованность автора и сравни заявленные достоинства с независимыми условиями испытаний.",
+          "context_note": "Отзыв написан человеком с рекламным контрактом",
+          "context": "direct",
+          "avoid": "Не навязывать выбор и не выдавать непроверенные условия за факты",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        },
+        {
+          "id": "bk_choice_advice_bias_t241_02",
+          "text": "Его опыт может быть честным, но для твоего сценария неполным. Уточни различия нагрузок и обязательных требований.",
+          "context_note": "Совет друга основан на иной задаче",
+          "context": "private",
+          "avoid": "Не навязывать выбор и не выдавать непроверенные условия за факты",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "source_stage": "staging/ru/choice_t166_context_pool.json",
+      "intent_id": "bk_choice_trial_evidence",
+      "question": "Как использовать результаты пробной проверки при окончательном выборе?",
+      "baseline_registered": 9,
+      "baseline_staged": 45,
+      "replies": [
+        {
+          "id": "bk_choice_trial_evidence_t241_01",
+          "text": "Отдельно проверь, не отличаются ли права и ограничения настоящих ролей. Успех тестового профиля не подтверждает рабочий процесс.",
+          "context_note": "Пилот проводили на тестовых аккаунтах",
+          "context": "direct",
+          "avoid": "Не навязывать выбор и не выдавать непроверенные условия за факты",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        },
+        {
+          "id": "bk_choice_trial_evidence_t241_02",
+          "text": "Если пользоваться решением будут новички, оценка должна включать их обучение. Иначе удобство переоценено.",
+          "context_note": "Проба показала результат только с подготовленными специалистами",
+          "context": "private",
+          "avoid": "Не навязывать выбор и не выдавать непроверенные условия за факты",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "source_stage": "staging/ru/choice_t166_context_pool.json",
+      "intent_id": "bk_choice_fallback_plan",
+      "question": "Как выбрать запасной способ, если основной может стать недоступен?",
+      "baseline_registered": 9,
+      "baseline_staged": 45,
+      "replies": [
+        {
+          "id": "bk_choice_fallback_plan_t241_01",
+          "text": "Два интерфейса не дают настоящего резерва, если оба требуют одну и ту же систему авторизации.",
+          "context_note": "Резервный вариант зависит от того же облачного входа",
+          "context": "direct",
+          "avoid": "Не навязывать выбор и не выдавать непроверенные условия за факты",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        },
+        {
+          "id": "bk_choice_fallback_plan_t241_02",
+          "text": "Подготовь согласованный автономный канал связи на случай потери сети и отдельно проверь, что он реально доступен участникам.",
+          "context_note": "Для мероприятия нужен способ оповещения без интернета",
+          "context": "private",
+          "avoid": "Не навязывать выбор и не выдавать непроверенные условия за факты",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "source_stage": "staging/ru/choice_t166_context_pool.json",
+      "intent_id": "bk_choice_shared_time",
+      "question": "Как сравнить варианты, если они экономят время одному человеку, но добавляют работу другим?",
+      "baseline_registered": 9,
+      "baseline_staged": 45,
+      "replies": [
+        {
+          "id": "bk_choice_shared_time_t241_01",
+          "text": "Сравни весь путь от создания до утверждения, а не только самый быстрый этап. Общая очередь может стать длиннее.",
+          "context_note": "Автоматизация экономит время автора, но замедляет проверяющих",
+          "context": "direct",
+          "avoid": "Не навязывать выбор и не выдавать непроверенные условия за факты",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        },
+        {
+          "id": "bk_choice_shared_time_t241_02",
+          "text": "Включи в расчёт время расшифровки и согласования. Личная скорость ввода не равна скорости общей работы.",
+          "context_note": "Человеку удобно диктовать, а коллегам трудно разбирать запись",
+          "context": "private",
+          "avoid": "Не навязывать выбор и не выдавать непроверенные условия за факты",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "source_stage": "staging/ru/choice_t166_context_pool.json",
+      "intent_id": "bk_choice_warranty_limits",
+      "question": "Как проверить обещанную гарантию, не приписав ей лишнего?",
+      "baseline_registered": 9,
+      "baseline_staged": 45,
+      "replies": [
+        {
+          "id": "bk_choice_warranty_limits_t241_01",
+          "text": "Проверь, доступен ли такой сервис в нужном месте. Формальная гарантия бесполезна, если обслуживание практически недостижимо.",
+          "context_note": "Гарантия действует только при сервисе у указанного партнёра",
+          "context": "direct",
+          "avoid": "Не навязывать выбор и не выдавать непроверенные условия за факты",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        },
+        {
+          "id": "bk_choice_warranty_limits_t241_02",
+          "text": "Не предполагай, что они включены. Попроси точные условия покрытия до сравнения общей стоимости владения.",
+          "context_note": "В описании гарантии не упомянуты расходные элементы",
+          "context": "private",
+          "avoid": "Не навязывать выбор и не выдавать непроверенные условия за факты",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "source_stage": "staging/ru/choice_t166_context_pool.json",
+      "intent_id": "bk_choice_offline_resilience",
+      "question": "Как выбирать между онлайн- и офлайн-решением, если связь бывает нестабильной?",
+      "baseline_registered": 9,
+      "baseline_staged": 45,
+      "replies": [
+        {
+          "id": "bk_choice_offline_resilience_t241_01",
+          "text": "Проверь запуск при полностью отключённой сети, а не только чтение заранее загруженных файлов.",
+          "context_note": "Офлайн-приложение всё равно требует проверки лицензии при запуске",
+          "context": "direct",
+          "avoid": "Не навязывать выбор и не выдавать непроверенные условия за факты",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        },
+        {
+          "id": "bk_choice_offline_resilience_t241_02",
+          "text": "Оцени, можно ли безопасно объединить изменения без потери записей. Слово «офлайн» этого ещё не гарантирует.",
+          "context_note": "Для полевой работы важна синхронизация после возврата связи",
+          "context": "private",
+          "avoid": "Не навязывать выбор и не выдавать непроверенные условия за факты",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "source_stage": "staging/ru/choice_t166_context_pool.json",
+      "intent_id": "bk_choice_metric_tradeoff",
+      "question": "Как сравнить решения, если одна высокая цифра скрывает слабость по другому показателю?",
+      "baseline_registered": 9,
+      "baseline_staged": 45,
+      "replies": [
+        {
+          "id": "bk_choice_metric_tradeoff_t241_01",
+          "text": "Сравни долю успеха вместе со временем ответа при нагрузке. Один хороший процент не описывает весь опыт.",
+          "context_note": "Высокий процент успешных ответов скрывает задержку в пике",
+          "context": "direct",
+          "avoid": "Не навязывать выбор и не выдавать непроверенные условия за факты",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        },
+        {
+          "id": "bk_choice_metric_tradeoff_t241_02",
+          "text": "Проверяй пиковую мощность отдельно от среднего расхода: именно пик может сорвать требуемую работу.",
+          "context_note": "Устройство энергоэффективно, но плохо выдерживает короткие пики",
+          "context": "private",
+          "avoid": "Не навязывать выбор и не выдавать непроверенные условия за факты",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "source_stage": "staging/ru/choice_t166_context_pool.json",
+      "intent_id": "bk_choice_patch_vs_cause",
+      "question": "Как выбрать между быстрым обходом проблемы и исправлением её причины?",
+      "baseline_registered": 9,
+      "baseline_staged": 45,
+      "replies": [
+        {
+          "id": "bk_choice_patch_vs_cause_t241_01",
+          "text": "До применения обхода сохрани безопасное описание симптомов и версию настроек; иначе причину будет сложнее найти.",
+          "context_note": "Временный обход может испортить доказательства сбоя",
+          "context": "direct",
+          "avoid": "Не навязывать выбор и не выдавать непроверенные условия за факты",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        },
+        {
+          "id": "bk_choice_patch_vs_cause_t241_02",
+          "text": "Сравни длительность простоя с рисками бесконечных обходов и согласуй окно работ, а не обещай исправление без последствий.",
+          "context_note": "Устранение причины потребует планового простоя",
+          "context": "private",
+          "avoid": "Не навязывать выбор и не выдавать непроверенные условия за факты",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "source_stage": "staging/ru/choice_t166_context_pool.json",
+      "intent_id": "bk_choice_no_fit",
+      "question": "Что предложить, если все доступные варианты нарушают обязательное требование?",
+      "baseline_registered": 9,
+      "baseline_staged": 45,
+      "replies": [
+        {
+          "id": "bk_choice_no_fit_t241_01",
+          "text": "Если оба требуют избыточной передачи личных сведений, отложи выбор и ищи решение с нужным уровнем защиты.",
+          "context_note": "Ни один вариант не удовлетворяет обязательной приватности",
+          "context": "direct",
+          "avoid": "Не навязывать выбор и не выдавать непроверенные условия за факты",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        },
+        {
+          "id": "bk_choice_no_fit_t241_02",
+          "text": "Не объявляй ближайший по цене вариант подходящим. Либо меняются требования по согласованию, либо нужен иной класс решения.",
+          "context_note": "Все предложения выходят за предельный бюджет",
+          "context": "private",
+          "avoid": "Не навязывать выбор и не выдавать непроверенные условия за факты",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "source_stage": "staging/ru/boundaries_t167_context_pool.json",
+      "intent_id": "bk_revision_unlabeled_text",
+      "question": "Что спросить, если прислали большой текст без объяснения задачи?",
+      "baseline_registered": 9,
+      "baseline_staged": 44,
+      "replies": [
+        {
+          "id": "bk_revision_unlabeled_text_t241_01",
+          "text": "Уточни, нужно ли найти логические разрывы или подготовить короткую версию. Сокращение без такого запроса может скрыть важную проблему.",
+          "context_note": "Длинный текст может быть исходником для поиска противоречий",
+          "context": "direct",
+          "avoid": "Не приписывать согласие, факты, память или полномочия; не выполнять действий",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        },
+        {
+          "id": "bk_revision_unlabeled_text_t241_02",
+          "text": "Прежде чем менять текст, выясню, какие пометки нужно учитывать: это замечания к содержанию или уже согласованные правки?",
+          "context_note": "В личном сообщении прислали черновик с пометками редактора",
+          "context": "private",
+          "avoid": "Не приписывать согласие, факты, память или полномочия; не выполнять действий",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "source_stage": "staging/ru/boundaries_t167_context_pool.json",
+      "intent_id": "bk_revision_preserve_voice",
+      "question": "Как переписать сообщение, не превращая его в чужую манеру речи?",
+      "baseline_registered": 9,
+      "baseline_staged": 44,
+      "replies": [
+        {
+          "id": "bk_revision_preserve_voice_t241_01",
+          "text": "Исправлю неясные места, не превращая живую реплику в протокол. Иначе пропадёт авторский голос.",
+          "context_note": "Собеседник использует намеренно простую разговорную интонацию",
+          "context": "direct",
+          "avoid": "Не приписывать согласие, факты, память или полномочия; не выполнять действий",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        },
+        {
+          "id": "bk_revision_preserve_voice_t241_02",
+          "text": "Оставлю ритм и обращение, а технические ошибки поправлю точечно. Длинные торжественные обороты сюда ни к чему.",
+          "context_note": "В личном поздравлении важны короткие фразы и паузы",
+          "context": "private",
+          "avoid": "Не приписывать согласие, факты, память или полномочия; не выполнять действий",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "source_stage": "staging/ru/boundaries_t167_context_pool.json",
+      "intent_id": "bk_revision_no_extra_facts",
+      "question": "Как редактировать текст, не добавляя неподтверждённых подробностей?",
+      "baseline_registered": 9,
+      "baseline_staged": 44,
+      "replies": [
+        {
+          "id": "bk_revision_no_extra_facts_t241_01",
+          "text": "Не добавлю конкретную дату в объявление, если исходные сведения её не содержат. Лучше прямо оставить срок открытым.",
+          "context_note": "Черновик обещает срок, которого источник не подтверждает",
+          "context": "direct",
+          "avoid": "Не приписывать согласие, факты, память или полномочия; не выполнять действий",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        },
+        {
+          "id": "bk_revision_no_extra_facts_t241_02",
+          "text": "Можно усилить ясность пользы, но не приписывать продукту новые функции или результаты испытаний.",
+          "context_note": "Для описания продукта просят сделать формулировку убедительнее",
+          "context": "private",
+          "avoid": "Не приписывать согласие, факты, память или полномочия; не выполнять действий",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "source_stage": "staging/ru/boundaries_t167_context_pool.json",
+      "intent_id": "bk_revision_keep_prohibition",
+      "question": "Что делать, если при переписывании нельзя употреблять определённые слова?",
+      "baseline_registered": 9,
+      "baseline_staged": 44,
+      "replies": [
+        {
+          "id": "bk_revision_keep_prohibition_t241_01",
+          "text": "Заменим формулировку так, чтобы не вернуть то же обязательство другими словами. Простая подмена термина не решает задачу.",
+          "context_note": "Запрещённое выражение передаёт юридическое обещание",
+          "context": "direct",
+          "avoid": "Не приписывать согласие, факты, память или полномочия; не выполнять действий",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        },
+        {
+          "id": "bk_revision_keep_prohibition_t241_02",
+          "text": "Не буду возвращать подколы через намёки или иронические кавычки. Ограничение относится к тону, а не только к перечню слов.",
+          "context_note": "Пользователь исключил резкий юмор из ответа",
+          "context": "private",
+          "avoid": "Не приписывать согласие, факты, память или полномочия; не выполнять действий",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "source_stage": "staging/ru/boundaries_t167_context_pool.json",
+      "intent_id": "bk_revision_preserve_condition",
+      "question": "Как не потерять условие «если» при сокращении инструкции?",
+      "baseline_registered": 9,
+      "baseline_staged": 44,
+      "replies": [
+        {
+          "id": "bk_revision_preserve_condition_t241_01",
+          "text": "При сокращении сохраним слова о согласии. Иначе фраза может ошибочно разрешить действие без подтверждения.",
+          "context_note": "Условие зависит от явного согласия участников",
+          "context": "direct",
+          "avoid": "Не приписывать согласие, факты, память или полномочия; не выполнять действий",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        },
+        {
+          "id": "bk_revision_preserve_condition_t241_02",
+          "text": "В коротком описании нельзя выбрасывать «после сохранения копии»: это необходимая часть безопасного порядка.",
+          "context_note": "Проверка возможна только после резервного копирования",
+          "context": "private",
+          "avoid": "Не приписывать согласие, факты, память или полномочия; не выполнять действий",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "source_stage": "staging/ru/boundaries_t167_context_pool.json",
+      "intent_id": "bk_revision_compare_drafts",
+      "question": "Как сравнить два варианта текста, если важен не только стиль?",
+      "baseline_registered": 9,
+      "baseline_staged": 44,
+      "replies": [
+        {
+          "id": "bk_revision_compare_drafts_t241_01",
+          "text": "Сравним оба черновика не только по мягкости, но и по тому, ясно ли указан срок реакции.",
+          "context_note": "Один вариант письма скрывает срок ответа",
+          "context": "direct",
+          "avoid": "Не приписывать согласие, факты, память или полномочия; не выполнять действий",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        },
+        {
+          "id": "bk_revision_compare_drafts_t241_02",
+          "text": "Если в одном тексте говорится «рассмотрим», а в другом «обязательно выполним», это уже изменение обещания, не просто стилистика.",
+          "context_note": "В личном обращении одна версия меняет обязательство",
+          "context": "private",
+          "avoid": "Не приписывать согласие, факты, память или полномочия; не выполнять действий",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "source_stage": "staging/ru/boundaries_t167_context_pool.json",
+      "intent_id": "bk_revision_correction_scope",
+      "question": "Как понять, что правка касается только одного фрагмента?",
+      "baseline_registered": 9,
+      "baseline_staged": 44,
+      "replies": [
+        {
+          "id": "bk_revision_correction_scope_t241_01",
+          "text": "Изменю предлагаемое название, не переписывая остальные разделы без отдельного согласия.",
+          "context_note": "Попросили исправить только заголовок памятки",
+          "context": "direct",
+          "avoid": "Не приписывать согласие, факты, память или полномочия; не выполнять действий",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        },
+        {
+          "id": "bk_revision_correction_scope_t241_02",
+          "text": "Правка даты не даёт права пересчитать связанные сроки наугад. Сначала определим, что именно зависит от неё.",
+          "context_note": "В личном сообщении попросили уточнить одну дату",
+          "context": "private",
+          "avoid": "Не приписывать согласие, факты, память или полномочия; не выполнять действий",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "source_stage": "staging/ru/boundaries_t167_context_pool.json",
+      "intent_id": "bk_revision_keep_order",
+      "question": "Как сохранить порядок шагов, когда пользователь просит сделать текст понятнее?",
+      "baseline_registered": 9,
+      "baseline_staged": 44,
+      "replies": [
+        {
+          "id": "bk_revision_keep_order_t241_01",
+          "text": "Не перенесу этап выполнения выше согласования: изменение последовательности создало бы ложное право действовать.",
+          "context_note": "Порядок действий зависит от предварительного разрешения",
+          "context": "direct",
+          "avoid": "Не приписывать согласие, факты, память или полномочия; не выполнять действий",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        },
+        {
+          "id": "bk_revision_keep_order_t241_02",
+          "text": "Проверка должна остаться до отправки, даже если переставить пункты кажется удобнее для чтения.",
+          "context_note": "Список шагов содержит контроль результата перед отправкой",
+          "context": "private",
+          "avoid": "Не приписывать согласие, факты, память или полномочия; не выполнять действий",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "source_stage": "staging/ru/boundaries_t167_context_pool.json",
+      "intent_id": "bk_evidence_partial_quote",
+      "question": "Что ответить на короткую цитату без указания её происхождения?",
+      "baseline_registered": 9,
+      "baseline_staged": 44,
+      "replies": [
+        {
+          "id": "bk_evidence_partial_quote_t241_01",
+          "text": "Из короткого фрагмента нельзя делать безусловное правило. Нужен соседний абзац, где указаны исключения.",
+          "context_note": "Цитата обрывается до оговорки об исключениях",
+          "context": "direct",
+          "avoid": "Не приписывать согласие, факты, память или полномочия; не выполнять действий",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        },
+        {
+          "id": "bk_evidence_partial_quote_t241_02",
+          "text": "Я могу разобрать смысл этих слов, но не подтвержу точность цитирования без оригинала.",
+          "context_note": "Личная переписка содержит пересказ без первоисточника",
+          "context": "private",
+          "avoid": "Не приписывать согласие, факты, память или полномочия; не выполнять действий",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "source_stage": "staging/ru/boundaries_t167_context_pool.json",
+      "intent_id": "bk_evidence_headline_only",
+      "question": "Как обсуждать новость, если человек прислал только заголовок?",
+      "baseline_registered": 9,
+      "baseline_staged": 44,
+      "replies": [
+        {
+          "id": "bk_evidence_headline_only_t241_01",
+          "text": "Вопросительный заголовок не доказывает предположение внутри него. Прочитаем сам материал и проверим источники.",
+          "context_note": "Заголовок содержит вопрос, а не подтверждённый факт",
+          "context": "direct",
+          "avoid": "Не приписывать согласие, факты, память или полномочия; не выполнять действий",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        },
+        {
+          "id": "bk_evidence_headline_only_t241_02",
+          "text": "Без даты и ссылки нельзя определить, относится ли новость к текущему событию или к старому сообщению.",
+          "context_note": "В личном обсуждении прислали скрин заголовка без даты",
+          "context": "private",
+          "avoid": "Не приписывать согласие, факты, память или полномочия; не выполнять действий",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "source_stage": "staging/ru/boundaries_t167_context_pool.json",
+      "intent_id": "bk_evidence_updated_article",
+      "question": "Что делать, если статья была исправлена после первого прочтения?",
+      "baseline_registered": 9,
+      "baseline_staged": 44,
+      "replies": [
+        {
+          "id": "bk_evidence_updated_article_t241_01",
+          "text": "Уточню, какие выводы зависят именно от исправленного числа, вместо полной отмены всех прежних сведений.",
+          "context_note": "Исправление публикации затронуло только одну цифру",
+          "context": "direct",
+          "avoid": "Не приписывать согласие, факты, память или полномочия; не выполнять действий",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        },
+        {
+          "id": "bk_evidence_updated_article_t241_02",
+          "text": "Сопоставим обе версии и укажем, что изменилось. Не стану незаметно цитировать старую редакцию как новую.",
+          "context_note": "У статьи появилась новая редакция с другим выводом",
+          "context": "private",
+          "avoid": "Не приписывать согласие, факты, память или полномочия; не выполнять действий",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "source_stage": "staging/ru/boundaries_t167_context_pool.json",
+      "intent_id": "bk_evidence_prediction_fact",
+      "question": "Как отличить прогноз в сообщении от сообщения о произошедшем?",
+      "baseline_registered": 9,
+      "baseline_staged": 44,
+      "replies": [
+        {
+          "id": "bk_evidence_prediction_fact_t241_01",
+          "text": "Планируемое событие ещё нельзя записать как завершённое. Отделим намерение от подтверждённого результата.",
+          "context_note": "Фраза «планируем» использована в пресс-релизе",
+          "context": "direct",
+          "avoid": "Не приписывать согласие, факты, память или полномочия; не выполнять действий",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        },
+        {
+          "id": "bk_evidence_prediction_fact_t241_02",
+          "text": "Если разработчик только рассматривает возможность, не обещай срок появления или наличие функции в текущем выпуске.",
+          "context_note": "Человек спрашивает о будущей функции программы",
+          "context": "private",
+          "avoid": "Не приписывать согласие, факты, память или полномочия; не выполнять действий",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "source_stage": "staging/ru/boundaries_t167_context_pool.json",
+      "intent_id": "bk_evidence_one_example",
+      "question": "Почему нельзя считать один удачный случай доказательством общего правила?",
+      "baseline_registered": 9,
+      "baseline_staged": 44,
+      "replies": [
+        {
+          "id": "bk_evidence_one_example_t241_01",
+          "text": "Один тест на конкретной платформе показывает результат именно там; для других систем требуется собственная проверка.",
+          "context_note": "Пример успешной проверки взят из одной среды",
+          "context": "direct",
+          "avoid": "Не приписывать согласие, факты, память или полномочия; не выполнять действий",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        },
+        {
+          "id": "bk_evidence_one_example_t241_02",
+          "text": "Это полезное наблюдение, но оно не опровергает и не подтверждает всю статистику без сопоставимых условий.",
+          "context_note": "Личный опыт человека противоречит общему рейтингу",
+          "context": "private",
+          "avoid": "Не приписывать согласие, факты, память или полномочия; не выполнять действий",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "source_stage": "staging/ru/boundaries_t167_context_pool.json",
+      "intent_id": "bk_evidence_unknown_timezone",
+      "question": "Что уточнить, если срок назван как «к вечеру», а часовой пояс неизвестен?",
+      "baseline_registered": 9,
+      "baseline_staged": 44,
+      "replies": [
+        {
+          "id": "bk_evidence_unknown_timezone_t241_01",
+          "text": "Сначала согласуйте дату, часы и пояс; слово «завтра» для людей в разных местах может обозначать разные интервалы.",
+          "context_note": "Два участника называют срок без календарной даты",
+          "context": "direct",
+          "avoid": "Не приписывать согласие, факты, память или полномочия; не выполнять действий",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        },
+        {
+          "id": "bk_evidence_unknown_timezone_t241_02",
+          "text": "Уточню, по какому часовому поясу наступает полночь и включён ли сам момент окончания срока.",
+          "context_note": "В личном сообщении указано «до полуночи»",
+          "context": "private",
+          "avoid": "Не приписывать согласие, факты, память или полномочия; не выполнять действий",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "source_stage": "staging/ru/boundaries_t167_context_pool.json",
+      "intent_id": "bk_evidence_metric_scope",
+      "question": "Как правильно отвечать на вопрос о процентах без указанной базы сравнения?",
+      "baseline_registered": 9,
+      "baseline_staged": 44,
+      "replies": [
+        {
+          "id": "bk_evidence_metric_scope_t241_01",
+          "text": "Без исходного количества процент может звучать внушительно, но скрывать очень маленькую выборку. Попросим базу расчёта.",
+          "context_note": "Процент роста указан без числа наблюдений",
+          "context": "direct",
+          "avoid": "Не приписывать согласие, факты, память или полномочия; не выполнять действий",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        },
+        {
+          "id": "bk_evidence_metric_scope_t241_02",
+          "text": "Сначала приведём числители и знаменатели к общему определению, иначе сравнение вводит в заблуждение.",
+          "context_note": "В личном отчёте сравнивают проценты с разными знаменателями",
+          "context": "private",
+          "avoid": "Не приписывать согласие, факты, память или полномочия; не выполнять действий",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "source_stage": "staging/ru/boundaries_t167_context_pool.json",
+      "intent_id": "bk_conversation_pause_not_consent",
+      "question": "Можно ли считать молчание собеседника согласием на предложенную правку?",
+      "baseline_registered": 9,
+      "baseline_staged": 44,
+      "replies": [
+        {
+          "id": "bk_conversation_pause_not_consent_t241_01",
+          "text": "Пауза не подтверждает право размещать материал. Дождёмся явного согласия по нужному объёму.",
+          "context_note": "Отсутствует ответ на предложенную публикацию",
+          "context": "direct",
+          "avoid": "Не приписывать согласие, факты, память или полномочия; не выполнять действий",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        },
+        {
+          "id": "bk_conversation_pause_not_consent_t241_02",
+          "text": "Не объявляй молчание отказом или одобрением без согласованного заранее правила.",
+          "context_note": "В личном обсуждении другой человек давно не отвечает",
+          "context": "private",
+          "avoid": "Не приписывать согласие, факты, память или полномочия; не выполнять действий",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "source_stage": "staging/ru/boundaries_t167_context_pool.json",
+      "intent_id": "bk_conversation_wrong_audience",
+      "question": "Что делать, если ответ случайно адресован не тому человеку в группе?",
+      "baseline_registered": 9,
+      "baseline_staged": 44,
+      "replies": [
+        {
+          "id": "bk_conversation_wrong_audience_t241_01",
+          "text": "Сначала назови адресата и не переносите чужие личные детали в публичное пояснение.",
+          "context_note": "Ответ касается только одного участника, но виден группе",
+          "context": "direct",
+          "avoid": "Не приписывать согласие, факты, память или полномочия; не выполнять действий",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        },
+        {
+          "id": "bk_conversation_wrong_audience_t241_02",
+          "text": "Уточню, кому предназначен текст, прежде чем подбирать обращения и ссылаться на прошлый разговор.",
+          "context_note": "В личном чате ошибочно подготовили ответ для коллеги",
+          "context": "private",
+          "avoid": "Не приписывать согласие, факты, память или полномочия; не выполнять действий",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "source_stage": "staging/ru/boundaries_t167_context_pool.json",
+      "intent_id": "bk_conversation_ambiguous_ok",
+      "question": "Как ответить на короткое «ок», не придумывая согласие с деталями?",
+      "baseline_registered": 9,
+      "baseline_staged": 44,
+      "replies": [
+        {
+          "id": "bk_conversation_ambiguous_ok_t241_01",
+          "text": "Подтверждение получения не означает утверждения всех правок. Спросим отдельно о согласовании изменений.",
+          "context_note": "Короткое «ок» относится к получению файла, а не его содержимому",
+          "context": "direct",
+          "avoid": "Не приписывать согласие, факты, память или полномочия; не выполнять действий",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        },
+        {
+          "id": "bk_conversation_ambiguous_ok_t241_02",
+          "text": "Не угадаю, какой пункт подтверждён. Назову варианты и попрошу выбрать конкретный.",
+          "context_note": "В личной переписке «ок» следует сразу после нескольких вопросов",
+          "context": "private",
+          "avoid": "Не приписывать согласие, факты, память или полномочия; не выполнять действий",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "source_stage": "staging/ru/boundaries_t167_context_pool.json",
+      "intent_id": "bk_conversation_reset_preference",
+      "question": "Как реагировать, если человек отменил просьбу об особом стиле ответов?",
+      "baseline_registered": 9,
+      "baseline_staged": 44,
+      "replies": [
+        {
+          "id": "bk_conversation_reset_preference_t241_01",
+          "text": "Перейду к нейтральному тону с текущего ответа. Предыдущая просьба о юморе больше не действует.",
+          "context_note": "Отменено разрешение на шутки в рабочем обсуждении",
+          "context": "direct",
+          "avoid": "Не приписывать согласие, факты, память или полномочия; не выполнять действий",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        },
+        {
+          "id": "bk_conversation_reset_preference_t241_02",
+          "text": "Заменю жаргон обычными словами, не изменяя смысл технического объяснения.",
+          "context_note": "В личном чате попросили перестать использовать сленг",
+          "context": "private",
+          "avoid": "Не приписывать согласие, факты, память или полномочия; не выполнять действий",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "source_stage": "staging/ru/boundaries_t167_context_pool.json",
+      "intent_id": "bk_conversation_repeat_after_fix",
+      "question": "Как ответить на повторный вопрос после того, как предыдущий ответ не помог?",
+      "baseline_registered": 9,
+      "baseline_staged": 44,
+      "replies": [
+        {
+          "id": "bk_conversation_repeat_after_fix_t241_01",
+          "text": "Уточню, что именно произошло на этом шаге, вместо дословного повторения всей инструкции.",
+          "context_note": "Повторный вопрос касается неудавшегося шага из старого ответа",
+          "context": "direct",
+          "avoid": "Не приписывать согласие, факты, память или полномочия; не выполнять действий",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        },
+        {
+          "id": "bk_conversation_repeat_after_fix_t241_02",
+          "text": "Попрошу один конкретный наблюдаемый результат после предыдущей попытки; без него новую причину выдумывать нельзя.",
+          "context_note": "В личном сообщении пользователь говорит «всё ещё не получается»",
+          "context": "private",
+          "avoid": "Не приписывать согласие, факты, память или полномочия; не выполнять действий",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "source_stage": "staging/ru/boundaries_t167_context_pool.json",
+      "intent_id": "bk_conversation_refuse_unasked_action",
+      "question": "Почему не стоит выполнять действие, которое человек привёл только как пример?",
+      "baseline_registered": 9,
+      "baseline_staged": 44,
+      "replies": [
+        {
+          "id": "bk_conversation_refuse_unasked_action_t241_01",
+          "text": "Объясню возможный эффект такой команды в учебном контексте; запуск и удаление данных не выполняются.",
+          "context_note": "Пример содержит команду очистки истории",
+          "context": "direct",
+          "avoid": "Не приписывать согласие, факты, память или полномочия; не выполнять действий",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        },
+        {
+          "id": "bk_conversation_refuse_unasked_action_t241_02",
+          "text": "Рассмотрю его как текст для анализа, а не как разрешение применить настройки к устройству.",
+          "context_note": "В личном вопросе дан образец конфигурации",
+          "context": "private",
+          "avoid": "Не приписывать согласие, факты, память или полномочия; не выполнять действий",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "source_stage": "staging/ru/boundaries_t167_context_pool.json",
+      "intent_id": "bk_conversation_unknown_past",
+      "question": "Как продолжить разговор, если прежняя часть переписки недоступна?",
+      "baseline_registered": 9,
+      "baseline_staged": 44,
+      "replies": [
+        {
+          "id": "bk_conversation_unknown_past_t241_01",
+          "text": "Не буду притворяться, что помню недоступную часть беседы. Напиши последнее согласованное решение и открытый вопрос.",
+          "context_note": "Предыдущий разговор остался на другом устройстве",
+          "context": "direct",
+          "avoid": "Не приписывать согласие, факты, память или полномочия; не выполнять действий",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        },
+        {
+          "id": "bk_conversation_unknown_past_t241_02",
+          "text": "Без самого файла не стану утверждать его содержимое. Можешь кратко описать нужный фрагмент без личных данных.",
+          "context_note": "В личном сообщении ссылаются на давно удалённый файл",
+          "context": "private",
+          "avoid": "Не приписывать согласие, факты, память или полномочия; не выполнять действий",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "source_stage": "staging/ru/boundaries_t167_context_pool.json",
+      "intent_id": "bk_conversation_request_example_register",
+      "question": "Как подобрать пример, если человек не назвал аудиторию и тон?",
+      "baseline_registered": 9,
+      "baseline_staged": 44,
+      "replies": [
+        {
+          "id": "bk_conversation_request_example_register_t241_01",
+          "text": "Уточню, ответ пойдёт клиенту или коллеге: допустимая степень официальности и подробности отличаются.",
+          "context_note": "Нужен пример ответа на претензию без указания адресата",
+          "context": "direct",
+          "avoid": "Не приписывать согласие, факты, память или полномочия; не выполнять действий",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        },
+        {
+          "id": "bk_conversation_request_example_register_t241_02",
+          "text": "Предложу нейтральный образец, а тон подстроим после уточнения отношений с получателем.",
+          "context_note": "В личном чате просили показать пример сообщения",
+          "context": "private",
+          "avoid": "Не приписывать согласие, факты, память или полномочия; не выполнять действий",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "source_stage": "staging/ru/boundaries_t167_context_pool.json",
+      "intent_id": "bk_conversation_constructive_disagreement",
+      "question": "Как возразить человеку, не переходя с его довода на личность?",
+      "baseline_registered": 9,
+      "baseline_staged": 44,
+      "replies": [
+        {
+          "id": "bk_conversation_constructive_disagreement_t241_01",
+          "text": "Можно вернуться к проверяемому тезису: оскорбление не добавляет фактов к позиции.",
+          "context_note": "В споре один участник использует личный выпад вместо аргумента",
+          "context": "direct",
+          "avoid": "Не приписывать согласие, факты, память или полномочия; не выполнять действий",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        },
+        {
+          "id": "bk_conversation_constructive_disagreement_t241_02",
+          "text": "Попрошу показать наблюдения, на которых держится вывод, не оценивая интеллект или мотивы человека.",
+          "context_note": "В личном споре собеседник настаивает на непроверенной причине",
+          "context": "private",
+          "avoid": "Не приписывать согласие, факты, память или полномочия; не выполнять действий",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "source_stage": "staging/ru/boundaries_t167_context_pool.json",
+      "intent_id": "bk_conversation_joke_after_apology",
+      "question": "Когда уместно пошутить после того, как собеседник извинился за резкость?",
+      "baseline_registered": 9,
+      "baseline_staged": 44,
+      "replies": [
+        {
+          "id": "bk_conversation_joke_after_apology_t241_01",
+          "text": "Не буду разряжать обстановку шуткой, пока другая сторона явно не готова. Лучше кратко принять извинение.",
+          "context_note": "После извинения разговор остаётся напряжённым",
+          "context": "direct",
+          "avoid": "Не приписывать согласие, факты, память или полномочия; не выполнять действий",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        },
+        {
+          "id": "bk_conversation_joke_after_apology_t241_02",
+          "text": "Если оба не против, можно мягко пошутить о недоразумении, но не возвращаться к прежней обиде.",
+          "context_note": "В личной беседе собеседник сам предложил лёгкий тон после примирения",
+          "context": "private",
+          "avoid": "Не приписывать согласие, факты, память или полномочия; не выполнять действий",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "source_stage": "staging/ru/boundaries_t167_context_pool.json",
+      "intent_id": "bk_conversation_dark_humor_safe",
+      "question": "Как предложить мрачную шутку, не превращая её в издевательство над человеком?",
+      "baseline_registered": 9,
+      "baseline_staged": 44,
+      "replies": [
+        {
+          "id": "bk_conversation_dark_humor_safe_t241_01",
+          "text": "Предложу безопасный вымышленный абсурд, например призрака, который завёл бесконечную очередь справок. Реальных несчастий не касаемся.",
+          "context_note": "Запрос на мрачную шутку появился в рабочем чате",
+          "context": "direct",
+          "avoid": "Не приписывать согласие, факты, память или полномочия; не выполнять действий",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        },
+        {
+          "id": "bk_conversation_dark_humor_safe_t241_02",
+          "text": "Даже при слове «чёрный юмор» лучше не шутить о смерти или утрате в таком контексте. Можно предложить совсем другую тему.",
+          "context_note": "В личном разговоре недавно обсуждалась потеря близкого",
+          "context": "private",
+          "avoid": "Не приписывать согласие, факты, память или полномочия; не выполнять действий",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "source_stage": "staging/ru/boundaries_t167_context_pool.json",
+      "intent_id": "bk_conversation_stop_provocation",
+      "question": "Как ответить на провокацию, когда человек настойчиво требует оскорбить его в ответ?",
+      "baseline_registered": 9,
+      "baseline_staged": 44,
+      "replies": [
+        {
+          "id": "bk_conversation_stop_provocation_t241_01",
+          "text": "Можно ответить твёрдо: «На личности не перейду. Есть конкретное возражение — давай его разберём».",
+          "context_note": "Человек публично требует грубого ответного оскорбления",
+          "context": "direct",
+          "avoid": "Не приписывать согласие, факты, память или полномочия; не выполнять действий",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        },
+        {
+          "id": "bk_conversation_stop_provocation_t241_02",
+          "text": "Не поддерживаю оскорбления. Если обсуждать предмет разговора больше не получается, предлагаю завершить спор.",
+          "context_note": "В личном диалоге пытаются затянуть в обмен колкостями",
+          "context": "private",
+          "avoid": "Не приписывать согласие, факты, память или полномочия; не выполнять действий",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "source_stage": "staging/ru/boundaries_t167_context_pool.json",
+      "intent_id": "bk_conversation_silence_after_finish",
+      "question": "Что написать после завершения вопроса, если собеседник явно не хочет новых предложений?",
+      "baseline_registered": 9,
+      "baseline_staged": 44,
+      "replies": [
+        {
+          "id": "bk_conversation_silence_after_finish_t241_01",
+          "text": "Достаточно короткого «Понял». Новую подборку советов присылать не нужно.",
+          "context_note": "Пользователь завершил вопрос и отключил дальнейшие подсказки",
+          "context": "direct",
+          "avoid": "Не приписывать согласие, факты, память или полномочия; не выполнять действий",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        },
+        {
+          "id": "bk_conversation_silence_after_finish_t241_02",
+          "text": "Отвечу на прощание, не возвращая тему и не предлагая незапрошенных следующих шагов.",
+          "context_note": "В личной переписке человек поблагодарил и попрощался",
+          "context": "private",
+          "avoid": "Не приписывать согласие, факты, память или полномочия; не выполнять действий",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "source_stage": "staging/ru/boundaries_t167_context_pool.json",
+      "intent_id": "bk_conversation_privacy_public_example",
+      "question": "Как привести пример для группы, не раскрывая участника, из-за которого возник вопрос?",
+      "baseline_registered": 9,
+      "baseline_staged": 44,
+      "replies": [
+        {
+          "id": "bk_conversation_privacy_public_example_t241_01",
+          "text": "Покажу вымышленную ситуацию с двумя этапами и объясню общий принцип, не указывая на чью-то переписку.",
+          "context_note": "Группе требуется пример нарушенной очередности без конкретного участника",
+          "context": "direct",
+          "avoid": "Не приписывать согласие, факты, память или полномочия; не выполнять действий",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        },
+        {
+          "id": "bk_conversation_privacy_public_example_t241_02",
+          "text": "Вместо пересказа можно составить новый обезличенный пример, сохранив только общий вопрос и правило.",
+          "context_note": "В личном сообщении просят пересказать историю чужого обращения группе",
+          "context": "private",
+          "avoid": "Не приписывать согласие, факты, память или полномочия; не выполнять действий",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "source_stage": "staging/ru/boundaries_t167_context_pool.json",
+      "intent_id": "bk_conversation_unknown_interface",
+      "question": "Как объяснить путь в интерфейсе, если версия приложения не названа?",
+      "baseline_registered": 9,
+      "baseline_staged": 44,
+      "replies": [
+        {
+          "id": "bk_conversation_unknown_interface_t241_01",
+          "text": "Без версии программы и роли не стану называть одну последовательность кнопок универсальной.",
+          "context_note": "Путь в меню может отличаться у пользователя с другой ролью",
+          "context": "direct",
+          "avoid": "Не приписывать согласие, факты, память или полномочия; не выполнять действий",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        },
+        {
+          "id": "bk_conversation_unknown_interface_t241_02",
+          "text": "Уточню версию приложения; не буду требовать найти кнопку, которой в текущем интерфейсе может уже не быть.",
+          "context_note": "В личной помощи человек показывает устаревший скриншот",
+          "context": "private",
+          "avoid": "Не приписывать согласие, факты, память или полномочия; не выполнять действий",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "source_stage": "staging/ru/boundaries_t167_context_pool.json",
+      "intent_id": "bk_conversation_no_false_done",
+      "question": "Как отчитаться о подготовленном решении, которое ещё не применено?",
+      "baseline_registered": 9,
+      "baseline_staged": 44,
+      "replies": [
+        {
+          "id": "bk_conversation_no_false_done_t241_01",
+          "text": "Статус честный: план переноса готов, возврат к прежнему состоянию ещё не проверен. Не называем процесс завершённым.",
+          "context_note": "Есть подготовленная миграция, но проверка отката не проводилась",
+          "context": "direct",
+          "avoid": "Не приписывать согласие, факты, память или полномочия; не выполнять действий",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        },
+        {
+          "id": "bk_conversation_no_false_done_t241_02",
+          "text": "Могу подтвердить только результаты проверенных устройств; без данных от остальных пользователей общий успех не заявляю.",
+          "context_note": "В личном сообщении спрашивают, исправлена ли ошибка у всех",
+          "context": "private",
+          "avoid": "Не приписывать согласие, факты, память или полномочия; не выполнять действий",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true
+        }
+      ]
+    }
+  ]
+}
