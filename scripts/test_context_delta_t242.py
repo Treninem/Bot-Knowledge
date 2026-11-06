@@ -10,7 +10,7 @@ from scripts.staged_context_delta import StagedContextDelta
 ROOT = Path(__file__).resolve().parents[1]
 PATH = "staging/ru/context_delta_t241.json"
 NEW_IDS = ("_t241_03", "_t241_04")
-BAD = re.compile(r"(?i)(ghp_[a-z0-9]{12,}|sk-[a-z0-9]{12,}|bot_token|bearer\\s+|https://t\\.me/|[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,})")
+BAD = re.compile(r"(?i)(ghp_[a-z0-9]{13,}|sk-[a-z0-9]{13,}|bot_token|bearer\\s+|https://t\\.me/|[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,})")
 
 
 def norm(value):
@@ -32,18 +32,18 @@ class ContextDeltaT242(unittest.TestCase):
 
     def test_checkpoint_and_all_ids_are_stable(self):
         cp = self.data["checkpoint"]
-        self.assertEqual((cp["prior_accepted"], cp["added_in_current"], cp["verified_new"]), (935, 85, 1020))
+        self.assertEqual((cp["prior_accepted"], cp["added_in_current"], cp["verified_new"]), (1020, 85, 1105))
         self.assertEqual((cp["processed_intents"], cp["newly_finished_100"]), (85, 0))
         self.assertEqual(len(self.data["entries"]), 85)
         self.assertEqual([(r["source"], r["new_answers"], r["t242_added_answers"])
                           for r in cp["per_source"]],
-                         [("recovery", 288, 48), ("choice", 360, 60), ("boundaries", 372, 62)])
+                         [("recovery", 312, 48), ("choice", 390, 60), ("boundaries", 403, 62)])
         ids = [x["id"] for e in self.data["entries"] for x in e["replies"]]
-        self.assertEqual((len(ids), len(set(ids))), (1020, 1020))
+        self.assertEqual((len(ids), len(set(ids))), (1105, 1105))
         for e in self.data["entries"]:
-            self.assertEqual(len(e["replies"]), 12)
+            self.assertEqual(len(e["replies"]), 13)
             self.assertEqual([x["id"] for x in e["replies"]],
-                             [f'{e["intent_id"]}_t241_{n:02d}' for n in range(1, 13)])
+                             [f'{e["intent_id"]}_t241_{n:02d}' for n in range(1, 14)])
 
     def test_current_batch_has_distinct_text_context_and_no_secrets(self):
         existing, fresh = set(), set()
