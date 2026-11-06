@@ -46,6 +46,9 @@ class ImpulsPublicHelpTests(unittest.TestCase):
                 self.assertIn(contexts, (
                     ["group_addressed"], ["private"],
                     ["direct", "private", "group_addressed"]))
+            elif row["id"] == "impuls_supergroup_delete_right":
+                # Permission-specific answer is deliberately direct-only.
+                self.assertEqual(contexts, ["direct"])
             else:
                 self.assertEqual(contexts, ["direct", "private", "group_addressed"])
             self.assertNotIn("action", row)
