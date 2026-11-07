@@ -102,7 +102,7 @@ class Stage:
         return None
 
 def validate_both(root=ROOT):
-    a,b=Stage("T369",root),Stage("T370",root)
+    a,b=Stage("T371",root),Stage("T372",root)
     texts=[norm(x["text"]) for s in (a,b) for rows in s.by_intent.values() for x in rows]
     notes=[norm(x["context_note"]) for s in (a,b) for rows in s.by_intent.values() for x in rows]
     if len(texts)!=92 or len(set(texts))!=92 or len(set(notes))!=92:
