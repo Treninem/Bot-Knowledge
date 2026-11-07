@@ -1,4 +1,4 @@
-"""Guarded local catalog across T383-T399, with no consumer side effects."""
+"""Guarded local catalog across T383-T400, with no consumer side effects."""
 import json
 import shutil
 import tempfile
@@ -18,13 +18,13 @@ class FollowthroughStageCatalogTests(unittest.TestCase):
     def test_verified_inventory_and_stable_cache(self):
         c = self.catalog
         self.assertEqual(c.intent_count, 82)
-        self.assertEqual(c.reply_count, 1476)
+        self.assertEqual(c.reply_count, 1558)
         self.assertEqual(c.registered_reply_count, 246)
         self.assertEqual(c.cache_identity, FollowthroughStageCatalog(ROOT).cache_identity)
         self.assertEqual(len(c.cache_identity[1]), 64)
         baseline = json.loads((ROOT / SOURCE).read_text("utf-8"))
         self.assertEqual({r["id"] for r in baseline["records"]}, set(c._by_intent))
-        self.assertTrue(all(len(ids) == 18 for ids in c._by_intent.values()))
+        self.assertTrue(all(len(ids) == 19 for ids in c._by_intent.values()))
 
     def test_every_stage_retrievable_with_exact_approval(self):
         c = self.catalog
@@ -71,7 +71,7 @@ class FollowthroughStageCatalogTests(unittest.TestCase):
                 dst = root / rel
                 dst.parent.mkdir(parents=True, exist_ok=True)
                 shutil.copyfile(ROOT / rel, dst)
-            self.assertEqual(FollowthroughStageCatalog(root).reply_count, 1476)
+            self.assertEqual(FollowthroughStageCatalog(root).reply_count, 1558)
             for rel in (SOURCE, *STAGES):
                 dst = root / rel
                 dst.write_bytes(dst.read_bytes() + b" ")
