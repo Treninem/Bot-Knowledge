@@ -13,14 +13,14 @@ STAGES = {
         "source": "packs/ru/colloquial_ru_pragmatics_qa.json",
         "earlier": tuple("staging/ru/colloquial_t%d_context_pool.json" % n for n in (305,307,309,311,313,315,317,319,321,323,325)),
         "previous": "staging/ru/colloquial_t327_context_pool.json",
-        "stage": "staging/ru/colloquial_t327_context_pool.json",
+        "stage": "staging/ru/colloquial_t329_context_pool.json",
         "parent": "T327", "intents": 22, "prior": 33,
     },
     "T330": {
         "source": "packs/ru/practical_recovery_qa.json",
         "earlier": ("staging/ru/practical_t306_salvage.json",) + tuple("staging/ru/practical_t%d_context_pool.json" % n for n in (308,310,312,314,316,318,320,322,324,326)),
         "previous": "staging/ru/practical_t328_context_pool.json",
-        "stage": "staging/ru/practical_t328_context_pool.json",
+        "stage": "staging/ru/practical_t330_context_pool.json",
         "parent": "T328", "intents": 24, "prior": 32,
     },
 }
@@ -42,7 +42,7 @@ class Stage:
         checkpoint = {"stage_id": label, "processed_intents": total,
             "baseline_registered": total*9, "baseline_staged": total*prior,
             "added_candidates": total*2, "finished_100": 0,
-            "partial_intents": total, "remaining_total": total*(100-9-prior-4), "rejected": 0}
+            "partial_intents": total, "remaining_total": total*(100-9-prior-2), "rejected": 0}
         if (len(canonical)!=total or len(original)!=total or
             c["stage"] in registered or
             registered.get(c["source"])!=hashlib.sha256(source_bytes).hexdigest() or
