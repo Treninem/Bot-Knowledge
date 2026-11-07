@@ -1,0 +1,5 @@
+# T341/T342 — 92 оригинальных контекстных ответа
+
+Родитель main 7a59517d73036a089341099fbfd4fca0e0fbbef0. Новых ответов 92: 44 разговорных (22 намерения 54 → 56/100, 968 недостающих), 48 практических (24 намерения 53 → 55/100, 1080 недостающих). Всего 2552/4600, 2048 остаётся. Новых завершённых 100/100 — 0, частичных 46. Только обезличенные синтетические условия. Parent staging T339 blob SHA 050218a3060a54eb71672194b234fe1bacba0682; T340 blob SHA 183f384adabc9da0306bc3c51c6a64770a9ac587. Source SHA-256 and blob SHA embedded per JSON. 414 registered unchanged. Staging now 2138 replies, consumer connection not claimed.
+
+Precheck: 92 unique normalized texts and notes vs latest 506 registered/staged replies, maximum Jaccard 0.316; full Python ancestor/JSON/scope/dup test and exact-head CI mandatory before merge. Read-only, no actions, no sanctions, no user data. Existing static ReviewedStageCatalog still pins T339/T340 and will not silently include new stages. Continue T343/T344 after verified merge; extend catalog separately with explicit pinned scope and CI.
