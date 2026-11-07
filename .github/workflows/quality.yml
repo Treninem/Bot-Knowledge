@@ -27,6 +27,8 @@ jobs:
           python-version: "3.12"
       - name: Validate language pack
         run: python scripts/validate_pack.py
+      - name: T381/T382 catalog exact-head read-only verification
+        run: python -m unittest scripts.test_reviewed_stage_catalog -q
       - name: T142 staged dialogue integrity and source-SHA review
         run: |
           if test -f staging/ru/dialogue_t125_context_pool.json; then
