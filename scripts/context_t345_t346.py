@@ -105,7 +105,7 @@ def validate_both(root=ROOT):
     a,b=Stage("T345",root),Stage("T346",root)
     texts=[norm(x["text"]) for s in (a,b) for rows in s.by_intent.values() for x in rows]
     notes=[norm(x["context_note"]) for s in (a,b) for rows in s.by_intent.values() for x in rows]
-    if len(texts)!=92 or len(set(texts))!=184 or len(set(notes))!=184:
+    if len(texts)!=92 or len(set(texts))!=92 or len(set(notes))!=92:
         raise ValueError("cross-stage duplicate")
     return a,b
 
