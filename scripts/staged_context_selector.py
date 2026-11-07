@@ -37,6 +37,7 @@ _ALLOWED = frozenset({
     "staging/ru/followthrough_t398_context_pool.json",
     "staging/ru/followthrough_t399_context_pool.json",
     "staging/ru/followthrough_t400_context_pool.json",
+    "staging/ru/followthrough_t401_context_pool.json",
 })
 _PINNED_STAGE_BLOBS = {
     "staging/ru/followthrough_t383_context_pool.json": "6aa6b98c0a3fdb5a68ebcc0071d6c80f0967f5f3",
@@ -57,6 +58,7 @@ _PINNED_STAGE_BLOBS = {
     "staging/ru/followthrough_t398_context_pool.json": "3997b6db7b36f7f27a693cf442ce84f6b4bab829",
     "staging/ru/followthrough_t399_context_pool.json": "dd51f07e16a5c2fa42291ecbb1f582f74d8545b2",
     "staging/ru/followthrough_t400_context_pool.json": "9c72702ef5c3c94d9f782f3ecdfc363bb2c422c5",
+    "staging/ru/followthrough_t401_context_pool.json": "aefd9dcab4f3caf2db550752399bc612603ab938",
 }
 
 _CONTEXTS = frozenset({"direct", "private", "group_addressed"})
@@ -1078,6 +1080,68 @@ class StagedContextSelector:
                        or _norm(item.get("text", "")) in old_texts
                        for item in row.get("replies", [])):
                     raise ValueError("repeated answer in T400")
+
+        if stage_path == "staging/ru/followthrough_t401_context_pool.json":
+            # Historical SHA provenance and cumulative inventory are independently
+            # checked before any language from this unregistered stage can be selected.
+            history_paths = tuple(
+                f"staging/ru/followthrough_t{n}_context_pool.json"
+                for n in range(383, 401)
+            )
+            old_questions, old_texts, old_ids = {}, set(), set()
+            for position, path in enumerate(history_paths):
+                raw_history = (root / path).read_bytes()
+                actual_blob = hashlib.sha1(
+                    b"blob " + str(len(raw_history)).encode() + b"\0" + raw_history
+                ).hexdigest()
+                if actual_blob != _PINNED_STAGE_BLOBS[path]:
+                    raise ValueError("unverified T401 ancestor bytes")
+                ancestor = json.loads(raw_history)
+                if (ancestor.get("source_pack") != stage.get("source_pack")
+                        or ancestor.get("consumer_registered") is not False
+                        or not isinstance(ancestor.get("entries"), list)
+                        or len(ancestor["entries"]) != 82):
+                    raise ValueError("invalid T401 ancestor inventory")
+                if position and (
+                    ancestor.get("previous_stage") != history_paths[position - 1]
+                    or ancestor.get("previous_stage_blob_sha")
+                    != _PINNED_STAGE_BLOBS[history_paths[position - 1]]
+                ):
+                    raise ValueError("broken T401 ancestor chain")
+                for row in ancestor["entries"]:
+                    ident = row["intent_id"]
+                    if ident in old_questions and old_questions[ident] != row["question"]:
+                        raise ValueError("changed T401 canonical question")
+                    old_questions[ident] = row["question"]
+                    for reply in row["replies"]:
+                        normal = _norm(reply["text"])
+                        if reply["id"] in old_ids or not normal or normal in old_texts:
+                            raise ValueError("duplicate among T401 ancestors")
+                        old_ids.add(reply["id"])
+                        old_texts.add(normal)
+            child_rows = stage.get("entries")
+            if (stage.get("previous_stage") != history_paths[-1]
+                    or stage.get("previous_stage_blob_sha")
+                    != _PINNED_STAGE_BLOBS[history_paths[-1]]
+                    or len(old_questions) != 82
+                    or not isinstance(child_rows, list)
+                    or len(child_rows) != 82
+                    or {row.get("intent_id") for row in child_rows}
+                    != set(old_questions)
+                    or stage.get("cumulative_checkpoint") != {
+                        "baseline_registered": 246, "previous_staged": 1558,
+                        "added_candidates": 82, "total": 1886,
+                        "partial_intents": 82, "finished_100": 0,
+                        "remaining_total": 6314,
+                    }):
+                raise ValueError("wrong T401 ancestry or cumulative count")
+            for row in child_rows:
+                if row.get("question") != old_questions[row["intent_id"]]:
+                    raise ValueError("changed question in T401")
+                if any(item.get("id") in old_ids
+                       or _norm(item.get("text", "")) in old_texts
+                       for item in row.get("replies", [])):
+                    raise ValueError("repeated answer in T401")
 
         if (stage.get("schema_version") != 1
                 or stage.get("stage_type") != "supplemental_contextual_reply_pool"
