@@ -156,7 +156,7 @@ class Stage:
         return None
 
 def validate_both(root: Path = ROOT):
-    a, b = Stage("T319", root), Stage("T320", root)
+    a, b = Stage("T321", root), Stage("T322", root)
     text_keys = [norm(x["text"]) for model in (a, b)
                  for group in model.by_intent.values() for x in group]
     note_keys = [norm(x["context_note"]) for model in (a, b)
