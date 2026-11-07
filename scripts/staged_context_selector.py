@@ -19,7 +19,12 @@ _ALLOWED = frozenset({
     "staging/ru/recovery_t168_context_pool.json",
     "staging/ru/boundaries_t167_context_pool.json",
     "staging/ru/spoken_pragmatics_t251_context_pool.json",
+    "staging/ru/followthrough_t383_context_pool.json",
 })
+_PINNED_STAGE_BLOBS = {
+    "staging/ru/followthrough_t383_context_pool.json": "6aa6b98c0a3fdb5a68ebcc0071d6c80f0967f5f3",
+}
+
 _CONTEXTS = frozenset({"direct", "private", "group_addressed"})
 _GUARDS = {"read_only": True, "requires_direct_address": True, "no_personal_data": True}
 _SECRET = re.compile(r"(?i)(ghp_[a-z0-9]{12,}|sk-[a-z0-9]{12,}|bot_token|chat_id|user_id|https://t\.me/|[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,})")
@@ -54,6 +59,11 @@ class StagedContextSelector:
         manifest = json.loads((root / "manifest.json").read_text("utf-8"))
         packs = {entry["path"]: entry["sha256"] for entry in manifest["packs"]}
         raw = (root / stage_path).read_bytes()
+        pinned = _PINNED_STAGE_BLOBS.get(stage_path)
+        if pinned is not None:
+            actual_blob = hashlib.sha1(b"blob " + str(len(raw)).encode() + b"\0" + raw).hexdigest()
+            if actual_blob != pinned:
+                raise ValueError("Unreviewed staged content changed")
         stage = json.loads(raw)
         if (stage.get("schema_version") != 1
                 or stage.get("stage_type") != "supplemental_contextual_reply_pool"
