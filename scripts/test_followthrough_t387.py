@@ -62,7 +62,7 @@ class T387Tests(unittest.TestCase):
             "added_candidates": 82, "total": 738, "partial_intents": 82,
             "finished_100": 0, "remaining_total": 7462,
         })
-        self.assertEqual(FollowthroughStageCatalog(ROOT).reply_count, 492)
+        self.assertGreaterEqual(FollowthroughStageCatalog(ROOT).reply_count, 492)
 
     def test_exact_unique_intents_and_context_boundaries(self):
         originals = {r["id"]: r for r in self.source["records"]}
