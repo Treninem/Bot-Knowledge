@@ -11,7 +11,7 @@ from scripts.context_overlay_t271 import PARENTS, GUARDS, CONTEXTS, SECRET, norm
 from scripts.staged_context_selector import StagedSelection
 
 OVERLAY = "staging/ru/context_overlay_t300.json"
-HISTORY = (*ANCESTORS, PARENT)
+HISTORY = ANCESTORS  # all 85-intent ancestor layers; T299 is a 14-intent partial overlay
 BEFORE = {"recovery": 94, "choice": 92, "boundaries": 91}
 EXCEPTIONS = T298_COMPLETED | frozenset().union(*(frozenset(items) for items in T299_COMPLETED.values()))
 TARGET_COUNTS = {"recovery": 6, "choice": 8, "boundaries": 9}
@@ -65,6 +65,12 @@ class ContextOverlayT300:
                 or OVERLAY in registered):
             raise ValueError("untrusted stage provenance, scope or consumer registration")
 
+        # T299 completes only 14 intents; it is validated by self.parent but
+        # must not be mistaken for an all-85 historical layer.
+        t299_entries = json.loads(parent_raw)["entries"]
+        t299_by_id = {e["intent_id"]: e for e in t299_entries}
+        if len(t299_entries) != 14 or len(t299_by_id) != 14:
+            raise ValueError("T299 parent partial overlay inventory changed")
         history = []
         for fname in HISTORY:
             rows = json.loads((root / fname).read_bytes())["entries"]
@@ -92,7 +98,8 @@ class ContextOverlayT300:
                     raise ValueError("invalid historical intent identity")
                 text = [rec["answer"], *rec.get("variants", [])]
                 notes = set()
-                for item in (pooled[ident], *(h[ident] for h in history)):
+                for item in (pooled[ident], *(h[ident] for h in history),
+                             *([t299_by_id[ident]] if ident in t299_by_id else [])):
                     for reply in item["replies"]:
                         rid = reply["id"]
                         if rid in all_ids:
