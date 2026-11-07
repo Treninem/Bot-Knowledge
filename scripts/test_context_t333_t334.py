@@ -37,7 +37,7 @@ class TestT333T334(unittest.TestCase):
         new=[norm(x) for x in fresh]
         self.assertEqual(len(prior),2092)
         self.assertEqual(len(new),92)
-        self.assertEqual(len(set(prior)),2000)
+        self.assertEqual(len(set(prior)),2092)
         self.assertEqual(len(set(new)),92)
         self.assertFalse(set(prior)&set(new))
         def similarity(a,b):
