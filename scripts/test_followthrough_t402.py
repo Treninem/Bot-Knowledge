@@ -15,7 +15,7 @@ STAGE_BLOB = "92bf99add2d6f08be09821014d870bd9301d6a77"
 
 
 def blob_hash(data):
-    return hashlib.sha1(b"blob " + str(len(data)).encode() + b"\\0" + data).hexdigest()
+    return hashlib.sha1(b"blob " + str(len(data)).encode() + bytes([0]) + data).hexdigest()
 
 
 def tokens(s):
