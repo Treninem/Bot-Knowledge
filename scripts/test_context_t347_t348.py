@@ -25,7 +25,7 @@ class TestT347T348(unittest.TestCase):
                                    dict(context="wrong"),dict(approved_reply_ids=frozenset()),
                                    dict(recent_ids=(x["id"],))):
                         self.assertIsNone(stage.select(ident,**(kw|denied)))
-        self.assertEqual(n,46
+        self.assertEqual(n,46)
 
     def test_unique_and_near_duplicates(self):
         history=[]
@@ -67,7 +67,7 @@ class TestT347T348(unittest.TestCase):
             shutil.copyfile(ROOT/STAGES["T347"]["previous"],damaged)
             damaged=root/STAGES["T348"]["stage"]
             payload=json.loads(damaged.read_text("utf-8"))
-            payload["entries"][0]["replies"][0]["id"]=payload["entries"][0]["replies"][1]["id"]
+            payload["entries"][0]["replies"][0]["id"]="wrong_duplicated_id"
             damaged.write_text(json.dumps(payload,ensure_ascii=False),encoding="utf-8")
             with self.assertRaises(ValueError):
                 Stage("T348",root)
