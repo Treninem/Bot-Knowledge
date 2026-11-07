@@ -32,7 +32,7 @@ class Stage:
         n,prior=cfg["intents"],cfg["prior"]
         expected={"stage_id":label,"processed_intents":n,"baseline_registered":n*9,
                   "baseline_staged":n*prior,"added_candidates":n*2,"finished_100":0,
-                  "partial_intents":n,"remaining_total":n*(100-9-prior-4),"rejected":0}
+                  "partial_intents":n,"remaining_total":n*(100-9-prior-2),"rejected":0}
         if (len(original)!=n or len(canonical)!=n or cfg["stage"] in registered or
             registered.get(cfg["source"])!=hashlib.sha256(source).hexdigest() or
             stage.get("source_pack")!=cfg["source"] or
