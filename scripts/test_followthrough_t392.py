@@ -28,7 +28,7 @@ HISTORY_BLOBS = (
     "41bc57dbcc429f2bfeaa68ef28ca77450748f963",
     "66157082f9e60937f513f3e6bf9c5b6c1e0f99c5",
 )
-STAGE_BLOB = "0c3f8c0bb5c5b10aed4bce210ca4294c0478a775"
+STAGE_BLOB = "e3de3c687c3ee0a4122d92f78da82d69f5467bd1"
 NEIGHBORS = (
     "packs/ru/dialogue_help_qa.json",
     "packs/ru/collaborative_dialogue_qa.json",
@@ -146,6 +146,26 @@ class T392Tests(unittest.TestCase):
                 with self.assertRaises(ValueError):
                     StagedContextSelector(root, STAGE)
                 shutil.copyfile(ROOT / rel, path)
+
+    def test_six_reviewed_contexts_are_distinct_from_t391(self):
+        previous = json.loads((ROOT / HISTORY[-1]).read_text("utf-8"))
+        by_id = {x["intent_id"]: x for x in previous["entries"]}
+        current = {x["intent_id"]: x for x in self.stage["entries"]}
+        expected = {
+            "follow_t86_026": ("group_addressed", "Группа"),
+            "follow_t88_014": ("group_addressed", "бюджетному"),
+            "follow_t90_013": ("direct", "приглашении"),
+            "follow_t90_021": ("direct", "диагностики"),
+            "follow_t90_023": ("direct", "подписи"),
+            "follow_t90_025": ("private", "маркер окончания"),
+        }
+        for intent, (context, marker) in expected.items():
+            old = by_id[intent]["replies"][0]
+            new = current[intent]["replies"][0]
+            self.assertNotEqual(_norm(old["text"]), _norm(new["text"]))
+            self.assertNotEqual(_norm(old["context_note"]), _norm(new["context_note"]))
+            self.assertEqual(new["context"], context)
+            self.assertIn(marker, new["context_note"])
 
 if __name__ == "__main__":
     unittest.main()
