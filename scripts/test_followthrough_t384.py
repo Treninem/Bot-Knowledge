@@ -97,9 +97,13 @@ class T384Test(unittest.TestCase):
             selected = self.selector.select(entry["intent_id"],**args)
             self.assertIsNotNone(selected)
             self.assertEqual(selected.text,r["text"])
-            for change in ({"addressed":False},{"local_permission":False},
+            for change in ({"addressed":False},{"addressed":1},
+                           {"local_permission":False},{"local_permission":1},
                            {"audience":"community_bots"},{"approved_reply_ids":frozenset()},
-                           {"context":"wrong"},{"recent_ids":(r["id"],)}):
+                           {"approved_reply_ids":frozenset({7})},
+                           {"approved_reply_ids":frozenset({"unknown"})},
+                           {"context":"wrong"},{"recent_ids":(r["id"],)},
+                           {"recent_ids":(1,)},{"recent_ids":tuple("x" for _ in range(101))}):
                 self.assertIsNone(self.selector.select(entry["intent_id"],**(args|change)))
 
     def test_parent_and_stage_tamper_rejected(self):
