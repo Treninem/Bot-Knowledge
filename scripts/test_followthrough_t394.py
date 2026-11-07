@@ -30,7 +30,7 @@ HISTORY_BLOBS = (
     "e3de3c687c3ee0a4122d92f78da82d69f5467bd1",
     "2cf87aa1622684d40e50f3cfc8be837c0efdc62f",
 )
-STAGE_BLOB = "3c410f83b5f824706ff69ca2191ec428402e7e36"
+STAGE_BLOB = "70610ea757b26e45779adb6b26a2b74307529eef"
 NEIGHBORS = (
     "packs/ru/dialogue_help_qa.json",
     "packs/ru/collaborative_dialogue_qa.json",
