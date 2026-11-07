@@ -131,7 +131,7 @@ class Stage:
             self.by_intent[ident] = tuple(approved)
         if (set(self.by_intent) != set(canonical)
                 or len(ids) != c["intents"] * (c["prior"] + 1)
-                or len(texts) != c["intents"] * (9 + c["prior"] + 2)):
+                or len(texts) != c["intents"] * (9 + c["prior"] + 1)):
             raise ValueError("count differs from actual verified replies")
         self.label = label
         self.checkpoint = checkpoint
@@ -163,7 +163,7 @@ def validate_both(root: Path = ROOT):
                  for group in model.by_intent.values() for x in group]
     note_keys = [norm(x["context_note"]) for model in (a, b)
                  for group in model.by_intent.values() for x in group]
-    if len(text_keys) != 46 or len(set(text_keys)) != 92 or len(set(note_keys)) != 92:
+    if len(text_keys) != 46 or len(set(text_keys)) != 46 or len(set(note_keys)) != 46:
         raise ValueError("cross-stage normalized collisions")
     return a, b
 
