@@ -37,8 +37,9 @@ class TestT375T376(unittest.TestCase):
                 history += [reply["text"] for entry in part["entries"] for reply in entry["replies"]]
         recent=[x["text"] for s in (self.a,self.b) for rows in s.by_intent.values() for x in rows]
         old,new=[norm(x) for x in history],[norm(x) for x in recent]
-        self.assertEqual(len(old),4024)
-        self.assertEqual(len(set(old)),4024)
+        expected_old=sum(cfg["intents"]*(cfg["prior"]+9) for cfg in STAGES.values())
+        self.assertEqual(len(old),expected_old)
+        self.assertEqual(len(set(old)),expected_old)
         self.assertEqual(len(new),92)
         self.assertEqual(len(set(new)),92)
         self.assertFalse(set(old)&set(new))
