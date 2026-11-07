@@ -1,0 +1,42 @@
+name: T337 T338 RU response expansion exact-head
+on:
+  pull_request:
+    paths:
+      - 'staging/ru/colloquial_t337_context_pool.json'
+      - 'staging/ru/practical_t338_context_pool.json'
+      - 'scripts/context_t337_t338.py'
+      - 'scripts/test_context_t337_t338.py'
+      - 'docs/CONTEXT_CONTINUATION_T337_T338_2026_11_07.md'
+      - '.github/workflows/context-t337-t338.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'staging/ru/colloquial_t337_context_pool.json'
+      - 'staging/ru/practical_t338_context_pool.json'
+      - 'scripts/context_t337_t338.py'
+      - 'scripts/test_context_t337_t338.py'
+      - 'docs/CONTEXT_CONTINUATION_T337_T338_2026_11_07.md'
+      - '.github/workflows/context-t337-t338.yml'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - name: Verify exact head
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify manifest packages
+        run: python scripts/validate_pack.py
+      - name: Validate complete reply history and privacy
+        run: python -m unittest scripts.test_context_t337_t338 -q
+      - name: Validate new stages
+        run: python -m scripts.context_t337_t338
