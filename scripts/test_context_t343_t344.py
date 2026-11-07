@@ -66,7 +66,9 @@ class TestT343T344(unittest.TestCase):
             self.assertEqual(Stage("T344",root).label,"T344")
             shutil.copyfile(ROOT/STAGES["T343"]["previous"],damaged)
             damaged=root/STAGES["T344"]["stage"]
-            damaged.write_bytes(damaged.read_bytes()+b" ")
+            payload=json.loads(damaged.read_text("utf-8"))
+            payload["entries"][0]["replies"][0]["id"]=payload["entries"][0]["replies"][1]["id"]
+            damaged.write_text(json.dumps(payload,ensure_ascii=False),encoding="utf-8")
             with self.assertRaises(ValueError):
                 Stage("T344",root)
 
