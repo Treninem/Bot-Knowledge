@@ -1,0 +1,35 @@
+name: T304 Russian colloquial pragmatic QA (read-only)
+on:
+  pull_request:
+    paths:
+      - 'packs/ru/colloquial_ru_pragmatics_qa.json'
+      - 'manifest.json'
+      - 'scripts/test_colloquial_pragmatics_t304.py'
+      - '.github/workflows/colloquial-t304.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'packs/ru/colloquial_ru_pragmatics_qa.json'
+      - 'manifest.json'
+      - 'scripts/test_colloquial_pragmatics_t304.py'
+      - '.github/workflows/colloquial-t304.yml'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - name: Verify actual checkout SHA
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+      - name: Validate full manifest and pack digests
+        run: python scripts/validate_pack.py
+      - name: Validate all qa.v1 registered packs
+        run: python scripts/validate_qa_v1.py
+      - name: T304 normalized uniqueness, provenance, scope and safety
+        run: python -m unittest scripts.test_colloquial_pragmatics_t304 -q
