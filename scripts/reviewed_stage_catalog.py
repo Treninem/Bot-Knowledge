@@ -55,7 +55,7 @@ class ReviewedStageCatalog:
                 digest.update(path.encode("utf-8") + b"\\0" + raw)
                 payload = json.loads(raw)
                 if (payload.get("schema_version") != 1
-                        or payload.get("stage_type") != "supplemental_contextual_reply_pool"
+                        or payload.get("stage_type") != ("salvaged_contextual_reply_delta" if path == "staging/ru/practical_t306_salvage.json" else "supplemental_contextual_reply_pool")
                         or payload.get("consumer_registered") is not False
                         or payload.get("source_pack") != source
                         or payload.get("audiences") != ["all_ai_bots"]
