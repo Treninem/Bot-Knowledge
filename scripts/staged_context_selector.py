@@ -23,12 +23,14 @@ _ALLOWED = frozenset({
     "staging/ru/followthrough_t384_context_pool.json",
     "staging/ru/followthrough_t385_context_pool.json",
     "staging/ru/followthrough_t386_context_pool.json",
+    "staging/ru/followthrough_t387_context_pool.json",
 })
 _PINNED_STAGE_BLOBS = {
     "staging/ru/followthrough_t383_context_pool.json": "6aa6b98c0a3fdb5a68ebcc0071d6c80f0967f5f3",
     "staging/ru/followthrough_t384_context_pool.json": "86dd0b4d5c7fbd298eacf82c8d2b5df6ff6013e5",
     "staging/ru/followthrough_t385_context_pool.json": "2484f31c20df35b0af67bc41d6579164da6686e5",
     "staging/ru/followthrough_t386_context_pool.json": "ebee173a7fd4003f832bbdca87cfd10da9ee3e82",
+    "staging/ru/followthrough_t387_context_pool.json": "b1eb2222893e832ad8b9324d03a4615a8491e7b9",
 }
 
 _CONTEXTS = frozenset({"direct", "private", "group_addressed"})
@@ -210,6 +212,64 @@ class StagedContextSelector:
                 if any(_norm(reply.get("text", "")) in old_texts
                        for reply in row.get("replies", [])):
                     raise ValueError("repeated previous stage text")
+
+        if stage_path == "staging/ru/followthrough_t387_context_pool.json":
+            history_paths = tuple(
+                f"staging/ru/followthrough_t{n}_context_pool.json"
+                for n in (383, 384, 385, 386)
+            )
+            histories = []
+            old_questions, old_texts, old_ids = {}, set(), set()
+            for position, path in enumerate(history_paths):
+                raw_history = (root / path).read_bytes()
+                actual = hashlib.sha1(
+                    b"blob " + str(len(raw_history)).encode() + b"\0" + raw_history
+                ).hexdigest()
+                if actual != _PINNED_STAGE_BLOBS[path]:
+                    raise ValueError("unverified T387 ancestor bytes")
+                previous = json.loads(raw_history)
+                if (previous.get("source_pack") != stage.get("source_pack")
+                        or previous.get("consumer_registered") is not False
+                        or len(previous.get("entries", [])) != 82):
+                    raise ValueError("invalid T387 ancestor inventory")
+                if position:
+                    if (previous.get("previous_stage") != history_paths[position - 1]
+                            or previous.get("previous_stage_blob_sha")
+                            != _PINNED_STAGE_BLOBS[history_paths[position - 1]]):
+                        raise ValueError("broken T387 ancestry")
+                histories.append(previous)
+                for row in previous["entries"]:
+                    ident = row["intent_id"]
+                    if ident in old_questions and old_questions[ident] != row["question"]:
+                        raise ValueError("changed T387 canonical question")
+                    old_questions[ident] = row["question"]
+                    for reply in row["replies"]:
+                        if reply["id"] in old_ids or _norm(reply["text"]) in old_texts:
+                            raise ValueError("duplicate in T387 ancestors")
+                        old_ids.add(reply["id"])
+                        old_texts.add(_norm(reply["text"]))
+            if (stage.get("previous_stage") != history_paths[-1]
+                    or stage.get("previous_stage_blob_sha")
+                    != _PINNED_STAGE_BLOBS[history_paths[-1]]
+                    or len(old_questions) != 82
+                    or not isinstance(stage.get("entries"), list)
+                    or len(stage["entries"]) != 82
+                    or set(old_questions) != {row.get("intent_id") for row in stage["entries"]}
+                    or stage.get("cumulative_checkpoint") != {
+                        "baseline_registered": 246, "previous_staged": 410,
+                        "added_candidates": 82, "total": 738,
+                        "partial_intents": 82, "finished_100": 0,
+                        "remaining_total": 7462,
+                    }):
+                raise ValueError("wrong T387 ancestry or count")
+            for row in stage["entries"]:
+                if row.get("question") != old_questions[row["intent_id"]]:
+                    raise ValueError("changed question in T387")
+                if any(item.get("id") in old_ids
+                       or _norm(item.get("text", "")) in old_texts
+                       for item in row.get("replies", [])):
+                    raise ValueError("repeated answer in T387")
+
         if (stage.get("schema_version") != 1
                 or stage.get("stage_type") != "supplemental_contextual_reply_pool"
                 or stage.get("consumer_registered") is not False
