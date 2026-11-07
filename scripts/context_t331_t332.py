@@ -14,14 +14,14 @@ STAGES = {
         "earlier": tuple("staging/ru/colloquial_t%d_context_pool.json" % n for n in (305,307,309,311,313,315,317,319,321,323,325,327)),
         "previous": "staging/ru/colloquial_t329_context_pool.json",
         "stage": "staging/ru/colloquial_t331_context_pool.json",
-        "parent": "T327", "intents": 22, "prior": 33,
+        "parent": "T329", "intents": 22, "prior": 35,
     },
     "T332": {
         "source": "packs/ru/practical_recovery_qa.json",
         "earlier": ("staging/ru/practical_t306_salvage.json",) + tuple("staging/ru/practical_t%d_context_pool.json" % n for n in (308,310,312,314,316,318,320,322,324,326,328)),
         "previous": "staging/ru/practical_t330_context_pool.json",
         "stage": "staging/ru/practical_t332_context_pool.json",
-        "parent": "T328", "intents": 24, "prior": 32,
+        "parent": "T330", "intents": 24, "prior": 34,
     },
 }
 
