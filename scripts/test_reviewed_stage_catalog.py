@@ -1,4 +1,4 @@
-"""Live-data regressions for the read-only 1954-answer stage catalog."""
+"""Live-data regressions for the read-only 2046-answer stage catalog."""
 import json
 import shutil
 import tempfile
@@ -6,7 +6,7 @@ import unittest
 from pathlib import Path
 
 from scripts.colloquial_t305 import ROOT, norm
-from scripts.context_t337_t338 import STAGES
+from scripts.context_t339_t340 import STAGES
 from scripts.reviewed_stage_catalog import ReviewedStageCatalog
 
 
@@ -17,9 +17,9 @@ class ReviewedStageCatalogTest(unittest.TestCase):
 
     def test_verified_inventory_and_cache(self):
         self.assertEqual(self.catalog.intent_count, 46)
-        self.assertEqual(self.catalog.reply_count, 1954)
+        self.assertEqual(self.catalog.reply_count, 2046)
         ids, answers = set(), set()
-        counts = {"ru_turn_no_question": 43, "bk_recovery_no_steps": 42}
+        counts = {"ru_turn_no_question": 45, "bk_recovery_no_steps": 44}
         for intent, replies in self.catalog._by_intent.items():
             for path, item in replies:
                 self.assertIn("/ru/", path)
@@ -29,7 +29,7 @@ class ReviewedStageCatalogTest(unittest.TestCase):
                 answers.add(norm(item["text"]))
             if intent in counts:
                 self.assertEqual(len(replies), counts[intent])
-        self.assertEqual(len(ids), 1954)
+        self.assertEqual(len(ids), 2046)
         self.assertEqual(len(self.catalog.cache_identity), 2)
         self.assertEqual(len(self.catalog.cache_identity[1]), 64)
 
@@ -49,7 +49,7 @@ class ReviewedStageCatalogTest(unittest.TestCase):
                 self.assertEqual(selected.text, reply["text"])
                 self.assertIsNone(self.catalog.select(
                     intent, **(args | {"recent_ids": (reply["id"],)})))
-        self.assertEqual(checked, 1954)
+        self.assertEqual(checked, 2046)
 
     def test_must_fail_closed_without_trusted_approval(self):
         ident, entries = next(iter(self.catalog._by_intent.items()))
@@ -84,8 +84,8 @@ class ReviewedStageCatalogTest(unittest.TestCase):
                 p = root / rel
                 p.parent.mkdir(parents=True, exist_ok=True)
                 shutil.copyfile(ROOT / rel, p)
-            self.assertEqual(ReviewedStageCatalog(root).reply_count, 1954)
-            parent = root / STAGES["T337"]["previous"]
+            self.assertEqual(ReviewedStageCatalog(root).reply_count, 2046)
+            parent = root / STAGES["T339"]["previous"]
             parent.write_bytes(parent.read_bytes() + b" ")
             with self.assertRaises(ValueError):
                 ReviewedStageCatalog(root)

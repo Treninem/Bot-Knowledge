@@ -1,4 +1,4 @@
-"""Offline, read-only lookup across the *fully verified* T337/T338 stage histories.
+"""Offline, read-only lookup across the *fully verified* T339/T340 stage histories.
 
 Reference implementation only. Staging is NOT registered in the manifest and
 no live consumer is wired to this class. Caller must independently authorize
@@ -12,10 +12,10 @@ from pathlib import Path
 
 from scripts.colloquial_t305 import ROOT, norm
 from scripts.context_t309_t310 import _read, CONTEXTS, GUARDS, FIELDS
-from scripts.context_t337_t338 import STAGES, Stage
+from scripts.context_t339_t340 import STAGES, Stage
 from scripts.staged_context_selector import StagedSelection
 
-_ALLOWED = ("T337", "T338")
+_ALLOWED = ("T339", "T340")
 
 
 class ReviewedStageCatalog:
@@ -94,7 +94,7 @@ class ReviewedStageCatalog:
                     raise ValueError("cross-group duplicate or wrong total")
                 by_intent[ident] = tuple(items)
                 total += len(items)
-        if len(by_intent) != 46 or total != 1954:
+        if len(by_intent) != 46 or total != 2046:
             raise ValueError("incomplete verified corpus")
         self._by_intent = by_intent
         self.reply_count = total
