@@ -21,10 +21,12 @@ _ALLOWED = frozenset({
     "staging/ru/spoken_pragmatics_t251_context_pool.json",
     "staging/ru/followthrough_t383_context_pool.json",
     "staging/ru/followthrough_t384_context_pool.json",
+    "staging/ru/followthrough_t385_context_pool.json",
 })
 _PINNED_STAGE_BLOBS = {
     "staging/ru/followthrough_t383_context_pool.json": "6aa6b98c0a3fdb5a68ebcc0071d6c80f0967f5f3",
     "staging/ru/followthrough_t384_context_pool.json": "86dd0b4d5c7fbd298eacf82c8d2b5df6ff6013e5",
+    "staging/ru/followthrough_t385_context_pool.json": "2484f31c20df35b0af67bc41d6579164da6686e5",
 }
 
 _CONTEXTS = frozenset({"direct", "private", "group_addressed"})
@@ -103,6 +105,58 @@ class StagedContextSelector:
                 for item in row.get("replies", []):
                     if _norm(item.get("text", "")) in historical:
                         raise ValueError("cross-stage duplicate")
+        if stage_path == "staging/ru/followthrough_t385_context_pool.json":
+            parent_path = "staging/ru/followthrough_t384_context_pool.json"
+            ancestor_path = "staging/ru/followthrough_t383_context_pool.json"
+            parent_raw = (root / parent_path).read_bytes()
+            ancestor_raw = (root / ancestor_path).read_bytes()
+            def git_blob(raw: bytes) -> str:
+                return hashlib.sha1(
+                    b"blob " + str(len(raw)).encode() + b"\0" + raw
+                ).hexdigest()
+            parent_blob = git_blob(parent_raw)
+            ancestor_blob = git_blob(ancestor_raw)
+            if (parent_blob != _PINNED_STAGE_BLOBS[parent_path]
+                    or ancestor_blob != _PINNED_STAGE_BLOBS[ancestor_path]
+                    or stage.get("previous_stage") != parent_path
+                    or stage.get("previous_stage_blob_sha") != parent_blob):
+                raise ValueError("unverified T385 parent SHA")
+            parent = json.loads(parent_raw)
+            ancestor = json.loads(ancestor_raw)
+            if (parent.get("previous_stage") != ancestor_path
+                    or parent.get("previous_stage_blob_sha") != ancestor_blob
+                    or parent.get("source_pack") != stage.get("source_pack")
+                    or ancestor.get("source_pack") != stage.get("source_pack")
+                    or parent.get("consumer_registered") is not False
+                    or ancestor.get("consumer_registered") is not False):
+                raise ValueError("unverified T385 ancestry")
+            parent_entries = {r["intent_id"]: r for r in parent.get("entries", [])}
+            ancestor_entries = {r["intent_id"]: r for r in ancestor.get("entries", [])}
+            children = stage.get("entries", [])
+            if (len(parent_entries) != 82 or len(ancestor_entries) != 82
+                    or not isinstance(children, list) or len(children) != 82
+                    or set(parent_entries) != set(ancestor_entries)
+                    or set(parent_entries) != {r.get("intent_id") for r in children}
+                    or stage.get("cumulative_checkpoint") != {
+                        "baseline_registered": 246, "previous_staged": 164,
+                        "added_candidates": 164, "total": 574,
+                        "partial_intents": 82, "finished_100": 0,
+                        "remaining_total": 7626,
+                    }):
+                raise ValueError("invalid T385 cumulative checkpoint")
+            historical = {
+                _norm(reply["text"])
+                for history in (parent_entries, ancestor_entries)
+                for row in history.values()
+                for reply in row["replies"]
+            }
+            for row in children:
+                if (row.get("question") != parent_entries[row["intent_id"]]["question"]
+                        or row.get("question") != ancestor_entries[row["intent_id"]]["question"]):
+                    raise ValueError("modified canonical question")
+                if any(_norm(reply["text"]) in historical
+                       for reply in row.get("replies", [])):
+                    raise ValueError("T385 cross-stage duplicate")
         if (stage.get("schema_version") != 1
                 or stage.get("stage_type") != "supplemental_contextual_reply_pool"
                 or stage.get("consumer_registered") is not False
