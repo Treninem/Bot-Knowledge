@@ -38,7 +38,7 @@ class TestT367T368(unittest.TestCase):
         recent=[x["text"] for s in (self.a,self.b) for rows in s.by_intent.values() for x in rows]
         old,new=[norm(x) for x in history],[norm(x) for x in recent]
         self.assertEqual(len(old),3748)
-        self.assertEqual(len(set(old)),3656)
+        self.assertEqual(len(set(old)),3748)
         self.assertEqual(len(new),92)
         self.assertEqual(len(set(new)),92)
         self.assertFalse(set(old)&set(new))
