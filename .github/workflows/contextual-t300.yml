@@ -1,0 +1,26 @@
+name: T300 contextual scoped Russian completion
+on:
+  pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  verify-t300:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Confirm exact checkout head
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate published manifest and registered pack content
+        run: python scripts/validate_pack.py
+      - name: Validate complete T300 ancestry and 114 new contextual replies
+        run: python -m unittest scripts.test_context_overlay_t300 -q
