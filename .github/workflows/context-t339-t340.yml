@@ -1,0 +1,42 @@
+name: T339 T340 scoped RU answers exact-head
+on:
+  pull_request:
+    paths:
+      - 'staging/ru/colloquial_t339_context_pool.json'
+      - 'staging/ru/practical_t340_context_pool.json'
+      - 'scripts/context_t339_t340.py'
+      - 'scripts/test_context_t339_t340.py'
+      - 'docs/CONTEXT_CONTINUATION_T339_T340_2026_11_07.md'
+      - '.github/workflows/context-t339-t340.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'staging/ru/colloquial_t339_context_pool.json'
+      - 'staging/ru/practical_t340_context_pool.json'
+      - 'scripts/context_t339_t340.py'
+      - 'scripts/test_context_t339_t340.py'
+      - 'docs/CONTEXT_CONTINUATION_T339_T340_2026_11_07.md'
+      - '.github/workflows/context-t339-t340.yml'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - name: Verify exact checkout
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check registered SHA-256
+        run: python scripts/validate_pack.py
+      - name: Test contextual stages and privacy
+        run: python -m unittest scripts.test_context_t339_t340 -q
+      - name: Validate stages
+        run: python -m scripts.context_t339_t340
