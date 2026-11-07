@@ -187,9 +187,13 @@ class StagedContextSelector:
         approved_reply_ids MUST be produced by consumer-side policy/context
         verification, never raw chat text or a guessed match.
         """
-        if (not addressed or not local_permission or audience != "all_ai_bots"
-                or context not in _CONTEXTS or not isinstance(approved_reply_ids, frozenset)
-                or not approved_reply_ids or not isinstance(recent_ids, tuple)):
+        if (addressed is not True or local_permission is not True
+                or audience != "all_ai_bots" or context not in _CONTEXTS
+                or not isinstance(approved_reply_ids, frozenset)
+                or not approved_reply_ids or len(approved_reply_ids) > 100
+                or not all(isinstance(x, str) for x in approved_reply_ids)
+                or not isinstance(recent_ids, tuple) or len(recent_ids) > 100
+                or not all(isinstance(x, str) for x in recent_ids)):
             return None
         recently_used = set(recent_ids)
         for reply in self._by_intent.get(intent_id, ()):
