@@ -22,11 +22,13 @@ _ALLOWED = frozenset({
     "staging/ru/followthrough_t383_context_pool.json",
     "staging/ru/followthrough_t384_context_pool.json",
     "staging/ru/followthrough_t385_context_pool.json",
+    "staging/ru/followthrough_t386_context_pool.json",
 })
 _PINNED_STAGE_BLOBS = {
     "staging/ru/followthrough_t383_context_pool.json": "6aa6b98c0a3fdb5a68ebcc0071d6c80f0967f5f3",
     "staging/ru/followthrough_t384_context_pool.json": "86dd0b4d5c7fbd298eacf82c8d2b5df6ff6013e5",
     "staging/ru/followthrough_t385_context_pool.json": "2484f31c20df35b0af67bc41d6579164da6686e5",
+    "staging/ru/followthrough_t386_context_pool.json": "ebee173a7fd4003f832bbdca87cfd10da9ee3e82",
 }
 
 _CONTEXTS = frozenset({"direct", "private", "group_addressed"})
@@ -157,6 +159,57 @@ class StagedContextSelector:
                 if any(_norm(reply["text"]) in historical
                        for reply in row.get("replies", [])):
                     raise ValueError("T385 cross-stage duplicate")
+        if stage_path == "staging/ru/followthrough_t386_context_pool.json":
+            parent_path = "staging/ru/followthrough_t385_context_pool.json"
+            grandparent_path = "staging/ru/followthrough_t384_context_pool.json"
+            ancestor_path = "staging/ru/followthrough_t383_context_pool.json"
+            def blob_id(path: str) -> str:
+                raw = (root / path).read_bytes()
+                return hashlib.sha1(
+                    b"blob " + str(len(raw)).encode() + b"\0" + raw
+                ).hexdigest()
+            for checked in (parent_path, grandparent_path, ancestor_path):
+                if blob_id(checked) != _PINNED_STAGE_BLOBS[checked]:
+                    raise ValueError("T386 source history changed")
+            parent = json.loads((root / parent_path).read_bytes())
+            grandparent = json.loads((root / grandparent_path).read_bytes())
+            ancestor = json.loads((root / ancestor_path).read_bytes())
+            if (stage.get("previous_stage") != parent_path
+                    or stage.get("previous_stage_blob_sha") != _PINNED_STAGE_BLOBS[parent_path]
+                    or parent.get("previous_stage") != grandparent_path
+                    or parent.get("previous_stage_blob_sha") != _PINNED_STAGE_BLOBS[grandparent_path]
+                    or grandparent.get("previous_stage") != ancestor_path
+                    or grandparent.get("previous_stage_blob_sha") != _PINNED_STAGE_BLOBS[ancestor_path]
+                    or len(stage.get("entries", [])) != 82
+                    or stage.get("cumulative_checkpoint") != {
+                        "baseline_registered": 246, "previous_staged": 328,
+                        "added_candidates": 82, "total": 656,
+                        "partial_intents": 82, "finished_100": 0,
+                        "remaining_total": 7544,
+                    }):
+                raise ValueError("T386 ancestry or cumulative checkpoint mismatch")
+            histories = (ancestor, grandparent, parent)
+            old = {}
+            old_texts = set()
+            for historical in histories:
+                if (historical.get("source_pack") != stage.get("source_pack")
+                        or historical.get("consumer_registered") is not False
+                        or len(historical.get("entries", [])) != 82):
+                    raise ValueError("unverified T386 history")
+                for row in historical["entries"]:
+                    ident = row["intent_id"]
+                    if ident in old and old[ident] != row["question"]:
+                        raise ValueError("mutated canonical question")
+                    old[ident] = row["question"]
+                    old_texts.update(_norm(reply["text"]) for reply in row["replies"])
+            if len(old) != 82 or set(old) != {x.get("intent_id") for x in stage["entries"]}:
+                raise ValueError("changed historical intent set")
+            for row in stage["entries"]:
+                if row.get("question") != old[row["intent_id"]]:
+                    raise ValueError("changed T386 canonical question")
+                if any(_norm(reply.get("text", "")) in old_texts
+                       for reply in row.get("replies", [])):
+                    raise ValueError("repeated previous stage text")
         if (stage.get("schema_version") != 1
                 or stage.get("stage_type") != "supplemental_contextual_reply_pool"
                 or stage.get("consumer_registered") is not False
