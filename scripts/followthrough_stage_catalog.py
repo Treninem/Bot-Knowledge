@@ -1,4 +1,4 @@
-"""Source-pinned, read-only local index over the eleven reviewed followthrough stages.
+"""Source-pinned, read-only local index over the twelve reviewed followthrough stages.
 
 No consumer integration, inference from chat text, network calls, actions, or
 moderation. A trusted caller must verify and approve exact reply IDs.
@@ -26,6 +26,7 @@ STAGES = (
     "staging/ru/followthrough_t391_context_pool.json",
     "staging/ru/followthrough_t392_context_pool.json",
     "staging/ru/followthrough_t393_context_pool.json",
+    "staging/ru/followthrough_t394_context_pool.json",
 )
 SOURCE = "packs/ru/conversation_followthrough_qa.json"
 CONTEXTS = frozenset({"direct", "private", "group_addressed"})
@@ -84,9 +85,9 @@ class FollowthroughStageCatalog:
                     seen_texts.add(text)
                     by_intent[ident].append((path, rid))
 
-        if (len(seen_ids) != 984 or len(by_intent) != 82
-                or any(len(items) != 12 for items in by_intent.values())):
-            raise ValueError("incomplete or inconsistent eleven-stage catalog")
+        if (len(seen_ids) != 1066 or len(by_intent) != 82
+                or any(len(items) != 13 for items in by_intent.values())):
+            raise ValueError("incomplete or inconsistent twelve-stage catalog")
         # Newest stage gets the first chance but only among explicitly
         # approved IDs; no automatic interpretation or hidden randomness.
         self._selectors = tuple(reversed(selectors))
