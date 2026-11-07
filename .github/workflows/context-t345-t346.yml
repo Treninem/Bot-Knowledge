@@ -1,0 +1,42 @@
+name: T345 T346 contextual replies exact-head
+on:
+  pull_request:
+    paths:
+      - 'staging/ru/colloquial_t345_context_pool.json'
+      - 'staging/ru/practical_t346_context_pool.json'
+      - 'scripts/context_t345_t346.py'
+      - 'scripts/test_context_t345_t346.py'
+      - 'docs/CONTEXT_CONTINUATION_T345_T346_2026_11_07.md'
+      - '.github/workflows/context-t345-t346.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'staging/ru/colloquial_t345_context_pool.json'
+      - 'staging/ru/practical_t346_context_pool.json'
+      - 'scripts/context_t345_t346.py'
+      - 'scripts/test_context_t345_t346.py'
+      - 'docs/CONTEXT_CONTINUATION_T345_T346_2026_11_07.md'
+      - '.github/workflows/context-t345-t346.yml'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - name: Exact checkout SHA
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check registered manifest packages
+        run: python scripts/validate_pack.py
+      - name: Validate complete historical stages and scoped selection
+        run: python -m unittest scripts.test_context_t345_t346 -q
+      - name: Check read-only stage inventory
+        run: python -m scripts.context_t345_t346
