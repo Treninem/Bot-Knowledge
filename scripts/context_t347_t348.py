@@ -9,11 +9,11 @@ from scripts.context_t309_t310 import _read, GUARDS, CONTEXTS, FIELDS
 from scripts.staged_context_selector import StagedSelection
 
 STAGES = {
- "T347": {"source": PREV["T347"]["source"], "earlier": (*PREV["T347"]["earlier"], PREV["T347"]["previous"]),
-          "previous": PREV["T347"]["stage"], "stage": "staging/ru/colloquial_t347_context_pool.json",
+ "T347": {"source": PREV["T345"]["source"], "earlier": (*PREV["T345"]["earlier"], PREV["T345"]["previous"]),
+          "previous": PREV["T345"]["stage"], "stage": "staging/ru/colloquial_t347_context_pool.json",
           "parent":"T345", "intents":22, "prior":53},
- "T348": {"source": PREV["T348"]["source"], "earlier": (*PREV["T348"]["earlier"], PREV["T348"]["previous"]),
-          "previous": PREV["T348"]["stage"], "stage": "staging/ru/practical_t348_context_pool.json",
+ "T348": {"source": PREV["T346"]["source"], "earlier": (*PREV["T346"]["earlier"], PREV["T346"]["previous"]),
+          "previous": PREV["T346"]["stage"], "stage": "staging/ru/practical_t348_context_pool.json",
           "parent":"T346", "intents":24, "prior":52},
 }
 class Stage:
