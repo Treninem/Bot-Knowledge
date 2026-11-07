@@ -11,7 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 class TestT300(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.validator = ContextOverlayT299(ROOT)
+        cls.validator = ContextOverlayT300(ROOT)
         cls.stage = json.loads((ROOT / OVERLAY).read_text("utf-8"))
 
     def test_full_inventory_and_hash(self):
@@ -66,7 +66,7 @@ class TestT300(unittest.TestCase):
 
     def test_unknown_stage_and_unknown_intent(self):
         with self.assertRaises(ValueError):
-            ContextOverlayT299(ROOT, "staging/ru/unchecked.json")
+            ContextOverlayT300(ROOT, "staging/ru/unchecked.json")
         self.assertIsNone(self.validator.select(
             "unknown_intent", approved_reply_ids=frozenset({"fake"}),
             audience="all_ai_bots", context="direct",
