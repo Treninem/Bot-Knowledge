@@ -20,9 +20,11 @@ _ALLOWED = frozenset({
     "staging/ru/boundaries_t167_context_pool.json",
     "staging/ru/spoken_pragmatics_t251_context_pool.json",
     "staging/ru/followthrough_t383_context_pool.json",
+    "staging/ru/followthrough_t384_context_pool.json",
 })
 _PINNED_STAGE_BLOBS = {
     "staging/ru/followthrough_t383_context_pool.json": "6aa6b98c0a3fdb5a68ebcc0071d6c80f0967f5f3",
+    "staging/ru/followthrough_t384_context_pool.json": "86dd0b4d5c7fbd298eacf82c8d2b5df6ff6013e5",
 }
 
 _CONTEXTS = frozenset({"direct", "private", "group_addressed"})
@@ -65,6 +67,42 @@ class StagedContextSelector:
             if actual_blob != pinned:
                 raise ValueError("Unreviewed staged content changed")
         stage = json.loads(raw)
+        if stage_path == "staging/ru/followthrough_t384_context_pool.json":
+            parent_path = "staging/ru/followthrough_t383_context_pool.json"
+            parent_raw = (root / parent_path).read_bytes()
+            parent_blob = hashlib.sha1(
+                b"blob " + str(len(parent_raw)).encode() + b"\0" + parent_raw
+            ).hexdigest()
+            if (stage.get("previous_stage") != parent_path
+                    or parent_blob != stage.get("previous_stage_blob_sha")
+                    or parent_blob != _PINNED_STAGE_BLOBS[parent_path]):
+                raise ValueError("unverified T383 stage ancestry")
+            parent = json.loads(parent_raw)
+            parent_entries = {row["intent_id"]: row for row in parent.get("entries", [])}
+            child_entries = stage.get("entries", [])
+            if (len(parent_entries) != 82 or not isinstance(child_entries, list)
+                    or len(child_entries) != 82
+                    or set(parent_entries) != {row.get("intent_id") for row in child_entries}
+                    or parent.get("source_pack") != stage.get("source_pack")
+                    or parent.get("consumer_registered") is not False
+                    or stage.get("cumulative_checkpoint") != {
+                        "baseline_registered": 246, "previous_staged": 82,
+                        "added_candidates": 82, "total": 410,
+                        "partial_intents": 82, "finished_100": 0,
+                        "remaining_total": 7790,
+                    }):
+                raise ValueError("invalid T384 cumulative inventory")
+            historical = set()
+            for row in parent_entries.values():
+                for item in row["replies"]:
+                    historical.add(_norm(item["text"]))
+            for row in child_entries:
+                parent_row = parent_entries[row["intent_id"]]
+                if row.get("question") != parent_row.get("question"):
+                    raise ValueError("changed intent question across stages")
+                for item in row.get("replies", []):
+                    if _norm(item.get("text", "")) in historical:
+                        raise ValueError("cross-stage duplicate")
         if (stage.get("schema_version") != 1
                 or stage.get("stage_type") != "supplemental_contextual_reply_pool"
                 or stage.get("consumer_registered") is not False
@@ -149,9 +187,13 @@ class StagedContextSelector:
         approved_reply_ids MUST be produced by consumer-side policy/context
         verification, never raw chat text or a guessed match.
         """
-        if (not addressed or not local_permission or audience != "all_ai_bots"
-                or context not in _CONTEXTS or not isinstance(approved_reply_ids, frozenset)
-                or not approved_reply_ids or not isinstance(recent_ids, tuple)):
+        if (addressed is not True or local_permission is not True
+                or audience != "all_ai_bots" or context not in _CONTEXTS
+                or not isinstance(approved_reply_ids, frozenset)
+                or not approved_reply_ids or len(approved_reply_ids) > 100
+                or not all(isinstance(x, str) for x in approved_reply_ids)
+                or not isinstance(recent_ids, tuple) or len(recent_ids) > 100
+                or not all(isinstance(x, str) for x in recent_ids)):
             return None
         recently_used = set(recent_ids)
         for reply in self._by_intent.get(intent_id, ()):
