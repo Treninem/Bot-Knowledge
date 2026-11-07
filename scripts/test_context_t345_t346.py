@@ -1,4 +1,4 @@
-"""T343/T344 tests: exact provenance, lexical uniqueness, approval and privacy."""
+"""T345/T346 tests: exact provenance, lexical uniqueness, approval and privacy."""
 import json
 import shutil
 import tempfile
