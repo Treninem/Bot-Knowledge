@@ -41,7 +41,7 @@ class TestT381T382(unittest.TestCase):
         self.assertEqual(len(old),expected_old)
         self.assertEqual(len(set(old)),expected_old)
         self.assertEqual(len(new),208)
-        self.assertEqual(len(set(new)),92)
+        self.assertEqual(len(set(new)),208)
         self.assertFalse(set(old)&set(new))
         prior=[set(x.split()) for x in old]
         for i,x in enumerate(new):
