@@ -20,7 +20,7 @@ NEIGHBORS = ("packs/ru/dialogue_help_qa.json", "packs/ru/collaborative_dialogue_
 
 
 def blob(raw):
-    return hashlib.sha1(b"blob " + str(len(raw)).encode() + b"\\0" + raw).hexdigest()
+    return hashlib.sha1(b"blob " + str(len(raw)).encode() + b"\0" + raw).hexdigest()
 
 
 class T384Test(unittest.TestCase):
