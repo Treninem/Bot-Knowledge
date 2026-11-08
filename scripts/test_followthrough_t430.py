@@ -17,7 +17,7 @@ def read(path):
     return (ROOT / path).read_bytes()
 
 def blob(data):
-    return hashlib.sha1(b"blob " + str(len(data)).encode() + b"\\0" + data).hexdigest()
+    return hashlib.sha1(b"blob " + str(len(data)).encode() + b"\0" + data).hexdigest()
 
 def tokens(value):
     return set(_norm(value).split())
