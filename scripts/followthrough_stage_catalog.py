@@ -1,4 +1,4 @@
-"""Source-pinned, read-only local index over the twenty-three reviewed followthrough stages.
+"""Source-pinned, read-only local index over the thirty-three reviewed followthrough stages.
 
 No consumer integration, inference from chat text, network calls, actions, or
 moderation. A trusted caller must verify and approve exact reply IDs.
@@ -38,6 +38,16 @@ STAGES = (
     "staging/ru/followthrough_t403_context_pool.json",
     "staging/ru/followthrough_t404_context_pool.json",
     "staging/ru/followthrough_t405_context_pool.json",
+    "staging/ru/followthrough_t406_context_pool.json",
+    "staging/ru/followthrough_t407_context_pool.json",
+    "staging/ru/followthrough_t408_context_pool.json",
+    "staging/ru/followthrough_t409_context_pool.json",
+    "staging/ru/followthrough_t410_context_pool.json",
+    "staging/ru/followthrough_t411_context_pool.json",
+    "staging/ru/followthrough_t412_context_pool.json",
+    "staging/ru/followthrough_t413_context_pool.json",
+    "staging/ru/followthrough_t414_context_pool.json",
+    "staging/ru/followthrough_t415_context_pool.json",
 )
 SOURCE = "packs/ru/conversation_followthrough_qa.json"
 CONTEXTS = frozenset({"direct", "private", "group_addressed"})
@@ -96,9 +106,9 @@ class FollowthroughStageCatalog:
                     seen_texts.add(text)
                     by_intent[ident].append((path, rid))
 
-        if (len(seen_ids) != 1968 or len(by_intent) != 82
-                or any(len(items) != 24 for items in by_intent.values())):
-            raise ValueError("incomplete or inconsistent twenty-three-stage catalog")
+        if (len(seen_ids) != 2870 or len(by_intent) != 82
+                or any(len(items) != 35 for items in by_intent.values())):
+            raise ValueError("incomplete or inconsistent thirty-three-stage catalog")
         # Newest stage gets the first chance but only among explicitly
         # approved IDs; no automatic interpretation or hidden randomness.
         self._selectors = tuple(reversed(selectors))
