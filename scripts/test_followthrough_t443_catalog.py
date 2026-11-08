@@ -13,7 +13,7 @@ PINNED = {
 }
 
 def blob(raw):
-    return hashlib.sha1(b"blob " + str(len(raw)).encode() + b"\\0" + raw).hexdigest()
+    return hashlib.sha1(b"blob " + str(len(raw)).encode() + b"\0" + raw).hexdigest()
 
 class T443CatalogTests(unittest.TestCase):
     def test_all_82_intents_per_stage_require_explicit_verified_approval(self):
