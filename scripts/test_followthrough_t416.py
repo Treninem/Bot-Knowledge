@@ -6,7 +6,7 @@ from scripts.colloquial_t305 import ROOT
 from scripts.staged_context_selector import _norm
 
 SOURCE = "packs/ru/conversation_followthrough_qa.json"
-PARENT = "staging/ru/followthrough_t414_context_pool.json"
+PARENT = "staging/ru/followthrough_t415_context_pool.json"
 STAGE = "staging/ru/followthrough_t416_context_pool.json"
 SOURCE_SHA = "0862daf244df650bfd85217df3bedb9f2373a6e63dbabfa8d0c831a6fb289ff7"
 SOURCE_BLOB = "707fcaa6440d398a730840362602d4532ab92036"
