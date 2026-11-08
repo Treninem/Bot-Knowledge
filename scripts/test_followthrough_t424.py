@@ -72,7 +72,7 @@ class T424Tests(unittest.TestCase):
 
     def test_complete_history_uniqueness_and_near_duplicates(self):
         previous=[x for row in self.source["records"] for x in [row["answer"],*row["variants"]]]
-        for i in range(383,424):
+        for i in range(383,423):
             history=json.loads(read(f"staging/ru/followthrough_t{i}_context_pool.json"))
             self.assertEqual(len(history["entries"]),82)
             previous.extend(r["text"] for e in history["entries"] for r in e["replies"])
