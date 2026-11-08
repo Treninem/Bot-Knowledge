@@ -69,6 +69,7 @@ _ALLOWED = frozenset({
     "staging/ru/followthrough_t432_context_pool.json",
     "staging/ru/followthrough_t433_context_pool.json",
     "staging/ru/followthrough_t434_context_pool.json",
+    "staging/ru/followthrough_t436_context_pool.json",
 })
 _PINNED_STAGE_BLOBS = {
     "staging/ru/followthrough_t383_context_pool.json": "6aa6b98c0a3fdb5a68ebcc0071d6c80f0967f5f3",
@@ -121,6 +122,7 @@ _PINNED_STAGE_BLOBS = {
     "staging/ru/followthrough_t432_context_pool.json": "c462fe31b7c69432d46efbacc6df768d61cbfac4",
     "staging/ru/followthrough_t433_context_pool.json": "e2ec084c9f2259fcb71a572dfbf812b72042f0a0",
     "staging/ru/followthrough_t434_context_pool.json": "0c6d96d7ee06bd7a166e0e0535fce35bd937cfdb",
+    "staging/ru/followthrough_t436_context_pool.json": "915d487e6234f1288f66f925136832812dd9fb2d",
 }
 
 _CONTEXTS = frozenset({"direct", "private", "group_addressed"})
@@ -1455,12 +1457,12 @@ class StagedContextSelector:
 
         if stage_path in {
             f"staging/ru/followthrough_t{n}_context_pool.json"
-            for n in [*range(406, 423), 424, 425, *range(427, 435)]
+            for n in [*range(406, 423), 424, 425, *range(427, 435), 436]
         }:
-            # T423 and T426 were catalog-only PRs, not staged answer files.
+            # T423, T426 and T435 were catalog-only PRs, not staged answer files.
             # Never guess missing sequence members or accept unpinned paths.
             number = int(stage_path.split("followthrough_t")[1].split("_")[0])
-            reviewed_numbers = (*range(383, 423), 424, 425, *range(427, 435))
+            reviewed_numbers = (*range(383, 423), 424, 425, *range(427, 435), 436)
             if number not in reviewed_numbers:
                 raise ValueError("unreviewed followthrough stage")
             chain = [

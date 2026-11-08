@@ -1,4 +1,4 @@
-"""T406–T434 selector stays explicit, SHA-pinned and fail-closed."""
+"""T406–T436 selector stays explicit, SHA-pinned and fail-closed."""
 import json
 import shutil
 import unittest
@@ -8,7 +8,7 @@ from tempfile import TemporaryDirectory
 from scripts.staged_context_selector import StagedContextSelector
 
 ROOT = Path(__file__).resolve().parents[1]
-STAGES = tuple(f"staging/ru/followthrough_t{n}_context_pool.json" for n in [*range(406, 423), 424, 425, *range(427, 435)])
+STAGES = tuple(f"staging/ru/followthrough_t{n}_context_pool.json" for n in [*range(406, 423), 424, 425, *range(427, 435), 436])
 
 
 class RecentFollowthroughSelectorTests(unittest.TestCase):
@@ -64,11 +64,11 @@ class RecentFollowthroughSelectorTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             StagedContextSelector(ROOT, "staging/ru/followthrough_t423_context_pool.json")
 
-    def test_t434_rejects_modified_pinned_stage_or_ancestor(self):
+    def test_t436_rejects_modified_pinned_stage_or_ancestor(self):
         with TemporaryDirectory() as folder:
             root = Path(folder)
             needed = ["manifest.json", "packs/ru/conversation_followthrough_qa.json"]
-            needed += [f"staging/ru/followthrough_t{n}_context_pool.json" for n in [*range(383, 423), 424, 425, *range(427, 435)]]
+            needed += [f"staging/ru/followthrough_t{n}_context_pool.json" for n in [*range(383, 423), 424, 425, *range(427, 435), 436]]
             for path in needed:
                 dest = root / path
                 dest.parent.mkdir(parents=True, exist_ok=True)
@@ -79,7 +79,7 @@ class RecentFollowthroughSelectorTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 StagedContextSelector(root, STAGES[-1])
             target.write_bytes(original)
-            ancestor = root / "staging/ru/followthrough_t433_context_pool.json"
+            ancestor = root / "staging/ru/followthrough_t434_context_pool.json"
             ancestor.write_bytes(ancestor.read_bytes() + b" ")
             with self.assertRaises(ValueError):
                 StagedContextSelector(root, STAGES[-1])
