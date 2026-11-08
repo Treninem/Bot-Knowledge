@@ -10,7 +10,7 @@ PARENT = "staging/ru/followthrough_t410_context_pool.json"
 SOURCE_SHA = "0862daf244df650bfd85217df3bedb9f2373a6e63dbabfa8d0c831a6fb289ff7"
 SOURCE_BLOB = "707fcaa6440d398a730840362602d4532ab92036"
 PARENT_BLOB = "95dfa757cc0cde14a88aa7aa6752baf1fb96397a"
-STAGE_BLOB = "e567f8440653b9ef6ec3ee219b94f1641aafb0fe"
+STAGE_BLOB = "836deea92279a4d03971c4b490e69c50deef2c71"
 def blob(data):
     return hashlib.sha1(b"blob "+str(len(data)).encode()+b"\0"+data).hexdigest()
 def tokens(s):
@@ -67,6 +67,7 @@ class T411Tests(unittest.TestCase):
                 self.assertIs(r["read_only"],True)
                 self.assertIn("без действий",r["avoid"])
                 self.assertGreater(len(r["text"]),30)
+                self.assertRegex(r["text"],r"[А-Яа-яЁё]")
                 self.assertGreater(len(r["context_note"]),18)
                 cur=tokens(r["text"])
                 for t in oldtok:
