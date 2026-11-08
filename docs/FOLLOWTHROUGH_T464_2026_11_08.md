@@ -6,7 +6,7 @@
 
 - Непосредственный предшественник: [T463 PR #519](https://github.com/Treninem/Bot-Knowledge/pull/519), Git blob `fdecb742788c38ee573e7fb896e4322536cceb12`.
 - Исходный зарегистрированный пакет: `packs/ru/conversation_followthrough_qa.json`; SHA-256 `0862daf244df650bfd85217df3bedb9f2373a6e63dbabfa8d0c831a6fb289ff7`, Git blob `707fcaa6440d398a730840362602d4532ab92036`.
-- Новый файл: `staging/ru/followthrough_t464_context_pool.json`; фактический Git blob `39d62fbec278438bdfeedc8152ae6ba222aa2ef2`.
+- Новый файл: `staging/ru/followthrough_t464_context_pool.json`; фактический Git blob `4713f33907dc196df6d804da269b90a1498c2aae`.
 - Дельта относительно T463 **+82** (без повторного учёта более ранних ответов). Если T462, T463 и T464 последовательно объединены: 246 зарегистрированных + 6232 staged = **6478/8200**, **79/100 для каждого из 82 намерений**, остаток **1722 (21 на намерение)**. 82 частичных, **0 завершённых 100/100**.
 - Семантически различные примеры имеют собственные `context_note`, аудиторию `all_ai_bots`, явную адресацию, `read_only=true` и `consumer_registered=false`. Не дают полномочий и не распространяют персональные данные.
 
