@@ -13,7 +13,7 @@ PARENT = "staging/ru/followthrough_t450_context_pool.json"
 SOURCE_SHA = "0862daf244df650bfd85217df3bedb9f2373a6e63dbabfa8d0c831a6fb289ff7"
 SOURCE_BLOB = "707fcaa6440d398a730840362602d4532ab92036"
 PARENT_BLOB = "ffb24b69dce46c3459ed31c0f394d4e6fd2914ff"
-STAGE_BLOB = "14f6ee2d4957c1eb780f327e593ff12b6a8fa66c"
+STAGE_BLOB = "1fe127da7259b2389812c76097047d9155e0f19f"
 STAGES = (*range(383, 423), 424, 425, *range(427, 435), 436, 438, 439, 440, 441, 442, 444, 445, 446, 448, 449, 450)
 SECRET = re.compile(r"(?i)(ghp_[a-z0-9]{12,}|sk-[a-z0-9]{12,}|bot_token|chat_id|user_id|https://t\.me/|[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,})")
 
