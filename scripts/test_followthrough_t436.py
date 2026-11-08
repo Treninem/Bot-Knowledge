@@ -11,7 +11,7 @@ PARENT = "staging/ru/followthrough_t434_context_pool.json"
 SOURCE_SHA = "0862daf244df650bfd85217df3bedb9f2373a6e63dbabfa8d0c831a6fb289ff7"
 SOURCE_BLOB = "707fcaa6440d398a730840362602d4532ab92036"
 PARENT_BLOB = "0c6d96d7ee06bd7a166e0e0535fce35bd937cfdb"
-STAGE_BLOB = "0a4b4820ad7694a3ad845e631614e6a67200de49"
+STAGE_BLOB = "915d487e6234f1288f66f925136832812dd9fb2d"
 STAGES = (*range(383, 423), 424, 425, *range(427, 435))
 
 def raw(path):
