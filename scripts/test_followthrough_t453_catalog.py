@@ -67,7 +67,7 @@ class T453StageOptInTests(unittest.TestCase):
 
     def test_unreviewed_future_stage_fail_closed(self):
         with self.assertRaises(ValueError):
-            StagedContextSelector(ROOT, "staging/ru/followthrough_t452_context_pool.json")
+            StagedContextSelector(ROOT, "staging/ru/followthrough_t457_context_pool.json")
 
 
 if __name__ == "__main__":

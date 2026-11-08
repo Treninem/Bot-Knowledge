@@ -82,6 +82,10 @@ _ALLOWED = frozenset({
     "staging/ru/followthrough_t449_context_pool.json",
     "staging/ru/followthrough_t450_context_pool.json",
     "staging/ru/followthrough_t451_context_pool.json",
+    "staging/ru/followthrough_t452_context_pool.json",
+    "staging/ru/followthrough_t454_context_pool.json",
+    "staging/ru/followthrough_t455_context_pool.json",
+    "staging/ru/followthrough_t456_context_pool.json",
 })
 _PINNED_STAGE_BLOBS = {
     "staging/ru/followthrough_t383_context_pool.json": "6aa6b98c0a3fdb5a68ebcc0071d6c80f0967f5f3",
@@ -147,6 +151,10 @@ _PINNED_STAGE_BLOBS = {
     "staging/ru/followthrough_t449_context_pool.json": "8e775230ed9b21628119e73cfc0ca0964c478c98",
     "staging/ru/followthrough_t450_context_pool.json": "ffb24b69dce46c3459ed31c0f394d4e6fd2914ff",
     "staging/ru/followthrough_t451_context_pool.json": "1fe127da7259b2389812c76097047d9155e0f19f",
+    "staging/ru/followthrough_t452_context_pool.json": "962307b5753f7364d5eb75dc03451f99a76bf639",
+    "staging/ru/followthrough_t454_context_pool.json": "0d6ca465fe2bfa9e25cd08bd5725f889f4514684",
+    "staging/ru/followthrough_t455_context_pool.json": "abbc4f5cfadccd72816634c206006a951b879777",
+    "staging/ru/followthrough_t456_context_pool.json": "f53752a47422676e41c57e2576d6b4ea67ecdc32",
 }
 
 _CONTEXTS = frozenset({"direct", "private", "group_addressed"})
@@ -1481,12 +1489,12 @@ class StagedContextSelector:
 
         if stage_path in {
             f"staging/ru/followthrough_t{n}_context_pool.json"
-            for n in [*range(406, 423), 424, 425, *range(427, 435), 436, 438, 439, 440, 441, 442, 444, 445, 446, 448, 449, 450, 451]
+            for n in [*range(406, 423), 424, 425, *range(427, 435), 436, 438, 439, 440, 441, 442, 444, 445, 446, 448, 449, 450, 451, 452, 454, 455, 456]
         }:
             # T423, T426 and T435 were catalog-only PRs, not staged answer files.
             # Never guess missing sequence members or accept unpinned paths.
             number = int(stage_path.split("followthrough_t")[1].split("_")[0])
-            reviewed_numbers = (*range(383, 423), 424, 425, *range(427, 435), 436, 438, 439, 440, 441, 442, 444, 445, 446, 448, 449, 450, 451)
+            reviewed_numbers = (*range(383, 423), 424, 425, *range(427, 435), 436, 438, 439, 440, 441, 442, 444, 445, 446, 448, 449, 450, 451, 452, 454, 455, 456)
             if number not in reviewed_numbers:
                 raise ValueError("unreviewed followthrough stage")
             chain = [
