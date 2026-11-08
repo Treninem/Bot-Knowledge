@@ -1,4 +1,4 @@
-"""Source-pinned, read-only local index over the fifty-one reviewed followthrough stages.
+"""Source-pinned, read-only local index over the seventy-eight reviewed followthrough stages.
 
 No consumer integration, inference from chat text, network calls, actions, or
 moderation. A trusted caller must verify and approve exact reply IDs.
@@ -66,6 +66,33 @@ STAGES = (
     "staging/ru/followthrough_t433_context_pool.json",
     "staging/ru/followthrough_t434_context_pool.json",
     "staging/ru/followthrough_t436_context_pool.json",
+    "staging/ru/followthrough_t438_context_pool.json",
+    "staging/ru/followthrough_t439_context_pool.json",
+    "staging/ru/followthrough_t440_context_pool.json",
+    "staging/ru/followthrough_t441_context_pool.json",
+    "staging/ru/followthrough_t442_context_pool.json",
+    "staging/ru/followthrough_t444_context_pool.json",
+    "staging/ru/followthrough_t445_context_pool.json",
+    "staging/ru/followthrough_t446_context_pool.json",
+    "staging/ru/followthrough_t448_context_pool.json",
+    "staging/ru/followthrough_t449_context_pool.json",
+    "staging/ru/followthrough_t450_context_pool.json",
+    "staging/ru/followthrough_t451_context_pool.json",
+    "staging/ru/followthrough_t452_context_pool.json",
+    "staging/ru/followthrough_t454_context_pool.json",
+    "staging/ru/followthrough_t455_context_pool.json",
+    "staging/ru/followthrough_t456_context_pool.json",
+    "staging/ru/followthrough_t458_context_pool.json",
+    "staging/ru/followthrough_t459_context_pool.json",
+    "staging/ru/followthrough_t460_context_pool.json",
+    "staging/ru/followthrough_t461_context_pool.json",
+    "staging/ru/followthrough_t462_context_pool.json",
+    "staging/ru/followthrough_t463_context_pool.json",
+    "staging/ru/followthrough_t464_context_pool.json",
+    "staging/ru/followthrough_t465_context_pool.json",
+    "staging/ru/followthrough_t466_context_pool.json",
+    "staging/ru/followthrough_t467_context_pool.json",
+    "staging/ru/followthrough_t468_context_pool.json",
 )
 SOURCE = "packs/ru/conversation_followthrough_qa.json"
 CONTEXTS = frozenset({"direct", "private", "group_addressed"})
@@ -124,9 +151,9 @@ class FollowthroughStageCatalog:
                     seen_texts.add(text)
                     by_intent[ident].append((path, rid))
 
-        if (len(seen_ids) != 4346 or len(by_intent) != 82
-                or any(len(items) != 53 for items in by_intent.values())):
-            raise ValueError("incomplete or inconsistent fifty-one-stage catalog")
+        if (len(seen_ids) != 6560 or len(by_intent) != 82
+                or any(len(items) != 80 for items in by_intent.values())):
+            raise ValueError("incomplete or inconsistent seventy-eight-stage catalog")
         # Newest stage gets the first chance but only among explicitly
         # approved IDs; no automatic interpretation or hidden randomness.
         self._selectors = tuple(reversed(selectors))
