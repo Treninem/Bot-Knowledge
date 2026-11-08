@@ -1,4 +1,4 @@
-"""T406–T410 selector stays explicit, SHA-pinned and fail-closed."""
+"""T406–T415 selector stays explicit, SHA-pinned and fail-closed."""
 import json
 import shutil
 import unittest
@@ -8,7 +8,7 @@ from tempfile import TemporaryDirectory
 from scripts.staged_context_selector import StagedContextSelector
 
 ROOT = Path(__file__).resolve().parents[1]
-STAGES = tuple(f"staging/ru/followthrough_t{n}_context_pool.json" for n in range(406, 411))
+STAGES = tuple(f"staging/ru/followthrough_t{n}_context_pool.json" for n in range(406, 416))
 
 
 class RecentFollowthroughSelectorTests(unittest.TestCase):
@@ -43,15 +43,32 @@ class RecentFollowthroughSelectorTests(unittest.TestCase):
                     self.assertIsNone(pool.select(entry["intent_id"], **{**opts, "context": wrong}))
                 self.assertIsNone(pool.select(entry["intent_id"], **{**opts, "recent_ids": (item["id"],)}))
 
-    def test_unpinned_future_stage_cannot_load(self):
-        with self.assertRaises(ValueError):
-            StagedContextSelector(ROOT, "staging/ru/followthrough_t411_context_pool.json")
+    def test_t411_two_variants_require_separate_approval(self):
+        path = "staging/ru/followthrough_t411_context_pool.json"
+        pool = StagedContextSelector(ROOT, path)
+        data = json.loads((ROOT / path).read_text("utf-8"))
+        self.assertEqual(len(data["entries"]), 82)
+        for entry in data["entries"]:
+            self.assertEqual(len(entry["replies"]), 2)
+            for reply in entry["replies"]:
+                opts = dict(approved_reply_ids=frozenset({reply["id"]}),
+                            audience="all_ai_bots", context=reply["context"],
+                            addressed=True, local_permission=True)
+                selected = pool.select(entry["intent_id"], **opts)
+                self.assertIsNotNone(selected)
+                self.assertEqual(selected.id, reply["id"])
+                self.assertIsNone(pool.select(
+                    entry["intent_id"], **{**opts, "approved_reply_ids":frozenset()}))
 
-    def test_t410_rejects_modified_pinned_stage_or_ancestor(self):
+    def test_t416_future_stage_cannot_load(self):
+        with self.assertRaises(ValueError):
+            StagedContextSelector(ROOT, "staging/ru/followthrough_t416_context_pool.json")
+
+    def test_t415_rejects_modified_pinned_stage_or_ancestor(self):
         with TemporaryDirectory() as folder:
             root = Path(folder)
             needed = ["manifest.json", "packs/ru/conversation_followthrough_qa.json"]
-            needed += [f"staging/ru/followthrough_t{n}_context_pool.json" for n in range(383, 411)]
+            needed += [f"staging/ru/followthrough_t{n}_context_pool.json" for n in range(383, 416)]
             for path in needed:
                 dest = root / path
                 dest.parent.mkdir(parents=True, exist_ok=True)
@@ -62,7 +79,7 @@ class RecentFollowthroughSelectorTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 StagedContextSelector(root, STAGES[-1])
             target.write_bytes(original)
-            ancestor = root / "staging/ru/followthrough_t409_context_pool.json"
+            ancestor = root / "staging/ru/followthrough_t414_context_pool.json"
             ancestor.write_bytes(ancestor.read_bytes() + b" ")
             with self.assertRaises(ValueError):
                 StagedContextSelector(root, STAGES[-1])
