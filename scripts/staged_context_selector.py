@@ -42,6 +42,11 @@ _ALLOWED = frozenset({
     "staging/ru/followthrough_t403_context_pool.json",
     "staging/ru/followthrough_t404_context_pool.json",
     "staging/ru/followthrough_t405_context_pool.json",
+    "staging/ru/followthrough_t406_context_pool.json",
+    "staging/ru/followthrough_t407_context_pool.json",
+    "staging/ru/followthrough_t408_context_pool.json",
+    "staging/ru/followthrough_t409_context_pool.json",
+    "staging/ru/followthrough_t410_context_pool.json",
 })
 _PINNED_STAGE_BLOBS = {
     "staging/ru/followthrough_t383_context_pool.json": "6aa6b98c0a3fdb5a68ebcc0071d6c80f0967f5f3",
@@ -67,6 +72,11 @@ _PINNED_STAGE_BLOBS = {
     "staging/ru/followthrough_t403_context_pool.json": "a9c28f3c598113f3c9dce298343f3fef8eeabe6e",
     "staging/ru/followthrough_t404_context_pool.json": "3476971b3e4147d4860872a58dba51d391edf039",
     "staging/ru/followthrough_t405_context_pool.json": "64dff05e9ac337f0cf2640e3325c8623b0591664",
+    "staging/ru/followthrough_t406_context_pool.json": "577b8b899886b77fcfc20bb6e388de75f55ccc98",
+    "staging/ru/followthrough_t407_context_pool.json": "4cd8bb75083984f948212999572e515f55ab31ac",
+    "staging/ru/followthrough_t408_context_pool.json": "d270253f07299d773afbb591ed0fb88477712eba",
+    "staging/ru/followthrough_t409_context_pool.json": "0384f8ea5277b2ce46a6d38e101528a92c905ae4",
+    "staging/ru/followthrough_t410_context_pool.json": "95dfa757cc0cde14a88aa7aa6752baf1fb96397a",
 }
 
 _CONTEXTS = frozenset({"direct", "private", "group_addressed"})
@@ -1398,6 +1408,74 @@ class StagedContextSelector:
                        or _norm(item.get("text", "")) in old_texts
                        for item in row.get("replies", [])):
                     raise ValueError("repeated answer in T405")
+
+        if stage_path in {
+            f"staging/ru/followthrough_t{n}_context_pool.json"
+            for n in range(406, 411)
+        }:
+            # Staging remains unregistered and requires a trusted caller's explicit approval.
+            number = int(stage_path.split("followthrough_t")[1].split("_")[0])
+            chain = [
+                f"staging/ru/followthrough_t{n}_context_pool.json"
+                for n in range(383, number)
+            ]
+            past_questions, past_ids, past_texts = {}, set(), set()
+            count_prior = 0
+            for pos, path in enumerate(chain):
+                data = (root / path).read_bytes()
+                git_sha = hashlib.sha1(
+                    b"blob " + str(len(data)).encode() + bytes([0]) + data
+                ).hexdigest()
+                if git_sha != _PINNED_STAGE_BLOBS[path]:
+                    raise ValueError("changed pinned followthrough ancestor")
+                history = json.loads(data)
+                if (history.get("source_pack") != stage.get("source_pack")
+                        or history.get("audiences") != ["all_ai_bots"]
+                        or history.get("consumer_registered") is not False
+                        or history.get("constraints") != _GUARDS
+                        or len(history.get("entries", [])) != 82):
+                    raise ValueError("invalid historical scope")
+                if pos and (
+                    history.get("previous_stage") != chain[pos - 1]
+                    or history.get("previous_stage_blob_sha")
+                    != _PINNED_STAGE_BLOBS[chain[pos - 1]]
+                ):
+                    raise ValueError("broken historical chain")
+                for entry in history["entries"]:
+                    intent = entry["intent_id"]
+                    if intent in past_questions and past_questions[intent] != entry["question"]:
+                        raise ValueError("changed historical question")
+                    past_questions[intent] = entry["question"]
+                    for reply in entry["replies"]:
+                        rid, normalized = reply["id"], _norm(reply["text"])
+                        if rid in past_ids or not normalized or normalized in past_texts:
+                            raise ValueError("duplicate reviewed ancestor")
+                        past_ids.add(rid)
+                        past_texts.add(normalized)
+                        count_prior += 1
+            children = stage.get("entries", [])
+            current_count = sum(len(entry["replies"]) for entry in children)
+            if (len(past_questions) != 82 or len(children) != 82
+                    or {entry["intent_id"] for entry in children} != set(past_questions)
+                    or stage.get("previous_stage") != chain[-1]
+                    or stage.get("previous_stage_blob_sha") != _PINNED_STAGE_BLOBS[chain[-1]]
+                    or stage.get("cumulative_checkpoint") != {
+                        "baseline_registered": 246,
+                        "previous_staged": count_prior,
+                        "added_candidates": current_count,
+                        "total": 246 + count_prior + current_count,
+                        "partial_intents": 82,
+                        "finished_100": 0,
+                        "remaining_total": 8200 - 246 - count_prior - current_count,
+                    }):
+                raise ValueError("unverified cumulative stage")
+            for entry in children:
+                if entry["question"] != past_questions[entry["intent_id"]]:
+                    raise ValueError("mutated canonical question")
+                for reply in entry["replies"]:
+                    if (reply["id"] in past_ids
+                            or _norm(reply["text"]) in past_texts):
+                        raise ValueError("reused historical reply")
 
         if (stage.get("schema_version") != 1
                 or stage.get("stage_type") != "supplemental_contextual_reply_pool"
