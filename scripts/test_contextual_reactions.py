@@ -19,11 +19,11 @@ class SocialResponseTests(unittest.TestCase):
         self.assertEqual(self.source["reactions"]["thanks"],["Пожалуйста.","Рад, что пригодилось."])
         self.assertEqual(self.source["reactions"]["farewell"],["До встречи.","Хорошо, до связи."])
         values=[v for intent in self.source["contextual_reactions"]["intents"].values() for g in intent["contexts"].values() for v in g]
-        self.assertEqual(len(values),96);self.assertEqual(len(set(map(norm,values))),96)
+        self.assertEqual(len(values),136);self.assertEqual(len(set(map(norm,values))),136)
         for intent,group in self.source["contextual_reactions"]["intents"].items():
-            self.assertEqual(len(group["contexts"]),12)
+            self.assertEqual(len(group["contexts"]),17)
             self.assertEqual(set(group["context_conditions"]),set(group["contexts"]))
-            self.assertEqual(sum(map(len,group["contexts"].values()))+len(self.source["reactions"][intent]),50)
+            self.assertEqual(sum(map(len,group["contexts"].values()))+len(self.source["reactions"][intent]),70)
     def test_scopes_and_negative_inputs(self):
         self.assertEqual(self.query("спасибо")["status"],"ok")
         self.assertEqual(self.query("до встречи",intent="farewell")["status"],"ok")
