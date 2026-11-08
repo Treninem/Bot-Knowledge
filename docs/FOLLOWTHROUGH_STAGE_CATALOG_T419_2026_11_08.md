@@ -6,6 +6,6 @@
 
 Выбор возможен исключительно после внешнего одобрения конкретного `reply_id`, при прямом обращении, локальном разрешении, допустимой аудитории и контексте; повторно недавно выбранный ответ исключается. Каталог не определяет намерения по сырым сообщениям и не имеет полномочий на модерацию, отправку, платежи или доступ к личной памяти. Все эти ответы остаются **unregistered staging**. Само наличие в справочном каталоге не означает установку или доставку в ImPULS или AuroraFox.
 
-Проверки `python -m unittest scripts.test_followthrough_stage_catalog -q`, `python -m unittest scripts.test_followthrough_t418 scripts.test_followthrough_t419 -q`, общий `quality.yml`. Требуется exact-head CI 31/31 и post-main CI 29/29 на фактических SHA; до этого PR остаётся Draft/BLOCKED.
+Проверки `python -m unittest scripts.test_followthrough_stage_catalog -q`, `python -m unittest scripts.test_followthrough_t418 scripts.test_followthrough_t419 -q`, общий `quality.yml`. Требуются все применимые exact-head проверки на фактическом head SHA (для PR без изменения workflow сейчас 29 проверок) и успешный post-main CI на фактическом merge SHA. При незавершённой или неуспешной проверке PR остаётся Draft/BLOCKED.
 
 Очередь: новые, действительно отличные по содержанию ответы T420, затем повторный контроль смысловых пересечений и недостающих тематик; все 82 набора по-прежнему частичные (по 58 до 100).
