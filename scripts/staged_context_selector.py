@@ -56,6 +56,9 @@ _ALLOWED = frozenset({
     "staging/ru/followthrough_t417_context_pool.json",
     "staging/ru/followthrough_t418_context_pool.json",
     "staging/ru/followthrough_t419_context_pool.json",
+    "staging/ru/followthrough_t420_context_pool.json",
+    "staging/ru/followthrough_t421_context_pool.json",
+    "staging/ru/followthrough_t422_context_pool.json",
 })
 _PINNED_STAGE_BLOBS = {
     "staging/ru/followthrough_t383_context_pool.json": "6aa6b98c0a3fdb5a68ebcc0071d6c80f0967f5f3",
@@ -95,6 +98,9 @@ _PINNED_STAGE_BLOBS = {
     "staging/ru/followthrough_t417_context_pool.json": "dd6102212e9be4e467b79825f5e9fb77a618e5ac",
     "staging/ru/followthrough_t418_context_pool.json": "a00acfec24d24702f32f03be245b72dd6a4be4ce",
     "staging/ru/followthrough_t419_context_pool.json": "eb3b6e5567b05e1e92d427b80b23106edec511a3",
+    "staging/ru/followthrough_t420_context_pool.json": "c3964d60d48a4d5e83375bde7043062728bf0e8a",
+    "staging/ru/followthrough_t421_context_pool.json": "4ca59f3c7538ac78e0103436d9f6d8dcb681b63a",
+    "staging/ru/followthrough_t422_context_pool.json": "29fe137e2c2a396ba8b42238dc4788033cea3c1e",
 }
 
 _CONTEXTS = frozenset({"direct", "private", "group_addressed"})
@@ -1429,7 +1435,7 @@ class StagedContextSelector:
 
         if stage_path in {
             f"staging/ru/followthrough_t{n}_context_pool.json"
-            for n in range(406, 420)
+            for n in range(406, 423)
         }:
             # Staging remains unregistered and requires a trusted caller's explicit approval.
             number = int(stage_path.split("followthrough_t")[1].split("_")[0])
