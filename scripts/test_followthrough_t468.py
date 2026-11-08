@@ -13,7 +13,7 @@ PARENT = "staging/ru/followthrough_t467_context_pool.json"
 SOURCE_SHA = "0862daf244df650bfd85217df3bedb9f2373a6e63dbabfa8d0c831a6fb289ff7"
 SOURCE_BLOB = "707fcaa6440d398a730840362602d4532ab92036"
 PARENT_BLOB = "d588abc18e6b5bf52a153d75ac2cb51d85953a2d"
-STAGE_BLOB = "0cd7465e7282555681ed284f0846e4fc719afd35"
+STAGE_BLOB = "e29e6385cef8ffdb24e328afdb58f5df7bda3068"
 STAGES = (*range(383, 423), 424, 425, *range(427, 435), 436, 438, 439, 440, 441, 442, 444, 445, 446, 448, 449, 450, 451, 452, 454, 455, 456, 458, 459, 460, 461, 462, 463, 464, 465, 466, 467)
 SECRET = re.compile(r"(?i)(ghp_[a-z0-9]{12,}|sk-[a-z0-9]{12,}|bot_token|chat_id|user_id|https://t\.me/|[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,})")
 
@@ -54,7 +54,7 @@ class T468Tests(unittest.TestCase):
         self.assertFalse(s["consumer_registered"])
         self.assertEqual(s["audiences"], ["all_ai_bots"])
         self.assertEqual(s["constraints"], {"read_only": True, "requires_direct_address": True, "no_personal_data": True})
-        self.assertEqual(s["checkpoint"], {"stage_id": "T468", "processed_intents": 82, "registered_count": 246, "added_candidates": 82, "finished_100": 0, "partial_intents": 82, "remaining_total": 7790, "rejected": 0})
+        self.assertEqual(s["checkpoint"], {"stage_id": "T468", "processed_intents": 82, "registered_count": 246, "added_candidates": 82, "finished_100": 0, "partial_intents": 82, "remaining_total": 7872, "rejected": 0})
         self.assertEqual(s["cumulative_checkpoint"], {"baseline_registered": 246, "previous_staged": 6478, "added_candidates": 82, "total": 6806, "partial_intents": 82, "finished_100": 0, "remaining_total": 1394})
         source = {x["id"]: x["question"] for x in self.source["records"]}
         self.assertEqual(len(source), 82)
