@@ -24,7 +24,9 @@ class ContextualReactions:
         seen={norm(t) for intent in groups for t in data["reactions"][intent]};self._data={}
         for intent,item in groups.items():
             contexts=item.get("contexts",{});inputs=item.get("accepted_inputs",[])
-            if item.get("default_context")!="neutral" or len(contexts)!=4 or "neutral" not in contexts or len(inputs)!=4: raise ValueError("contexts")
+            if item.get("default_context")!="neutral" or not isinstance(contexts,dict) or not 4<=len(contexts)<=24 or "neutral" not in contexts or len(inputs)!=4: raise ValueError("contexts")
+            notes=item.get("context_conditions",{})
+            if not isinstance(notes,dict) or set(notes)!=set(contexts) or any(not isinstance(note,str) or not 10<=len(note)<=240 for note in notes.values()): raise ValueError("context conditions")
             cleaned={}
             for name,values in contexts.items():
                 if not isinstance(name,str) or not name.isascii() or len(values)!=4: raise ValueError("group")
