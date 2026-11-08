@@ -1,4 +1,4 @@
-"""T406–T417 selector stays explicit, SHA-pinned and fail-closed."""
+"""T406–T419 selector stays explicit, SHA-pinned and fail-closed."""
 import json
 import shutil
 import unittest
@@ -8,7 +8,7 @@ from tempfile import TemporaryDirectory
 from scripts.staged_context_selector import StagedContextSelector
 
 ROOT = Path(__file__).resolve().parents[1]
-STAGES = tuple(f"staging/ru/followthrough_t{n}_context_pool.json" for n in range(406, 418))
+STAGES = tuple(f"staging/ru/followthrough_t{n}_context_pool.json" for n in range(406, 420))
 
 
 class RecentFollowthroughSelectorTests(unittest.TestCase):
@@ -60,15 +60,15 @@ class RecentFollowthroughSelectorTests(unittest.TestCase):
                 self.assertIsNone(pool.select(
                     entry["intent_id"], **{**opts, "approved_reply_ids":frozenset()}))
 
-    def test_t418_future_stage_cannot_load(self):
+    def test_t420_future_stage_cannot_load(self):
         with self.assertRaises(ValueError):
-            StagedContextSelector(ROOT, "staging/ru/followthrough_t418_context_pool.json")
+            StagedContextSelector(ROOT, "staging/ru/followthrough_t420_context_pool.json")
 
-    def test_t417_rejects_modified_pinned_stage_or_ancestor(self):
+    def test_t419_rejects_modified_pinned_stage_or_ancestor(self):
         with TemporaryDirectory() as folder:
             root = Path(folder)
             needed = ["manifest.json", "packs/ru/conversation_followthrough_qa.json"]
-            needed += [f"staging/ru/followthrough_t{n}_context_pool.json" for n in range(383, 418)]
+            needed += [f"staging/ru/followthrough_t{n}_context_pool.json" for n in range(383, 420)]
             for path in needed:
                 dest = root / path
                 dest.parent.mkdir(parents=True, exist_ok=True)
@@ -79,7 +79,7 @@ class RecentFollowthroughSelectorTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 StagedContextSelector(root, STAGES[-1])
             target.write_bytes(original)
-            ancestor = root / "staging/ru/followthrough_t416_context_pool.json"
+            ancestor = root / "staging/ru/followthrough_t418_context_pool.json"
             ancestor.write_bytes(ancestor.read_bytes() + b" ")
             with self.assertRaises(ValueError):
                 StagedContextSelector(root, STAGES[-1])
