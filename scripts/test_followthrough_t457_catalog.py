@@ -68,8 +68,10 @@ class T457StageOptInTests(unittest.TestCase):
         self.assertEqual(len(all_ids), 328)
 
     def test_unreviewed_future_stage_fail_closed(self):
+        # T458 is now explicitly SHA-pinned and reviewed by the expanded catalog.
+        # A stage never placed on the trust allowlist must remain inaccessible.
         with self.assertRaises(ValueError):
-            StagedContextSelector(ROOT, "staging/ru/followthrough_t458_context_pool.json")
+            StagedContextSelector(ROOT, "staging/ru/followthrough_t9999_context_pool.json")
 
 
 if __name__ == "__main__":
