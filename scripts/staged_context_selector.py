@@ -75,6 +75,9 @@ _ALLOWED = frozenset({
     "staging/ru/followthrough_t440_context_pool.json",
     "staging/ru/followthrough_t441_context_pool.json",
     "staging/ru/followthrough_t442_context_pool.json",
+    "staging/ru/followthrough_t444_context_pool.json",
+    "staging/ru/followthrough_t445_context_pool.json",
+    "staging/ru/followthrough_t446_context_pool.json",
 })
 _PINNED_STAGE_BLOBS = {
     "staging/ru/followthrough_t383_context_pool.json": "6aa6b98c0a3fdb5a68ebcc0071d6c80f0967f5f3",
@@ -133,6 +136,9 @@ _PINNED_STAGE_BLOBS = {
     "staging/ru/followthrough_t440_context_pool.json": "56356ecdbe9b0d9eb5c83f699c5e178827f55a10",
     "staging/ru/followthrough_t441_context_pool.json": "49ead3c0961aa8ab82a75f4d8a0077041742d209",
     "staging/ru/followthrough_t442_context_pool.json": "6fc3f9721b51da3cd0317fab601181df0f7d871b",
+    "staging/ru/followthrough_t444_context_pool.json": "e95a22fe46906bf0c8122aa7302a99ae4268bfcb",
+    "staging/ru/followthrough_t445_context_pool.json": "446c78aa6b1f31dcd456acfe078df50e2310839e",
+    "staging/ru/followthrough_t446_context_pool.json": "fc0fddb01819ce0315d2d8175a99f99a32073e03",
 }
 
 _CONTEXTS = frozenset({"direct", "private", "group_addressed"})
@@ -1467,12 +1473,12 @@ class StagedContextSelector:
 
         if stage_path in {
             f"staging/ru/followthrough_t{n}_context_pool.json"
-            for n in [*range(406, 423), 424, 425, *range(427, 435), 436, 438, 439, 440, 441, 442]
+            for n in [*range(406, 423), 424, 425, *range(427, 435), 436, 438, 439, 440, 441, 442, 444, 445, 446]
         }:
             # T423, T426 and T435 were catalog-only PRs, not staged answer files.
             # Never guess missing sequence members or accept unpinned paths.
             number = int(stage_path.split("followthrough_t")[1].split("_")[0])
-            reviewed_numbers = (*range(383, 423), 424, 425, *range(427, 435), 436, 438, 439, 440, 441, 442)
+            reviewed_numbers = (*range(383, 423), 424, 425, *range(427, 435), 436, 438, 439, 440, 441, 442, 444, 445, 446)
             if number not in reviewed_numbers:
                 raise ValueError("unreviewed followthrough stage")
             chain = [
