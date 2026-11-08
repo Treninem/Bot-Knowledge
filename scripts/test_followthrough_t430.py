@@ -11,7 +11,7 @@ STAGE = "staging/ru/followthrough_t430_context_pool.json"
 SOURCE_SHA = "0862daf244df650bfd85217df3bedb9f2373a6e63dbabfa8d0c831a6fb289ff7"
 SOURCE_BLOB = "707fcaa6440d398a730840362602d4532ab92036"
 PARENT_BLOB = "cf0ad83036e0fafea4fa1a0d7c207bf0183e7528"
-STAGE_BLOB = "1d320e486434859ccab06b7b4cc4220d37b43745"
+STAGE_BLOB = "6004d03017463aee1545021cc2bcde5a6bfa48e8"
 
 def read(path):
     return (ROOT / path).read_bytes()
