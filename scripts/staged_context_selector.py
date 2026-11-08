@@ -59,6 +59,16 @@ _ALLOWED = frozenset({
     "staging/ru/followthrough_t420_context_pool.json",
     "staging/ru/followthrough_t421_context_pool.json",
     "staging/ru/followthrough_t422_context_pool.json",
+    "staging/ru/followthrough_t424_context_pool.json",
+    "staging/ru/followthrough_t425_context_pool.json",
+    "staging/ru/followthrough_t427_context_pool.json",
+    "staging/ru/followthrough_t428_context_pool.json",
+    "staging/ru/followthrough_t429_context_pool.json",
+    "staging/ru/followthrough_t430_context_pool.json",
+    "staging/ru/followthrough_t431_context_pool.json",
+    "staging/ru/followthrough_t432_context_pool.json",
+    "staging/ru/followthrough_t433_context_pool.json",
+    "staging/ru/followthrough_t434_context_pool.json",
 })
 _PINNED_STAGE_BLOBS = {
     "staging/ru/followthrough_t383_context_pool.json": "6aa6b98c0a3fdb5a68ebcc0071d6c80f0967f5f3",
@@ -101,6 +111,16 @@ _PINNED_STAGE_BLOBS = {
     "staging/ru/followthrough_t420_context_pool.json": "c3964d60d48a4d5e83375bde7043062728bf0e8a",
     "staging/ru/followthrough_t421_context_pool.json": "4ca59f3c7538ac78e0103436d9f6d8dcb681b63a",
     "staging/ru/followthrough_t422_context_pool.json": "29fe137e2c2a396ba8b42238dc4788033cea3c1e",
+    "staging/ru/followthrough_t424_context_pool.json": "955808243204e9e348e77f3f7d73072eefa2ae2d",
+    "staging/ru/followthrough_t425_context_pool.json": "e89334c1ffcca0fb87d11a0400c7106e3393d67b",
+    "staging/ru/followthrough_t427_context_pool.json": "4bad4fa90347dbd8123f49be0e732f88a5e096f3",
+    "staging/ru/followthrough_t428_context_pool.json": "9947f434ebf95511d0f9ce00466a420aad0fd743",
+    "staging/ru/followthrough_t429_context_pool.json": "cf0ad83036e0fafea4fa1a0d7c207bf0183e7528",
+    "staging/ru/followthrough_t430_context_pool.json": "6004d03017463aee1545021cc2bcde5a6bfa48e8",
+    "staging/ru/followthrough_t431_context_pool.json": "0b259f09db1d58004c48d6b298c573197e3ad191",
+    "staging/ru/followthrough_t432_context_pool.json": "c462fe31b7c69432d46efbacc6df768d61cbfac4",
+    "staging/ru/followthrough_t433_context_pool.json": "e2ec084c9f2259fcb71a572dfbf812b72042f0a0",
+    "staging/ru/followthrough_t434_context_pool.json": "0c6d96d7ee06bd7a166e0e0535fce35bd937cfdb",
 }
 
 _CONTEXTS = frozenset({"direct", "private", "group_addressed"})
@@ -1435,13 +1455,17 @@ class StagedContextSelector:
 
         if stage_path in {
             f"staging/ru/followthrough_t{n}_context_pool.json"
-            for n in range(406, 423)
+            for n in [*range(406, 423), 424, 425, *range(427, 435)]
         }:
-            # Staging remains unregistered and requires a trusted caller's explicit approval.
+            # T423 and T426 were catalog-only PRs, not staged answer files.
+            # Never guess missing sequence members or accept unpinned paths.
             number = int(stage_path.split("followthrough_t")[1].split("_")[0])
+            reviewed_numbers = (*range(383, 423), 424, 425, *range(427, 435))
+            if number not in reviewed_numbers:
+                raise ValueError("unreviewed followthrough stage")
             chain = [
                 f"staging/ru/followthrough_t{n}_context_pool.json"
-                for n in range(383, number)
+                for n in reviewed_numbers[:reviewed_numbers.index(number)]
             ]
             past_questions, past_ids, past_texts = {}, set(), set()
             count_prior = 0
