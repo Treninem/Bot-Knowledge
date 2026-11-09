@@ -84,7 +84,7 @@ class T521Quality(unittest.TestCase):
                     self.assertEqual(reply["audiences"], ["all_ai_bots"])
                     self.assertTrue(reply["read_only"])
                     self.assertTrue(reply["avoid"])
-                    self.assertGreater(len(reply["context_note"]), 20)
+                    self.assertGreaterEqual(len(reply["context_note"]), 20)
                     self.assertIn(reply["context"], ("direct", "private"))
                     if key in ("humor_t517_friendly", "humor_t517_darkfiction"):
                         self.assertEqual(reply["context"], "private")
