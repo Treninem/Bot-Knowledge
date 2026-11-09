@@ -1,0 +1,27 @@
+name: Bot-Knowledge T515 contextual conversation extension
+on:
+  pull_request:
+    paths:
+      - 'staging/ru/conversation_t515_context_pool.json'
+      - 'scripts/test_conversation_t515.py'
+      - 'docs/CONVERSATION_T515_2026_11_09.md'
+      - '.github/workflows/t515-conversation.yml'
+      - 'packs/ru/dialogue.json'
+      - 'manifest.json'
+permissions:
+  contents: read
+jobs:
+  t515:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout exact PR head, no persistent token
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          persist-credentials: false
+      - name: Confirm checkout
+        env:
+          EXPECTED_HEAD: ${{ github.event.pull_request.head.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_HEAD"
+      - name: Run T515 data integrity test
+        run: python scripts/test_conversation_t515.py
