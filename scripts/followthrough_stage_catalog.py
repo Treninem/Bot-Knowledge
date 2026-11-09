@@ -11,7 +11,7 @@ from pathlib import Path
 
 from scripts.colloquial_t305 import ROOT
 from scripts.staged_context_selector import (
-    StagedContextSelector, StagedSelection, _norm,
+    StagedContextSelector, StagedSelection, _norm, _PINNED_STAGE_BLOBS,
 )
 
 STAGES = (
@@ -135,6 +135,22 @@ class FollowthroughStageCatalog:
         canon = {r["id"]: r["question"] for r in source["records"]}
         if len(canon) != 82 or len(source["records"]) != 82:
             raise ValueError("expected 82 existing canonical intentions")
+
+        # Fast, fail-closed immutable preflight. The regression suite mutates
+        # every stage in turn: reject a changed Git blob *before* constructing
+        # dozens of selectors with expensive multi-stage ancestry checks.
+        # This only moves existing pin verification earlier; all selector
+        # policy, parent-chain and semantic checks still run on valid data.
+        for path in STAGES:
+            expected = _PINNED_STAGE_BLOBS.get(path)
+            if not expected:
+                raise ValueError("unreviewed stage missing immutable pin")
+            stage_raw = (root / path).read_bytes()
+            git_blob = hashlib.sha1(
+                b"blob " + str(len(stage_raw)).encode("ascii") + b"\0" + stage_raw
+            ).hexdigest()
+            if git_blob != expected:
+                raise ValueError("unreviewed stage blob mismatch")
 
         digest = hashlib.sha256(manifest_bytes)
         seen_ids, seen_texts = set(), set()
