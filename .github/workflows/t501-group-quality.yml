@@ -1,0 +1,31 @@
+name: Bot-Knowledge T501 group boundary checks
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  t501-stage-quality:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Verify exact checked-out head
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+          printf 'T501_EXACT_HEAD=%s\n' "$EXPECTED_SHA"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate unchanged registered packs
+        run: python scripts/validate_pack.py
+      - name: T501 lineage and complete privacy/uniqueness check
+        run: python -m unittest scripts.test_group_turns_t501 -q
