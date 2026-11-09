@@ -52,7 +52,7 @@ class ScopedRepairTests(unittest.TestCase):
                     self.assertIs(answer["read_only"], True)
                     self.assertEqual(answer["style"], "neutral")
                     self.assertNotRegex(
-                        answer["text"], r"(?i)(https?://|@[a-z0-9_]+|ghp_[a-z0-9]{12,}|sk-[a-z0-9]{12,}|\\b\\d{6,}\\b)"
+                        answer["text"], r"(?i)(https?://|@[a-z0-9_]+|ghp_[a-z0-9]{12,}|sk-[a-z0-9]{12,}|\b\d{6,}\b)"
                     )
         self.assertEqual(len(ids), 64)
         self.assertEqual(len(all_texts), 64)
