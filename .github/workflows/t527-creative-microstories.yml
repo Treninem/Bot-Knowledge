@@ -1,0 +1,37 @@
+name: T527 420 original creative candidates exact-head read-only
+on:
+  pull_request:
+    paths:
+      - "staging/ru/creative_microstories_t527_context_pool.json"
+      - "scripts/test_creative_microstories_t527.py"
+      - "docs/CREATIVE_MICROSTORIES_T527_2026_11_10.md"
+      - ".github/workflows/t527-creative-microstories.yml"
+      - "packs/ru/social_dialogues.json"
+      - "manifest.json"
+  push:
+    branches: [main]
+    paths:
+      - "staging/ru/creative_microstories_t527_context_pool.json"
+      - "scripts/test_creative_microstories_t527.py"
+      - ".github/workflows/t527-creative-microstories.yml"
+permissions:
+  contents: read
+jobs:
+  verify-t527:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Verify real exact checkout
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Check manifest and 420 cumulative unique opt-in stories
+        run: |
+          python scripts/validate_pack.py
+          python -m unittest scripts.test_creative_microstories_t524 scripts.test_creative_microstories_t525 scripts.test_creative_microstories_t526 scripts.test_creative_microstories_t527 -v
