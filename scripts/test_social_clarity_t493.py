@@ -57,4 +57,41 @@ class T493Tests(unittest.TestCase):
      self.assertLess(len(now&old_tokens)/len(now|old_tokens),0.78,x["id"])
     tokens.append(now)
   self.assertEqual(count,100)
+
+ def test_all_registered_and_staged_reply_texts(self):
+  """Compare new candidates against complete public JSON response fields; lexical gate only."""
+  from collections import defaultdict
+  def extract(obj):
+   if isinstance(obj,dict):
+    for key,val in obj.items():
+     if key in ("text","answer","reply","response","assistant_response","response_text","reply_text") and isinstance(val,str):
+      yield val
+     else:
+      yield from extract(val)
+   elif isinstance(obj,list):
+    for item in obj: yield from extract(item)
+  ours=ROOT/"staging/ru/social_clarity_t493_context_pool.json"
+  history=set()
+  for folder in (ROOT/"packs/ru",ROOT/"staging/ru"):
+   for path in sorted(folder.glob("*.json")):
+    if path==ours: continue
+    obj=json.loads(path.read_text("utf-8"))
+    history.update(norm(x) for x in extract(obj) if x.strip())
+  history.update(norm(t) for arr in self.source["reactions"].values() for t in arr)
+  history.discard("")
+  buckets={}
+  for line in history:
+   tt=frozenset(line.split())
+   buckets.setdefault(len(tt),[]).append(tt)
+  for entry in self.stage["entries"]:
+   for reply in entry["replies"]:
+    k=norm(reply["text"])
+    self.assertNotIn(k,history,reply["id"])
+    tok=frozenset(k.split())
+    # Jaccard>=.78 requires compatible token cardinalities.
+    for n in range(max(1,int(len(tok)*0.78)),int(len(tok)/0.78)+2):
+     for prior in buckets.get(n,()):
+      overlap=len(tok & prior)
+      self.assertLess(overlap/(len(tok)+len(prior)-overlap),0.78,reply["id"])
+
 if __name__=="__main__": unittest.main()
