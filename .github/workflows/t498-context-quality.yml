@@ -1,0 +1,29 @@
+name: T498 social clarity completion (read-only)
+on:
+  pull_request:
+    paths:
+      - 'staging/ru/social_clarity_t498_context_pool.json'
+      - 'scripts/test_social_clarity_t498.py'
+      - '.github/workflows/t498-context-quality.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'staging/ru/social_clarity_t498_context_pool.json'
+      - 'scripts/test_social_clarity_t498.py'
+      - '.github/workflows/t498-context-quality.yml'
+permissions:
+  contents: read
+jobs:
+  exact-head:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Confirm checkout exact head
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+      - name: Run T498 source, complete history and privacy checks
+        run: python -m unittest scripts.test_social_clarity_t498 -q
