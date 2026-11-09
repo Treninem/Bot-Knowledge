@@ -1,0 +1,42 @@
+name: T517 original humor exact-head read-only
+
+on:
+  pull_request:
+    paths:
+      - "packs/ru/optional_humor_qa.json"
+      - "manifest.json"
+      - "scripts/search_knowledge.py"
+      - "scripts/test_optional_humor_t517.py"
+      - ".github/workflows/t517-humor.yml"
+  push:
+    branches: [main]
+    paths:
+      - "packs/ru/optional_humor_qa.json"
+      - "manifest.json"
+      - "scripts/search_knowledge.py"
+      - "scripts/test_optional_humor_t517.py"
+      - ".github/workflows/t517-humor.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  exact-head-humor:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Verify actual checkout head SHA
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Check manifest, QA schema, opt-in, privacy and retrieval
+        run: |
+          python scripts/validate_pack.py
+          python scripts/validate_qa_v1.py
+          python -m unittest scripts.test_optional_humor_t517 -q

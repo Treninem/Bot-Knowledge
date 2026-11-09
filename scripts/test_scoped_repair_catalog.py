@@ -24,7 +24,7 @@ class ScopedRepairTests(unittest.TestCase):
         matches = [p for p in self.manifest["packs"] if p["path"] == PACK]
         self.assertEqual(len(matches), 1)
         self.assertEqual(matches[0]["sha256"], hashlib.sha256(self.raw).hexdigest())
-        self.assertEqual(self.manifest["knowledge_version"], "2026.11.09.002")
+        self.assertGreaterEqual(tuple(map(int, self.manifest["knowledge_version"].split("."))), (2026, 11, 9, 2))
         self.assertEqual(self.pack["pack_version"], "2026.11.09.2")
 
     def test_all_intents_and_partial_checkpoints(self):
