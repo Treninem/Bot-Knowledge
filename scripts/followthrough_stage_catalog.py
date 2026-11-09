@@ -1,4 +1,4 @@
-"""Source-pinned, read-only local index over the ninety-three reviewed followthrough stages.
+"""Source-pinned, read-only local index over the ninety-six reviewed followthrough stages.
 
 No consumer integration, inference from chat text, network calls, actions, or
 moderation. A trusted caller must verify and approve exact reply IDs.
@@ -108,6 +108,7 @@ STAGES = (
     "staging/ru/followthrough_t481_context_pool.json",
     "staging/ru/followthrough_t482_context_pool.json",
     "staging/ru/followthrough_t483_context_pool.json",
+    "staging/ru/followthrough_t484_context_pool.json",
 )
 SOURCE = "packs/ru/conversation_followthrough_qa.json"
 CONTEXTS = frozenset({"direct", "private", "group_addressed"})
