@@ -12,14 +12,14 @@ STAGE = "staging/ru/scoped_repair_t486_context_pool.json"
 SOURCE_SHA = "3e63012f2823ea1896e9d9612f68f19a3cf2fe6bbf2c8296fc98ac29fb18a024"
 SOURCE_BLOB = "b881d145f634b6104c8538fef708d45162ef3125"
 COUNTS = {"clarify_previous": 18, "disagreement": 17, "unknown_fact": 17, "ambiguous": 17}
-SECRET = re.compile(r"(?i)(ghp_[a-z0-9]{12,}|sk-[a-z0-9]{12,}|bot_token|chat_id|user_id|https?://|@[a-z0-9_]+|[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,})")
+SECRET = re.compile(r"(?i)(ghp_[a-z0-9]{12,}|sk-[a-z0-9]{12,}|bot_token|chat_id|user_id|https?://|@[a-z0-9_]+|[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,})")
 
 def normalize(s):
     s = unicodedata.normalize("NFKC", s).lower().replace("ё", "е")
-    return " ".join(re.findall(r"\\w+", s))
+    return " ".join(re.findall(r"\w+", s))
 
 def blob(raw):
-    return hashlib.sha1(b"blob " + str(len(raw)).encode() + b"\\0" + raw).hexdigest()
+    return hashlib.sha1(b"blob " + str(len(raw)).encode() + b"\0" + raw).hexdigest()
 
 class T486Tests(unittest.TestCase):
     @classmethod
