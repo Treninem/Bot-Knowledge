@@ -626,10 +626,16 @@ jobs:
         run: python -m unittest scripts.test_agreement_catalog -q
       - name: T489 contextual thanks, farewells and agreements (100 synthetic replies)
         run: python -m unittest scripts.test_social_turns_t489 -q
+      - name: T490 additional scoped social replies, pinned T489 SHA and dedup
+        run: python -m unittest scripts.test_social_turns_t490 -q
       - name: Scoped conversation repairs, SHA and opt-in safety (64 original replies)
         run: python -m unittest scripts.test_scoped_repair_catalog -q
       - name: T486 scoped repairs 80 original RU replies, source SHA and dedup
         run: python -m unittest scripts.test_scoped_repair_t486 -q
+      - name: T487 120 original RU scoped replies and parent SHA verification
+        run: python -m unittest scripts.test_scoped_repair_t487 -q
+      - name: T488 131 contextual replies to finish four scoped intents
+        run: python -m unittest scripts.test_scoped_repair_t488 -q
       - name: T472 82 contextual RU replies, immutable ancestors and full historical dedup
         run: python -m unittest scripts.test_followthrough_t472 -q
       - name: T473 another 82 RU situational replies with full immutable lineage
