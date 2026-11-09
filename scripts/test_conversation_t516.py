@@ -47,5 +47,24 @@ class T516(unittest.TestCase):
         self.assertEqual(counts,{name:100 for name in NAMES})
         self.assertEqual(len(ids),700)
 
+    def test_no_near_lexical_duplicates_within_intents(self):
+        stages = [json.loads(
+            (ROOT / f"staging/ru/conversation_t{n}_context_pool.json").read_text(encoding="utf-8")
+        ) for n in STAGES]
+        by_intent = {key: [] for key in NAMES}
+        for item in stages:
+            for entry in item["entries"]:
+                for row in entry["replies"]:
+                    by_intent[entry["intent_id"]].append(row)
+        for name, rows in by_intent.items():
+            for i, a in enumerate(rows):
+                words_a = {word for word in canonical(a["text"]).split() if len(word) > 1}
+                for b in rows[:i]:
+                    words_b = {word for word in canonical(b["text"]).split() if len(word) > 1}
+                    overlap = len(words_a & words_b)
+                    union = len(words_a | words_b)
+                    similarity = overlap / union if union else 1
+                    self.assertLess(similarity, 0.78, (name, a["id"], b["id"], similarity))
+
 if __name__=="__main__":
     unittest.main()
