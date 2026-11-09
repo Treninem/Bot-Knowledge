@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "language": "ru",
-  "pack_version": "2026.11.09.1",
+  "pack_version": "2026.11.09.2",
   "reactions": {
     "greeting": [
       "Привет. Я на связи. Что нужно разобрать?",
@@ -875,6 +875,595 @@
       "time_window": "Пользователь подтвердил конкретный временной диапазон обсуждения; часовой пояс или даты могут быть важны.",
       "safety_sensitive": "Собеседник согласился с осторожным ответом в чувствительной или потенциально рискованной ситуации.",
       "pause_and_resume": "Человек подтвердил, что разговор надо прервать и возвращаться к нему только по новой просьбе."
+    }
+  },
+  "scoped_repair_reactions": {
+    "schema_version": 1,
+    "section": "общение",
+    "language": "ru",
+    "audiences": [
+      "all_ai_bots"
+    ],
+    "synthetic_examples_only": true,
+    "automatic_sanctions_allowed": false,
+    "personal_data_allowed": false,
+    "requires_explicit_address": true,
+    "requires_local_permission": true,
+    "selection_notes": [
+      "Только явное обращение и подтверждённый разрешённым consumer контекст; сырое сообщение не даёт права выбирать тему.",
+      "Ответ по существу или отказ от догадки важнее разнообразия. Никаких команд, санкций или действий на основе языкового шаблона.",
+      "При цитате, отрицании, запросе молчать или чувствительной теме обычный ответ не выбирается автоматически.",
+      "Новый каталог opt-in: старые reactions и потребители не изменяются; для каждого ответа требуется одобрение точного ID."
+    ],
+    "intents": {
+      "clarify_previous": {
+        "canonical_question": "Можешь объяснить предыдущий ответ понятнее?",
+        "existing_legacy_count": 2,
+        "contexts": {
+          "too_many_steps": {
+            "condition": "Предыдущее объяснение содержало несколько этапов, и пользователь просит прояснить одну часть, не повторяя всё подряд.",
+            "replies": [
+              {
+                "id": "repair_clarify_previous_too_many_steps_1",
+                "text": "Назови номер шага, на котором стало непонятно. Разберём именно его и сохраним остальной порядок.",
+                "style": "neutral",
+                "read_only": true
+              },
+              {
+                "id": "repair_clarify_previous_too_many_steps_2",
+                "text": "Могу показать на одном коротком примере, как выполняется этот этап, а потом вернуться к твоей задаче.",
+                "style": "neutral",
+                "read_only": true
+              }
+            ]
+          },
+          "term_unknown": {
+            "condition": "В прошлой реплике встречался незнакомый термин; надо раскрыть его смысл, не приписывая лишних свойств.",
+            "replies": [
+              {
+                "id": "repair_clarify_previous_term_unknown_1",
+                "text": "Этот термин лучше объяснить через действие: что он обозначает и где встречается в твоей задаче.",
+                "style": "neutral",
+                "read_only": true
+              },
+              {
+                "id": "repair_clarify_previous_term_unknown_2",
+                "text": "Сначала дам простое определение, затем уточню, чем это понятие отличается от похожего. Так меньше шансов их перепутать.",
+                "style": "neutral",
+                "read_only": true
+              }
+            ]
+          },
+          "lost_context": {
+            "condition": "Предыдущий текст или исходные материалы недоступны; уточнение нельзя строить на вымышленной памяти.",
+            "replies": [
+              {
+                "id": "repair_clarify_previous_lost_context_1",
+                "text": "Сейчас нет исходного фрагмента, который нужно объяснить. Пришли его снова — иначе могу ошибиться в смысле.",
+                "style": "neutral",
+                "read_only": true
+              },
+              {
+                "id": "repair_clarify_previous_lost_context_2",
+                "text": "Я могу объяснить общий принцип, но конкретную прежнюю формулировку без текста восстанавливать не стану.",
+                "style": "neutral",
+                "read_only": true
+              }
+            ]
+          },
+          "example_missing": {
+            "condition": "Собеседник понял правило на словах, но попросил показать применение на конкретном нейтральном примере.",
+            "replies": [
+              {
+                "id": "repair_clarify_previous_example_missing_1",
+                "text": "Сделаем пример с вымышленными данными и посмотрим каждый переход отдельно.",
+                "style": "neutral",
+                "read_only": true
+              },
+              {
+                "id": "repair_clarify_previous_example_missing_2",
+                "text": "Покажу один верный пример и рядом типичную ошибку — так будет видно, где проходит граница правила.",
+                "style": "neutral",
+                "read_only": true
+              }
+            ]
+          },
+          "numbers_confused": {
+            "condition": "В предыдущем разборе несколько чисел или единиц, и неясно, какое значение вызвало вопрос.",
+            "replies": [
+              {
+                "id": "repair_clarify_previous_numbers_confused_1",
+                "text": "Уточни, о каком числе речь: исходном, промежуточном или итоговом. Это разные этапы расчёта.",
+                "style": "neutral",
+                "read_only": true
+              },
+              {
+                "id": "repair_clarify_previous_numbers_confused_2",
+                "text": "Перепишем значения вместе с единицами измерения и только после этого проверим арифметику.",
+                "style": "neutral",
+                "read_only": true
+              }
+            ]
+          },
+          "contradictory_terms": {
+            "condition": "Предыдущее объяснение использовало два понятия будто они совпадают, хотя их следует различать.",
+            "replies": [
+              {
+                "id": "repair_clarify_previous_contradictory_terms_1",
+                "text": "Я смешал два разных понятия. Исправлю: одно описывает причину, другое — наблюдаемый результат.",
+                "style": "neutral",
+                "read_only": true
+              },
+              {
+                "id": "repair_clarify_previous_contradictory_terms_2",
+                "text": "Здесь стоит разделить определения, прежде чем делать вывод. Одинаковое слово не всегда означает одинаковое условие.",
+                "style": "neutral",
+                "read_only": true
+              }
+            ]
+          },
+          "asked_shorter": {
+            "condition": "Человек явно просит сократить предыдущее объяснение без потери важного ограничения.",
+            "replies": [
+              {
+                "id": "repair_clarify_previous_asked_shorter_1",
+                "text": "Сокращу до главного вывода и одного условия, от которого он зависит.",
+                "style": "neutral",
+                "read_only": true
+              },
+              {
+                "id": "repair_clarify_previous_asked_shorter_2",
+                "text": "Уберу вступление и примеры, но сохраню исключение: без него короткий ответ окажется неверным.",
+                "style": "neutral",
+                "read_only": true
+              }
+            ]
+          },
+          "wants_verbatim": {
+            "condition": "Пользователь просит повторить точную прежнюю формулировку, но не разрешал переписывать или дополнять её.",
+            "replies": [
+              {
+                "id": "repair_clarify_previous_wants_verbatim_1",
+                "text": "Если нужен дословный вариант, лучше брать его из доступного исходного сообщения, а не из пересказа.",
+                "style": "neutral",
+                "read_only": true
+              },
+              {
+                "id": "repair_clarify_previous_wants_verbatim_2",
+                "text": "Могу отдельно процитировать видимый фрагмент и отдельно объяснить его — не смешивая цитату с моей трактовкой.",
+                "style": "neutral",
+                "read_only": true
+              }
+            ]
+          }
+        }
+      },
+      "disagreement": {
+        "canonical_question": "Я не согласен с твоим ответом.",
+        "existing_legacy_count": 1,
+        "contexts": {
+          "wrong_fact": {
+            "condition": "Пользователь возражает против проверяемого утверждения и указывает на конкретное расхождение.",
+            "replies": [
+              {
+                "id": "repair_disagreement_wrong_fact_1",
+                "text": "Покажи, какой именно факт не сходится. Проверим исходные данные до того, как спорить о выводе.",
+                "style": "neutral",
+                "read_only": true
+              },
+              {
+                "id": "repair_disagreement_wrong_fact_2",
+                "text": "Если источник противоречит моему ответу, исправлю факт и объясню, как это меняет итог.",
+                "style": "neutral",
+                "read_only": true
+              }
+            ]
+          },
+          "bad_tone": {
+            "condition": "Собеседник не согласен с манерой ответа, а не с фактической частью.",
+            "replies": [
+              {
+                "id": "repair_disagreement_bad_tone_1",
+                "text": "Содержание можно оставить, а тон поменять. Напиши, что прозвучало неуместно, — исправлю подачу.",
+                "style": "neutral",
+                "read_only": true
+              },
+              {
+                "id": "repair_disagreement_bad_tone_2",
+                "text": "Понял, резкость мешает разговору. Переформулирую по существу без оценки тебя или твоего решения.",
+                "style": "neutral",
+                "read_only": true
+              }
+            ]
+          },
+          "preference_diff": {
+            "condition": "Речь о разных вкусах или приоритетах, а не об ошибке, которую надо победить в споре.",
+            "replies": [
+              {
+                "id": "repair_disagreement_preference_diff_1",
+                "text": "Тут нет единственного правильного вкуса. Давай сравним варианты по твоим критериям.",
+                "style": "neutral",
+                "read_only": true
+              },
+              {
+                "id": "repair_disagreement_preference_diff_2",
+                "text": "Согласиться необязательно. Если для тебя важнее удобство, чем внешний вид, вывод может быть другим.",
+                "style": "neutral",
+                "read_only": true
+              }
+            ]
+          },
+          "partial_agreement": {
+            "condition": "Участник принимает часть аргумента, но отвергает определённую посылку.",
+            "replies": [
+              {
+                "id": "repair_disagreement_partial_agreement_1",
+                "text": "Зафиксируем, в чём совпали, и отдельно проверим спорную предпосылку.",
+                "style": "neutral",
+                "read_only": true
+              },
+              {
+                "id": "repair_disagreement_partial_agreement_2",
+                "text": "Это не полное несогласие: вывод похож, но путь к нему вызывает сомнения. Разберём именно этот переход.",
+                "style": "neutral",
+                "read_only": true
+              }
+            ]
+          },
+          "source_dispute": {
+            "condition": "Собеседник оспаривает достоверность источника, и нельзя объявлять ссылку доказательством сама по себе.",
+            "replies": [
+              {
+                "id": "repair_disagreement_source_dispute_1",
+                "text": "Одной ссылки мало. Проверим автора, дату и то, действительно ли там сказано нужное.",
+                "style": "neutral",
+                "read_only": true
+              },
+              {
+                "id": "repair_disagreement_source_dispute_2",
+                "text": "Если данные старые или пересказаны без первоисточника, на них не стоит строить уверенный ответ.",
+                "style": "neutral",
+                "read_only": true
+              }
+            ]
+          },
+          "scope_violation": {
+            "condition": "Человек справедливо возражает, что помощник вышел за пределы заданной задачи.",
+            "replies": [
+              {
+                "id": "repair_disagreement_scope_violation_1",
+                "text": "Ты просил оценку, а я начал предлагать переделку. Вернусь к оценке без изменений исходника.",
+                "style": "neutral",
+                "read_only": true
+              },
+              {
+                "id": "repair_disagreement_scope_violation_2",
+                "text": "Понял ограничение: обсуждаем только указанный пункт, остальные части не трогаем.",
+                "style": "neutral",
+                "read_only": true
+              }
+            ]
+          },
+          "group_division": {
+            "condition": "В групповом обсуждении участники расходятся во мнениях, и один голос не равен общему согласию.",
+            "replies": [
+              {
+                "id": "repair_disagreement_group_division_1",
+                "text": "Пока согласия группы нет. Могу перечислить позиции без объявления победителя.",
+                "style": "neutral",
+                "read_only": true
+              },
+              {
+                "id": "repair_disagreement_group_division_2",
+                "text": "Не буду говорить «все решили», если часть участников против. Отделим принятое от спорного.",
+                "style": "neutral",
+                "read_only": true
+              }
+            ]
+          },
+          "asks_to_prove": {
+            "condition": "Пользователь требует обоснование вместо повторения прежнего утверждения более уверенным тоном.",
+            "replies": [
+              {
+                "id": "repair_disagreement_asks_to_prove_1",
+                "text": "Вместо повторения вывода покажу, на каких предпосылках он держится и как их проверить.",
+                "style": "neutral",
+                "read_only": true
+              },
+              {
+                "id": "repair_disagreement_asks_to_prove_2",
+                "text": "Если подтвердить тезис нечем, так и скажу; уверенная формулировка не заменяет доказательство.",
+                "style": "neutral",
+                "read_only": true
+              }
+            ]
+          }
+        }
+      },
+      "unknown_fact": {
+        "canonical_question": "Ты точно знаешь этот факт?",
+        "existing_legacy_count": 1,
+        "contexts": {
+          "fresh_price": {
+            "condition": "Пользователь спрашивает текущую цену, но нет свежего подтверждённого предложения или региона продажи.",
+            "replies": [
+              {
+                "id": "repair_unknown_fact_fresh_price_1",
+                "text": "Актуальную цену без свежей карточки товара и региона я не подтвержу. Можем сравнить конкретные предложения.",
+                "style": "neutral",
+                "read_only": true
+              },
+              {
+                "id": "repair_unknown_fact_fresh_price_2",
+                "text": "Не стану выдавать старый ценник за сегодняшний. Проверь дату и комплектацию, особенно у похожих моделей.",
+                "style": "neutral",
+                "read_only": true
+              }
+            ]
+          },
+          "missing_document": {
+            "condition": "Запрос опирается на документ, который не предоставлен и не доступен в текущей сессии.",
+            "replies": [
+              {
+                "id": "repair_unknown_fact_missing_document_1",
+                "text": "Точного ответа по документу без самого текста не получится. Пришли нужный пункт, и разберём его.",
+                "style": "neutral",
+                "read_only": true
+              },
+              {
+                "id": "repair_unknown_fact_missing_document_2",
+                "text": "Могу объяснить общую практику, но не утверждать, что именно так написано в твоём документе.",
+                "style": "neutral",
+                "read_only": true
+              }
+            ]
+          },
+          "local_rules": {
+            "condition": "Спрашивают о правилах конкретного сообщества, а актуальная редакция и полномочия неизвестны.",
+            "replies": [
+              {
+                "id": "repair_unknown_fact_local_rules_1",
+                "text": "Правила этого чата мне не показаны. Не буду придумывать запреты или обещать санкции.",
+                "style": "neutral",
+                "read_only": true
+              },
+              {
+                "id": "repair_unknown_fact_local_rules_2",
+                "text": "Для точного ответа нужна действующая редакция правил и указание, кто вправе их применять.",
+                "style": "neutral",
+                "read_only": true
+              }
+            ]
+          },
+          "statistics_without_source": {
+            "condition": "Пользователь просит точную статистику, но нет периода, источника и определения показателя.",
+            "replies": [
+              {
+                "id": "repair_unknown_fact_statistics_without_source_1",
+                "text": "Число без периода и метода подсчёта вводит в заблуждение. Уточним, что именно считать.",
+                "style": "neutral",
+                "read_only": true
+              },
+              {
+                "id": "repair_unknown_fact_statistics_without_source_2",
+                "text": "Могу показать способ расчёта, но выдавать примерные числа за официальную статистику не буду.",
+                "style": "neutral",
+                "read_only": true
+              }
+            ]
+          },
+          "attachment_unavailable": {
+            "condition": "Собеседник ссылается на файл или изображение, которое не видно помощнику.",
+            "replies": [
+              {
+                "id": "repair_unknown_fact_attachment_unavailable_1",
+                "text": "Вложение в доступном мне сообщении отсутствует, поэтому оценивать его содержимое наугад не стану.",
+                "style": "neutral",
+                "read_only": true
+              },
+              {
+                "id": "repair_unknown_fact_attachment_unavailable_2",
+                "text": "Опиши нужную часть изображения или прикрепи файл заново; тогда смогу ответить по фактическим данным.",
+                "style": "neutral",
+                "read_only": true
+              }
+            ]
+          },
+          "current_status": {
+            "condition": "Запрашивают нынешний статус услуги, релиза или заявки без подтверждённой актуальной записи.",
+            "replies": [
+              {
+                "id": "repair_unknown_fact_current_status_1",
+                "text": "Статус мог измениться после последнего известного сообщения. Без свежей записи не скажу «готово».",
+                "style": "neutral",
+                "read_only": true
+              },
+              {
+                "id": "repair_unknown_fact_current_status_2",
+                "text": "Могу помочь разобрать полученное уведомление, но само по себе ожидание не доказывает завершения.",
+                "style": "neutral",
+                "read_only": true
+              }
+            ]
+          },
+          "health_uncertainty": {
+            "condition": "Человек просит установить диагноз по недостаточной информации; нужно честно обозначить предел.",
+            "replies": [
+              {
+                "id": "repair_unknown_fact_health_uncertainty_1",
+                "text": "По одной детали нельзя достоверно установить причину симптома. При тревожных признаках нужна медицинская оценка.",
+                "style": "neutral",
+                "read_only": true
+              },
+              {
+                "id": "repair_unknown_fact_health_uncertainty_2",
+                "text": "Могу помочь структурировать симптомы и вопросы к врачу, но не заменю осмотр уверенным диагнозом.",
+                "style": "neutral",
+                "read_only": true
+              }
+            ]
+          },
+          "personal_history": {
+            "condition": "Вопрос требует сведений о личной истории, которые отсутствуют в текущем разрешённом контексте.",
+            "replies": [
+              {
+                "id": "repair_unknown_fact_personal_history_1",
+                "text": "Я не вижу подтверждения, что это уже обсуждали. Лучше опираться на то, что ты готов повторить сейчас.",
+                "style": "neutral",
+                "read_only": true
+              },
+              {
+                "id": "repair_unknown_fact_personal_history_2",
+                "text": "Не буду додумывать чужие события по намёку. Если расскажешь необходимое без лишних подробностей, продолжим.",
+                "style": "neutral",
+                "read_only": true
+              }
+            ]
+          }
+        }
+      },
+      "ambiguous": {
+        "canonical_question": "Что ты имеешь в виду? Нужно уточнить.",
+        "existing_legacy_count": 1,
+        "contexts": {
+          "pronoun_reference": {
+            "condition": "В предыдущем сообщении есть два возможных объекта для местоимения «он» или «это».",
+            "replies": [
+              {
+                "id": "repair_ambiguous_pronoun_reference_1",
+                "text": "Под «он» ты имеешь в виду автора сообщения или человека, о котором он пишет?",
+                "style": "neutral",
+                "read_only": true
+              },
+              {
+                "id": "repair_ambiguous_pronoun_reference_2",
+                "text": "Здесь два возможных предмета. Назови один прямо, чтобы я не ответил не о том.",
+                "style": "neutral",
+                "read_only": true
+              }
+            ]
+          },
+          "relative_time": {
+            "condition": "Вопрос содержит «завтра» или «позже», но дата либо часовой пояс не определены.",
+            "replies": [
+              {
+                "id": "repair_ambiguous_relative_time_1",
+                "text": "Для расписания лучше указать конкретную дату и часовой пояс — слово «завтра» зависит от места.",
+                "style": "neutral",
+                "read_only": true
+              },
+              {
+                "id": "repair_ambiguous_relative_time_2",
+                "text": "Ты говоришь о следующем календарном дне или о времени после полуночи? Для сроков это важно.",
+                "style": "neutral",
+                "read_only": true
+              }
+            ]
+          },
+          "which_file": {
+            "condition": "Пользователь говорит «исправь файл», но прикреплено несколько разных версий.",
+            "replies": [
+              {
+                "id": "repair_ambiguous_which_file_1",
+                "text": "Какую версию менять: исходную или исправленную копию? Названия помогут не перезаписать нужное.",
+                "style": "neutral",
+                "read_only": true
+              },
+              {
+                "id": "repair_ambiguous_which_file_2",
+                "text": "Сначала выберем конкретный файл и поле. Остальные версии оставим без изменений.",
+                "style": "neutral",
+                "read_only": true
+              }
+            ]
+          },
+          "approval_vs_discussion": {
+            "condition": "Короткое «нормально» непонятно: это оценка идеи или окончательное разрешение действовать.",
+            "replies": [
+              {
+                "id": "repair_ambiguous_approval_vs_discussion_1",
+                "text": "«Нормально» — это отзыв о варианте или разрешение считать его окончательным? Не буду угадывать.",
+                "style": "neutral",
+                "read_only": true
+              },
+              {
+                "id": "repair_ambiguous_approval_vs_discussion_2",
+                "text": "Могу продолжить обсуждение, но для публикации или изменения данных нужно отдельное явное согласие.",
+                "style": "neutral",
+                "read_only": true
+              }
+            ]
+          },
+          "group_addressee": {
+            "condition": "В группе есть обращение «ты», но неясно, адресовано ли оно боту.",
+            "replies": [
+              {
+                "id": "repair_ambiguous_group_addressee_1",
+                "text": "В общей беседе неясно, кто адресат. Отвечу, когда вопрос будет направлен мне явно.",
+                "style": "neutral",
+                "read_only": true
+              },
+              {
+                "id": "repair_ambiguous_group_addressee_2",
+                "text": "Не стану вмешиваться в разговор между участниками из-за одного неоднозначного «ты».",
+                "style": "neutral",
+                "read_only": true
+              }
+            ]
+          },
+          "quantity_units": {
+            "condition": "Указано число без единицы, а возможны разные физические величины или валюты.",
+            "replies": [
+              {
+                "id": "repair_ambiguous_quantity_units_1",
+                "text": "Пять чего именно: минут, часов или дней? Пока не уточним, срок считать рано.",
+                "style": "neutral",
+                "read_only": true
+              },
+              {
+                "id": "repair_ambiguous_quantity_units_2",
+                "text": "Значение без единицы может изменить результат в разы. Укажи единицу, и только потом посчитаем.",
+                "style": "neutral",
+                "read_only": true
+              }
+            ]
+          },
+          "quoted_instruction": {
+            "condition": "Фраза похожа на команду, но стоит в цитате или обсуждается как пример.",
+            "replies": [
+              {
+                "id": "repair_ambiguous_quoted_instruction_1",
+                "text": "Ты приводишь чужую фразу для разбора или просишь выполнить её? Цитата сама по себе не команда.",
+                "style": "neutral",
+                "read_only": true
+              },
+              {
+                "id": "repair_ambiguous_quoted_instruction_2",
+                "text": "Если это пример сообщения, разберём его смысл без изменения настроек и выполнения действий.",
+                "style": "neutral",
+                "read_only": true
+              }
+            ]
+          },
+          "goal_unspecified": {
+            "condition": "Человек прислал материал без задачи и нельзя уверенно решать, что его нужно переписать.",
+            "replies": [
+              {
+                "id": "repair_ambiguous_goal_unspecified_1",
+                "text": "Что требуется сделать с текстом: оценить, сократить или найти ошибки? Сам менять его пока не буду.",
+                "style": "neutral",
+                "read_only": true
+              },
+              {
+                "id": "repair_ambiguous_goal_unspecified_2",
+                "text": "Могу сначала описать, что вижу в материале, но решение о правках оставлю за тобой.",
+                "style": "neutral",
+                "read_only": true
+              }
+            ]
+          }
+        }
+      }
     }
   }
 }
