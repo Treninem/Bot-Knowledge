@@ -23,15 +23,15 @@ class T505(unittest.TestCase):
         self.assertTrue(d["constraints"]["read_only"])
         self.assertTrue(d["constraints"]["no_sanctions"])
         self.assertEqual(len(d["entries"]),10)
-        self.assertEqual(sum(len(e["replies"]) for e in d["entries"]),350)
+        self.assertEqual(sum(len(e["replies"]) for e in d["entries"]),400)
         previous={}
         for p in old:
             for e in p["entries"]:previous.setdefault(e["intent_id"],[]).extend(e["replies"])
         ids=set(); answers=set();notes=set()
         for e in d["entries"]:
             self.assertIn(e["intent_id"],previous)
-            self.assertEqual((e["prior_for_stable_id"],e["added_candidates"],e["target"],e["total_staged"],e["remaining"]),(20,80,100,100,0) if e["intent_id"]=="verify_numeric_context" else (20,30,100,50,50))
-            self.assertEqual(len(e["replies"]),80 if e["intent_id"]=="verify_numeric_context" else 30)
+            self.assertEqual((e["prior_for_stable_id"],e["added_candidates"],e["target"],e["total_staged"],e["remaining"]),(20,80,100,100,0) if e["intent_id"] in {"verify_numeric_context","interpret_relative_time"} else (20,30,100,50,50))
+            self.assertEqual(len(e["replies"]),80 if e["intent_id"] in {"verify_numeric_context","interpret_relative_time"} else 30)
             parents={norm(x["text"]) for x in previous[e["intent_id"]]}
             context_parents={norm(x["context_note"]) for x in previous[e["intent_id"]]}
             for x in e["replies"]:
@@ -52,5 +52,5 @@ class T505(unittest.TestCase):
                 for p in parents:
                     b=set(p.split())
                     self.assertLess(len(a&b)/len(a|b),.78,x["id"])
-        self.assertEqual(len(ids),350)
+        self.assertEqual(len(ids),400)
 if __name__=="__main__":unittest.main()
