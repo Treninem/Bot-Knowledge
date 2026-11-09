@@ -1,4 +1,4 @@
-"""T506: 160 original contextual replies; registered source immutable; opt-in only."""
+"""T506: 400 original contextual replies; registered source immutable; opt-in only."""
 import hashlib
 import json
 import re
