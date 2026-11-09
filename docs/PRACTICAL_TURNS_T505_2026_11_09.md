@@ -1,6 +1,6 @@
 # T505 — third practical continuation for ten stable intents (2026-11-09)
 
-Created from exact main `d02a9a195414e66e69727ee9cacd0672b6a4b15c` after [PR #564](https://github.com/Treninem/Bot-Knowledge/pull/564) merged. **400 new independent context-specific Russian reply candidates** (thirty per stable intent). Prior T503+T504: 200; cumulative stages T503–T505: **600** across ten intents: two at **100/100**, eight at **50/100** (**400 total remaining**). Newly completed sets: **2** (candidate-only).
+Created from exact main `d02a9a195414e66e69727ee9cacd0672b6a4b15c` after [PR #564](https://github.com/Treninem/Bot-Knowledge/pull/564) merged. **400 new independent context-specific Russian reply candidates** (80 in each of the two completed intents and 30 in each of eight other intents). Prior T503+T504: 200; cumulative stages T503–T505: **600** across ten intents: two at **100/100**, eight at **50/100** (**400 total remaining**). Newly completed sets: **2** (candidate-only).
 
 Stable intents: `verify_numeric_context`, `interpret_relative_time`, `conditional_steps`, `safe_bug_report`, `fact_vs_guess`, `responsibility_boundary`, `restore_missing_step`, `compare_incomplete_criteria`, `explain_known_limit`, `creative_revision_scope`.
 
@@ -10,7 +10,7 @@ Source pack `packs/ru/dialogue.json` unchanged. Manifest SHA-256 `3e63012f2823ea
 
 Preflight: 400 distinct candidate IDs, 400 distinct normalized replies, 400 distinct context notes; no exact repeats against the previous two stages on the same intent; maximum token-set Jaccard `0.474`. This is a mechanical check, not evidence of semantic independence; quality must still be inspected. Real source integrity, structure, privacy and history validation is required by CI on the exact head SHA before merge. After merge, verify CI on the actual main SHA.
 
-Next stage: continue same IDs from 50/100, without treating alternative spellings of a question as separate intents. 
+Next stage: continue the eight remaining IDs from 50/100, without treating alternative spellings of a question as separate intents. The historical sub-batch sections below record intermediate checkpoints, not the current totals; the final paragraph is authoritative. 
 
 ## T505 second preserved sub-batch
 
