@@ -6,7 +6,7 @@ SOURCE=ROOT/"packs/ru/dialogue.json"
 STAGE=ROOT/"staging/ru/practical_turns_t505_context_pool.json"
 PREVIOUS=[ROOT/"staging/ru/practical_turns_t503_context_pool.json", ROOT/"staging/ru/practical_turns_t504_context_pool.json"]
 def norm(t):
-    return " ".join(re.findall(r"\\w+",unicodedata.normalize("NFKC",t).lower().replace("ё","е")))
+    return " ".join(re.findall(r"\w+",unicodedata.normalize("NFKC",t).lower().replace("ё","е")))
 class T505(unittest.TestCase):
     def test_integrity_lineage_and_audience(self):
         d=json.loads(STAGE.read_text("utf-8"))
@@ -47,7 +47,7 @@ class T505(unittest.TestCase):
                 self.assertEqual(x["context"],"direct")
                 self.assertTrue(x["avoid"])
                 self.assertFalse(re.search(r"(?i)(ghp_[a-z0-9]{12,}|sk-[a-z0-9]{12,}|https?://|@[a-z0-9_]+)",x["text"]))
-                self.assertFalse(re.search(r"(?i)\\b(забань|замуть|удали чужое сообщение)\\b",x["text"]))
+                self.assertFalse(re.search(r"(?i)\b(забань|замуть|удали чужое сообщение)\b",x["text"]))
                 a=set(n.split())
                 for p in parents:
                     b=set(p.split())
