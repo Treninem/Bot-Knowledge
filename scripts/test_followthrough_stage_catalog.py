@@ -71,7 +71,7 @@ class FollowthroughStageCatalogTests(unittest.TestCase):
                 dst = root / rel
                 dst.parent.mkdir(parents=True, exist_ok=True)
                 shutil.copyfile(ROOT / rel, dst)
-            self.assertEqual(FollowthroughStageCatalog(root).reply_count, 7052)
+            self.assertEqual(FollowthroughStageCatalog(root).reply_count, 7134)
             for rel in (SOURCE, *STAGES):
                 dst = root / rel
                 dst.write_bytes(dst.read_bytes() + b" ")
