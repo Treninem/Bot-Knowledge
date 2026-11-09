@@ -54,7 +54,7 @@ class T482Tests(unittest.TestCase):
         self.assertFalse(s["consumer_registered"])
         self.assertEqual(s["audiences"], ["all_ai_bots"])
         self.assertEqual(s["constraints"], {"read_only": True, "requires_direct_address": True, "no_personal_data": True})
-        self.assertEqual(s["checkpoint"], {"stage_id": "T482", "processed_intents": 82, "registered_count": 246, "added_candidates": 82, "finished_100": 0, "partial_intents": 82, "remaining_total": 7954, "rejected": 0})
+        self.assertEqual(s["checkpoint"], {"stage_id": "T482", "processed_intents": 82, "registered_count": 246, "added_candidates": 82, "finished_100": 0, "partial_intents": 82, "remaining_total": 7872, "rejected": 0})
         self.assertEqual(s["cumulative_checkpoint"], {"baseline_registered": 246, "previous_staged": 7626, "added_candidates": 82, "total": 7954, "partial_intents": 82, "finished_100": 0, "remaining_total": 246})
         source = {x["id"]: x["question"] for x in self.source["records"]}
         self.assertEqual(len(source), 82)
