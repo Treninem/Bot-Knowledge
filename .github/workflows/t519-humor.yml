@@ -1,0 +1,38 @@
+name: T519 opt-in humor stage exact-head read-only
+on:
+  pull_request:
+    paths:
+      - "staging/ru/optional_humor_t519_context_pool.json"
+      - "scripts/test_optional_humor_t519.py"
+      - ".github/workflows/t519-humor.yml"
+      - "staging/ru/optional_humor_t518_context_pool.json"
+      - "packs/ru/optional_humor_qa.json"
+      - "manifest.json"
+  push:
+    branches: [main]
+    paths:
+      - "staging/ru/optional_humor_t519_context_pool.json"
+      - "scripts/test_optional_humor_t519.py"
+      - ".github/workflows/t519-humor.yml"
+permissions:
+  contents: read
+jobs:
+  exact-head-t519:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Confirm actual checkout head SHA
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Check schema, privacy, SHA, duplicates, context and opt-in
+        run: |
+          python scripts/validate_pack.py
+          python scripts/validate_qa_v1.py
+          python -m unittest scripts.test_optional_humor_t517 scripts.test_optional_humor_t518 scripts.test_optional_humor_t519 -q
