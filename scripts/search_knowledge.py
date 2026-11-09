@@ -136,6 +136,9 @@ class KnowledgeSearch:
                         "expression": question,
                         "preview": answer[:220],
                         "contexts": tuple(contexts),
+                        # Never expose optional joke material to a generic lookup.
+                        # A consumer must separately confirm a direct humor request.
+                        "requires_humor_opt_in": catalog.get("purpose") == "optional_humor_guidance",
                     }
                     index = len(self.records)
                     self.records.append(record)
@@ -151,12 +154,14 @@ class KnowledgeSearch:
         self._cached_search = lru_cache(maxsize=512)(self._search_uncached)
 
     def search(self, query: str, audience: str = "all_ai_bots", limit: int = 5,
-               *, context: str | None = None) -> tuple[tuple, ...]:
-        """Filter qa.v1 replies by caller-supplied context; None keeps old behaviour."""
-        return self._cached_search(query, audience, limit, context)
+               *, context: str | None = None, humor_opt_in: bool = False) -> tuple[tuple, ...]:
+        """Reference lookup; optional humor requires an explicit trusted caller opt-in."""
+        if type(humor_opt_in) is not bool:
+            raise ValueError("humor_opt_in must be bool")
+        return self._cached_search(query, audience, limit, context, humor_opt_in)
 
     def _search_uncached(self, query: str, audience: str, limit: int,
-                         context: str | None) -> tuple[tuple, ...]:
+                         context: str | None, humor_opt_in: bool) -> tuple[tuple, ...]:
         if audience not in AUDIENCES:
             raise ValueError("Unknown audience")
         if not 1 <= limit <= 20:
@@ -172,6 +177,8 @@ class KnowledgeSearch:
         def eligible(i: int) -> bool:
             record = self.records[i]
             scoped = record["contexts"]
+            if record.get("requires_humor_opt_in", False) and not humor_opt_in:
+                return False
             return bool(allowed.intersection(record["audiences"])) and (
                 context is None or scoped is None or context in scoped
             )
@@ -195,12 +202,15 @@ def main() -> None:
     parser.add_argument("--query", required=True)
     parser.add_argument("--audience", choices=sorted(AUDIENCES), default="all_ai_bots")
     parser.add_argument("--limit", type=int, default=5)
+    parser.add_argument("--humor-opt-in", action="store_true",
+                        help="Trusted caller confirms direct request for optional original humor")
     parser.add_argument("--context", choices=("direct", "private", "group_addressed"),
                         default=None, help="Optional qa.v1 reply context")
     args = parser.parse_args()
     started = time.perf_counter()
     index = KnowledgeSearch()
-    result = index.search(args.query, args.audience, args.limit, context=args.context)
+    result = index.search(args.query, args.audience, args.limit, context=args.context,
+                          humor_opt_in=args.humor_opt_in)
     elapsed_ms = round((time.perf_counter() - started) * 1000, 3)
     print(json.dumps({"query": args.query, "audience": args.audience,
                       "loaded_records": len(index.records),
