@@ -23,7 +23,7 @@ EXPECTED = {
 }
 
 def norm(text):
-    return re.sub(r"\\s+", " ", re.sub(r"[^\\w\\s]", " ", text.casefold().replace("ё", "е"))).strip()
+    return re.sub(r"\s+", " ", re.sub(r"[^\w\s]", " ", text.casefold().replace("ё", "е"))).strip()
 
 class T514(unittest.TestCase):
     @classmethod
