@@ -99,6 +99,7 @@ STAGES = (
     "staging/ru/followthrough_t472_context_pool.json",
     "staging/ru/followthrough_t473_context_pool.json",
     "staging/ru/followthrough_t474_context_pool.json",
+    "staging/ru/followthrough_t475_context_pool.json",
 )
 SOURCE = "packs/ru/conversation_followthrough_qa.json"
 CONTEXTS = frozenset({"direct", "private", "group_addressed"})
