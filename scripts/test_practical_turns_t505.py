@@ -23,15 +23,15 @@ class T505(unittest.TestCase):
         self.assertTrue(d["constraints"]["read_only"])
         self.assertTrue(d["constraints"]["no_sanctions"])
         self.assertEqual(len(d["entries"]),10)
-        self.assertEqual(sum(len(e["replies"]) for e in d["entries"]),100)
+        self.assertEqual(sum(len(e["replies"]) for e in d["entries"]),200)
         previous={}
         for p in old:
             for e in p["entries"]:previous.setdefault(e["intent_id"],[]).extend(e["replies"])
         ids=set(); answers=set();notes=set()
         for e in d["entries"]:
             self.assertIn(e["intent_id"],previous)
-            self.assertEqual((e["prior_for_stable_id"],e["added_candidates"],e["target"],e["total_staged"],e["remaining"]),(20,10,100,30,70))
-            self.assertEqual(len(e["replies"]),10)
+            self.assertEqual((e["prior_for_stable_id"],e["added_candidates"],e["target"],e["total_staged"],e["remaining"]),(20,20,100,40,60))
+            self.assertEqual(len(e["replies"]),20)
             parents={norm(x["text"]) for x in previous[e["intent_id"]]}
             context_parents={norm(x["context_note"]) for x in previous[e["intent_id"]]}
             for x in e["replies"]:
@@ -52,5 +52,5 @@ class T505(unittest.TestCase):
                 for p in parents:
                     b=set(p.split())
                     self.assertLess(len(a&b)/len(a|b),.78,x["id"])
-        self.assertEqual(len(ids),100)
+        self.assertEqual(len(ids),200)
 if __name__=="__main__":unittest.main()
