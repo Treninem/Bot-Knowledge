@@ -98,6 +98,7 @@ _ALLOWED = frozenset({
     "staging/ru/followthrough_t467_context_pool.json",
     "staging/ru/followthrough_t468_context_pool.json",
     "staging/ru/followthrough_t469_context_pool.json",
+    "staging/ru/followthrough_t470_context_pool.json",
 })
 _PINNED_STAGE_BLOBS = {
     "staging/ru/followthrough_t383_context_pool.json": "6aa6b98c0a3fdb5a68ebcc0071d6c80f0967f5f3",
@@ -179,6 +180,7 @@ _PINNED_STAGE_BLOBS = {
     "staging/ru/followthrough_t467_context_pool.json": "d588abc18e6b5bf52a153d75ac2cb51d85953a2d",
     "staging/ru/followthrough_t468_context_pool.json": "e29e6385cef8ffdb24e328afdb58f5df7bda3068",
     "staging/ru/followthrough_t469_context_pool.json": "b53e2407348c6081220cc3d039ff1a691743ec1a",
+    "staging/ru/followthrough_t470_context_pool.json": "0dce5390493effc94d7a6b8673b38aba3245f607",
 }
 
 _CONTEXTS = frozenset({"direct", "private", "group_addressed"})
@@ -1513,12 +1515,12 @@ class StagedContextSelector:
 
         if stage_path in {
             f"staging/ru/followthrough_t{n}_context_pool.json"
-            for n in [*range(406, 423), 424, 425, *range(427, 435), 436, 438, 439, 440, 441, 442, 444, 445, 446, 448, 449, 450, 451, 452, 454, 455, 456, *range(458, 470)]
+            for n in [*range(406, 423), 424, 425, *range(427, 435), 436, 438, 439, 440, 441, 442, 444, 445, 446, 448, 449, 450, 451, 452, 454, 455, 456, *range(458, 471)]
         }:
             # T423, T426, T435 and T457 were catalog-only PRs, not staged answer files.
             # Never guess missing sequence members or accept unpinned paths.
             number = int(stage_path.split("followthrough_t")[1].split("_")[0])
-            reviewed_numbers = (*range(383, 423), 424, 425, *range(427, 435), 436, 438, 439, 440, 441, 442, 444, 445, 446, 448, 449, 450, 451, 452, 454, 455, 456, *range(458, 470))
+            reviewed_numbers = (*range(383, 423), 424, 425, *range(427, 435), 436, 438, 439, 440, 441, 442, 444, 445, 446, 448, 449, 450, 451, 452, 454, 455, 456, *range(458, 471))
             if number not in reviewed_numbers:
                 raise ValueError("unreviewed followthrough stage")
             chain = [
