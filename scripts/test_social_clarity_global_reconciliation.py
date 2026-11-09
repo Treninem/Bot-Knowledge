@@ -38,4 +38,22 @@ class GlobalProgress(unittest.TestCase):
   self.assertEqual(cp["preexisting_complete_stage_blob_sha"],OLD_BLOB)
   self.assertEqual(cp["global_candidate_total_with_t488_t493_t496_t497_t498"],795)
   self.assertFalse(phases[-1]["consumer_registered"])
+
+ def test_readonly_aggregate_counts(self):
+  from scripts.aggregate_social_intent_coverage import calculate
+  result=calculate()
+  self.assertEqual(result["registered"],69)
+  self.assertEqual(result["staged"],726)
+  self.assertEqual(result["candidate_total"],795)
+  self.assertEqual(result["newly_completed_intents_since_T488"],0)
+  by_id={x["intent_id"]:x for x in result["intents"]}
+  self.assertEqual(by_id["clarify_previous"]["registered"],18)
+  self.assertEqual(by_id["clarify_previous"]["staged"],180)
+  self.assertEqual(by_id["clarify_previous"]["over_target"],98)
+  for intent in ("disagreement","unknown_fact","ambiguous"):
+   self.assertEqual(by_id[intent]["registered"],17)
+   self.assertEqual(by_id[intent]["staged"],182)
+   self.assertEqual(by_id[intent]["over_target"],99)
+  self.assertEqual(sum(x["missing"] for x in result["intents"]),0)
+
 if __name__=="__main__":unittest.main()
