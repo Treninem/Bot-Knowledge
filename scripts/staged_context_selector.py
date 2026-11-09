@@ -101,6 +101,7 @@ _ALLOWED = frozenset({
     "staging/ru/followthrough_t470_context_pool.json",
     "staging/ru/followthrough_t471_context_pool.json",
     "staging/ru/followthrough_t472_context_pool.json",
+    "staging/ru/followthrough_t473_context_pool.json",
 })
 _PINNED_STAGE_BLOBS = {
     "staging/ru/followthrough_t383_context_pool.json": "6aa6b98c0a3fdb5a68ebcc0071d6c80f0967f5f3",
@@ -185,6 +186,7 @@ _PINNED_STAGE_BLOBS = {
     "staging/ru/followthrough_t470_context_pool.json": "0dce5390493effc94d7a6b8673b38aba3245f607",
     "staging/ru/followthrough_t471_context_pool.json": "de594abe4b87403a349e5a5e52ac7a66371d4227",
     "staging/ru/followthrough_t472_context_pool.json": "3d392a8f0212a992400bdd17af0ce4a0e26049e2",
+    "staging/ru/followthrough_t473_context_pool.json": "1f8c5a616aaa13ef1cb3321df0adf7b1d25d9847",
 }
 
 _CONTEXTS = frozenset({"direct", "private", "group_addressed"})
