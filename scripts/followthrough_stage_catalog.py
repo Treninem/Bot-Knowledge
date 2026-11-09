@@ -168,8 +168,8 @@ class FollowthroughStageCatalog:
                     seen_texts.add(text)
                     by_intent[ident].append((path, rid))
 
-        if (len(seen_ids) != 82 * len(STAGES) or len(by_intent) != 82
-                or any(len(items) != len(STAGES) for items in by_intent.values())):
+        if (len(seen_ids) != 7954 or len(by_intent) != 82
+                or any(len(items) != 97 for items in by_intent.values())):
             raise ValueError("incomplete or inconsistent stage catalog")
         # Newest stage gets the first chance but only among explicitly
         # approved IDs; no automatic interpretation or hidden randomness.
