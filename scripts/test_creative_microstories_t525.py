@@ -104,7 +104,7 @@ class T525Quality(unittest.TestCase):
             self.assertIn("Это вымысел", r["avoid"])
             self.assertIn("прямому запросу", r["avoid"])
             self.assertTrue(65 <= len(r["text"]) <= 480)
-            self.assertNotRegex(r["text"], r"(?i)https?://|@\\w+|(?:\\+7|\\b8)\\d{10}\\b")
+            self.assertNotRegex(r["text"], r"(?i)https?://|@\w+|(?:\+7|\b8)\d{10}\b")
         prev = [set(norm(r["text"]).split()) for r in a]
         for r in b:
             t = set(norm(r["text"]).split())
