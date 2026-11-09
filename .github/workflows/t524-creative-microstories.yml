@@ -1,0 +1,35 @@
+name: T524 creative microstories exact-head read-only
+on:
+  pull_request:
+    paths:
+      - "staging/ru/creative_microstories_t524_context_pool.json"
+      - "scripts/test_creative_microstories_t524.py"
+      - "docs/CREATIVE_MICROSTORIES_T524_2026_11_09.md"
+      - ".github/workflows/t524-creative-microstories.yml"
+      - "packs/ru/social_dialogues.json"
+      - "manifest.json"
+  push:
+    branches: [main]
+    paths:
+      - "staging/ru/creative_microstories_t524_context_pool.json"
+      - "scripts/test_creative_microstories_t524.py"
+      - ".github/workflows/t524-creative-microstories.yml"
+permissions:
+  contents: read
+jobs:
+  verify-t524:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Exact SHA of checked-out commit
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Verify T524 stage against source bytes and semantic boundaries
+        run: python -m unittest scripts.test_creative_microstories_t524 -v
