@@ -17,3 +17,7 @@ The new **read-only** `scripts/coverage_intent_report.py` counts the actual regi
 These are **candidate records**, not 795 verified semantic variations or 795 delivered consumer replies. T493's 100 entries were genuinely new candidate records but finished **zero** additional sets, because all four were already at 100/100 in T488. T496–T498 are extra candidates above target. Preserve them for later semantic curation; stop using their local `remaining` as a global count. There is no basis to generate more replies for these four until curation/registration work is done.
 
 CLI: `python scripts/coverage_intent_report.py`; regression: `python -m unittest scripts.test_coverage_intent_report -q`. Separate minimal read-only workflow requires exact checked-out head; local Python and full CI must be reported by actual result. No ImPULS, live bot, manifest, token, privacy data, active cache or enforcement change. Other dialogue intent families are deliberately out of this report's limited scope; do **not** interpret it as all-intent global coverage.
+
+## Reconciliation checkpoint — 2026-11-09
+
+After T501 PR #562 merged on `c87308b8c09bd7738e83674f0a4eff92ddd6e720`, this independent T502 branch was fast-forwarded by a two-parent commit preserving the original T502 head and exact new main tree. Paths T501/T502 do not overlap. All coverage source and stage content remains unchanged; full exact-head CI must be rerun for this new head before merging.
