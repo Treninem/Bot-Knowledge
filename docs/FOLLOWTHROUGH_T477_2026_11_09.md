@@ -1,6 +1,6 @@
 # T477 — +82 оригинальных ответа для 82 намерений (09.11.2026)
 
-Основа — Draft #537 (T476) exact-head `535d56d8375e008220c44f1cdef5f53d5f91c19a`. Новый immutable stage: `staging/ru/followthrough_t477_context_pool.json`, Git blob `5c327be84ad919ef95db190954a80abc9e8ff165`. Предыдущий T476 blob `862a8a818ac2cee0b5d36f537cb62c3954e5867a`.
+Основа — Draft #537 (T476) exact-head `535d56d8375e008220c44f1cdef5f53d5f91c19a`. Новый immutable stage: `staging/ru/followthrough_t477_context_pool.json`, Git blob `b4ec4984244db14552a6afb6e26b7754383e6770`. Предыдущий T476 blob `862a8a818ac2cee0b5d36f537cb62c3954e5867a`.
 
 Проверенный зарегистрированный источник `packs/ru/conversation_followthrough_qa.json`: SHA-256 `0862daf244df650bfd85217df3bedb9f2373a6e63dbabfa8d0c831a6fb289ff7`, не изменён. `manifest.json` не менялся, потому что дополнительный stage **не зарегистрирован для потребителей**. Кэши работающих ботов не затронуты.
 

@@ -194,7 +194,7 @@ _PINNED_STAGE_BLOBS = {
     "staging/ru/followthrough_t474_context_pool.json": "ad6ca9577b37296557a2a0f56e3389ea7c796630",
     "staging/ru/followthrough_t475_context_pool.json": "f16fa0cc0e5a7b1b6966f7b06cf9dbfc9a1c6eea",
     "staging/ru/followthrough_t476_context_pool.json": "862a8a818ac2cee0b5d36f537cb62c3954e5867a",
-    "staging/ru/followthrough_t477_context_pool.json": "5c327be84ad919ef95db190954a80abc9e8ff165",
+    "staging/ru/followthrough_t477_context_pool.json": "b4ec4984244db14552a6afb6e26b7754383e6770",
 }
 
 _CONTEXTS = frozenset({"direct", "private", "group_addressed"})
