@@ -1,0 +1,35 @@
+name: T523 final ten opt-in humor intents exact-head (read-only)
+on:
+  pull_request:
+    paths:
+      - "staging/ru/optional_humor_t523_context_pool.json"
+      - "scripts/test_optional_humor_t523.py"
+      - "docs/OPTIONAL_HUMOR_T523_2026_11_09.md"
+      - ".github/workflows/t523-humor.yml"
+      - "packs/ru/optional_humor_qa.json"
+      - "manifest.json"
+  push:
+    branches: [main]
+    paths:
+      - "staging/ru/optional_humor_t523_context_pool.json"
+      - "scripts/test_optional_humor_t523.py"
+      - ".github/workflows/t523-humor.yml"
+permissions:
+  contents: read
+jobs:
+  verify-t523:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Assert checkout exact head
+        env:
+          SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Full ten-intent count, history, privacy and dedup
+        run: python -m unittest scripts.test_optional_humor_t523 -v
