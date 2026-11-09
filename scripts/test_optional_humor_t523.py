@@ -53,7 +53,7 @@ class T523(unittest.TestCase):
                 totals[key] += len(e["replies"])
                 self.assertEqual((e["total_staged"],e["remaining"]),(totals[key],100-totals[key]))
         self.assertEqual(set(totals.values()), {100})
-        stage=self.stages[522]
+        stage=self.stages[523]
         self.assertEqual((stage["checkpoint"]["processed_intents"],stage["checkpoint"]["added_candidates"],stage["checkpoint"]["remaining_total"]),(10,210,0))
 
     def test_new_reply_uniqueness_and_privacy(self):
@@ -63,7 +63,7 @@ class T523(unittest.TestCase):
         norms = set(map(norm,existing))
         bags = [words(s) for s in existing]
         seen_ids = set()
-        for e in self.stages[522]["entries"]:
+        for e in self.stages[523]["entries"]:
             self.assertEqual(len(e["replies"]),21)
             notes=set()
             for r in e["replies"]:
