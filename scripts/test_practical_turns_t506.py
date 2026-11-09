@@ -45,7 +45,7 @@ class T506StageTests(unittest.TestCase):
         for entry in stage["entries"]:
             intent = entry["intent_id"]
             self.assertIn(intent, by_intent)
-            count = 50 if intent in ("conditional_steps", "safe_bug_report") else 10
+            count = 50
             self.assertEqual(entry["prior_for_stable_id"], 50)
             self.assertEqual(entry["added_candidates"], count)
             self.assertEqual(entry["target"], 100)
@@ -79,12 +79,12 @@ class T506StageTests(unittest.TestCase):
                 for oldwords in parent_word_sets:
                     self.assertLess(len(words & oldwords) / len(words | oldwords), 0.78, r["id"])
                 parent_word_sets.append(words)
-        self.assertEqual(additions, 160)
-        self.assertEqual(len(global_ids), 160)
-        self.assertEqual(stage["checkpoint"]["added_candidates"], 160)
-        self.assertEqual(stage["checkpoint"]["finished_100"], 4)
-        self.assertEqual(stage["checkpoint"]["partial_intents"], 6)
-        self.assertEqual(stage["checkpoint"]["remaining_total"], 240)
+        self.assertEqual(additions, 400)
+        self.assertEqual(len(global_ids), 400)
+        self.assertEqual(stage["checkpoint"]["added_candidates"], 400)
+        self.assertEqual(stage["checkpoint"]["finished_100"], 10)
+        self.assertEqual(stage["checkpoint"]["partial_intents"], 0)
+        self.assertEqual(stage["checkpoint"]["remaining_total"], 0)
 
 if __name__ == "__main__":
     unittest.main()
