@@ -1,0 +1,35 @@
+name: T573 conversation contracts continuation exact-head
+on:
+  pull_request:
+    paths:
+      - "staging/ru/conversation_contracts_t573_context_delta.json"
+      - "scripts/test_conversation_contracts_t573.py"
+      - "docs/CONVERSATION_CONTRACTS_T573_2026_11_10.md"
+      - ".github/workflows/t573-conversation-contracts.yml"
+  push:
+    branches: [main]
+    paths:
+      - "staging/ru/conversation_contracts_t573_context_delta.json"
+      - "scripts/test_conversation_contracts_t573.py"
+      - ".github/workflows/t573-conversation-contracts.yml"
+permissions:
+  contents: read
+jobs:
+  verify-t573:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Confirm actual checked-out head
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Validate manifest and 400 contextual candidates
+        run: |
+          python scripts/validate_pack.py
+          python -m unittest scripts.test_conversation_contracts_t570 scripts.test_conversation_contracts_t571 scripts.test_conversation_contracts_t572 scripts.test_conversation_contracts_t573 -v
