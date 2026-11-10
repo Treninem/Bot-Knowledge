@@ -1,0 +1,38 @@
+name: T561 evidence-boundaries continuation exact-head
+on:
+  pull_request:
+    paths:
+      - "staging/ru/evidence_boundaries_t560_context_pool.json"
+      - "staging/ru/evidence_boundaries_t561_context_delta.json"
+      - "scripts/test_evidence_boundaries_t560.py"
+      - "scripts/test_evidence_boundaries_t561.py"
+      - "docs/EVIDENCE_BOUNDARIES_T561_2026_11_10.md"
+      - ".github/workflows/t561-evidence-boundaries.yml"
+      - "manifest.json"
+  push:
+    branches: [main]
+    paths:
+      - "staging/ru/evidence_boundaries_t561_context_delta.json"
+      - "scripts/test_evidence_boundaries_t561.py"
+      - ".github/workflows/t561-evidence-boundaries.yml"
+permissions:
+  contents: read
+jobs:
+  verify-t561:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Verify actual checkout SHA
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Validate registered snapshot and 240 read-only context replies
+        run: |
+          python scripts/validate_pack.py
+          python -m unittest scripts.test_evidence_boundaries_t560 scripts.test_evidence_boundaries_t561 -v
