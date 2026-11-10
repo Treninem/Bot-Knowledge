@@ -57,7 +57,7 @@ class PracticalDialogueT538(unittest.TestCase):
                 self.assertEqual(len(entry["replies"]), 20)
                 for position, row in enumerate(entry["replies"], 1):
                     self.assertEqual(
-                        row["id"], "{}_{}".format(entry["intent_id"], idx * 20 + position)
+                        row["id"], "{}_{:02d}".format(entry["intent_id"], idx * 20 + position)
                     )
                     self.assertNotIn(row["id"], ids)
                     ids.add(row["id"])
