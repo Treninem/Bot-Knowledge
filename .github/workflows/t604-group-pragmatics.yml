@@ -1,0 +1,36 @@
+name: T604-T605 group pragmatics exact-head
+on:
+  pull_request:
+    paths:
+      - "staging/ru/group_pragmatics_t604_context_delta.json"
+      - "staging/ru/group_pragmatics_t605_context_delta.json"
+      - "scripts/test_group_pragmatics_t604_t605.py"
+      - ".github/workflows/t604-group-pragmatics.yml"
+  push:
+    branches: [main]
+    paths:
+      - "staging/ru/group_pragmatics_t604_context_delta.json"
+      - "staging/ru/group_pragmatics_t605_context_delta.json"
+      - "scripts/test_group_pragmatics_t604_t605.py"
+      - ".github/workflows/t604-group-pragmatics.yml"
+permissions:
+  contents: read
+jobs:
+  verify-t604-t605:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Assert actual checkout SHA
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Validate registered source and staging continuation
+        run: |
+          python scripts/validate_pack.py
+          python -m unittest scripts.test_group_pragmatics_t600_t601 scripts.test_group_pragmatics_t604_t605 -v
