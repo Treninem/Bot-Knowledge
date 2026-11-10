@@ -4,6 +4,8 @@ on:
     paths:
       - "staging/ru/social_boundaries_t580_context_pool.json"
       - "scripts/test_social_boundaries_t580.py"
+      - "staging/ru/social_boundaries_t581_context_delta.json"
+      - "scripts/test_social_boundaries_t581.py"
       - ".github/workflows/t580-social-boundaries.yml"
   push:
     branches: [main]
@@ -31,4 +33,4 @@ jobs:
       - name: T580 data, privacy, source and uniqueness
         run: |
           python scripts/validate_pack.py
-          python -m unittest scripts.test_social_boundaries_t580 -v
+          python -m unittest scripts.test_social_boundaries_t580 scripts.test_social_boundaries_t581 -v
