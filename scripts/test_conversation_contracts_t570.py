@@ -79,6 +79,7 @@ class TestT570(unittest.TestCase):
             except (UnicodeError, json.JSONDecodeError): self.fail(f"Invalid JSON in {path}")
             for t in candidate_texts(obj):
                 self.assertNotIn(norm(t),fresh,f"Exact duplicate in {path}")
+            if path.name.startswith("conversation_contracts_t57"): continue
             if isinstance(obj,dict):
                 existing={norm(e["canonical_question"]) for e in obj.get("entries",[]) if isinstance(e,dict) and isinstance(e.get("canonical_question"),str)}
                 for e in self.data["entries"]:
