@@ -1,6 +1,5 @@
 """T582–T583: staged contextual social replies, exact-parent and dedup checks."""
 import json
-import re
 import subprocess
 import unittest
 from pathlib import Path
@@ -70,7 +69,7 @@ class TestT582T583(unittest.TestCase):
                                       reply["context"], reply["read_only"]),
                                      ("ru", "neutral", ["all_ai_bots"], "direct", True))
                     self.assertTrue(reply["avoid"].startswith("Только при подтверждённом контексте"))
-                    self.assertNotRegex(reply["text"], r"(?i)https?://|@[a-z0-9_]+|\\b\\+?\\d[ -]?\\d{2,}")
+                    self.assertNotRegex(reply["text"], r"(?i)https?://|@[a-z0-9_]+|\b\+?\d[ -]?\d{2,}")
                     for value, seen in ((reply["id"], ids), (norm(reply["text"]), texts),
                                         (norm(reply["context_note"]), contexts)):
                         self.assertTrue(value)
