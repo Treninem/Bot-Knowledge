@@ -92,7 +92,11 @@ class EvidenceContinuation565(unittest.TestCase):
             other = json.loads(path.read_text(encoding="utf-8"))
             for line in candidate_replies(other):
                 self.assertNotIn(norm(line), new, path.name)
-            # A later T56x stage deliberately reuses the same canonical intent IDs.\n            # Compare its reply texts above; do not count stable questions as new intents.\n            if path.name.startswith("evidence_boundaries_t56"):\n                continue\n            if isinstance(other, dict):
+            # Later T56x files intentionally extend the same canonical intents.
+            # Check their answer texts above, but not their repeated intent questions.
+            if path.name.startswith("evidence_boundaries_t56"):
+                continue
+            if isinstance(other, dict):
                 for entry in other.get("entries", []):
                     if isinstance(entry, dict) and isinstance(entry.get("canonical_question"), str):
                         self.assertNotIn(norm(entry["canonical_question"]), canonical_questions)
