@@ -61,7 +61,7 @@ class TestT571(unittest.TestCase):
         for i,a in enumerate(tokens):
             for b in tokens[i+1:]:
                 self.assertLess(len(a&b)/len(a|b),.78,self.rows[i]["id"])
-        fresh={norm(r["text"]) for r in self.stages[1]["entries"] for r in r["replies"]}
+        fresh={norm(r["text"]) for e in self.stages[1]["entries"] for r in e["replies"]}
         stage_files={(ROOT/p).resolve() for p in FILES}
         for path in (ROOT/"staging/ru").glob("*.json"):
             if path.resolve() in stage_files:continue
