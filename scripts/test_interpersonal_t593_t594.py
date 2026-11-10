@@ -47,7 +47,7 @@ class TestInterpersonalContinuation(unittest.TestCase):
             self.assertEqual({e["intent_id"] for e in doc["entries"]}, set(roles))
             for e in doc["entries"]:
                 self.assertEqual(e["response_role"], roles[e["intent_id"]])
-                self.assertEqual((e["prior_for_stable_id"], e["added_candidates"], e["total_staged"], e["target"], e["remaining"]),([0,12,12,100,88],[12,8,20,100,80],[20,10,30,100,70],[30,10,40,100,60],[40,10,50,100,50])[idx])
+                self.assertEqual((e["prior_for_stable_id"], e["added_candidates"], e["total_staged"], e["target"], e["remaining"]),tuple(([0,12,12,100,88],[12,8,20,100,80],[20,10,30,100,70],[30,10,40,100,60],[40,10,50,100,50])[idx]))
                 self.assertEqual(len(e["replies"]), count)
                 for offset, r in enumerate(e["replies"]):
                     self.assertEqual(r["id"], f'{e["intent_id"]}_{start+offset:02d}')
