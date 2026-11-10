@@ -10,7 +10,7 @@ ROOT = Path(__file__).resolve().parents[1]
 STAGES = [f"staging/ru/interpersonal_t{n}_context_{'pool' if n == 590 else 'delta'}.json" for n in range(590, 595)]
 # Note: stage 590 uses context_pool, and all subsequent stages context_delta.
 def normalize(s):
-    return " ".join(re.findall(r"[^\\W_]+", s.casefold().replace("ё", "е")))
+    return " ".join(re.findall(r"[^\W_]+", s.casefold().replace("ё", "е")))
 def git_blob(path):
     return subprocess.check_output(["git", "hash-object", path], cwd=ROOT, text=True).strip()
 
@@ -53,7 +53,7 @@ class TestInterpersonalContinuation(unittest.TestCase):
                     self.assertEqual(r["id"], f'{e["intent_id"]}_{start+offset:02d}')
                     self.assertEqual((r["language"],r["audiences"],r["read_only"],r["context"]),("ru",["all_ai_bots"],True,"direct"))
                     self.assertIn("совпадении контекста",r["avoid"])
-                    self.assertFalse(re.search(r"(?i)https?://|@[a-z0-9_]+|\\b\\+?\\d[\\d -]{7,}\\d\\b",r["text"]))
+                    self.assertFalse(re.search(r"(?i)https?://|@[a-z0-9_]+|\b\+?\d[\d -]{7,}\d\b",r["text"]))
                     for v,s in ((r["id"],seen_id),(normalize(r["text"]),seen_text),(normalize(r["context_note"]),seen_note)):
                         self.assertTrue(v)
                         self.assertNotIn(v,s)
