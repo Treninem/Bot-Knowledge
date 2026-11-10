@@ -1,0 +1,35 @@
+name: T571 conversation contracts continuation exact-head
+on:
+  pull_request:
+    paths:
+      - "staging/ru/conversation_contracts_t57*.json"
+      - "scripts/test_conversation_contracts_t57*.py"
+      - "docs/CONVERSATION_CONTRACTS_T571_2026_11_10.md"
+      - ".github/workflows/t571-conversation-contracts.yml"
+  push:
+    branches: [main]
+    paths:
+      - "staging/ru/conversation_contracts_t571_context_delta.json"
+      - "scripts/test_conversation_contracts_t571.py"
+      - ".github/workflows/t571-conversation-contracts.yml"
+permissions:
+  contents: read
+jobs:
+  verify-t571:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Verify actual checked-out SHA
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Validate registered packs and cumulative 200 candidates
+        run: |
+          python scripts/validate_pack.py
+          python -m unittest scripts.test_conversation_contracts_t570 scripts.test_conversation_contracts_t571 -v
