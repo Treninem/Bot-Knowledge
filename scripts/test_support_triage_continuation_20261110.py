@@ -22,10 +22,10 @@ RELATED = [
 ]
 
 def normalized(s):
-    return " ".join(re.findall(r"[^\\W_]+", s.casefold().replace("ё", "е")))
+    return " ".join(re.findall(r"[^\W_]+", s.casefold().replace("ё", "е")))
 
 def blob_sha(raw):
-    prefix = ("blob " + str(len(raw)) + "\\0").encode()
+    prefix = ("blob " + str(len(raw)) + "\0").encode()
     return hashlib.sha1(prefix + raw).hexdigest()
 
 def tokens(s):
@@ -99,8 +99,8 @@ class TestSupportTriageContinuation(unittest.TestCase):
                         self.assertTrue(value)
                         self.assertNotIn(value, seen)
                         seen.add(value)
-                    self.assertNotRegex(r["text"], r"https?://|[A-Za-z0-9_.+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}")
-                    self.assertNotRegex(r["text"], r"(?<!\\w)\\+?\\d[\\d ()-]{8,}\\d(?!\\w)")
+                    self.assertNotRegex(r["text"], r"https?://|[A-Za-z0-9_.+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}")
+                    self.assertNotRegex(r["text"], r"(?<!\w)\+?\d[\d ()-]{8,}\d(?!\w)")
         self.assertEqual((len(seen_ids), len(seen_texts), len(seen_notes)), (500, 500, 500))
 
     def test_lexical_near_duplicates_against_prior_stages_and_related(self):
