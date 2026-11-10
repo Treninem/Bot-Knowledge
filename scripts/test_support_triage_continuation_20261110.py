@@ -1,4 +1,4 @@
-"""Checks for generic support triage continuation C/D/E/F; staging data only."""
+"""Checks for generic support triage continuation C/D/E/F/G; staging data only."""
 import hashlib
 import json
 import re
@@ -13,6 +13,7 @@ FILES = [
     "staging/ru/support_triage_20261110_context_delta_d.json",
     "staging/ru/support_triage_20261110_context_delta_e.json",
     "staging/ru/support_triage_20261110_context_delta_f.json",
+    "staging/ru/support_triage_20261110_context_delta_g.json",
 ]
 RELATED = [
     "staging/ru/evidence_boundaries_t560_context_pool.json",
@@ -59,7 +60,7 @@ class TestSupportTriageContinuation(unittest.TestCase):
 
     def test_scope_counts_ids_and_private_data(self):
         seen_ids, seen_texts, seen_notes = set(), set(), set()
-        counts = [10, 10, 20, 10, 10, 20]
+        counts = [10, 10, 20, 10, 10, 20, 20]
         names = None
         for i, (stage, count) in enumerate(zip(self.stages, counts)):
             self.assertEqual(stage["stage_type"], "supplemental_contextual_reply_pool")
@@ -73,8 +74,8 @@ class TestSupportTriageContinuation(unittest.TestCase):
             self.assertEqual(cp["prior_candidates"], sum(counts[:i]) * 10)
             self.assertEqual(cp["cumulative_candidates"], sum(counts[:i+1]) * 10)
             self.assertEqual(cp["processed_intents"], 10)
-            self.assertEqual(cp["finished_100"], 0)
-            self.assertEqual(cp["partial_intents"], 10)
+            self.assertEqual(cp["finished_100"], 10 if i == len(counts) - 1 else 0)
+            self.assertEqual(cp["partial_intents"], 0 if i == len(counts) - 1 else 10)
             self.assertEqual(cp["remaining_total"], 1000 - sum(counts[:i+1]) * 10)
             self.assertEqual(len(stage["entries"]), 10)
             names_now = {e["intent_id"] for e in stage["entries"]}
@@ -103,12 +104,12 @@ class TestSupportTriageContinuation(unittest.TestCase):
                         seen.add(value)
                     self.assertNotRegex(r["text"], r"https?://|[A-Za-z0-9_.+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}")
                     self.assertNotRegex(r["text"], r"(?<!\w)\+?\d[\d ()-]{8,}\d(?!\w)")
-        self.assertEqual((len(seen_ids), len(seen_texts), len(seen_notes)), (800, 800, 800))
+        self.assertEqual((len(seen_ids), len(seen_texts), len(seen_notes)), (1000, 1000, 1000))
 
     def test_lexical_near_duplicates_against_prior_stages_and_related(self):
         prior = [r["text"] for s in self.stages[:2] for e in s["entries"] for r in e["replies"]]
         incoming = [r["text"] for s in self.stages[2:] for e in s["entries"] for r in e["replies"]]
-        self.assertEqual(len(incoming), 600)
+        self.assertEqual(len(incoming), 800)
         related = []
         for filename in RELATED:
             data = json.loads((ROOT / filename).read_text("utf-8"))
@@ -129,7 +130,7 @@ class TestSupportTriageContinuation(unittest.TestCase):
                 self.assertLess(similarity, .80, (t, similarity))
             old.append(a)
         self.assertLess(highest, .80)
-        print("C+D+E+F cross-pool token Jaccard max:", round(highest, 4),
+        print("C+D+E+F+G cross-pool token Jaccard max:", round(highest, 4),
               "compared against", len(prior) + len(related), "prior/related replies")
 
 if __name__ == "__main__":
