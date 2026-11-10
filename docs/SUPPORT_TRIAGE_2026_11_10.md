@@ -35,3 +35,20 @@ or claimed integrations.
 Candidate replies do not claim any named product has a specific button,
 permission, logging facility or refresh behavior. Conditions in `context_note`
 are required, not optional decoration. No uncontrolled automatic selection.
+
+## Continuation checkpoint B — 100 more original answers
+- `staging/ru/support_triage_20261110_context_delta_b.json`: +100 new
+  context-specific replies, replies 11–20 in all ten original stable intents,
+  no new canonical intents counted. Parent: `staging/ru/support_triage_20261110_context_pool.json`
+  Git blob `e8f1f64250b7d30ddd57d93120aeee837675fdfe`.
+- **Session total: +200 new replies; 200/1000** (10 intents × 20/100),
+  **ten partial** sets, **0 completed** 100/100, 80 per intent still missing,
+  next stable response ID index is **21**.
+- Independently verified 200 normalized texts and 200 distinct context notes
+  across the two new stages (zero exact/near ≥ 0.80, max Jaccard 0.2609).
+  Cross-checked **200** candidates against **1500** related staged replies
+  in 12 files: zero exact/near ≥ 0.80, max Jaccard 0.3000.
+  Neither metric establishes semantic novelty outside those 12 sampled files.
+- Python tests now cover pinned source SHA and exact parent Git blob,
+  both checkpoint counts, privacy and lexical dedup across 1700 texts.
+  Latest exact-head and post-main CI must finish before any merge.
