@@ -1,4 +1,4 @@
-"""Checks for generic support triage continuation C/D; staging data only."""
+"""Checks for generic support triage continuation C/D/E; staging data only."""
 import hashlib
 import json
 import re
@@ -11,6 +11,7 @@ FILES = [
     "staging/ru/support_triage_20261110_context_delta_b.json",
     "staging/ru/support_triage_20261110_context_delta_c.json",
     "staging/ru/support_triage_20261110_context_delta_d.json",
+    "staging/ru/support_triage_20261110_context_delta_e.json",
 ]
 RELATED = [
     "staging/ru/evidence_boundaries_t560_context_pool.json",
@@ -57,7 +58,7 @@ class TestSupportTriageContinuation(unittest.TestCase):
 
     def test_scope_counts_ids_and_private_data(self):
         seen_ids, seen_texts, seen_notes = set(), set(), set()
-        counts = [10, 10, 20, 10]
+        counts = [10, 10, 20, 10, 10]
         names = None
         for i, (stage, count) in enumerate(zip(self.stages, counts)):
             self.assertEqual(stage["stage_type"], "supplemental_contextual_reply_pool")
@@ -101,12 +102,12 @@ class TestSupportTriageContinuation(unittest.TestCase):
                         seen.add(value)
                     self.assertNotRegex(r["text"], r"https?://|[A-Za-z0-9_.+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}")
                     self.assertNotRegex(r["text"], r"(?<!\w)\+?\d[\d ()-]{8,}\d(?!\w)")
-        self.assertEqual((len(seen_ids), len(seen_texts), len(seen_notes)), (500, 500, 500))
+        self.assertEqual((len(seen_ids), len(seen_texts), len(seen_notes)), (600, 600, 600))
 
     def test_lexical_near_duplicates_against_prior_stages_and_related(self):
         prior = [r["text"] for s in self.stages[:2] for e in s["entries"] for r in e["replies"]]
         incoming = [r["text"] for s in self.stages[2:] for e in s["entries"] for r in e["replies"]]
-        self.assertEqual(len(incoming), 300)
+        self.assertEqual(len(incoming), 400)
         related = []
         for filename in RELATED:
             data = json.loads((ROOT / filename).read_text("utf-8"))
