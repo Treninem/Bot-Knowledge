@@ -1,0 +1,40 @@
+name: T537 practical dialogue 80-of-100 exact-head
+on:
+  pull_request:
+    paths:
+      - "staging/ru/practical_dialogue_t537_context_pool.json"
+      - "scripts/test_practical_dialogue_t537.py"
+      - "docs/PRACTICAL_DIALOGUE_T537_2026_11_10.md"
+      - ".github/workflows/t537-practical-dialogue.yml"
+      - "staging/ru/practical_dialogue_t536_context_pool.json"
+      - "staging/ru/practical_dialogue_t535_context_pool.json"
+      - "staging/ru/practical_dialogue_t534_context_pool.json"
+      - "packs/ru/dialogue.json"
+      - "manifest.json"
+  push:
+    branches: [main]
+    paths:
+      - "staging/ru/practical_dialogue_t537_context_pool.json"
+      - "scripts/test_practical_dialogue_t537.py"
+      - ".github/workflows/t537-practical-dialogue.yml"
+permissions:
+  contents: read
+jobs:
+  verify-t537:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Verify source checkout SHA
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Validate source and staged contexts
+        run: |
+          python scripts/validate_pack.py
+          python -m unittest scripts.test_practical_dialogue_t535 scripts.test_practical_dialogue_t536 scripts.test_practical_dialogue_t537
