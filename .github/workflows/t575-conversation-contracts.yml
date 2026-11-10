@@ -1,0 +1,35 @@
+name: T575 context contracts sixth stage exact-head
+on:
+  pull_request:
+    paths:
+      - "staging/ru/conversation_contracts_t575_context_delta.json"
+      - "scripts/test_conversation_contracts_t575.py"
+      - "docs/CONVERSATION_CONTRACTS_T575_2026_11_10.md"
+      - ".github/workflows/t575-conversation-contracts.yml"
+  push:
+    branches: [main]
+    paths:
+      - "staging/ru/conversation_contracts_t575_context_delta.json"
+      - "scripts/test_conversation_contracts_t575.py"
+      - ".github/workflows/t575-conversation-contracts.yml"
+permissions:
+  contents: read
+jobs:
+  verify-t575:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Confirm actual HEAD
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Validate registered packs and 600 scoped replies
+        run: |
+          python scripts/validate_pack.py
+          python -m unittest scripts.test_conversation_contracts_t570 scripts.test_conversation_contracts_t571 scripts.test_conversation_contracts_t572 scripts.test_conversation_contracts_t573 scripts.test_conversation_contracts_t574 scripts.test_conversation_contracts_t575 -v
