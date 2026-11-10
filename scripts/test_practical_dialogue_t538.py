@@ -4,7 +4,6 @@ Staging only: the replies are never consumer-registered or authority-bearing.
 """
 import hashlib
 import json
-import re
 import subprocess
 import unicodedata
 import unittest
@@ -75,7 +74,7 @@ class PracticalDialogueT538(unittest.TestCase):
                     self.assertGreaterEqual(len(row["text"]), 40)
                     self.assertNotRegex(
                         row["text"].lower(),
-                        r"(?<!\\w)(?:забанил|замутил|выдал бан|удалил сообщение)(?!\\w)",
+                        r"(?<!\w)(?:забанил|замутил|выдал бан|удалил сообщение)(?!\w)",
                     )
                     bag = set(norm(row["text"]).split())
                     for previous in bags:
