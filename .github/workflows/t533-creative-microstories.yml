@@ -1,0 +1,37 @@
+name: T533 original creative microstories exact-head read-only
+on:
+  pull_request:
+    paths:
+      - "staging/ru/creative_microstories_t533_context_pool.json"
+      - "scripts/test_creative_microstories_t533.py"
+      - "docs/CREATIVE_MICROSTORIES_T533_2026_11_10.md"
+      - ".github/workflows/t533-creative-microstories.yml"
+      - "packs/ru/social_dialogues.json"
+      - "manifest.json"
+  push:
+    branches: [main]
+    paths:
+      - "staging/ru/creative_microstories_t533_context_pool.json"
+      - "scripts/test_creative_microstories_t533.py"
+      - ".github/workflows/t533-creative-microstories.yml"
+permissions:
+  contents: read
+jobs:
+  verify-t533:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Verify actual exact head checkout
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Validate manifest and complete 1000 candidate inventory
+        run: |
+          python scripts/validate_pack.py
+          python -m unittest scripts.test_creative_microstories_t524 scripts.test_creative_microstories_t525 scripts.test_creative_microstories_t526 scripts.test_creative_microstories_t527 scripts.test_creative_microstories_t528 scripts.test_creative_microstories_t529 scripts.test_creative_microstories_t530 scripts.test_creative_microstories_t531 scripts.test_creative_microstories_t532 scripts.test_creative_microstories_t533 -v
