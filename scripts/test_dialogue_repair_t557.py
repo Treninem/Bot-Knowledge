@@ -36,7 +36,7 @@ class DialogueRepair557(unittest.TestCase):
     def test_600_exact_and_context_unique(self):
         d=self.parts
         by=[{e["intent_id"]:e for e in p["entries"]} for p in d]
-        self.assertEqual(len(by[0]),len(by[1]),len(by[2]),len(by[3]),10)
+        self.assertEqual([len(x) for x in by], [10]*4)
         ids,txt,notes=set(),set(),set()
         for e in d[-1]["entries"]:
             k=e["intent_id"]
