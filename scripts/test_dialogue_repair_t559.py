@@ -1,4 +1,4 @@
-"""T559: context-bound RU continuation 61–80, full original lineage and scopes."""
+"""T559: context-bound RU continuation 81–100, full original lineage and scopes."""
 import hashlib
 import json
 import subprocess
@@ -49,7 +49,7 @@ class DialogueRepair559(unittest.TestCase):
                 self.assertEqual((r["read_only"],r["language"],r["audiences"],r["context"]),(True,"ru",["all_ai_bots"],"direct"))
         self.assertEqual((len(ids),len(txt),len(notes)),(1000,1000,1000))
         c=self.parts[-1]["checkpoint"]
-        self.assertEqual((c["prior_candidates"],c["added_candidates"],c["cumulative_candidates"],c["remaining_total"]),(600,200,1000,200))
+        self.assertEqual((c["prior_candidates"],c["added_candidates"],c["cumulative_candidates"],c["remaining_total"]),(800,200,1000,0))
     def test_near_and_cross_stage_exact(self):
         lines=[r["text"] for d in self.parts for e in d["entries"] for r in e["replies"]]
         vectors=[set(norm(t).split()) for t in lines]
