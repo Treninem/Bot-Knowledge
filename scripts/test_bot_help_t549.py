@@ -28,8 +28,8 @@ class T549(unittest.TestCase):
         self.assertEqual(len(p["entries"]),5)
         ids,texts,notes=set(),set(),set()
         for e in p["entries"]:
-            self.assertEqual((e["prior_for_stable_id"],e["added_candidates"],e["total_staged"],e["remaining"]), (0,20,20,80))
-            self.assertEqual(len(e["replies"]),20)
+            self.assertEqual((e["prior_for_stable_id"],e["added_candidates"],e["total_staged"],e["remaining"]), (20,20,40,60))
+            self.assertEqual(len(e["replies"]),40)
             for i,r in enumerate(e["replies"],1):
                 self.assertEqual(r["id"],e["intent_id"]+"_%02d"%i)
                 self.assertNotIn(r["id"],ids); ids.add(r["id"])
@@ -40,8 +40,8 @@ class T549(unittest.TestCase):
                 for val,seen in ((r["text"],texts),(r["context_note"],notes)):
                     k=norm(val); self.assertTrue(k); self.assertNotIn(k,seen); seen.add(k)
                 self.assertNotRegex(r["text"].casefold(),r"\b(?:я забанил|я замутил|я удалил|я настроил|я оплатил)\b")
-        self.assertEqual((len(ids),len(texts),len(notes)),(100,100,100))
-        self.assertEqual((p["checkpoint"]["cumulative_candidates"],p["checkpoint"]["remaining_total"]), (100,400))
+        self.assertEqual((len(ids),len(texts),len(notes)),(200,200,200))
+        self.assertEqual((p["checkpoint"]["cumulative_candidates"],p["checkpoint"]["remaining_total"]), (200,300))
         # Scan staged replies outside this pool for exact matches without assuming every source shares this schema.
         for path in sorted((ROOT/"staging/ru").glob("*.json")):
             if path==POOL: continue
