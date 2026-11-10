@@ -8,6 +8,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 STAGE = ROOT / "staging/ru/support_triage_20261110_context_pool.json"
+STAGE_B = ROOT / "staging/ru/support_triage_20261110_context_delta_b.json"
 RELATED = [
     "staging/ru/evidence_boundaries_t560_context_pool.json",
     "staging/ru/evidence_boundaries_t569_context_delta.json",
@@ -38,6 +39,7 @@ class TestSupportTriage20261110(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.stage = json.loads(STAGE.read_text(encoding="utf-8"))
+        cls.stage_b = json.loads(STAGE_B.read_text(encoding="utf-8"))
 
     def test_source_pack_and_scope(self):
         stage = self.stage
@@ -92,8 +94,58 @@ class TestSupportTriage20261110(unittest.TestCase):
                 self.assertNotRegex(reply["text"], r"(?<!\w)\+?\d[\d ()-]{8,}\d(?!\w)")
         self.assertEqual((len(ids), len(texts), len(notes)), (100, 100, 100))
 
+    def test_delta_lineage_and_second_hundred(self):
+        other = self.stage_b
+        self.assertEqual(other["parent_stage"], STAGE.relative_to(ROOT).as_posix())
+        self.assertEqual(other["parent_stage_blob_sha"], git_blob(STAGE))
+        for key in ("source_pack", "source_pack_manifest_sha256",
+                    "source_pack_blob_sha", "checked_source_main_sha"):
+            self.assertEqual(other[key], self.stage[key])
+        self.assertIs(other["consumer_registered"], False)
+        self.assertEqual(other["audiences"], ["all_ai_bots"])
+        for key in ("read_only", "requires_direct_address", "no_personal_data",
+                    "no_sanctions", "requires_context_match"):
+            self.assertIs(other["constraints"][key], True)
+        checkpoint = other["checkpoint"]
+        self.assertEqual((checkpoint["prior_candidates"], checkpoint["added_candidates"],
+                          checkpoint["cumulative_candidates"], checkpoint["remaining_total"]),
+                         (100, 100, 200, 800))
+        self.assertEqual((checkpoint["processed_intents"], checkpoint["partial_intents"],
+                          checkpoint["finished_100"]), (10, 10, 0))
+        existing_text = {normalized(r["text"]) for e in self.stage["entries"]
+                         for r in e["replies"]}
+        existing_notes = {normalized(r["context_note"]) for e in self.stage["entries"]
+                          for r in e["replies"]}
+        new_ids, new_text, new_notes = set(), set(), set()
+        self.assertEqual(len(other["entries"]), 10)
+        for entry in other["entries"]:
+            self.assertIn(entry["intent_id"], {e["intent_id"] for e in self.stage["entries"]})
+            self.assertEqual((entry["target"], entry["prior_for_stable_id"],
+                              entry["added_candidates"], entry["total_staged"], entry["remaining"]),
+                             (100, 10, 10, 20, 80))
+            self.assertEqual(len(entry["replies"]), 10)
+            for i, reply in enumerate(entry["replies"], 11):
+                self.assertEqual(reply["id"], f'{entry["intent_id"]}_{i:02d}')
+                self.assertEqual(reply["language"], "ru")
+                self.assertEqual(reply["audiences"], ["all_ai_bots"])
+                self.assertEqual(reply["context"], "direct")
+                self.assertIs(reply["read_only"], True)
+                self.assertIn("совпадении условия", reply["avoid"])
+                self.assertNotRegex(reply["text"], r"https?://|[A-Za-z0-9_.+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}")
+                self.assertNotRegex(reply["text"], r"(?<!\w)\+?\d[\d ()-]{8,}\d(?!\w)")
+                self.assertNotIn(normalized(reply["text"]), existing_text)
+                self.assertNotIn(normalized(reply["context_note"]), existing_notes)
+                self.assertNotIn(reply["id"], new_ids)
+                self.assertNotIn(normalized(reply["text"]), new_text)
+                self.assertNotIn(normalized(reply["context_note"]), new_notes)
+                new_ids.add(reply["id"])
+                new_text.add(normalized(reply["text"]))
+                new_notes.add(normalized(reply["context_note"]))
+        self.assertEqual((len(new_ids), len(new_text), len(new_notes)), (100, 100, 100))
+
     def test_no_near_duplicates_with_related_staged_replies(self):
-        current = [r["text"] for e in self.stage["entries"] for r in e["replies"]]
+        current = [r["text"] for document in (self.stage, self.stage_b)
+                   for e in document["entries"] for r in e["replies"]]
         previous = []
         for path in RELATED:
             obj = json.loads((ROOT / path).read_text(encoding="utf-8"))
