@@ -147,7 +147,7 @@ class FollowthroughStageCatalog:
                 raise ValueError("unreviewed stage missing immutable pin")
             stage_bytes = (root / stage_path).read_bytes()
             blob_hash = hashlib.sha1(
-                b"blob " + str(len(stage_bytes)).encode("ascii") + b"\\0" + stage_bytes
+                b"blob " + str(len(stage_bytes)).encode("ascii") + b"\0" + stage_bytes
             ).hexdigest()
             if blob_hash != expected_blob:
                 raise ValueError("unreviewed stage blob mismatch")
