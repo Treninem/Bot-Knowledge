@@ -39,7 +39,7 @@ class T549(unittest.TestCase):
                 self.assertIn("адресации",r["avoid"])
                 for val,seen in ((r["text"],texts),(r["context_note"],notes)):
                     k=norm(val); self.assertTrue(k); self.assertNotIn(k,seen); seen.add(k)
-                self.assertNotRegex(r["text"].casefold(),r"\\b(?:я забанил|я замутил|я удалил|я настроил|я оплатил)\\b")
+                self.assertNotRegex(r["text"].casefold(),r"\b(?:я забанил|я замутил|я удалил|я настроил|я оплатил)\b")
         self.assertEqual((len(ids),len(texts),len(notes)),(100,100,100))
         self.assertEqual((p["checkpoint"]["cumulative_candidates"],p["checkpoint"]["remaining_total"]), (100,400))
         # Scan staged replies outside this pool for exact matches without assuming every source shares this schema.
