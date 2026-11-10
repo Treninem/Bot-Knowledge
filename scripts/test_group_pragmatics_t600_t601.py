@@ -1,4 +1,4 @@
-"""Read-only acceptance tests for T600/T601 synthetic group pragmatics staging.
+"""Read-only acceptance tests for T600–T603 synthetic group pragmatics staging.
 
 The content has no sanctions, consumer registration, or chat-memory authority.
 """
@@ -12,6 +12,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 P0 = Path("staging/ru/group_pragmatics_t600_context_pool.json")
 P1 = Path("staging/ru/group_pragmatics_t601_context_delta.json")
+P2 = Path("staging/ru/group_pragmatics_t602_context_delta.json")
+P3 = Path("staging/ru/group_pragmatics_t603_context_delta.json")
 EXPECTED = {
     "t600_spoiler_boundary", "t600_ambiguous_joke", "t600_group_turns",
     "t600_public_private", "t600_neutral_poll", "t600_recap_missing_start",
@@ -32,6 +34,8 @@ class TestGroupPragmatics(unittest.TestCase):
     def setUpClass(cls):
         cls.a = json.loads((ROOT / P0).read_text(encoding="utf-8"))
         cls.b = json.loads((ROOT / P1).read_text(encoding="utf-8"))
+        cls.c = json.loads((ROOT / P2).read_text(encoding="utf-8"))
+        cls.d = json.loads((ROOT / P3).read_text(encoding="utf-8"))
 
     def test_source_and_isolation(self):
         manifest = json.loads((ROOT / "manifest.json").read_text(encoding="utf-8"))
@@ -42,7 +46,11 @@ class TestGroupPragmatics(unittest.TestCase):
         self.assertIn({"path": source, "sha256": digest}, manifest["packs"])
         self.assertEqual(self.b["parent_stage"], str(P0))
         self.assertEqual(self.b["parent_stage_blob_sha"], git_blob(P0))
-        for document in (self.a, self.b):
+        self.assertEqual(self.c["parent_stage"], str(P1))
+        self.assertEqual(self.c["parent_stage_blob_sha"], git_blob(P1))
+        self.assertEqual(self.d["parent_stage"], str(P2))
+        self.assertEqual(self.d["parent_stage_blob_sha"], git_blob(P2))
+        for document in (self.a, self.b, self.c, self.d):
             self.assertEqual(document["schema_version"], 1)
             self.assertFalse(document["consumer_registered"])
             self.assertEqual(document["language"], "ru")
@@ -57,7 +65,7 @@ class TestGroupPragmatics(unittest.TestCase):
     def test_counts_ids_and_context(self):
         seen_ids, seen_texts, seen_notes = set(), set(), set()
         token_sets = []
-        for stage, doc in enumerate((self.a, self.b)):
+        for stage, doc in enumerate((self.a, self.b, self.c, self.d)):
             checkpoint = doc["checkpoint"]
             self.assertEqual(checkpoint["added_candidates"], 100)
             self.assertEqual(checkpoint["cumulative_candidates"], (stage+1)*100)
@@ -97,7 +105,7 @@ class TestGroupPragmatics(unittest.TestCase):
                         pool.add(value)
                     token_sets.append(set(normalized(reply["text"]).split()))
         self.assertEqual((len(seen_ids), len(seen_texts), len(seen_notes)),
-                         (200, 200, 200))
+                         (400, 400, 400))
         for i, a in enumerate(token_sets):
             for b in token_sets[i+1:]:
                 self.assertLess(len(a & b) / len(a | b), 0.80)
