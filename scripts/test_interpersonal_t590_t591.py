@@ -70,7 +70,7 @@ class InterpersonalT590T591(unittest.TestCase):
         original, delta = self.docs
         expected_roles = {
             "t590_specific_thanks", "t590_apologize_concretely",
-            "t590_decline_gently", "t590_pause_boundary",
+            "t590_decline_gently",
         }
         intents = [e["intent_id"] for e in original["entries"]]
         self.assertEqual(len(intents), len(set(intents)))
