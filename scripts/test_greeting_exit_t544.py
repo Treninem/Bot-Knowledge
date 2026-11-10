@@ -30,8 +30,8 @@ class T544(unittest.TestCase):
         ids, texts, notes, bags = set(), set(), set(), []
         for e in j["entries"]:
             self.assertTrue(e["intent_id"].startswith("t544_"))
-            self.assertEqual((e["prior_for_stable_id"], e["added_candidates"], e["total_staged"], e["remaining"]), (10, 20, 30, 70))
-            self.assertEqual(len(e["replies"]), 30)
+            self.assertEqual((e["prior_for_stable_id"], e["added_candidates"], e["total_staged"], e["remaining"]), (30, 20, 50, 50))
+            self.assertEqual(len(e["replies"]), 50)
             for i, r in enumerate(e["replies"], 1):
                 self.assertEqual(r["id"], e["intent_id"] + "_%02d" % i)
                 self.assertNotIn(r["id"], ids); ids.add(r["id"])
@@ -46,8 +46,8 @@ class T544(unittest.TestCase):
                 for other in bags:
                     self.assertLess(len(bag & other) / len(bag | other), .78)
                 bags.append(bag)
-        self.assertEqual((len(ids), len(texts), len(notes)), (150, 150, 150))
-        self.assertEqual((j["checkpoint"]["cumulative_candidates"], j["checkpoint"]["remaining_total"]), (150, 350))
+        self.assertEqual((len(ids), len(texts), len(notes)), (250, 250, 250))
+        self.assertEqual((j["checkpoint"]["cumulative_candidates"], j["checkpoint"]["remaining_total"]), (250, 250))
         external = set()
         for path in sorted((ROOT / "staging/ru").glob("*.json")):
             if path == POOL: continue
