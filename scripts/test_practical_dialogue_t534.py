@@ -26,14 +26,14 @@ class TestT534(unittest.TestCase):
         entries=self.pool["entries"]
         self.assertEqual(len(entries),8)
         ids=set();texts=set();notes=set();tokens=[]
-        self.assertEqual(self.pool["checkpoint"]["added_candidates"],80)
-        self.assertEqual(self.pool["checkpoint"]["remaining_total"],720)
+        self.assertEqual(self.pool["checkpoint"]["added_candidates"],160)
+        self.assertEqual(self.pool["checkpoint"]["remaining_total"],640)
         for entry in entries:
-            self.assertEqual(len(entry["replies"]),10)
+            self.assertEqual(len(entry["replies"]),20)
             self.assertEqual(entry["prior_for_stable_id"],0)
-            self.assertEqual(entry["added_candidates"],10)
-            self.assertEqual(entry["total_staged"],10)
-            self.assertEqual(entry["remaining"],90)
+            self.assertEqual(entry["added_candidates"],20)
+            self.assertEqual(entry["total_staged"],20)
+            self.assertEqual(entry["remaining"],80)
             self.assertEqual(entry["target"],100)
             for row in entry["replies"]:
                 self.assertNotIn(row["id"],ids);ids.add(row["id"])
@@ -48,7 +48,7 @@ class TestT534(unittest.TestCase):
                 for other in tokens:
                     self.assertLess(len(words & other)/len(words | other),0.78)
                 tokens.append(words)
-        self.assertEqual(len(ids),80)
-        self.assertEqual(len(texts),80)
-        self.assertEqual(len(notes),80)
+        self.assertEqual(len(ids),160)
+        self.assertEqual(len(texts),160)
+        self.assertEqual(len(notes),160)
 if __name__=="__main__": unittest.main()
