@@ -1,22 +1,26 @@
-name: T590-T591 interpersonal context candidate verification
+name: T590-T592 interpersonal context candidate verification
 on:
   pull_request:
     paths:
       - 'staging/ru/interpersonal_t590_context_pool.json'
       - 'staging/ru/interpersonal_t591_context_delta.json'
+      - 'staging/ru/interpersonal_t592_context_delta.json'
       - 'scripts/test_interpersonal_t590_t591.py'
+      - 'scripts/test_interpersonal_t592.py'
       - '.github/workflows/t590-interpersonal-context.yml'
   push:
     branches: [main]
     paths:
       - 'staging/ru/interpersonal_t590_context_pool.json'
       - 'staging/ru/interpersonal_t591_context_delta.json'
+      - 'staging/ru/interpersonal_t592_context_delta.json'
       - 'scripts/test_interpersonal_t590_t591.py'
+      - 'scripts/test_interpersonal_t592.py'
       - '.github/workflows/t590-interpersonal-context.yml'
 permissions:
   contents: read
 jobs:
-  verify-t590-t591:
+  verify-t590-t592:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -30,7 +34,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Validate source and 200 contextual replies
+      - name: Validate source and 300 contextual replies
         run: |
           python scripts/validate_pack.py
-          python -m unittest scripts.test_interpersonal_t590_t591 -v
+          python -m unittest scripts.test_interpersonal_t590_t591 scripts.test_interpersonal_t592 -v
