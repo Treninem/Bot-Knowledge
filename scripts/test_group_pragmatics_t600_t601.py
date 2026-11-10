@@ -20,7 +20,7 @@ EXPECTED = {
 }
 
 def normalized(text):
-    return " ".join(re.findall(r"[^\\W_]+", text.casefold().replace("ё", "е")))
+    return " ".join(re.findall(r"[^\W_]+", text.casefold().replace("ё", "е")))
 
 def git_blob(path):
     return subprocess.check_output(
@@ -85,8 +85,8 @@ class TestGroupPragmatics(unittest.TestCase):
                     self.assertEqual(reply["context"], "direct")
                     self.assertIs(reply["read_only"], True)
                     self.assertIn("совпадении контекста", reply["avoid"])
-                    self.assertNotRegex(reply["text"], r"https?://|[A-Za-z0-9_.+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}")
-                    self.assertNotRegex(reply["text"], r"(?<!\\w)\\+?\\d[\\d ()-]{8,}\\d(?!\\w)")
+                    self.assertNotRegex(reply["text"], r"https?://|[A-Za-z0-9_.+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}")
+                    self.assertNotRegex(reply["text"], r"(?<!\w)\+?\d[\d ()-]{8,}\d(?!\w)")
                     for value, pool in (
                         (reply["id"], seen_ids),
                         (normalized(reply["text"]), seen_texts),
