@@ -12,7 +12,7 @@ PATH = ROOT / "staging/ru/conversation_contracts_t570_context_pool.json"
 def norm(value):
     import unicodedata
     value = unicodedata.normalize("NFKC", value).lower().replace("ё", "е")
-    return " ".join(re.findall(r"[^\\W_]+", value, flags=re.UNICODE))
+    return " ".join(re.findall(r"[^\W_]+", value, flags=re.UNICODE))
 
 def candidate_texts(obj):
     if isinstance(obj, dict):
@@ -64,7 +64,7 @@ class TestT570(unittest.TestCase):
                     self.assertTrue(value.strip()); k=norm(value)
                     self.assertNotIn(k,collection,r["id"]); collection.add(k)
                 self.assertEqual((r["language"],r["audiences"],r["context"],r["read_only"]),("ru",["all_ai_bots"],"direct",True))
-                self.assertTrue(r["avoid"]); self.assertFalse(re.search(r"[\\w.+-]+@[\\w.-]+\\.[A-Za-z]{2,}",r["text"]))
+                self.assertTrue(r["avoid"]); self.assertFalse(re.search(r"[\w.+-]+@[\w.-]+\.[A-Za-z]{2,}",r["text"]))
         self.assertEqual((len(ids),len(texts),len(notes)),(100,100,100))
 
     def test_lexical_independence_and_unrelated_stages(self):
