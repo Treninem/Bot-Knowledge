@@ -1,0 +1,1808 @@
+{
+  "schema_version": 1,
+  "stage_type": "supplemental_contextual_reply_delta",
+  "consumer_registered": false,
+  "language": "ru",
+  "audiences": [
+    "all_ai_bots"
+  ],
+  "constraints": {
+    "read_only": true,
+    "requires_direct_address": true,
+    "no_personal_data": true,
+    "no_sanctions": true,
+    "requires_context_match": true
+  },
+  "source_pack": "packs/ru/response_boundaries_qa.json",
+  "source_pack_manifest_sha256": "e0d704a2a03d5aabb3db479eb47f07c2ba229ca76955a3cfc0f89dd5386538d9",
+  "source_pack_blob_sha": "f15104dbf08d3691b198abb7f0bd52d81383b5a0",
+  "parent_stage": "staging/ru/evidence_boundaries_t560_context_pool.json",
+  "parent_stage_blob_sha": "dd6b1b332686683347284701753581535b1198a5",
+  "checked_source_main_sha": "779e7e78addaaf87becd0067102f67a937507406",
+  "source_documents": [
+    "AGENTS.md",
+    "POLICY.md",
+    "docs/REQUIREMENTS_21.md"
+  ],
+  "scope": "T561 independent concrete context repairs 11–20 for T560 12 stable evidence/help intents",
+  "checkpoint": {
+    "stage_id": "T561",
+    "parent_commit": "efba9c74ebd93563ac50597f239f89350056909e",
+    "prior_candidates": 120,
+    "added_candidates": 120,
+    "cumulative_candidates": 240,
+    "processed_intents": 12,
+    "finished_100": 0,
+    "partial_intents": 12,
+    "remaining_total": 960,
+    "duplicate_rejections": 0,
+    "max_jaccard": 0.3125,
+    "next_action": "Exact-head full CI for T560 and T561, check cross-stage duplicates, then continue stable IDs 21–100, with no automatic consumer activation."
+  },
+  "entries": [
+    {
+      "intent_id": "t560_missing_attachment",
+      "canonical_question": "Почему ты не видишь файл, о котором я говорю?",
+      "section": "помощь",
+      "language": "ru",
+      "style": "neutral",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "prior_for_stable_id": 10,
+      "added_candidates": 10,
+      "total_staged": 20,
+      "target": 100,
+      "remaining": 80,
+      "replies": [
+        {
+          "id": "t560_missing_attachment_11",
+          "text": "В архиве может быть много материалов. Назови нужный файл или путь внутри, чтобы не анализировать случайный.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Пользователь прислал архив, но не указал внутренний файл",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_missing_attachment_12",
+          "text": "Не стоит присылать пароль в чат. Лучше передать отдельную несекретную копию нужных страниц.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Документ защищён паролем",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_missing_attachment_13",
+          "text": "Подпись к записи не заменяет звук. Для точной расшифровки нужен доступный аудиофайл.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Аудиофайл упомянут, но есть только текстовая подпись",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_missing_attachment_14",
+          "text": "Если замечания были в слое аннотаций, обычный экспорт мог их не сохранить. Нужна версия с комментариями.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Из PDF исчезли комментарии при экспорте",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_missing_attachment_15",
+          "text": "Выбор в окне телефона не всегда означает отправку. Проверь, появился ли файл в сообщении после загрузки.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "На телефоне выбран файл, но загрузка ещё не завершилась",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_missing_attachment_16",
+          "text": "Просроченную ссылку нельзя считать открытым документом. Можно прислать новую ссылку без токенов доступа.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Истёк срок действия ссылки на вложение",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_missing_attachment_17",
+          "text": "Отсутствие прав означает ограничение доступа, не пустой документ. Не нужно открывать его публично ради диагностики.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Права на общий файл не позволяют читать содержимое",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_missing_attachment_18",
+          "text": "На картинке нет всех заголовков письма. Если важна доставка, нужны обезличенные сведения об отправке.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Для анализа письма прислали только вложенную картинку",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_missing_attachment_19",
+          "text": "Если виден только конец или начало, отмечу границы прочитанного и не буду считать его полным.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Большой текст обрезан при передаче",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_missing_attachment_20",
+          "text": "Сначала выберем версию, которую нужно обсуждать. Иначе правки могут относиться к разным документам.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "В двух сообщениях разные версии одноимённого файла",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "t560_unverified_action",
+      "canonical_question": "Ты действительно это сделал или только описал?",
+      "section": "навыки",
+      "language": "ru",
+      "style": "neutral",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "prior_for_stable_id": 10,
+      "added_candidates": 10,
+      "total_staged": 20,
+      "target": 100,
+      "remaining": 80,
+      "replies": [
+        {
+          "id": "t560_unverified_action_11",
+          "text": "Текст напоминания составлен, но расписание этим не создано. Нужна отдельная подтверждённая постановка задачи.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Пользователь просит напомнить позже, получен только текст напоминания",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_unverified_action_12",
+          "text": "Наличие черновика не подтверждает отправку адресату. Для этого нужен статус отправленного сообщения.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Письмо находится в черновиках",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_unverified_action_13",
+          "text": "Принятый запрос ещё не равен завершённой обработке. Проверь конечное состояние операции.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Сервис принял запрос с кодом ожидания",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_unverified_action_14",
+          "text": "Слияние кода и развёртывание — разные события. Версию запущенного приложения нужно подтвердить отдельно.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Код объединён в main, но живой продукт не обновлён",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_unverified_action_15",
+          "text": "Ноль выполненных тестов нельзя назвать успешной проверкой функции, даже если команда не упала.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Запуск тестов завершился без обнаруженных тестов",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_unverified_action_16",
+          "text": "Адрес в тексте не доказывает существование результата. Ссылку нужно реально открыть или подтвердить файл.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "В ответе показана правдоподобная ссылка",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_unverified_action_17",
+          "text": "Видимый в редакторе текст ещё не гарантирует запись на диск. Проверь сохранённую версию.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Изменения остались в несохранённом редакторе",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_unverified_action_18",
+          "text": "Оценка длительности переноса не свидетельствует об окончании. Нужны фактические признаки завершения.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Копирование было только оценено по времени",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_unverified_action_19",
+          "text": "Скачивание и проверка смысла — отдельные этапы. Не стану выдавать первое за второе.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Данные получены, но их содержание не проверялось",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_unverified_action_20",
+          "text": "Нарисованное нажатие не меняет реальный сервис. О выполнении можно говорить лишь после подтверждённого действия.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "В интерфейсе показали демонстрацию нажатия кнопки",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "t560_search_no_results",
+      "canonical_question": "Если поиск ничего не нашёл, значит этого не существует?",
+      "section": "умение",
+      "language": "ru",
+      "style": "neutral",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "prior_for_stable_id": 10,
+      "added_candidates": 10,
+      "total_staged": 20,
+      "target": 100,
+      "remaining": 80,
+      "replies": [
+        {
+          "id": "t560_search_no_results_11",
+          "text": "Если фильтр скрывает чужие записи, пустой ответ относится только к разрешённой области.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Поиск в API использует фильтр текущего пользователя",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_search_no_results_12",
+          "text": "Ищи основу или несколько форм слова, если поиск не учитывает склонения.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Искомое слово присутствует в другой грамматической форме",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_search_no_results_13",
+          "text": "Запись могла появиться за пределами интервала. Сначала проверь даты без лишнего ограничения.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Выбран слишком узкий временной диапазон",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_search_no_results_14",
+          "text": "Отсутствие в активных элементах не равно удалению. Если есть архив, проверь его отдельно.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Запись могла быть архивирована",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_search_no_results_15",
+          "text": "Файл может существовать в другой ветке. Уточни, какую версию репозитория ищем.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Поиск кода охватил только основную ветку",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_search_no_results_16",
+          "text": "Пустая последняя страница не отменяет совпадения на предыдущих. Учитывай номер страницы.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Результаты разбиты на страницы",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_search_no_results_17",
+          "text": "Если фильтр по тегу не тот, даже подходящая запись будет скрыта. Попробуй снять его.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Неверная метка в фильтре выдачи",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_search_no_results_18",
+          "text": "Русское и латинское написание имени могут не совпасть в строковом поиске.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Название записано транслитерацией",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_search_no_results_19",
+          "text": "Отсутствие совпадения в заголовке ничего не говорит о содержимом документа.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Поиск ищет лишь название, а термин есть в тексте",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_search_no_results_20",
+          "text": "После изменения исходника поисковый список может отставать. Проверь версию индекса.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Кэш поиска обновляется с задержкой",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "t560_screenshot_evidence",
+      "canonical_question": "Можно ли считать один скриншот достаточным доказательством?",
+      "section": "рассуждение",
+      "language": "ru",
+      "style": "neutral",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "prior_for_stable_id": 10,
+      "added_candidates": 10,
+      "total_staged": 20,
+      "target": 100,
+      "remaining": 80,
+      "replies": [
+        {
+          "id": "t560_screenshot_evidence_11",
+          "text": "Крутящийся индикатор означает процесс, а не успешное завершение операции.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Скриншот показывает только индикатор загрузки",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_screenshot_evidence_12",
+          "text": "Часы в углу кадра не являются независимой меткой времени события.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Отображённое время на экране можно изменить вручную",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_screenshot_evidence_13",
+          "text": "Пока всплывающая подсказка закрывает значение, нельзя уверенно читать его по кадру.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Подсказка интерфейса скрывает важную часть поля",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_screenshot_evidence_14",
+          "text": "По закрытому меню невозможно перечислить все его пункты. Нужен снимок раскрытого списка.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "На снимке не раскрыт список доступных опций",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_screenshot_evidence_15",
+          "text": "Девяносто девять процентов не подтверждают успех. Нужен итоговый статус без ошибки.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Полоса прогресса почти дошла до конца",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_screenshot_evidence_16",
+          "text": "Кэшированная отметка не гарантирует успешность текущей операции. Сверь идентификатор запуска.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Зелёная отметка могла остаться от прежнего запуска",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_screenshot_evidence_17",
+          "text": "Совет для конкретной сборки может не подойти без версии. Нужен её номер, а не догадка по дизайну.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Обрезан номер версии приложения",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_screenshot_evidence_18",
+          "text": "Число на картинке надо читать с учётом локали; «1,234» в разных форматах может означать разное.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "В одной локали разделитель дробей — запятая",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_screenshot_evidence_19",
+          "text": "Уведомление поверх окна может скрывать предупреждение. Лучше получить снимок без перекрытия.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Часть экрана закрыта системным уведомлением",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_screenshot_evidence_20",
+          "text": "Визуально похожие высоты столбцов не означают равные значения, если шкалы отличаются.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Два графика сравнивают при разных масштабах",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "t560_time_zone",
+      "canonical_question": "Как не перепутать дату и время при разных часовых поясах?",
+      "section": "помощь",
+      "language": "ru",
+      "style": "neutral",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "prior_for_stable_id": 10,
+      "added_candidates": 10,
+      "total_staged": 20,
+      "target": 100,
+      "remaining": 80,
+      "replies": [
+        {
+          "id": "t560_time_zone_11",
+          "text": "Во время осеннего перевода часов одного времени 02:30 может быть два. Нужны зона и смещение.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "В период смены часов местное 02:30 повторяется",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_time_zone_12",
+          "text": "Фиксированное смещение не всегда заменяет региональную зону с сезонными правилами.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Указано только смещение +03:00 без названия зоны",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_time_zone_13",
+          "text": "В другой зоне это уже следующая дата. При сравнении публикаций сохраняй абсолютную метку.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Публикация произошла в 23:50 UTC",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_time_zone_14",
+          "text": "Для повторяющегося события важно, задано местное время региона или постоянное смещение.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Повторяющаяся еженедельная встреча проходит через сезонный перевод",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_time_zone_15",
+          "text": "Сначала выясни местную зону площадки, а потом переводи во время участника.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Расписание относится к месту проведения мероприятия",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_time_zone_16",
+          "text": "Буква Z означает UTC. Не считай эту метку временем компьютера пользователя.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Лог записывает ISO-метку с Z на конце",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_time_zone_17",
+          "text": "«10 ноября» может относиться к разным годам; уточни год, особенно для прошедшего события.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Дата указана без года",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_time_zone_18",
+          "text": "Транспортные расписания могут указывать местное время конкретной станции; проверь подпись перевозчика.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Билет на поезд показывает время станции",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_time_zone_19",
+          "text": "Не применяй нынешнее смещение к исторической дате без проверки правил на тот год.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Правила смены времени в стране менялись",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_time_zone_20",
+          "text": "В календаре одно событие может выглядеть по-разному в поездке. Уточни зону, сохранённую в самом событии.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Календарь автоматически показывает время по текущему местоположению",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "t560_reversible_change",
+      "canonical_question": "Как понять, можно ли безопасно откатить изменение?",
+      "section": "настройка",
+      "language": "ru",
+      "style": "neutral",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "prior_for_stable_id": 10,
+      "added_candidates": 10,
+      "total_staged": 20,
+      "target": 100,
+      "remaining": 80,
+      "replies": [
+        {
+          "id": "t560_reversible_change_11",
+          "text": "После перезапуска старые настройки не появляются сами. Откат надо планировать отдельно.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Перезапуск сервиса не возвращает прежнюю конфигурацию",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_reversible_change_12",
+          "text": "Перед возвратом бинарника проверь совместимость данных; иначе приложение может не запуститься.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Старая версия программы не понимает новую схему базы",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_reversible_change_13",
+          "text": "После отправки нельзя гарантировать, что получатель его не видел, даже если есть кнопка удаления.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Сообщение уже отправлено получателю",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_reversible_change_14",
+          "text": "Для восстановления прав нужен исходный перечень ролей; без него возможны лишние полномочия.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Перед изменением ролей не сохранили список доступов",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_reversible_change_15",
+          "text": "Резервная копия должна сохранять связи, не только видимые названия строк.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Экспорт потерял связь между ID записей",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_reversible_change_16",
+          "text": "Откат приложения не восстановит автоматически отозванные ключи доступа.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Старые учётные данные отозваны",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_reversible_change_17",
+          "text": "При частичном развёртывании сначала выясни, какие узлы уже обновлены, чтобы не смешать версии.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Обновление выполнено только на части серверов",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_reversible_change_18",
+          "text": "Отмена сброса кэша не вернёт то, чего не было в постоянном хранилище.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "После сброса кэша исчезли временные данные",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_reversible_change_19",
+          "text": "Ради безопасности не стоит «откатывать» отзыв украденного токена. Выпусти новый по штатной процедуре.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Токен отозван из-за утечки",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_reversible_change_20",
+          "text": "Не обещай восстановление после необратимого удаления; сначала проверь, есть ли независимая копия.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Данные удалены без резервной копии",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "t560_conflicting_sources",
+      "canonical_question": "Что делать, если два источника противоречат друг другу?",
+      "section": "рассуждение",
+      "language": "ru",
+      "style": "neutral",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "prior_for_stable_id": 10,
+      "added_candidates": 10,
+      "total_staged": 20,
+      "target": 100,
+      "remaining": 80,
+      "replies": [
+        {
+          "id": "t560_conflicting_sources_11",
+          "text": "Проверь условия акции: два прайса могут быть верны для разных покупателей.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Обычная цена и цена по персональной акции различаются",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_conflicting_sources_12",
+          "text": "Уточни модель и версию устройства; руководство производителя обычно задаёт исходные ограничения.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Руководство производителя и неофициальная инструкция расходятся",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_conflicting_sources_13",
+          "text": "Препринт и проверенное итоговое исследование имеют разный статус. Не приписывай предварительному выводу окончательность.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "В научной новости пересказан предварительный препринт",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_conflicting_sources_14",
+          "text": "Не смешивай исторические правила с действующими; проверь дату вступления изменений в силу.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Старые условия обслуживания и новые опубликованы вместе",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_conflicting_sources_15",
+          "text": "Время редактирования статьи не является датой описанного события.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "В статье дата обновления позднее самого события",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_conflicting_sources_16",
+          "text": "Прежде чем считать даты противоречием, переведи обе метки в одну зону.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Одно сообщение использует время UTC, другое местное",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_conflicting_sources_17",
+          "text": "Прогноз мог не сбыться, но это не ошибка в дате прогноза. Различай ожидаемое и случившееся.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Один текст содержит прогноз, другой итоговый результат",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_conflicting_sources_18",
+          "text": "Разные выборки дают разные доли без логического противоречия. Сравни состав групп.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Статистика рассчитана для разных групп населения",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_conflicting_sources_19",
+          "text": "В оригинале утверждение вероятностное; перевод без оговорки искажает степень уверенности.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Перевод пропустил слово «может»",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_conflicting_sources_20",
+          "text": "Возможна реальная смена состояния между кадрами. Сначала восстанови хронологию.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Два скриншота сделаны в разные дни",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "t560_incomplete_document",
+      "canonical_question": "Почему нельзя делать окончательный вывод по одному отрывку?",
+      "section": "умение",
+      "language": "ru",
+      "style": "neutral",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "prior_for_stable_id": 10,
+      "added_candidates": 10,
+      "total_staged": 20,
+      "target": 100,
+      "remaining": 80,
+      "replies": [
+        {
+          "id": "t560_incomplete_document_11",
+          "text": "Сноска может ограничивать значение числа. Без неё вывод о строке неполон.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Под таблицей есть важная сноска",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_incomplete_document_12",
+          "text": "Без нумерации трудно понять, не пропущена ли середина документа.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Вырезанный лист не показывает номера страниц",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_incomplete_document_13",
+          "text": "Линия без масштаба не показывает абсолютное изменение. Нужна подпись шкалы.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "График прислан без оси значений",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_incomplete_document_14",
+          "text": "Ссылка на предыдущий пункт означает, что один абзац недостаточен для инструкции.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Раздел ссылается на «условия выше»",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_incomplete_document_15",
+          "text": "По куску кода нельзя заключить, разрешено ли его распространять. Нужна лицензия исходного проекта.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Фрагмент кода приведён без лицензии",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_incomplete_document_16",
+          "text": "Пока приложение отсутствует, условия из него нельзя воспроизвести из догадок.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Указано «см. приложение Б», но его нет",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_incomplete_document_17",
+          "text": "Важно отличить удалённую редакцию от принятого текста, особенно в совместно редактируемом файле.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Документ содержит зачёркнутые предложения",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_incomplete_document_18",
+          "text": "Если сроки вынесены в приложение, основной пункт без него не даёт полной даты исполнения.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "В приложении к договору определены сроки",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_incomplete_document_19",
+          "text": "Исключение меняет правило; нельзя трактовать оборванную фразу как окончательный запрет.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Отрывок обрывается на слове «кроме»",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_incomplete_document_20",
+          "text": "Без исходного вопроса можно ошибочно приписать ответ не той теме.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Скриншот показывает только ответ, но не вопрос",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "t560_unknown_values",
+      "canonical_question": "Как проверить расчёт, когда не хватает исходных чисел?",
+      "section": "помощь",
+      "language": "ru",
+      "style": "neutral",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "prior_for_stable_id": 10,
+      "added_candidates": 10,
+      "total_staged": 20,
+      "target": 100,
+      "remaining": 80,
+      "replies": [
+        {
+          "id": "t560_unknown_values_11",
+          "text": "Уточни, нужна масса товара или вес брутто: это разные расчёты.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Суммарная масса дана без массы упаковки",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_unknown_values_12",
+          "text": "Перед сложением переведи все расходы к одинаковому периоду.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Расход на один день и месяц смешаны",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_unknown_values_13",
+          "text": "Для точной суммы нужна схема начисления: простые и сложные проценты дают разные результаты.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Проценты по вкладу могут капитализироваться",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_unknown_values_14",
+          "text": "Уточни правило округления; оно может заметно изменить сумму за короткую работу.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Оплата округляется по начатым часам",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_unknown_values_15",
+          "text": "Пока неизвестны оба параметра тарифа, можно дать формулу, но не цену доставки.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Доставка зависит от массы и расстояния",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_unknown_values_16",
+          "text": "Без размера выборки нельзя оценить, насколько устойчив показатель.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Средняя оценка рассчитана по неизвестному числу ответов",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_unknown_values_17",
+          "text": "Расчёт можно сделать по указанному курсу, но не выдавать его за действующий сейчас.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Курс валюты указан на другую дату",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_unknown_values_18",
+          "text": "Раздели стоимость до налога и итог; не добавляй произвольную ставку.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Цена дана без уточнения, включает ли налог",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_unknown_values_19",
+          "text": "Нужно знать конкретный способ, иначе получится только диапазон возможных удержаний.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Комиссия зависит от способа оплаты",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_unknown_values_20",
+          "text": "Если ставки конфликтуют, покажи оба сценария и попроси подтвердить нужный.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "В задаче есть две разные ставки за одно действие",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "t560_unopened_link",
+      "canonical_question": "Что можно утверждать о ссылке, которую ты не открыл?",
+      "section": "правила",
+      "language": "ru",
+      "style": "neutral",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "prior_for_stable_id": 10,
+      "added_candidates": 10,
+      "total_staged": 20,
+      "target": 100,
+      "remaining": 80,
+      "replies": [
+        {
+          "id": "t560_unopened_link_11",
+          "text": "Если страница закрыта для чтения, не буду пересказывать невидимые условия с уверенным тоном.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Сайт блокирует автоматическое чтение",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_unopened_link_12",
+          "text": "Без авторизации содержимое может отсутствовать. Лучше передать общедоступный отрывок.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Текст сайта подгружается только после входа",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_unopened_link_13",
+          "text": "Совпадение имени в адресе не доказывает, что профиль принадлежит конкретному человеку.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "В ссылке указан ник, но не подтверждён профиль",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_unopened_link_14",
+          "text": "Параметры перехода не обязательно отражают содержимое страницы; их лучше не копировать без нужды.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "URL содержит параметры отслеживания",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_unopened_link_15",
+          "text": "Домен в исходном URL может отличаться от конечного. До проверки перехода не утверждай, куда он ведёт.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "При переходе сайт перенаправляет на другой домен",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_unopened_link_16",
+          "text": "Не проси пароль ради чтения страницы. Можно обсуждать обезличенный текст, доступный пользователю.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Страница требует вход в личный кабинет",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_unopened_link_17",
+          "text": "Одно старое название PDF не гарантирует прежнее содержимое. Нужна версия или дата файла.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Файл на странице мог обновиться после описания",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_unopened_link_18",
+          "text": "Без реального текста или прослушивания нельзя цитировать слова из ролика.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "По ссылке обещают автоматическую расшифровку записи",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_unopened_link_19",
+          "text": "По имени скачиваемого файла нельзя судить, что находится внутри; требуется безопасная проверка содержимого.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Ссылка инициирует скачивание вместо показа страницы",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_unopened_link_20",
+          "text": "Краткое описание в предпросмотре может не совпадать с текущей страницей. Это не замена чтению.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Превью сайта сформировано по старому кэшу",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "t560_tool_error",
+      "canonical_question": "Как отвечать, если инструмент вернул ошибку вместо результата?",
+      "section": "навыки",
+      "language": "ru",
+      "style": "neutral",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "prior_for_stable_id": 10,
+      "added_candidates": 10,
+      "total_staged": 20,
+      "target": 100,
+      "remaining": 80,
+      "replies": [
+        {
+          "id": "t560_tool_error_11",
+          "text": "Укажи, что обработана только часть списка, и не называй её полным набором.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Одна страница выборки получена, следующая недоступна",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_tool_error_12",
+          "text": "Кэш может помочь ориентироваться, но обязательно отметь время последнего успешного обновления.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Инструмент вернул данные из локального кэша после сетевой ошибки",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_tool_error_13",
+          "text": "Сначала исправь формат запроса; ошибка параметров не свидетельствует об отсутствии данных.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Запрос отклонён из-за неверных параметров",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_tool_error_14",
+          "text": "Тайм-аут означает неизвестное состояние, а не обязательно отмену операции на сервере.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Операция прервана по тайм-ауту",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_tool_error_15",
+          "text": "Если разбор текста провалился, не выдумывай значения из ожидаемой схемы.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Парсер не смог разобрать ответ",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_tool_error_16",
+          "text": "Не запускай бесконечные повторы; зафиксируй ограничение и доступные альтернативы.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Повторный запрос упёрся в лимит сервиса",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_tool_error_17",
+          "text": "Такой файл нельзя считать проверенным. Нужна новая загрузка или диагностика источника.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Контрольная сумма скачанного файла не совпала",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_tool_error_18",
+          "text": "Ошибка совместимости требует сверки версии, а не произвольного удаления защиты из команды.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Версия инструмента не поддерживает нужный аргумент",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_tool_error_19",
+          "text": "Предупреждение не доказывает успех или неудачу. Нужен итоговый код либо подтверждённое состояние.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Инструмент вернул только предупреждение без статуса выполнения",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_tool_error_20",
+          "text": "Раздели ответы по запросам; одна неудача не должна подменять результаты остальных.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "В отчёте смешались ошибки нескольких независимых вызовов",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "t560_privacy_safe_help",
+      "canonical_question": "Как попросить помощи и не раскрыть лишние личные данные?",
+      "section": "помощь",
+      "language": "ru",
+      "style": "neutral",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "prior_for_stable_id": 10,
+      "added_candidates": 10,
+      "total_staged": 20,
+      "target": 100,
+      "remaining": 80,
+      "replies": [
+        {
+          "id": "t560_privacy_safe_help_11",
+          "text": "Перед публикацией стоит удалить геометки из метаданных файла, не только закрыть видимую подпись.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Фотография содержит скрытые координаты",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_privacy_safe_help_12",
+          "text": "Для типовой консультации замени домашний адрес вымышленным примером.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "В документе есть адрес проживания",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_privacy_safe_help_13",
+          "text": "Для вопроса о расчёте оставь суммы и даты, а персональные реквизиты закрой.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Банковская выписка содержит фамилию и номер счёта",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_privacy_safe_help_14",
+          "text": "Перед отправкой лога удали активные идентификаторы и другие секреты авторизации.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Логи приложения включают идентификатор сессии",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_privacy_safe_help_15",
+          "text": "Можно описать тон и задачу пересказа, не передавая интимные подробности записи.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Личный дневник используется как пример текста",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_privacy_safe_help_16",
+          "text": "Вместо исходной переписки составь несколько вымышленных реплик, сохраняющих проблему.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Экспорт группового чата содержит имена участников",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_privacy_safe_help_17",
+          "text": "Секретный ключ нельзя публиковать для диагностики. Покажи название параметра без значения.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "В конфигурации виден ключ рабочего сервиса",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_privacy_safe_help_18",
+          "text": "Замени внутренние имена организации ролями и описанием процесса.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Для помощи достаточно роли сотрудника, но не названия компании",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_privacy_safe_help_19",
+          "text": "Для общего вопроса передай только нужные обезличенные показатели, без номера документа.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Медицинская справка содержит личные данные",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t560_privacy_safe_help_20",
+          "text": "Сначала удали данные третьих лиц; их согласие нельзя предполагать из желания решить свою задачу.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Объявление о проблеме включает чужой документ",
+          "avoid": "Только при подтверждённом контексте; не приписывать несуществующие данные, действия или санкции.",
+          "read_only": true
+        }
+      ]
+    }
+  ]
+}
