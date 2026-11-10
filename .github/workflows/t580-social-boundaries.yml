@@ -1,0 +1,34 @@
+name: T580 social conversation boundaries exact-head
+on:
+  pull_request:
+    paths:
+      - "staging/ru/social_boundaries_t580_context_pool.json"
+      - "scripts/test_social_boundaries_t580.py"
+      - ".github/workflows/t580-social-boundaries.yml"
+  push:
+    branches: [main]
+    paths:
+      - "staging/ru/social_boundaries_t580_context_pool.json"
+      - "scripts/test_social_boundaries_t580.py"
+      - ".github/workflows/t580-social-boundaries.yml"
+permissions:
+  contents: read
+jobs:
+  verify-t580:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Confirm actual exact checkout
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: T580 data, privacy, source and uniqueness
+        run: |
+          python scripts/validate_pack.py
+          python -m unittest scripts.test_social_boundaries_t580 -v
