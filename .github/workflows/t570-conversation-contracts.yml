@@ -1,0 +1,36 @@
+name: T570 conversation contracts exact-head
+on:
+  pull_request:
+    paths:
+      - "staging/ru/conversation_contracts_t570_context_pool.json"
+      - "scripts/test_conversation_contracts_t570.py"
+      - "docs/CONVERSATION_CONTRACTS_T570_2026_11_10.md"
+      - ".github/workflows/t570-conversation-contracts.yml"
+      - "manifest.json"
+  push:
+    branches: [main]
+    paths:
+      - "staging/ru/conversation_contracts_t570_context_pool.json"
+      - "scripts/test_conversation_contracts_t570.py"
+      - ".github/workflows/t570-conversation-contracts.yml"
+permissions:
+  contents: read
+jobs:
+  verify-t570:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Verify actual checked-out SHA
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Verify registered packs and new contextual candidates
+        run: |
+          python scripts/validate_pack.py
+          python -m unittest scripts.test_conversation_contracts_t570 -v
