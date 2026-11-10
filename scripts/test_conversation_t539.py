@@ -70,10 +70,10 @@ class ConversationT539(unittest.TestCase):
             self.assertEqual(entry["language"], "ru")
             self.assertEqual(entry["target"], 100)
             self.assertEqual((entry["baseline_registered"], entry["prior_for_stable_id"]),
-                             (0, 16))
+                             (0, 88))
             self.assertEqual((entry["added_candidates"], entry["total_staged"],
-                              entry["remaining"]), (20, 36, 64))
-            self.assertEqual(len(entry["replies"]), 36)
+                              entry["remaining"]), (12, 100, 0))
+            self.assertEqual(len(entry["replies"]), 100)
             for position, item in enumerate(entry["replies"], 1):
                 self.assertEqual(item["id"],
                                  "{}_{:02d}".format(entry["intent_id"], position))
@@ -101,11 +101,11 @@ class ConversationT539(unittest.TestCase):
                     score = len(bag & old) / len(bag | old)
                     self.assertLess(score, 0.78)
                 bags.append(bag)
-        self.assertEqual((len(ids), len(answers), len(notes)), (360, 360, 360))
-        self.assertEqual(stage["checkpoint"]["added_candidates"], 200)
-        self.assertEqual(stage["checkpoint"]["remaining_total"], 640)
-        self.assertEqual(stage["checkpoint"]["finished_100"], 0)
-        self.assertEqual(stage["checkpoint"]["partial_intents"], 10)
+        self.assertEqual((len(ids), len(answers), len(notes)), (1000, 1000, 1000))
+        self.assertEqual(stage["checkpoint"]["added_candidates"], 120)
+        self.assertEqual(stage["checkpoint"]["remaining_total"], 0)
+        self.assertEqual(stage["checkpoint"]["finished_100"], 10)
+        self.assertEqual(stage["checkpoint"]["partial_intents"], 0)
 
         # Exact overlap against all comparable staged reply lists; this does
         # not claim complete semantic equivalence or coverage of every format.
