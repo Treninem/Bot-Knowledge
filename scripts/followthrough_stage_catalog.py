@@ -11,7 +11,7 @@ from pathlib import Path
 
 from scripts.colloquial_t305 import ROOT
 from scripts.staged_context_selector import (
-    StagedContextSelector, StagedSelection, _norm,
+    StagedContextSelector, StagedSelection, _norm, _PINNED_STAGE_BLOBS,
 )
 
 STAGES = (
@@ -137,6 +137,20 @@ class FollowthroughStageCatalog:
         canon = {r["id"]: r["question"] for r in source["records"]}
         if len(canon) != 82 or len(source["records"]) != 82:
             raise ValueError("expected 82 existing canonical intentions")
+
+        # Immutable preflight before expensive ancestry/selector construction.
+        # This moves the existing pin check earlier; it does not bypass any
+        # context, policy, SHA, or consumer-scope checks below.
+        for stage_path in STAGES:
+            expected_blob = _PINNED_STAGE_BLOBS.get(stage_path)
+            if not expected_blob:
+                raise ValueError("unreviewed stage missing immutable pin")
+            stage_bytes = (root / stage_path).read_bytes()
+            blob_hash = hashlib.sha1(
+                b"blob " + str(len(stage_bytes)).encode("ascii") + b"\\0" + stage_bytes
+            ).hexdigest()
+            if blob_hash != expected_blob:
+                raise ValueError("unreviewed stage blob mismatch")
 
         digest = hashlib.sha256(manifest_bytes)
         seen_ids, seen_texts = set(), set()
