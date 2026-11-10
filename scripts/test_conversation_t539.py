@@ -70,10 +70,10 @@ class ConversationT539(unittest.TestCase):
             self.assertEqual(entry["language"], "ru")
             self.assertEqual(entry["target"], 100)
             self.assertEqual((entry["baseline_registered"], entry["prior_for_stable_id"]),
-                             (0, 56))
+                             (0, 76))
             self.assertEqual((entry["added_candidates"], entry["total_staged"],
-                              entry["remaining"]), (20, 76, 24))
-            self.assertEqual(len(entry["replies"]), 76)
+                              entry["remaining"]), (12, 88, 12))
+            self.assertEqual(len(entry["replies"]), 88)
             for position, item in enumerate(entry["replies"], 1):
                 self.assertEqual(item["id"],
                                  "{}_{:02d}".format(entry["intent_id"], position))
@@ -101,9 +101,9 @@ class ConversationT539(unittest.TestCase):
                     score = len(bag & old) / len(bag | old)
                     self.assertLess(score, 0.78)
                 bags.append(bag)
-        self.assertEqual((len(ids), len(answers), len(notes)), (760, 760, 760))
-        self.assertEqual(stage["checkpoint"]["added_candidates"], 200)
-        self.assertEqual(stage["checkpoint"]["remaining_total"], 240)
+        self.assertEqual((len(ids), len(answers), len(notes)), (880, 880, 880))
+        self.assertEqual(stage["checkpoint"]["added_candidates"], 120)
+        self.assertEqual(stage["checkpoint"]["remaining_total"], 120)
         self.assertEqual(stage["checkpoint"]["finished_100"], 0)
         self.assertEqual(stage["checkpoint"]["partial_intents"], 10)
 
