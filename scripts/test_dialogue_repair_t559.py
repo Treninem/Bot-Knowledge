@@ -36,7 +36,7 @@ class DialogueRepair559(unittest.TestCase):
         ids,txt,notes=set(),set(),set()
         for e in self.parts[-1]["entries"]:
             key=e["intent_id"]
-            self.assertEqual([g[key]["canonical_question"] for g in grouped],[e["canonical_question"]]*5)
+            self.assertEqual([g[key]["canonical_question"] for g in grouped],[e["canonical_question"]]*6)
             self.assertEqual((e["prior_for_stable_id"],e["added_candidates"],e["total_staged"],e["target"],e["remaining"]),(80,20,100,100,0))
             self.assertEqual(len(e["replies"]),20)
             rs=[r for g in grouped for r in g[key]["replies"]]
