@@ -1,0 +1,39 @@
+name: T565-T569 evidence continuation exact-head
+on:
+  pull_request:
+    paths:
+      - "staging/ru/evidence_boundaries_t56*.json"
+      - "scripts/test_evidence_boundaries_t56*.py"
+      - "docs/EVIDENCE_BOUNDARIES_T565_2026_11_10.md"
+      - "docs/EVIDENCE_BOUNDARIES_T566_2026_11_10.md"
+      - ".github/workflows/t565-evidence-boundaries.yml"
+      - "manifest.json"
+  push:
+    branches: [main]
+    paths:
+      - "staging/ru/evidence_boundaries_t565_context_delta.json"
+      - "staging/ru/evidence_boundaries_t566_context_delta.json"
+      - "scripts/test_evidence_boundaries_t565.py"
+      - "scripts/test_evidence_boundaries_t566.py"
+      - ".github/workflows/t565-evidence-boundaries.yml"
+permissions:
+  contents: read
+jobs:
+  verify-t565:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Confirm actual checkout head
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Validate registered and 1200 contextual candidates
+        run: |
+          python scripts/validate_pack.py
+          python -m unittest scripts.test_evidence_boundaries_t560 scripts.test_evidence_boundaries_t561 scripts.test_evidence_boundaries_t562_t563 scripts.test_evidence_boundaries_t564 scripts.test_evidence_boundaries_t565 scripts.test_evidence_boundaries_t566 scripts.test_evidence_boundaries_t567_t569 -v
