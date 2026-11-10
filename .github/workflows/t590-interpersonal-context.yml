@@ -1,0 +1,36 @@
+name: T590-T591 interpersonal context candidate verification
+on:
+  pull_request:
+    paths:
+      - 'staging/ru/interpersonal_t590_context_pool.json'
+      - 'staging/ru/interpersonal_t591_context_delta.json'
+      - 'scripts/test_interpersonal_t590_t591.py'
+      - '.github/workflows/t590-interpersonal-context.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'staging/ru/interpersonal_t590_context_pool.json'
+      - 'staging/ru/interpersonal_t591_context_delta.json'
+      - 'scripts/test_interpersonal_t590_t591.py'
+      - '.github/workflows/t590-interpersonal-context.yml'
+permissions:
+  contents: read
+jobs:
+  verify-t590-t591:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Verify actual checkout SHA
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate source and 200 contextual replies
+        run: |
+          python scripts/validate_pack.py
+          python -m unittest scripts.test_interpersonal_t590_t591 -v
