@@ -1,0 +1,34 @@
+name: T590 group etiquette exact-head validation
+on:
+  pull_request:
+    paths:
+      - "staging/ru/group_etiquette_t590_context_pool.json"
+      - "scripts/test_group_etiquette_t590.py"
+      - ".github/workflows/t590-group-etiquette.yml"
+  push:
+    branches: [main]
+    paths:
+      - "staging/ru/group_etiquette_t590_context_pool.json"
+      - "scripts/test_group_etiquette_t590.py"
+      - ".github/workflows/t590-group-etiquette.yml"
+permissions:
+  contents: read
+jobs:
+  verify-t590:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Verify exact intended source SHA
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Validate registered packs and privacy-first group conversation stage
+        run: |
+          python scripts/validate_pack.py
+          python -m unittest scripts.test_group_etiquette_t590 -v
