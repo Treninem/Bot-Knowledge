@@ -24,7 +24,7 @@ INTENTS = {
 }
 
 def normalized(s):
-    return " ".join(re.findall(r"[^\\W_]+", s.casefold().replace("ё", "е")))
+    return " ".join(re.findall(r"[^\W_]+", s.casefold().replace("ё", "е")))
 
 def blob_sha(path):
     return subprocess.check_output(
@@ -92,8 +92,8 @@ class GroupPragmaticsContinuationTests(unittest.TestCase):
                     self.assertEqual(item["context"], "direct")
                     self.assertIs(item["read_only"], True)
                     self.assertIn("совпадении контекста", item["avoid"])
-                    self.assertNotRegex(item["text"], r"https?://|[A-Za-z0-9_.+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}")
-                    self.assertNotRegex(item["text"], r"(?<!\\w)\\+?\\d[\\d ()-]{8,}\\d(?!\\w)")
+                    self.assertNotRegex(item["text"], r"https?://|[A-Za-z0-9_.+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}")
+                    self.assertNotRegex(item["text"], r"(?<!\w)\+?\d[\d ()-]{8,}\d(?!\w)")
                     for value, pool in ((item["id"], ids),
                                         (normalized(item["text"]), texts),
                                         (normalized(item["context_note"]), notes)):
