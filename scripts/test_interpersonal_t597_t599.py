@@ -16,7 +16,7 @@ ADDED = [12, 8, 10, 10, 10, 10, 10, 10, 10, 10]
 COMMON_AVOID = "совпадении контекста"
 
 def normalize(text):
-    return " ".join(re.findall(r"[^\\W_]+", text.casefold().replace("ё", "е")))
+    return " ".join(re.findall(r"[^\W_]+", text.casefold().replace("ё", "е")))
 
 def blob(path):
     return subprocess.check_output(["git", "hash-object", path], cwd=ROOT, text=True).strip()
@@ -72,7 +72,7 @@ class TestT597T599(unittest.TestCase):
                     self.assertEqual((r["language"],r["audiences"],r["context"],r["read_only"]),
                                      ("ru",["all_ai_bots"],"direct",True))
                     self.assertIn(COMMON_AVOID, r["avoid"])
-                    self.assertFalse(re.search(r"(?i)https?://|@[a-z0-9_]+|\\b\\+?\\d[\\d -]{7,}\\d\\b",r["text"]))
+                    self.assertFalse(re.search(r"(?i)https?://|@[a-z0-9_]+|\b\+?\d[\d -]{7,}\d\b",r["text"]))
                     for key, pool in ((r["id"],ids),(normalize(r["text"]),texts),(normalize(r["context_note"]),notes)):
                         self.assertTrue(key)
                         self.assertNotIn(key,pool)
