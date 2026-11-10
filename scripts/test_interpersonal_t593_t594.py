@@ -7,7 +7,7 @@ import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-STAGES = [f"staging/ru/interpersonal_t{n}_context_{'pool' if n == 590 else 'delta'}.json" for n in range(590, 595)]
+STAGES = [f"staging/ru/interpersonal_t{n}_context_{'pool' if n == 590 else 'delta'}.json" for n in range(590, 596)]
 # Note: stage 590 uses context_pool, and all subsequent stages context_delta.
 def normalize(s):
     return " ".join(re.findall(r"[^\W_]+", s.casefold().replace("ё", "е")))
@@ -40,14 +40,14 @@ class TestInterpersonalContinuation(unittest.TestCase):
         vector = []
         roles = {e["intent_id"]: e["response_role"] for e in self.docs[0]["entries"]}
         for idx, doc in enumerate(self.docs):
-            start, count = [(1,12), (13,8), (21,10), (31,10), (41,10)][idx]
+            start, count = [(1,12), (13,8), (21,10), (31,10), (41,10), (51,10)][idx]
             self.assertEqual(len(doc["entries"]), 10)
-            self.assertEqual(doc["checkpoint"]["cumulative_candidates"], [120,200,300,400,500][idx])
-            self.assertEqual(doc["checkpoint"]["remaining_total"], [880,800,700,600,500][idx])
+            self.assertEqual(doc["checkpoint"]["cumulative_candidates"], [120,200,300,400,500,600][idx])
+            self.assertEqual(doc["checkpoint"]["remaining_total"], [880,800,700,600,500,400][idx])
             self.assertEqual({e["intent_id"] for e in doc["entries"]}, set(roles))
             for e in doc["entries"]:
                 self.assertEqual(e["response_role"], roles[e["intent_id"]])
-                self.assertEqual((e["prior_for_stable_id"], e["added_candidates"], e["total_staged"], e["target"], e["remaining"]),tuple(([0,12,12,100,88],[12,8,20,100,80],[20,10,30,100,70],[30,10,40,100,60],[40,10,50,100,50])[idx]))
+                self.assertEqual((e["prior_for_stable_id"], e["added_candidates"], e["total_staged"], e["target"], e["remaining"]),tuple(([0,12,12,100,88],[12,8,20,100,80],[20,10,30,100,70],[30,10,40,100,60],[40,10,50,100,50],[50,10,60,100,40])[idx]))
                 self.assertEqual(len(e["replies"]), count)
                 for offset, r in enumerate(e["replies"]):
                     self.assertEqual(r["id"], f'{e["intent_id"]}_{start+offset:02d}')
@@ -59,7 +59,7 @@ class TestInterpersonalContinuation(unittest.TestCase):
                         self.assertNotIn(v,s)
                         s.add(v)
                     vector.append(set(normalize(r["text"]).split()))
-        self.assertEqual((len(seen_id),len(seen_text),len(seen_note)),(500,500,500))
+        self.assertEqual((len(seen_id),len(seen_text),len(seen_note)),(600,600,600))
         for i,a in enumerate(vector):
             for b in vector[i+1:]:
                 self.assertLess(len(a&b)/len(a|b), .8)
