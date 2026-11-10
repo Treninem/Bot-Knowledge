@@ -24,7 +24,7 @@ RELATED = [
 ]
 
 def normalized(s):
-    return " ".join(re.findall(r"[^\\W_]+", s.casefold().replace("ё", "е")))
+    return " ".join(re.findall(r"[^\W_]+", s.casefold().replace("ё", "е")))
 
 def text_tokens(s):
     return set(normalized(s).split())
@@ -88,8 +88,8 @@ class TestSupportTriage20261110(unittest.TestCase):
                     self.assertTrue(value)
                     self.assertNotIn(value, dest)
                     dest.add(value)
-                self.assertNotRegex(reply["text"], r"https?://|[A-Za-z0-9_.+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}")
-                self.assertNotRegex(reply["text"], r"(?<!\\w)\\+?\\d[\\d ()-]{8,}\\d(?!\\w)")
+                self.assertNotRegex(reply["text"], r"https?://|[A-Za-z0-9_.+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}")
+                self.assertNotRegex(reply["text"], r"(?<!\w)\+?\d[\d ()-]{8,}\d(?!\w)")
         self.assertEqual((len(ids), len(texts), len(notes)), (100, 100, 100))
 
     def test_no_near_duplicates_with_related_staged_replies(self):
