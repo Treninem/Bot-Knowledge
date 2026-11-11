@@ -5,3 +5,10 @@
 - Normalized preflight: 60 distinct IDs, texts and context notes; zero exact duplicates compared against 1596 source+staged replies including K; highest token-Jaccard 0.5714 (<0.70). This is not complete semantic QA.
 - Stage only: `consumer_registered=false`, `read_only=true`, direct addressing and context match required. No personal data, sanctions, live changes, manifest/cache changes or new consumer capabilities.
 - BLOCKED until complete exact-head CI, editorial quality and full repository compatibility, guarded merge and post-main CI. Legacy PR #229 needs separate reconciliation. Resume from suffix **22** per stable ID.
+
+## Continuation L2 — additional 60 situational replies
+
+- New +60 authored distinct replies (suffix 22); total new in this PR **120** for 60 stable intents, **16/100** each, **84 remaining each**, **5,040 missing total**.
+- Latest addition preflight against original L1, prior A–J, registered source and separate K PR #661: zero exact overlap; maximum token-Jaccard 0.3333 (threshold 0.70). Human semantic QA remains required.
+- No manifest, registered source pack or consumer cache changes. Latest exact-head CI must be checked after this commit, not inherited from prior L1.
+- Resume from suffix **23**, continue other independent questions once data are reviewed.
