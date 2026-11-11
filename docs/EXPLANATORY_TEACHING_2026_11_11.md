@@ -37,3 +37,9 @@ Next action: independently and carefully continue **the same ten stable intents*
 - Pre-commit normalization on A–E: 500 unique IDs, 500 unique normalized answer texts and 500 distinct normalized application notes, exact duplicates **0**; maximum pairwise token-Jaccard **0.2857**. Semantically close answers may still require editorial review.
 - All stages unregistered read-only (`all_ai_bots`); published source SHA-256 `0cfedc133354a69522fecc3cda6bc21533c66005f0dc207050075f787dc977a8`, manifest `2026.11.09.003`, live caches, ImPULS and bots unchanged.
 - Next: run updated `python -m unittest scripts.test_explanatory_teaching_20261111 -v` on the **final** PR head; verify full exact-head checks and post-main compatibility before merge. If blocked, preserve branch and continue suffix **51** next time, do not restart.
+
+## Stage F checkpoint — 11 November 2026
+- Added **100 NEW** synthetic RU teaching replies (51–60) across the ten unchanged intents; prior 500 retained. **Cumulative 600/1000**, each intent **60/100**, **40 missing each** (400 total), 0 complete; following suffix **61**.
+- Parent E blob `d6d124bf61462b4167a9d4ff8b338adc3d13ad53`. All six source stage files remain unregistered/read-only, and test validates exact parent Git blobs, source SHA-256, stable IDs, safe scope, lexical uniqueness.
+- Normalization QA on all six stages: 600 unique IDs, 600 distinct normalized replies and context notes, 0 exact duplicates; maximum token-Jaccard 0.2857. This is a lexical bound, not proof of exhaustive semantic originality. New examples cover reliability, timing, ambiguity, access, data integrity, statistics, safety, and teaching feedback.
+- Manifest remains `2026.11.09.003`, source SHA-256 `0cfedc133354a69522fecc3cda6bc21533c66005f0dc207050075f787dc977a8`. Consumers, ImPULS, BotHost and caches untouched. Run all exact-head CI before merge and post-main CI after any merge; no consumer delivery asserted.
