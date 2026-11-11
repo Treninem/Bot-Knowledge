@@ -22,3 +22,11 @@ The ten IDs are:
 2. Verify Python unit tests and all required exact-actual-head CI; if failing, keep this PR draft/BLOCKED.
 3. Only after exact-head green and safe current-main compatibility, mark ready/merge with expected-head SHA guard and verify post-main CI on actual merge SHA.
 4. Continue these exact ten stable intents starting **11**, not another set of IDs; create other non-overlapping questions only when their source and semantics are checked.
+
+## Stage B checkpoint (same series, no new intent IDs)
+- PR [#627](https://github.com/Treninem/Bot-Knowledge/pull/627), branch `bk/temporal-language-20261111-a`; Stage B is `staging/ru/temporal_language_20261111_context_delta_b.json`.
+- **100 more NEW** original synthetic examples (11–20 for each stable intent), continuing Stage A without recounting its 100. Cumulative **200/1000**, 10 partial intent sets at **20/100**, **80 missing each** (800 total), zero completed.
+- Source registered SHA-256 and blob unchanged. Stage B records exact parent Stage A blob `ffc8ab618c5f2e20db7e48f35fa99adf048cd2ac`; the expanded Python unittest checks that blob from real bytes.
+- Connector-side normalization of 200 replies before commit: 200 distinct IDs, 200 normalized response texts, 200 context notes, zero exact repeats; maximum token Jaccard **0.31579**. This does not prove absence of semantic duplicates in the full repository. All replies require direct context, no actions or sanctions.
+- Stage B raw-data commit `56d02baf4416f715a8ff843c2c9fc872a275071b`; test update `9f1419e86aca533b8797d5d1221f6afd2ecec410`. Full actual-head Python/CI must be confirmed on **latest** PR head; earlier CI on Stage A is obsolete.
+- **Next suffix: 21** for each existing stable intent; new accepted response delta this cycle is Stage A +100 plus Stage B +100 = **200**, not 300. For merge, check fresh main and complete predecessor post-main; do not bypass checks or modify live consumers.
