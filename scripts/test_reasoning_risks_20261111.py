@@ -4,11 +4,11 @@ import hashlib,json,re,unicodedata,unittest
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 SOURCE=ROOT/"staging/ru/reasoning_risks_20261111_context_pool.json"
-NORMAL=re.compile(r"[^\\W_]+",re.UNICODE)
+NORMAL=re.compile(r"[^\W_]+",re.UNICODE)
 def norm(t):
     return " ".join(NORMAL.findall(unicodedata.normalize("NFKC",t).casefold().replace("ё","е")))
 def gitblob(b):
-    return hashlib.sha1(b"blob "+str(len(b)).encode()+b"\\0"+b).hexdigest()
+    return hashlib.sha1(b"blob "+str(len(b)).encode()+b"\0"+b).hexdigest()
 class ReasoningStage(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
@@ -59,9 +59,9 @@ class ReasoningStage(unittest.TestCase):
             for b in tokens[i+1:]:
                 self.assertLess(len(a&b)/len(a|b),0.8,rs[i]["id"])
         for r in rs:
-            self.assertNotRegex(r["text"],r"(?i)[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,}")
+            self.assertNotRegex(r["text"],r"(?i)[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}")
             self.assertNotIn("ghp_",r["text"])
-            self.assertNotRegex(norm(r["text"]),r"\\b(?:я|бот) (?:забанил|замутил|удалил сообщение)\\b")
+            self.assertNotRegex(norm(r["text"]),r"\b(?:я|бот) (?:забанил|замутил|удалил сообщение)\b")
     def test_against_registered_answers(self):
         manifest=json.loads((ROOT/"manifest.json").read_text("utf-8"))
         old=set()
