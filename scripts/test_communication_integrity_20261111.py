@@ -1,4 +1,4 @@
-"""Read-only stage A–H checks for RU conversation integrity, 2026-11-11."""
+"""Read-only stage A–J checks for RU conversation integrity, 2026-11-11."""
 import hashlib
 import json
 import re
@@ -15,6 +15,8 @@ FILES = [
     "staging/ru/communication_integrity_20261111_context_delta_f.json",
     "staging/ru/communication_integrity_20261111_context_delta_g.json",
     "staging/ru/communication_integrity_20261111_context_delta_h.json",
+    "staging/ru/communication_integrity_20261111_context_delta_i.json",
+    "staging/ru/communication_integrity_20261111_context_delta_j.json",
 ]
 RELATED = [
     "greeting_exit_t544_context_pool.json",
@@ -65,7 +67,7 @@ class CommunicationIntegrityAD(unittest.TestCase):
     def test_scope_privacy_context_and_counts(self):
         seen_ids, seen_texts, seen_notes = set(), set(), set()
         stable = None
-        counts = [12, 10, 10, 12, 12, 10, 10, 8]
+        counts = [12, 10, 10, 12, 12, 10, 10, 8, 8, 8]
         for i, (stage, number) in enumerate(zip(self.stages, counts)):
             self.assertEqual(stage["language"], "ru")
             self.assertEqual(stage["audiences"], ["all_ai_bots"])
@@ -78,8 +80,8 @@ class CommunicationIntegrityAD(unittest.TestCase):
             self.assertEqual(cp["prior_candidates"], sum(counts[:i])*10)
             self.assertEqual(cp["cumulative_candidates"], sum(counts[:i+1])*10)
             self.assertEqual(cp["processed_intents"], 10)
-            self.assertEqual(cp["finished_100"], 0)
-            self.assertEqual(cp["partial_intents"], 10)
+            self.assertEqual(cp["finished_100"], 10 if i == len(counts)-1 else 0)
+            self.assertEqual(cp["partial_intents"], 0 if i == len(counts)-1 else 10)
             self.assertEqual(cp["remaining_total"], 1000-sum(counts[:i+1])*10)
             self.assertEqual(len(stage["entries"]), 10)
             stable_now = {e["intent_id"] for e in stage["entries"]}
@@ -120,7 +122,7 @@ class CommunicationIntegrityAD(unittest.TestCase):
             related.extend(r["text"] for e in d["entries"] for r in e["replies"])
         self.assertEqual(len(related), 1920)
         candidate = [r["text"] for s in self.stages for e in s["entries"] for r in e["replies"]]
-        self.assertEqual(len(candidate), 840)
+        self.assertEqual(len(candidate), 1000)
         prior = [tokens(t) for t in related]
         for idx, text in enumerate(candidate):
             a = tokens(text)
