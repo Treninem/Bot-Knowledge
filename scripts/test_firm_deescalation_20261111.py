@@ -1,4 +1,4 @@
-"""Read-only QA for original contextual RU de-escalation stages A–D."""
+"""Read-only QA for original contextual RU de-escalation stages A–E."""
 from __future__ import annotations
 import hashlib
 import json
@@ -13,6 +13,7 @@ STAGES = [
     ROOT / "staging/ru/firm_deescalation_20261111_b.json",
     ROOT / "staging/ru/firm_deescalation_20261111_c.json",
     ROOT / "staging/ru/firm_deescalation_20261111_d.json",
+    ROOT / "staging/ru/firm_deescalation_20261111_e.json",
 ]
 TOKENS = re.compile(r"[^\W_]+", re.UNICODE)
 INTENTS = {
@@ -49,7 +50,7 @@ class FirmDialogueTest(unittest.TestCase):
                 self.assertIs(stage["constraints"][fld], True)
 
     def test_stable_id_sequence_and_checkpoint(self):
-        self.assertEqual(len(self.replies), 400)
+        self.assertEqual(len(self.replies), 500)
         names = [e["intent_id"] for e in self.stages[0]["entries"]]
         self.assertEqual({n.removeprefix("firm20261111_") for n in names}, INTENTS)
         for n, stage in enumerate(self.stages):
