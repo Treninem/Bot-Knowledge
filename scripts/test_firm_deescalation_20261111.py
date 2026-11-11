@@ -101,5 +101,38 @@ class FirmDialogueTest(unittest.TestCase):
             walk(json.loads((ROOT / item["path"]).read_text("utf-8")))
         self.assertFalse(known.intersection(norm(r["text"]) for r in self.replies))
 
+    def test_no_close_lexical_overlap_with_six_related_staging_packs(self):
+        related = [
+            "staging/ru/group_pragmatics_t600_context_pool.json",
+            "staging/ru/interpersonal_t590_context_pool.json",
+            "staging/ru/communication_integrity_20261111_context_pool.json",
+            "staging/ru/dialogue_repair_t554_context_pool.json",
+            "staging/ru/optional_humor_t518_context_pool.json",
+            "staging/ru/group_pragmatics_t611_alternatives_review_only.json",
+        ]
+        other = []
+        def walk(node):
+            if isinstance(node, dict):
+                if isinstance(node.get("text"), str) and (
+                    "id" in node or "context_note" in node or "context" in node
+                ):
+                    other.append(norm(node["text"]))
+                for k,v in node.items():
+                    if k != "text":
+                        walk(v)
+            elif isinstance(node,list):
+                for item in node:
+                    walk(item)
+        for path in related:
+            walk(json.loads((ROOT / path).read_text("utf-8")))
+        self.assertGreaterEqual(len(other), 1000)
+        refs = [set(t.split()) for t in other]
+        for reply in self.replies:
+            txt = norm(reply["text"])
+            self.assertNotIn(txt,other, reply["id"])
+            words = set(txt.split())
+            for outside in refs:
+                self.assertLess(len(words & outside) / len(words | outside), .55, reply["id"])
+
 if __name__ == "__main__":
     unittest.main()
