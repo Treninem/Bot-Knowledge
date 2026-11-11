@@ -31,3 +31,14 @@ Owner's authorization to expand and merge verified Bot-Knowledge PRs is in `docs
 - Another **100 new synthetic** situational replies (suffix 21–30) across the same ten stable canonical intents. Total A+B+C **300/1000**, each **30/100**, **70 remaining per intent / 700 total**, zero completed 100/100.
 - Prior B Git blob `9783fe46d5d07273650f8822501cff5a764ec0c1` is recorded in `parent_stage_blob_sha`. A and B are not recounted as new in C. Combined 300 unique IDs, normalized texts and context notes, 0 exact duplicates, max token-Jaccard 0.2917 (lexical only). Broader editorial/corpus and full CI remain required.
 - Manifest/registered pack SHA-256 untouched, consumers not updated. Next suffix 31.
+
+## Stage D checkpoint — 11 November 2026
+- After the verified merge of #628 to main `eac2ef761fe54f4f9edb3b5fa7c8ecb35e509fe8`, added **100 new original contextual RU replies** (IDs 31–40 per stable intent), not repeating A–C. Each of ten intents: **40/100**, 60 missing, **400/1000** cumulative staging candidates.
+- Stage C parent Git blob `1bfdad2d0f016427fdc832c1d3b5df08a14cd8d4`. Exact normalized IDs/texts/context notes 400/400 in connector-side precommit checks; token-Jaccard max 0.381. Counts are candidate counts, not approved consumer material.
+
+## Stage E checkpoint — 11 November 2026
+- Another **100 NEW original synthetic replies** (IDs 41–50 per intent). Total **500/1000** staging-only candidates, each of ten intents **50/100**; exactly **50 remain per intent / 500 total**, **0 completed sets 100/100**. D's 100 and pre-existing A–C's 300 are not counted again as new in E.
+- Stage D parent Git blob `3bd9d63bfaf17fd7282ca3caa3cc02b2d74e1ebf`; D and E each use consistent original source SHA-256 `0cfedc133354a69522fecc3cda6bc21533c66005f0dc207050075f787dc977a8`.
+- 500/500 unique IDs, normalized answer strings and context conditions; no exact duplicates and max token-Jaccard **0.5714** among all five stages (connector-side check). This is not proof of full semantic distinctness or global corpus exclusion. New read-only Python QA and exact-head workflow validate metadata, version/source integrity, Git blob ancestry, context guards and isolation.
+- Scope: two new JSON staging files, an additional deterministic Python QA file, adjusted existing read-only workflow and this checkpoint document. Registered pack, manifest, cache keys, ImPULS and live bots unchanged; no permissions or sanctions created.
+- Next: run **ALL** required exact-head CI against the actual PR branch SHA; verify post-main on #628 merge SHA first, then current main and expected-head guard before any merge. Continue these stable ten intents from suffix **51** in a new independent extension; broaden to other practical intents without meaningless paraphrases.
