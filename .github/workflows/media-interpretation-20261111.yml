@@ -1,0 +1,36 @@
+name: RU media interpretation staged read-only QA
+on:
+  pull_request:
+    paths:
+      - 'staging/ru/media_interpretation_20261111_*'
+      - 'scripts/test_media_interpretation_20261111.py'
+      - 'docs/MEDIA_INTERPRETATION_2026_11_11.md'
+      - '.github/workflows/media-interpretation-20261111.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'staging/ru/media_interpretation_20261111_*'
+      - 'scripts/test_media_interpretation_20261111.py'
+      - 'docs/MEDIA_INTERPRETATION_2026_11_11.md'
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - name: Verify actual checkout equals expected head
+        shell: bash
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+          echo "BK_MEDIA_EXACT_HEAD=$(git rev-parse HEAD)"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run read-only media language tests
+        run: python -m unittest scripts.test_media_interpretation_20261111 -v
