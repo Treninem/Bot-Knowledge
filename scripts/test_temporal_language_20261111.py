@@ -11,6 +11,8 @@ STAGE = ROOT / "staging/ru/temporal_language_20261111_context_pool.json"
 STAGE_B = ROOT / "staging/ru/temporal_language_20261111_context_delta_b.json"
 STAGE_C = ROOT / "staging/ru/temporal_language_20261111_context_delta_c.json"
 STAGE_D = ROOT / "staging/ru/temporal_language_20261111_context_delta_d.json"
+STAGE_E = ROOT / "staging/ru/temporal_language_20261111_context_delta_e.json"
+STAGE_F = ROOT / "staging/ru/temporal_language_20261111_context_delta_f.json"
 AUX = {"all_ai_bots"}
 
 def norm(value):
@@ -28,7 +30,9 @@ class TemporalLanguageStagingTest(unittest.TestCase):
         cls.delta = json.loads(STAGE_B.read_text("utf-8"))
         cls.stage_c = json.loads(STAGE_C.read_text("utf-8"))
         cls.stage_d = json.loads(STAGE_D.read_text("utf-8"))
-        cls.replies = [r for stage in (cls.payload, cls.delta, cls.stage_c, cls.stage_d) for entry in stage["entries"] for r in entry["replies"]]
+        cls.stage_e = json.loads(STAGE_E.read_text("utf-8"))
+        cls.stage_f = json.loads(STAGE_F.read_text("utf-8"))
+        cls.replies = [r for stage in (cls.payload, cls.delta, cls.stage_c, cls.stage_d, cls.stage_e, cls.stage_f) for entry in stage["entries"] for r in entry["replies"]]
 
     def test_integrity_and_manifest_source(self):
         stage = self.payload
@@ -74,7 +78,7 @@ class TemporalLanguageStagingTest(unittest.TestCase):
         ids = [r["id"] for r in self.replies]
         texts = [norm(r["text"]) for r in self.replies]
         contexts = [norm(r["context_note"]) for r in self.replies]
-        self.assertEqual((len(set(ids)), len(set(texts)), len(set(contexts))), (400, 400, 400))
+        self.assertEqual((len(set(ids)), len(set(texts)), len(set(contexts))), (600, 600, 600))
         bags = [set(v.split()) for v in texts]
         for i, left in enumerate(bags):
             for right in bags[i+1:]:
@@ -103,14 +107,14 @@ class TemporalLanguageStagingTest(unittest.TestCase):
                 self.assertIn("не применять санкции", r["avoid"])
                 self.assertGreater(len(r["context_note"]), 12)
 
-    def test_stage_c_and_d_ancestry_progress_and_applicability(self):
+    def test_stage_c_through_f_ancestry_progress_and_applicability(self):
         previous = self.delta
-        paths = (STAGE_C, STAGE_D)
-        expected_totals = (300, 400)
-        prior = (200, 300)
+        paths = (STAGE_C, STAGE_D, STAGE_E, STAGE_F)
+        expected_totals = (300, 400, 500, 600)
+        prior = (200, 300, 400, 500)
         for stage_path, cumulative, previous_count in zip(paths, expected_totals, prior):
             stage = json.loads(stage_path.read_text("utf-8"))
-            parent_path = STAGE_B if cumulative == 300 else STAGE_C
+            parent_path = {300: STAGE_B, 400: STAGE_C, 500: STAGE_D, 600: STAGE_E}[cumulative]
             self.assertEqual(stage["parent_stage"], str(parent_path.relative_to(ROOT)))
             self.assertEqual(stage["parent_stage_blob_sha"], blob_sha(parent_path.read_bytes()))
             self.assertEqual(stage["source_pack_manifest_sha256"], self.payload["source_pack_manifest_sha256"])
