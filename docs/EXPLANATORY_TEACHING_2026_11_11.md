@@ -43,3 +43,8 @@ Next action: independently and carefully continue **the same ten stable intents*
 - Parent E blob `d6d124bf61462b4167a9d4ff8b338adc3d13ad53`. All six source stage files remain unregistered/read-only, and test validates exact parent Git blobs, source SHA-256, stable IDs, safe scope, lexical uniqueness.
 - Normalization QA on all six stages: 600 unique IDs, 600 distinct normalized replies and context notes, 0 exact duplicates; maximum token-Jaccard 0.2857. This is a lexical bound, not proof of exhaustive semantic originality. New examples cover reliability, timing, ambiguity, access, data integrity, statistics, safety, and teaching feedback.
 - Manifest remains `2026.11.09.003`, source SHA-256 `0cfedc133354a69522fecc3cda6bc21533c66005f0dc207050075f787dc977a8`. Consumers, ImPULS, BotHost and caches untouched. Run all exact-head CI before merge and post-main CI after any merge; no consumer delivery asserted.
+
+## Stage G checkpoint — 11 November 2026
+- Added 100 new original replies, stable IDs suffix 61–70. Prior 600 not counted again. **Cumulative A–G 700/1000**, ten intents each **70/100**, 30 missing each, zero completed.
+- Parent F blob `9ad11e9e37ace34391b742691c49ba2655943b13`; updated Python test checks exact ancestry, source manifest SHA-256 and all seven stages. Pre-commit normalized IDs/texts/context notes: **700/700** distinct, zero exact duplicates, maximal pair token-Jaccard **0.2857** (< 0.80). Semantic originality across all published corpus not proven.
+- All candidates remain unregistered, contextual and read-only. Registered source pack, manifest `2026.11.09.003`, ImPULS and consumer caches unchanged. Next suffix **71**.
