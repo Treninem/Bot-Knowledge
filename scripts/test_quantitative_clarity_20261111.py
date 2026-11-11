@@ -81,5 +81,42 @@ class QuantitativeClarityTest(unittest.TestCase):
             for right in wordsets[i+1:]:
                 self.assertLess(len(left&right)/len(left|right),.8)
 
+
+    def test_stage_c_lineage_and_300_unique_replies(self):
+        paths=[ROOT/"staging/ru/quantitative_clarity_20261111_context_pool.json",
+               ROOT/"staging/ru/quantitative_clarity_20261111_context_delta_b.json",
+               ROOT/"staging/ru/quantitative_clarity_20261111_context_delta_c.json"]
+        raw=[x.read_bytes() for x in paths]
+        stages=[json.loads(x) for x in raw]
+        self.assertEqual(stages[2]["parent_stage"],"staging/ru/quantitative_clarity_20261111_context_delta_b.json")
+        self.assertEqual(stages[2]["parent_stage_blob_sha"],git_blob(raw[1]))
+        for stage in stages[1:]:
+            for key in ("source_pack","source_pack_manifest_sha256","source_pack_blob_sha"):
+                self.assertEqual(stage[key],stages[0][key])
+            self.assertFalse(stage["consumer_registered"])
+            self.assertTrue(all(stage["constraints"].values()))
+        self.assertEqual((stages[2]["checkpoint"]["prior_candidates"],
+                          stages[2]["checkpoint"]["cumulative_candidates"],
+                          stages[2]["checkpoint"]["remaining_total"]),(200,300,700))
+        ids=set();texts=set();notes=set();sets=[]
+        for stage_index,stage in enumerate(stages):
+            self.assertEqual(len(stage["entries"]),10)
+            for entry in stage["entries"]:
+                self.assertEqual((entry["prior_for_stable_id"],entry["total_staged"],entry["remaining"]),
+                                 (stage_index*10,(stage_index+1)*10,90-stage_index*10))
+                for j,r in enumerate(entry["replies"],stage_index*10+1):
+                    self.assertEqual(r["id"],f'{entry["intent_id"]}_{j:02d}')
+                    self.assertTrue(r["read_only"])
+                    self.assertEqual(r["audiences"],["all_ai_bots"])
+                    self.assertEqual(r["context"],"direct")
+                    self.assertIn("не применять санкции",r["avoid"])
+                    for value,dest in ((r["id"],ids),(norm(r["text"]),texts),(norm(r["context_note"]),notes)):
+                        self.assertNotIn(value,dest);dest.add(value)
+                    sets.append(set(norm(r["text"]).split()))
+        self.assertEqual((len(ids),len(texts),len(notes)),(300,300,300))
+        for i,l in enumerate(sets):
+            for r in sets[i+1:]:
+                self.assertLess(len(l&r)/len(l|r),.8)
+
 if __name__ == "__main__":
     unittest.main()

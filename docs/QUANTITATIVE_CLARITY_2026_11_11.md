@@ -26,3 +26,8 @@ Owner's authorization to expand and merge verified Bot-Knowledge PRs is in `docs
 - **100 NEW** original context-specific candidates, suffix 11–20 per intent; ten stable intents at **20/100**, **80 missing each / 800 missing total**, zero completed. Stage A 100 are prior data and not counted as new for Stage B.
 - Stage A blob `c2dd1ed56e487f20041fb99fa44f46e2184ec873` is verified as parent; both unregistered JSON stages have matching registered source SHA-256 `0cfedc133354a69522fecc3cda6bc21533c66005f0dc207050075f787dc977a8`. Combined 200 distinct IDs, normalized response texts and context notes; 0 exact duplicates, maximum token-Jaccard 0.2308 (<0.8), not a semantic uniqueness guarantee.
 - Python tests extend to both stages; CI on current exact head and post-main actual merge SHA must succeed before publication. Manifest, caches and live consumers remain unchanged. Next suffix **21**.
+
+## Stage C checkpoint
+- Another **100 new synthetic** situational replies (suffix 21–30) across the same ten stable canonical intents. Total A+B+C **300/1000**, each **30/100**, **70 remaining per intent / 700 total**, zero completed 100/100.
+- Prior B Git blob `9783fe46d5d07273650f8822501cff5a764ec0c1` is recorded in `parent_stage_blob_sha`. A and B are not recounted as new in C. Combined 300 unique IDs, normalized texts and context notes, 0 exact duplicates, max token-Jaccard 0.2917 (lexical only). Broader editorial/corpus and full CI remain required.
+- Manifest/registered pack SHA-256 untouched, consumers not updated. Next suffix 31.
