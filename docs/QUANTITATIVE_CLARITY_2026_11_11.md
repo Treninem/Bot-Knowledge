@@ -21,3 +21,8 @@ General **staging-only** synthetic replies for `all_ai_bots`; no live calculator
 10. `quant20261111_calculation_check` — Как проверить, что расчёт верный?
 
 Owner's authorization to expand and merge verified Bot-Knowledge PRs is in `docs/OWNER_AUTOMATION_SCOPE_2026_11_02.md`; safeguards remain in force. Do not claim the candidate answers are active in ImPULS or AuroraFox.
+
+## Stage B checkpoint
+- **100 NEW** original context-specific candidates, suffix 11–20 per intent; ten stable intents at **20/100**, **80 missing each / 800 missing total**, zero completed. Stage A 100 are prior data and not counted as new for Stage B.
+- Stage A blob `c2dd1ed56e487f20041fb99fa44f46e2184ec873` is verified as parent; both unregistered JSON stages have matching registered source SHA-256 `0cfedc133354a69522fecc3cda6bc21533c66005f0dc207050075f787dc977a8`. Combined 200 distinct IDs, normalized response texts and context notes; 0 exact duplicates, maximum token-Jaccard 0.2308 (<0.8), not a semantic uniqueness guarantee.
+- Python tests extend to both stages; CI on current exact head and post-main actual merge SHA must succeed before publication. Manifest, caches and live consumers remain unchanged. Next suffix **21**.
