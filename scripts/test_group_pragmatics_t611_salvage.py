@@ -11,7 +11,7 @@ ARCHIVE=ROOT/"staging/ru/group_pragmatics_t611_alternatives_review_only.json"
 MAIN=[ROOT/"staging/ru/group_pragmatics_t600_context_pool.json"]+[
     ROOT/f"staging/ru/group_pragmatics_t{n}_context_delta.json" for n in range(601,610)
 ]
-TOKEN=re.compile(r"[^\\W_]+",re.UNICODE)
+TOKEN=re.compile(r"[^\W_]+",re.UNICODE)
 def norm(v):
     return " ".join(TOKEN.findall(unicodedata.normalize("NFKC",v).casefold().replace("ё","е")))
 
@@ -55,7 +55,7 @@ class AlternativeSalvage(unittest.TestCase):
         original_ids=[e["intent_id"] for e in self.base[0]["entries"]]
         self.assertEqual([e["intent_id"] for e in a["entries"]],original_ids)
         for e in a["entries"]:
-            self.assertEqual(e["registered_main_staged_count"],100)
+            self.assertEqual(e["existing_main_staged_count"],100)
             self.assertEqual(len(e["review_only_alternates"]),50)
             for idx,r in enumerate(e["review_only_alternates"]):
                 self.assertEqual(r["original_id"],f'{e["intent_id"]}_{41+idx:02}')
@@ -81,7 +81,7 @@ class AlternativeSalvage(unittest.TestCase):
             for b in all_tokens[:idx]:
                 self.assertLess(len(a&b)/len(a|b),0.80,self.alternates[idx-len(self.primary)]["id"])
         for r in self.alternates:
-            self.assertNotRegex(r["text"],r"(?i)[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,}")
+            self.assertNotRegex(r["text"],r"(?i)[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}")
             self.assertNotIn("ghp_",r["text"])
             self.assertNotIn("я забанил",norm(r["text"]))
             self.assertNotIn("я замутил",norm(r["text"]))
