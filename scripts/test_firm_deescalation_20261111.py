@@ -1,4 +1,4 @@
-"""Read-only QA for original contextual RU de-escalation stages A–F."""
+"""Read-only QA for original contextual RU de-escalation stages A–J."""
 from __future__ import annotations
 import hashlib
 import json
@@ -15,6 +15,10 @@ STAGES = [
     ROOT / "staging/ru/firm_deescalation_20261111_d.json",
     ROOT / "staging/ru/firm_deescalation_20261111_e.json",
     ROOT / "staging/ru/firm_deescalation_20261111_f.json",
+    ROOT / "staging/ru/firm_deescalation_20261111_g.json",
+    ROOT / "staging/ru/firm_deescalation_20261111_h.json",
+    ROOT / "staging/ru/firm_deescalation_20261111_i.json",
+    ROOT / "staging/ru/firm_deescalation_20261111_j.json",
 ]
 TOKENS = re.compile(r"[^\W_]+", re.UNICODE)
 INTENTS = {
@@ -51,15 +55,15 @@ class FirmDialogueTest(unittest.TestCase):
                 self.assertIs(stage["constraints"][fld], True)
 
     def test_stable_id_sequence_and_checkpoint(self):
-        self.assertEqual(len(self.replies), 600)
+        self.assertEqual(len(self.replies), 1000)
         names = [e["intent_id"] for e in self.stages[0]["entries"]]
         self.assertEqual({n.removeprefix("firm20261111_") for n in names}, INTENTS)
         for n, stage in enumerate(self.stages):
             cp = stage["checkpoint"]
             self.assertEqual((cp["prior_candidates"], cp["added_candidates"], cp["cumulative_candidates"]), (n*100,100,(n+1)*100))
             self.assertEqual(cp["remaining_total"], 900 - n*100)
-            self.assertEqual(cp["partial_intents"], 10)
-            self.assertEqual(cp["finished_100"], 0)
+            self.assertEqual(cp["partial_intents"], 0 if n == 9 else 10)
+            self.assertEqual(cp["finished_100"], 10 if n == 9 else 0)
             self.assertEqual([e["intent_id"] for e in stage["entries"]], names)
             for e in stage["entries"]:
                 self.assertEqual((e["prior_for_stable_id"],e["added_candidates"],e["total_staged"],e["target"],e["remaining"]), (n*10,10,(n+1)*10,100,90-n*10))
