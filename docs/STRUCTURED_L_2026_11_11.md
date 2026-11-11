@@ -12,3 +12,10 @@
 - Latest addition preflight against original L1, prior A–J, registered source and separate K PR #661: zero exact overlap; maximum token-Jaccard 0.3333 (threshold 0.70). Human semantic QA remains required.
 - No manifest, registered source pack or consumer cache changes. Latest exact-head CI must be checked after this commit, not inherited from prior L1.
 - Resume from suffix **23**, continue other independent questions once data are reviewed.
+
+## L3 — продолжение 60 независимых контекстов (2026-11-11)
+
+- Добавлено **60 новых** синтетических ответов (ровно один для каждого из 60 прежних устойчивых intent ID), суффикс `23`. В этом PR теперь **180 новых** ответов: каждый intent **17/100** (3 зарегистрированы, 11 уже были в staging, 3 в этом PR), остаток **83** на каждый / **4 980** всего; полных 100/100 нет.
+- Перед фиксацией проверены все текущие ID, нормализованные тексты и ситуационные контексты внутри L: повторов нет; максимум token-Jaccard 0.4783 (<0.70). Это проверка внутри L, не доказательство полной смысловой уникальности всей базы.
+- Изменения только в staging JSON, целевом тесте и журнале; source pack, manifest, живые кэши и потребители без изменений.
+- PR остаётся Draft/BLOCKED: exact-head CI / независимое смысловое ревью / сверка параллельных веток / post-main необходимы. Следующий суффикс `24`.
