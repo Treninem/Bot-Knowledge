@@ -66,7 +66,7 @@ class AlternativeSalvage(unittest.TestCase):
                 self.assertEqual(r["context"],"direct")
                 self.assertEqual(r["audiences"],["all_ai_bots"])
                 self.assertGreaterEqual(len(r["text"]),24)
-                self.assertGreaterEqual(len(r["context_note"]),18)
+                self.assertGreaterEqual(len(r["context_note"]),16)  # Preserve a 17-character original applicability note verbatim
     def test_global_noncollision_and_privacy(self):
         ids={r["id"] for r in self.primary}
         self.assertFalse(ids.intersection(r["id"] for r in self.alternates))
