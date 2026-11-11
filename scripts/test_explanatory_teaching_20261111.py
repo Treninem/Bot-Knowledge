@@ -15,7 +15,8 @@ FILES = [STAGING / "explanatory_teaching_20261111_context_pool.json",
          STAGING / "explanatory_teaching_20261111_context_delta_c.json",
          STAGING / "explanatory_teaching_20261111_context_delta_d.json",
          STAGING / "explanatory_teaching_20261111_context_delta_e.json",
-         STAGING / "explanatory_teaching_20261111_context_delta_f.json"]
+         STAGING / "explanatory_teaching_20261111_context_delta_f.json",
+         STAGING / "explanatory_teaching_20261111_context_delta_g.json"]
 TOKEN = re.compile(r"[^\W_]+", flags=re.UNICODE)
 
 def norm(s: str) -> str:
