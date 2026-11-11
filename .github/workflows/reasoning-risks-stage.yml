@@ -1,0 +1,37 @@
+name: Reasoning risks stage read-only QA
+on:
+  pull_request:
+    paths:
+      - 'staging/ru/reasoning_risks_20261111_context_pool.json'
+      - 'staging/ru/reasoning_risks_20261111_b.json'
+      - 'staging/ru/reasoning_risks_20261111_c.json'
+      - 'staging/ru/reasoning_risks_20261111_d.json'
+      - 'staging/ru/reasoning_risks_20261111_e.json'
+      - 'staging/ru/reasoning_risks_20261111_f.json'
+      - 'staging/ru/reasoning_risks_20261111_g.json'
+      - 'staging/ru/reasoning_risks_20261111_h.json'
+      - 'staging/ru/reasoning_risks_20261111_i.json'
+      - 'staging/ru/reasoning_risks_20261111_j.json'
+      - 'scripts/test_reasoning_risks_20261111.py'
+      - '.github/workflows/reasoning-risks-stage.yml'
+permissions:
+  contents: read
+jobs:
+  stage:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          persist-credentials: false
+      - name: Verify actual head checkout
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate registered packs and all reasoning stages
+        run: |
+          python scripts/validate_pack.py
+          python -m unittest scripts.test_reasoning_risks_20261111 -v
