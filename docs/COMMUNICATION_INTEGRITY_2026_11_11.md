@@ -55,3 +55,31 @@ Stable IDs: `comm20261111_<intent>_<01..32>`; subsequent stage must begin at `33
 - Pre-commit JS on connector-read original: 440/440 unique IDs, normalized responses and notes; zero exact duplicates; max lexical Jaccard against the existing A–C and other new D candidates 0.3333 (<0.80). Editorial semantic review is separate from lexical checks.
 - Python suite expanded to include D; exact-head CI and post-main CI must be checked on their final actual SHAs. No changes to ImPULS, consumers, registered packs, manifest or live cache.
 - Next index for each intent: **45**; complete pending quality review before merge.
+
+## Stage E checkpoint — 11 November 2026
+
+- Starting point: merged PR #617 at `85f684592c0aa80c336725acba460ecfc08c7b2f`; A–D already contained **440** candidates. Stage E adds **120 NEW** original RU answers (12 per existing canonical intent), suffixes **45–56**; cumulative **560/1000**, ten partial sets **56/100**, **44 remaining per intent / 440 total**, no 100/100 set claimed.
+- New file `staging/ru/communication_integrity_20261111_context_delta_e.json` is unregistered staging, parent D Git blob `9662c8ec779f5daf021f739fa4ddcc314d8bd14c`. All replies are synthetic, apply only to their explicit context, require a direct request, are read-only, and do not authorize sanctions or transferring private chat data.
+- JS pre-commit normalization found zero exact duplicate texts, IDs or context notes against A–D; observed max within A–E token-Jaccard **0.3500** (not a substitute for semantic editorial review). The Python suite is expanded to E, with source SHA-256, ancestry, manifest and related-pool checks. Actual CI for final head must pass before merge, followed by post-main CI.
+- The manifest and registered packs remain unchanged; consumer deployment and ImPULS were not touched. Next suffix is **57** for every intent.
+
+## Stage F checkpoint — 11 November 2026
+
+- F adds **100 NEW** hand-authored contextual replies, 10 per existing intent, suffixes **57–66**. E already held 560 across A–E. Cumulative **660/1000** candidates, 10 partial sets at **66/100**, remaining 34 per intent / 340 total, 0 complete.
+- Staging `staging/ru/communication_integrity_20261111_context_delta_f.json` has parent E blob `62417965f34e3608ec850d76ee14b7b53e4d4818` and explicit context conditions. No registered pack, cache, private chats, consumer capabilities or ImPULS modifications.
+- JS exact normalization finds no repeated IDs/texts/context notes against A–E and the 100 new F candidates; maximum observed A–F token Jaccard **0.3750**, no pair >=0.80. Semantic editor review remains required. Python unittest expanded to include stage F; exact-head and post-main checks remain gates.
+- Next response suffix **67** per intent; do not recount earlier 660 as newly authored.
+
+## Stage G checkpoint — 11 November 2026
+
+- G adds **100 NEW** original synthetic RU contextual answers, suffixes **67–76** for ten existing intent IDs; prior A–F 660 kept intact. Cumulative **760/1000**, ten partial **76/100**, **24 missing per intent** / 240 remaining, 0 sets marked complete.
+- Source ancestry: parent F Git blob `3e6fe4d9ddbd0cd160f07f9651d4035963440a56`. New stage `staging/ru/communication_integrity_20261111_context_delta_g.json` is unregistered, direct/context-guarded and read-only. Registered source manifest, consumers, ImPULS, live caches and private materials unchanged.
+- Pre-commit JS found zero repeated normalized replies, IDs or context notes across A–G, with maximum observed token Jaccard **0.3333** (no pair >=0.80); human semantic review still required. Python suite updated for G and must pass on actual final PR head. After any merge, check actual post-main SHA before more merges.
+- Next suffix **77**. Earlier 760 are cumulative, not new in a subsequent run.
+
+## Stage H checkpoint — 11 November 2026
+
+- +**80 NEW** authored synthetic RU responses, 8 per stable intent, ID suffixes **77–84**. Prior A–G 760 retained, cumulative **840/1000**, ten partial sets **84/100**, 16 remaining per intent (160 total); no 100/100 claim.
+- File `staging/ru/communication_integrity_20261111_context_delta_h.json`, parent G blob `4158e136ec800cb0187dabc27b1f7a016a43ba80`. Public staging only, with direct/context match, no personal chat data, no sanctions, no actual consumer feature claims.
+- On A–H, pre-commit JS found 840 unique normalized texts, IDs and context notes; maximum observed token-Jaccard **0.3571**, no pair >=0.80. Full semantic editorial proof not claimed. Python tests updated for H. Exact-head CI and post-main gates apply; manifest, source pack, ImPULS and caches unchanged.
+- Next suffix **85** per intent; 160 remains.
