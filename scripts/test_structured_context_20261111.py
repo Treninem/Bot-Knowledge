@@ -120,5 +120,82 @@ class StructuredContextSupplementTest(unittest.TestCase):
                 similarity = len(left & right) / len(left | right)
                 self.assertLess(similarity, 0.68, (self.replies[i]["id"], j))
 
+
+class StructuredContextContinuationBTest(unittest.TestCase):
+    """Review the second independent stage without counting unmerged #229 as main."""
+    @classmethod
+    def setUpClass(cls):
+        cls.a = json.loads((ROOT / "staging/ru/structured_information_20261111_delta_a.json").read_text(encoding="utf-8"))
+        cls.b = json.loads((ROOT / "staging/ru/structured_information_20261111_delta_b.json").read_text(encoding="utf-8"))
+        cls.source = json.loads((ROOT / cls.b["source_pack"]).read_text(encoding="utf-8"))
+        cls.a_replies = [reply for entry in cls.a["entries"] for reply in entry["replies"]]
+        cls.b_replies = [reply for entry in cls.b["entries"] for reply in entry["replies"]]
+        cls.all_replies = cls.a_replies + cls.b_replies
+
+    def test_b_counts_and_source_checks(self):
+        self.assertEqual(len(self.a_replies), 150)
+        self.assertEqual(len(self.b_replies), 150)
+        self.assertEqual(len(self.all_replies), 300)
+        self.assertEqual(len(self.b["entries"]), 30)
+        self.assertEqual(self.b["checkpoint"]["added_candidates"], 150)
+        self.assertEqual(self.b["checkpoint"]["cumulative_new_in_independent_pr"], 300)
+        self.assertEqual(self.b["checkpoint"]["prior_independent_stage"], 150)
+        self.assertEqual(self.b["checkpoint"]["finished_100"], 0)
+        self.assertEqual(self.b["checkpoint"]["partial_intents"], 30)
+        self.assertFalse(self.b["consumer_registered"])
+        manifest = json.loads((ROOT / "manifest.json").read_text(encoding="utf-8"))
+        registry = {p["path"]: p["sha256"] for p in manifest["packs"]}
+        self.assertNotIn("staging/ru/structured_information_20261111_delta_b.json", registry)
+        raw = (ROOT / self.b["source_pack"]).read_bytes()
+        self.assertEqual(hashlib.sha256(raw).hexdigest(), registry[self.b["source_pack"]])
+        self.assertEqual(self.b["source_pack_manifest_sha256"], registry[self.b["source_pack"]])
+        self.assertEqual(self.b["source_pack_blob_sha"], git_blob_sha(raw))
+        self.assertEqual(self.b["external_draft_source"]["pr"], 229)
+        for flag in ("read_only", "requires_direct_address", "requires_context_match",
+                     "no_personal_data", "no_sanctions"):
+            self.assertIs(self.b["constraints"][flag], True)
+
+    def test_stable_ids_and_contexts_across_both_stages(self):
+        source = {record["id"]: record for record in self.source["records"]}
+        ids = [entry["intent_id"] for stage in (self.a, self.b) for entry in stage["entries"]]
+        self.assertEqual(len(ids), len(set(ids)))
+        self.assertEqual(len(ids), 60)
+        for entry in self.b["entries"]:
+            self.assertIn(entry["intent_id"], source)
+            original = source[entry["intent_id"]]
+            self.assertEqual(entry["canonical_question"], original["question"])
+            self.assertEqual(entry["published_count"], 1 + len(original["variants"]))
+            self.assertEqual(entry["published_count"], 3)
+            self.assertEqual(entry["unmerged_pr_229_count"], 9)
+            self.assertEqual(entry["added_candidates"], 5)
+            self.assertEqual(entry["potential_if_both_prs_merged"], 14)
+            self.assertEqual(entry["remaining_if_both_merged"], 86)
+            self.assertEqual(len(entry["replies"]), 5)
+            for idx, reply in enumerate(entry["replies"], 10):
+                self.assertEqual(reply["id"], f'{entry["intent_id"]}_supp_{idx:02d}')
+                self.assertIs(reply["read_only"], True)
+                self.assertEqual(reply["language"], "ru")
+                self.assertEqual(reply["context"], "direct")
+                self.assertEqual(reply["audiences"], ["all_ai_bots"])
+                self.assertGreaterEqual(len(reply["text"]), 45)
+                self.assertGreaterEqual(len(reply["context_note"]), 30)
+                self.assertIn("не применять санкции", reply["avoid"])
+        for field in ("id", "text", "context_note"):
+            keys = [r[field] if field == "id" else normalized(r[field]) for r in self.all_replies]
+            self.assertEqual(len(keys), len(set(keys)), field)
+        for reply in self.all_replies:
+            self.assertNotRegex(reply["text"], r"(?i)(?:ghp_|github_pat_|\\bt\\.me/|\\btelegram\\.me/)")
+            self.assertNotRegex(reply["text"], r"(?i)[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,}")
+
+    def test_all_staged_replies_lexically_distinct_from_registered(self):
+        prior = [v for record in self.source["records"] for v in [record["answer"], *record["variants"]]]
+        refs = [set(normalized(text).split()) for text in prior]
+        new = [set(normalized(reply["text"]).split()) for reply in self.all_replies]
+        for idx, words in enumerate(new):
+            for other in refs:
+                self.assertLess(len(words & other) / len(words | other), 0.68, idx)
+            for other in new[:idx]:
+                self.assertLess(len(words & other) / len(words | other), 0.68, idx)
+
 if __name__ == "__main__":
     unittest.main()
