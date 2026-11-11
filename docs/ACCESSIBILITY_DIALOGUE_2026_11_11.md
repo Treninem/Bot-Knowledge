@@ -27,3 +27,8 @@ The verified source pack is `packs/ru/social_dialogues.json`, whose registered S
 
 ## Next steps
 Continue these **same** ten intent IDs from answer 31, without regenerating or recounting A–C. Before a merge, verify exact current main/head SHAs, all required exact-head workflow results, publication guards and consumer isolation. After a merge, confirm post-main on the actual merge SHA. A staged dataset is not a consumer release: registration, manifest SHA-256/version, index and consumer integration require a separately tested release.
+
+## Stage D checkpoint (same 11 November cycle)
+- **100 additional original contextual replies**, suffix 31–40 per intent; staged **400/1000**, all ten at **40/100**, **60 missing each / 600 total**, zero completed. This stage is **new** in the current cycle; total new B+C+D is **300** (prior A100 excluded).
+- Parent C blob `480352a5eb5af86406c8aa1aae5ddb89dc4cb983`; stages A–D have **400 unique** IDs, normalized responses and context conditions, zero exact duplicates; max token Jaccard 0.2857 (lexical only, human editorial check still required). Changes do not register this staging pack.
+- Next suffix **41**. Run Python suite and exact-head CI after final changes before merging; no ImPULS, BotHost or cache changes.
