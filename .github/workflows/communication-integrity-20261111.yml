@@ -1,0 +1,33 @@
+name: RU communication integrity contextual QA
+on:
+  pull_request:
+    paths:
+      - 'staging/ru/communication_integrity_20261111_context_*.json'
+      - 'scripts/test_communication_integrity_20261111.py'
+      - 'docs/COMMUNICATION_INTEGRITY_2026_11_11.md'
+      - '.github/workflows/communication-integrity-20261111.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'staging/ru/communication_integrity_20261111_context_*.json'
+      - 'scripts/test_communication_integrity_20261111.py'
+      - '.github/workflows/communication-integrity-20261111.yml'
+permissions:
+  contents: read
+jobs:
+  verify-communication-integrity:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout actual PR head, no credentials persisted
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Pin actual checkout SHA
+        shell: bash
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+      - name: Read-only Python validation of staged candidates
+        run: python -m unittest scripts.test_communication_integrity_20261111 -v
