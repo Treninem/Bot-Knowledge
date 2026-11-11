@@ -15,10 +15,10 @@ EXPECTED_COUNTS = (10, 10, 10)
 ALLOWED_AUDIENCES = ["all_ai_bots"]
 
 def norm(text):
-    return " ".join(re.findall(r"[^\\W_]+", text.casefold().replace("ё", "е")))
+    return " ".join(re.findall(r"[^\W_]+", text.casefold().replace("ё", "е")))
 
 def blob_sha(raw):
-    return hashlib.sha1(b"blob " + str(len(raw)).encode() + b"\\0" + raw).hexdigest()
+    return hashlib.sha1(b"blob " + str(len(raw)).encode() + b"\0" + raw).hexdigest()
 
 class AccessibilityStagingTest(unittest.TestCase):
     @classmethod
@@ -92,8 +92,8 @@ class AccessibilityStagingTest(unittest.TestCase):
                     self.assertNotIn(n, notes)
                     answers.add(a)
                     notes.add(n)
-                    self.assertNotRegex(reply["text"], r"(?i)[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,}")
-                    self.assertNotRegex(reply["text"], r"\\b(?:\\+?\\d[ -]?){11,}\\b")
+                    self.assertNotRegex(reply["text"], r"(?i)[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}")
+                    self.assertNotRegex(reply["text"], r"\b(?:\+?\d[ -]?){11,}\b")
         self.assertEqual((len(ids), len(answers), len(notes)), (300, 300, 300))
 
     def test_high_lexical_similarity_requires_review(self):
