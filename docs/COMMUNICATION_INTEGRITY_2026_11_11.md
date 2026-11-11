@@ -62,3 +62,10 @@ Stable IDs: `comm20261111_<intent>_<01..32>`; subsequent stage must begin at `33
 - New file `staging/ru/communication_integrity_20261111_context_delta_e.json` is unregistered staging, parent D Git blob `9662c8ec779f5daf021f739fa4ddcc314d8bd14c`. All replies are synthetic, apply only to their explicit context, require a direct request, are read-only, and do not authorize sanctions or transferring private chat data.
 - JS pre-commit normalization found zero exact duplicate texts, IDs or context notes against A–D; observed max within A–E token-Jaccard **0.3500** (not a substitute for semantic editorial review). The Python suite is expanded to E, with source SHA-256, ancestry, manifest and related-pool checks. Actual CI for final head must pass before merge, followed by post-main CI.
 - The manifest and registered packs remain unchanged; consumer deployment and ImPULS were not touched. Next suffix is **57** for every intent.
+
+## Stage F checkpoint — 11 November 2026
+
+- F adds **100 NEW** hand-authored contextual replies, 10 per existing intent, suffixes **57–66**. E already held 560 across A–E. Cumulative **660/1000** candidates, 10 partial sets at **66/100**, remaining 34 per intent / 340 total, 0 complete.
+- Staging `staging/ru/communication_integrity_20261111_context_delta_f.json` has parent E blob `62417965f34e3608ec850d76ee14b7b53e4d4818` and explicit context conditions. No registered pack, cache, private chats, consumer capabilities or ImPULS modifications.
+- JS exact normalization finds no repeated IDs/texts/context notes against A–E and the 100 new F candidates; maximum observed A–F token Jaccard **0.3750**, no pair >=0.80. Semantic editor review remains required. Python unittest expanded to include stage F; exact-head and post-main checks remain gates.
+- Next response suffix **67** per intent; do not recount earlier 660 as newly authored.
