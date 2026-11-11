@@ -110,7 +110,7 @@ class CommunicationIntegrityAD(unittest.TestCase):
                         self.assertTrue(item)
                         self.assertNotIn(item, seen)
                         seen.add(item)
-        self.assertEqual((len(seen_ids), len(seen_texts), len(seen_notes)), (440, 440, 440))
+        self.assertEqual((len(seen_ids), len(seen_texts), len(seen_notes)), (sum(counts)*10,)*3)
 
     def test_all_stage_replies_against_related_pools(self):
         related = []
