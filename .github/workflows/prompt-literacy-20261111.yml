@@ -1,0 +1,36 @@
+name: RU prompt literacy staged QA (read-only)
+on:
+  pull_request:
+    paths:
+      - 'staging/ru/prompt_literacy_20261111_*'
+      - 'scripts/test_prompt_literacy_20261111.py'
+      - 'docs/PROMPT_LITERACY_2026_11_11.md'
+      - '.github/workflows/prompt-literacy-20261111.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'staging/ru/prompt_literacy_20261111_*'
+      - 'scripts/test_prompt_literacy_20261111.py'
+      - 'docs/PROMPT_LITERACY_2026_11_11.md'
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - name: Verify exact checked-out head
+        shell: bash
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+          echo "BK_PROMPT_EXACT_SHA=$(git rev-parse HEAD)"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify original prompt-literacy candidates
+        run: python -m unittest scripts.test_prompt_literacy_20261111 -v
