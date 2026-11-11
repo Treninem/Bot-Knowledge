@@ -35,3 +35,16 @@ Python gate: `python -m unittest scripts.test_prompt_literacy_20261111 -v`. This
 ## Next action
 
 First reconcile any concurrent work on the same prefix, then extend this exact series with suffix **11–20** for each intent, preserving the 100 existing responses and their contexts; repeat until reaching 100 useful choices per intent, without cosmetic paraphrases. Do not register the staging data in manifest until a compatible, reviewed consumer interface, size budget and publication gate are demonstrated. No live bot, BotHost, ImPULS or cache changes.
+
+## Continuation B–C — 2026-11-11 (separate draft from #641)
+
+The previous PR #641 was merged into main at `9c18349c3ad9f3305d2520e74b116c0a1109ff49`; 39/39 exact-head and 39/39 post-main checks passed. The 100 replies in stage A are **previous work**, not new in B/C.
+
+This independent continuation contributes **200 NEW** original synthetic context-bound Russian replies, across **the same ten stable intents**: stage B IDs 11–20 and stage C IDs 21–30, ten per intent per stage. Previous 100 + new 200 = **300/1000**, ten partial intent sets **30/100**, exactly 70 missing per intent / 700 remaining, zero completed 100/100.
+
+- Stage B `staging/ru/prompt_literacy_20261111_context_delta_b.json`, parent blob A `fad75d3166445c76dbf58a0160f65ad0aa40373a`.
+- Stage C `staging/ru/prompt_literacy_20261111_context_delta_c.json`, parent blob B recorded in the C file.
+- Data is **unregistered** with `consumer_registered=false`. The current manifest `2026.11.09.003` and source `packs/ru/social_dialogues.json` SHA-256 `0cfedc133354a69522fecc3cda6bc21533c66005f0dc207050075f787dc977a8` remain unchanged. No consumer update or new command is implied.
+- Authoring-side GitHub connector checks: 300 different IDs, 300 normalized replies and 300 context notes; no exact duplicates; maximum pair token-Jaccard **0.2333** across A/B/C. This automated metric is not exhaustive semantic review.
+- New test `python -m unittest scripts.test_prompt_literacy_b_c_20261111 -v` checks real source bytes, Git blob ancestry, all counts, uniqueness, scope, privacy and registered exact overlap. Must pass on the exact head via GitHub CI before merging. A local Python pass has not been claimed.
+- Next addition should start from suffix **31**, preserving 300 existing replies. Distinct real applicability matters more than reaching 100 by superficial variations. ImPULS, BotHost, live consumers and caches are untouched.
