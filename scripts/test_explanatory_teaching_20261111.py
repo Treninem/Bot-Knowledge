@@ -12,7 +12,8 @@ ROOT = Path(__file__).resolve().parents[1]
 STAGING = ROOT / "staging/ru"
 FILES = [STAGING / "explanatory_teaching_20261111_context_pool.json",
          STAGING / "explanatory_teaching_20261111_context_delta_b.json",
-         STAGING / "explanatory_teaching_20261111_context_delta_c.json"]
+         STAGING / "explanatory_teaching_20261111_context_delta_c.json",
+         STAGING / "explanatory_teaching_20261111_context_delta_d.json"]
 TOKEN = re.compile(r"[^\W_]+", flags=re.UNICODE)
 
 def norm(s: str) -> str:
