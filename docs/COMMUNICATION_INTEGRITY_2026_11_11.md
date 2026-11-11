@@ -47,3 +47,11 @@ Stable IDs: `comm20261111_<intent>_<01..32>`; subsequent stage must begin at `33
 - Rechecked 320 IDs, 320 normalized responses and 320 normalized context notes, with zero repeats. All new C replies compared with 1920 other relevant replies plus A+B: no exact repeats, highest token Jaccard **0.2728**, no pairs >= 0.8. This lexical check does not prove full semantic independence.
 - The Python unittest now verifies all 3 stages, exact Git parent chain, existing source manifest checksum, unique counts and read-only scopes. CI exact head and post-main results must be rechecked after the last commit, and the dataset remains blocked from release/merging until they pass.
 - Next unfilled reply number is **33** per intent. Do not count previous 320 as newly written on future runs.
+
+## Stage D checkpoint — 11 November 2026
+
+- Exactly **120 new** synthetic Russian contextual replies across the **same ten stable intents**, suffixes `33–44` per intent. Previous 320 A–C candidates remain counted only once; cumulative **440/1000**, ten partial sets **44/100**, **56 missing per intent / 560 total**, zero 100/100.
+- Unregistered `staging/ru/communication_integrity_20261111_context_delta_d.json`, parent C blob `8d63c28f05760b09a934953fade4b9314022f904`, source manifest unchanged. Each candidate has distinct context condition, `all_ai_bots`, direct and read-only scopes, no sanctions, no actual chat data.
+- Pre-commit JS on connector-read original: 440/440 unique IDs, normalized responses and notes; zero exact duplicates; max lexical Jaccard against the existing A–C and other new D candidates 0.3333 (<0.80). Editorial semantic review is separate from lexical checks.
+- Python suite expanded to include D; exact-head CI and post-main CI must be checked on their final actual SHAs. No changes to ImPULS, consumers, registered packs, manifest or live cache.
+- Next index for each intent: **45**; complete pending quality review before merge.
