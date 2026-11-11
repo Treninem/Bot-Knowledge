@@ -22,10 +22,10 @@ class TestStructuredK(unittest.TestCase):
  def test_checkpoint(self):
   d=self.data;self.assertFalse(d["consumer_registered"]);self.assertEqual(d["audiences"],["all_ai_bots"])
   for key in ("read_only","requires_direct_address","requires_context_match","no_personal_data","no_sanctions"):self.assertTrue(d["constraints"][key])
-  self.assertEqual((len(self.entries),len(self.current),d["checkpoint"]["remaining_total"]),(54,162,4590))
+  self.assertEqual((len(self.entries),len(self.current),d["checkpoint"]["remaining_total"]),(54,216,4536))
   for e in self.entries:
-   self.assertEqual((e["published_count"],e["previous_staged_count"],e["added_candidates"],e["total_candidates_with_published"],e["remaining"]),(3,9,3,15,85))
-   self.assertEqual([v["id"] for v in e["replies"]],[e["intent_id"]+"_supp_19",e["intent_id"]+"_supp_20",e["intent_id"]+"_supp_21"])
+   self.assertEqual((e["published_count"],e["previous_staged_count"],e["added_candidates"],e["total_candidates_with_published"],e["remaining"]),(3,9,4,16,84))
+   self.assertEqual([v["id"] for v in e["replies"]],[e["intent_id"]+"_supp_19",e["intent_id"]+"_supp_20",e["intent_id"]+"_supp_21",e["intent_id"]+"_supp_22"])
  def test_unique_and_safe(self):
   older=[r["text"] for p in PREV for e in json.loads(p.read_text("utf-8"))["entries"] for r in e["replies"]]
   registered=json.loads(SRC.read_text("utf-8"));older += [t for rec in registered["records"] for t in [rec["answer"],*rec["variants"]]]
