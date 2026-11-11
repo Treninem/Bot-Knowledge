@@ -1,5 +1,7 @@
 # Structured information supplemental replies — 11 November 2026
 
+**Latest verified authoring checkpoint: stages A+B, 60 canonical intents × 5 original new situational replies = 300 new candidates.** The A-only history below is retained for audit.
+
 ## Scope and immutable ancestry
 - Worktree base (fresh main after protected #652 merge): `418d801cf037b96a9d7d5ebdfa2f563f86331344`.
 - Registered source: `packs/ru/structured_information_qa.json`, **SHA-256 `55b3f6126d36cd92687d005b7fedf5a11df9ee61cf453103accdf1f13c8498f0`**, Git blob `8b3d596b5b50d3d319ebf450c96d5623fc99d26a`, from manifest `2026.11.09.003`.
@@ -21,3 +23,13 @@
 - Before merge: verify fresh PR/head+base SHA, quality exact-head CI (including this special workflow), editorial quality, and all relevant conflicts. Use `expected_head_sha`; after merge verify actual post-main SHA CI. Do not bypass required checks or run paid workflows.
 - **No staged reply implies live-bot delivery**. #229 remains an independent unresolved Draft. Its 9-variant ceiling requires future consumer-compatible selection/representation, not cloning canonical questions.
 - Next: continue these same IDs only if genuine uncovered contexts remain; distribute effort to different incomplete practical intents, and do not count the new 150 twice.
+
+## Continuation B — another 30 existing questions, 150 genuinely new replies
+
+- Stage B in `staging/ru/structured_information_20261111_delta_b.json` adds **+150** situation-specific, original Russian answers, five to each of the next 30 stable original intents (`struct_t86_031`–`struct_t86_039` and `struct_t88_001`–`struct_t88_021`). Stage A's earlier 150 are not counted as new here.
+- **A+B total in Draft #653: 300 new answers, 60 canonical intentions**, all 60 still partial. New 5/100 in each independent staging set, none 100/100. At the pinned main there were already 60 × 3 = 180 registered answers. Old blocked #229 proposes an additional 60 × 6 = 360 replies that must not be counted as published or newly authored in this PR. Potential independent combined coverage after both PRs safely integrated would be **14/100 per intent**, **86 missing each / 5,160 missing**. This is a conditional inventory, not consumer compatibility.
+- Newly covered contexts: price-vs-value comparison; cross-date metric comparisons; fractional work hours; genuine vs duplicate transactions; data-file versions; OCR uncertainty; measurement tolerance; additive vs multiplicative wording; missing units; inapplicable vs measured zero; DST repeated local times; filtered totals; rolling seven-day windows; ratio direction; deadline boundaries; historical exchange rates; imputation; complaint counts; tie-breaking in rankings; negative accounting entries; forecasts vs actuals; normalized rates; inclusive date bounds; weighted means; filtered denominators; "from" prices; cancelled orders; restated historical records; mismatched graph scales; small-group anonymity.
+- Direct connected-GitHub textual preflight compared all 300 new texts and context notes between stages and with all **1026** existing proposed answers in old Draft #229. **300 distinct normalized texts, 300 distinct normalized contexts, zero exact repeats**. No pair had token-Jaccard ≥ 0.68; max observed B-related similarity **0.545**. Automated token overlap is not full semantic QA. The newer Python stage tests cover the complete 300 and the registered main source; local tests must not be claimed to have run unless actually executed.
+- Stage B preserves `consumer_registered=false`, exact source SHA/blob, stable canonical IDs and enforced read-only/direct context, no sanctions, no personal information, no live access. Registered pack and manifest version `2026.11.09.003` remain unchanged; no bot/cache/consumer update.
+- Exact-head check and safe merge gates apply to the **final PR head after stage B and its test/workflow/doc edits**, not a prior stage-A SHA. Keep #229 unresolved; its incompatible merge and maximum-eight-variant schema must not be bypassed by duplicating canonical questions.
+- Next: review full exact-head CI for #653, examine all 300 for semantic distinctness, then (if checks permit) merge guarded with `expected_head_sha` and check real post-main CI. Further work may extend genuinely distinct contexts or expand other unsaturated canonical intents.
