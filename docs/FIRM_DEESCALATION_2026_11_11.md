@@ -1,0 +1,13 @@
+# Firm de-escalation — original context-specific Russian replies (11 November 2026)
+
+## Authoring checkpoint A
+
+- Base: `697ec80df18205027bbbf675a512bb5d1fa8f87f` (Bot-Knowledge main after #649).
+- New content: `staging/ru/firm_deescalation_20261111_context_pool.json`, **100 new** synthetic RU replies across ten *stable* `firm20261111_*` intentions, **10/100 each**, **90 missing per intention**, **900 total still missing**; **0 complete 100/100 sets**. Earlier staged replies from other series are not included.
+- Subjects: direct insult, mockery instead of evidence, unsubstantiated accusations, pressure for immediate conclusions, sanctions bait, third-party private data, targeted bullying, repetitive disputes, rude group dynamics and criticism of the assistant.
+- Every reply has a distinct situational `context_note`; a reply is not universally applicable to every utterance under its canonical question. `read_only=true`, `consumer_registered=false`, `requires_direct_address=true`, `requires_context_match=true`, `all_ai_bots`; never assert moderator rights, perform sanctions or publish personal data.
+- Registered source: `packs/ru/social_dialogues.json`, manifest SHA-256 `0cfedc133354a69522fecc3cda6bc21533c66005f0dc207050075f787dc977a8`, Git blob `d56ff304da7165bd63c328f3220a1f6d3d26e3ab`. Manifest `2026.11.09.003` and consumer cache untouched.
+- Connector-side initial 100-entry audit: 100 unique IDs, 100 normalized reply texts, 100 normalized context notes; no exact duplicates; maximum intra-stage token-Jaccard **0.2778**. This lexical metric is **not** a guarantee of semantic originality against all existing staging PRs. Manual editorial selection remains necessary.
+- Test locally from actual checkout: `python scripts/validate_pack.py`; `python -m unittest scripts.test_firm_deescalation_20261111 -v`. The associated read-only exact-head CI must also complete successfully.
+- Stage is **review-only**. No data were appended to registered packs or connected to ImPULS/AuroraFox. Merge into main would only publish staged candidates, not enable new consumer skills.
+- Next: after verifying exact-head CI, source SHA, cross-corpus overlap and main compatibility, guarded merge `expected_head_sha` followed by actual merge-SHA post-main CI. Then continue these same IDs from suffix **11**, rejecting low-value synonym padding; also proceed with other genuinely missing intentions.
