@@ -1,0 +1,10 @@
+# Quantitative clarity — stage F, separate dependent checkpoint (2026-11-11)
+
+This branch is based on **unmerged Draft #629** head `dbf40cbeab53d848e8c3d89932ab3d6828df8fea`, which extends merged #628 at main `eac2ef761fe54f4f9edb3b5fa7c8ecb35e509fe8`. Do not merge this dependent branch before #629 exact-head and actual post-main CI succeed. Avoid duplicating its already-authored D/E answers.
+
+- Stage F adds **100 NEW original synthetic RU replies**, ten each for the SAME stable `quant20261111_*` intents, suffix IDs **51–60**. No changed intention names. Stage A–C 300 merged earlier; stages D–E 200 remain in Draft #629; F 100 is **only this branch**. Distinct new replies in this run D/E/F: 300.
+- Total staging across A–F **600/1000**: ten partial sets each **60/100**, exactly **40 remaining each / 400 total**; **0 full 100/100**. No earlier answer is recounted as new for F.
+- Original source `packs/ru/social_dialogues.json`, checked at source main `1bf2a82834c674a50e7c44e11a41f4fc77861f3d`, registered source SHA-256 `0cfedc133354a69522fecc3cda6bc21533c66005f0dc207050075f787dc977a8`. Stage F parent E blob `9fcf61d3f25374d0b80ddaa6df96ae098c684302`. Unregistered data do not modify manifest, source SHA, live cache, ImPULS, or BotHost.
+- Precommit connector-side whole-series checks found **600 unique IDs, normalized texts and context notes**, exact duplicates 0; maximum token-Jaccard **0.5714**, lexical metric only. Full cross-corpus semantic review not proven. Stage-F-specific Python QA and exact-head workflow prepared in branch; **CI is not claimed until an actual run**.
+- Consumer `all_ai_bots`; per-reply direct/context guards, read-only, no personal data, no execution or sanctions. This is not an active consumer feature.
+- Next: once #629 has complete exact-head success and merges with successful actual post-main checks, rebase or retarget this independent F branch safely without force-push, confirm no overlap, open Draft PR, verify exact-head, merge with expected-head guard, then resume **suffix 61** and expand unrelated useful intents.
