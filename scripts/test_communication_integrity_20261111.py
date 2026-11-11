@@ -1,4 +1,4 @@
-"""Read-only stage A–F checks for RU conversation integrity, 2026-11-11."""
+"""Read-only stage A–G checks for RU conversation integrity, 2026-11-11."""
 import hashlib
 import json
 import re
@@ -13,6 +13,7 @@ FILES = [
     "staging/ru/communication_integrity_20261111_context_delta_d.json",
     "staging/ru/communication_integrity_20261111_context_delta_e.json",
     "staging/ru/communication_integrity_20261111_context_delta_f.json",
+    "staging/ru/communication_integrity_20261111_context_delta_g.json",
 ]
 RELATED = [
     "greeting_exit_t544_context_pool.json",
@@ -63,7 +64,7 @@ class CommunicationIntegrityAD(unittest.TestCase):
     def test_scope_privacy_context_and_counts(self):
         seen_ids, seen_texts, seen_notes = set(), set(), set()
         stable = None
-        counts = [12, 10, 10, 12, 12, 10]
+        counts = [12, 10, 10, 12, 12, 10, 10]
         for i, (stage, number) in enumerate(zip(self.stages, counts)):
             self.assertEqual(stage["language"], "ru")
             self.assertEqual(stage["audiences"], ["all_ai_bots"])
@@ -118,7 +119,7 @@ class CommunicationIntegrityAD(unittest.TestCase):
             related.extend(r["text"] for e in d["entries"] for r in e["replies"])
         self.assertEqual(len(related), 1920)
         candidate = [r["text"] for s in self.stages for e in s["entries"] for r in e["replies"]]
-        self.assertEqual(len(candidate), 660)
+        self.assertEqual(len(candidate), 760)
         prior = [tokens(t) for t in related]
         for idx, text in enumerate(candidate):
             a = tokens(text)
