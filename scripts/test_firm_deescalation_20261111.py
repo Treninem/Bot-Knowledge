@@ -9,7 +9,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 STAGED = ROOT / "staging/ru/firm_deescalation_20261111_context_pool.json"
-TOKENS = re.compile(r"[^\\W_]+", re.UNICODE)
+TOKENS = re.compile(r"[^\W_]+", re.UNICODE)
 INTENTS = {
     "direct_insult", "mockery_instead_of_argument", "unfounded_accusation",
     "rushed_answer", "sanction_bait", "private_data_pressure",
@@ -21,7 +21,7 @@ def norm(s: str) -> str:
     return " ".join(TOKENS.findall(unicodedata.normalize("NFKC", s).casefold().replace("ё", "е")))
 
 def blobsha(data: bytes) -> str:
-    return hashlib.sha1(b"blob " + str(len(data)).encode() + b"\\0" + data).hexdigest()
+    return hashlib.sha1(b"blob " + str(len(data)).encode() + b"\0" + data).hexdigest()
 
 class FirmDialogueTest(unittest.TestCase):
     @classmethod
@@ -77,9 +77,9 @@ class FirmDialogueTest(unittest.TestCase):
             for b in sets[i+1:]:
                 self.assertLess(len(a & b) / len(a | b), .8)
         for r in self.replies:
-            self.assertNotRegex(r["text"], r"(?i)[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,}")
-            self.assertNotRegex(r["text"], r"(?i)(?:ghp_|github_pat_|(?:telegram|t)\\.me/)")
-            self.assertNotRegex(norm(r["text"]), r"\\bя (?:забанил|замутил|удалил сообщение|раскрыл данные)\\b")
+            self.assertNotRegex(r["text"], r"(?i)[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}")
+            self.assertNotRegex(r["text"], r"(?i)(?:ghp_|github_pat_|(?:telegram|t)\.me/)")
+            self.assertNotRegex(norm(r["text"]), r"\bя (?:забанил|замутил|удалил сообщение|раскрыл данные)\b")
 
     def test_no_exact_overlap_with_registered_packs(self):
         manifest = json.loads((ROOT / "manifest.json").read_text("utf-8"))
