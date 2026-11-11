@@ -1,0 +1,28 @@
+name: Reasoning risks stage read-only QA
+on:
+  pull_request:
+    paths:
+      - 'staging/ru/reasoning_risks_20261111_context_pool.json'
+      - 'scripts/test_reasoning_risks_20261111.py'
+      - '.github/workflows/reasoning-risks-stage.yml'
+permissions:
+  contents: read
+jobs:
+  stage:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          persist-credentials: false
+      - name: Verify actual head checkout
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate packs and reasoning stage
+        run: |
+          python scripts/validate_pack.py
+          python -m unittest scripts.test_reasoning_risks_20261111 -v
