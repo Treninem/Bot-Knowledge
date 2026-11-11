@@ -11,13 +11,13 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 STAGING = ROOT / "staging/ru"
 FILES = [STAGING / "media_interpretation_20261111_context_pool.json"]
-TOKEN = re.compile(r"[^\\W_]+", flags=re.UNICODE)
+TOKEN = re.compile(r"[^\W_]+", flags=re.UNICODE)
 
 def norm(s: str) -> str:
     return " ".join(TOKEN.findall(unicodedata.normalize("NFKC", s).casefold().replace("ё", "е")))
 
 def git_blob(raw: bytes) -> str:
-    return hashlib.sha1(b"blob " + str(len(raw)).encode() + b"\\0" + raw).hexdigest()
+    return hashlib.sha1(b"blob " + str(len(raw)).encode() + b"\0" + raw).hexdigest()
 
 class MediaInterpretation(unittest.TestCase):
     @classmethod
@@ -107,8 +107,8 @@ class MediaInterpretation(unittest.TestCase):
     def test_privacy_and_no_actions(self):
         for r in self.rows:
             s = r["text"]
-            self.assertNotRegex(s, r"(?i)[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,}")
-            self.assertNotRegex(s, r"(?:\\+?\\d[ -]?){11,}")
+            self.assertNotRegex(s, r"(?i)[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}")
+            self.assertNotRegex(s, r"(?:\+?\d[ -]?){11,}")
             self.assertNotRegex(s, r"(?i)(?:бот|я) (?:забанил|замутил|уже отправил|изменил настройки)")
             self.assertNotIn("token", s.casefold())
 
