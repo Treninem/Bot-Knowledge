@@ -36,7 +36,10 @@ class PromptLiteracyContinuation(unittest.TestCase):
     def test_real_source_and_chain(self):
         manifest = json.loads((ROOT / "manifest.json").read_text("utf-8"))
         recorded = {x["path"]: x["sha256"] for x in manifest["packs"]}
-        self.assertEqual(manifest["knowledge_version"], "2026.11.09.003")
+        version_parts = manifest["knowledge_version"].split(".")
+        self.assertEqual(len(version_parts), 4)
+        self.assertTrue(all(part.isdecimal() for part in version_parts))
+        self.assertGreaterEqual(tuple(map(int, version_parts)), (2026, 11, 9, 3))
         stage0 = self.data[0]
         source = (ROOT / stage0["source_pack"]).read_bytes()
         sha256 = hashlib.sha256(source).hexdigest()

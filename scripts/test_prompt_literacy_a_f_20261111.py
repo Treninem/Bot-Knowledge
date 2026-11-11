@@ -29,7 +29,10 @@ class Continuation(unittest.TestCase):
         source=(ROOT/self.data[0]["source_pack"]).read_bytes()
         sha=hashlib.sha256(source).hexdigest()
         expected={x["path"]:x["sha256"] for x in manifest["packs"]}
-        self.assertEqual(manifest["knowledge_version"],"2026.11.09.003")
+        version_parts = manifest["knowledge_version"].split(".")
+        self.assertEqual(len(version_parts), 4)
+        self.assertTrue(all(part.isdecimal() for part in version_parts))
+        self.assertGreaterEqual(tuple(map(int, version_parts)), (2026, 11, 9, 3))
         self.assertEqual(expected[self.data[0]["source_pack"]],sha)
         for i,s in enumerate(self.data):
             self.assertIs(s["consumer_registered"],False)

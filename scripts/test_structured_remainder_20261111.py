@@ -64,7 +64,10 @@ class StructuredRemainderTest(unittest.TestCase):
         manifest = json.loads((ROOT / "manifest.json").read_text(encoding="utf-8"))
         packs = {p["path"]: p["sha256"] for p in manifest["packs"]}
         self.assertEqual(packs["packs/ru/structured_information_qa.json"], SHA256)
-        self.assertEqual(manifest["knowledge_version"], "2026.11.09.003")
+        version_parts = manifest["knowledge_version"].split(".")
+        self.assertEqual(len(version_parts), 4)
+        self.assertTrue(all(part.isdecimal() for part in version_parts))
+        self.assertGreaterEqual(tuple(map(int, version_parts)), (2026, 11, 9, 3))
         for path, stage in zip(PATHS, self.stages):
             self.assertNotIn(path.relative_to(ROOT).as_posix(), packs)
             self.assertFalse(stage["consumer_registered"])

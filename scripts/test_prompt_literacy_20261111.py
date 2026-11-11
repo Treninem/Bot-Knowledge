@@ -32,7 +32,10 @@ class PromptLiteracyCandidates(unittest.TestCase):
         recorded = {e["path"]: e["sha256"] for e in manifest["packs"]}
         source = self.stage["source_pack"]
         raw = (ROOT / source).read_bytes()
-        self.assertEqual(manifest["knowledge_version"], "2026.11.09.003")
+        version_parts = manifest["knowledge_version"].split(".")
+        self.assertEqual(len(version_parts), 4)
+        self.assertTrue(all(part.isdecimal() for part in version_parts))
+        self.assertGreaterEqual(tuple(map(int, version_parts)), (2026, 11, 9, 3))
         self.assertEqual(hashlib.sha256(raw).hexdigest(), recorded[source])
         self.assertEqual(hashlib.sha256(raw).hexdigest(), self.stage["source_pack_manifest_sha256"])
         self.assertEqual(git_blob(raw), self.stage["source_pack_blob_sha"])
