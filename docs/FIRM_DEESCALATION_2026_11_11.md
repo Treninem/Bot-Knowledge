@@ -26,3 +26,13 @@
 The latest A+B authoring pass compared all **200** new answers with **1060** contextual reply texts from six relevant existing staging files: `group_pragmatics_t600_context_pool`, `interpersonal_t590_context_pool`, `communication_integrity_20261111_context_pool`, `dialogue_repair_t554_context_pool`, `optional_humor_t518_context_pool`, and `group_pragmatics_t611_alternatives_review_only`. There were **zero exact duplicates and zero token-Jaccard matches at or above 0.55** across these 212,000 pair comparisons. This deliberately limited sample is not a full cross-repository semantic audit.
 
 The Python test now repeats this check against those six available staging files, as well as testing exact duplicates against every manifest-registered pack. Review exact final-head CI before merge; no consumer registration.
+
+## Continuation C — ten situational answers per stable intent
+
+- Latest content commit: `895bd7ce8d87675d2df0cb99d6c1914aeb73ea7e`, file `staging/ru/firm_deescalation_20261111_c.json`.
+- **100 newly authored synthetic RU replies**, suffixes **21–30** in each of ten existing stable `firm20261111_*` intents. Earlier A+B: 200; **cumulative 300**, ten partial sets **30/100 each**, **70 missing each** / **700 missing total**, zero sets at 100/100.
+- Independent connected-data preflight: all 300 IDs, normalized answer texts and context notes unique across A+B+C; zero overlaps in this sample, highest token-Jaccard **0.2941**. This is a lexical check, **not** complete editorial semantic review or all-repository screening.
+- Responses explicitly limited to directly addressed, context-specific, read-only `all_ai_bots` dialogue. No sanctions, identification, personal information sharing, BotHost, ImPULS or consumer changes.
+- Existing `manifest.json` and SHA of registered `packs/ru/social_dialogues.json` unchanged. The new staging file is **not registered** for consumer loading.
+- Updated `scripts/test_firm_deescalation_20261111.py` checks all three stages and their exact counts, source hashes, registered-pack exact repeats, adjacent staging lexical overlap and privacy restrictions. Exact-head CI for this **new head** still required, as is post-main CI before further merges.
+- Next: continue from suffix **31** per stable intent, refusing low-value synonym padding; after successful PR CI and fresh base/head check, guarded merge and actual post-main validation. Keep the recorded full count distinct from accepted consumer content.
