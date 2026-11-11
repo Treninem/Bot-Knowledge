@@ -15,7 +15,11 @@ FILES = [STAGING / "media_interpretation_20261111_context_pool.json",
          STAGING / "media_interpretation_20261111_context_delta_c.json",
          STAGING / "media_interpretation_20261111_context_delta_d.json",
          STAGING / "media_interpretation_20261111_context_delta_e.json",
-         STAGING / "media_interpretation_20261111_context_delta_f.json"]
+         STAGING / "media_interpretation_20261111_context_delta_f.json",
+         STAGING / "media_interpretation_20261111_context_delta_g.json",
+         STAGING / "media_interpretation_20261111_context_delta_h.json",
+         STAGING / "media_interpretation_20261111_context_delta_i.json",
+         STAGING / "media_interpretation_20261111_context_delta_j.json"]
 TOKEN = re.compile(r"[^\W_]+", flags=re.UNICODE)
 
 def norm(s: str) -> str:
