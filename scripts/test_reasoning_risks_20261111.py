@@ -1,4 +1,4 @@
-"""Read-only QA for synthetic RU evidence-bound reasoning stages A–G."""
+"""Read-only QA for synthetic RU evidence-bound reasoning stages A–J."""
 from __future__ import annotations
 
 import hashlib
@@ -17,6 +17,9 @@ STAGES = [
     ROOT / "staging/ru/reasoning_risks_20261111_e.json",
     ROOT / "staging/ru/reasoning_risks_20261111_f.json",
     ROOT / "staging/ru/reasoning_risks_20261111_g.json",
+    ROOT / "staging/ru/reasoning_risks_20261111_h.json",
+    ROOT / "staging/ru/reasoning_risks_20261111_i.json",
+    ROOT / "staging/ru/reasoning_risks_20261111_j.json",
 ]
 NORMAL = re.compile(r"[^\W_]+", re.UNICODE)
 
@@ -51,7 +54,7 @@ class ReasoningStage(unittest.TestCase):
                 self.assertIs(stage["constraints"][key], True)
 
     def test_stable_intents_and_counts(self):
-        self.assertEqual(len(self.replies), 700)
+        self.assertEqual(len(self.replies), 1000)
         originals = [e["intent_id"] for e in self.stages[0]["entries"]]
         self.assertEqual(len(originals), len(set(originals)))
         self.assertEqual(len(originals), 10)
@@ -61,8 +64,8 @@ class ReasoningStage(unittest.TestCase):
             self.assertEqual(cp["added_candidates"], 100)
             self.assertEqual(cp["cumulative_candidates"], (stage_number + 1) * 100)
             self.assertEqual(cp["remaining_total"], 900 - stage_number * 100)
-            self.assertEqual(cp["finished_100"], 0)
-            self.assertEqual(cp["partial_intents"], 10)
+            self.assertEqual(cp["finished_100"], 10 if stage_number == 9 else 0)
+            self.assertEqual(cp["partial_intents"], 0 if stage_number == 9 else 10)
             self.assertEqual([e["intent_id"] for e in stage["entries"]], originals)
             for e in stage["entries"]:
                 self.assertEqual(len(e["replies"]), 10)
