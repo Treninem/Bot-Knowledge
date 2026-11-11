@@ -20,3 +20,9 @@
 - `scripts/test_firm_deescalation_20261111.py` and the read-only workflow validate both full stages and the per-stage checkpoint. Source hashes, manifest version, registered packs, consumer cache, ImPULS and BotHost remain unchanged.
 - Current branch `bk/firm-deescalation-20261111-a`, PR #650. B initial content commit `2812b30ae15468f9472e0cf50f351071ea1d1241`. New current full head must be read, not assumed from a former checkpoint.
 - Follow-up: continue each stable intent with suffix **21**, reject merely cosmetic variants, require actual final-head CI success; do not claim a consumer-ready release from staging.
+
+## Targeted cross-staging overlap check
+
+The latest A+B authoring pass compared all **200** new answers with **1060** contextual reply texts from six relevant existing staging files: `group_pragmatics_t600_context_pool`, `interpersonal_t590_context_pool`, `communication_integrity_20261111_context_pool`, `dialogue_repair_t554_context_pool`, `optional_humor_t518_context_pool`, and `group_pragmatics_t611_alternatives_review_only`. There were **zero exact duplicates and zero token-Jaccard matches at or above 0.55** across these 212,000 pair comparisons. This deliberately limited sample is not a full cross-repository semantic audit.
+
+The Python test now repeats this check against those six available staging files, as well as testing exact duplicates against every manifest-registered pack. Review exact final-head CI before merge; no consumer registration.
