@@ -1,4 +1,4 @@
-"""Read-only, deterministic checks for 2026-11-11 accessibility staging A–D."""
+"""Read-only, deterministic checks for 2026-11-11 accessibility staging A–E."""
 import hashlib
 import json
 import re
@@ -11,8 +11,9 @@ PATHS = [
     "staging/ru/accessibility_dialogue_20261111_context_delta_b.json",
     "staging/ru/accessibility_dialogue_20261111_context_delta_c.json",
     "staging/ru/accessibility_dialogue_20261111_context_delta_d.json",
+    "staging/ru/accessibility_dialogue_20261111_context_delta_e.json",
 ]
-EXPECTED_COUNTS = (10, 10, 10, 10)
+EXPECTED_COUNTS = (10, 10, 10, 10, 10)
 ALLOWED_AUDIENCES = ["all_ai_bots"]
 
 def norm(text):
@@ -95,7 +96,7 @@ class AccessibilityStagingTest(unittest.TestCase):
                     notes.add(n)
                     self.assertNotRegex(reply["text"], r"(?i)[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}")
                     self.assertNotRegex(reply["text"], r"\b(?:\+?\d[ -]?){11,}\b")
-        self.assertEqual((len(ids), len(answers), len(notes)), (400, 400, 400))
+        self.assertEqual((len(ids), len(answers), len(notes)), (500, 500, 500))
 
     def test_high_lexical_similarity_requires_review(self):
         values = [set(norm(r["text"]).split()) for s in self.stages
