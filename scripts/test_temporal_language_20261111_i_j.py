@@ -10,7 +10,7 @@ ROOT = Path(__file__).resolve().parents[1]
 PREFIX = ROOT / "staging/ru"
 SUFFIXES = ("context_pool",) + tuple(f"context_delta_{c}" for c in "bcdefghij")
 PATHS = [PREFIX / f"temporal_language_20261111_{s}.json" for s in SUFFIXES]
-NORMAL_RE = re.compile(r"[^\\W_]+", re.UNICODE)
+NORMAL_RE = re.compile(r"[^\W_]+", re.UNICODE)
 
 def normalized(value):
     return " ".join(NORMAL_RE.findall(unicodedata.normalize("NFKC", value).casefold().replace("ё", "е")))
@@ -84,8 +84,8 @@ class TemporalCompletion(unittest.TestCase):
     def test_privacy_actions(self):
         for reply in self.rows:
             text = reply["text"]
-            self.assertNotRegex(text, r"(?i)[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,}")
-            self.assertNotRegex(text, r"(?:\\+?\\d[ \\-]?){11,}")
+            self.assertNotRegex(text, r"(?i)[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}")
+            self.assertNotRegex(text, r"(?:\+?\d[ \-]?){11,}")
             self.assertNotRegex(text, r"(?i)(?:бот|я) (?:забанил|замутил|уже отправил|изменил настройки)")
             self.assertNotIn("token", text.casefold())
 
