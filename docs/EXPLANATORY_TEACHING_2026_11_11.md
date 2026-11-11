@@ -53,3 +53,17 @@ Next action: independently and carefully continue **the same ten stable intents*
 - +100 original RU responses with suffix 71–80, continuing 10 existing stable intents, previous 700 preserved. **Total 800/1000**, each **80/100**, **20 remaining per intent** (200 total), completed 100/100 **0**.
 - Parent G exact Git blob `2467feecddc609ab19e2e7fdb62094254e75d34b`, verified before commit. A–H normalization QA 800 unique IDs, 800 normalized texts, 800 normalized context notes; zero exact duplicates; maximal token-Jaccard 0.2857. Automated lexical checks are not a full semantic audit.
 - Updated read-only unittest covers eight stages, parent blob ancestry, manifest/source checksums, context and privacy. All staging packages remain consumer-unregistered. No live changes or auto-delivery claims. Continue suffix **81**.
+
+## Stage I checkpoint — 11 November 2026 (recovered)
+- Stage I already existed on parent PR #639 head `e4ec206a05072f22a20fac248d92e37885b41ac1` when this independent continuation was started. It contains **100 earlier responses** (IDs 81–90), not counted as newly created by this continuation.
+- Stage I Git blob `36b23de86fb21f9233c5b33d874ca899250c9165`, parent H Git blob `b7b6325745415a6e1164b7eb4da91583ed2172d9`. Parent series cumulative **900/1000**, ten stable intents at **90/100**, ten each still missing.
+- Parent #639 must be merged and verified independently. The dependent completion PR does not authorize overwriting its branch.
+
+## Stage J independent completion — 11 November 2026
+- Created **100 NEW original synthetic Russian replies**, ten per stable intent with ID suffixes **91–100**. Earlier stages A–I contain 900 replies and are **not** counted as newly added. **Cumulative A–J: 1000/1000 staged candidates; 10 intentions at 100/100, no partial sets, 0 remaining.**
+- Candidate file `staging/ru/explanatory_teaching_20261111_context_delta_j.json` uses exact parent stage I Git blob `36b23de86fb21f9233c5b33d874ca899250c9165`; a separate dependent branch `bk/explanatory-teaching-complete-20261111-r11` preserves parent #639 without concurrent edits.
+- Connector-side normalization of A–J: **1000 unique IDs, 1000 unique normalized reply texts, 1000 unique normalized applicability notes**; zero exact duplicates; maximum token-Jaccard **0.3462** among 1000 answers (threshold 0.80). This does not prove there are no semantic near-duplicates or inaccuracies. Manual context and wording review remains required.
+- The read-only Python unittest was extended from eight to all ten stages; its passing status must be confirmed by actual exact-head CI. Source and manifest remain expected at registered `2026.11.09.003` / `0cfedc133354a69522fecc3cda6bc21533c66005f0dc207050075f787dc977a8`; dedicated test independently compares source file bytes, manifest SHA and Git blob.
+- All staged replies require direct address and a matching situation; they provide explanations and exercises only, no actual teaching integration, permissions, sanctions, memory, privacy extraction, or modifications to live bots.
+- **Publication gate:** first verify and merge parent #639 only if its exact-head and actual post-main requirements pass. Then retarget this PR onto verified main without discarding useful changes; confirm exact-head Python plus full CI and compatible base, use guarded head merge and actual post-main CI. Do not merge this dependent candidate early.
+- After the completed series: review and prioritize **existing partial** canonical intents from the backlog, not another renamed copy of this teaching set.
