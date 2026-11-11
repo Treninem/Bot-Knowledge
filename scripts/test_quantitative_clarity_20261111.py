@@ -7,9 +7,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "staging/ru/quantitative_clarity_20261111_context_pool.json"
 def norm(s):
-    return " ".join(re.findall(r"[^\\W_]+", s.casefold().replace("ё","е")))
+    return " ".join(re.findall(r"[^\W_]+", s.casefold().replace("ё","е")))
 def git_blob(raw):
-    return hashlib.sha1(b"blob "+str(len(raw)).encode()+b"\\0"+raw).hexdigest()
+    return hashlib.sha1(b"blob "+str(len(raw)).encode()+b"\0"+raw).hexdigest()
 class QuantitativeClarityTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
@@ -40,8 +40,8 @@ class QuantitativeClarityTest(unittest.TestCase):
                     value=norm(r[key]);self.assertGreater(len(value),16);self.assertNotIn(value,target);target.add(value)
                 self.assertEqual(r["context"],"direct");self.assertTrue(r["read_only"])
                 self.assertIn("не применять санкции",r["avoid"])
-                self.assertNotRegex(r["text"],r"(?i)[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,}")
-                self.assertNotRegex(r["text"],r"\\b(?:\\+?\\d[ -]?){11,}\\b")
+                self.assertNotRegex(r["text"],r"(?i)[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}")
+                self.assertNotRegex(r["text"],r"\b(?:\+?\d[ -]?){11,}\b")
                 sets.append(set(norm(r["text"]).split()))
         self.assertEqual((len(ids),len(texts),len(notes)),(100,100,100))
         for i,a in enumerate(sets):
