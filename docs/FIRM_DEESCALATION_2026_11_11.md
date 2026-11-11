@@ -51,3 +51,11 @@ The Python test now repeats this check against those six available staging files
 - Cumulative **500/1000** staged answers A–E across ten unchanged intentions: **50/100** each, **50 missing each** / **500 missing total**. **0 completed 100/100** sets. In this continuation PR C–E contributes **300 new**, not the older 200 from main.
 - Connected preflight covers all 500: normalized IDs, answer texts and context notes unique. New E vs A–D + E max token-Jaccard **0.4167**, zero pairs ≥0.55. Manual semantic quality review and exact-head CI still required.
 - Safety: no personal information, sanctions, powers or consumer registration. Source pack, manifest and cache unchanged. Next suffix **51** for all ten intentions.
+
+## Continuation F — no sanctions, safe direct replies
+
+- File `staging/ru/firm_deescalation_20261111_f.json`, source commit `1f7442addd22601d9f39f65daf09ef403d0e360f`; **+100** newly authored, suffixes 51–60 across the same ten intents.
+- A–F cumulative **600 replies**, ten partial sets **60/100** with **40 missing per set** / **400 missing total** and **zero complete sets**. Net additions in PR #651 from C–F **400**, distinct from 200 A+B already merged.
+- Deterministic preflight across A–F: 600 unique normalized responses, IDs, context notes. New F max token-Jaccard **0.3182** vs previous five stages; no pair ≥0.55. Editorial semantic audit remains separate.
+- No registered-pack, manifest, SHA/cache, ImPULS, BotHost or active consumer change. `scripts/test_firm_deescalation_20261111.py` updated for all six stages. Exact final-head and post-main gates still required.
+- Next suffix **61** in each of ten stable intents, subject to genuinely distinct context and wording.
