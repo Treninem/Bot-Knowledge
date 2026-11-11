@@ -26,3 +26,36 @@
 The latest A+B authoring pass compared all **200** new answers with **1060** contextual reply texts from six relevant existing staging files: `group_pragmatics_t600_context_pool`, `interpersonal_t590_context_pool`, `communication_integrity_20261111_context_pool`, `dialogue_repair_t554_context_pool`, `optional_humor_t518_context_pool`, and `group_pragmatics_t611_alternatives_review_only`. There were **zero exact duplicates and zero token-Jaccard matches at or above 0.55** across these 212,000 pair comparisons. This deliberately limited sample is not a full cross-repository semantic audit.
 
 The Python test now repeats this check against those six available staging files, as well as testing exact duplicates against every manifest-registered pack. Review exact final-head CI before merge; no consumer registration.
+
+## Continuation C — ten situational answers per stable intent
+
+- Latest content commit: `895bd7ce8d87675d2df0cb99d6c1914aeb73ea7e`, file `staging/ru/firm_deescalation_20261111_c.json`.
+- **100 newly authored synthetic RU replies**, suffixes **21–30** in each of ten existing stable `firm20261111_*` intents. Earlier A+B: 200; **cumulative 300**, ten partial sets **30/100 each**, **70 missing each** / **700 missing total**, zero sets at 100/100.
+- Independent connected-data preflight: all 300 IDs, normalized answer texts and context notes unique across A+B+C; zero overlaps in this sample, highest token-Jaccard **0.2941**. This is a lexical check, **not** complete editorial semantic review or all-repository screening.
+- Responses explicitly limited to directly addressed, context-specific, read-only `all_ai_bots` dialogue. No sanctions, identification, personal information sharing, BotHost, ImPULS or consumer changes.
+- Existing `manifest.json` and SHA of registered `packs/ru/social_dialogues.json` unchanged. The new staging file is **not registered** for consumer loading.
+- Updated `scripts/test_firm_deescalation_20261111.py` checks all three stages and their exact counts, source hashes, registered-pack exact repeats, adjacent staging lexical overlap and privacy restrictions. Exact-head CI for this **new head** still required, as is post-main CI before further merges.
+- Next: continue from suffix **31** per stable intent, refusing low-value synonym padding; after successful PR CI and fresh base/head check, guarded merge and actual post-main validation. Keep the recorded full count distinct from accepted consumer content.
+
+## Continuation D — distinct contexts 31–40
+
+- Added **100 new** synthetic contextual replies in `staging/ru/firm_deescalation_20261111_d.json`, commit `4029fd7911887904b1c12070390ba673983de14f`.
+- Cumulative **400** distinct staged replies A–D for ten unchanged `firm20261111_*` intents: **40/100 per intent**, **60 missing each**, **600 still missing**, **0 completed 100/100 sets**. The +100 count is relative to C and does not include its older 300.
+- Connected read-only preflight: 400 distinct IDs, normalized text responses and situational notes; for the 100 new D responses, max token-Jaccard against A–C and D was **0.3125**; zero pairs ≥0.55. No direct identifiers, no live actions, no sanctions, no consumer registration.
+- Same registered source SHA-256 `0cfedc133354a69522fecc3cda6bc21533c66005f0dc207050075f787dc977a8`. Registered manifest/cache untouched.
+- Script checks four files and must be run on exact final head; these lexical checks do not replace editorial review of meaning or quality. Next suffix **41** per intent. Merge only with fresh main, final exact-head CI, expected-head protection and post-main CI.
+
+## Continuation E — context-first conversational boundaries
+
+- File `staging/ru/firm_deescalation_20261111_e.json`, commit `91f08153903757bd2cf85f9484114afa64f61180`: **+100 new** synthetic contextual answers, stable suffixes 41–50.
+- Cumulative **500/1000** staged answers A–E across ten unchanged intentions: **50/100** each, **50 missing each** / **500 missing total**. **0 completed 100/100** sets. In this continuation PR C–E contributes **300 new**, not the older 200 from main.
+- Connected preflight covers all 500: normalized IDs, answer texts and context notes unique. New E vs A–D + E max token-Jaccard **0.4167**, zero pairs ≥0.55. Manual semantic quality review and exact-head CI still required.
+- Safety: no personal information, sanctions, powers or consumer registration. Source pack, manifest and cache unchanged. Next suffix **51** for all ten intentions.
+
+## Continuation F — no sanctions, safe direct replies
+
+- File `staging/ru/firm_deescalation_20261111_f.json`, source commit `1f7442addd22601d9f39f65daf09ef403d0e360f`; **+100** newly authored, suffixes 51–60 across the same ten intents.
+- A–F cumulative **600 replies**, ten partial sets **60/100** with **40 missing per set** / **400 missing total** and **zero complete sets**. Net additions in PR #651 from C–F **400**, distinct from 200 A+B already merged.
+- Deterministic preflight across A–F: 600 unique normalized responses, IDs, context notes. New F max token-Jaccard **0.3182** vs previous five stages; no pair ≥0.55. Editorial semantic audit remains separate.
+- No registered-pack, manifest, SHA/cache, ImPULS, BotHost or active consumer change. `scripts/test_firm_deescalation_20261111.py` updated for all six stages. Exact final-head and post-main gates still required.
+- Next suffix **61** in each of ten stable intents, subject to genuinely distinct context and wording.
