@@ -21,3 +21,10 @@ Owner authorisation: `docs/OWNER_AUTOMATION_SCOPE_2026_11_02.md`. **Only Trenine
 - Cumulative proposed **200/1000**; each of 10 intents **20/100**, 80 missing, 800 total remaining. **0** finished sets. No new canonicals, no published consumer package changes.
 - Precommit connector-side verification for A+B: **200/200 distinct IDs, normalized reply text and context notes**, 0 exact collisions; highest token Jaccard **0.3333** (lexical only). New B content length ≥45 characters and notes ≥18; 100 B replies are fresh relative to A.
 - Required Python, exact-head CI and complete cross-corpus semantic review must be checked **on the new head**; any prior CI is obsolete. Next B→C continuation from suffix **21** after QA, do not restart IDs or create duplicate PRs.
+
+## Stage C checkpoint — continued exact same ten intents
+- New 100 original situational Russian replies in `staging/ru/media_interpretation_20261111_context_delta_c.json`, suffixes 21–30. Earlier stages A+B (**200**) unchanged and excluded from this new count.
+- Parent B Git blob `9dcf8ec62ed1129596d1a797a00dadd250d0f7a2`; C checkpoint inherits source manifest SHA-256, audience and safety limits.
+- Cumulative staged **300/1000**; 10 partial sets **30/100 each**, 70 missing each, 700 total remaining, complete 0. No changes to registered pack, manifest, live consumer or ImPULS.
+- Precommit connector-side checks over stages A–C: 300 unique IDs, normalized replies and application notes; no exact duplicates, max token-Jaccard **0.3333** (<0.80). Semantic uniqueness beyond lexical checks remains subject to editorial review. All C replies have distinct scenario conditions and are read-only.
+- Python/quality checks for the latest head, expected-head guarded merge and actual post-main required. Prior head CI is obsolete after C commit. Next suffix: **31**.
