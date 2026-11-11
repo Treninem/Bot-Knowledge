@@ -59,3 +59,15 @@ The Python test now repeats this check against those six available staging files
 - Deterministic preflight across A–F: 600 unique normalized responses, IDs, context notes. New F max token-Jaccard **0.3182** vs previous five stages; no pair ≥0.55. Editorial semantic audit remains separate.
 - No registered-pack, manifest, SHA/cache, ImPULS, BotHost or active consumer change. `scripts/test_firm_deescalation_20261111.py` updated for all six stages. Exact final-head and post-main gates still required.
 - Next suffix **61** in each of ten stable intents, subject to genuinely distinct context and wording.
+
+## Continuation G–J — ten stable intents completed in staging, 11 November 2026
+
+- **Baseline after #651:** A–F = 600 candidates in main, ten stable `firm20261111_*` intents each at **60/100**. Merge commit of #651: `9ce02e620b0d89290f58ce6d664a4e92defaa046`; no live consumer deployment.
+- **G:** +100 synthetic situation-specific Russian replies, suffixes 61–70, in `staging/ru/firm_deescalation_20261111_g.json`. Cumulative **700**, ten intents at **70/100**, 300 missing.
+- **H:** +100 more, suffixes 71–80, in `staging/ru/firm_deescalation_20261111_h.json`. Cumulative **800**, ten at **80/100**, 200 missing.
+- **I:** +100 more, suffixes 81–90, in `staging/ru/firm_deescalation_20261111_i.json`. Cumulative **900**, ten at **90/100**, 100 missing.
+- **J:** +100 more, suffixes 91–100, in `staging/ru/firm_deescalation_20261111_j.json`. Cumulative **1000**, ten complete **100/100**, no partial intents or remaining gaps in *this staging series*.
+- **Net new in the G–J continuation: 400** unique candidate replies, not the older 600 A–F. Pre-commit per-stage normalised checks across existing and new stages: distinct ID, text and context notes, no token-Jaccard >= 0.55; stage maxima G=0.3182, H=0.3333, I=0.3889, J=0.3750. These are lexical screens, **not a guarantee of semantic originality**. Each of 400 has a distinct motivating scenario, with restrictions on context, audience, read-only use, and no sanctions. Edited and checked before creating each GitHub file.
+- Registered source `packs/ru/social_dialogues.json` SHA-256 `0cfedc133354a69522fecc3cda6bc21533c66005f0dc207050075f787dc977a8`, Git blob `d56ff304da7165bd63c328f3220a1f6d3d26e3ab`; manifest `2026.11.09.003`, registered pack content and all running caches unchanged. All four JSON packages are **staging only** with `consumer_registered=false`; they do not give any live bot new knowledge or rights.
+- Validate exact branch head with `python scripts/validate_pack.py` and `python -m unittest scripts.test_firm_deescalation_20261111 -v` (all ten stages), plus GitHub exact-head checkout and final `quality/validate`. Compare with registered packs and six neighbouring staging pools, review semantic quality and PR conflicts before expected-head guarded merge.
+- Before merge, confirm **post-main #651** checks on actual `9ce02e620b0d89290f58ce6d664a4e92defaa046`, not a PR merge-ref. After any merge, rerun full post-main checks. Future priority is to select genuinely underfilled *different* intents rather than manufacturing more copies of these ten.
