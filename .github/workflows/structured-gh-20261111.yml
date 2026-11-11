@@ -1,0 +1,30 @@
+name: Structured RU G-H 228 contextual replies exact-head QA
+on:
+  pull_request:
+    paths:
+      - 'staging/ru/structured_information_20261111_delta_g.json'
+      - 'staging/ru/structured_information_20261111_delta_h.json'
+      - 'scripts/test_structured_gh_20261111.py'
+      - 'docs/STRUCTURED_GH_2026_11_11.md'
+      - '.github/workflows/structured-gh-20261111.yml'
+permissions:
+  contents: read
+jobs:
+  structured-gh-qa:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          persist-credentials: false
+      - name: Confirm actual checkout is PR head
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate registered knowledge packs and all structured stages A-H
+        run: |
+          python scripts/validate_pack.py
+          python -m unittest scripts.test_structured_remainder_20261111 scripts.test_structured_followup_20261111 scripts.test_structured_gh_20261111 -v
