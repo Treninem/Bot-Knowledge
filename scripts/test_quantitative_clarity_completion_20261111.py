@@ -16,10 +16,10 @@ STAGES = ["staging/ru/quantitative_clarity_20261111_context_pool.json"] + [
 ]
 
 def normalize(text):
-    return " ".join(re.findall(r"[^\\W_]+", text.casefold().replace("ё", "е")))
+    return " ".join(re.findall(r"[^\W_]+", text.casefold().replace("ё", "е")))
 
 def blob_sha(raw):
-    return hashlib.sha1(b"blob " + str(len(raw)).encode() + b"\\0" + raw).hexdigest()
+    return hashlib.sha1(b"blob " + str(len(raw)).encode() + b"\0" + raw).hexdigest()
 
 class QuantitativeClarityCompletionTest(unittest.TestCase):
     def test_1000_contextual_candidate_safety_and_consistency(self):
@@ -68,8 +68,8 @@ class QuantitativeClarityCompletionTest(unittest.TestCase):
                     self.assertEqual(reply["context"], "direct")
                     self.assertEqual(reply["audiences"], ["all_ai_bots"])
                     self.assertIn("не применять санкции", reply["avoid"])
-                    self.assertNotRegex(reply["text"], r"(?i)[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,}")
-                    self.assertNotRegex(reply["text"], r"\\b(?:\\+?\\d[ -]?){11,}\\b")
+                    self.assertNotRegex(reply["text"], r"(?i)[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}")
+                    self.assertNotRegex(reply["text"], r"\b(?:\+?\d[ -]?){11,}\b")
                     for item, dest in (
                         (reply["id"], seen_ids),
                         (normalize(reply["text"]), seen_texts),
