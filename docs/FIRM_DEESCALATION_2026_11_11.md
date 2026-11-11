@@ -44,3 +44,10 @@ The Python test now repeats this check against those six available staging files
 - Connected read-only preflight: 400 distinct IDs, normalized text responses and situational notes; for the 100 new D responses, max token-Jaccard against A–C and D was **0.3125**; zero pairs ≥0.55. No direct identifiers, no live actions, no sanctions, no consumer registration.
 - Same registered source SHA-256 `0cfedc133354a69522fecc3cda6bc21533c66005f0dc207050075f787dc977a8`. Registered manifest/cache untouched.
 - Script checks four files and must be run on exact final head; these lexical checks do not replace editorial review of meaning or quality. Next suffix **41** per intent. Merge only with fresh main, final exact-head CI, expected-head protection and post-main CI.
+
+## Continuation E — context-first conversational boundaries
+
+- File `staging/ru/firm_deescalation_20261111_e.json`, commit `91f08153903757bd2cf85f9484114afa64f61180`: **+100 new** synthetic contextual answers, stable suffixes 41–50.
+- Cumulative **500/1000** staged answers A–E across ten unchanged intentions: **50/100** each, **50 missing each** / **500 missing total**. **0 completed 100/100** sets. In this continuation PR C–E contributes **300 new**, not the older 200 from main.
+- Connected preflight covers all 500: normalized IDs, answer texts and context notes unique. New E vs A–D + E max token-Jaccard **0.4167**, zero pairs ≥0.55. Manual semantic quality review and exact-head CI still required.
+- Safety: no personal information, sanctions, powers or consumer registration. Source pack, manifest and cache unchanged. Next suffix **51** for all ten intentions.
