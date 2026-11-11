@@ -1,4 +1,4 @@
-"""Read-only QA for synthetic RU evidence-bound reasoning stages A–E."""
+"""Read-only QA for synthetic RU evidence-bound reasoning stages A–G."""
 from __future__ import annotations
 
 import hashlib
@@ -15,6 +15,8 @@ STAGES = [
     ROOT / "staging/ru/reasoning_risks_20261111_c.json",
     ROOT / "staging/ru/reasoning_risks_20261111_d.json",
     ROOT / "staging/ru/reasoning_risks_20261111_e.json",
+    ROOT / "staging/ru/reasoning_risks_20261111_f.json",
+    ROOT / "staging/ru/reasoning_risks_20261111_g.json",
 ]
 NORMAL = re.compile(r"[^\W_]+", re.UNICODE)
 
@@ -49,7 +51,7 @@ class ReasoningStage(unittest.TestCase):
                 self.assertIs(stage["constraints"][key], True)
 
     def test_stable_intents_and_counts(self):
-        self.assertEqual(len(self.replies), 500)
+        self.assertEqual(len(self.replies), 700)
         originals = [e["intent_id"] for e in self.stages[0]["entries"]]
         self.assertEqual(len(originals), len(set(originals)))
         self.assertEqual(len(originals), 10)
