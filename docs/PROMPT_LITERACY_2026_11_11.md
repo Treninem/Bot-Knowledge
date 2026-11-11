@@ -48,3 +48,9 @@ This independent continuation contributes **200 NEW** original synthetic context
 - Authoring-side GitHub connector checks: 300 different IDs, 300 normalized replies and 300 context notes; no exact duplicates; maximum pair token-Jaccard **0.2333** across A/B/C. This automated metric is not exhaustive semantic review.
 - New test `python -m unittest scripts.test_prompt_literacy_b_c_20261111 -v` checks real source bytes, Git blob ancestry, all counts, uniqueness, scope, privacy and registered exact overlap. Must pass on the exact head via GitHub CI before merging. A local Python pass has not been claimed.
 - Next addition should start from suffix **31**, preserving 300 existing replies. Distinct real applicability matters more than reaching 100 by superficial variations. ImPULS, BotHost, live consumers and caches are untouched.
+
+## Continuation D — 2026-11-11
+
+Separate dependent stage, 100 **new** original contextual RU replies, same ten canonical intents, suffix IDs **31–40**. Prior A–C count 300; cumulative staging **400/1000**, ten partial sets **40/100**, 60 missing per intent / 600 remaining, zero 100/100. Parent stage C Git blob `6016a641eea4c380773c212b5f8063d193af38e4`. Current D blob checked by repository readback before publication. No registered pack, manifest, cache, consumer, ImPULS or BotHost edits.
+
+Connector-side verification of 400 A–D entries: 400 unique IDs, 400 normalized texts and 400 context notes, no exact duplication, maximum pair token-Jaccard **0.2800**. Tests now include four immutable stages, parent Git blob chains, byte SHA-256 source pack and scope/privacy restrictions. The lexical screen is not full semantic proof. **Do not merge D** until exact-head tests and compatibility with final merged B/C are checked. Start next suffix at 41; do not repeat old candidates.
