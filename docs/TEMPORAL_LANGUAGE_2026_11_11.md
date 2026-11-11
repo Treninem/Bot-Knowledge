@@ -53,8 +53,11 @@ After stages A–B (200, merged #627) and C–D (200 new in this PR), two additi
 - Stage E: 100 new replies **41–50** in `staging/ru/temporal_language_20261111_context_delta_e.json`.
 - Stage F: 100 new replies **51–60** in `staging/ru/temporal_language_20261111_context_delta_f.json`.
 - **New delta in PR #632: 400** (C–F); **whole staging series: 600/1000**, ten partial sets **60/100**, 40 remaining for each, 400 total; **zero completed**.
-- Parent links: E → D blob `2db1f81e29b144f1d5ef61cac6a4a5d9d893510b`, F → E blob `2a035cb7f67ef908a2be49c8990b84120c971a58`. Python QA now asserts the whole A–F chain and 600 unique normalized texts, IDs and contexts.
+- Parent links: E → D blob `d72558db7e1e631d10b3f1f4602b5ab1c6305197`, F → E blob `90b8ee2846dab66ca322c4766f94cfa14cefd7d9`. Python QA now asserts the whole A–F chain and 600 unique normalized texts, IDs and contexts.
 - Before commit, exact normalized duplicates among 600: **0**; max pairwise token-Jaccard **0.38889** (lexical only). Broader semantic/cross-corpus originality must still be reviewed, particularly against related staging files and concurrent PRs.
 - No pack registration, manifest version bump, SHA-256 change, cache, consumer or ImPULS modification. Same original source pack SHA-256 from Stage A; these are **unregistered candidates** only.
 - The old "next suffix 41" above is superseded: **next continuation suffix 61**. Do not recount A–F or reset intent IDs.
 - Latest branch head and CI must be re-read before any merge. Current PR is DRAFT/BLOCKED until final-head full actual-checkout CI and previous merge post-main verification. After guarded merge, post-main CI on actual merge SHA is mandatory.
+
+### Exact-head QA correction
+The first actual GitHub exact-head Python run found one duplicated normalized context note across 600 candidates (original `sequence_04`, Stage D `sequence_35`). **One context note was rewritten** to preserve a distinct applicability condition, and the parent Git blob hashes were recomputed in stages E and F; response texts and IDs were not altered. Distinguish this rejected duplicate from the **400 newly accepted reply texts**. Initial specialized run: [failure](https://github.com/Treninem/Bot-Knowledge/actions/runs/42973255169); a new exact-head run must pass before merge.
