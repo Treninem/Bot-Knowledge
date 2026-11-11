@@ -48,3 +48,8 @@ Next action: independently and carefully continue **the same ten stable intents*
 - Added 100 new original replies, stable IDs suffix 61–70. Prior 600 not counted again. **Cumulative A–G 700/1000**, ten intents each **70/100**, 30 missing each, zero completed.
 - Parent F blob `9ad11e9e37ace34391b742691c49ba2655943b13`; updated Python test checks exact ancestry, source manifest SHA-256 and all seven stages. Pre-commit normalized IDs/texts/context notes: **700/700** distinct, zero exact duplicates, maximal pair token-Jaccard **0.2857** (< 0.80). Semantic originality across all published corpus not proven.
 - All candidates remain unregistered, contextual and read-only. Registered source pack, manifest `2026.11.09.003`, ImPULS and consumer caches unchanged. Next suffix **71**.
+
+## Stage H checkpoint — 11 November 2026
+- +100 original RU responses with suffix 71–80, continuing 10 existing stable intents, previous 700 preserved. **Total 800/1000**, each **80/100**, **20 remaining per intent** (200 total), completed 100/100 **0**.
+- Parent G exact Git blob `2467feecddc609ab19e2e7fdb62094254e75d34b`, verified before commit. A–H normalization QA 800 unique IDs, 800 normalized texts, 800 normalized context notes; zero exact duplicates; maximal token-Jaccard 0.2857. Automated lexical checks are not a full semantic audit.
+- Updated read-only unittest covers eight stages, parent blob ancestry, manifest/source checksums, context and privacy. All staging packages remain consumer-unregistered. No live changes or auto-delivery claims. Continue suffix **81**.
