@@ -55,3 +55,10 @@ Stable IDs: `comm20261111_<intent>_<01..32>`; subsequent stage must begin at `33
 - Pre-commit JS on connector-read original: 440/440 unique IDs, normalized responses and notes; zero exact duplicates; max lexical Jaccard against the existing A–C and other new D candidates 0.3333 (<0.80). Editorial semantic review is separate from lexical checks.
 - Python suite expanded to include D; exact-head CI and post-main CI must be checked on their final actual SHAs. No changes to ImPULS, consumers, registered packs, manifest or live cache.
 - Next index for each intent: **45**; complete pending quality review before merge.
+
+## Stage E checkpoint — 11 November 2026
+
+- Starting point: merged PR #617 at `85f684592c0aa80c336725acba460ecfc08c7b2f`; A–D already contained **440** candidates. Stage E adds **120 NEW** original RU answers (12 per existing canonical intent), suffixes **45–56**; cumulative **560/1000**, ten partial sets **56/100**, **44 remaining per intent / 440 total**, no 100/100 set claimed.
+- New file `staging/ru/communication_integrity_20261111_context_delta_e.json` is unregistered staging, parent D Git blob `9662c8ec779f5daf021f739fa4ddcc314d8bd14c`. All replies are synthetic, apply only to their explicit context, require a direct request, are read-only, and do not authorize sanctions or transferring private chat data.
+- JS pre-commit normalization found zero exact duplicate texts, IDs or context notes against A–D; observed max within A–E token-Jaccard **0.3500** (not a substitute for semantic editorial review). The Python suite is expanded to E, with source SHA-256, ancestry, manifest and related-pool checks. Actual CI for final head must pass before merge, followed by post-main CI.
+- The manifest and registered packs remain unchanged; consumer deployment and ImPULS were not touched. Next suffix is **57** for every intent.
