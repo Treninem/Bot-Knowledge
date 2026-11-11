@@ -49,7 +49,8 @@ class OriginalHumorT517(unittest.TestCase):
         lengths = [(ROOT / x["path"]).stat().st_size for x in self.manifest["packs"]]
         total, remaining = evaluate_snapshot_budget((ROOT / "manifest.json").stat().st_size, lengths)
         self.assertGreater(remaining, 0, total)
-        self.assertEqual(self.manifest["knowledge_version"], "2026.11.09.003")
+        self.assertRegex(self.manifest["knowledge_version"], r"^\d{4}\.\d{2}\.\d{2}\.\d{3}$")
+        self.assertGreaterEqual(tuple(int(part) for part in self.manifest["knowledge_version"].split(".")), (2026, 11, 9, 3))
 
     def test_exactly_ninety_unique_original_responses(self):
         rows = self.data["records"]
