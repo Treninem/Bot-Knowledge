@@ -7,7 +7,7 @@ SHA="55b3f6126d36cd92687d005b7fedf5a11df9ee61cf453103accdf1f13c8498f0"
 BLOB="8b3d596b5b50d3d319ebf450c96d5623fc99d26a"
 PATH=ROOT/"staging/ru/structured_information_20261111_delta_k.json"
 PREV=[ROOT/f"staging/ru/structured_information_20261111_delta_{x}.json" for x in "abcdefghj"]
-RX=re.compile(r"[^\\W_]+",re.UNICODE)
+RX=re.compile(r"[^\W_]+",re.UNICODE)
 def norm(s):return " ".join(RX.findall(unicodedata.normalize("NFKC",s).casefold().replace("ё","е")))
 class TestStructuredK(unittest.TestCase):
  @classmethod
@@ -16,7 +16,7 @@ class TestStructuredK(unittest.TestCase):
  def test_manifest_source(self):
   raw=SRC.read_bytes();m=json.loads((ROOT/"manifest.json").read_text("utf-8"))
   self.assertEqual(hashlib.sha256(raw).hexdigest(),SHA)
-  self.assertEqual(hashlib.sha1(b"blob "+str(len(raw)).encode()+b"\\0"+raw).hexdigest(),BLOB)
+  self.assertEqual(hashlib.sha1(b"blob "+str(len(raw)).encode()+b"\0"+raw).hexdigest(),BLOB)
   self.assertEqual({x["path"]:x["sha256"] for x in m["packs"]}["packs/ru/structured_information_qa.json"],SHA)
   self.assertNotIn("staging/ru/structured_information_20261111_delta_k.json",{x["path"] for x in m["packs"]})
  def test_checkpoint(self):
@@ -33,7 +33,7 @@ class TestStructuredK(unittest.TestCase):
   for r in self.current:
    n=norm(r["text"]);nc=norm(r["context_note"]);self.assertNotIn(n,seen,r["id"]);self.assertNotIn(nc,ctx)
    self.assertNotIn(r["id"],ids);self.assertTrue(r["read_only"]);self.assertEqual(r["context"],"direct");self.assertGreater(len(r["text"]),39);self.assertGreater(len(r["context_note"]),25)
-   self.assertIsNone(re.search(r"[\\w.+-]+@[\\w.-]+\\.[A-Za-z]{2,}",r["text"]+" "+r["context_note"]))
+   self.assertIsNone(re.search(r"[\w.+-]+@[\w.-]+\.[A-Za-z]{2,}",r["text"]+" "+r["context_note"]))
    a=set(n.split());self.assertTrue(all(len(a&b)/len(a|b)<.70 for b in token_sets),r["id"])
    seen.add(n);ids.add(r["id"]);ctx.add(nc);token_sets.append(a)
 if __name__=="__main__":unittest.main()
