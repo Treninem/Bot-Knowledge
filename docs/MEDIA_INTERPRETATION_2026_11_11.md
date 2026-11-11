@@ -35,3 +35,12 @@ Owner authorisation: `docs/OWNER_AUTOMATION_SCOPE_2026_11_02.md`. **Only Trenine
 - Pre-commit connector-side read of A–C plus D: **400/400 distinct IDs, normalized reply texts, application context notes**; 0 exact repeats; maximum pairwise token-Jaccard **0.3333**, less than 0.80. This is a lexical screen, not exhaustive proof of semantic uniqueness. All new answers are conditional and read-only; no invented media access, actions, sanctions, or personal data.
 - Cumulative staging **400/1000**; ten partial intents at **40/100**, 60 missing each (600 total), completed 100/100: **0**. Continuing source is D, next unused suffix **41**. Keep the same intent IDs and do not regenerate the first 400.
 - Existing dedicated Python suite extended to include D; require actual exact-head CI and post-main checks for the merge SHA before release claims. To publish to consumers, a separate manifest/SHA/version/compatibility review and consumer integration is necessary. No ImPULS or BotHost writes.
+
+## Stage E checkpoint — stable intent suffixes 41–50
+- Fresh **100 original RU candidates** in `staging/ru/media_interpretation_20261111_context_delta_e.json`. Parent D Git blob `da529d0b2a95e5efcacd92f105625e1d4f558916`. Previous 400 replies unchanged; stage checkpoint 500/1000, each of 10 intents **50/100**, remaining 500 total; completed 0.
+- Lexical check over A–E: 500 unique ID, normalized text, and context notes; no exact repeat; max pairwise token-Jaccard 0.3333. Semantic cross-corpus originality is not established by this number alone.
+
+## Stage F checkpoint — stable intent suffixes 51–60
+- Fresh **100 original RU candidates** in `staging/ru/media_interpretation_20261111_context_delta_f.json`. Parent E Git blob `386c26370a0e692ed110fe4cc8ff4031e6d9f723`. Earlier 500 unchanged, excluding their counts from this newly added 100.
+- A–F now **600/1000**: ten existing intents each **60/100**, 40 missing each (400 total), complete 0. Connector-side comparison: 600/600 unique ID, normalized text and application notes; no exact collisions; highest token-Jaccard 0.4286. This does not replace editorial, privacy, JSON/schema or exact-head CI.
+- Six-stage Python unittest in `scripts/test_media_interpretation_20261111.py` and read-only workflow must pass on actual PR head; merge only with guarded SHA and confirmed post-main checks. Staging is unregistered: manifest, source SHA, consumer caches and ImPULS unchanged. **Next unused suffix 61** in each of ten `media20261111_*` intents.
