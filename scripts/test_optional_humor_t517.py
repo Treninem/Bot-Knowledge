@@ -49,7 +49,11 @@ class OriginalHumorT517(unittest.TestCase):
         lengths = [(ROOT / x["path"]).stat().st_size for x in self.manifest["packs"]]
         total, remaining = evaluate_snapshot_budget((ROOT / "manifest.json").stat().st_size, lengths)
         self.assertGreater(remaining, 0, total)
-        # The pack must keep its exact SHA, but unrelated vetted additions may\n        # advance the manifest. A fixed version would block all future releases.\n        version = self.manifest["knowledge_version"]\n        self.assertRegex(version, r"^\\d{4}\\.\\d{2}\\.\\d{2}\\.\\d{3}$")\n        self.assertGreaterEqual(tuple(map(int, version.split("."))), (2026, 11, 9, 3))
+        # The pack keeps its exact SHA, while unrelated vetted additions
+        # may advance the manifest beyond the version at test creation.
+        version = self.manifest["knowledge_version"]
+        self.assertRegex(version, r"^\d{4}\.\d{2}\.\d{2}\.\d{3}$")
+        self.assertGreaterEqual(tuple(map(int, version.split("."))), (2026, 11, 9, 3))
 
     def test_exactly_ninety_unique_original_responses(self):
         rows = self.data["records"]
