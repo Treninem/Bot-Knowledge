@@ -30,3 +30,18 @@ The ten IDs are:
 - Connector-side normalization of 200 replies before commit: 200 distinct IDs, 200 normalized response texts, 200 context notes, zero exact repeats; maximum token Jaccard **0.31579**. This does not prove absence of semantic duplicates in the full repository. All replies require direct context, no actions or sanctions.
 - Stage B raw-data commit `56d02baf4416f715a8ff843c2c9fc872a275071b`; test update `9f1419e86aca533b8797d5d1221f6afd2ecec410`. Full actual-head Python/CI must be confirmed on **latest** PR head; earlier CI on Stage A is obsolete.
 - **Next suffix: 21** for each existing stable intent; new accepted response delta this cycle is Stage A +100 plus Stage B +100 = **200**, not 300. For merge, check fresh main and complete predecessor post-main; do not bypass checks or modify live consumers.
+
+
+## Stage C–D checkpoint — continuation after #627 merge (2026-11-11)
+
+This is the current checkpoint; the earlier "next suffix 21" instruction above is superseded. PR #627 has been merged at actual main SHA `fbf23438790f33f767e8890dd14fd9fde5bd20c3`. The current branch `bk/temporal-language-20261111-c-d` began at that exact SHA. Do **not** count the 200 replies from stages A–B again as newly authored.
+
+- **C:** 100 genuinely new synthetic responses, IDs **21–30** for each of the ten original `temporal20261111_*` intents. 200 previous → **300/1000** (ten sets 30/100).
+- **D:** 100 additional contextual responses, IDs **31–40** on those same ten intents. 300 previous → **400/1000** (ten sets **40/100**, exactly **60 remaining per intent**, 600 total, zero finished 100/100).
+- This continuation adds **200 new candidate replies** across **two JSON files**. No additional canonical intents are invented. Answers include relative time anchoring, source time zones, open and intersecting intervals, tentative promises, conversational clock expressions, exceptions in recurrence, temporal status, scheduling collisions, ambiguous date formats and dependency order.
+- Source stays `packs/ru/social_dialogues.json` with registered SHA-256 `0cfedc133354a69522fecc3cda6bc21533c66005f0dc207050075f787dc977a8`, Git blob `d56ff304da7165bd63c328f3220a1f6d3d26e3ab`. Registered manifest, index and live caches were **not** changed: `consumer_registered=false`.
+- C checks its parent B blob `1872f48b24d0bbbdfbe023ab464f24cf93d6cf6d`; D checks its parent C blob `1f773829644bdb61e2366ab7bb4d3a89ba032700`. The updated read-only Python unittest verifies both links, original SHA-256, ten stable intents, 400 unique IDs/texts/context notes, target counts and action/privacy guards.
+- In connector-side normalized/text token checks across all 400 candidates: **400 unique texts/IDs**, no exact repeats and maximal token-Jaccard **0.33333**; this metric does **not** prove full semantic uniqueness across all Bot-Knowledge files or open PRs. Meaning/context requires editorial review.
+- No personal conversations, real identities, authoritative commands, moderation sanctions, live bot changes or new knowledge-consumer integration.
+- Before merge: run local or actual GitHub Python validation, verify **all** exact-head CI on final commit and actual post-main #627 success on its merge SHA, re-check main and PR for conflicts, then expected-head guarded merge. After merge verify actual post-main CI before the next merge.
+- **Next unique replies:** suffix **41–50** for each stable temporal intent. Preserve current 400 and continue; do not reset to Stage A.
