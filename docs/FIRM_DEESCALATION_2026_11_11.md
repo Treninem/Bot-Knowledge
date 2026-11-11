@@ -36,3 +36,11 @@ The Python test now repeats this check against those six available staging files
 - Existing `manifest.json` and SHA of registered `packs/ru/social_dialogues.json` unchanged. The new staging file is **not registered** for consumer loading.
 - Updated `scripts/test_firm_deescalation_20261111.py` checks all three stages and their exact counts, source hashes, registered-pack exact repeats, adjacent staging lexical overlap and privacy restrictions. Exact-head CI for this **new head** still required, as is post-main CI before further merges.
 - Next: continue from suffix **31** per stable intent, refusing low-value synonym padding; after successful PR CI and fresh base/head check, guarded merge and actual post-main validation. Keep the recorded full count distinct from accepted consumer content.
+
+## Continuation D — distinct contexts 31–40
+
+- Added **100 new** synthetic contextual replies in `staging/ru/firm_deescalation_20261111_d.json`, commit `4029fd7911887904b1c12070390ba673983de14f`.
+- Cumulative **400** distinct staged replies A–D for ten unchanged `firm20261111_*` intents: **40/100 per intent**, **60 missing each**, **600 still missing**, **0 completed 100/100 sets**. The +100 count is relative to C and does not include its older 300.
+- Connected read-only preflight: 400 distinct IDs, normalized text responses and situational notes; for the 100 new D responses, max token-Jaccard against A–C and D was **0.3125**; zero pairs ≥0.55. No direct identifiers, no live actions, no sanctions, no consumer registration.
+- Same registered source SHA-256 `0cfedc133354a69522fecc3cda6bc21533c66005f0dc207050075f787dc977a8`. Registered manifest/cache untouched.
+- Script checks four files and must be run on exact final head; these lexical checks do not replace editorial review of meaning or quality. Next suffix **41** per intent. Merge only with fresh main, final exact-head CI, expected-head protection and post-main CI.
