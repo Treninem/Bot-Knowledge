@@ -32,3 +32,8 @@ Continue these **same** ten intent IDs from answer 31, without regenerating or r
 - **100 additional original contextual replies**, suffix 31–40 per intent; staged **400/1000**, all ten at **40/100**, **60 missing each / 600 total**, zero completed. This stage is **new** in the current cycle; total new B+C+D is **300** (prior A100 excluded).
 - Parent C blob `480352a5eb5af86406c8aa1aae5ddb89dc4cb983`; stages A–D have **400 unique** IDs, normalized responses and context conditions, zero exact duplicates; max token Jaccard 0.2857 (lexical only, human editorial check still required). Changes do not register this staging pack.
 - Next suffix **41**. Run Python suite and exact-head CI after final changes before merging; no ImPULS, BotHost or cache changes.
+
+## Stage E on dependent continuation branch
+- After prior A–D 400 staged candidates, **100 newly authored** contextual replies, IDs **41–50** per ten stable intents. Across A–E **500/1000**, ten partial sets at **50/100**, **50 remaining each / 500 total**, zero completed 100/100.
+- Source data and QA remain unregistered and read-only, without private chat data, consumer integration or live bot changes. Parent stage D blob `6f8f5c8fb3cf192b366b8f2e700b436e3827de26`. Full A–E connector-side count: **500 unique IDs/texts/context notes**, no lexical Jaccard >= 0.8, max 0.2857. Semantic editorial and exact-head/full CI are still mandatory.
+- Dependent on PR #620 and must be rebased/retargeted against main after #620 merges and its post-main CI succeeds. Next suffix **51**.
