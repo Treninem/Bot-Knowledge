@@ -12,10 +12,10 @@ AUX = {"all_ai_bots"}
 
 def norm(value):
     text = unicodedata.normalize("NFKC", value).casefold().replace("ё", "е")
-    return " ".join(re.findall(r"[^\\W_]+", text, flags=re.UNICODE))
+    return " ".join(re.findall(r"[^\W_]+", text, flags=re.UNICODE))
 
 def blob_sha(raw):
-    return hashlib.sha1(b"blob " + str(len(raw)).encode("ascii") + b"\\x00" + raw).hexdigest()
+    return hashlib.sha1(b"blob " + str(len(raw)).encode("ascii") + b"\x00" + raw).hexdigest()
 
 class TemporalLanguageStagingTest(unittest.TestCase):
     @classmethod
@@ -77,8 +77,8 @@ class TemporalLanguageStagingTest(unittest.TestCase):
     def test_privacy_no_sanctions_or_false_access(self):
         for r in self.replies:
             text = r["text"]
-            self.assertNotRegex(text, r"(?i)[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,}")
-            self.assertNotRegex(text, r"(?:\\+?\\d[ \\-]?){11,}")
+            self.assertNotRegex(text, r"(?i)[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}")
+            self.assertNotRegex(text, r"(?:\+?\d[ \-]?){11,}")
             self.assertNotRegex(text, r"(?i)(?:бот|я) (?:забанил|замутил|уже отправил|изменил настройки)")
             self.assertNotIn("token", text.casefold())
 
