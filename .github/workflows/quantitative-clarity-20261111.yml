@@ -6,6 +6,8 @@ on:
       - 'scripts/test_quantitative_clarity_20261111.py'
       - 'scripts/test_quantitative_clarity_extension_20261111.py'
       - 'scripts/test_quantitative_clarity_stage_f_20261111.py'
+      - 'scripts/test_quantitative_clarity_completion_20261111.py'
+      - 'docs/QUANTITATIVE_CLARITY_G_J_2026_11_11.md'
       - 'docs/QUANTITATIVE_CLARITY_2026_11_11.md'
       - '.github/workflows/quantitative-clarity-20261111.yml'
   push:
@@ -13,6 +15,8 @@ on:
     paths:
       - 'staging/ru/quantitative_clarity_20261111_*'
       - 'scripts/test_quantitative_clarity_20261111.py'
+      - 'scripts/test_quantitative_clarity_completion_20261111.py'
+      - 'docs/QUANTITATIVE_CLARITY_G_J_2026_11_11.md'
       - 'docs/QUANTITATIVE_CLARITY_2026_11_11.md'
 permissions:
   contents: read
@@ -35,4 +39,4 @@ jobs:
         with:
           python-version: '3.12'
       - name: Validate staging and source boundaries
-        run: python -m unittest scripts.test_quantitative_clarity_20261111 scripts.test_quantitative_clarity_extension_20261111 scripts.test_quantitative_clarity_stage_f_20261111 -v
+        run: python -m unittest scripts.test_quantitative_clarity_20261111 scripts.test_quantitative_clarity_extension_20261111 scripts.test_quantitative_clarity_stage_f_20261111 scripts.test_quantitative_clarity_completion_20261111 -v
