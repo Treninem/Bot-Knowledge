@@ -184,8 +184,8 @@ class StructuredContextContinuationBTest(unittest.TestCase):
             keys = [r[field] if field == "id" else normalized(r[field]) for r in self.all_replies]
             self.assertEqual(len(keys), len(set(keys)), field)
         for reply in self.all_replies:
-            self.assertNotRegex(reply["text"], r"(?i)(?:ghp_|github_pat_|\\bt\\.me/|\\btelegram\\.me/)")
-            self.assertNotRegex(reply["text"], r"(?i)[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,}")
+            self.assertNotRegex(reply["text"], r"(?i)(?:ghp_|github_pat_|\bt\.me/|\btelegram\.me/)")
+            self.assertNotRegex(reply["text"], r"(?i)[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}")
 
     def test_all_staged_replies_lexically_distinct_from_registered(self):
         prior = [v for record in self.source["records"] for v in [record["answer"], *record["variants"]]]
