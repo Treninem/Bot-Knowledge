@@ -1,4 +1,4 @@
-"""Read-only, deterministic checks for 2026-11-11 accessibility staging A–I."""
+"""Read-only, deterministic checks for 2026-11-11 accessibility staging A–J."""
 import hashlib
 import json
 import re
@@ -16,8 +16,9 @@ PATHS = [
     "staging/ru/accessibility_dialogue_20261111_context_delta_g.json",
     "staging/ru/accessibility_dialogue_20261111_context_delta_h.json",
     "staging/ru/accessibility_dialogue_20261111_context_delta_i.json",
+    "staging/ru/accessibility_dialogue_20261111_context_delta_j.json",
 ]
-EXPECTED_COUNTS = (10, 10, 10, 10, 10, 10, 10, 10, 10)
+EXPECTED_COUNTS = (10, 10, 10, 10, 10, 10, 10, 10, 10, 10)
 ALLOWED_AUDIENCES = ["all_ai_bots"]
 
 def norm(text):
@@ -64,8 +65,8 @@ class AccessibilityStagingTest(unittest.TestCase):
             self.assertEqual(cp["prior_candidates"], i * 100)
             self.assertEqual(cp["cumulative_candidates"], (i + 1) * 100)
             self.assertEqual(cp["processed_intents"], 10)
-            self.assertEqual(cp["finished_100"], 0)
-            self.assertEqual(cp["partial_intents"], 10)
+            self.assertEqual(cp["finished_100"], 10 if i == 9 else 0)
+            self.assertEqual(cp["partial_intents"], 0 if i == 9 else 10)
             self.assertEqual(cp["remaining_total"], 900 - i * 100)
             entries = stage["entries"]
             self.assertEqual(len(entries), 10)
@@ -100,7 +101,7 @@ class AccessibilityStagingTest(unittest.TestCase):
                     notes.add(n)
                     self.assertNotRegex(reply["text"], r"(?i)[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}")
                     self.assertNotRegex(reply["text"], r"\b(?:\+?\d[ -]?){11,}\b")
-        self.assertEqual((len(ids), len(answers), len(notes)), (900, 900, 900))
+        self.assertEqual((len(ids), len(answers), len(notes)), (1000, 1000, 1000))
 
     def test_high_lexical_similarity_requires_review(self):
         values = [set(norm(r["text"]).split()) for s in self.stages
