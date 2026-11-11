@@ -6,9 +6,9 @@ SOURCE = "packs/ru/structured_information_qa.json"
 SHA = "55b3f6126d36cd92687d005b7fedf5a11df9ee61cf453103accdf1f13c8498f0"
 BLOB = "8b3d596b5b50d3d319ebf450c96d5623fc99d26a"
 STAGES = [ROOT / f"staging/ru/structured_information_20261111_delta_{x}.json" for x in "abcdefghi"]
-tok = re.compile(r"[^\\W_]+", re.UNICODE)
+tok = re.compile(r"[^\W_]+", re.UNICODE)
 def norm(x): return " ".join(tok.findall(unicodedata.normalize("NFKC",x).casefold().replace("ё","е")))
-def blob(raw): return hashlib.sha1(b"blob "+str(len(raw)).encode()+b"\\0"+raw).hexdigest()
+def blob(raw): return hashlib.sha1(b"blob "+str(len(raw)).encode()+b"\0"+raw).hexdigest()
 class StructuredI(unittest.TestCase):
  @classmethod
  def setUpClass(cls):
@@ -51,7 +51,7 @@ class StructuredI(unittest.TestCase):
    self.assertIn("санкци",norm(r["avoid"]))
    self.assertGreater(len(r["text"]),35)
    self.assertGreater(len(r["context_note"]),24)
-   self.assertIsNone(re.search(r"[\\w.+-]+@[\\w.-]+\\.[A-Za-z]{2,}",r["text"]+" "+r["context_note"]))
+   self.assertIsNone(re.search(r"[\w.+-]+@[\w.-]+\.[A-Za-z]{2,}",r["text"]+" "+r["context_note"]))
    words=set(current[i].split())
    for x in prev:
     self.assertLess(len(words&x)/len(words|x),.70)
