@@ -1,0 +1,29 @@
+name: Structured RU K 108 context replies exact-head QA
+on:
+  pull_request:
+    paths:
+      - 'staging/ru/structured_information_20261111_delta_k.json'
+      - 'scripts/test_structured_k_20261111.py'
+      - 'docs/STRUCTURED_K_2026_11_11.md'
+      - '.github/workflows/structured-k-20261111.yml'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          persist-credentials: false
+      - name: Verify actual checkout equals PR head
+        env:
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: test "$(git rev-parse HEAD)" = "$HEAD_SHA"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate all registered packs and structured K
+        run: |
+          python scripts/validate_pack.py
+          python -m unittest scripts.test_structured_k_20261111 -v
