@@ -14,3 +14,10 @@ Owner authorisation: `docs/OWNER_AUTOMATION_SCOPE_2026_11_02.md`. **Only Trenine
 - Run `python -m unittest scripts.test_media_interpretation_20261111 -v` and existing validation on the exact checkout SHA. Check all required CI and post-main for the actual merge SHA before calling a release verified; do not bypass protections or trigger paid jobs.
 - Next stage **B** must continue these exact ten IDs with reply suffixes **11–20**, *not* create new intents. Verify across the previous stage and registered packs, include precise counts and parent blob SHA before saving.
 - Do not touch ImPULS, BotHost, existing caches, private messages or the protected publisher scripts.
+
+## Stage B checkpoint — same ten stable intents
+- New B: `staging/ru/media_interpretation_20261111_context_delta_b.json`, exactly **100** additional synthetic contextual replies (suffixes 11–20, 10 per same intent). These are **new for this continuation**, not the previous A set.
+- Stage A Git blob parent SHA: `2d146659a81f932f5d933452cc0dee7fc9ee77c2` (after fixing a short context note). Stage B references that exact blob and the original source pack.
+- Cumulative proposed **200/1000**; each of 10 intents **20/100**, 80 missing, 800 total remaining. **0** finished sets. No new canonicals, no published consumer package changes.
+- Precommit connector-side verification for A+B: **200/200 distinct IDs, normalized reply text and context notes**, 0 exact collisions; highest token Jaccard **0.3333** (lexical only). New B content length ≥45 characters and notes ≥18; 100 B replies are fresh relative to A.
+- Required Python, exact-head CI and complete cross-corpus semantic review must be checked **on the new head**; any prior CI is obsolete. Next B→C continuation from suffix **21** after QA, do not restart IDs or create duplicate PRs.

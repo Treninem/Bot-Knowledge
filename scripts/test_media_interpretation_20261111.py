@@ -10,7 +10,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 STAGING = ROOT / "staging/ru"
-FILES = [STAGING / "media_interpretation_20261111_context_pool.json"]
+FILES = [STAGING / "media_interpretation_20261111_context_pool.json",
+         STAGING / "media_interpretation_20261111_context_delta_b.json"]
 TOKEN = re.compile(r"[^\W_]+", flags=re.UNICODE)
 
 def norm(s: str) -> str:
