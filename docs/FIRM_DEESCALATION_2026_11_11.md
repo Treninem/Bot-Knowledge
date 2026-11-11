@@ -11,3 +11,12 @@
 - Test locally from actual checkout: `python scripts/validate_pack.py`; `python -m unittest scripts.test_firm_deescalation_20261111 -v`. The associated read-only exact-head CI must also complete successfully.
 - Stage is **review-only**. No data were appended to registered packs or connected to ImPULS/AuroraFox. Merge into main would only publish staged candidates, not enable new consumer skills.
 - Next: after verifying exact-head CI, source SHA, cross-corpus overlap and main compatibility, guarded merge `expected_head_sha` followed by actual merge-SHA post-main CI. Then continue these same IDs from suffix **11**, rejecting low-value synonym padding; also proceed with other genuinely missing intentions.
+
+## Continuation B — distinct situational answers
+
+- New file `staging/ru/firm_deescalation_20261111_b.json`: **+100 new** original situation-specific answers, ten per existing stable intention (suffix 11–20). No A-series entries are counted twice.
+- **Cumulative staged: 200 answers**, ten distinct intentions **20/100 each**; **ten partial sets**, **80 remaining per set**, **800 total remaining**, **zero completed 100/100**.
+- After A+B checks in connected GitHub code, 200 distinct stable IDs, 200 normalized texts and 200 context notes; zero exact matches and zero Jaccard ≥0.8; max token-Jaccard **0.2778**. This is only a lexical duplicate screen; full cross-corpus and semantic quality must still be reviewed.
+- `scripts/test_firm_deescalation_20261111.py` and the read-only workflow validate both full stages and the per-stage checkpoint. Source hashes, manifest version, registered packs, consumer cache, ImPULS and BotHost remain unchanged.
+- Current branch `bk/firm-deescalation-20261111-a`, PR #650. B initial content commit `2812b30ae15468f9472e0cf50f351071ea1d1241`. New current full head must be read, not assumed from a former checkpoint.
+- Follow-up: continue each stable intent with suffix **21**, reject merely cosmetic variants, require actual final-head CI success; do not claim a consumer-ready release from staging.
