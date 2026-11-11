@@ -8,6 +8,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 STAGE = ROOT / "staging/ru/temporal_language_20261111_context_pool.json"
+STAGE_B = ROOT / "staging/ru/temporal_language_20261111_context_delta_b.json"
 AUX = {"all_ai_bots"}
 
 def norm(value):
@@ -22,7 +23,8 @@ class TemporalLanguageStagingTest(unittest.TestCase):
     def setUpClass(cls):
         cls.payload = json.loads(STAGE.read_text("utf-8"))
         cls.entries = cls.payload["entries"]
-        cls.replies = [r for entry in cls.entries for r in entry["replies"]]
+        cls.delta = json.loads(STAGE_B.read_text("utf-8"))
+        cls.replies = [r for stage in (cls.payload, cls.delta) for entry in stage["entries"] for r in entry["replies"]]
 
     def test_integrity_and_manifest_source(self):
         stage = self.payload
@@ -68,11 +70,34 @@ class TemporalLanguageStagingTest(unittest.TestCase):
         ids = [r["id"] for r in self.replies]
         texts = [norm(r["text"]) for r in self.replies]
         contexts = [norm(r["context_note"]) for r in self.replies]
-        self.assertEqual((len(set(ids)), len(set(texts)), len(set(contexts))), (100, 100, 100))
+        self.assertEqual((len(set(ids)), len(set(texts)), len(set(contexts))), (200, 200, 200))
         bags = [set(v.split()) for v in texts]
         for i, left in enumerate(bags):
             for right in bags[i+1:]:
                 self.assertLess(len(left & right) / len(left | right), 0.8)
+
+    def test_stage_b_parent_and_progress(self):
+        b = self.delta
+        self.assertEqual(b["parent_stage"], str(STAGE.relative_to(ROOT)))
+        self.assertEqual(b["parent_stage_blob_sha"], blob_sha(STAGE.read_bytes()))
+        self.assertEqual(b["source_pack_manifest_sha256"], self.payload["source_pack_manifest_sha256"])
+        self.assertEqual(b["source_pack_blob_sha"], self.payload["source_pack_blob_sha"])
+        self.assertFalse(b["consumer_registered"])
+        cp = b["checkpoint"]
+        self.assertEqual((cp["prior_candidates"], cp["added_candidates"], cp["cumulative_candidates"]), (100, 100, 200))
+        self.assertEqual((cp["processed_intents"], cp["finished_100"], cp["partial_intents"], cp["remaining_total"]), (10, 0, 10, 800))
+        self.assertEqual({e["intent_id"] for e in b["entries"]}, {e["intent_id"] for e in self.entries})
+        for e in b["entries"]:
+            self.assertEqual((e["prior_for_stable_id"], e["total_staged"], e["target"], e["remaining"]), (10, 20, 100, 80))
+            self.assertEqual(len(e["replies"]), 10)
+            for i, r in enumerate(e["replies"], 11):
+                self.assertEqual(r["id"], f"{e['intent_id']}_{i:02d}")
+                self.assertTrue(r["read_only"])
+                self.assertEqual(r["context"], "direct")
+                self.assertEqual(r["language"], "ru")
+                self.assertEqual(r["audiences"], ["all_ai_bots"])
+                self.assertIn("не применять санкции", r["avoid"])
+                self.assertGreater(len(r["context_note"]), 12)
 
     def test_privacy_no_sanctions_or_false_access(self):
         for r in self.replies:
