@@ -34,7 +34,7 @@ class StructuredJ(unittest.TestCase):
   d=self.ds[-1]
   self.assertEqual(len(d["entries"]),54)
   self.assertEqual(d["checkpoint"]["remaining_total"],4752)
-  ids={e["intent_id"] for e in self.ds[-2]["entries"]}
+  ids={e["intent_id"] for e in self.ds[-3]["entries"]}
   self.assertEqual(ids,{e["intent_id"] for e in d["entries"]})
   for e in d["entries"]:
    self.assertEqual((e["published_count"],e["previous_staged_count"],e["added_candidates"],e["total_candidates_with_published"],e["remaining"]),(3,7,2,12,88))
