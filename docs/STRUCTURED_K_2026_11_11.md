@@ -6,3 +6,9 @@
 - `consumer_registered=false`, direct/context matching, read-only, no sanctions, no identities or private conversations. **Not consumer-published**; manifest and cache untouched.
 - Cross-branch #229 needs reconciling before any eventual consumer integration. Do not merge without full exact-head CI, editorial quality, current-main compatibility and guarded head SHA. Verify actual merge SHA post-main CI separately.
 - Resume these stable intentions at suffix **21**, after checking prior files and concurrent PRs. Independent 60-intent structured series is tracked separately.
+
+## K2 — дополнение 54 разных контекстов (2026-11-11)
+
+- **+54 новых** синтетических ответа, один для каждого прежнего устойчивого намерения; суффикс `21`. Всего новых в этом PR **162**, теперь **15/100** в каждом наборе (3 зарегистрированных + 9 прежних staging + 3 кандидата в K); остаток **85** каждому, **4 590** по 54 намерениям. Наборов 100/100 пока 0.
+- Проверено внутри этого staging-файла: ID, нормализованный ответ, контекст без точных повторов; максимальный token-Jaccard 0.3478 (<0.70). Это не глобальная смысловая проверка всех пакетов.
+- Registered source SHA, manifest и живые кэши не трогали. Требуется exact-head CI, редакционная сверка, независимая проверка других веток и безопасное слияние. **Draft/BLOCKED**. Продолжить с суффикса `22`.
