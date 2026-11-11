@@ -21,3 +21,11 @@ Two additional independent, original stages were committed to the **same PR #649
 Provenance remains main `d3248d3279c3ca272b76ed2b89621c2577b20f6f` and registered source `packs/ru/social_dialogues.json` with actual expected SHA-256 `0cfedc133354a69522fecc3cda6bc21533c66005f0dc207050075f787dc977a8`. Neither source nor manifest nor working bot caches were changed. Staging files are explicitly `consumer_registered=false`, no sanctions, no consumer rollout.
 
 Run **`python -m unittest scripts.test_reasoning_risks_20261111 -v`** and `python scripts/validate_pack.py` on actual PR head; read-only exact-head workflow now includes all three stages. Block merge until complete required exact-head tests, semantic/cross-corpus checks, current-main compatibility and expected-head guarded merge; check post-main CI afterward. Next: continue suffix **31** of each same intent and then other missing topics.
+
+## Continuation D–E (same PR #649)
+
+Two more original unregistered review-only JSON stages were saved: D (`staging/ru/reasoning_risks_20261111_d.json`) and E (`staging/ru/reasoning_risks_20261111_e.json`). Each contains **100 new original RU contexts** distributed as ten new answers to each of the same stable ten intentions. For this run **+400 NEW** after original A (B+C+D+E), **500/1000 total**, each 50/100, **50 left** per intent, 500 total, 0 complete.
+
+JS source-array check: 500 unique stable suffix IDs, 500 normalized answer texts and 500 normalized context notes; no identical cases, no reply token-Jaccard >=0.8, largest observed **0.2963**. This lexical screen is not full editorial semantic proof; all replies require direct matching of their `context_note` and other restrictions. The registered base `packs/ru/social_dialogues.json`, manifest SHA-256, consumer cache, and private ImPULS are unchanged.
+
+Updated `scripts/test_reasoning_risks_20261111.py` and read-only exact-head workflow to validate all **A–E** with source pack hash, git blob, manifest routing, unique IDs/text/context, zero sanctions and no PII. Current progress is staged only, not published to consumers. To merge check actual final full head CI and current main; then guard merge by expected head and check post-main CI. Next suffix **51**.
