@@ -20,7 +20,7 @@ SOURCE_BLOB = "8b3d596b5b50d3d319ebf450c96d5623fc99d26a"
 
 def normalized(text: str) -> str:
     value = unicodedata.normalize("NFKC", text).casefold().replace("ё", "е")
-    return " ".join(re.findall(r"[^\\W_]+", value, flags=re.UNICODE))
+    return " ".join(re.findall(r"[^\W_]+", value, flags=re.UNICODE))
 
 
 def words(text: str) -> set[str]:
@@ -59,7 +59,7 @@ class StructuredRemainderTest(unittest.TestCase):
     def test_source_hash_and_registry_scope(self):
         raw = SOURCE.read_bytes()
         self.assertEqual(hashlib.sha256(raw).hexdigest(), SHA256)
-        git_blob = hashlib.sha1(b"blob " + str(len(raw)).encode() + b"\\0" + raw).hexdigest()
+        git_blob = hashlib.sha1(b"blob " + str(len(raw)).encode() + b"\0" + raw).hexdigest()
         self.assertEqual(git_blob, SOURCE_BLOB)
         manifest = json.loads((ROOT / "manifest.json").read_text(encoding="utf-8"))
         packs = {p["path"]: p["sha256"] for p in manifest["packs"]}
@@ -114,10 +114,10 @@ class StructuredRemainderTest(unittest.TestCase):
                       for r in self.all_replies]
             self.assertEqual(len(values), len(set(values)), key)
         for r in self.all_replies:
-            self.assertNotRegex(r["text"], r"(?i)(ghp_|github_pat_|\\bt\\.me/|@\\w+)")
-            self.assertNotRegex(r["text"], r"(?i)[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,}")
+            self.assertNotRegex(r["text"], r"(?i)(ghp_|github_pat_|\bt\.me/|@\w+)")
+            self.assertNotRegex(r["text"], r"(?i)[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}")
             self.assertNotRegex(normalized(r["text"]),
-                                r"\\bя (?:забанил|замутил|выдал роль|раскрыл данные)\\b")
+                                r"\bя (?:забанил|замутил|выдал роль|раскрыл данные)\b")
             self.assertIn("без санкций", r["avoid"].lower()) if r in self.new_replies else self.assertIn("не применять санкции", r["avoid"])
 
     def test_no_registered_pack_exact_duplicates_and_low_token_overlap(self):
