@@ -1,4 +1,4 @@
-"""Read-only checks for communication integrity RU staged replies (2026-11-11)."""
+"""Read-only stage A+B checks for RU conversation integrity, 2026-11-11."""
 import hashlib
 import json
 import re
@@ -6,7 +6,10 @@ import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-STAGE = "staging/ru/communication_integrity_20261111_context_pool.json"
+FILES = [
+    "staging/ru/communication_integrity_20261111_context_pool.json",
+    "staging/ru/communication_integrity_20261111_context_delta_b.json",
+]
 RELATED = [
     "greeting_exit_t544_context_pool.json",
     "conversation_contracts_t570_context_pool.json",
@@ -29,74 +32,96 @@ def tokens(value):
 def git_blob_sha(content):
     return hashlib.sha1(("blob " + str(len(content)) + "\0").encode() + content).hexdigest()
 
-class CommunicationIntegrityA(unittest.TestCase):
+class CommunicationIntegrityAB(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.data = json.loads((ROOT / STAGE).read_text("utf-8"))
+        cls.raw = [(ROOT / p).read_bytes() for p in FILES]
+        cls.stages = [json.loads(b) for b in cls.raw]
 
-    def test_source_manifest_unchanged(self):
-        d = self.data
-        source = (ROOT / d["source_pack"]).read_bytes()
-        real_sha = hashlib.sha256(source).hexdigest()
+    def test_source_manifest_and_ancestry(self):
+        initial = self.stages[0]
+        source = (ROOT / initial["source_pack"]).read_bytes()
+        sha256 = hashlib.sha256(source).hexdigest()
         manifest = json.loads((ROOT / "manifest.json").read_text("utf-8"))
-        self.assertEqual(d["source_pack_manifest_sha256"], real_sha)
-        self.assertEqual(d["source_pack_blob_sha"], git_blob_sha(source))
-        self.assertIn({"path": d["source_pack"], "sha256": real_sha}, manifest["packs"])
-        self.assertNotIn(STAGE, [item["path"] for item in manifest["packs"]])
-        self.assertEqual(d["consumer_registered"], False)
+        self.assertEqual(initial["source_pack_manifest_sha256"], sha256)
+        self.assertEqual(initial["source_pack_blob_sha"], git_blob_sha(source))
+        self.assertIn({"path": initial["source_pack"], "sha256": sha256}, manifest["packs"])
+        for index, stage in enumerate(self.stages):
+            self.assertNotIn(FILES[index], [p["path"] for p in manifest["packs"]])
+            self.assertIs(stage["consumer_registered"], False)
+            for key in ("source_pack", "source_pack_manifest_sha256",
+                        "source_pack_blob_sha", "checked_source_main_sha"):
+                self.assertEqual(stage[key], initial[key])
+            if index:
+                self.assertEqual(stage["parent_stage"], FILES[index-1])
+                self.assertEqual(stage["parent_stage_blob_sha"], git_blob_sha(self.raw[index-1]))
 
-    def test_structural_privacy_and_scope(self):
-        d = self.data
-        self.assertEqual(d["language"], "ru")
-        self.assertEqual(d["audiences"], ["all_ai_bots"])
-        self.assertEqual(d["stage_type"], "supplemental_contextual_reply_pool")
-        for flag in ("read_only", "requires_direct_address", "no_personal_data",
-                     "no_sanctions", "requires_context_match"):
-            self.assertIs(d["constraints"][flag], True)
-        self.assertEqual(len(d["entries"]), 10)
-        self.assertEqual(d["checkpoint"]["added_candidates"], 120)
-        self.assertEqual(d["checkpoint"]["partial_intents"], 10)
-        self.assertEqual(d["checkpoint"]["finished_100"], 0)
-        ids, answers, conditions = set(), set(), set()
-        for entry in d["entries"]:
-            self.assertEqual((entry["prior_for_stable_id"], entry["added_candidates"],
-                              entry["total_staged"], entry["target"], entry["remaining"]),
-                             (0, 12, 12, 100, 88))
-            self.assertEqual(entry["response_role"], "assistant_reply")
-            self.assertEqual(len(entry["replies"]), 12)
-            for index, reply in enumerate(entry["replies"], 1):
-                self.assertEqual(reply["id"], entry["intent_id"] + "_" + f"{index:02d}")
-                self.assertEqual(reply["audiences"], ["all_ai_bots"])
-                self.assertEqual(reply["context"], "direct")
-                self.assertEqual(reply["language"], "ru")
-                self.assertIs(reply["read_only"], True)
-                self.assertIn("совпадении контекста", reply["avoid"])
-                self.assertGreater(len(reply["context_note"].strip()), 15)
-                self.assertNotRegex(reply["text"], r"https?://|[A-Za-z0-9_.+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}")
-                self.assertNotRegex(reply["text"], r"(?<!\w)\+?\d[\d ()-]{8,}\d(?!\w)")
-                for item, seen in ((reply["id"], ids), (normalized(reply["text"]), answers),
-                                   (normalized(reply["context_note"]), conditions)):
-                    self.assertTrue(item)
-                    self.assertNotIn(item, seen)
-                    seen.add(item)
-        self.assertEqual((len(ids), len(answers), len(conditions)), (120, 120, 120))
+    def test_scope_privacy_context_and_counts(self):
+        seen_ids, seen_texts, seen_notes = set(), set(), set()
+        stable = None
+        counts = [12, 10]
+        for i, (stage, number) in enumerate(zip(self.stages, counts)):
+            self.assertEqual(stage["language"], "ru")
+            self.assertEqual(stage["audiences"], ["all_ai_bots"])
+            self.assertEqual(stage["stage_type"], "supplemental_contextual_reply_pool")
+            for key in ("read_only", "requires_direct_address", "no_personal_data",
+                        "no_sanctions", "requires_context_match"):
+                self.assertIs(stage["constraints"][key], True)
+            cp = stage["checkpoint"]
+            self.assertEqual(cp["added_candidates"], number*10)
+            self.assertEqual(cp["prior_candidates"], sum(counts[:i])*10)
+            self.assertEqual(cp["cumulative_candidates"], sum(counts[:i+1])*10)
+            self.assertEqual(cp["processed_intents"], 10)
+            self.assertEqual(cp["finished_100"], 0)
+            self.assertEqual(cp["partial_intents"], 10)
+            self.assertEqual(cp["remaining_total"], 1000-sum(counts[:i+1])*10)
+            self.assertEqual(len(stage["entries"]), 10)
+            stable_now = {e["intent_id"] for e in stage["entries"]}
+            self.assertEqual(len(stable_now), 10)
+            if stable is None:
+                stable = stable_now
+            self.assertEqual(stable, stable_now)
+            for e in stage["entries"]:
+                self.assertEqual(e["target"], 100)
+                self.assertEqual(e["prior_for_stable_id"], sum(counts[:i]))
+                self.assertEqual(e["added_candidates"], number)
+                self.assertEqual(e["total_staged"], sum(counts[:i+1]))
+                self.assertEqual(e["remaining"], 100-sum(counts[:i+1]))
+                self.assertEqual(e["response_role"], "assistant_reply")
+                self.assertEqual(len(e["replies"]), number)
+                for idx, r in enumerate(e["replies"], sum(counts[:i])+1):
+                    self.assertEqual(r["id"], f'{e["intent_id"]}_{idx:02d}')
+                    self.assertEqual(r["audiences"], ["all_ai_bots"])
+                    self.assertEqual(r["language"], "ru")
+                    self.assertEqual(r["context"], "direct")
+                    self.assertTrue(r["read_only"])
+                    self.assertIn("совпадении контекста", r["avoid"])
+                    self.assertGreater(len(r["context_note"]), 15)
+                    self.assertNotRegex(r["text"], r"https?://|[A-Za-z0-9_.+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}")
+                    self.assertNotRegex(r["text"], r"(?<!\w)\+?\d[\d ()-]{8,}\d(?!\w)")
+                    for item, seen in ((r["id"], seen_ids),
+                                       (normalized(r["text"]), seen_texts),
+                                       (normalized(r["context_note"]), seen_notes)):
+                        self.assertTrue(item)
+                        self.assertNotIn(item, seen)
+                        seen.add(item)
+        self.assertEqual((len(seen_ids), len(seen_texts), len(seen_notes)), (220, 220, 220))
 
-    def test_related_lexical_duplicates(self):
-        old = []
+    def test_all_stage_replies_against_related_pools(self):
+        related = []
         for filename in RELATED:
             d = json.loads((ROOT / "staging" / "ru" / filename).read_text("utf-8"))
-            old.extend(r["text"] for e in d["entries"] for r in e["replies"])
-        new = [r["text"] for e in self.data["entries"] for r in e["replies"]]
-        prior = [tokens(t) for t in old]
-        highest = 0.0
-        for text in new:
+            related.extend(r["text"] for e in d["entries"] for r in e["replies"])
+        self.assertEqual(len(related), 1920)
+        candidate = [r["text"] for s in self.stages for e in s["entries"] for r in e["replies"]]
+        self.assertEqual(len(candidate), 220)
+        prior = [tokens(t) for t in related]
+        for idx, text in enumerate(candidate):
             a = tokens(text)
             for b in prior:
-                overlap = len(a & b) / len(a | b)
-                highest = max(highest, overlap)
-                self.assertLess(overlap, 0.80, (text, overlap))
-        self.assertEqual(len(old), 1920)
-        self.assertLess(highest, 0.80)
+                similarity = len(a & b)/len(a | b)
+                self.assertLess(similarity, 0.80, (idx, similarity, text))
+            prior.append(a)
 
 if __name__ == "__main__":
     unittest.main()
