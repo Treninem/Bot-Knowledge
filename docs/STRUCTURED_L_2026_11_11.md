@@ -119,3 +119,10 @@
 - +60 unique RU replies (suffix 37) in 60 unchanged intents; 1020 staging candidates overall, **31/100** each including 3 registered + 11 older staged, **4140 remaining**, 60 partial, 0 complete. Resume suffix **38**.
 - New cases cover ambiguity of numeric locales and time zones, rolled-up totals, missing observations, privacy of small aggregates, invoice duplication and percentage semantics. On GitHub source readback: no normalized exact overlaps in current K/L and no token-Jaccard >=0.70 (maximum 0.3929). Complete all-pack semantic audit not claimed.
 - No registered package, manifest, runtime cache, consumer code, sanction or private user data changed. Fresh exact-head CI and compatibility/consumer review required before any merge.
+
+
+## L17 — 12 November 2026: 60 further authentic explanation contexts
+
+- +60 novel synthetic RU replies across 60 established intents (suffix 38); **1080** candidates in PR, **32/100** per intent (3 registered, 11 earlier staged, 18 in L); **4080 missing** and 0 completed 100/100. Next suffix **39**.
+- Follow-up contexts include source format ambiguity, group boundaries, OCR punctuation, different time bases, inclusive deadlines, sampling biases and privacy safeguards. K/L readback preflight shows no exact normalization collision and no token-Jaccard >=0.70, max 0.5000. Full all-pack semantic/editorial evaluation not claimed.
+- Remains unregistered staging, not manifest or live consumer change; current-head CI and compatibility/consumer checks required for merge.
