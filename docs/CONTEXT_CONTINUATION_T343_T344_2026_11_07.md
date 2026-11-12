@@ -1,9 +1,0 @@
-# T343/T344 — continuation on exact main 2ad3ae05b8c1edceb79c5286a6fef336a2bf38f3
-
-Original synthetic Russian context-bound candidate responses: **184 new** across **46 canonical intents**. T343: 22 intents × 4 = **88** new, 56/100 → **60/100** per intent, 22 × 40 = **880** remaining. T344: 24 × 4 = **96** new, 55/100 → **59/100** per intent, 24 × 41 = **984** remaining. Combined 2,552 → **2,736/4,600**, **1,864** remaining, **46** partial intents and zero newly completed 100/100. 414 registered remain unchanged; staging 2,138 → **2,322** (not consumer enabled).
-
-Source package manifest SHA-256 and Git blob SHA are embedded in each stage. Direct previous stage blob pins: T341 4f42b77cd5d90efa719dbd08d0e5c4d616553873, T342 c131b624a4250b06fbbd4f8a251f9f8d99e59c32. Keep all historical intent IDs, source manifest, registered QA packs and cache untouched. Current ReviewedStageCatalog remains pinned to T341/T342 and intentionally excludes these new candidates pending a separate independent catalog review/CI. Do not claim live ImPULS integration.
-
-Every candidate has unique intent-specific ID, original text, distinct use-case note, audience, direct-address/permission constraints, no raw chats, no secrets or sanctions. No physical action occurs. The new Python test verifies inherited source integrity, selection denial, cumulative counts, 184 new answers vs 2,552 registered/staged corpus, unique notes and token-Jaccard <0.78. Automatic lexical screening cannot guarantee full semantic uniqueness.
-
-Owner permission (02.11.2026) authorizes verified expansion and merging but not bypassing exact-head and post-main CI, paid runners, production deployment, or consumer compatibility. Release gates: test and verify exact SHA; merge only after successful required checks; verify actual post-main head. Next: index verified T343/T344 in a separately pinned change, then complete additional meaningful contexts.

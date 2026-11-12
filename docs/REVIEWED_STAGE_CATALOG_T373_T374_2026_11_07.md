@@ -1,7 +1,0 @@
-# ReviewedStageCatalog — T373/T374 index (2026-11-07)
-
-Independent read-only index refresh on merge commit `c01b15a12b6c0e679c9655163ff543098da16f06` (PR #414). This PR contains **zero newly authored replies**. It includes 92 existing, source-pinned, approval-gated contextual replies from PR #414 and advances the staged catalog from **3,610** to **3,702** entries over the same 46 canonical intents. Registered QA replies **414**, tracked group total **4,116/4,600**, remaining **484**: colloquial 22 intents at 90/100, practical 24 at 89/100, 46 partial, 0 complete.
-
-The index uses the existing Stage validator for T373/T374 and recursively checks registered manifest SHA-256, parent-stage Git blob SHA, historical uniqueness and contextual permission metadata. Selection is fail-closed unless caller supplies exact approved reply ID, recognized intent, audience, matching context, direct address and local permission; no inferred authority, sanctions, memory, network or writes. Cache identity is based on all verified staged file bytes. Data remains staging-only, not a manifest package and not deployed.
-
-Test on current exact PR head: `python scripts/validate_pack.py`, `python -m unittest scripts.test_reviewed_stage_catalog -q`. Merge only after successful exact-head CI and completed actual post-main CI of PR #414; verify this PR's post-main CI before declaring done. No manual paid workflow dispatch. Do not change ImPULS, live bots, manifest, registered source packs or runtime cache.

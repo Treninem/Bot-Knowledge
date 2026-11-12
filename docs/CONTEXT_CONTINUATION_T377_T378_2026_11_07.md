@@ -1,7 +1,0 @@
-# T377/T378 — 92 new contextual Russian answers (7 November 2026)
-
-Builds on merged main `2e8eafef64acca1a61fb8b2a74be555037f685de` and immutable T375/T376 stage. Adds **92** original synthetic answers for **46** stable intents (22 colloquial ×2 =44; 24 practical/recovery ×2 =48). Baseline **4,208/4,600** (414 registered and 3,794 staged). Candidate after this change **4,300/4,600**, 22 colloquial intents **94/100**, 24 practical intents **93/100**; **300** remaining (132 +168), 46 partial sets, 0 completed. No prior texts, IDs or source files altered.
-
-Every entry includes distinct situation-specific content and explicit language/audience/context metadata; synthetic, private-data free, read-only, no actions or sanctions. Strict source SHA-256 from registered manifest, immutable immediate-parent Git blob, all ancestor stages, normalized ID/text/context-note uniqueness and safe selection are checked by `scripts/context_t377_t378.py`, with tamper, scope and word-Jaccard regression tests. Lexical metrics cannot prove semantic novelty alone; independent review remains necessary. No consumer, manifest or live cache modifications.
-
-Exact SHA tests: `python scripts/validate_pack.py`, `python -m unittest scripts.test_context_t377_t378 -q`, `python -m scripts.context_t377_t378`. Do not merge before parent post-main CI, exact-head CI, and post-main verification of this PR. No paid manual Actions.

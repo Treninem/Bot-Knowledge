@@ -10,7 +10,7 @@ PATH = ROOT / "staging/ru/precision_followup_20261112.json"
 
 def norm(value):
     value = unicodedata.normalize("NFKC", value).casefold().replace("ё", "е")
-    return " ".join(re.findall(r"[^\\W_]+", value, re.UNICODE))
+    return " ".join(re.findall(r"[^\W_]+", value, re.UNICODE))
 
 class PrecisionFollowupTests(unittest.TestCase):
     @classmethod
@@ -49,7 +49,7 @@ class PrecisionFollowupTests(unittest.TestCase):
                 "humor_opt_in": False,
                 "no_sanctions": True,
             })
-            self.assertFalse(re.search(r"[\\w.+-]+@[\\w.-]+\\.[A-Za-z]{2,}", reply["text"]))
+            self.assertFalse(re.search(r"[\w.+-]+@[\w.-]+\.[A-Za-z]{2,}", reply["text"]))
             self.assertNotIn("mod_action", reply)
 
     def test_unique_text_ids_and_selection_notes(self):
