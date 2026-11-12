@@ -32,13 +32,13 @@ class TestConversationNuance(unittest.TestCase):
         self.assertEqual(checkpoint["partial_intents"], sum(e["remaining"] > 0 for e in self.entries))
         self.assertEqual(checkpoint["completed_100"], sum(e["remaining"] == 0 for e in self.entries))
         self.assertEqual(checkpoint["remaining_total"], sum(e["remaining"] for e in self.entries))
-        self.assertEqual((len(self.replies), checkpoint["remaining_total"]), (1640, 360))
+        self.assertEqual((len(self.replies), checkpoint["remaining_total"]), (1800, 200))
         for entry in self.entries:
             self.assertEqual(entry["target"], 100)
             self.assertEqual(entry["accepted_staged"], len(entry["replies"]))
             self.assertEqual(entry["accepted_prior"] + len(entry["replies"]) + entry["remaining"], 100)
             self.assertEqual([r["id"] for r in entry["replies"]],
-                             [f'{entry["intent_id"]}_v{i:02}' for i in range(1, 83)])
+                             [f'{entry["intent_id"]}_v{i:02}' for i in range(1, 91)])
 
     def test_context_and_safety(self):
         self.assertTrue(all(self.stage["constraints"].values()))
