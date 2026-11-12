@@ -100,3 +100,10 @@
 - **+54 новых** ответов с суффиксом 34 для 54 существующих намерений. Дельта PR = **864** кандидата; вместе с 3 зарегистрированными и 9 старыми staging — **28/100** для каждого, остаётся **72 × 54 = 3 888**, завершённых 100/100 нет. Следующий суффикс **35**.
 - Отдельные контексты для статистики, процентов, валют, смен, распределений и визуального сравнения. Машинная сверка K/L на нормализованные точные и лексические дубли: **0**, max token-Jaccard **0.3438**, порог 0,70. Требуется независимая полная смысловая проверка.
 - Только контекстные обезличенные staging-ответы; source pack/manifest/cache не изменены, нет санкций или потребительских полномочий. Full current-head CI и post-main обязательны до merge; Draft/BLOCKED.
+
+
+## K16 — 12 November 2026: 54 distinct factual edge cases
+
+- +54 **new** original RU context-conditioned replies across the same 54 intents (suffix 35). This PR now has **918 staging records**; including 3 registered and 9 earlier staged per intent, **29/100**, **71 missing each / 3834 total**, 54 partial and **0 completed 100/100**. Next suffix **36**.
+- Added cases: first-observed failure rates, refunds vs income, DST overnight shifts, survey weights, paired uncertainty, JOIN multiplicities, axis interpretation, numerical precision, event causality and related context-dependent explanations. 54 non-duplicated IDs and context notes; JavaScript preflight against both K/L existing records found zero normalized exact text collisions or token Jaccard >=0.70 (maximum 0.5357). Semantic all-pack review not claimed.
+- Staging only, not manifest-registered; published source SHA-256 55b3f6126d36cd92687d005b7fedf5a11df9ee61cf453103accdf1f13c8498f0 unchanged. Exact-head CI must be checked on this new commit. No sanctions, private data, consumer deployment or cache changes.
