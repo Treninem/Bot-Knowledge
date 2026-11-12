@@ -77,7 +77,15 @@ class TestConversationNuance(unittest.TestCase):
             for record in package["records"]:
                 historical.extend([record["answer"], *record.get("variants", [])])
         normalized = set(map(norm, historical))
-        self.assertTrue(all(norm(reply["text"]) not in normalized for reply in self.replies))
+        historical_tokens = [set(norm(text).split()) for text in historical]
+        for reply in self.replies:
+            candidate = norm(reply["text"])
+            self.assertNotIn(candidate, normalized)
+            tokens = set(candidate.split())
+            for previous in historical_tokens:
+                overlap = len(tokens & previous)
+                similarity = overlap / len(tokens | previous)
+                self.assertLess(similarity, 0.70, f"published near duplicate: {reply['id']}")
 
 if __name__ == "__main__":
     unittest.main()
