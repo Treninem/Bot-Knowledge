@@ -126,3 +126,10 @@
 - +60 novel synthetic RU replies across 60 established intents (suffix 38); **1080** candidates in PR, **32/100** per intent (3 registered, 11 earlier staged, 18 in L); **4080 missing** and 0 completed 100/100. Next suffix **39**.
 - Follow-up contexts include source format ambiguity, group boundaries, OCR punctuation, different time bases, inclusive deadlines, sampling biases and privacy safeguards. K/L readback preflight shows no exact normalization collision and no token-Jaccard >=0.70, max 0.5000. Full all-pack semantic/editorial evaluation not claimed.
 - Remains unregistered staging, not manifest or live consumer change; current-head CI and compatibility/consumer checks required for merge.
+
+
+## L continuation — 12 November 2026
+- +60 context-specific synthetic RU replies in existing 60 distinct stable intents, suffix 39. Starting 32/100 each, now 33/100 each, remaining 4020 across 60 partial sets, complete 0. Next suffix 40.
+- New contexts include calendar-day boundaries, per-thousand rates, ambiguous time strings, tax-inclusive prices, versioned backfills, dimensional units, small-group privacy and mixed data types; not mechanical synonym substitutions.
+- JS validation against 2106 existing K/L staged texts: no exact normalised repeats and no token-set Jaccard >=0.70. This check is lexical; full independent semantic review of all packs remains outstanding. No user data, no sanctions, read-only consumer_registered=false. Source pack SHA and manifest unchanged.
+- Three paths touched: staging JSON, focused Python test and progress journal. Await exact-head CI on final SHA, current-main compatibility and consumer/editorial review. Do not merge while main post-push checks are not confirmed.
