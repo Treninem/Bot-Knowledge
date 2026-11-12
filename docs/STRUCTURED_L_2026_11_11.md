@@ -140,3 +140,10 @@
 - Cases distinguish time zones, reporting vintages, odds versus proportions, fractional hours versus clock time, accounting reversals and laboratory detection limits, with separate applicability notes. Read-only, all_ai_bots, no live actions or sanctions.
 - JS preflight against 2220 current K/L staged text occurrences: unique normalized texts and IDs, no exact match and no Jaccard ≥0.70. Full all-pack semantic review remains pending. Published manifest and consumer cache remain unchanged.
 - One atomic 3-path commit (staging JSON, targeted test, checkpoint log). Exact-head CI must be observed on final head; no merge until consumer/editorial and main push gates.
+
+
+## L21 — 12.11.2026: 60 context-specific original continuations
+
+- +60 synthetic Russian replies, suffix 41 across the same 60 stable intents; 1200 -> 1260 new staging candidates, 35/100 per intent (3 registered + 11 old staged + 21 L), 65 missing per intent / 3900 remaining; 60 partial, 0 complete 100/100.
+- Context cases include locale, decimal time, unit semantics, rounding, causal assumptions, sampling and disclosure avoidance. Normalized exact and token-set Jaccard comparisons against prior L found 0 failures (max 0.5000, threshold 0.70); broader semantic and cross-pack audit remains necessary.
+- Staging only: no manifest, pack SHA, consumer cache or ImPULS changes. Before any merge confirm full exact-head CI and current main compatibility. Next suffix **42**.
