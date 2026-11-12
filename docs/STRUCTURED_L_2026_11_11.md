@@ -174,3 +174,11 @@
 - +60 independently authored context-specific replies, 60 stable questions, 1,500 new staging answers in PR #662, 39/100 per intent including published and older staging, 61 remaining per intent and 3,660 total. 60 partial, zero completed. Next suffix 46.
 - New conditions: locale-specific CSV parsing, currency direction, dates and DST, missing denominators, multiple coupons with threshold, statistical sampling, incomplete units, origin revisions and privacy risks of marginal totals. New 60 IDs, normalized responses and context notes are unique against latest fetched K/L including new K suffix 43; zero token-Jaccard >=0.70 (maximum 0.3750). Full semantic editing and comparison with all historical sources still required before release.
 - Synthetic read-only text for all_ai_bots and direct context only. No manifest, active caches, private messages, sanctions or ImPULS changes. Do not merge before verified exact-head CI, compatible main and post-main gate.
+
+## L46 — 12.11.2026: точные контексты для 60 прежних намерений
+
+- Проверенная исходная контрольная точка: 1500 новых staging-ответов на head `c407a57113bd0b499881eb3aad01023cdce76a8f` (60 намерений, по 39/100 с учётом 3 зарегистрированных и 11 более ранних staging).
+- Добавлено 60 авторских ответов с суффиксом 46, по одному на прежний устойчивый ID. Стало **1560 новых кандидатов в этом PR**, по **40/100** вместе с опубликованными и ранее подготовленными. Осталось **60 на намерение, 3600 суммарно**, все 60 наборов частичные; завершённых 100/100 — 0.
+- Партия затрагивает локаль чисел, проценты, сроки, единицы, качество данных, статистику, погрешность, жалобы, конфиденциальность малых групп. Все ответы оригинальные синтетические и зависят от конкретного `context_note`; нет санкций или подтверждений действий.
+- До записи: уникальные нормализованные ID, тексты и описания контекстов; для новых текстов проверен token-Jaccard относительно 1500 прежних L и текущей партии, ни одна пара не достигла 0.70. Этот тест не заменяет полноценную редакционную проверку других PR и выбор потребителем.
+- Изменены только staging JSON, соответствующий Python-тест и этот журнал; manifest, зарегистрированные SHA и живые consumer-кэши не затронуты. PR остаётся **Draft/BLOCKED** до полного exact-head CI, смыслового ревью и проверки совместимости со snapshot 8 MiB. Следующий суффикс — **47**.
