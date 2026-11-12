@@ -17,8 +17,8 @@ EARLIER = [
 ]
 SOURCE_SHA = "55b3f6126d36cd92687d005b7fedf5a11df9ee61cf453103accdf1f13c8498f0"
 SOURCE_BLOB = "8b3d596b5b50d3d319ebf450c96d5623fc99d26a"
-WORDS = re.compile(r"[^\\W_]+", re.UNICODE)
-MAIL = re.compile(r"[\\w.+-]+@[\\w.-]+\\.[A-Za-z]{2,}")
+WORDS = re.compile(r"[^\W_]+", re.UNICODE)
+MAIL = re.compile(r"[\w.+-]+@[\w.-]+\.[A-Za-z]{2,}")
 
 
 def normalized(value):
@@ -47,7 +47,7 @@ class StructuredMContinuation(unittest.TestCase):
     def test_source_integrity_and_no_registration(self):
         raw = SOURCE.read_bytes()
         self.assertEqual(hashlib.sha256(raw).hexdigest(), SOURCE_SHA)
-        blob_header = b"blob " + str(len(raw)).encode() + b"\\0"
+        blob_header = b"blob " + str(len(raw)).encode() + b"\0"
         self.assertEqual(hashlib.sha1(blob_header + raw).hexdigest(), SOURCE_BLOB)
         manifest = json.loads(MANIFEST.read_text("utf-8"))
         packs = {p["path"]: p["sha256"] for p in manifest["packs"]}
