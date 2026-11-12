@@ -196,3 +196,10 @@
 - Cases address column types versus displayed digits, overlapping group intersections, cost per unit, historical rate basis, withheld totals, event-level IDs, revisions, missing observations and misleading chart scales. All are scoped to direct addressed contexts, read-only, with no personal data or sanctions.
 - In-process JavaScript comparison on the fetched immutable K/L blobs and new entries found **0 normalized exact collisions and 0 token-set Jaccard ≥0.70** (maximum 0.3889). Broader all-pack semantic and consumer evaluation remains pending. No registered manifest, consumer cache or live bot modification.
 - GitHub atomic commit uses three paths (staging JSON, checkpoint test, journal); require full current-head CI and independent editorial review before any merge.
+
+## L49 — 12 November 2026: second independent contextual batch
+
+- Added **60** original Russian context-specific replies (suffix `49`) for 60 existing canonical intents. Staging **1680 → 1740**; each intent **42/100 → 43/100** including the 14 existing registered/older candidates; 60 partial intents, 0 completed 100/100, **57 remaining each / 3420 total**. Next suffix **50**.
+- Different conditions include zero-baseline percentages, source-sensitive date formats, capped source precision, inclusive vs exclusive time windows, constrained coupons, identity-preserving deduplication and small-group disclosure risks. Read-only, all_ai_bots, synthetic and direct-context only.
+- Preflight compared 60 new candidates with fetched current K/L and registered structured source: **zero normalized exact repeats; zero token-Jaccard ≥0.70**, maximum **0.3714**. This does not establish independent all-packs semantic review or consumer behavior.
+- Atomic GitHub commit updates staging JSON, matching Python test assertions and this journal; registered manifest/cache/ImPULS unchanged. Merge remains blocked until complete exact-head CI and editorial/consumer verification.
