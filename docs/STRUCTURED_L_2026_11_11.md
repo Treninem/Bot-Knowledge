@@ -154,3 +154,10 @@
 - +60 independently written, synthetic and context-labelled RU replies, suffix 42, for the same 60 stable intents. Staged candidate count **1320**; **36/100** per intent including 3 registered, 11 old staged and 22 L. Remain 64 per intent / 3840 total; 60 partial, 0 completed 100/100.
 - New contexts include coverage gaps, historical course vs transaction price, canceled orders, precision, date boundaries and indirect disclosure. Normalized-text and context uniqueness checked for these new candidates; token-set Jaccard <0.70 vs prior L (max 0.5926). Independent all-pack semantic/consumer validation not yet complete.
 - Staging-only; no manifest, registered pack, cache or live-bot changes. Next suffix **43**; require exact-head CI, editorial review, current main and post-main gate before merge.
+
+## L continuation — 12 November 2026, suffix 43
+
+- +60 originally authored context-bound Russian replies for 60 existing stable intents, L staging now 1,380 candidates, 37/100 inclusive of published/older stages, 3,780 remaining, 0 newly completed. Resume at suffix 44.
+- Explicit contexts distinguish date formats, rounding, identifiers, totals, time zones, uncertain measurements, independent groups, sampling, pricing, finance and privacy. Portable read-only replies, no sanctions or unsupported bot functions.
+- Internal new-text QA against current K and L staging: zero exact normalized duplicates and zero token-set Jaccard >= 0.70; this lexical gate does not establish full semantic, historical or consumer verification.
+- Manifest and consumer caches unchanged, `consumer_registered=false`; exact-head and post-main CI plus editorial review required before merge.
