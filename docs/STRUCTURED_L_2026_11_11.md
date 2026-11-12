@@ -147,3 +147,10 @@
 - +60 synthetic Russian replies, suffix 41 across the same 60 stable intents; 1200 -> 1260 new staging candidates, 35/100 per intent (3 registered + 11 old staged + 21 L), 65 missing per intent / 3900 remaining; 60 partial, 0 complete 100/100.
 - Context cases include locale, decimal time, unit semantics, rounding, causal assumptions, sampling and disclosure avoidance. Normalized exact and token-set Jaccard comparisons against prior L found 0 failures (max 0.5000, threshold 0.70); broader semantic and cross-pack audit remains necessary.
 - Staging only: no manifest, pack SHA, consumer cache or ImPULS changes. Before any merge confirm full exact-head CI and current main compatibility. Next suffix **42**.
+
+
+## L22 — 12.11.2026: 60 further practical numeric explanations
+
+- +60 independently written, synthetic and context-labelled RU replies, suffix 42, for the same 60 stable intents. Staged candidate count **1320**; **36/100** per intent including 3 registered, 11 old staged and 22 L. Remain 64 per intent / 3840 total; 60 partial, 0 completed 100/100.
+- New contexts include coverage gaps, historical course vs transaction price, canceled orders, precision, date boundaries and indirect disclosure. Normalized-text and context uniqueness checked for these new candidates; token-set Jaccard <0.70 vs prior L (max 0.5926). Independent all-pack semantic/consumer validation not yet complete.
+- Staging-only; no manifest, registered pack, cache or live-bot changes. Next suffix **43**; require exact-head CI, editorial review, current main and post-main gate before merge.
