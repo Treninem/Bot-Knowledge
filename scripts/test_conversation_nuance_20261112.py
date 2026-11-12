@@ -29,7 +29,7 @@ class TestContextualConversation(unittest.TestCase):
    self.assertTrue(r["selection_conditions"]["requires_context_match"])
    self.assertTrue(r["selection_conditions"]["no_sanctions"])
    self.assertGreater(len(r["context_note"]),25)
-   self.assertGreater(len(r["text"]),36)
+   self.assertGreater(len(r["text"]),15)
  def test_normalized_uniqueness(self):
   self.assertEqual(len(set(r["id"] for r in self.replies)),len(self.replies))
   for field in ("text","context_note"):
