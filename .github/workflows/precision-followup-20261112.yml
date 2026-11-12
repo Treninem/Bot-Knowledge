@@ -1,0 +1,27 @@
+name: Precision followup 2026-11-12 exact-head QA
+on:
+  pull_request:
+    paths:
+      - "staging/ru/precision_followup_20261112.json"
+      - "scripts/test_precision_followup_20261112.py"
+      - ".github/workflows/precision-followup-20261112.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify-precision:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Check exact checkout SHA
+        env:
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          test -n "$HEAD_SHA"
+          test "$(git rev-parse HEAD)" = "$HEAD_SHA"
+      - name: Validate staged data
+        run: |
+          python scripts/test_precision_followup_20261112.py
+          python -O scripts/test_precision_followup_20261112.py
