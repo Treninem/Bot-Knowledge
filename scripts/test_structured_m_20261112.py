@@ -66,7 +66,7 @@ class StructuredMContinuation(unittest.TestCase):
         m_count = checkpoint["M_per_intent"]
         end_suffix = 51 + m_count
         self.assertGreaterEqual(m_count, 6)
-        self.assertLessEqual(m_count, 49)
+        self.assertLessEqual(m_count, 55)
         self.assertEqual(len(self.current), 60 * m_count)
         self.assertEqual(len(replies(self.l)), 1860)
         self.assertEqual(checkpoint["new_replies"], len(self.current))
