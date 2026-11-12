@@ -1,4 +1,4 @@
-"""Staging-only continuation of 60 structured intents, suffixes 52 through 55."""
+"""Staging-only continuation of 60 structured intents, suffixes 52 through 56."""
 import hashlib
 import json
 import re
@@ -62,16 +62,16 @@ class StructuredMContinuation(unittest.TestCase):
         for k in ("read_only", "requires_direct_address", "requires_context_match", "no_personal_data", "no_sanctions"):
             self.assertTrue(data["constraints"][k], k)
         self.assertEqual(len(data["entries"]), 60)
-        self.assertEqual(len(self.current), 240)
+        self.assertEqual(len(self.current), 300)
         self.assertEqual(len(replies(self.l)), 1860)
-        self.assertEqual(data["checkpoint"]["combined_L_M_replies"], 2100)
-        self.assertEqual(data["checkpoint"]["remaining_total"], 3060)
-        self.assertEqual(data["checkpoint"]["next_suffix"], 56)
+        self.assertEqual(data["checkpoint"]["combined_L_M_replies"], 2160)
+        self.assertEqual(data["checkpoint"]["remaining_total"], 3000)
+        self.assertEqual(data["checkpoint"]["next_suffix"], 57)
         self.assertEqual([e["intent_id"] for e in data["entries"]], [e["intent_id"] for e in self.l["entries"]])
         for e in data["entries"]:
             self.assertEqual((e["published_count"], e["previous_staged_count"], e["prior_L_count"]), (3, 11, 31))
-            self.assertEqual((e["added_candidates"], e["total_candidates_with_published"], e["remaining"], e["target"]), (4, 49, 51, 100))
-            self.assertEqual([r["id"] for r in e["replies"]], [f"{e['intent_id']}_supp_52", f"{e['intent_id']}_supp_53", f"{e['intent_id']}_supp_54", f"{e['intent_id']}_supp_55"])
+            self.assertEqual((e["added_candidates"], e["total_candidates_with_published"], e["remaining"], e["target"]), (5, 50, 50, 100))
+            self.assertEqual([r["id"] for r in e["replies"]], [f"{e['intent_id']}_supp_52", f"{e['intent_id']}_supp_53", f"{e['intent_id']}_supp_54", f"{e['intent_id']}_supp_55", f"{e['intent_id']}_supp_56"])
 
     def test_unique_safe_and_lexical_distance(self):
         older_text = self.source_answers + [r["text"] for r in self.prior]
