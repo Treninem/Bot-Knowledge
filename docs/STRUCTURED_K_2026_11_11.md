@@ -121,3 +121,10 @@
 - Scenarios include DST transitions, data joins with one-to-many keys, repeated measures, confidence versus prediction intervals, causal inference, and financial definitions; contexts are explicitly scoped to direct questions and synthetic examples.
 - Local JS preflight against 2052 previously staged K/L texts: zero exact normalized duplicates; zero token-set Jaccard ≥0.70. No claim of full editorial/consumer acceptance. Read-only, all_ai_bots, no sanctions, no private data. Manifest, source SHA and live cache remain unchanged.
 - Changes in 3 paths: staging JSON, targeted test and progress log. Exact-head CI must be rerun on the new head, merge blocked until source compatibility, editorial and consumer review, and main post-push gate.
+
+
+## K second independent set — 2026-11-12
+- +54 original context-specific RU replies on 54 stable intent IDs, suffix 38. Progress 31/100 → 32/100 per intent, total staged in K 1080, remaining 3672 in 54 partial sets, completed 0, resume suffix 39.
+- Distinct cases include absolute versus delta temperature conversions, effective annual interest, refunds in running totals, instrument accuracy bases, index points, paired observations and financial revenue recognition. Conditional direct/context-only, read-only, no private data or sanctions.
+- Pre-commit lexical QA versus 2166 pre-existing K+L staged answers: 54 unique normalized texts, no exact duplicates and no token Jaccard >=0.70. Full semantic all-packs editorial and consumer behavior verification remain outstanding. No manifest or consumer caches changed.
+- 3 updated paths in one commit (JSON, Python QA test, journal). Exact-head CI needs new SHA; merge remains blocked by existing independent readiness gates.
