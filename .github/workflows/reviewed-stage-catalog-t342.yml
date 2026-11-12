@@ -1,0 +1,36 @@
+name: Verified staged catalog T381 T382 exact-head
+on:
+  pull_request:
+    paths:
+      - 'scripts/reviewed_stage_catalog.py'
+      - 'scripts/test_reviewed_stage_catalog.py'
+      - 'docs/REVIEWED_STAGE_CATALOG_T381_T382_2026_11_07.md'
+      - '.github/workflows/reviewed-stage-catalog-t342.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/reviewed_stage_catalog.py'
+      - 'scripts/test_reviewed_stage_catalog.py'
+      - 'docs/REVIEWED_STAGE_CATALOG_T381_T382_2026_11_07.md'
+      - '.github/workflows/reviewed-stage-catalog-t342.yml'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - name: Verify actual head SHA
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check registered source hash
+        run: python scripts/validate_pack.py
+      - name: Test 4186 safe staged lookup entries
+        run: python -m unittest scripts.test_reviewed_stage_catalog -q

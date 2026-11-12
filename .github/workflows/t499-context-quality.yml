@@ -1,0 +1,29 @@
+name: T499 group dialogue follow-up (read-only)
+on:
+  pull_request:
+    paths:
+      - 'staging/ru/group_turns_t499_context_pool.json'
+      - 'scripts/test_group_turns_t499.py'
+      - '.github/workflows/t499-context-quality.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'staging/ru/group_turns_t499_context_pool.json'
+      - 'scripts/test_group_turns_t499.py'
+      - '.github/workflows/t499-context-quality.yml'
+permissions:
+  contents: read
+jobs:
+  exact-head:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Verify actual checkout head SHA
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+      - name: Check source and historical lineage, privacy, all-history reply distinctness
+        run: python -m unittest scripts.test_group_turns_t499 -q

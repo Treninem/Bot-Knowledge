@@ -1,0 +1,872 @@
+{
+  "schema_version": 1,
+  "stage_type": "supplemental_contextual_reply_pool",
+  "consumer_registered": false,
+  "language": "ru",
+  "audiences": [
+    "all_ai_bots"
+  ],
+  "constraints": {
+    "read_only": true,
+    "requires_direct_address": true,
+    "no_personal_data": true
+  },
+  "source_pack": "packs/ru/practical_recovery_qa.json",
+  "source_pack_manifest_sha256": "be8ae1408cf42816adc3f8ba818b3f004318617ba2e878e72edd85cf7eb4954e",
+  "source_pack_blob_sha": "21bf261970d1bdcf0f9fb8fb3383772b86b2dc2f",
+  "previous_stage": "staging/ru/practical_t332_context_pool.json",
+  "previous_stage_blob_sha": "9a86f95f42ed2f60fbdc20a1421712cad14d1212",
+  "checkpoint": {
+    "stage_id": "T334",
+    "processed_intents": 24,
+    "baseline_registered": 216,
+    "baseline_staged": 864,
+    "added_candidates": 48,
+    "finished_100": 0,
+    "partial_intents": 24,
+    "remaining_total": 1272,
+    "rejected": 0
+  },
+  "entries": [
+    {
+      "intent_id": "bk_recovery_no_steps",
+      "question": "Что прислать, если я написал только «не работает»?",
+      "baseline_registered": 9,
+      "previous_staged": 36,
+      "new_staged": 2,
+      "replies": [
+        {
+          "id": "bk_recovery_no_steps_t334_01",
+          "text": "Напиши, на каком шаге всё остановилось, что ты ожидал увидеть и что появилось вместо этого.",
+          "context_note": "Неясная жалоба на сохранение документа",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "private",
+          "avoid": "Только при подтверждённой адресации, намерении, аудитории, контексте и разрешении; не совершать действий и не выдавать предположение за факт.",
+          "read_only": true
+        },
+        {
+          "id": "bk_recovery_no_steps_t334_02",
+          "text": "Для общего сообщения об ошибке нужны версия приложения, точное действие и один обезличенный пример.",
+          "context_note": "Подготовка отчёта о сбое формы регистрации",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "group_addressed",
+          "avoid": "Только при подтверждённой адресации, намерении, аудитории, контексте и разрешении; не совершать действий и не выдавать предположение за факт.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "bk_recovery_changed_symptom",
+      "question": "Что делать, если после исправления появилась другая ошибка?",
+      "baseline_registered": 9,
+      "previous_staged": 36,
+      "new_staged": 2,
+      "replies": [
+        {
+          "id": "bk_recovery_changed_symptom_t334_01",
+          "text": "Если старая ошибка исчезла, а новая возникает при экспорте, проверь экспорт отдельно и сохрани рабочую версию.",
+          "context_note": "После исправления открытия появился сбой экспорта",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "private",
+          "avoid": "Только при подтверждённой адресации, намерении, аудитории, контексте и разрешении; не совершать действий и не выдавать предположение за факт.",
+          "read_only": true
+        },
+        {
+          "id": "bk_recovery_changed_symptom_t334_02",
+          "text": "Не объединяйте два разных симптома в одно доказательство причины; оформите отдельные шаги воспроизведения.",
+          "context_note": "Коллеги обсуждают дефекты после обновления",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "group_addressed",
+          "avoid": "Только при подтверждённой адресации, намерении, аудитории, контексте и разрешении; не совершать действий и не выдавать предположение за факт.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "bk_recovery_partial_success",
+      "question": "Как разобраться, если часть функций работает, а одна нет?",
+      "baseline_registered": 9,
+      "previous_staged": 36,
+      "new_staged": 2,
+      "replies": [
+        {
+          "id": "bk_recovery_partial_success_t334_01",
+          "text": "Если текст копируется, а изображения нет, проверь формат вставки на небольшом тестовом файле.",
+          "context_note": "Частичная работа буфера обмена",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "private",
+          "avoid": "Только при подтверждённой адресации, намерении, аудитории, контексте и разрешении; не совершать действий и не выдавать предположение за факт.",
+          "read_only": true
+        },
+        {
+          "id": "bk_recovery_partial_success_t334_02",
+          "text": "При успешной авторизации и сбое загрузки данных разделите проверки входа, прав и сетевого запроса.",
+          "context_note": "Группа разбирает неполную работу личного кабинета",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "group_addressed",
+          "avoid": "Только при подтверждённой адресации, намерении, аудитории, контексте и разрешении; не совершать действий и не выдавать предположение за факт.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "bk_recovery_reset_risk",
+      "question": "Стоит ли сразу сбрасывать настройки ради исправления ошибки?",
+      "baseline_registered": 9,
+      "previous_staged": 36,
+      "new_staged": 2,
+      "replies": [
+        {
+          "id": "bk_recovery_reset_risk_t334_01",
+          "text": "Не начинай со сброса: сначала запиши, какие настройки изменены, и сохрани копию нужных файлов.",
+          "context_note": "Исправление программы с пользовательскими параметрами",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "private",
+          "avoid": "Только при подтверждённой адресации, намерении, аудитории, контексте и разрешении; не совершать действий и не выдавать предположение за факт.",
+          "read_only": true
+        },
+        {
+          "id": "bk_recovery_reset_risk_t334_02",
+          "text": "Прежде чем сбрасывать общий инструмент, согласуйте простой способ вернуть предыдущую конфигурацию.",
+          "context_note": "Настройка общего рабочего пространства",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "group_addressed",
+          "avoid": "Только при подтверждённой адресации, намерении, аудитории, контексте и разрешении; не совершать действий и не выдавать предположение за факт.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "bk_recovery_many_requests",
+      "question": "Как помочь, если в сообщении сразу несколько независимых задач?",
+      "baseline_registered": 9,
+      "previous_staged": 36,
+      "new_staged": 2,
+      "replies": [
+        {
+          "id": "bk_recovery_many_requests_t334_01",
+          "text": "Вижу две задачи: сначала восстановить доступ к файлу, потом исправить его содержание. Так мы не потеряем результат.",
+          "context_note": "Один человек одновременно просит доступ и редактуру",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "private",
+          "avoid": "Только при подтверждённой адресации, намерении, аудитории, контексте и разрешении; не совершать действий и не выдавать предположение за факт.",
+          "read_only": true
+        },
+        {
+          "id": "bk_recovery_many_requests_t334_02",
+          "text": "Отделите сбор фактов, исправление и проверку: это разные этапы с разными ответственными.",
+          "context_note": "Команда прислала длинный список разнородных просьб",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "group_addressed",
+          "avoid": "Только при подтверждённой адресации, намерении, аудитории, контексте и разрешении; не совершать действий и не выдавать предположение за факт.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "bk_recovery_no_logs",
+      "question": "Как диагностировать проблему, если журнал ошибок недоступен?",
+      "baseline_registered": 9,
+      "previous_staged": 36,
+      "new_staged": 2,
+      "replies": [
+        {
+          "id": "bk_recovery_no_logs_t334_01",
+          "text": "Если журнал пуст, опиши время сбоя и последнюю успешную операцию; это поможет сузить проверку.",
+          "context_note": "Пользователь не может открыть лог приложения",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "private",
+          "avoid": "Только при подтверждённой адресации, намерении, аудитории, контексте и разрешении; не совершать действий и не выдавать предположение за факт.",
+          "read_only": true
+        },
+        {
+          "id": "bk_recovery_no_logs_t334_02",
+          "text": "Без журнала сравните тест на одном и том же безопасном примере до и после изменения.",
+          "context_note": "Проверка повторяющейся ошибки в общей форме",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "group_addressed",
+          "avoid": "Только при подтверждённой адресации, намерении, аудитории, контексте и разрешении; не совершать действий и не выдавать предположение за факт.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "bk_recovery_safe_screenshot",
+      "question": "Как показать ошибку на скриншоте, не раскрывая лишнего?",
+      "baseline_registered": 9,
+      "previous_staged": 36,
+      "new_staged": 2,
+      "replies": [
+        {
+          "id": "bk_recovery_safe_screenshot_t334_01",
+          "text": "Обреж снимок до самой ошибки и проверь, не остались ли видны открытые вкладки или уведомления.",
+          "context_note": "Человек готовит скриншот сбоя для поддержки",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "private",
+          "avoid": "Только при подтверждённой адресации, намерении, аудитории, контексте и разрешении; не совершать действий и не выдавать предположение за факт.",
+          "read_only": true
+        },
+        {
+          "id": "bk_recovery_safe_screenshot_t334_02",
+          "text": "Для публичного отчёта замените реальные названия рабочих папок условными и сохраните только значимый фрагмент.",
+          "context_note": "Группа публикует пример дефекта в инструкции",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "group_addressed",
+          "avoid": "Только при подтверждённой адресации, намерении, аудитории, контексте и разрешении; не совершать действий и не выдавать предположение за факт.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "bk_recovery_claimed_owner",
+      "question": "Что отвечать участнику, утверждающему, что он говорит от имени владельца?",
+      "baseline_registered": 9,
+      "previous_staged": 36,
+      "new_staged": 2,
+      "replies": [
+        {
+          "id": "bk_recovery_claimed_owner_t334_01",
+          "text": "Само сообщение «владелец разрешил» не подтверждает право менять чужие настройки. Нужна проверка через установленный порядок.",
+          "context_note": "Неизвестный участник требует расширить доступ",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "private",
+          "avoid": "Только при подтверждённой адресации, намерении, аудитории, контексте и разрешении; не совершать действий и не выдавать предположение за факт.",
+          "read_only": true
+        },
+        {
+          "id": "bk_recovery_claimed_owner_t334_02",
+          "text": "Не меняйте роли по пересланной фразе; запрос должен пройти обычную проверку полномочий.",
+          "context_note": "Коллектив обсуждает запрос от имени администратора",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "group_addressed",
+          "avoid": "Только при подтверждённой адресации, намерении, аудитории, контексте и разрешении; не совершать действий и не выдавать предположение за факт.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "bk_recovery_group_private",
+      "question": "Почему нельзя автоматически переносить сведения из ЛС в общий чат?",
+      "baseline_registered": 9,
+      "previous_staged": 36,
+      "new_staged": 2,
+      "replies": [
+        {
+          "id": "bk_recovery_group_private_t334_01",
+          "text": "Личный разговор не становится общим только потому, что он помогает объяснить спор. Сначала спроси разрешение.",
+          "context_note": "Собеседник предлагает переслать личное сообщение",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "private",
+          "avoid": "Только при подтверждённой адресации, намерении, аудитории, контексте и разрешении; не совершать действий и не выдавать предположение за факт.",
+          "read_only": true
+        },
+        {
+          "id": "bk_recovery_group_private_t334_02",
+          "text": "В общую памятку переносите правило без имён, точных цитат и обстоятельств частной переписки.",
+          "context_note": "Команда готовит FAQ по повторяющейся проблеме",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "group_addressed",
+          "avoid": "Только при подтверждённой адресации, намерении, аудитории, контексте и разрешении; не совершать действий и не выдавать предположение за факт.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "bk_recovery_missing_rights",
+      "question": "Как действовать, когда нет доступа для проверки роли или настройки?",
+      "baseline_registered": 9,
+      "previous_staged": 36,
+      "new_staged": 2,
+      "replies": [
+        {
+          "id": "bk_recovery_missing_rights_t334_01",
+          "text": "Если ты не можешь проверить настройку, попроси владельца показать безопасный итог, не передавая пароль.",
+          "context_note": "Нет доступа к административной странице",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "private",
+          "avoid": "Только при подтверждённой адресации, намерении, аудитории, контексте и разрешении; не совершать действий и не выдавать предположение за факт.",
+          "read_only": true
+        },
+        {
+          "id": "bk_recovery_missing_rights_t334_02",
+          "text": "Недоступную проверку отмечайте как непроверенную и назначайте ответственного с нужной ролью.",
+          "context_note": "Командная диагностика без прав администратора",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "group_addressed",
+          "avoid": "Только при подтверждённой адресации, намерении, аудитории, контексте и разрешении; не совершать действий и не выдавать предположение за факт.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "bk_recovery_reversible_test",
+      "question": "Как выбрать безопасную первую проверку перед исправлением?",
+      "baseline_registered": 9,
+      "previous_staged": 36,
+      "new_staged": 2,
+      "replies": [
+        {
+          "id": "bk_recovery_reversible_test_t334_01",
+          "text": "Для начала испытай изменение на копии одного документа, а оригинал не трогай.",
+          "context_note": "Поиск причины поломки форматирования",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "private",
+          "avoid": "Только при подтверждённой адресации, намерении, аудитории, контексте и разрешении; не совершать действий и не выдавать предположение за факт.",
+          "read_only": true
+        },
+        {
+          "id": "bk_recovery_reversible_test_t334_02",
+          "text": "Прежде чем менять общий шаблон, проведите тест на черновике с возможностью отката.",
+          "context_note": "Группа проверяет изменение формы отчётности",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "group_addressed",
+          "avoid": "Только при подтверждённой адресации, намерении, аудитории, контексте и разрешении; не совершать действий и не выдавать предположение за факт.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "bk_recovery_unverified_success",
+      "question": "Можно ли считать действие выполненным, когда нет подтверждения результата?",
+      "baseline_registered": 9,
+      "previous_staged": 36,
+      "new_staged": 2,
+      "replies": [
+        {
+          "id": "bk_recovery_unverified_success_t334_01",
+          "text": "Сообщение «готово» без результата мало помогает: попроси показать итоговый файл или безопасную проверку открытия.",
+          "context_note": "Исполнитель заявил об окончании обработки файла",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "private",
+          "avoid": "Только при подтверждённой адресации, намерении, аудитории, контексте и разрешении; не совершать действий и не выдавать предположение за факт.",
+          "read_only": true
+        },
+        {
+          "id": "bk_recovery_unverified_success_t334_02",
+          "text": "Завершённый запуск команды не равен проверенному результату для пользователя; нужен контрольный сценарий.",
+          "context_note": "Команда отчитывается об автоматическом экспорте",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "group_addressed",
+          "avoid": "Только при подтверждённой адресации, намерении, аудитории, контексте и разрешении; не совершать действий и не выдавать предположение за факт.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "bk_recovery_tradeoffs",
+      "question": "Как объяснить выбор между двумя способами решения?",
+      "baseline_registered": 9,
+      "previous_staged": 36,
+      "new_staged": 2,
+      "replies": [
+        {
+          "id": "bk_recovery_tradeoffs_t334_01",
+          "text": "Если один способ быстрее, а другой проще отменить, выбирай исходя из цены ошибки, а не только удобства.",
+          "context_note": "Сравнение двух вариантов восстановления настроек",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "private",
+          "avoid": "Только при подтверждённой адресации, намерении, аудитории, контексте и разрешении; не совершать действий и не выдавать предположение за факт.",
+          "read_only": true
+        },
+        {
+          "id": "bk_recovery_tradeoffs_t334_02",
+          "text": "При выборе решения отдельно обозначьте безопасность данных, зависимость от сети и расходы на поддержку.",
+          "context_note": "Обсуждение вариантов хранения общего архива",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "group_addressed",
+          "avoid": "Только при подтверждённой адресации, намерении, аудитории, контексте и разрешении; не совершать действий и не выдавать предположение за факт.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "bk_recovery_small_change",
+      "question": "Что делать, если человек просит исправить только одну деталь?",
+      "baseline_registered": 9,
+      "previous_staged": 36,
+      "new_staged": 2,
+      "replies": [
+        {
+          "id": "bk_recovery_small_change_t334_01",
+          "text": "Если нужно исправить один абзац, сначала зафиксируй его границы и сравни итог с исходником; остальные части оставь без изменений.",
+          "context_note": "Небольшая правка в письме",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "private",
+          "avoid": "Только при подтверждённой адресации, намерении, аудитории, контексте и разрешении; не совершать действий и не выдавать предположение за факт.",
+          "read_only": true
+        },
+        {
+          "id": "bk_recovery_small_change_t334_02",
+          "text": "Точечная замена цвета не должна незаметно менять подписи и размеры элементов.",
+          "context_note": "Общий макет требует одной визуальной правки",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "group_addressed",
+          "avoid": "Только при подтверждённой адресации, намерении, аудитории, контексте и разрешении; не совершать действий и не выдавать предположение за факт.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "bk_recovery_example_only",
+      "question": "Как ответить на просьбу показать пример, не применяя его?",
+      "baseline_registered": 9,
+      "previous_staged": 36,
+      "new_staged": 2,
+      "replies": [
+        {
+          "id": "bk_recovery_example_only_t334_01",
+          "text": "Покажу условную команду и ожидаемый ответ отдельно; это будет иллюстрация, а не доказательство выполнения.",
+          "context_note": "Запрос на демонстрационный пример работы скрипта",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "private",
+          "avoid": "Только при подтверждённой адресации, намерении, аудитории, контексте и разрешении; не совершать действий и не выдавать предположение за факт.",
+          "read_only": true
+        },
+        {
+          "id": "bk_recovery_example_only_t334_02",
+          "text": "Отмечайте учебные данные как вымышленные и не смешивайте их с фактическим отчётом.",
+          "context_note": "Группа готовит пример таблицы для руководства",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "group_addressed",
+          "avoid": "Только при подтверждённой адресации, намерении, аудитории, контексте и разрешении; не совершать действий и не выдавать предположение за факт.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "bk_recovery_issue_report",
+      "question": "Как составить понятное сообщение об ошибке для разработчика?",
+      "baseline_registered": 9,
+      "previous_staged": 36,
+      "new_staged": 2,
+      "replies": [
+        {
+          "id": "bk_recovery_issue_report_t334_01",
+          "text": "Укажи короткий заголовок, шаги до ошибки и что получилось вместо ожидаемого; лишние личные данные не нужны.",
+          "context_note": "Подготовка сообщения о сбое при печати",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "private",
+          "avoid": "Только при подтверждённой адресации, намерении, аудитории, контексте и разрешении; не совершать действий и не выдавать предположение за факт.",
+          "read_only": true
+        },
+        {
+          "id": "bk_recovery_issue_report_t334_02",
+          "text": "Добавьте частоту воспроизведения и границы затронутых версий, если это проверено.",
+          "context_note": "Команда оформляет дефект после обновления",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "group_addressed",
+          "avoid": "Только при подтверждённой адресации, намерении, аудитории, контексте и разрешении; не совершать действий и не выдавать предположение за факт.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "bk_recovery_terms_mixed",
+      "question": "Что уточнить, когда одним словом называют разные элементы интерфейса?",
+      "baseline_registered": 9,
+      "previous_staged": 36,
+      "new_staged": 2,
+      "replies": [
+        {
+          "id": "bk_recovery_terms_mixed_t334_01",
+          "text": "Под «не открывается» ты имеешь в виду ошибку доступа, пустую страницу или зависание? Это разные причины.",
+          "context_note": "Собеседник неточно описывает работу сайта",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "private",
+          "avoid": "Только при подтверждённой адресации, намерении, аудитории, контексте и разрешении; не совершать действий и не выдавать предположение за факт.",
+          "read_only": true
+        },
+        {
+          "id": "bk_recovery_terms_mixed_t334_02",
+          "text": "Когда говорят «очистить историю», уточните, речь о локальном просмотре или общем архиве.",
+          "context_note": "Обсуждение неоднозначной команды в интерфейсе",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "group_addressed",
+          "avoid": "Только при подтверждённой адресации, намерении, аудитории, контексте и разрешении; не совершать действий и не выдавать предположение за факт.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "bk_recovery_rollback",
+      "question": "Как понять, когда нужно откатить неудачное изменение?",
+      "baseline_registered": 9,
+      "previous_staged": 36,
+      "new_staged": 2,
+      "replies": [
+        {
+          "id": "bk_recovery_rollback_t334_01",
+          "text": "Перед откатом посмотри, какие изменения появились после рабочей версии, и сохрани всё полезное отдельно.",
+          "context_note": "Восстановление прежнего состояния документа",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "private",
+          "avoid": "Только при подтверждённой адресации, намерении, аудитории, контексте и разрешении; не совершать действий и не выдавать предположение за факт.",
+          "read_only": true
+        },
+        {
+          "id": "bk_recovery_rollback_t334_02",
+          "text": "Возвращайте только неисправную часть, если остальные независимые изменения уже прошли проверку.",
+          "context_note": "Команда оценивает откат нескольких исправлений",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "group_addressed",
+          "avoid": "Только при подтверждённой адресации, намерении, аудитории, контексте и разрешении; не совершать действий и не выдавать предположение за факт.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "bk_recovery_unknown_live_state",
+      "question": "Что отвечать о состоянии сервиса, к которому нет живого доступа?",
+      "baseline_registered": 9,
+      "previous_staged": 36,
+      "new_staged": 2,
+      "replies": [
+        {
+          "id": "bk_recovery_unknown_live_state_t334_01",
+          "text": "У меня нет подтверждения, что сервис работает сейчас. Могу помочь составить короткую проверку с фиксацией времени.",
+          "context_note": "Вопрос о доступности внешнего кабинета",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "private",
+          "avoid": "Только при подтверждённой адресации, намерении, аудитории, контексте и разрешении; не совершать действий и не выдавать предположение за факт.",
+          "read_only": true
+        },
+        {
+          "id": "bk_recovery_unknown_live_state_t334_02",
+          "text": "Старый успешный тест не отражает текущую доступность; укажите время наблюдения и источник статуса.",
+          "context_note": "Коллективный отчёт по недоступному сервису",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "group_addressed",
+          "avoid": "Только при подтверждённой адресации, намерении, аудитории, контексте и разрешении; не совершать действий и не выдавать предположение за факт.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "bk_recovery_no_blame",
+      "question": "Как обсудить ошибку, не обвиняя собеседника или администратора?",
+      "baseline_registered": 9,
+      "previous_staged": 36,
+      "new_staged": 2,
+      "replies": [
+        {
+          "id": "bk_recovery_no_blame_t334_01",
+          "text": "Давай сначала отделим то, что точно произошло, от догадки, кто виноват.",
+          "context_note": "Разговор после потери части правок",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "private",
+          "avoid": "Только при подтверждённой адресации, намерении, аудитории, контексте и разрешении; не совершать действий и не выдавать предположение за факт.",
+          "read_only": true
+        },
+        {
+          "id": "bk_recovery_no_blame_t334_02",
+          "text": "Фиксируйте последовательность событий и способ предупреждения повтора, не приписывая человеку мотивы без доказательств.",
+          "context_note": "Разбор сбоя после совместной работы",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "group_addressed",
+          "avoid": "Только при подтверждённой адресации, намерении, аудитории, контексте и разрешении; не совершать действий и не выдавать предположение за факт.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "bk_recovery_addressed_or_chat",
+      "question": "Как понять, обращён ли вопрос к боту или это переписка участников?",
+      "baseline_registered": 9,
+      "previous_staged": 36,
+      "new_staged": 2,
+      "replies": [
+        {
+          "id": "bk_recovery_addressed_or_chat_t334_01",
+          "text": "Если сообщение просто цитирует вопрос к боту, не воспринимай его как новое обращение.",
+          "context_note": "Пример вопроса приведён внутри разговора",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "private",
+          "avoid": "Только при подтверждённой адресации, намерении, аудитории, контексте и разрешении; не совершать действий и не выдавать предположение за факт.",
+          "read_only": true
+        },
+        {
+          "id": "bk_recovery_addressed_or_chat_t334_02",
+          "text": "Перед ответом проверяйте явную адресацию: обсуждение команды участниками не является её вызовом.",
+          "context_note": "Группа показывает примеры сообщений боту",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "group_addressed",
+          "avoid": "Только при подтверждённой адресации, намерении, аудитории, контексте и разрешении; не совершать действий и не выдавать предположение за факт.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "bk_recovery_disagreement",
+      "question": "Как помочь двум участникам, которые спорят о проверяемом факте?",
+      "baseline_registered": 9,
+      "previous_staged": 36,
+      "new_staged": 2,
+      "replies": [
+        {
+          "id": "bk_recovery_disagreement_t334_01",
+          "text": "Прежде чем выбирать правого, проверьте, сравнивают ли участники одни и те же версии документа.",
+          "context_note": "Спор о несовпадающих сведениях из разных копий",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "private",
+          "avoid": "Только при подтверждённой адресации, намерении, аудитории, контексте и разрешении; не совершать действий и не выдавать предположение за факт.",
+          "read_only": true
+        },
+        {
+          "id": "bk_recovery_disagreement_t334_02",
+          "text": "Если расходятся числа, согласуйте единицы измерения и период, за который они посчитаны.",
+          "context_note": "Команда спорит об итогах отчёта",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "group_addressed",
+          "avoid": "Только при подтверждённой адресации, намерении, аудитории, контексте и разрешении; не совершать действий и не выдавать предположение за факт.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "bk_recovery_progress_status",
+      "question": "Что говорить о задаче, если готова только часть результата?",
+      "baseline_registered": 9,
+      "previous_staged": 36,
+      "new_staged": 2,
+      "replies": [
+        {
+          "id": "bk_recovery_progress_status_t334_01",
+          "text": "Часть результата сохранена, но проверка ещё идёт. Не называй задачу законченной до сверки итога.",
+          "context_note": "Запрос о ходе обработки большого списка",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "private",
+          "avoid": "Только при подтверждённой адресации, намерении, аудитории, контексте и разрешении; не совершать действий и не выдавать предположение за факт.",
+          "read_only": true
+        },
+        {
+          "id": "bk_recovery_progress_status_t334_02",
+          "text": "В статусе разделите готовые материалы, ожидающие теста и опубликованные изменения.",
+          "context_note": "Коллектив получает промежуточный отчёт",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "group_addressed",
+          "avoid": "Только при подтверждённой адресации, намерении, аудитории, контексте и разрешении; не совершать действий и не выдавать предположение за факт.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "bk_recovery_no_more_advice",
+      "question": "Как ответить человеку, который больше не хочет советов?",
+      "baseline_registered": 9,
+      "previous_staged": 36,
+      "new_staged": 2,
+      "replies": [
+        {
+          "id": "bk_recovery_no_more_advice_t334_01",
+          "text": "Понял, советы пока не нужны. Могу просто выслушать, если тебе этого хочется.",
+          "context_note": "Знакомый просит перестать предлагать решения",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "private",
+          "avoid": "Только при подтверждённой адресации, намерении, аудитории, контексте и разрешении; не совершать действий и не выдавать предположение за факт.",
+          "read_only": true
+        },
+        {
+          "id": "bk_recovery_no_more_advice_t334_02",
+          "text": "Если участник отказался от рекомендаций, не продолжайте убеждать его под видом уточнений.",
+          "context_note": "Общее обсуждение после явного отказа от советов",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "group_addressed",
+          "avoid": "Только при подтверждённой адресации, намерении, аудитории, контексте и разрешении; не совершать действий и не выдавать предположение за факт.",
+          "read_only": true
+        }
+      ]
+    }
+  ]
+}

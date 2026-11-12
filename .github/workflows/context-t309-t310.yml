@@ -1,0 +1,39 @@
+name: T309 T310 contextual continuation (read-only)
+on:
+  pull_request:
+    paths:
+      - 'staging/ru/colloquial_t309_context_pool.json'
+      - 'staging/ru/practical_t310_context_pool.json'
+      - 'scripts/context_t309_t310.py'
+      - 'scripts/test_context_t309_t310.py'
+      - 'docs/CONTEXT_CONTINUATION_T309_T310_2026_11_07.md'
+      - '.github/workflows/context-t309-t310.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'staging/ru/colloquial_t309_context_pool.json'
+      - 'staging/ru/practical_t310_context_pool.json'
+      - 'scripts/context_t309_t310.py'
+      - 'scripts/test_context_t309_t310.py'
+      - 'docs/CONTEXT_CONTINUATION_T309_T310_2026_11_07.md'
+      - '.github/workflows/context-t309-t310.yml'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - name: Assert actual exact HEAD
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+      - name: Validate all registered manifest hashes
+        run: python scripts/validate_pack.py
+      - name: Validate previous chain and all 162 new replies
+        run: python -m unittest scripts.test_colloquial_t305 scripts.test_colloquial_t307 scripts.test_practical_t306 scripts.test_practical_t308 scripts.test_context_t309_t310 -q
+      - name: Verify explicit selection boundaries
+        run: python -m scripts.context_t309_t310

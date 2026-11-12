@@ -1,0 +1,42 @@
+name: T323 T324 direct-address contexts exact-head
+on:
+  pull_request:
+    paths:
+      - 'staging/ru/colloquial_t323_context_pool.json'
+      - 'staging/ru/practical_t324_context_pool.json'
+      - 'scripts/context_t323_t324.py'
+      - 'scripts/test_context_t323_t324.py'
+      - 'docs/CONTEXT_CONTINUATION_T323_T324_2026_11_07.md'
+      - '.github/workflows/context-t323-t324.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'staging/ru/colloquial_t323_context_pool.json'
+      - 'staging/ru/practical_t324_context_pool.json'
+      - 'scripts/context_t323_t324.py'
+      - 'scripts/test_context_t323_t324.py'
+      - 'docs/CONTEXT_CONTINUATION_T323_T324_2026_11_07.md'
+      - '.github/workflows/context-t323-t324.yml'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Assert exact HEAD
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate registered SHA and manifest
+        run: python scripts/validate_pack.py
+      - name: Validate historical inventory, privacy and selection
+        run: python -m unittest scripts.test_context_t323_t324 -q
+      - name: Validate staged direct-address replies
+        run: python -m scripts.context_t323_t324

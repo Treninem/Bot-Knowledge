@@ -1,0 +1,29 @@
+name: T495 group dialogue contexts (read-only)
+on:
+  pull_request:
+    paths:
+      - 'staging/ru/group_turns_t495_context_pool.json'
+      - 'scripts/test_group_turns_t495.py'
+      - '.github/workflows/t495-context-quality.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'staging/ru/group_turns_t495_context_pool.json'
+      - 'scripts/test_group_turns_t495.py'
+      - '.github/workflows/t495-context-quality.yml'
+permissions:
+  contents: read
+jobs:
+  exact-head:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Verify exact checkout HEAD
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+      - name: Check source, previous stages, global dedup, scope and context
+        run: python -m unittest scripts.test_group_turns_t495 -q

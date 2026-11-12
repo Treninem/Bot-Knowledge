@@ -1,0 +1,39 @@
+name: Search cache exact-head
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/search_knowledge.py'
+      - 'scripts/test_search_cache.py'
+      - 'docs/DIALOGUE_SEARCH.md'
+      - '.github/workflows/quality.yml'
+      - '.github/workflows/search-cache.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  search-cache-head:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Assert actual checkout is the PR head
+        env:
+          EXPECTED_HEAD: ${{ github.event.pull_request.head.sha }}
+        run: |
+          test "$(git rev-parse HEAD)" = "$EXPECTED_HEAD"
+          git rev-parse HEAD
+      - name: Validate all SHA-pinned packages
+        run: python scripts/validate_pack.py
+      - name: Verify search snapshot cache lifecycle
+        run: python scripts/test_search_cache.py
+      - name: Preserve dialogue search regressions
+        run: python scripts/test_dialogue_search.py
+      - name: Preserve pragmatic search regressions
+        run: python scripts/test_pragmatic_search.py

@@ -1,0 +1,37 @@
+name: T554 scoped dialogue repair exact-head
+on:
+  pull_request:
+    paths:
+      - "staging/ru/dialogue_repair_t554_context_pool.json"
+      - "scripts/test_dialogue_repair_t554.py"
+      - "docs/DIALOGUE_REPAIR_T554_2026_11_10.md"
+      - ".github/workflows/t554-dialogue-repair.yml"
+      - "packs/ru/social_dialogues.json"
+      - "manifest.json"
+  push:
+    branches: [main]
+    paths:
+      - "staging/ru/dialogue_repair_t554_context_pool.json"
+      - "scripts/test_dialogue_repair_t554.py"
+      - ".github/workflows/t554-dialogue-repair.yml"
+permissions:
+  contents: read
+jobs:
+  verify-t554:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Confirm exact checkout SHA
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Check registered source and all T554 contextual replies
+        run: |
+          python scripts/validate_pack.py
+          python -m unittest scripts.test_dialogue_repair_t554 -v

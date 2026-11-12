@@ -1,0 +1,38 @@
+name: T597-T599 interpersonal completion exact-head
+on:
+  pull_request:
+    paths:
+      - "staging/ru/interpersonal_t597_context_delta.json"
+      - "staging/ru/interpersonal_t598_context_delta.json"
+      - "staging/ru/interpersonal_t599_context_delta.json"
+      - "scripts/test_interpersonal_t597_t599.py"
+      - ".github/workflows/t597-interpersonal-completion.yml"
+  push:
+    branches: [main]
+    paths:
+      - "staging/ru/interpersonal_t597_context_delta.json"
+      - "staging/ru/interpersonal_t598_context_delta.json"
+      - "staging/ru/interpersonal_t599_context_delta.json"
+      - "scripts/test_interpersonal_t597_t599.py"
+      - ".github/workflows/t597-interpersonal-completion.yml"
+permissions:
+  contents: read
+jobs:
+  verify-t597-t599:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Verify actual checkout head
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Validate registered packages and ten complete contextual sets
+        run: |
+          python scripts/validate_pack.py
+          python -m unittest scripts.test_interpersonal_t590_t591 scripts.test_interpersonal_t592 scripts.test_interpersonal_t593_t594 scripts.test_interpersonal_t597_t599 -v

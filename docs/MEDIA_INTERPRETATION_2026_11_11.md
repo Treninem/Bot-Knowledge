@@ -1,0 +1,58 @@
+# Media interpretation — synthetic contextual replies (2026-11-11)
+
+Owner authorisation: `docs/OWNER_AUTOMATION_SCOPE_2026_11_02.md`. **Only Treninem/Bot-Knowledge** is modified. Work is read-only language guidance, not media processing integration.
+
+## Stage A checkpoint
+- Source main: `3b94c70763df9d2e8ef256967e25371719b1a998`; source file: `packs/ru/social_dialogues.json`, Git blob `d56ff304da7165bd63c328f3220a1f6d3d26e3ab`, manifest SHA-256 `0cfedc133354a69522fecc3cda6bc21533c66005f0dc207050075f787dc977a8`.
+- Stable intent namespace `media20261111_*`. 10 intents for cropped images, screenshots versus completed actions, uncertain audio, frame-only video, missing document pages, tables, code excerpts, unavailable links, differing file versions, and input capability limits.
+- Exactly **100 new original synthetic Russian candidates**, ten distinct contextual replies per intent. Each intent is **10/100**, **90 missing**, **900 total remaining**. Completed **0**, partial **10**. Do not count previous corpus examples as new.
+- Pre-commit JS: 100 distinct IDs, 100 normalized texts and context notes, exact duplicates 0, highest within-stage token-Jaccard 0.2381. Automatic lexical screening is *not* an exhaustive proof of semantic uniqueness.
+- File `staging/ru/media_interpretation_20261111_context_pool.json` is intentionally **unregistered** (`consumer_registered=false`); the published `manifest.json` and source SHA-256 are unchanged. No consumer is claimed to understand a file, image, audio, video or a link without independent access.
+- All rows require direct addressing and a matching situation, are read-only, no sanctions or private data, no invented action/status. Any platform-specific capabilities require separate consumer verification.
+
+## Gates and continuation
+- Run `python -m unittest scripts.test_media_interpretation_20261111 -v` and existing validation on the exact checkout SHA. Check all required CI and post-main for the actual merge SHA before calling a release verified; do not bypass protections or trigger paid jobs.
+- Next stage **B** must continue these exact ten IDs with reply suffixes **11–20**, *not* create new intents. Verify across the previous stage and registered packs, include precise counts and parent blob SHA before saving.
+- Do not touch ImPULS, BotHost, existing caches, private messages or the protected publisher scripts.
+
+## Stage B checkpoint — same ten stable intents
+- New B: `staging/ru/media_interpretation_20261111_context_delta_b.json`, exactly **100** additional synthetic contextual replies (suffixes 11–20, 10 per same intent). These are **new for this continuation**, not the previous A set.
+- Stage A Git blob parent SHA: `2d146659a81f932f5d933452cc0dee7fc9ee77c2` (after fixing a short context note). Stage B references that exact blob and the original source pack.
+- Cumulative proposed **200/1000**; each of 10 intents **20/100**, 80 missing, 800 total remaining. **0** finished sets. No new canonicals, no published consumer package changes.
+- Precommit connector-side verification for A+B: **200/200 distinct IDs, normalized reply text and context notes**, 0 exact collisions; highest token Jaccard **0.3333** (lexical only). New B content length ≥45 characters and notes ≥18; 100 B replies are fresh relative to A.
+- Required Python, exact-head CI and complete cross-corpus semantic review must be checked **on the new head**; any prior CI is obsolete. Next B→C continuation from suffix **21** after QA, do not restart IDs or create duplicate PRs.
+
+## Stage C checkpoint — continued exact same ten intents
+- New 100 original situational Russian replies in `staging/ru/media_interpretation_20261111_context_delta_c.json`, suffixes 21–30. Earlier stages A+B (**200**) unchanged and excluded from this new count.
+- Parent B Git blob `9dcf8ec62ed1129596d1a797a00dadd250d0f7a2`; C checkpoint inherits source manifest SHA-256, audience and safety limits.
+- Cumulative staged **300/1000**; 10 partial sets **30/100 each**, 70 missing each, 700 total remaining, complete 0. No changes to registered pack, manifest, live consumer or ImPULS.
+- Precommit connector-side checks over stages A–C: 300 unique IDs, normalized replies and application notes; no exact duplicates, max token-Jaccard **0.3333** (<0.80). Semantic uniqueness beyond lexical checks remains subject to editorial review. All C replies have distinct scenario conditions and are read-only.
+- Python/quality checks for the latest head, expected-head guarded merge and actual post-main required. Prior head CI is obsolete after C commit. Next suffix: **31**.
+
+## Stage D checkpoint — continued ten stable intents, 31–40
+- Based on confirmed main `8697a9abb15380a3b25f567467d1cfddb3f5b58c` after merged #634; earlier stages A–C unchanged. New stage `staging/ru/media_interpretation_20261111_context_delta_d.json` contains **100 original synthetic contextual Russian candidates**, ten per existing `media20261111_*` intent, ID suffixes 31–40. This is the **new delta**, not a recount of the preceding 300.
+- Exact parent C Git blob: `d2ba043797124cbf8758c9756a85bbf7b054f6ea`. Source registered pack remains `packs/ru/social_dialogues.json` with SHA-256 `0cfedc133354a69522fecc3cda6bc21533c66005f0dc207050075f787dc977a8`; staging is not registered and no consumer cache is modified.
+- Pre-commit connector-side read of A–C plus D: **400/400 distinct IDs, normalized reply texts, application context notes**; 0 exact repeats; maximum pairwise token-Jaccard **0.3333**, less than 0.80. This is a lexical screen, not exhaustive proof of semantic uniqueness. All new answers are conditional and read-only; no invented media access, actions, sanctions, or personal data.
+- Cumulative staging **400/1000**; ten partial intents at **40/100**, 60 missing each (600 total), completed 100/100: **0**. Continuing source is D, next unused suffix **41**. Keep the same intent IDs and do not regenerate the first 400.
+- Existing dedicated Python suite extended to include D; require actual exact-head CI and post-main checks for the merge SHA before release claims. To publish to consumers, a separate manifest/SHA/version/compatibility review and consumer integration is necessary. No ImPULS or BotHost writes.
+
+## Stage E checkpoint — stable intent suffixes 41–50
+- Fresh **100 original RU candidates** in `staging/ru/media_interpretation_20261111_context_delta_e.json`. Parent D Git blob `da529d0b2a95e5efcacd92f105625e1d4f558916`. Previous 400 replies unchanged; stage checkpoint 500/1000, each of 10 intents **50/100**, remaining 500 total; completed 0.
+- Lexical check over A–E: 500 unique ID, normalized text, and context notes; no exact repeat; max pairwise token-Jaccard 0.3333. Semantic cross-corpus originality is not established by this number alone.
+
+## Stage F checkpoint — stable intent suffixes 51–60
+- Fresh **100 original RU candidates** in `staging/ru/media_interpretation_20261111_context_delta_f.json`. Parent E Git blob `386c26370a0e692ed110fe4cc8ff4031e6d9f723`. Earlier 500 unchanged, excluding their counts from this newly added 100.
+- A–F now **600/1000**: ten existing intents each **60/100**, 40 missing each (400 total), complete 0. Connector-side comparison: 600/600 unique ID, normalized text and application notes; no exact collisions; highest token-Jaccard 0.4286. This does not replace editorial, privacy, JSON/schema or exact-head CI.
+- Six-stage Python unittest in `scripts/test_media_interpretation_20261111.py` and read-only workflow must pass on actual PR head; merge only with guarded SHA and confirmed post-main checks. Staging is unregistered: manifest, source SHA, consumer caches and ImPULS unchanged. **Next unused suffix 61** in each of ten `media20261111_*` intents.
+
+## Stage G–J checkpoint — ten stable intents completed in staging (11 Nov 2026)
+
+- Starting point: merged PR #636, actual merge main `1e81ec9b23a212d05ae9bdcd569c4aefc5c0699c`. Its A–F stages contain **600 previously submitted responses**, not counted as new in G–J.
+- This continuation authored **400 additional original, synthetic, context-guarded Russian reply candidates** in four distinct unregistered files: `context_delta_g.json` (61–70), `context_delta_h.json` (71–80), `context_delta_i.json` (81–90), `context_delta_j.json` (91–100). Exactly 10 new replies per each of the same ten `media20261111_*` intent IDs per stage.
+- **Cumulative proposed: 1000/1000**; ten intent sets at **100/100**. Remaining **0**, partial sets **0**, finished **10 as staging candidates only**. Consumer registration, manifest release and live integration are NOT claimed.
+- Git blob lineage: F `e8cf531d5e7ae542895e0e4631d308dfa5cf038a` → G `7cb7d464354092ce747ec3c0ea60cf0641c12ef6` → H `e91245cd21548978bf692c2d2a2df6c4c82910e7` → I `5a2884926066652398a04b0e169b1c79630070de` → J `97c338403dca9cd33d3cd2f39190ee96460af546`. Each child embeds its exact parent-stage Git blob SHA.
+- Before documentation/QA commit, connector-side read of all A–J files: **1000 unique IDs, 1000 unique normalized response texts, 1000 unique normalized context notes**, **zero exact repeats**, maximal pairwise token-Jaccard **0.4286** across 1000 responses (under 0.80). This is a lexical check, not proof of full semantic uniqueness or correctness on every real media input.
+- Context selection is explicit; read-only, direct-address, `all_ai_bots`; no claims of actual image/audio/video/file/link access. No private messages, identities, sanctions, payments, bot deployments, or modifications to ImPULS.
+- The registered `packs/ru/social_dialogues.json` SHA-256 remains `0cfedc133354a69522fecc3cda6bc21533c66005f0dc207050075f787dc977a8` and manifest `2026.11.09.003` is unchanged because these files are **not** published consumer packs.
+- Mandatory next gates: run `python -m unittest scripts.test_media_interpretation_20261111 -v` and all existing exact-head checks for the current PR head, verify actual checkout SHA, compatibility with current main and prior post-main, guarded merge using expected head, then post-main CI on the resulting actual merge SHA. If any gate is incomplete, keep the PR DRAFT/BLOCKED.
+- After verified merge, work on other unfinished intentions (e.g. ten `teach20261111_*` explanatory sets currently last observed at 10/100), not on duplicate media IDs.

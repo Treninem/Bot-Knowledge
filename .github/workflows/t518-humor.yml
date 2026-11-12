@@ -1,0 +1,37 @@
+name: T518 optional humor staged exact-head read-only
+
+on:
+  pull_request:
+    paths:
+      - "staging/ru/optional_humor_t518_context_pool.json"
+      - "scripts/test_optional_humor_t518.py"
+      - ".github/workflows/t518-humor.yml"
+      - "packs/ru/optional_humor_qa.json"
+      - "manifest.json"
+  push:
+    branches: [main]
+    paths:
+      - "staging/ru/optional_humor_t518_context_pool.json"
+      - "scripts/test_optional_humor_t518.py"
+      - ".github/workflows/t518-humor.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  exact-head-t518:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Check checkout actual SHA
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Validate T518 exactly pinned stage and opt-in
+        run: python -m unittest scripts.test_optional_humor_t518 -q

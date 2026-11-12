@@ -1,0 +1,33 @@
+name: T306 practical recovery salvage (read-only)
+on:
+  pull_request:
+    paths:
+      - 'staging/ru/practical_t306_salvage.json'
+      - 'scripts/practical_t306.py'
+      - 'scripts/test_practical_t306.py'
+      - '.github/workflows/practical-t306.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'staging/ru/practical_t306_salvage.json'
+      - 'scripts/practical_t306.py'
+      - 'scripts/test_practical_t306.py'
+      - '.github/workflows/practical-t306.yml'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - name: Verify checkout head exact
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+      - name: Validate registered source SHA and snapshot
+        run: python scripts/validate_pack.py
+      - name: T306 safe salvage inventory and scoped selection
+        run: python -m unittest scripts.test_practical_t306 -q

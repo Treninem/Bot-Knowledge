@@ -1,0 +1,222 @@
+"""Offline SHA-verified retrieval over portable, approved packs.
+
+This code is a local reference implementation. It does not connect to GitHub,
+learn autonomously, make moderation decisions or grant administrative powers.
+"""
+from __future__ import annotations
+
+import argparse
+import hashlib
+import json
+import re
+import time
+from collections import defaultdict
+from functools import lru_cache
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+AUDIENCES = {"all_ai_bots", "chat_moderators", "community_bots", "impuls"}
+WORDS = re.compile(r"[a-zа-яё0-9]+", re.IGNORECASE)
+
+def exact_phrase(text: str) -> str:
+    return " ".join(WORDS.findall(text.casefold().replace("ё", "е")))
+STOP = {"это", "мне", "для", "что", "как", "или", "with", "the", "and", "you", "are"}
+
+def tokens(text: str) -> set[str]:
+    words = set()
+    for raw in WORDS.findall(text.casefold().replace("ё", "е")):
+        if len(raw) < 3 or raw in STOP:
+            continue
+        words.add(raw)
+        if len(raw) >= 7:
+            words.add(raw[:5] + "~")
+    return words
+
+def searchable_text(item: dict) -> str:
+    fields = ("id", "topic", "category", "kind", "domain", "classification",
+              "context", "input", "relation", "message", "local_rule", "reason",
+              "response", "meaning_ru", "when", "avoid", "examples",
+              "expected_behavior", "forbidden_behavior", "expression", "source", "semantic_guard")
+    values = []
+    for key in fields:
+        value = item.get(key)
+        if isinstance(value, str):
+            values.append(value)
+        elif isinstance(value, list):
+            values.extend(x for x in value if isinstance(x, str))
+    for reading in item.get("readings", ()):
+        if isinstance(reading, dict):
+            for name in ("context", "meaning", "suggested_response"):
+                if isinstance(reading.get(name), str):
+                    values.append(reading[name])
+            values.extend(c for c in reading.get("cues", ()) if isinstance(c, str))
+    # Do not index deliberately incorrect counterexamples as approved text.
+    variants = item.get("variants", {})
+    if isinstance(variants, dict):
+        values.extend(v for v in variants.values() if isinstance(v, str))
+    return " ".join(values)
+
+class KnowledgeSearch:
+    def __init__(self, root: Path = ROOT):
+        manifest = json.loads((root / "manifest.json").read_text(encoding="utf-8"))
+        self.records: list[dict] = []
+        self.inverted: dict[str, set[int]] = defaultdict(set)
+        self.exact: dict[str, set[int]] = defaultdict(set)
+        for info in manifest["packs"]:
+            rel = info["path"]
+            if not rel.startswith("packs/ru/") or ".." in Path(rel).parts:
+                raise ValueError("Unsafe pack path")
+            payload = (root / rel).read_bytes()
+            if hashlib.sha256(payload).hexdigest() != info["sha256"]:
+                raise ValueError("SHA mismatch: " + rel)
+            pack = json.loads(payload.decode("utf-8"))
+            for key in ("skills", "cases", "intents", "pairs", "triggers", "paraphrases", "scenarios"):
+                for item in pack.get(key, []):
+                    if not isinstance(item, dict):
+                        continue
+                    audiences = item.get("audiences", ["all_ai_bots"])
+                    if not isinstance(audiences, list) or not set(audiences) <= AUDIENCES:
+                        raise ValueError("Bad audience: " + rel)
+                    contents = searchable_text(item)
+                    record = {
+                        "id": item.get("id", ""),
+                        "pack": rel,
+                        "audiences": audiences,
+                        "topic": item.get("target_case_id", item.get("topic", item.get("kind", item.get("category", "")))),
+                        "expression": item.get("expression") or item.get("source") or (item.get("input", "") if "target_case_id" in item or "expected_ids" in item or ((rel in {"packs/ru/style_preferences.json", "packs/ru/scoped_style_requests.json", "packs/ru/composable_style.json"} and "dimension" in item) or (rel in {"packs/ru/numeric_repairs.json", "packs/ru/lexical_repairs.json"} and "expected_status" in item) or (rel == "packs/ru/discourse_links.json" and "relation" in item) or (rel == "packs/ru/short_turns.json" and "pending_kind" in item)) else ""),
+                        "preview": (item.get("expression") or item.get("response") or item.get("reason")
+                                    or item.get("source") or item.get("input") or item.get("message")
+                                    or (item.get("examples") or [""])[0])[:220],
+                        # Legacy records do not share the qa.v1 context contract.
+                        "contexts": None,
+                    }
+                    index = len(self.records)
+                    self.records.append(record)
+                    if isinstance(record["expression"], str) and record["expression"].strip():
+                        self.exact[exact_phrase(record["expression"])].add(index)
+                    for term in tokens(contents):
+                        self.inverted[term].add(index)
+
+            # Dynamically discover registered qa.v1 catalogs without a fixed
+            # pack-name list. These are reference hits, never actions.
+            catalog = pack.get("catalog")
+            if isinstance(catalog, dict) and catalog.get("adapter") == "qa.v1":
+                collection_name = catalog.get("records", "records")
+                qa_rows = pack.get(collection_name, [])
+                if not isinstance(qa_rows, list):
+                    raise ValueError("Invalid qa.v1 collection: " + rel)
+                default_audiences = catalog.get("audiences", ["all_ai_bots"])
+                default_contexts = catalog.get("contexts", ["direct"])
+                for item in qa_rows:
+                    if not isinstance(item, dict):
+                        raise ValueError("Invalid qa.v1 record: " + rel)
+                    audiences = item.get("audiences", default_audiences)
+                    contexts = item.get("contexts", default_contexts)
+                    if (not isinstance(audiences, list) or not audiences
+                            or not set(audiences) <= AUDIENCES):
+                        raise ValueError("Bad qa.v1 audience: " + rel)
+                    if (not isinstance(contexts, list) or not contexts
+                            or not set(contexts) <= {"direct", "private", "group_addressed"}):
+                        raise ValueError("Bad qa.v1 context: " + rel)
+                    question = item.get("question")
+                    answer = item.get("answer")
+                    aliases = item.get("aliases", [])
+                    variants = item.get("variants", [])
+                    if (not isinstance(question, str) or not question.strip()
+                            or not isinstance(answer, str) or not answer.strip()
+                            or not isinstance(aliases, list) or not isinstance(variants, list)
+                            or any(not isinstance(x, str) for x in aliases + variants)):
+                        raise ValueError("Invalid qa.v1 searchable fields: " + rel)
+                    searchable = " ".join([question, answer, *aliases, *variants])
+                    record = {
+                        "id": item.get("id", ""),
+                        "pack": rel,
+                        "audiences": audiences,
+                        "topic": catalog.get("id", ""),
+                        "expression": question,
+                        "preview": answer[:220],
+                        "contexts": tuple(contexts),
+                        # Never expose optional joke material to a generic lookup.
+                        # A consumer must separately confirm a direct humor request.
+                        "requires_humor_opt_in": catalog.get("purpose") == "optional_humor_guidance",
+                    }
+                    index = len(self.records)
+                    self.records.append(record)
+                    for phrase in [question, *aliases]:
+                        if phrase.strip():
+                            self.exact[exact_phrase(phrase)].add(index)
+                    for term in tokens(searchable):
+                        self.inverted[term].add(index)
+
+        # Keep lookup caching owned by this verified snapshot. Decorating the
+        # instance method at class scope would retain retired KnowledgeSearch
+        # instances through the global LRU after a snapshot refresh.
+        self._cached_search = lru_cache(maxsize=512)(self._search_uncached)
+
+    def search(self, query: str, audience: str = "all_ai_bots", limit: int = 5,
+               *, context: str | None = None, humor_opt_in: bool = False) -> tuple[tuple, ...]:
+        """Reference lookup; optional humor requires an explicit trusted caller opt-in."""
+        if type(humor_opt_in) is not bool:
+            raise ValueError("humor_opt_in must be bool")
+        return self._cached_search(query, audience, limit, context, humor_opt_in)
+
+    def _search_uncached(self, query: str, audience: str, limit: int,
+                         context: str | None, humor_opt_in: bool) -> tuple[tuple, ...]:
+        if audience not in AUDIENCES:
+            raise ValueError("Unknown audience")
+        if not 1 <= limit <= 20:
+            raise ValueError("Invalid limit")
+        if context is not None and context not in {"direct", "private", "group_addressed"}:
+            raise ValueError("Unknown context")
+        terms = tokens(query)
+        exact_matches = self.exact.get(exact_phrase(query), ())
+        if not terms and not exact_matches:
+            return ()
+        allowed = {"all_ai_bots", audience}
+
+        def eligible(i: int) -> bool:
+            record = self.records[i]
+            scoped = record["contexts"]
+            if record.get("requires_humor_opt_in", False) and not humor_opt_in:
+                return False
+            return bool(allowed.intersection(record["audiences"])) and (
+                context is None or scoped is None or context in scoped
+            )
+
+        scores: dict[int, int] = defaultdict(int)
+        for term in terms:
+            for i in self.inverted.get(term, ()):
+                if eligible(i):
+                    scores[i] += 1
+        # Rank an exact phrase above loose token overlap, after audience filtering.
+        for i in exact_matches:
+            if eligible(i):
+                scores[i] += max(10, 3 * len(terms))
+        ranked = sorted(scores, key=lambda i: (-scores[i], self.records[i]["id"]))
+        return tuple((self.records[i]["id"], self.records[i]["pack"],
+                      self.records[i]["topic"], self.records[i]["preview"])
+                     for i in ranked[:limit])
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description="Search local approved knowledge without network calls")
+    parser.add_argument("--query", required=True)
+    parser.add_argument("--audience", choices=sorted(AUDIENCES), default="all_ai_bots")
+    parser.add_argument("--limit", type=int, default=5)
+    parser.add_argument("--humor-opt-in", action="store_true",
+                        help="Trusted caller confirms direct request for optional original humor")
+    parser.add_argument("--context", choices=("direct", "private", "group_addressed"),
+                        default=None, help="Optional qa.v1 reply context")
+    args = parser.parse_args()
+    started = time.perf_counter()
+    index = KnowledgeSearch()
+    result = index.search(args.query, args.audience, args.limit, context=args.context,
+                          humor_opt_in=args.humor_opt_in)
+    elapsed_ms = round((time.perf_counter() - started) * 1000, 3)
+    print(json.dumps({"query": args.query, "audience": args.audience,
+                      "loaded_records": len(index.records),
+                      "load_and_first_query_ms": elapsed_ms,
+                      "results": [{"id": x[0], "pack": x[1], "topic": x[2], "preview": x[3]}
+                                  for x in result]}, ensure_ascii=False, indent=2))
+
+if __name__ == "__main__":
+    main()

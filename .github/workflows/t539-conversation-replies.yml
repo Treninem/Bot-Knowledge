@@ -1,0 +1,37 @@
+name: T539 original contextual social replies exact-head
+on:
+  pull_request:
+    paths:
+      - "staging/ru/conversation_t539_context_pool.json"
+      - "scripts/test_conversation_t539.py"
+      - "docs/CONVERSATION_T539_2026_11_10.md"
+      - ".github/workflows/t539-conversation-replies.yml"
+      - "packs/ru/social_dialogues.json"
+      - "manifest.json"
+  push:
+    branches: [main]
+    paths:
+      - "staging/ru/conversation_t539_context_pool.json"
+      - "scripts/test_conversation_t539.py"
+      - ".github/workflows/t539-conversation-replies.yml"
+permissions:
+  contents: read
+jobs:
+  verify-t539:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Verify exact checked out commit
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Validate registered packs and 760 staged replies
+        run: |
+          python scripts/validate_pack.py
+          python -m unittest scripts.test_conversation_t539

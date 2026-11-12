@@ -1,0 +1,31 @@
+name: QA context scope T95 exact-head
+
+on:
+  pull_request:
+  push:
+    branches: ["main"]
+
+permissions:
+  contents: read
+
+jobs:
+  qa-context-scope:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Verify exact checkout SHA
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+          echo "BK_QA_CONTEXT_HEAD=$EXPECTED_SHA"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Test private vs group QA context isolation
+        run: python -B scripts/test_qa_context_scope_t95.py
+      - name: Validate registered packs and SHA-256
+        run: python -B scripts/validate_pack.py

@@ -1,0 +1,42 @@
+name: T321 T322 new context exact-head
+on:
+  pull_request:
+    paths:
+      - 'staging/ru/colloquial_t321_context_pool.json'
+      - 'staging/ru/practical_t322_context_pool.json'
+      - 'scripts/context_t321_t322.py'
+      - 'scripts/test_context_t321_t322.py'
+      - 'docs/CONTEXT_CONTINUATION_T321_T322_2026_11_07.md'
+      - '.github/workflows/context-t321-t322.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'staging/ru/colloquial_t321_context_pool.json'
+      - 'staging/ru/practical_t322_context_pool.json'
+      - 'scripts/context_t321_t322.py'
+      - 'scripts/test_context_t321_t322.py'
+      - 'docs/CONTEXT_CONTINUATION_T321_T322_2026_11_07.md'
+      - '.github/workflows/context-t321-t322.yml'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Assert checkout exact HEAD
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check manifest and registered sources
+        run: python scripts/validate_pack.py
+      - name: Check original staged responses and safeguards
+        run: python -m unittest scripts.test_context_t321_t322 -q
+      - name: Validate the linked staged pools
+        run: python -m scripts.context_t321_t322

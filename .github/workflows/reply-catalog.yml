@@ -1,0 +1,39 @@
+name: Reply catalogue exact-head
+on:
+  pull_request:
+    paths:
+      - 'packs/ru/reply_catalog.json'
+      - 'manifest.json'
+      - 'scripts/reply_catalog.py'
+      - 'scripts/test_reply_catalog.py'
+      - 'docs/REPLY_CATALOG_COVERAGE.md'
+      - '.github/workflows/reply-catalog.yml'
+permissions:
+  contents: read
+jobs:
+  reply-catalog-head:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Assert actual checkout is the PR head
+        env:
+          EXPECTED_HEAD: ${{ github.event.pull_request.head.sha }}
+        run: |
+          test "$(git rev-parse HEAD)" = "$EXPECTED_HEAD"
+          git rev-parse HEAD
+      - name: Validate all SHA-pinned packages
+        run: python scripts/validate_pack.py
+      - name: Verify 111 question sets and 11100 scoped replies
+        run: python scripts/test_reply_catalog.py --repository -v
+      - name: Preserve merged greeting catalogue
+        run: python scripts/test_greeting_catalog.py --repository -v
+      - name: Check existing dialogue routing
+        run: python scripts/test_conversation_router.py
+      - name: Check extended knowledge safeguards
+        run: python scripts/test_extended_knowledge.py

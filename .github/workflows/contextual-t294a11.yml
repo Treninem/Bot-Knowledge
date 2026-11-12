@@ -1,0 +1,26 @@
+name: T294A11 contextual scoped read-only validation
+on:
+  pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  validate-t294a11:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Confirm actual exact checkout SHA
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate registered manifest SHA256 and schema
+        run: python scripts/validate_pack.py
+      - name: Validate T294A11 170 contexts with full history and opt-in
+        run: python -m unittest scripts.test_context_overlay_t294a11 -q
