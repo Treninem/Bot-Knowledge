@@ -209,3 +209,10 @@
 - This run now totals **+180** new replies across 60 stable canonical questions (suffixes 48–50). This batch added **60** new entries; PR staging **1740 → 1800**, per question **43/100 → 44/100** including earlier registered and staged answers, 60 partial, 0 complete. **56 remain each / 3360 in total**. Next suffix **51**.
 - Fresh scenarios cover OCR scientific notation, ratio interpretation, VAT-inclusive prices, time boundaries and night shifts, archive identifiers, incomplete samples and disclosure limits. No user transcripts, sanctions, private data, actions, or unsupported consumer features.
 - Checked latest 60 against fetched K/L and registered structured QA: **0 normalized exact matches, 0 token-Jaccard ≥0.70**, maximum **0.4000**. Full independent meaning review and consumer delivery still needed. Changes are staging-only; keep main manifest and caches untouched.
+
+## L51 — 12 November 2026: final near-limit context batch
+
+- **60 new** synthetic, directly addressed contextual RU replies for existing 60 stable intents (suffix 51). In this execution **240 new answers** total (suffixes 48–51); PR staging **1800 → 1860**. Per intent: **44/100 → 45/100**, 60 partial, 0 newly completed; **55 missing each / 3300 total**. Next suffix 52, pending safe size/content review.
+- New distinctions concern nested counts, dual-axis plots, reported units, lost OCR minus, repeated hours at DST, unique-per-day vs unique-per-week, and cumulative vs daily data; all read-only and no private data or sanctions.
+- Checked new text against fetched L/K and the published structured source: no normalized exact duplicates or token-Jaccard ≥0.70; max **0.3611**. Semantic/editorial/consumer checks remain independent work.
+- Final staging UTF-8 size **2094994 bytes** of the 2,097,152 byte single-pack planning limit; next batch must check capacity before writing. No manifest, live consumer caches, ImPULS or BotHost changes. PR remains BLOCKED awaiting exact-head CI, editorial and consumer verification.
