@@ -22,9 +22,9 @@ class TestStructuredK(unittest.TestCase):
  def test_checkpoint(self):
   d=self.data;self.assertFalse(d["consumer_registered"]);self.assertEqual(d["audiences"],["all_ai_bots"])
   for key in ("read_only","requires_direct_address","requires_context_match","no_personal_data","no_sanctions"):self.assertTrue(d["constraints"][key])
-  self.assertEqual((len(self.entries),len(self.current),d["checkpoint"]["remaining_total"]),(54,756,3996))
+  self.assertEqual((len(self.entries),len(self.current),d["checkpoint"]["remaining_total"]),(54,810,3942))
   for e in self.entries:
-   self.assertEqual((e["published_count"],e["previous_staged_count"],e["added_candidates"],e["total_candidates_with_published"],e["remaining"]),(3,9,14,26,74))
+   self.assertEqual((e["published_count"],e["previous_staged_count"],e["added_candidates"],e["total_candidates_with_published"],e["remaining"]),(3,9,15,27,73))
    self.assertEqual([v["id"] for v in e["replies"]],[f"{e['intent_id']}_supp_{i}" for i in range(19, 19+e["added_candidates"])])
  def test_unique_and_safe(self):
   older=[r["text"] for p in PREV for e in json.loads(p.read_text("utf-8"))["entries"] for r in e["replies"]]
