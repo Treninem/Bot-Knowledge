@@ -65,5 +65,24 @@ class PrecisionFollowupTests(unittest.TestCase):
                 score = len(left & right) / len(left | right)
                 self.assertLess(score, 0.70, (self.replies[i]["id"], self.replies[j]["id"]))
 
+
+    def test_intents_and_selection_notes_are_distinct(self):
+        ids = [norm(e["intent_id"]) for e in self.entries]
+        questions = [norm(e["canonical_question"]) for e in self.entries]
+        self.assertEqual(len(ids), len(set(ids)), "intent IDs")
+        self.assertEqual(len(questions), len(set(questions)), "canonical questions")
+        for entry in self.entries:
+            self.assertEqual(entry["audiences"], ["all_ai_bots"])
+            self.assertEqual(entry["language"], "ru")
+            notes = [set(norm(r["context_note"]).split()) for r in entry["replies"]]
+            for i, left in enumerate(notes):
+                for j in range(i):
+                    right = notes[j]
+                    similarity = len(left & right) / len(left | right)
+                    self.assertLess(
+                        similarity, 0.70,
+                        (entry["intent_id"], i + 1, j + 1, "context notes"),
+                    )
+
 if __name__ == "__main__":
     unittest.main()
