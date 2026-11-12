@@ -6,7 +6,7 @@ P=R/"staging/ru/conversation_nuance_20261112.json"
 BASE=["packs/ru/response_boundaries_qa.json","packs/ru/practical_recovery_qa.json","packs/ru/conversation_followthrough_qa.json","packs/ru/optional_humor_qa.json"]
 def norm(s):
  s=unicodedata.normalize("NFKC",s).casefold().replace("ё","е")
- return " ".join(re.findall(r"[^\\W_]+",s,re.UNICODE))
+ return " ".join(re.findall(r"[^\W_]+",s,re.UNICODE))
 class TestContextualConversation(unittest.TestCase):
  @classmethod
  def setUpClass(cls):
@@ -42,7 +42,7 @@ class TestContextualConversation(unittest.TestCase):
   historic=set(map(norm,historical))
   self.assertTrue(all(norm(r["text"]) not in historic for r in self.replies))
  def test_protection(self):
-  mail=re.compile(r"[\\w.+-]+@[\\w.-]+\\.[A-Za-z]{2,}")
+  mail=re.compile(r"[\w.+-]+@[\w.-]+\.[A-Za-z]{2,}")
   self.assertTrue(all(mail.search(r["text"]+" "+r["context_note"]) is None for r in self.replies))
   for e in self.entries:
    for r in e["replies"]:
