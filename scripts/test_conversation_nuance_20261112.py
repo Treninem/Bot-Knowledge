@@ -70,6 +70,18 @@ class TestConversationNuance(unittest.TestCase):
                 score = len(left & right) / len(left | right)
                 self.assertLess(score, 0.70, f"near duplicate: {self.replies[i]['id']} vs {self.replies[j]['id']}")
 
+    def test_context_notes_are_distinct_within_intent(self):
+        # Context notes must distinguish selection scenarios, not just reword them.
+        # This lexical guard complements editorial semantic review.
+        for entry in self.entries:
+            notes = [set(norm(r["context_note"]).split()) for r in entry["replies"]]
+            for i, current in enumerate(notes):
+                for j in range(i):
+                    previous = notes[j]
+                    score = len(current & previous) / len(current | previous)
+                    self.assertLess(score, 0.60,
+                                    f"context premise near duplicate: {entry['replies'][i]['id']} vs {entry['replies'][j]['id']}")
+
     def test_registered_comparison(self):
         historical = []
         for path in BASE:
