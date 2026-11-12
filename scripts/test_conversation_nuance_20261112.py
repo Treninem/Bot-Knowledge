@@ -18,11 +18,11 @@ class TestContextualConversation(unittest.TestCase):
   self.assertFalse(d["consumer_registered"])
   self.assertEqual(d["audiences"],["all_ai_bots"])
   self.assertTrue(all(d["constraints"].values()))
-  self.assertEqual((len(self.entries),len(self.replies)),(20,160))
-  self.assertEqual(d["checkpoint"]["remaining_total"],1840)
+  self.assertEqual((len(self.entries),len(self.replies)),(20,260))
+  self.assertEqual(d["checkpoint"]["remaining_total"],1740)
   for e in self.entries:
-   self.assertEqual(e["remaining"],92)
-   self.assertEqual(e["accepted_staged"],8)
+   self.assertEqual(e["remaining"],87)
+   self.assertEqual(e["accepted_staged"],13)
    self.assertEqual(e["target"],100)
   for r in self.replies:
    self.assertTrue(r["read_only"])
