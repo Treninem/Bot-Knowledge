@@ -114,3 +114,10 @@
 - +54 genuinely new RU replies (suffix 36), making **972** in this PR. Each of 54 intents is now **30/100** including registered and older staging; **3780 missing**, 0 completed. Resume at suffix **37**.
 - New situations include shift schedules, denominators, nonresponse weighting, effective annual rates, matrix orientation, source provenance and risk of overinterpreting causality. Normalized exact overlaps against K+L staged content: 0; token-set Jaccard >=0.70: 0 (max 0.4333). Full semantic all-pack audit not claimed.
 - Read-only staging, not manifest registered. Exact-head CI must be repeated on current commit; no consumer rollout or private data.
+
+
+## K continuation — 12.11.2026 (independent contextual review)
+- +54 new original RU examples, one for each of the same 54 canonical intents, suffix 37. Started at 30/100, now 31/100 each; partial 54, complete 0, remaining 3726 overall. Next suffix 38.
+- Scenarios include DST transitions, data joins with one-to-many keys, repeated measures, confidence versus prediction intervals, causal inference, and financial definitions; contexts are explicitly scoped to direct questions and synthetic examples.
+- Local JS preflight against 2052 previously staged K/L texts: zero exact normalized duplicates; zero token-set Jaccard ≥0.70. No claim of full editorial/consumer acceptance. Read-only, all_ai_bots, no sanctions, no private data. Manifest, source SHA and live cache remain unchanged.
+- Changes in 3 paths: staging JSON, targeted test and progress log. Exact-head CI must be rerun on the new head, merge blocked until source compatibility, editorial and consumer review, and main post-push gate.
