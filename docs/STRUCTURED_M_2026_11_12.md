@@ -53,3 +53,8 @@ Next: preserve all 180 newly staged records, resume the same 60 intents at suffi
 - Verified numeric checkpoint: L 1,860 + M 300 = **2,160 staged within #662**. Published 3 + older staged 11 + L31 + M5 = **50/100** per intent, **60 partial intents**, **0 new complete**, **50 missing each / 3,000 remaining**. Next ID suffix **57**; all former responses and stable intent IDs preserved.
 - Prewrite stage-M screening: 60 new texts and 60 selection notes compared with 240 preceding M replies. **0 exact duplicates; max token-set Jaccard 0.2941, 0 ≥0.70** across 16,170 text pairs. Updated dedicated test checks M suffixes 52–56, count 300, published source SHA and cross-source collisions with A–J/L. Full independent semantic review of all PRs remains outstanding.
 - M file has **383001 actual UTF-8 bytes** under the 2 MiB planning limit. Exactly three files touched in this continuation: unregistered M JSON, dedicated regression and this journal. No published manifest/consumer checksum/cache, ImPULS, BotHost or live consumer changes. Exact-head CI, current-main compatibility, 8 MiB delivery constraints and post-main checks are still merge gates.
+
+
+### Editorial correction after M56 — 13 November 2026
+
+The answer `struct_t86_011_supp_56` now explicitly requires the **same calendar date** before concluding that 12:00 UTC+2 and 12:00 UTC+3 are one hour apart. Otherwise dates must be compared as well. The associated context note was tightened. This is **one correction, zero new replies**; counts stay 60 intents × 50/100, M 300 and L+M 2,160. The correction requires fresh exact-head CI on the new commit.
