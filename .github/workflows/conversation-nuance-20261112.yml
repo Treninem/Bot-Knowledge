@@ -1,0 +1,29 @@
+name: Conversation nuance 2026-11-12 exact-head QA
+on:
+  pull_request:
+    paths:
+      - 'staging/ru/conversation_nuance_20261112.json'
+      - 'scripts/test_conversation_nuance_20261112.py'
+      - 'docs/CONVERSATION_NUANCE_2026_11_12.md'
+      - '.github/workflows/conversation-nuance-20261112.yml'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          persist-credentials: false
+      - name: Verify actual checkout equals PR head
+        env:
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: test "$(git rev-parse HEAD)" = "$HEAD_SHA"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate registered packs and stage replies
+        run: |
+          python scripts/validate_pack.py
+          python -m unittest scripts.test_conversation_nuance_20261112 -v
