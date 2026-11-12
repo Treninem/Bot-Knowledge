@@ -161,3 +161,10 @@
 - Explicit contexts distinguish date formats, rounding, identifiers, totals, time zones, uncertain measurements, independent groups, sampling, pricing, finance and privacy. Portable read-only replies, no sanctions or unsupported bot functions.
 - Internal new-text QA against current K and L staging: zero exact normalized duplicates and zero token-set Jaccard >= 0.70; this lexical gate does not establish full semantic, historical or consumer verification.
 - Manifest and consumer caches unchanged, `consumer_registered=false`; exact-head and post-main CI plus editorial review required before merge.
+
+## L next checkpoint — 12 November 2026, suffix 44
+
+- +60 NEW independently authored, context-bound Russian replies: one for each of 60 existing stable intents. 1,440 new staging replies in PR #662; 38/100 per intent (3 registered + 11 previous staged + 24 here), 62 remaining per intent, 3,720 total; 60 partial and 0 finished.
+- New distinctions: missing denominators, misleading rounded screens, fee limits, duplicate exports, calendar boundaries, revised history, uncertainty and confidentiality of small groups. All 60 IDs, normalized texts and context notes are unique versus currently fetched K/L (including new K suffix 42); no token-set Jaccard >=0.70 (maximum 0.5625). Lexical checks do not establish full editorial originality.
+- Read-only, direct-context synthetic content for all_ai_bots only. No personal data, sanctions, commands, ImPULS updates or live consumer registration. Source main 6c9f430da47f137d39a72bbd28c057cfb8f6be96; registered SHA-256 55b3f6126d36cd92687d005b7fedf5a11df9ee61cf453103accdf1f13c8498f0. Manifest and cache unchanged.
+- Next suffix 45. PR remains Draft/BLOCKED until exact-head CI, editorial/consumer review, current-main validation and post-main gates.
