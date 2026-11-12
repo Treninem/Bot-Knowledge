@@ -4,6 +4,9 @@ on:
     paths:
       - 'staging/ru/structured_information_20261111_delta_l.json'
       - 'scripts/test_structured_l_20261111.py'
+      - 'staging/ru/structured_information_20261112_delta_m.json'
+      - 'scripts/test_structured_m_20261112.py'
+      - 'docs/STRUCTURED_M_2026_11_12.md'
       - 'docs/STRUCTURED_L_2026_11_11.md'
       - '.github/workflows/structured-l-20261111.yml'
 permissions:
@@ -23,7 +26,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Validate sources and L
+      - name: Validate sources and L/M
         run: |
           python scripts/validate_pack.py
           python -m unittest scripts.test_structured_l_20261111 -v
+          python -m unittest scripts.test_structured_m_20261112 -v
