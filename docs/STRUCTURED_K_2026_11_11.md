@@ -154,3 +154,10 @@
 - Distinct use cases: missing-vs-zero baseline, reverse price change, stock/flow, shift time, statistical inference, data joins, currency, plotting and sampling. All entries remain direct-only, read-only, and generic. `consumer_registered=false`.
 - Programmatic new-text check against K and L staging: 0 exact normalized matches, 0 token-set Jaccard >= 0.70. Lexical checks are not a full semantic or consumer audit.
 - Exact source manifest remains unchanged; no live-bot cache or private ImPULS modifications. Current-head CI and post-main checks required before merge.
+
+## K next checkpoint — 12 November 2026, suffix 42
+
+- +54 NEW independently authored, contextual Russian responses: one for each of the 54 existing stable IDs. 1,296 new staging replies in PR #661; each set now 36/100 (3 published + 9 previous staged + 24 here), 64 remaining per intent, 3,456 total, 54 partial and 0 completed.
+- New scenarios address rate bases, payment flows, daylight-saving changes, weighting, multiple comparisons, measurement uncertainty, misleading visualization, selection effects and data provenance. All 54 new IDs, normalized texts and context notes are unique relative to the fetched K/L branches, with no token-Jaccard >=0.70 (maximum 0.3125). A lexical preflight is not a complete independent semantic audit.
+- This is staged read-only text, direct-context only, all_ai_bots; no user data, sanctions or new consumer functionality. Manifest, live caches and ImPULS untouched. Exact source main 6c9f430da47f137d39a72bbd28c057cfb8f6be96, registered SHA-256 55b3f6126d36cd92687d005b7fedf5a11df9ee61cf453103accdf1f13c8498f0; current head must be reverified after the commit.
+- Next suffix 43. Before release: exact-head CI, further editorial/consumer checks, current-main compatibility and post-main CI. Draft/BLOCKED until verified.
