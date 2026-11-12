@@ -140,3 +140,10 @@
 - +54 Russian synthetic replies, suffix 39 across the same 54 intents, previous 1080 -> current 1134 staging candidates; 33/100 per intent (3 registered + 9 older staged + 21 K), 67 remaining each / 3618 remaining total; 54 partial, 0 completed.
 - New contexts distinguish numeric methods, payment bases, time-zone shifts, sampling assumptions, comparison definitions and missing metadata. Identical normalized replies/contexts rejected by local in-memory preflight; maximum token Jaccard against earlier K 0.3750 (threshold <0.70). Not a full all-packs semantic or consumer audit.
 - Staging only; consumer_registered=false. No changes to published manifest, pack SHA, BotHost or ImPULS. Before merge verify exact-head CI and main compatibility; next suffix **40**.
+
+
+## K22 — 12.11.2026: contextual numerical checks and disambiguation
+
+- +54 newly written synthetic replies for the same 54 stable intents, suffix 40. The K staging PR now contains **1188 new replies**; each intent has 34/100 including 3 registered and 9 older staged. Remain 66 per intent / 3564 total; 54 partial, 0 completed.
+- Different scenarios: zero-sales baseline, hold vs balance, incomplete shifts, delayed events, unlogged errors, multi-test p-values, cash vs profit and changing denominators. Texts, IDs and context notes passed in-memory uniqueness checks; no exact or token-set Jaccard ≥0.70 against K's 1134 prior answers (max 0.3590). Cross-pack semantic review still outstanding.
+- Staging-only; no manifest, active consumer, deployed bot or source pack modification. Next suffix **41**. This head needs its own exact-head CI; main post-push gate is not bypassed.
