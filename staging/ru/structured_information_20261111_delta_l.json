@@ -13,7 +13,7 @@
     "no_personal_data": true,
     "no_sanctions": true
   },
-  "scope": "Structured-information continuation L: 1440 contextual RU replies for 60 stable intents; staging only",
+  "scope": "Structured-information continuation L: 1500 contextual RU replies for 60 stable intents; staging only",
   "source_pack": "packs/ru/structured_information_qa.json",
   "source_pack_manifest_sha256": "55b3f6126d36cd92687d005b7fedf5a11df9ee61cf453103accdf1f13c8498f0",
   "source_pack_blob_sha": "8b3d596b5b50d3d319ebf450c96d5623fc99d26a",
@@ -24,15 +24,15 @@
     "processed_intents": 60,
     "published_per_intent": 3,
     "previous_staged_per_intent": 11,
-    "added_per_intent": 24,
-    "added_candidates": 1440,
-    "combined_per_intent": 38,
-    "remaining_per_intent": 62,
-    "remaining_total": 3720,
+    "added_per_intent": 25,
+    "added_candidates": 1500,
+    "combined_per_intent": 39,
+    "remaining_per_intent": 61,
+    "remaining_total": 3660,
     "finished_100": 0,
     "partial_intents": 60,
     "duplicate_rejections": 0,
-    "next_action": "L next suffix 45; full exact-head CI, semantic QA, main compatibility and size review; staging only"
+    "next_action": "L next suffix 46; full exact-head CI and semantic QA before any consumer publication"
   },
   "entries": [
     {
@@ -47,10 +47,10 @@
       "response_role": "assistant_reply",
       "published_count": 3,
       "previous_staged_count": 11,
-      "added_candidates": 24,
-      "total_candidates_with_published": 38,
+      "added_candidates": 25,
+      "total_candidates_with_published": 39,
       "target": 100,
-      "remaining": 62,
+      "remaining": 61,
       "replies": [
         {
           "id": "struct_t86_001_supp_21",
@@ -387,6 +387,20 @@
           "context_note": "В выгрузке есть хотя бы одна сумма, которую можно сопоставить с текстом документа.",
           "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
           "read_only": true
+        },
+        {
+          "id": "struct_t86_001_supp_45",
+          "text": "Запятая внутри «1,234» может быть десятичной, а в CSV той же запятой могут разделяться поля. Прежде чем переводить текст в число, проверь кавычки вокруг значения и настройки парсера.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "В CSV одна ячейка содержит запятую и может распасться на две колонки при неверном импорте.",
+          "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
+          "read_only": true
         }
       ]
     },
@@ -402,10 +416,10 @@
       "response_role": "assistant_reply",
       "published_count": 3,
       "previous_staged_count": 11,
-      "added_candidates": 24,
-      "total_candidates_with_published": 38,
+      "added_candidates": 25,
+      "total_candidates_with_published": 39,
       "target": 100,
-      "remaining": 62,
+      "remaining": 61,
       "replies": [
         {
           "id": "struct_t86_002_supp_21",
@@ -742,6 +756,20 @@
           "context_note": "В презентации резко выросла доля редкого события, и рядом требуют абсолютную и относительную динамику.",
           "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
           "read_only": true
+        },
+        {
+          "id": "struct_t86_002_supp_45",
+          "text": "При переходе с 3% до 4% изменение составляет один процентный пункт, но относительное увеличение самой доли — примерно 33,3%. Укажи, какую из двух метрик спрашивают.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Сравнивают маленькие проценты двух последовательных отчётных периодов.",
+          "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
+          "read_only": true
         }
       ]
     },
@@ -757,10 +785,10 @@
       "response_role": "assistant_reply",
       "published_count": 3,
       "previous_staged_count": 11,
-      "added_candidates": 24,
-      "total_candidates_with_published": 38,
+      "added_candidates": 25,
+      "total_candidates_with_published": 39,
       "target": 100,
-      "remaining": 62,
+      "remaining": 61,
       "replies": [
         {
           "id": "struct_t86_003_supp_21",
@@ -1097,6 +1125,20 @@
           "context_note": "Из журнала выгрузили только удачные исходы, не сохранив общее количество событий.",
           "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
           "read_only": true
+        },
+        {
+          "id": "struct_t86_003_supp_45",
+          "text": "Число 30 завершённых заявок нельзя превратить в долю без числа заявок с подходящим статусом. Все созданные и все обработанные заявки могут давать разные знаменатели.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "В службе поддержки завершённые заявки известны, а общее число зависит от выбранного статуса.",
+          "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
+          "read_only": true
         }
       ]
     },
@@ -1112,10 +1154,10 @@
       "response_role": "assistant_reply",
       "published_count": 3,
       "previous_staged_count": 11,
-      "added_candidates": 24,
-      "total_candidates_with_published": 38,
+      "added_candidates": 25,
+      "total_candidates_with_published": 39,
       "target": 100,
-      "remaining": 62,
+      "remaining": 61,
       "replies": [
         {
           "id": "struct_t86_004_supp_21",
@@ -1452,6 +1494,20 @@
           "context_note": "Сняли фотографию округлённого показания прибора и пытаются получить недостающие знаки.",
           "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
           "read_only": true
+        },
+        {
+          "id": "struct_t86_004_supp_45",
+          "text": "Показание 10,0 на экране с одним десятичным знаком не доказывает, что истинное значение ровно десять. Сохрани шаг отображения и не дописывай несуществующие сотые.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "На цифровом приборе видна только одна цифра после запятой, а в отчёте требуют три.",
+          "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
+          "read_only": true
         }
       ]
     },
@@ -1467,10 +1523,10 @@
       "response_role": "assistant_reply",
       "published_count": 3,
       "previous_staged_count": 11,
-      "added_candidates": 24,
-      "total_candidates_with_published": 38,
+      "added_candidates": 25,
+      "total_candidates_with_published": 39,
       "target": 100,
-      "remaining": 62,
+      "remaining": 61,
       "replies": [
         {
           "id": "struct_t86_005_supp_21",
@@ -1807,6 +1863,20 @@
           "context_note": "При импорте артикулов электронная таблица автоматически превращает коды в числа.",
           "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
           "read_only": true
+        },
+        {
+          "id": "struct_t86_005_supp_45",
+          "text": "Код «007» может отличаться от «7» по формальным правилам каталога. Перед нормализацией проверь длину ключа: ведущие нули могут быть частью его идентичности.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "В каталоге запчастей одинаковые на вид номера отличаются фиксированным числом знаков.",
+          "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
+          "read_only": true
         }
       ]
     },
@@ -1822,10 +1892,10 @@
       "response_role": "assistant_reply",
       "published_count": 3,
       "previous_staged_count": 11,
-      "added_candidates": 24,
-      "total_candidates_with_published": 38,
+      "added_candidates": 25,
+      "total_candidates_with_published": 39,
       "target": 100,
-      "remaining": 62,
+      "remaining": 61,
       "replies": [
         {
           "id": "struct_t86_006_supp_21",
@@ -2162,6 +2232,20 @@
           "context_note": "В сводке отдельно показаны обращения всех видов и подмножество жалоб.",
           "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
           "read_only": true
+        },
+        {
+          "id": "struct_t86_006_supp_45",
+          "text": "Если общая группа 120 человек разбита на 70 взрослых и 50 детей, итог уже равен 120; повторное сложение 120+70+50 удваивает учёт. Сначала нарисуй дерево категорий.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "В таблице присутствует общий итог и два вложенных возрастных подраздела.",
+          "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
+          "read_only": true
         }
       ]
     },
@@ -2177,10 +2261,10 @@
       "response_role": "assistant_reply",
       "published_count": 3,
       "previous_staged_count": 11,
-      "added_candidates": 24,
-      "total_candidates_with_published": 38,
+      "added_candidates": 25,
+      "total_candidates_with_published": 39,
       "target": 100,
-      "remaining": 62,
+      "remaining": 61,
       "replies": [
         {
           "id": "struct_t86_007_supp_21",
@@ -2517,6 +2601,20 @@
           "context_note": "В табеле есть утренний и вечерний выезд, а договор устанавливает дневную доплату.",
           "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
           "read_only": true
+        },
+        {
+          "id": "struct_t86_007_supp_45",
+          "text": "При компенсации за два рабочих дня фиксированную дневную сумму обычно считают дважды, даже если дорога была одна туда и одна обратно. Решает текст условия выплаты, а не число билетов.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Командировка длится два рабочих дня, а компенсация указана в день, не за поездку.",
+          "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
+          "read_only": true
         }
       ]
     },
@@ -2532,10 +2630,10 @@
       "response_role": "assistant_reply",
       "published_count": 3,
       "previous_staged_count": 11,
-      "added_candidates": 24,
-      "total_candidates_with_published": 38,
+      "added_candidates": 25,
+      "total_candidates_with_published": 39,
       "target": 100,
-      "remaining": 62,
+      "remaining": 61,
       "replies": [
         {
           "id": "struct_t86_008_supp_21",
@@ -2872,6 +2970,20 @@
           "context_note": "Сравнили предложения нескольких выбранных продавцов и хотят объявить абсолютный минимум.",
           "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
           "read_only": true
+        },
+        {
+          "id": "struct_t86_008_supp_45",
+          "text": "Если просмотрено лишь двадцать товаров, наименьшая найденная цена — минимум этой выборки. По ней нельзя обещать, что более дешёвого предложения нигде не существует.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Маркетинговая таблица собрана по нескольким магазинам, не охватывая весь рынок.",
+          "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
+          "read_only": true
         }
       ]
     },
@@ -2887,10 +2999,10 @@
       "response_role": "assistant_reply",
       "published_count": 3,
       "previous_staged_count": 11,
-      "added_candidates": 24,
-      "total_candidates_with_published": 38,
+      "added_candidates": 25,
+      "total_candidates_with_published": 39,
       "target": 100,
-      "remaining": 62,
+      "remaining": 61,
       "replies": [
         {
           "id": "struct_t86_009_supp_21",
@@ -3227,6 +3339,20 @@
           "context_note": "Сводят массы двух ингредиентов из документов с разными единицами.",
           "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
           "read_only": true
+        },
+        {
+          "id": "struct_t86_009_supp_45",
+          "text": "Строка «1,5 кг» и строка «350 г» вместе дают 1850 г, или 1,85 кг. Складывать написанные числа 1,5 и 350 без перевода единиц нельзя.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Нужно свести вес посылок из двух разных накладных с неодинаковыми единицами.",
+          "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
+          "read_only": true
         }
       ]
     },
@@ -3242,10 +3368,10 @@
       "response_role": "assistant_reply",
       "published_count": 3,
       "previous_staged_count": 11,
-      "added_candidates": 24,
-      "total_candidates_with_published": 38,
+      "added_candidates": 25,
+      "total_candidates_with_published": 39,
       "target": 100,
-      "remaining": 62,
+      "remaining": 61,
       "replies": [
         {
           "id": "struct_t86_010_supp_21",
@@ -3582,6 +3708,20 @@
           "context_note": "В международном билете день и месяц оба не больше двенадцати.",
           "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
           "read_only": true
+        },
+        {
+          "id": "struct_t86_010_supp_45",
+          "text": "Даже если день и месяц расшифрованы, дата без года может оставаться неоднозначной для срока исполнения. Для договора используй полную дату в формате ГГГГ-ММ-ДД.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Документ содержит короткую дату 04/11, но срок может относиться к разным годам.",
+          "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
+          "read_only": true
         }
       ]
     },
@@ -3597,10 +3737,10 @@
       "response_role": "assistant_reply",
       "published_count": 3,
       "previous_staged_count": 11,
-      "added_candidates": 24,
-      "total_candidates_with_published": 38,
+      "added_candidates": 25,
+      "total_candidates_with_published": 39,
       "target": 100,
-      "remaining": 62,
+      "remaining": 61,
       "replies": [
         {
           "id": "struct_t86_011_supp_21",
@@ -3937,6 +4077,20 @@
           "context_note": "Встреча начинается вечером в одном городе и заканчивается утром следующего дня в другом.",
           "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
           "read_only": true
+        },
+        {
+          "id": "struct_t86_011_supp_45",
+          "text": "Города могут отличаться по UTC не на целые часы: существуют смещения с половиной часа. Для точной длительности бери реальный часовой пояс на дату события, а не округляй разницу.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Планируют видеозвонок между городами, у которых разница местного времени выражается в часах и минутах.",
+          "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
+          "read_only": true
         }
       ]
     },
@@ -3952,10 +4106,10 @@
       "response_role": "assistant_reply",
       "published_count": 3,
       "previous_staged_count": 11,
-      "added_candidates": 24,
-      "total_candidates_with_published": 38,
+      "added_candidates": 25,
+      "total_candidates_with_published": 39,
       "target": 100,
-      "remaining": 62,
+      "remaining": 61,
       "replies": [
         {
           "id": "struct_t86_012_supp_21",
@@ -4292,6 +4446,20 @@
           "context_note": "На скриншоте аналитики верхний заголовок с основанием показателя не попал в кадр.",
           "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
           "read_only": true
+        },
+        {
+          "id": "struct_t86_012_supp_45",
+          "text": "Если скриншот начинается ниже заголовка, число 25 на карточке может означать проценты, штуки или дни. Пока метрика не видна, опиши только отображённое число и попроси полный кадр.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Человек просит оценить статистику по обрезанному изображению с одной большой цифрой.",
+          "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
+          "read_only": true
         }
       ]
     },
@@ -4307,10 +4475,10 @@
       "response_role": "assistant_reply",
       "published_count": 3,
       "previous_staged_count": 11,
-      "added_candidates": 24,
-      "total_candidates_with_published": 38,
+      "added_candidates": 25,
+      "total_candidates_with_published": 39,
       "target": 100,
-      "remaining": 62,
+      "remaining": 61,
       "replies": [
         {
           "id": "struct_t86_013_supp_21",
@@ -4647,6 +4815,20 @@
           "context_note": "Отправили график без легенды и подписи вертикальной шкалы.",
           "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
           "read_only": true
+        },
+        {
+          "id": "struct_t86_013_supp_45",
+          "text": "Если вертикальная ось без единицы, отметка 50 не подтверждает ни 50 рублей, ни 50 тысяч. Нельзя восстанавливать единицу только по теме соседнего абзаца.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "В отчёт вставили линию роста без заголовка и явной единицы измерения.",
+          "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
+          "read_only": true
         }
       ]
     },
@@ -4662,10 +4844,10 @@
       "response_role": "assistant_reply",
       "published_count": 3,
       "previous_staged_count": 11,
-      "added_candidates": 24,
-      "total_candidates_with_published": 38,
+      "added_candidates": 25,
+      "total_candidates_with_published": 39,
       "target": 100,
-      "remaining": 62,
+      "remaining": 61,
       "replies": [
         {
           "id": "struct_t86_014_supp_21",
@@ -5002,6 +5184,20 @@
           "context_note": "В многорядном заголовке слова верхнего уровня относятся сразу к нескольким подколонкам.",
           "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
           "read_only": true
+        },
+        {
+          "id": "struct_t86_014_supp_45",
+          "text": "Объединённый заголовок «2026» может охватывать подколонки «план» и «факт». Перед вычислением роста сравни одинаковые подколонки разных лет, а не соседние числа внутри года.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Таблица имеет двухуровневые заголовки с годами и видом показателя.",
+          "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
+          "read_only": true
         }
       ]
     },
@@ -5017,10 +5213,10 @@
       "response_role": "assistant_reply",
       "published_count": 3,
       "previous_staged_count": 11,
-      "added_candidates": 24,
-      "total_candidates_with_published": 38,
+      "added_candidates": 25,
+      "total_candidates_with_published": 39,
       "target": 100,
-      "remaining": 62,
+      "remaining": 61,
       "replies": [
         {
           "id": "struct_t86_015_supp_21",
@@ -5357,6 +5553,20 @@
           "context_note": "Внизу таблицы стоит сумма выше суммы десяти видимых строк.",
           "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
           "read_only": true
+        },
+        {
+          "id": "struct_t86_015_supp_45",
+          "text": "Если формула суммы включает строку «Итого» предыдущего раздела, результат будет завышен даже при правильных отдельных строках. Проверь адреса диапазона и наличие промежуточных итогов.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Внизу многораздельного отчёта общая сумма больше всех первичных операций вместе.",
+          "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
+          "read_only": true
         }
       ]
     },
@@ -5372,10 +5582,10 @@
       "response_role": "assistant_reply",
       "published_count": 3,
       "previous_staged_count": 11,
-      "added_candidates": 24,
-      "total_candidates_with_published": 38,
+      "added_candidates": 25,
+      "total_candidates_with_published": 39,
       "target": 100,
-      "remaining": 62,
+      "remaining": 61,
       "replies": [
         {
           "id": "struct_t86_016_supp_21",
@@ -5712,6 +5922,20 @@
           "context_note": "Датчик переставал передавать данные именно при перегреве оборудования.",
           "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
           "read_only": true
+        },
+        {
+          "id": "struct_t86_016_supp_45",
+          "text": "Удалять пропуски из среднего допустимо как явно обозначенную методику, но если устройство отключалось именно при высокой нагрузке, среднее по оставшимся значениям занижено.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Сигнал теряется во время перегрузок, и аналитик усредняет только доступные записи.",
+          "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
+          "read_only": true
         }
       ]
     },
@@ -5727,10 +5951,10 @@
       "response_role": "assistant_reply",
       "published_count": 3,
       "previous_staged_count": 11,
-      "added_candidates": 24,
-      "total_candidates_with_published": 38,
+      "added_candidates": 25,
+      "total_candidates_with_published": 39,
       "target": 100,
-      "remaining": 62,
+      "remaining": 61,
       "replies": [
         {
           "id": "struct_t86_017_supp_21",
@@ -6067,6 +6291,20 @@
           "context_note": "За смену прошло множество небольших покупок и одна очень крупная.",
           "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
           "read_only": true
+        },
+        {
+          "id": "struct_t86_017_supp_45",
+          "text": "При четырёх наблюдениях 2, 4, 100 и 102 медиана равна (4+100)/2 = 52. Это показывает, что и медиана небольшой неоднородной выборки может плохо описывать типичную ситуацию.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Небольшую смесь двух сильно отличающихся групп пытаются охарактеризовать одной медианой.",
+          "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
+          "read_only": true
         }
       ]
     },
@@ -6082,10 +6320,10 @@
       "response_role": "assistant_reply",
       "published_count": 3,
       "previous_staged_count": 11,
-      "added_candidates": 24,
-      "total_candidates_with_published": 38,
+      "added_candidates": 25,
+      "total_candidates_with_published": 39,
       "target": 100,
-      "remaining": 62,
+      "remaining": 61,
       "replies": [
         {
           "id": "struct_t86_018_supp_21",
@@ -6422,6 +6660,20 @@
           "context_note": "В ведомости продажи билетов по строкам пытаются посчитать число посетителей.",
           "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
           "read_only": true
+        },
+        {
+          "id": "struct_t86_018_supp_45",
+          "text": "Если один пользователь открыл несколько сессий, для подсчёта уникальных пользователей нужен стабильный обезличенный ключ. При отсутствии такого ключа честнее сообщить число сессий.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Журнал содержит повторные посещения, но идентификаторы не позволяют надёжно объединять их в людей.",
+          "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
+          "read_only": true
         }
       ]
     },
@@ -6437,10 +6689,10 @@
       "response_role": "assistant_reply",
       "published_count": 3,
       "previous_staged_count": 11,
-      "added_candidates": 24,
-      "total_candidates_with_published": 38,
+      "added_candidates": 25,
+      "total_candidates_with_published": 39,
       "target": 100,
-      "remaining": 62,
+      "remaining": 61,
       "replies": [
         {
           "id": "struct_t86_019_supp_21",
@@ -6777,6 +7029,20 @@
           "context_note": "Маршрут известен в километрах, но дата прибытия и время в пути не записаны.",
           "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
           "read_only": true
+        },
+        {
+          "id": "struct_t86_019_supp_45",
+          "text": "Расстояние 120 км само по себе не означает поездку за два часа: скорость без времени не определяется. Можно представить зависимость для нескольких явно условных длительностей.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Маршрут известен, но водитель не назвал время поездки и условия движения.",
+          "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
+          "read_only": true
         }
       ]
     },
@@ -6792,10 +7058,10 @@
       "response_role": "assistant_reply",
       "published_count": 3,
       "previous_staged_count": 11,
-      "added_candidates": 24,
-      "total_candidates_with_published": 38,
+      "added_candidates": 25,
+      "total_candidates_with_published": 39,
       "target": 100,
-      "remaining": 62,
+      "remaining": 61,
       "replies": [
         {
           "id": "struct_t86_020_supp_21",
@@ -7132,6 +7398,20 @@
           "context_note": "Отчёт просит одновременно общий объём за квартал и средний объём за месяц.",
           "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
           "read_only": true
+        },
+        {
+          "id": "struct_t86_020_supp_45",
+          "text": "Если в каждом месяце записан остаток склада на конец периода, складывать эти остатки как «квартальный остаток» нельзя. Сравни конечный мартовский остаток или средний по согласованной методике.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "В ежемесячной ведомости указаны запасы, а не приход товара за месяц.",
+          "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
+          "read_only": true
         }
       ]
     },
@@ -7147,10 +7427,10 @@
       "response_role": "assistant_reply",
       "published_count": 3,
       "previous_staged_count": 11,
-      "added_candidates": 24,
-      "total_candidates_with_published": 38,
+      "added_candidates": 25,
+      "total_candidates_with_published": 39,
       "target": 100,
-      "remaining": 62,
+      "remaining": 61,
       "replies": [
         {
           "id": "struct_t86_021_supp_21",
@@ -7487,6 +7767,20 @@
           "context_note": "Пользователь просит ориентир по обмену, не назвав валютный сервис и дату котировки.",
           "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
           "read_only": true
+        },
+        {
+          "id": "struct_t86_021_supp_45",
+          "text": "Курс покупки и курс продажи валюты различаются. Для точного обмена одной суммы назови направление сделки и учитывай спред, а не применяй абстрактный средний курс.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Пользователь видит два курса в банковском приложении, но не указал, какую валюту продаёт.",
+          "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
+          "read_only": true
         }
       ]
     },
@@ -7502,10 +7796,10 @@
       "response_role": "assistant_reply",
       "published_count": 3,
       "previous_staged_count": 11,
-      "added_candidates": 24,
-      "total_candidates_with_published": 38,
+      "added_candidates": 25,
+      "total_candidates_with_published": 39,
       "target": 100,
-      "remaining": 62,
+      "remaining": 61,
       "replies": [
         {
           "id": "struct_t86_022_supp_21",
@@ -7842,6 +8136,20 @@
           "context_note": "Одно предложение ориентировано на частного покупателя, другое на организацию с налоговым учётом.",
           "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
           "read_only": true
+        },
+        {
+          "id": "struct_t86_022_supp_45",
+          "text": "Цена с пометкой «без налога» не даёт права автоматически начислить одну универсальную ставку: правила и освобождения различаются. Сначала уточни применимый налоговый режим.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Сравнивают товар с налоговой льготой и обычное предложение, но в таблице нет налоговых условий.",
+          "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
+          "read_only": true
         }
       ]
     },
@@ -7857,10 +8165,10 @@
       "response_role": "assistant_reply",
       "published_count": 3,
       "previous_staged_count": 11,
-      "added_candidates": 24,
-      "total_candidates_with_published": 38,
+      "added_candidates": 25,
+      "total_candidates_with_published": 39,
       "target": 100,
-      "remaining": 62,
+      "remaining": 61,
       "replies": [
         {
           "id": "struct_t86_023_supp_21",
@@ -8197,6 +8505,20 @@
           "context_note": "Магазин рекламирует две последовательные скидки, но у первой есть максимальная сумма уменьшения.",
           "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
           "read_only": true
+        },
+        {
+          "id": "struct_t86_023_supp_45",
+          "text": "Если второй купон действует только при сумме заказа выше порога, порядок применения первой скидки может лишить права на второй. Проверь порог после каждого шага.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Две рекламные акции имеют ограничения по минимальной сумме корзины после скидки.",
+          "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
+          "read_only": true
         }
       ]
     },
@@ -8212,10 +8534,10 @@
       "response_role": "assistant_reply",
       "published_count": 3,
       "previous_staged_count": 11,
-      "added_candidates": 24,
-      "total_candidates_with_published": 38,
+      "added_candidates": 25,
+      "total_candidates_with_published": 39,
       "target": 100,
-      "remaining": 62,
+      "remaining": 61,
       "replies": [
         {
           "id": "struct_t86_024_supp_21",
@@ -8552,6 +8874,20 @@
           "context_note": "Нужно отдельно купить покрытие для пола и материал вдоль стен той же комнаты.",
           "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
           "read_only": true
+        },
+        {
+          "id": "struct_t86_024_supp_45",
+          "text": "Площадь стен комнаты нельзя заменить площадью пола: высота и проёмы меняют объём отделочных работ. Для краски нужен периметр, высота и площадь исключаемых проёмов.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Рассчитывают расход краски по метражу пола, не указав высоту помещения и окна.",
+          "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
+          "read_only": true
         }
       ]
     },
@@ -8567,10 +8903,10 @@
       "response_role": "assistant_reply",
       "published_count": 3,
       "previous_staged_count": 11,
-      "added_candidates": 24,
-      "total_candidates_with_published": 38,
+      "added_candidates": 25,
+      "total_candidates_with_published": 39,
       "target": 100,
-      "remaining": 62,
+      "remaining": 61,
       "replies": [
         {
           "id": "struct_t86_025_supp_21",
@@ -8907,6 +9243,20 @@
           "context_note": "Две соседние тарифные категории заданы полуоткрытыми числовыми интервалами.",
           "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
           "read_only": true
+        },
+        {
+          "id": "struct_t86_025_supp_45",
+          "text": "Число, совпадающее с общей границей [1;4] и (4;8], входит лишь в первый интервал. В классификаторе фиксируй открытость каждой границы отдельно.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Размечают группы значений с соприкасающимися интервалами разных типов.",
+          "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
+          "read_only": true
         }
       ]
     },
@@ -8922,10 +9272,10 @@
       "response_role": "assistant_reply",
       "published_count": 3,
       "previous_staged_count": 11,
-      "added_candidates": 24,
-      "total_candidates_with_published": 38,
+      "added_candidates": 25,
+      "total_candidates_with_published": 39,
       "target": 100,
-      "remaining": 62,
+      "remaining": 61,
       "replies": [
         {
           "id": "struct_t86_026_supp_21",
@@ -9262,6 +9612,20 @@
           "context_note": "В календаре магазина есть дни закрытия, за которые в отчёте стоят пустые клетки.",
           "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
           "read_only": true
+        },
+        {
+          "id": "struct_t86_026_supp_45",
+          "text": "Нулевая выработка за закрытую смену не означает нулевую производительность работников: работы не было. Пометь смену «не проводилась» и исключи её из подходящего знаменателя.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "В отчёте закрытую по ремонту смену записали как ноль изготовленных изделий.",
+          "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
+          "read_only": true
         }
       ]
     },
@@ -9277,10 +9641,10 @@
       "response_role": "assistant_reply",
       "published_count": 3,
       "previous_staged_count": 11,
-      "added_candidates": 24,
-      "total_candidates_with_published": 38,
+      "added_candidates": 25,
+      "total_candidates_with_published": 39,
       "target": 100,
-      "remaining": 62,
+      "remaining": 61,
       "replies": [
         {
           "id": "struct_t86_027_supp_21",
@@ -9617,6 +9981,20 @@
           "context_note": "Чек отсканирован с обрезанным краем, а строка возврата похожа на положительную продажу.",
           "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
           "read_only": true
+        },
+        {
+          "id": "struct_t86_027_supp_45",
+          "text": "При OCR длинное тире перед числом может быть знаком минуса или разделителем пункта списка. Сверь исходную строку и таблицу, прежде чем превращать его в отрицательную величину.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Автоматически прочитанный список содержит тире в начале каждой строки с суммами.",
+          "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
+          "read_only": true
         }
       ]
     },
@@ -9632,10 +10010,10 @@
       "response_role": "assistant_reply",
       "published_count": 3,
       "previous_staged_count": 11,
-      "added_candidates": 24,
-      "total_candidates_with_published": 38,
+      "added_candidates": 25,
+      "total_candidates_with_published": 39,
       "target": 100,
-      "remaining": 62,
+      "remaining": 61,
       "replies": [
         {
           "id": "struct_t86_028_supp_21",
@@ -9972,6 +10350,20 @@
           "context_note": "В смешанном файле одни строки содержат инвентарные коды, другие — измеренные показатели.",
           "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
           "read_only": true
+        },
+        {
+          "id": "struct_t86_028_supp_45",
+          "text": "Коды «A2» и «A10» при обычной алфавитной сортировке могут стоять как «A10, A2». Для естественной сортировки выдели буквенную часть и числовую, не теряя сам код.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "В товарном каталоге номера содержат общую букву и число переменной длины.",
+          "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
+          "read_only": true
         }
       ]
     },
@@ -9987,10 +10379,10 @@
       "response_role": "assistant_reply",
       "published_count": 3,
       "previous_staged_count": 11,
-      "added_candidates": 24,
-      "total_candidates_with_published": 38,
+      "added_candidates": 25,
+      "total_candidates_with_published": 39,
       "target": 100,
-      "remaining": 62,
+      "remaining": 61,
       "replies": [
         {
           "id": "struct_t86_029_supp_21",
@@ -10327,6 +10719,20 @@
           "context_note": "Объединяют результаты термометров с разными классами точности.",
           "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
           "read_only": true
+        },
+        {
+          "id": "struct_t86_029_supp_45",
+          "text": "При умножении измерений не добавляй значащие цифры, которых не подтверждает менее точный исходный результат. Отдельно учитывай правила округления и заявленную неопределённость.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Площадь вычисляют из длины с точностью до сантиметра и ширины с точностью до миллиметра.",
+          "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
+          "read_only": true
         }
       ]
     },
@@ -10342,10 +10748,10 @@
       "response_role": "assistant_reply",
       "published_count": 3,
       "previous_staged_count": 11,
-      "added_candidates": 24,
-      "total_candidates_with_published": 38,
+      "added_candidates": 25,
+      "total_candidates_with_published": 39,
       "target": 100,
-      "remaining": 62,
+      "remaining": 61,
       "replies": [
         {
           "id": "struct_t86_030_supp_21",
@@ -10682,6 +11088,20 @@
           "context_note": "В дни акции две кривые растут синхронно, и по ним делают вывод о причинности.",
           "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
           "read_only": true
+        },
+        {
+          "id": "struct_t86_030_supp_45",
+          "text": "Даже если посещения растут раньше продаж, это не исключает общую причину — например, рекламную кампанию. Нужны контрольные условия, а не только сдвиг одной линии во времени.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "На графике рост посещений предшествует росту заказов, и это объявляют причинным эффектом.",
+          "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
+          "read_only": true
         }
       ]
     },
@@ -10697,10 +11117,10 @@
       "response_role": "assistant_reply",
       "published_count": 3,
       "previous_staged_count": 11,
-      "added_candidates": 24,
-      "total_candidates_with_published": 38,
+      "added_candidates": 25,
+      "total_candidates_with_published": 39,
       "target": 100,
-      "remaining": 62,
+      "remaining": 61,
       "replies": [
         {
           "id": "struct_t86_031_supp_21",
@@ -11037,6 +11457,20 @@
           "context_note": "Сравнивают подрядчиков только по цене, не проверив срок выполнения и объём гарантии.",
           "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
           "read_only": true
+        },
+        {
+          "id": "struct_t86_031_supp_45",
+          "text": "Дешёвый тариф с высокой обязательной платой за обслуживание может оказаться дороже в годовом итоге. Для выбора нужно учитывать полную стоимость на одинаковый срок.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "В таблице сравнения тарифов приведён только первоначальный платёж.",
+          "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
+          "read_only": true
         }
       ]
     },
@@ -11052,10 +11486,10 @@
       "response_role": "assistant_reply",
       "published_count": 3,
       "previous_staged_count": 11,
-      "added_candidates": 24,
-      "total_candidates_with_published": 38,
+      "added_candidates": 25,
+      "total_candidates_with_published": 39,
       "target": 100,
-      "remaining": 62,
+      "remaining": 61,
       "replies": [
         {
           "id": "struct_t86_032_supp_21",
@@ -11392,6 +11826,20 @@
           "context_note": "Годовой отчёт смешал дату состояния и сумму операций за двенадцать месяцев.",
           "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
           "read_only": true
+        },
+        {
+          "id": "struct_t86_032_supp_45",
+          "text": "Чтобы сравнить стоимость в постоянных ценах, выбери общий базовый период и корректный индекс цен. Без этого номинальное повышение не доказывает рост реальной ценности.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Оценивают стоимость одинакового набора услуг в отчётах двух разных лет.",
+          "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
+          "read_only": true
         }
       ]
     },
@@ -11407,10 +11855,10 @@
       "response_role": "assistant_reply",
       "published_count": 3,
       "previous_staged_count": 11,
-      "added_candidates": 24,
-      "total_candidates_with_published": 38,
+      "added_candidates": 25,
+      "total_candidates_with_published": 39,
       "target": 100,
-      "remaining": 62,
+      "remaining": 61,
       "replies": [
         {
           "id": "struct_t86_033_supp_21",
@@ -11747,6 +12195,20 @@
           "context_note": "Начисляют оплату за короткую смену и хотят избежать неверной десятичной записи минут.",
           "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
           "read_only": true
+        },
+        {
+          "id": "struct_t86_033_supp_45",
+          "text": "Запись «01:30» в табеле может означать полтора часа, но в другой системе быть временем суток. Сначала уточни формат поля, прежде чем переводить его в десятичные часы.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Экспорт рабочего времени смешал длительности смен и точные моменты на часах.",
+          "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
+          "read_only": true
         }
       ]
     },
@@ -11762,10 +12224,10 @@
       "response_role": "assistant_reply",
       "published_count": 3,
       "previous_staged_count": 11,
-      "added_candidates": 24,
-      "total_candidates_with_published": 38,
+      "added_candidates": 25,
+      "total_candidates_with_published": 39,
       "target": 100,
-      "remaining": 62,
+      "remaining": 61,
       "replies": [
         {
           "id": "struct_t86_034_supp_21",
@@ -12102,6 +12564,20 @@
           "context_note": "Система дважды выгрузила часть данных, но в ней возможны и две одинаковые законные покупки.",
           "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
           "read_only": true
+        },
+        {
+          "id": "struct_t86_034_supp_45",
+          "text": "Совпадение содержимого строк не всегда означает дубль: два независимых заказа могут иметь одинаковую сумму и дату. Нужен надёжный ключ операции или подтверждение системы-источника.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "При очистке выгрузки удаляют строки только из-за совпадения даты, суммы и товара.",
+          "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
+          "read_only": true
         }
       ]
     },
@@ -12117,10 +12593,10 @@
       "response_role": "assistant_reply",
       "published_count": 3,
       "previous_staged_count": 11,
-      "added_candidates": 24,
-      "total_candidates_with_published": 38,
+      "added_candidates": 25,
+      "total_candidates_with_published": 39,
       "target": 100,
-      "remaining": 62,
+      "remaining": 61,
       "replies": [
         {
           "id": "struct_t86_035_supp_21",
@@ -12457,6 +12933,20 @@
           "context_note": "Последний по времени отчёт содержит только одну часть периода, а предыдущий — весь месяц.",
           "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
           "read_only": true
+        },
+        {
+          "id": "struct_t86_035_supp_45",
+          "text": "Разница между файлами может отражать исправление старой ошибки, а не новое событие. Для сопоставления сохрани номер ревизии и журнал изменения правил агрегации.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Второй отчёт пересчитал прошлый месяц после выявленного дублирования операций.",
+          "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
+          "read_only": true
         }
       ]
     },
@@ -12472,10 +12962,10 @@
       "response_role": "assistant_reply",
       "published_count": 3,
       "previous_staged_count": 11,
-      "added_candidates": 24,
-      "total_candidates_with_published": 38,
+      "added_candidates": 25,
+      "total_candidates_with_published": 39,
       "target": 100,
-      "remaining": 62,
+      "remaining": 61,
       "replies": [
         {
           "id": "struct_t86_036_supp_21",
@@ -12812,6 +13302,20 @@
           "context_note": "Скан инструкции содержит серийный код, где цифры внешне похожи на латинские буквы.",
           "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
           "read_only": true
+        },
+        {
+          "id": "struct_t86_036_supp_45",
+          "text": "Для критичного значения, полученного OCR, укажи статус «требует сверки» до проверки человеком. Не публикуй результат расчёта как точный по одному размытому изображению.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Из плохой фотографии считывают размер детали для заказа запасной части.",
+          "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
+          "read_only": true
         }
       ]
     },
@@ -12827,10 +13331,10 @@
       "response_role": "assistant_reply",
       "published_count": 3,
       "previous_staged_count": 11,
-      "added_candidates": 24,
-      "total_candidates_with_published": 38,
+      "added_candidates": 25,
+      "total_candidates_with_published": 39,
       "target": 100,
-      "remaining": 62,
+      "remaining": 61,
       "replies": [
         {
           "id": "struct_t86_037_supp_21",
@@ -13167,6 +13671,20 @@
           "context_note": "Два прибора дают результаты с вероятностной неопределённостью, а не гарантированным допуском.",
           "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
           "read_only": true
+        },
+        {
+          "id": "struct_t86_037_supp_45",
+          "text": "Для произведения длин неопределённость площади нельзя автоматически считать суммой абсолютных погрешностей длин: размерности различаются. Используй подходящее правило распространения для произведения.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Из двух приблизительных размеров прямоугольника хотят получить допуск площади.",
+          "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
+          "read_only": true
         }
       ]
     },
@@ -13182,10 +13700,10 @@
       "response_role": "assistant_reply",
       "published_count": 3,
       "previous_staged_count": 11,
-      "added_candidates": 24,
-      "total_candidates_with_published": 38,
+      "added_candidates": 25,
+      "total_candidates_with_published": 39,
       "target": 100,
-      "remaining": 62,
+      "remaining": 61,
       "replies": [
         {
           "id": "struct_t86_038_supp_21",
@@ -13522,6 +14040,20 @@
           "context_note": "Условия премии описаны словами «в полтора раза», но стороны по-разному трактуют расчёт.",
           "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
           "read_only": true
+        },
+        {
+          "id": "struct_t86_038_supp_45",
+          "text": "Фраза «стало больше на 200%» означает исходное плюс ещё два исходных, то есть втрое. Фраза «стало в два раза больше» означает удвоение; их не следует менять местами.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "В рекламном тексте смешали «увеличилось на 200%» и «увеличилось вдвое».",
+          "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
+          "read_only": true
         }
       ]
     },
@@ -13537,10 +14069,10 @@
       "response_role": "assistant_reply",
       "published_count": 3,
       "previous_staged_count": 11,
-      "added_candidates": 24,
-      "total_candidates_with_published": 38,
+      "added_candidates": 25,
+      "total_candidates_with_published": 39,
       "target": 100,
-      "remaining": 62,
+      "remaining": 61,
       "replies": [
         {
           "id": "struct_t86_039_supp_21",
@@ -13877,6 +14409,20 @@
           "context_note": "В списке ингредиентов часть столбцов подписана, а один объём указан без меры.",
           "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
           "read_only": true
+        },
+        {
+          "id": "struct_t86_039_supp_45",
+          "text": "Если один столбец может быть килограммами, а другой тоннами, сумма до подтверждения единиц бессмысленна. Лучше временно исключить этот столбец из расчёта с явной причиной.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Сводная таблица масс не содержит подписи единицы у одного из источников.",
+          "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
+          "read_only": true
         }
       ]
     },
@@ -13892,10 +14438,10 @@
       "response_role": "assistant_reply",
       "published_count": 3,
       "previous_staged_count": 11,
-      "added_candidates": 24,
-      "total_candidates_with_published": 38,
+      "added_candidates": 25,
+      "total_candidates_with_published": 39,
       "target": 100,
-      "remaining": 62,
+      "remaining": 61,
       "replies": [
         {
           "id": "struct_t88_001_supp_21",
@@ -14232,6 +14778,20 @@
           "context_note": "Форма отчёта имеет показатели, не относящиеся к некоторым подразделениям.",
           "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
           "read_only": true
+        },
+        {
+          "id": "struct_t88_001_supp_45",
+          "text": "Неизмеренный показатель нельзя включать в среднее как ноль и нельзя считать «не применимо» как обычный пропуск без оговорки: это разные причины отсутствия значения.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "В одном отчёте перемешаны нулевые, пустые и неприменимые поля показателя.",
+          "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
+          "read_only": true
         }
       ]
     },
@@ -14247,10 +14807,10 @@
       "response_role": "assistant_reply",
       "published_count": 3,
       "previous_staged_count": 11,
-      "added_candidates": 24,
-      "total_candidates_with_published": 38,
+      "added_candidates": 25,
+      "total_candidates_with_published": 39,
       "target": 100,
-      "remaining": 62,
+      "remaining": 61,
       "replies": [
         {
           "id": "struct_t88_002_supp_21",
@@ -14587,6 +15147,20 @@
           "context_note": "Журнал в регионе с сезонным временем хранит события ночью осеннего перевода часов.",
           "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
           "read_only": true
+        },
+        {
+          "id": "struct_t88_002_supp_45",
+          "text": "Весной при переводе часов некоторые местные значения времени вообще не существуют. Если в журнале указано такое значение без смещения, требуется уточнить часовой пояс и источник часов.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "В расписании указано время из пропущенного часа ночи весеннего перехода.",
+          "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
+          "read_only": true
         }
       ]
     },
@@ -14602,10 +15176,10 @@
       "response_role": "assistant_reply",
       "published_count": 3,
       "previous_staged_count": 11,
-      "added_candidates": 24,
-      "total_candidates_with_published": 38,
+      "added_candidates": 25,
+      "total_candidates_with_published": 39,
       "target": 100,
-      "remaining": 62,
+      "remaining": 61,
       "replies": [
         {
           "id": "struct_t88_003_supp_21",
@@ -14942,6 +15516,20 @@
           "context_note": "В таблице временно скрыли отменённые операции, но итог продолжает учитывать полный журнал.",
           "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
           "read_only": true
+        },
+        {
+          "id": "struct_t88_003_supp_45",
+          "text": "Среднее только по видимым строкам после фильтра может отличаться от среднего по всему набору. Укажи, какую совокупность охватывает итоговая формула.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Аналитик отфильтровал завершённые заказы, но хочет знать средний срок и для всех заказов.",
+          "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
+          "read_only": true
         }
       ]
     },
@@ -14957,10 +15545,10 @@
       "response_role": "assistant_reply",
       "published_count": 3,
       "previous_staged_count": 11,
-      "added_candidates": 24,
-      "total_candidates_with_published": 38,
+      "added_candidates": 25,
+      "total_candidates_with_published": 39,
       "target": 100,
-      "remaining": 62,
+      "remaining": 61,
       "replies": [
         {
           "id": "struct_t88_004_supp_21",
@@ -15297,6 +15885,20 @@
           "context_note": "Два аналитических сервиса показывают разные итоги за период с одинаковой подписью «7 дней».",
           "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
           "read_only": true
+        },
+        {
+          "id": "struct_t88_004_supp_45",
+          "text": "Семь календарных дней до полуночи и последние 168 часов от текущего момента — разные окна. Для совпадения отчётов укажи точный момент отсечения.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Сравнивают недельную активность панели с фиксированной датой и окна в 168 часов.",
+          "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
+          "read_only": true
         }
       ]
     },
@@ -15312,10 +15914,10 @@
       "response_role": "assistant_reply",
       "published_count": 3,
       "previous_staged_count": 11,
-      "added_candidates": 24,
-      "total_candidates_with_published": 38,
+      "added_candidates": 25,
+      "total_candidates_with_published": 39,
       "target": 100,
-      "remaining": 62,
+      "remaining": 61,
       "replies": [
         {
           "id": "struct_t88_005_supp_21",
@@ -15652,6 +16254,20 @@
           "context_note": "В турнирной таблице записано отношение двух непересекающихся исходов.",
           "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
           "read_only": true
+        },
+        {
+          "id": "struct_t88_005_supp_45",
+          "text": "Отношение 2:3 может относиться к шансам, а не к двум частям единого целого. Прежде чем перевести его в вероятности, выясни, какие события составляют числитель и знаменатель.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Формулировка «шансы два к трём» не уточняет, речь о победах к поражениям или двух независимых категориях.",
+          "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
+          "read_only": true
         }
       ]
     },
@@ -15667,10 +16283,10 @@
       "response_role": "assistant_reply",
       "published_count": 3,
       "previous_staged_count": 11,
-      "added_candidates": 24,
-      "total_candidates_with_published": 38,
+      "added_candidates": 25,
+      "total_candidates_with_published": 39,
       "target": 100,
-      "remaining": 62,
+      "remaining": 61,
       "replies": [
         {
           "id": "struct_t88_006_supp_21",
@@ -16007,6 +16623,20 @@
           "context_note": "Заявку отправили около крайнего срока через онлайн-форму с временной меткой.",
           "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
           "read_only": true
+        },
+        {
+          "id": "struct_t88_006_supp_45",
+          "text": "Если заявка отмечена как отправленная в 18:00, но сервер получил её в 18:00:02, выполнение срока зависит от принятого правила фиксации времени. Не подменяй его своим предположением.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Срок подачи совпал с задержкой между нажатием кнопки и регистрацией на сервере.",
+          "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
+          "read_only": true
         }
       ]
     },
@@ -16022,10 +16652,10 @@
       "response_role": "assistant_reply",
       "published_count": 3,
       "previous_staged_count": 11,
-      "added_candidates": 24,
-      "total_candidates_with_published": 38,
+      "added_candidates": 25,
+      "total_candidates_with_published": 39,
       "target": 100,
-      "remaining": 62,
+      "remaining": 61,
       "replies": [
         {
           "id": "struct_t88_007_supp_21",
@@ -16362,6 +16992,20 @@
           "context_note": "Пересчитывают старый платёж, дата оплаты и дата учётного отражения различаются.",
           "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
           "read_only": true
+        },
+        {
+          "id": "struct_t88_007_supp_45",
+          "text": "Банковский курс валюты на дату сделки и курс фактического исполнения обмена могут различаться. Для подтверждённой суммы используй параметры исполненной операции, а не справочный график.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Обмен валюты был заявлен утром, но исполнен позже по условиям сервиса.",
+          "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
+          "read_only": true
         }
       ]
     },
@@ -16377,10 +17021,10 @@
       "response_role": "assistant_reply",
       "published_count": 3,
       "previous_staged_count": 11,
-      "added_candidates": 24,
-      "total_candidates_with_published": 38,
+      "added_candidates": 25,
+      "total_candidates_with_published": 39,
       "target": 100,
-      "remaining": 62,
+      "remaining": 61,
       "replies": [
         {
           "id": "struct_t88_008_supp_21",
@@ -16717,6 +17361,20 @@
           "context_note": "После сбоя датчика построили непрерывную линию из предыдущих показаний.",
           "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
           "read_only": true
+        },
+        {
+          "id": "struct_t88_008_supp_45",
+          "text": "Перенос последнего известного значения через длинный пропуск скрывает возможные изменения. Ограничь допустимую длину такого заполнения и показывай интервал без измерений.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Телеметрия отсутствовала двое суток, а график продолжил прежнюю горизонтальную линию.",
+          "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
+          "read_only": true
         }
       ]
     },
@@ -16732,10 +17390,10 @@
       "response_role": "assistant_reply",
       "published_count": 3,
       "previous_staged_count": 11,
-      "added_candidates": 24,
-      "total_candidates_with_published": 38,
+      "added_candidates": 25,
+      "total_candidates_with_published": 39,
       "target": 100,
-      "remaining": 62,
+      "remaining": 61,
       "replies": [
         {
           "id": "struct_t88_009_supp_21",
@@ -17072,6 +17730,20 @@
           "context_note": "Компания открыла новый канал обратной связи, и количество обращений удвоилось.",
           "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
           "read_only": true
+        },
+        {
+          "id": "struct_t88_009_supp_45",
+          "text": "Десять жалоб на 100 активных клиентов и десять на 10 000 активных клиентов описывают разные частоты. При этом один клиент может подать несколько жалоб — уточни единицу подсчёта.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Сравнивают два сервиса с одинаковым числом обращений, но разной базой пользователей.",
+          "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
+          "read_only": true
         }
       ]
     },
@@ -17087,10 +17759,10 @@
       "response_role": "assistant_reply",
       "published_count": 3,
       "previous_staged_count": 11,
-      "added_candidates": 24,
-      "total_candidates_with_published": 38,
+      "added_candidates": 25,
+      "total_candidates_with_published": 39,
       "target": 100,
-      "remaining": 62,
+      "remaining": 61,
       "replies": [
         {
           "id": "struct_t88_010_supp_21",
@@ -17427,6 +18099,20 @@
           "context_note": "Публичный рейтинг должен объяснить, почему участники с одинаковыми очками вошли не все.",
           "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
           "read_only": true
+        },
+        {
+          "id": "struct_t88_010_supp_45",
+          "text": "Правило рейтинга должно объяснять, как вести себя при ничьей на последнем месте: расширять список, применять согласованный второй критерий или считать места общими. Без такого правила ровно десять позиций условны.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Трое участников делят десятое место по числу баллов.",
+          "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
+          "read_only": true
         }
       ]
     },
@@ -17442,10 +18128,10 @@
       "response_role": "assistant_reply",
       "published_count": 3,
       "previous_staged_count": 11,
-      "added_candidates": 24,
-      "total_candidates_with_published": 38,
+      "added_candidates": 25,
+      "total_candidates_with_published": 39,
       "target": 100,
-      "remaining": 62,
+      "remaining": 61,
       "replies": [
         {
           "id": "struct_t88_011_supp_21",
@@ -17782,6 +18468,20 @@
           "context_note": "Бухгалтерская ведомость содержит первоначальную покупку и обратную корректирующую проводку.",
           "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
           "read_only": true
+        },
+        {
+          "id": "struct_t88_011_supp_45",
+          "text": "Отрицательная корректировка расхода может означать сторно ранее учтённой операции, а не новый доход. В итоговой ведомости разделяй возвраты и обычные поступления.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "В учёте затрат встречается отрицательное значение после отмены покупки.",
+          "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
+          "read_only": true
         }
       ]
     },
@@ -17797,10 +18497,10 @@
       "response_role": "assistant_reply",
       "published_count": 3,
       "previous_staged_count": 11,
-      "added_candidates": 24,
-      "total_candidates_with_published": 38,
+      "added_candidates": 25,
+      "total_candidates_with_published": 39,
       "target": 100,
-      "remaining": 62,
+      "remaining": 61,
       "replies": [
         {
           "id": "struct_t88_012_supp_21",
@@ -18137,6 +18837,20 @@
           "context_note": "Финансовый план года строится из уже известных фактов и прогноза на оставшиеся месяцы.",
           "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
           "read_only": true
+        },
+        {
+          "id": "struct_t88_012_supp_45",
+          "text": "Если данные помечены как предварительный факт, их могут пересчитать. В прогнозе отделяй такие значения от окончательных фактов и от чистых предположений на будущее.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Годовой бюджет содержит закрытые месяцы, один предварительный месяц и прогноз остатка года.",
+          "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
+          "read_only": true
         }
       ]
     },
@@ -18152,10 +18866,10 @@
       "response_role": "assistant_reply",
       "published_count": 3,
       "previous_staged_count": 11,
-      "added_candidates": 24,
-      "total_candidates_with_published": 38,
+      "added_candidates": 25,
+      "total_candidates_with_published": 39,
       "target": 100,
-      "remaining": 62,
+      "remaining": 61,
       "replies": [
         {
           "id": "struct_t88_013_supp_21",
@@ -18492,6 +19206,20 @@
           "context_note": "В отчёте о частоте событий знаменатель указан «на 1000», без уточнения единицы наблюдения.",
           "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
           "read_only": true
+        },
+        {
+          "id": "struct_t88_013_supp_45",
+          "text": "Частота «на тысячу человеко-лет» не равна риску для одной тысячи людей за календарный год без допущений о времени наблюдения. Не теряй единицу знаменателя.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "В эпидемиологическом отчёте показатель указан на единицу накопленного времени наблюдения.",
+          "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
+          "read_only": true
         }
       ]
     },
@@ -18507,10 +19235,10 @@
       "response_role": "assistant_reply",
       "published_count": 3,
       "previous_staged_count": 11,
-      "added_candidates": 24,
-      "total_candidates_with_published": 38,
+      "added_candidates": 25,
+      "total_candidates_with_published": 39,
       "target": 100,
-      "remaining": 62,
+      "remaining": 61,
       "replies": [
         {
           "id": "struct_t88_014_supp_21",
@@ -18847,6 +19575,20 @@
           "context_note": "В заявке перечислены даты пребывания, а в табеле нужно отличить даты от фактических часов.",
           "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
           "read_only": true
+        },
+        {
+          "id": "struct_t88_014_supp_45",
+          "text": "При сроке «три рабочих дня» нельзя просто взять три соседние календарные даты. Для вычисления крайней даты нужен согласованный производственный календарь и момент начала отсчёта.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Договор задаёт срок в рабочих днях, а человек считает календарные.",
+          "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
+          "read_only": true
         }
       ]
     },
@@ -18862,10 +19604,10 @@
       "response_role": "assistant_reply",
       "published_count": 3,
       "previous_staged_count": 11,
-      "added_candidates": 24,
-      "total_candidates_with_published": 38,
+      "added_candidates": 25,
+      "total_candidates_with_published": 39,
       "target": 100,
-      "remaining": 62,
+      "remaining": 61,
       "replies": [
         {
           "id": "struct_t88_015_supp_21",
@@ -19202,6 +19944,20 @@
           "context_note": "Один большой филиал обслуживает много заказов, другой — всего несколько.",
           "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
           "read_only": true
+        },
+        {
+          "id": "struct_t88_015_supp_45",
+          "text": "Если у двух филиалов по пять и пятьсот заказов, их средние нельзя усреднять с равным весом для оценки среднего заказа всей компании. Вес каждого филиала — число заказов.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "В отчёте выводят общую среднюю цену заказа из средних по маленькому и крупному филиалам.",
+          "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
+          "read_only": true
         }
       ]
     },
@@ -19217,10 +19973,10 @@
       "response_role": "assistant_reply",
       "published_count": 3,
       "previous_staged_count": 11,
-      "added_candidates": 24,
-      "total_candidates_with_published": 38,
+      "added_candidates": 25,
+      "total_candidates_with_published": 39,
       "target": 100,
-      "remaining": 62,
+      "remaining": 61,
       "replies": [
         {
           "id": "struct_t88_016_supp_21",
@@ -19557,6 +20313,20 @@
           "context_note": "В анкете на чувствительный вопрос многие оставили поле пустым, а отчёт считает только ответы.",
           "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
           "read_only": true
+        },
+        {
+          "id": "struct_t88_016_supp_45",
+          "text": "Если из опроса исключили отрицательные ответы как «сомнительные», итоговая доля станет завышена. Правила исключения должны быть независимы от желаемого результата.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "После получения ответов решили исключить часть неудобных анкет без заранее определённого критерия.",
+          "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
+          "read_only": true
         }
       ]
     },
@@ -19572,10 +20342,10 @@
       "response_role": "assistant_reply",
       "published_count": 3,
       "previous_staged_count": 11,
-      "added_candidates": 24,
-      "total_candidates_with_published": 38,
+      "added_candidates": 25,
+      "total_candidates_with_published": 39,
       "target": 100,
-      "remaining": 62,
+      "remaining": 61,
       "replies": [
         {
           "id": "struct_t88_017_supp_21",
@@ -19912,6 +20682,20 @@
           "context_note": "На сайте указана цена «от», но пользователь выбирает услугу с конкретными дополнительными условиями.",
           "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
           "read_only": true
+        },
+        {
+          "id": "struct_t88_017_supp_45",
+          "text": "Стоимость «от 500» не включает автоматически обязательную доставку или комиссию оформления. Для сравнения конечной цены уточни все неизбежные доплаты.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Сайт показывает минимальную цену услуги до обязательных дополнительных платежей.",
+          "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
+          "read_only": true
         }
       ]
     },
@@ -19927,10 +20711,10 @@
       "response_role": "assistant_reply",
       "published_count": 3,
       "previous_staged_count": 11,
-      "added_candidates": 24,
-      "total_candidates_with_published": 38,
+      "added_candidates": 25,
+      "total_candidates_with_published": 39,
       "target": 100,
-      "remaining": 62,
+      "remaining": 61,
       "replies": [
         {
           "id": "struct_t88_018_supp_21",
@@ -20267,6 +21051,20 @@
           "context_note": "Покупатель оплатил товар, затем заказ отменили и вернули средства.",
           "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
           "read_only": true
+        },
+        {
+          "id": "struct_t88_018_supp_45",
+          "text": "При отмене уже оплаченного заказа деньги могут возвращаться позже даты отмены. В отчёте раздели дату изменения статуса и дату реального возврата.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Покупку отменили в конце месяца, а возврат пришёл на карту в следующем месяце.",
+          "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
+          "read_only": true
         }
       ]
     },
@@ -20282,10 +21080,10 @@
       "response_role": "assistant_reply",
       "published_count": 3,
       "previous_staged_count": 11,
-      "added_candidates": 24,
-      "total_candidates_with_published": 38,
+      "added_candidates": 25,
+      "total_candidates_with_published": 39,
       "target": 100,
-      "remaining": 62,
+      "remaining": 61,
       "replies": [
         {
           "id": "struct_t88_019_supp_21",
@@ -20622,6 +21420,20 @@
           "context_note": "В API задним числом изменили статистику прошлой недели после устранения ошибки подсчёта.",
           "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
           "read_only": true
+        },
+        {
+          "id": "struct_t88_019_supp_45",
+          "text": "Доступная на момент принятия решения версия показателя может отличаться от пересчитанной задним числом. Для честной проверки прогноза сохраняй именно известный тогда снимок данных.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Проверяют старое решение по статистике, которая была исправлена лишь спустя месяц.",
+          "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
+          "read_only": true
         }
       ]
     },
@@ -20637,10 +21449,10 @@
       "response_role": "assistant_reply",
       "published_count": 3,
       "previous_staged_count": 11,
-      "added_candidates": 24,
-      "total_candidates_with_published": 38,
+      "added_candidates": 25,
+      "total_candidates_with_published": 39,
       "target": 100,
-      "remaining": 62,
+      "remaining": 61,
       "replies": [
         {
           "id": "struct_t88_020_supp_21",
@@ -20977,6 +21789,20 @@
           "context_note": "Слайды презентации показывают похожие наклоны линий при разных интервалах и масштабах.",
           "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
           "read_only": true
+        },
+        {
+          "id": "struct_t88_020_supp_45",
+          "text": "У двух графиков разная ширина изображения, поэтому одинаковый визуальный наклон не означает одинакового темпа. Сопоставь числовое изменение за одинаковое время.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Сравнивают наклон линий на двух слайдах с разными пропорциями изображений.",
+          "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
+          "read_only": true
         }
       ]
     },
@@ -20992,10 +21818,10 @@
       "response_role": "assistant_reply",
       "published_count": 3,
       "previous_staged_count": 11,
-      "added_candidates": 24,
-      "total_candidates_with_published": 38,
+      "added_candidates": 25,
+      "total_candidates_with_published": 39,
       "target": 100,
-      "remaining": 62,
+      "remaining": 61,
       "replies": [
         {
           "id": "struct_t88_021_supp_21",
@@ -21330,6 +22156,20 @@
           "response_role": "assistant_reply",
           "context": "direct",
           "context_note": "Публичная таблица позволяет вычесть одну маленькую категорию из общего итога.",
+          "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
+          "read_only": true
+        },
+        {
+          "id": "struct_t88_021_supp_45",
+          "text": "Даже объединение маленькой группы с другой не всегда гарантирует анонимность, если предыдущий отчёт раскрывал старую сумму. Проверь возможность вычислить скрытую часть вычитанием.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Публикуют новую агрегированную статистику после уже опубликованной более детальной таблицы.",
           "avoid": "Только прямой запрос и совпадающий контекст; не приписывать себе непроверенные данные или действия, не давать санкций и не раскрывать приватные сведения.",
           "read_only": true
         }

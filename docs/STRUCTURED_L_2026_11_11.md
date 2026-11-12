@@ -168,3 +168,9 @@
 - New distinctions: missing denominators, misleading rounded screens, fee limits, duplicate exports, calendar boundaries, revised history, uncertainty and confidentiality of small groups. All 60 IDs, normalized texts and context notes are unique versus currently fetched K/L (including new K suffix 42); no token-set Jaccard >=0.70 (maximum 0.5625). Lexical checks do not establish full editorial originality.
 - Read-only, direct-context synthetic content for all_ai_bots only. No personal data, sanctions, commands, ImPULS updates or live consumer registration. Source main 6c9f430da47f137d39a72bbd28c057cfb8f6be96; registered SHA-256 55b3f6126d36cd92687d005b7fedf5a11df9ee61cf453103accdf1f13c8498f0. Manifest and cache unchanged.
 - Next suffix 45. PR remains Draft/BLOCKED until exact-head CI, editorial/consumer review, current-main validation and post-main gates.
+
+## L further independent continuation — 12 Nov 2026, suffix 45
+
+- +60 independently authored context-specific replies, 60 stable questions, 1,500 new staging answers in PR #662, 39/100 per intent including published and older staging, 61 remaining per intent and 3,660 total. 60 partial, zero completed. Next suffix 46.
+- New conditions: locale-specific CSV parsing, currency direction, dates and DST, missing denominators, multiple coupons with threshold, statistical sampling, incomplete units, origin revisions and privacy risks of marginal totals. New 60 IDs, normalized responses and context notes are unique against latest fetched K/L including new K suffix 43; zero token-Jaccard >=0.70 (maximum 0.3750). Full semantic editing and comparison with all historical sources still required before release.
+- Synthetic read-only text for all_ai_bots and direct context only. No manifest, active caches, private messages, sanctions or ImPULS changes. Do not merge before verified exact-head CI, compatible main and post-main gate.
