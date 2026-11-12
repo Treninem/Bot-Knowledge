@@ -133,3 +133,10 @@
 ## K editorial precision correction — 2026-11-12
 - `struct_t90_008_supp_38`: заменена технически длинная десятичная строка на естественное объяснение ошибки двоичного округления. Количество ответов не изменилось; предыдущие контрольные значения остаются верны.
 - Текст синтетический, read-only, без персональных данных; требуется повторная CI на новом SHA. Источник, manifest и consumer cache не изменены.
+
+
+## K21 — 12.11.2026: 54 context-specific original continuations
+
+- +54 Russian synthetic replies, suffix 39 across the same 54 intents, previous 1080 -> current 1134 staging candidates; 33/100 per intent (3 registered + 9 older staged + 21 K), 67 remaining each / 3618 remaining total; 54 partial, 0 completed.
+- New contexts distinguish numeric methods, payment bases, time-zone shifts, sampling assumptions, comparison definitions and missing metadata. Identical normalized replies/contexts rejected by local in-memory preflight; maximum token Jaccard against earlier K 0.3750 (threshold <0.70). Not a full all-packs semantic or consumer audit.
+- Staging only; consumer_registered=false. No changes to published manifest, pack SHA, BotHost or ImPULS. Before merge verify exact-head CI and main compatibility; next suffix **40**.
