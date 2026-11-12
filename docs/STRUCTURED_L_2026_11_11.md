@@ -133,3 +133,10 @@
 - New contexts include calendar-day boundaries, per-thousand rates, ambiguous time strings, tax-inclusive prices, versioned backfills, dimensional units, small-group privacy and mixed data types; not mechanical synonym substitutions.
 - JS validation against 2106 existing K/L staged texts: no exact normalised repeats and no token-set Jaccard >=0.70. This check is lexical; full independent semantic review of all packs remains outstanding. No user data, no sanctions, read-only consumer_registered=false. Source pack SHA and manifest unchanged.
 - Three paths touched: staging JSON, focused Python test and progress journal. Await exact-head CI on final SHA, current-main compatibility and consumer/editorial review. Do not merge while main post-push checks are not confirmed.
+
+
+## L second independent set — 12.11.2026
+- +60 original synthetic RU contextual replies, one for each existing stable intention, suffix 40; count 33/100 → 34/100 per intent, staged 1200 here, 3960 remaining in 60 partial sets, 0 completed. Next suffix 41.
+- Cases distinguish time zones, reporting vintages, odds versus proportions, fractional hours versus clock time, accounting reversals and laboratory detection limits, with separate applicability notes. Read-only, all_ai_bots, no live actions or sanctions.
+- JS preflight against 2220 current K/L staged text occurrences: unique normalized texts and IDs, no exact match and no Jaccard ≥0.70. Full all-pack semantic review remains pending. Published manifest and consumer cache remain unchanged.
+- One atomic 3-path commit (staging JSON, targeted test, checkpoint log). Exact-head CI must be observed on final head; no merge until consumer/editorial and main push gates.
