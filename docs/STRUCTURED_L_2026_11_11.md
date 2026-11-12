@@ -112,3 +112,10 @@
 - Исправлены **2 ранее созданные** реплики без увеличения счётчика новых ответов: неточная формулировка квартального итога по трём месяцам, неоднозначное описание длительности одной даты.
 - Machine preflight внутри K/L: ноль новых точных и лексических дублей ≥0.70, максимальный token-Jaccard **0.4167**; требуется независимый глубокий смысловой аудит и полный exact-head CI.
 - Только синтетический staging без добавления в manifest, регистрации consumer, санкций и изменения работающих кэшей. Merge остаётся BLOCKED до quality gates и post-main CI.
+
+
+## L16 — 12 November 2026: 60 contextual cases
+
+- +60 unique RU replies (suffix 37) in 60 unchanged intents; 1020 staging candidates overall, **31/100** each including 3 registered + 11 older staged, **4140 remaining**, 60 partial, 0 complete. Resume suffix **38**.
+- New cases cover ambiguity of numeric locales and time zones, rolled-up totals, missing observations, privacy of small aggregates, invoice duplication and percentage semantics. On GitHub source readback: no normalized exact overlaps in current K/L and no token-Jaccard >=0.70 (maximum 0.3929). Complete all-pack semantic audit not claimed.
+- No registered package, manifest, runtime cache, consumer code, sanction or private user data changed. Fresh exact-head CI and compatibility/consumer review required before any merge.
