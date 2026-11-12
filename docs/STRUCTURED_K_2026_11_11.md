@@ -107,3 +107,10 @@
 - +54 **new** original RU context-conditioned replies across the same 54 intents (suffix 35). This PR now has **918 staging records**; including 3 registered and 9 earlier staged per intent, **29/100**, **71 missing each / 3834 total**, 54 partial and **0 completed 100/100**. Next suffix **36**.
 - Added cases: first-observed failure rates, refunds vs income, DST overnight shifts, survey weights, paired uncertainty, JOIN multiplicities, axis interpretation, numerical precision, event causality and related context-dependent explanations. 54 non-duplicated IDs and context notes; JavaScript preflight against both K/L existing records found zero normalized exact text collisions or token Jaccard >=0.70 (maximum 0.5357). Semantic all-pack review not claimed.
 - Staging only, not manifest-registered; published source SHA-256 55b3f6126d36cd92687d005b7fedf5a11df9ee61cf453103accdf1f13c8498f0 unchanged. Exact-head CI must be checked on this new commit. No sanctions, private data, consumer deployment or cache changes.
+
+
+## K17 — 12 November 2026: 54 further original contextual distinctions
+
+- +54 genuinely new RU replies (suffix 36), making **972** in this PR. Each of 54 intents is now **30/100** including registered and older staging; **3780 missing**, 0 completed. Resume at suffix **37**.
+- New situations include shift schedules, denominators, nonresponse weighting, effective annual rates, matrix orientation, source provenance and risk of overinterpreting causality. Normalized exact overlaps against K+L staged content: 0; token-set Jaccard >=0.70: 0 (max 0.4333). Full semantic all-pack audit not claimed.
+- Read-only staging, not manifest registered. Exact-head CI must be repeated on current commit; no consumer rollout or private data.
