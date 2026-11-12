@@ -203,3 +203,9 @@
 - Different conditions include zero-baseline percentages, source-sensitive date formats, capped source precision, inclusive vs exclusive time windows, constrained coupons, identity-preserving deduplication and small-group disclosure risks. Read-only, all_ai_bots, synthetic and direct-context only.
 - Preflight compared 60 new candidates with fetched current K/L and registered structured source: **zero normalized exact repeats; zero token-Jaccard ≥0.70**, maximum **0.3714**. This does not establish independent all-packs semantic review or consumer behavior.
 - Atomic GitHub commit updates staging JSON, matching Python test assertions and this journal; registered manifest/cache/ImPULS unchanged. Merge remains blocked until complete exact-head CI and editorial/consumer verification.
+
+## L50 — 12 November 2026: third distinct context batch
+
+- This run now totals **+180** new replies across 60 stable canonical questions (suffixes 48–50). This batch added **60** new entries; PR staging **1740 → 1800**, per question **43/100 → 44/100** including earlier registered and staged answers, 60 partial, 0 complete. **56 remain each / 3360 in total**. Next suffix **51**.
+- Fresh scenarios cover OCR scientific notation, ratio interpretation, VAT-inclusive prices, time boundaries and night shifts, archive identifiers, incomplete samples and disclosure limits. No user transcripts, sanctions, private data, actions, or unsupported consumer features.
+- Checked latest 60 against fetched K/L and registered structured QA: **0 normalized exact matches, 0 token-Jaccard ≥0.70**, maximum **0.4000**. Full independent meaning review and consumer delivery still needed. Changes are staging-only; keep main manifest and caches untouched.
