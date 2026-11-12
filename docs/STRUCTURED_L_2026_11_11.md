@@ -189,3 +189,10 @@
 - Новые случаи затрагивают граничные проценты, типы метрик, пересечения групп, дробные часы, неполные интервалы, разную точность, округление, источники валютного курса, остатки и потоки, ревизии данных, риск косвенного раскрытия малых групп. Условия применения заданы отдельно на каждом ответе; все записи синтетические и read-only.
 - Программная проверка до записи: нормализованные ID/тексты/контекстные пояснения новые относительно текущего L, token-Jaccard новых ответов с L меньше 0.70; дополнительно проверить полные межпакетные и семантические пересечения перед публикацией.
 - Обновлены три пути: staging JSON, регрессионный тест, этот журнал. Manifest/зарегистрированные SHA-256, ImPULS и live-cache не менялись. Следующее продолжение **48**; PR остаётся Draft/BLOCKED до exact-head CI, семантического ревью и валидированного consumer-пути.
+
+## L48 — 12 November 2026: distinct source and measurement contexts
+
+- New in this execution: **60** synthetic context-labelled Russian replies, one per existing stable intent, suffix `48`; **1620 → 1680** in PR #662. Per-intent combined count **41/100 → 42/100** (3 registered + 11 earlier staged + 28 in L); 60 partial sets, 0 complete; **58 missing each / 3480 remaining**. Next suffix **49**.
+- Cases address column types versus displayed digits, overlapping group intersections, cost per unit, historical rate basis, withheld totals, event-level IDs, revisions, missing observations and misleading chart scales. All are scoped to direct addressed contexts, read-only, with no personal data or sanctions.
+- In-process JavaScript comparison on the fetched immutable K/L blobs and new entries found **0 normalized exact collisions and 0 token-set Jaccard ≥0.70** (maximum 0.3889). Broader all-pack semantic and consumer evaluation remains pending. No registered manifest, consumer cache or live bot modification.
+- GitHub atomic commit uses three paths (staging JSON, checkpoint test, journal); require full current-head CI and independent editorial review before any merge.
