@@ -147,3 +147,10 @@
 - +54 newly written synthetic replies for the same 54 stable intents, suffix 40. The K staging PR now contains **1188 new replies**; each intent has 34/100 including 3 registered and 9 older staged. Remain 66 per intent / 3564 total; 54 partial, 0 completed.
 - Different scenarios: zero-sales baseline, hold vs balance, incomplete shifts, delayed events, unlogged errors, multi-test p-values, cash vs profit and changing denominators. Texts, IDs and context notes passed in-memory uniqueness checks; no exact or token-set Jaccard ≥0.70 against K's 1134 prior answers (max 0.3590). Cross-pack semantic review still outstanding.
 - Staging-only; no manifest, active consumer, deployed bot or source pack modification. Next suffix **41**. This head needs its own exact-head CI; main post-push gate is not bypassed.
+
+## K continuation — 12 November 2026, suffix 41
+
+- +54 newly authored context-scoped Russian answers for the same 54 canonical intents; K staging now 1,242 candidates, 35/100 inclusive of registered+older staged, 3,510 missing, 0 newly complete. Resume suffix 42.
+- Distinct use cases: missing-vs-zero baseline, reverse price change, stock/flow, shift time, statistical inference, data joins, currency, plotting and sampling. All entries remain direct-only, read-only, and generic. `consumer_registered=false`.
+- Programmatic new-text check against K and L staging: 0 exact normalized matches, 0 token-set Jaccard >= 0.70. Lexical checks are not a full semantic or consumer audit.
+- Exact source manifest remains unchanged; no live-bot cache or private ImPULS modifications. Current-head CI and post-main checks required before merge.
