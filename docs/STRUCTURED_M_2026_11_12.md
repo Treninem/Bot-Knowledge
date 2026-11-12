@@ -37,3 +37,11 @@ First two sets: [M52](https://github.com/Treninem/Bot-Knowledge/commit/2c1405d79
 **Draft/BLOCKED:** snapshot historically 7,999,374 / 8,388,608 bytes, so L/M cannot be added wholesale to the registered consumer delivery. Require current full exact-head CI, independent semantic/context routing review, a validated size-compatible selection/delivery plan, safe main compatibility and post-main verification before merging. Do not raise the limit, disable safeguards or claim any live bot acquired these data.
 
 Next: preserve all 180 newly staged records, resume the same 60 intents at suffix **55** if further genuinely different contexts are found; otherwise work on other uncovered areas while separately testing consumer selection and resolving CI/main delivery gates.
+
+
+## M55 checkpoint — 13 November 2026
+
+- Continued the same 60 intents in [PR #662](https://github.com/Treninem/Bot-Knowledge/pull/662) from head `4ce840abfa8793c1260e6227bd9d03f6c8a079bd`, source main `6c9f430da47f137d39a72bbd28c057cfb8f6be96`.
+- Added **60 original synthetic Russian contextual replies**, suffix 55, one per existing intent. Preserved L=1,860 and M52–54=180. M now **240**, L+M now **2,100**. Published 3 + older staging 11 + L31 + M4 per intent = **49/100**; 60 partial, zero completed, 51 remaining per intent, 3,060 total; resume at **56**.
+- Before writing, normalized exact response/context comparisons against previous M found no duplicates. Maximum token-set Jaccard against previous M was **0.3077**, none ≥0.70. Updated Python tests cover exact sequence/counts, published source SHA, A–J/L lexical comparisons, audience, context, no email and read-only safety. Broad independent semantic checks remain necessary.
+- M JSON is **313479 UTF-8 bytes** (below per-file 2 MiB limit). Only this unregistered staging file, its dedicated test and journal changed. No consumer manifest, registered SHA, cache, ImPULS, BotHost, payment or live deployment changes. Exact-head CI and consumer-delivery/snapshot size must be confirmed before merge.
