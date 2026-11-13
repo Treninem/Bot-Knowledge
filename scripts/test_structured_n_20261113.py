@@ -1,4 +1,4 @@
-"""Read-only structural and lexical regression for evolving N81–N100 staging."""
+"""Read-only structural and lexical regression for N81–N106, including completion at 100 per intent."""
 from __future__ import annotations
 
 import hashlib
@@ -66,7 +66,7 @@ class StructuredNContinuation(unittest.TestCase):
         self.assertEqual(len(self.n["entries"]), 60)
         self.assertGreaterEqual(len(self.n_replies), 300)
         self.assertEqual(len(self.n_replies) % 60, 0)
-        self.assertLessEqual(len(self.n_replies), 1200)
+        self.assertLessEqual(len(self.n_replies), 1560)
         self.assertEqual(len(replies(self.l)), 1860)
         self.assertEqual(len(replies(self.m)), 1740)
         c = self.n["checkpoint"]
@@ -79,8 +79,8 @@ class StructuredNContinuation(unittest.TestCase):
         self.assertEqual(c["total_per_intent"], 74 + per)
         self.assertEqual(c["remaining_per_intent"], 26 - per)
         self.assertEqual(c["remaining_total"], 60 * (26 - per))
-        self.assertEqual(c["partial_intents"], 60)
-        self.assertEqual(c["finished_100"], 0)
+        self.assertEqual(c["partial_intents"], 60 if per < 26 else 0)
+        self.assertEqual(c["finished_100"], 60 if per == 26 else 0)
         self.assertEqual(c["next_suffix"], 81 + per)
         for l_entry, m_entry, n_entry in zip(self.l["entries"], self.m["entries"], self.n["entries"]):
             self.assertEqual(l_entry["intent_id"], m_entry["intent_id"])
@@ -91,6 +91,8 @@ class StructuredNContinuation(unittest.TestCase):
             )
             self.assertEqual((n_entry["added_candidates"], n_entry["total_candidates_with_published"], n_entry["remaining"], n_entry["target"]),
                              (per, 74 + per, 26 - per, 100))
+            self.assertEqual(len(n_entry["replies"]) + n_entry["published_count"] + n_entry["previous_staged_count"] + n_entry["prior_L_count"] + n_entry["prior_M_count"],
+                             n_entry["target"] - n_entry["remaining"])
             self.assertEqual([r["id"] for r in n_entry["replies"]],
                              [f"{n_entry['intent_id']}_supp_{suffix}" for suffix in range(81, 81 + per)])
 
