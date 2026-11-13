@@ -1,4 +1,4 @@
-name: Structured RU N81-N84 read-only exact-head QA
+name: Structured RU N81-N85 read-only exact-head QA
 on:
   pull_request:
     paths:
@@ -23,6 +23,10 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Report staged N bytes and SHA-256
+        run: |
+          wc -c staging/ru/structured_information_20261113_delta_n.json
+          sha256sum staging/ru/structured_information_20261113_delta_n.json
       - name: Validate packs and L/M/N staging
         run: |
           python scripts/validate_pack.py
