@@ -37,3 +37,15 @@ Main remains `6c9f430da47f137d39a72bbd28c057cfb8f6be96` at this read. Existing #
 **Draft/BLOCKED:** Require real complete exact-head CI for the final PR head, independent cross-stage semantic/context review, demonstrated consumer size/selection compatibility, fresh-main reconciliation and actual post-main verification. A green run for an earlier head does not satisfy a later commit. No PR was merged or closed in this checkpoint.
 
 **Next batch:** N83 and subsequent genuinely useful context-specific answers; update counters by delta, not by file size. Do not expand mechanically where a unique answer cannot be justified.
+
+## Cross-PR lexical screen — same checkpoint
+
+Read the actual Git blobs from the other still-open PRs and compared the **120 new N replies** against their staging reply texts (not against invented summary counts):
+
+| Other candidate pool | Existing replies | Pair comparisons | Exact normalized matches | Token-set Jaccard ≥0.70 | Largest Jaccard |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| [PR #661 K](https://github.com/Treninem/Bot-Knowledge/pull/661) | 1,458 | 174,960 | 0 | 0 | 0.2903 |
+| [PR #663 conversation](https://github.com/Treninem/Bot-Knowledge/pull/663) | 2,000 | 240,000 | 0 | 0 | 0.1935 |
+| [PR #664 precision](https://github.com/Treninem/Bot-Knowledge/pull/664) | 1,500 | 180,000 | 0 | 0 | 0.2308 |
+
+**594,960 cross-PR lexical comparisons** and no exact/high lexical collisions. This does **not** prove that the answers are semantically independent, or that live consumers will route them correctly. No unrelated PR was edited, merged or closed.
