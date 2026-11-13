@@ -1,4 +1,4 @@
-"""Read-only staging N81–N85 regression; no candidate is consumer-registered."""
+"""Read-only structural and lexical regression for evolving N81–N100 staging."""
 from __future__ import annotations
 
 import hashlib
@@ -64,7 +64,9 @@ class StructuredNContinuation(unittest.TestCase):
             "no_personal_data", "no_sanctions"
         )))
         self.assertEqual(len(self.n["entries"]), 60)
-        self.assertEqual(len(self.n_replies), 300)
+        self.assertGreaterEqual(len(self.n_replies), 300)
+        self.assertEqual(len(self.n_replies) % 60, 0)
+        self.assertLessEqual(len(self.n_replies), 1200)
         self.assertEqual(len(replies(self.l)), 1860)
         self.assertEqual(len(replies(self.m)), 1740)
         c = self.n["checkpoint"]
@@ -72,13 +74,14 @@ class StructuredNContinuation(unittest.TestCase):
         self.assertEqual(c["new_replies"], len(self.n_replies))
         self.assertEqual(c["prior_L_replies"], 1860)
         self.assertEqual(c["prior_M_replies"], 1740)
-        self.assertEqual(c["combined_L_M_N_replies"], 3900)
-        self.assertEqual(c["total_per_intent"], 79)
-        self.assertEqual(c["remaining_per_intent"], 21)
-        self.assertEqual(c["remaining_total"], 1260)
+        self.assertEqual(c["combined_L_M_N_replies"], 1860 + 1740 + len(self.n_replies))
+        per = len(self.n_replies) // 60
+        self.assertEqual(c["total_per_intent"], 74 + per)
+        self.assertEqual(c["remaining_per_intent"], 26 - per)
+        self.assertEqual(c["remaining_total"], 60 * (26 - per))
         self.assertEqual(c["partial_intents"], 60)
         self.assertEqual(c["finished_100"], 0)
-        self.assertEqual(c["next_suffix"], 86)
+        self.assertEqual(c["next_suffix"], 81 + per)
         for l_entry, m_entry, n_entry in zip(self.l["entries"], self.m["entries"], self.n["entries"]):
             self.assertEqual(l_entry["intent_id"], m_entry["intent_id"])
             self.assertEqual(l_entry["intent_id"], n_entry["intent_id"])
@@ -87,9 +90,9 @@ class StructuredNContinuation(unittest.TestCase):
                 (3, 11, 31, 29),
             )
             self.assertEqual((n_entry["added_candidates"], n_entry["total_candidates_with_published"], n_entry["remaining"], n_entry["target"]),
-                             (5, 79, 21, 100))
+                             (per, 74 + per, 26 - per, 100))
             self.assertEqual([r["id"] for r in n_entry["replies"]],
-                             [f"{n_entry['intent_id']}_supp_{suffix}" for suffix in range(81, 86)])
+                             [f"{n_entry['intent_id']}_supp_{suffix}" for suffix in range(81, 81 + per)])
 
     def test_lexical_distance_and_safety(self):
         previous = [v for record in self.source["records"] for v in (record["answer"], *record["variants"])]
