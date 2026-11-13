@@ -15,8 +15,8 @@ STAGES = [
     ROOT / "staging/ru/structured_information_20261113_delta_k4.json",
 ]
 PACK = ROOT / "packs/ru/structured_information_qa.json"
-WORDS = re.compile(r"[^\\W_]+", re.UNICODE)
-MAIL = re.compile(r"[\\w.+-]+@[\\w.-]+\\.[A-Za-z]{2,}")
+WORDS = re.compile(r"[^\W_]+", re.UNICODE)
+MAIL = re.compile(r"[\w.+-]+@[\w.-]+\.[A-Za-z]{2,}")
 
 def norm(value):
     return " ".join(WORDS.findall(unicodedata.normalize("NFKC", value).casefold().replace("ё", "е")))
