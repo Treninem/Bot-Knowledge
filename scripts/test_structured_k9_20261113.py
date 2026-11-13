@@ -13,8 +13,8 @@ PRIOR = [
     *[f"staging/ru/structured_information_20261113_delta_k{n}.json" for n in range(2, 9)]
 ]
 PACK = ROOT / "packs/ru/structured_information_qa.json"
-WORDS = re.compile(r"[^\\W_]+", re.UNICODE)
-EMAIL = re.compile(r"[\\w.+-]+@[\\w.-]+\\.[a-zA-Z]{2,}")
+WORDS = re.compile(r"[^\W_]+", re.UNICODE)
+EMAIL = re.compile(r"[\w.+-]+@[\w.-]+\.[a-zA-Z]{2,}")
 
 def norm(s):
     return " ".join(WORDS.findall(unicodedata.normalize("NFKC", s).casefold().replace("ё", "е")))
