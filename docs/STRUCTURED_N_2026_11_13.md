@@ -1,3 +1,26 @@
+# Checkpoint N92–N95 — 13 November 2026
+
+This continuation authored and saved **240 new original RU replies for 60 stable intents** (N92–N95, four distinct direct-address situations per intent). They are unregistered read-only staging candidates, not live skills. None of the previous 660 N answers was replaced. Data commits [N92–N93](https://github.com/Treninem/Bot-Knowledge/commit/b921c20300e9fffcd879661060423a5635dd6dc4) and [N94–N95](https://github.com/Treninem/Bot-Knowledge/commit/5993b461ce1b7898f6234e3e8f2fbc43a30b0ba9). N-stage blob `55079de5e6fc5784f75675e47eb17bae0225cf8a`; **1,026,695 bytes**, byte SHA-256 **`8b65d3e1d991455a07b97ac2047493583d8f1def01b195cc85a50732d1882133`**, measured by exact-head GitHub runner.
+
+| Pool | Per intent | All 60 |
+| --- | ---: | ---: |
+| Published in main | 3 | 180 |
+| Previous separate staging A–J | 11 | 660 |
+| L in #662 | 31 | 1,860 |
+| M in #662 | 29 | 1,740 |
+| N81–N91 before continuation | 11 | 660 |
+| **New N92–N95** | **4** | **240** |
+| **Published + all staging** | **89/100** | **5,340/6,000** |
+| **Still missing** | **11** | **660** |
+
+**60 partial sets, 0 newly finished 100/100**. Within #662, exactly **4,500 staged replies** (L 1,860, M 1,740, N 900). Next stable suffix N96. Only **2 repository paths** modified in this continuation: N data and this journal. PR title/body/comment metadata is not a repository file.
+
+GitHub readback confirmed 900 unique N IDs, normalized answers and distinct selection notes; 60 contiguous suffix sets N81–N95. For 240 newly authored texts, automatic lexical checks vs 342 published answers/variants found no exact or token-set Jaccard ≥0.70 (max 0.31035); the N data were also screened against prior N for duplicates. Specialized [exact-head N workflow](https://github.com/Treninem/Bot-Knowledge/actions/runs/43410350197) on data commit **5993b461** succeeded, verifying actual checkout SHA and executing **11/11 L/M/N Python tests plus 4/4 N tests under Python -O**. This includes checks against earlier staged L/M and manifest registration. Full quality CI: **40/41 successful, `Bot-Knowledge quality` still running** when inspected. Cross-PR independent semantic review, real consumer context-routing and local Python execution **not performed**.
+
+Source main at read: `6c9f430da47f137d39a72bbd28c057cfb8f6be96`. The PR still diverges from main (four main commits after merge-base `9daf4cb`). Published 46 packs already occupy 7,992,490 / 8,388,608 bytes according to the earlier consumer budget check; **all 4,500 #662 candidates cannot be registered in one snapshot**. This cycle did not change manifest, live cache, ImPULS, BotHost, protection or paid services. **Draft/BLOCKED** until latest final journal-head exact CI, independent semantic/consumer checks, base reconciliation and snapshot-safe publication. No merge, thus no post-main CI.
+
+---
+
 # Checkpoint N92–N93 — 13 November 2026
 
 Added **120 authored, context-bound Russian answers** to the same 60 stable intents in [PR #662](https://github.com/Treninem/Bot-Knowledge/pull/662). Data commit [b921c203](https://github.com/Treninem/Bot-Knowledge/commit/b921c20300e9fffcd879661060423a5635dd6dc4); N-stage Git blob `5373f46619d713ee9249f837aa10c408b81b16e2`. New answers require direct address and matching `context_note`; they were not registered in manifest. Earlier N81–N91 remain unchanged.
