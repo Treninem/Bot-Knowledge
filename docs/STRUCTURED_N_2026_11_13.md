@@ -1,3 +1,15 @@
+# Checkpoint N92–N93 — 13 November 2026
+
+Added **120 authored, context-bound Russian answers** to the same 60 stable intents in [PR #662](https://github.com/Treninem/Bot-Knowledge/pull/662). Data commit [b921c203](https://github.com/Treninem/Bot-Knowledge/commit/b921c20300e9fffcd879661060423a5635dd6dc4); N-stage Git blob `5373f46619d713ee9249f837aa10c408b81b16e2`. New answers require direct address and matching `context_note`; they were not registered in manifest. Earlier N81–N91 remain unchanged.
+
+Progress: published 3 + separately staged A–J 11 + L 31 + M 29 + N 13 = **87/100 per intent**. N has **780** entries, L 1,860, M 1,740, for **4,380 staged in #662**. Across 60 intents: **0 complete, 60 partial, 13 missing each, 780 missing altogether**. Next suffix N94. These are accounting counts, not live consumer abilities.
+
+GitHub readback confirmed 780 distinct N IDs, normalized answer texts and context notes, all 60 sets contiguous N81–N93, and 120 genuinely new N92–N93 records. New 120 had 0 exact overlaps and 0 token-set Jaccard ≥0.70 against 342 published structural answer/variant texts (maximum Jaccard 0.25), and 0 normalized or ≥0.70 lexical overlaps within N. Current-head specialized N exact-head CI SUCCESS; full quality workflow had one still in progress at the reading. **This does not constitute independent semantic QA, cross-L/M lexical certification, or verified consumer context routing.** Local Python test was not run: GitHub did not resolve from the container.
+
+Current main: `6c9f430da47f137d39a72bbd28c057cfb8f6be96` at read. Staging is still not in manifest. No change to live caches, BotHost, ImPULS, or deployments. **DRAFT/BLOCKED:** pending complete exact-head CI for latest journal head, independent semantic/editorial and consumer selection checks, base reconciliation, and a snapshot-safe delivery method within 8 MiB. No merge, no post-main CI.
+
+---
+
 # Structured N — checkpoint N89–N91, 13 November 2026
 
 ## Сохранённая партия и точный прогресс
