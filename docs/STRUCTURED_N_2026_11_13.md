@@ -1,3 +1,36 @@
+# Structured N continuation — verified candidate checkpoint N81–N85, 13 November 2026
+
+## Latest addition N83–N85 — 180 newly authored candidate answers
+
+- Continued the existing [PR #662](https://github.com/Treninem/Bot-Knowledge/pull/662) and its **60 stable canonical intents** in `staging/ru/structured_information_20261113_delta_n.json`. **180 new original Russian replies** (N83, N84, N85; 60 per suffix) have distinct direct-address application notes. Previously saved N81/N82 (120) were preserved. Source main read: `6c9f430da47f137d39a72bbd28c057cfb8f6be96`, with published structural pack SHA-256 `55b3f6126d36cd92687d005b7fedf5a11df9ee61cf453103accdf1f13c8498f0`.
+- Data commits: [N83–N84](https://github.com/Treninem/Bot-Knowledge/commit/27963bae9f70853e390d1adf214d157b86d8fc3a) (+120), [N85](https://github.com/Treninem/Bot-Knowledge/commit/e7b53b7e39ed5665904673e3c1c0a7a0ffafb7be) (+60). Structural test commits [N84](https://github.com/Treninem/Bot-Knowledge/commit/ee3f48f98bb9969e421d89ee151c58607c4810b9), [N85](https://github.com/Treninem/Bot-Knowledge/commit/a0dad0140073cc3464b15c1d749a92a23182926d); strengthened all-pairs context-note screening. Read-only SHA-reporting workflow commit [8f236c2](https://github.com/Treninem/Bot-Knowledge/commit/8f236c25121133789b73fe30a4c594033ac1fe99).
+- **Actual GitHub readback**: 60 entries and 300 N reply IDs, 300 unique normalized answers and 300 unique normalized context notes; all 60 ID sequences N81–N85 present. Automatic in-stage token-set Jaccard maximum for new material against N81–N84 was **0.2759**, with 0 values ≥0.70; context-note maximum for N81–N84 pairs was **0.4667**, 0 ≥0.70. This is a *preliminary lexical check*. Full semantic/editorial and consumer-routing review remains undone.
+- **N file:** Git blob `73069920c3d192f89522dfac6410e519ebe1d247`; 351,521 UTF-8 bytes; **SHA-256 `eab092ab74ca92b1f668a3fdb71986f331575703e176e4f137e3fef82735881f`**. SHA-256 implementation passed the standard `abc` vector and reproduced the previous N81–N82 known byte hash from GitHub. File stays below the 2 MiB limit. Workflow reports its own actual byte hash for independent comparison.
+- Scope remains `all_ai_bots`, Russian, answer-only, `read_only`, `requires_direct_address`, `requires_context_match`, `no_personal_data`, `no_sanctions`. No facts about unverified ImPULS commands, no user messages, live data, private identifiers or sanctions are staged.
+
+| Accounting category | Per intent | Total across 60 intents |
+| --- | ---: | ---: |
+| Published baseline in main | 3 | 180 |
+| Earlier independent A–J staging | 11 | 660 |
+| L in #662 | 31 | 1,860 |
+| M in #662 | 29 | 1,740 |
+| N81–N82, previous execution | 2 | 120 |
+| **N83–N85, this execution** | **3** | **180** |
+| **Cumulative published + staged** | **79/100** | **4,740/6,000** |
+| **Still missing** | **21** | **1,260** |
+
+**60 partial sets; 0 newly completed sets.** Exactly **3,900** candidate replies belong to #662 (L+M+N), while the earlier A–J staging is separate. Next stable ID for every intent: `<intent_id>_supp_86`. Do not recount an old variant as new.
+
+### Publication gate and tested limits
+
+Manifest and published pack are unchanged; staged additions are not available to consumers. Actual published-pack payload size sum on main (46 registered files, as listed by GitHub): **7,992,490 bytes** of an **8,388,608-byte** nominal snapshot cap; free room **396,118 bytes** before other overhead. This does not safely accommodate all #662 staged replies, so no full registration or merge is claimed. Main SHA and the PR's base SHA differ; the branch needs non-destructive reconciliation before any eligible merge.
+
+Local checkout Python tests could not run because the container could not resolve github.com. The read-only workflow `.github/workflows/structured-n-20261113.yml` now runs pack validation and L/M/N tests (regular Python plus `-O` for N) against the **actual PR head**; verify that full exact-head CI succeeds on the **latest journal commit**, not an older head. Full independent semantic review, cross-PR editorial review, consumer routing and 8 MiB-safe approved publication remain open. No merge and no post-main CI during this checkpoint; no changes to ImPULS, BotHost, live caches or paid resources.
+
+**Next:** N86 for genuinely new contexts only, then other underserved questions; in parallel establish an approved consumer-safe selection approach rather than publishing all staged material beyond the snapshot limit.
+
+---
+
 # Structured-information continuation N81–N82 — 13 November 2026
 
 ## Scope and actual new content
