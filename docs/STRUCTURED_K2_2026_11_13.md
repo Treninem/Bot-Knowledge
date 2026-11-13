@@ -8,9 +8,9 @@
 - Continuing PR: [#661](https://github.com/Treninem/Bot-Knowledge/pull/661), branch `bk/structured-information-k-20261111-2100`, previous head `d781ee654ca6601c43a3734019255551ef5a5f53`.
 - Original pack: `packs/ru/structured_information_qa.json`, SHA-256 `55b3f6126d36cd92687d005b7fedf5a11df9ee61cf453103accdf1f13c8498f0`, blob `8b3d596b5b50d3d319ebf450c96d5623fc99d26a`.
 - Before K2: **54 stable intents × 45/100** (3 registered + 9 old staged + 33 K candidates). K held 1,782 entries and was close to 2 MiB.
-- Added in this checkpoint: **108 new synthetic answers**, two independently written context-specific scenarios for each of those 54 intents, suffixes `52` and `53`. Original wording of the questions and the intent IDs remain unchanged.
-- After K2: **54 × 47/100**; **54 partial**, **0 new complete sets**, **53 remaining per intent**, **2,862 in total**. K2 holds 108 replies. K and all earlier staging remain unchanged.
-- Next stable suffix: **54** for the same 54 intent IDs. Do not recreate K2 answers on another run.
+- Added in this checkpoint: **162 new synthetic answers**, three independently written context-specific scenarios for each of those 54 intents, suffixes `52`, `53` and `54`. Original wording of the questions and the intent IDs remain unchanged.
+- After K2: **54 × 48/100**; **54 partial**, **0 new complete sets**, **52 remaining per intent**, **2,808 in total**. K2 holds 162 replies. K and all earlier staging remain unchanged.
+- Next stable suffix: **55** for the same 54 intent IDs. Do not recreate K2 answers on another run.
 
 ## Application and QA
 
@@ -23,3 +23,7 @@ Dedicated regression: `scripts/test_structured_k2_20261113.py`, wired into `.git
 ## Publication blockers
 
 The existing consumer snapshot is close to **8 MiB**. K2 is only an unregistered staging candidate file and does not solve the snapshot limit. Full independent semantic/context evaluation, tested consumer selection/delivery, current-main reconciliation, exact-head CI and eventual post-main CI remain required. Do not merge or claim a live-bot capability until those gates pass. No paid CI or bot deployment.
+
+## Additional batch K54 (same run)
+
+The first 108 responses were committed as a separate checkpoint, then a further 54 original, context-bound responses were added for the same 54 intents (suffix `54`). New contexts cover different edge cases such as time-zone transitions, denominator changes, sampling bias, counter resets and chart scales. Normalized new texts and context notes were distinct within K2; the additional 54 passed a token-Jaccard screen against the preceding 108 K2 texts with maximum observed score 0.206 (<0.70). Broader cross-stage QA is handled by the Python workflow and requires an actual PASS on the *final* head. No previous candidates were recounted as new.
