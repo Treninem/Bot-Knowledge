@@ -75,8 +75,8 @@ class StructuredMContinuation(unittest.TestCase):
         self.assertEqual(checkpoint["remaining_per_intent"], 55 - m_count)
         self.assertEqual(checkpoint["remaining_total"], 60 * (55 - m_count))
         self.assertEqual(checkpoint["next_suffix"], end_suffix + 1)
-        self.assertEqual(checkpoint["partial_intents"], 60)
-        self.assertEqual(checkpoint["finished_100"], 0)
+        self.assertEqual(checkpoint["partial_intents"], 60 if m_count < 55 else 0)
+        self.assertEqual(checkpoint["finished_100"], 0 if m_count < 55 else 60)
         self.assertEqual([e["intent_id"] for e in data["entries"]], [e["intent_id"] for e in self.l["entries"]])
         for e in data["entries"]:
             self.assertEqual((e["published_count"], e["previous_staged_count"], e["prior_L_count"]), (3, 11, 31))
