@@ -1,4 +1,4 @@
-"""Read-only staging N81–N82 regression; no candidate is consumer-registered."""
+"""Read-only staging N81–N84 regression; no candidate is consumer-registered."""
 from __future__ import annotations
 
 import hashlib
@@ -64,7 +64,7 @@ class StructuredNContinuation(unittest.TestCase):
             "no_personal_data", "no_sanctions"
         )))
         self.assertEqual(len(self.n["entries"]), 60)
-        self.assertEqual(len(self.n_replies), 120)
+        self.assertEqual(len(self.n_replies), 240)
         self.assertEqual(len(replies(self.l)), 1860)
         self.assertEqual(len(replies(self.m)), 1740)
         c = self.n["checkpoint"]
@@ -72,13 +72,13 @@ class StructuredNContinuation(unittest.TestCase):
         self.assertEqual(c["new_replies"], len(self.n_replies))
         self.assertEqual(c["prior_L_replies"], 1860)
         self.assertEqual(c["prior_M_replies"], 1740)
-        self.assertEqual(c["combined_L_M_N_replies"], 3720)
-        self.assertEqual(c["total_per_intent"], 76)
-        self.assertEqual(c["remaining_per_intent"], 24)
-        self.assertEqual(c["remaining_total"], 1440)
+        self.assertEqual(c["combined_L_M_N_replies"], 3840)
+        self.assertEqual(c["total_per_intent"], 78)
+        self.assertEqual(c["remaining_per_intent"], 22)
+        self.assertEqual(c["remaining_total"], 1320)
         self.assertEqual(c["partial_intents"], 60)
         self.assertEqual(c["finished_100"], 0)
-        self.assertEqual(c["next_suffix"], 83)
+        self.assertEqual(c["next_suffix"], 85)
         for l_entry, m_entry, n_entry in zip(self.l["entries"], self.m["entries"], self.n["entries"]):
             self.assertEqual(l_entry["intent_id"], m_entry["intent_id"])
             self.assertEqual(l_entry["intent_id"], n_entry["intent_id"])
@@ -87,9 +87,9 @@ class StructuredNContinuation(unittest.TestCase):
                 (3, 11, 31, 29),
             )
             self.assertEqual((n_entry["added_candidates"], n_entry["total_candidates_with_published"], n_entry["remaining"], n_entry["target"]),
-                             (2, 76, 24, 100))
+                             (4, 78, 22, 100))
             self.assertEqual([r["id"] for r in n_entry["replies"]],
-                             [f"{n_entry['intent_id']}_supp_81", f"{n_entry['intent_id']}_supp_82"])
+                             [f"{n_entry['intent_id']}_supp_{suffix}" for suffix in range(81, 85)])
 
     def test_lexical_distance_and_safety(self):
         previous = [v for record in self.source["records"] for v in (record["answer"], *record["variants"])]
@@ -121,8 +121,10 @@ class StructuredNContinuation(unittest.TestCase):
 
     def test_distinct_selection_notes_within_each_intent(self):
         for entry in self.n["entries"]:
-            a, b = (set(normalize(r["context_note"]).split()) for r in entry["replies"])
-            self.assertLess(len(a & b) / len(a | b), JACCARD_LIMIT, entry["intent_id"])
+            notes = [set(normalize(r["context_note"]).split()) for r in entry["replies"]]
+            for i, left in enumerate(notes):
+                for right in notes[i + 1:]:
+                    self.assertLess(len(left & right) / len(left | right), JACCARD_LIMIT, entry["intent_id"])
 
 if __name__ == "__main__":
     unittest.main()
