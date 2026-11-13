@@ -80,3 +80,9 @@ The answer `struct_t86_011_supp_56` now explicitly requires the **same calendar 
 - **Two unique repository files changed in this execution:** unregistered M JSON and this progress journal. Source pack, manifest SHA/version, consumer indexes and caches, ImPULS and live bots were not altered. The 8 MiB aggregate consumer delivery cap and independent context/semantic review remain merge blockers. No publication in main, consumer delivery or claims of live skills.
 
 Next: resume this same M intent set from suffix `63`, or advance other independent gaps if editorial quality no longer permits new distinct variants. Do not mark numeric completion or merge until actual checks and snapshot-safe consumer selection are satisfied.
+
+### M60–M62 independent editorial correction — 13 November 2026
+
+A second meaning-level pass identified 11 candidates where the numerical example or situation was too close to another staged response (percentage base, category overlap, monthly peaks, discounts, measurement precision, purchase selection, relative change, complaint classification and weighted averages). These were substantively rewritten in [commit 448747e](https://github.com/Treninem/Bot-Knowledge/commit/448747e2e2cd7f0a0c434186eeec8576d312776e), **0 additional answers**; original IDs, 60-intent sequence and all counts remain unchanged. In particular the repeated numerical substitutions for percentage points and weighted means were replaced with distinct application conditions.
+
+The corrected M JSON is **801,391 UTF-8 bytes**, Git blob `0d5bd8bf46ffd229922cf19e5ff02d4e288e8688`, actual-byte SHA-256 `968055875b355523e0d9ccaf9d3f1ffca9aa06b41a3c5e81dfcc3c0e95a2fabd` (implementation passed `abc`). Counts stay **M 660; L+M 2,520; 60 × 56/100; 44 missing each**. Since content and then this journal changed, previous green CI must **not** be considered exact-head verification of the corrected work. Independent review beyond this editorial pass is still required.
