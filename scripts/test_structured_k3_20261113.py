@@ -6,7 +6,7 @@ STAGE=ROOT/"staging/ru/structured_information_20261113_delta_k3.json"
 K2=ROOT/"staging/ru/structured_information_20261113_delta_k2.json"
 K=ROOT/"staging/ru/structured_information_20261111_delta_k.json"
 PACK=ROOT/"packs/ru/structured_information_qa.json"
-WORDS=re.compile(r"[^\\W_]+",re.UNICODE)
+WORDS=re.compile(r"[^\W_]+",re.UNICODE)
 def normalize(s):
     return " ".join(WORDS.findall(unicodedata.normalize("NFKC",s).casefold().replace("ё","е")))
 def tok(s): return set(normalize(s).split())
@@ -49,7 +49,7 @@ class K3StagingTest(unittest.TestCase):
             ids.add(r["id"]);texts.add(n);notes.add(c)
             self.assertTrue(len(r["text"])>=55 and len(r["context_note"])>=25)
             self.assertEqual((r["language"],r["audiences"],r["context"],r["response_role"],r["read_only"]),("ru",["all_ai_bots"],"direct","assistant_reply",True))
-            self.assertFalse(re.search(r"[\\w.+-]+@[\\w.-]+\\.[A-Za-z]{2,}",r["text"]+" "+r["context_note"]))
+            self.assertFalse(re.search(r"[\w.+-]+@[\w.-]+\.[A-Za-z]{2,}",r["text"]+" "+r["context_note"]))
             self.assertFalse(any(x in n for x in ("я забаню","я удалил сообщение","я выдал мут","я сохранил твои данные")))
     def test_cross_stage_lexical_uniqueness(self):
         earlier=[r["text"] for p in (self.k,self.k2) for e in p["entries"] for r in e["replies"]]
