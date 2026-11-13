@@ -110,5 +110,18 @@ class StructuredMContinuation(unittest.TestCase):
             token_sets.append(tokens)
 
 
+    def test_size_budget_and_context_note_distance(self):
+        self.assertLessEqual(M.stat().st_size, 2 * 1024 * 1024)
+        for entry in self.m["entries"]:
+            earlier = []
+            for reply in entry["replies"]:
+                current = set(normalized(reply["context_note"]).split())
+                self.assertTrue(current, reply["id"])
+                for prior in earlier:
+                    overlap = len(current & prior) / len(current | prior)
+                    self.assertLess(overlap, 0.70, reply["id"])
+                earlier.append(current)
+
+
 if __name__ == "__main__":
     unittest.main()
