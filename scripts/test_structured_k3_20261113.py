@@ -1,4 +1,4 @@
-"""K3: 108 RU context-scoped answers (54 intents x suffixes 55-56)."""
+"""K3: 162 RU context-scoped answers (54 intents x suffixes 55-57)."""
 import hashlib, json, re, unicodedata, unittest
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
@@ -30,17 +30,17 @@ class K3StagingTest(unittest.TestCase):
         self.assertTrue(all(self.data["constraints"][x] for x in
             ("read_only","requires_direct_address","requires_context_match","no_personal_data","no_sanctions")))
     def test_checkpoint_and_stable_ids(self):
-        self.assertEqual((len(self.entries),len(self.replies)),(54,108))
+        self.assertEqual((len(self.entries),len(self.replies)),(54,162))
         cp=self.data["checkpoint"]
-        self.assertEqual((cp["processed_intents"],cp["added_candidates"],cp["added_per_intent"]),(54,108,2))
-        self.assertEqual((cp["combined_per_intent"],cp["remaining_per_intent"],cp["remaining_total"],cp["finished_100"],cp["partial_intents"]),(50,50,2700,0,54))
+        self.assertEqual((cp["processed_intents"],cp["added_candidates"],cp["added_per_intent"]),(54,162,3))
+        self.assertEqual((cp["combined_per_intent"],cp["remaining_per_intent"],cp["remaining_total"],cp["finished_100"],cp["partial_intents"]),(51,49,2646,0,54))
         previous={e["intent_id"]:e for e in self.k2["entries"]}
         self.assertEqual(set(previous),{e["intent_id"] for e in self.entries})
         for e in self.entries:
             old=previous[e["intent_id"]]
             self.assertEqual(e["canonical_question"],old["canonical_question"])
-            self.assertEqual((e["published_count"],e["previous_staged_count"],e["added_candidates"],e["total_candidates_with_published"],e["remaining"],e["target"]),(3,45,2,50,50,100))
-            self.assertEqual([r["id"] for r in e["replies"]],[e["intent_id"]+"_supp_55",e["intent_id"]+"_supp_56"])
+            self.assertEqual((e["published_count"],e["previous_staged_count"],e["added_candidates"],e["total_candidates_with_published"],e["remaining"],e["target"]),(3,45,3,51,49,100))
+            self.assertEqual([r["id"] for r in e["replies"]],[e["intent_id"]+"_supp_55",e["intent_id"]+"_supp_56",e["intent_id"]+"_supp_57"])
     def test_safe_unique_contexts(self):
         ids=set();texts=set();notes=set()
         for r in self.replies:
