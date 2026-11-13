@@ -1,3 +1,35 @@
+# Structured N — checkpoint N86–N88, 13 November 2026
+
+## Actual additions and provenance
+
+- Continued [PR #662](https://github.com/Treninem/Bot-Knowledge/pull/662) on its existing 60 canonical structured-information intents; **180 new, authored Russian replies** (one per question in each of N86, N87 and N88). All 300 earlier N81–N85 replies were preserved. This is staged material only, not registered consumer knowledge.
+- Data commits: [N86](https://github.com/Treninem/Bot-Knowledge/commit/fb3b1aeaf48791c67c78790d806c4b93a27767f8), [N87](https://github.com/Treninem/Bot-Knowledge/commit/aabae2e45a14d398a29cdf068d3ba71bb078c80d), [N88](https://github.com/Treninem/Bot-Knowledge/commit/7306e0eabc0c8936b62caff3870079fd7db7fcfc). The N regression was changed from hardcoded 300 replies to a checked dynamic checkpoint in [a5ea666](https://github.com/Treninem/Bot-Knowledge/commit/a5ea666d5fb69087c3dea4b4b8f875ede2086050).
+- Topics cover precision, rounding, data provenance, missing denominators, tax and currency comparison, salary hours, date/time-zone interpretation, chart/table aggregation, overlapping groups and small-cell privacy. Each answer requires the specific context note; all are answer-only with no sanction or private-data operation.
+- Direct GitHub readback verified **60 intents × 8 new N replies = 480 N candidates**, 480 distinct normalized IDs, reply texts and context notes. New N86–N88 **180** replies have 0 exact or token-set Jaccard ≥0.70 collisions against the published structured source and N81–N85 plus earlier new replies; highest observed overlap **0.39286**. This is lexical/structural screening, **not** a certificate of semantic diversity or consumer selection. L/M cross-pool tests are delegated to the existing Python regression and exact-head CI; do not claim a full independent editorial review.
+- Actual N JSON Git blob **`32c7a56e89123664c27d648c2d2c7d0c50d174e9`**, **558,530 UTF-8 bytes**, SHA-256 **`f2499dbb43c45798fb835c63eac0c5dfcef6bd2a690f7e436f120c4841a63c0a`**. The byte-hash implementation verified standard SHA-256 `abc` and reproduced the previous N85 hash `eab092ab74ca92b1f668a3fdb71986f331575703e176e4f137e3fef82735881f`. Each individual stage file remains under 2 MiB.
+
+| Source | Replies per intent | Total across 60 |
+| --- | ---: | ---: |
+| Published structured QA on main | 3 | 180 |
+| Separate A–J staged answers | 11 | 660 |
+| L staged in #662 | 31 | 1,860 |
+| M staged in #662 | 29 | 1,740 |
+| N81–N85 (previous) | 5 | 300 |
+| **New N86–N88** | **3** | **180** |
+| **All published + staged** | **82/100** | **4,920/6,000** |
+| **Remaining** | **18** | **1,080** |
+
+**60 partial, 0 newly completed 100/100 sets.** L+M+N together in #662 = **4,080 staged**. The next stable suffix for each `intent_id` is **N89**. The progress count is not a count of published consumer-ready responses.
+
+## Quality and publication gate
+
+- The GitHub exact-head run for data commit N88 reported specialized N SUCCESS; full quality checks were 40/41 SUCCESS and one still in progress when read. A **new exact-head CI check is mandatory for this journal commit**, and its eventual status must be reported separately. Python tests in the container were not run because `github.com` did not resolve; Python executed in the read-only workflow only when that workflow reports completion.
+- Current main read: `6c9f430da47f137d39a72bbd28c057cfb8f6be96`; branch and base still diverge and must be reconciled without force-push. Published manifest remains unchanged. Last independently counted published snapshot was 7,992,490 bytes / 8,388,608 bytes; the accumulated #662 stages cannot be registered together under the 8 MiB consumer cap.
+- **Draft/BLOCKED:** exact-head complete CI for the final head, independent semantic/context-routing and cross-PR review, safe consumer delivery/manifest design within the size cap, reconciliation with current main. Do not merge based only on lexical checks; do not change consumer runtime, BotHost, ImPULS, caches, payment services, branch protection or GitHub secrets.
+- Next: evaluate N89 against confirmed contexts, while working separately on proof of consumer-safe selection of a smaller approved subset; preserve original stage IDs and checkpoint counts.
+
+---
+
 # Structured N continuation — verified candidate checkpoint N81–N85, 13 November 2026
 
 ## Latest addition N83–N85 — 180 newly authored candidate answers
