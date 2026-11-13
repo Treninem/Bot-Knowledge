@@ -1,3 +1,29 @@
+# Completion checkpoint N104–N106 — 13 November 2026
+
+In [PR #662](https://github.com/Treninem/Bot-Knowledge/pull/662), **180 new original Russian replies** were authored and saved for the existing 60 canonical structured-information intents (three context-specific answers per intent). These are still **unregistered staging candidates**. Earlier N81–N103 content was preserved; the new answers use stable suffixes N104, N105, N106. Data commit: [406ba9a](https://github.com/Treninem/Bot-Knowledge/commit/406ba9abee1474547302b01309a012279e9273b8); test completion fix: [1bd040e](https://github.com/Treninem/Bot-Knowledge/commit/1bd040e57181070aeabc1c92ddd9ed02c4dc4152).
+
+| Source | Per intent | Total across 60 |
+| --- | ---: | ---: |
+| Registered in main | 3 | 180 |
+| Older staging A–J (other PRs) | 11 | 660 |
+| L in #662 | 31 | 1,860 |
+| M in #662 | 29 | 1,740 |
+| N81–N103 before this continuation | 23 | 1,380 |
+| **New N104–N106** | **3** | **180** |
+| **All registered + staged** | **100/100** | **6,000/6,000** |
+
+**Coverage:** 60 intents, **60 numerically complete 100/100 sets** in the accumulated candidate ledger, 0 partial sets, 0 missing candidates. In #662 specifically, 5,160 replies remain staged (L 1,860 + M 1,740 + N 1,560). The 660 older A–J entries belong to separate staging PRs, and 180 are registered in main. Do not count these as new additions of this run. **100/100 is a candidate count, not approval of all entries nor consumer ability.**
+
+### Verification and blockers
+
+GitHub blob readback verified 1,560 N entries with 60 full N81–N106 ID sequences. The new 180 answers have unique normalized text/IDs/context notes; no exact or token-set Jaccard ≥0.70 overlaps against L/M/N/published structured answers and variants in the executed cross-pool check (largest new text overlap 0.60, context-note overlap 0.5833). A separate in-repo exact-head [GitHub Actions run 43421162214](https://github.com/Treninem/Bot-Knowledge/actions/runs/43421162214) on **1bd040e57181070aeabc1c92ddd9ed02c4dc4152** completed SUCCESS: actual checkout SHA matched, `scripts/validate_pack.py` succeeded, 11/11 combined L/M/N tests and 4/4 N tests under `python -O` passed. Runner measured N JSON at **1,731,911 UTF-8 bytes** and SHA-256 **`cee86f3f1852384e9aa33598d34282f5fd106845405e30323b19a32e4c6f613f`**. This certifies that data/test commit; subsequent workflow and journal commits require their own exact-head result. Local Python run did not occur because the container cannot resolve github.com. No independent editorial/semantic cross-PR or live consumer context-routing test has been completed.
+
+**Draft / BLOCKED for merge and registration:** Full CI at that head had 40/41 SUCCESS with one `Bot-Knowledge quality` job in progress. Branch was 147 commits ahead and 4 behind current main `6c9f430da47f137d39a72bbd28c057cfb8f6be96`; reconcile before merging. The 46 published packs occupy a previously measured 7,992,490 / 8,388,608 bytes. The staged candidates cannot all be added to the consumer manifest while respecting the 8 MiB snapshot. No manifest, published pack, consumer cache, ImPULS, BotHost, or deployment was modified. No post-main CI is applicable without merge.
+
+**Next queue:** separately review and deduplicate the 60 completed candidate sets across A–N and related PRs, prepare a consumer-compatible selected subset or an agreed transport scheme for the size limit, then move to fresh, underrepresented non-overlapping canonical intents (dialogue and practical help). Never automatically register all staged entries.
+
+---
+
 # Checkpoint N92–N95 — 13 November 2026
 
 This continuation authored and saved **240 new original RU replies for 60 stable intents** (N92–N95, four distinct direct-address situations per intent). They are unregistered read-only staging candidates, not live skills. None of the previous 660 N answers was replaced. Data commits [N92–N93](https://github.com/Treninem/Bot-Knowledge/commit/b921c20300e9fffcd879661060423a5635dd6dc4) and [N94–N95](https://github.com/Treninem/Bot-Knowledge/commit/5993b461ce1b7898f6234e3e8f2fbc43a30b0ba9). N-stage blob `55079de5e6fc5784f75675e47eb17bae0225cf8a`; **1,026,695 bytes**, byte SHA-256 **`8b65d3e1d991455a07b97ac2047493583d8f1def01b195cc85a50732d1882133`**, measured by exact-head GitHub runner.
