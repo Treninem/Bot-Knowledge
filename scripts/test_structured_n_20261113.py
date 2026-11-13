@@ -20,8 +20,8 @@ OLDER = [
 ]
 SOURCE_SHA = "55b3f6126d36cd92687d005b7fedf5a11df9ee61cf453103accdf1f13c8498f0"
 SOURCE_GIT_BLOB = "8b3d596b5b50d3d319ebf450c96d5623fc99d26a"
-WORDS = re.compile(r"[^\\W_]+", re.UNICODE)
-EMAIL = re.compile(r"[\\w.+-]+@[\\w.-]+\\.[A-Za-z]{2,}")
+WORDS = re.compile(r"[^\W_]+", re.UNICODE)
+EMAIL = re.compile(r"[\w.+-]+@[\w.-]+\.[A-Za-z]{2,}")
 # Some strings are naturally similar, so this lexical screen is not a semantic certificate.
 JACCARD_LIMIT = 0.70
 
@@ -47,7 +47,7 @@ class StructuredNContinuation(unittest.TestCase):
     def test_published_pack_sha_and_no_registration(self):
         raw = SOURCE.read_bytes()
         self.assertEqual(hashlib.sha256(raw).hexdigest(), SOURCE_SHA)
-        self.assertEqual(hashlib.sha1(b"blob " + str(len(raw)).encode() + b"\\0" + raw).hexdigest(), SOURCE_GIT_BLOB)
+        self.assertEqual(hashlib.sha1(b"blob " + str(len(raw)).encode() + b"\0" + raw).hexdigest(), SOURCE_GIT_BLOB)
         manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
         registered = {item["path"]: item["sha256"] for item in manifest["packs"]}
         self.assertEqual(registered["packs/ru/structured_information_qa.json"], SOURCE_SHA)
