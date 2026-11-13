@@ -1,4 +1,4 @@
-"""K52-K53 staged Russian context replies: checkpoint, safety and cross-pack QA."""
+"""K52-K54 staged Russian context replies: checkpoint, safety and cross-pack QA."""
 import hashlib
 import json
 import re
@@ -11,7 +11,7 @@ STAGE = ROOT / "staging/ru/structured_information_20261113_delta_k2.json"
 PREV = ROOT / "staging/ru/structured_information_20261111_delta_k.json"
 SOURCE = ROOT / "packs/ru/structured_information_qa.json"
 SOURCE_SHA256 = "55b3f6126d36cd92687d005b7fedf5a11df9ee61cf453103accdf1f13c8498f0"
-EXPECTED_SUFFIXES = (52, 53)
+EXPECTED_SUFFIXES = (52, 53, 54)
 WORDS = re.compile(r"[^\W_]+", re.UNICODE)
 
 def normalize(s):
@@ -43,9 +43,9 @@ class K2StageTest(unittest.TestCase):
 
     def test_exact_checkpoint(self):
         cp = self.data["checkpoint"]
-        self.assertEqual((len(self.entries), len(self.new)), (54, 108))
-        self.assertEqual((cp["processed_intents"], cp["added_candidates"], cp["added_per_intent"]), (54, 108, 2))
-        self.assertEqual((cp["combined_per_intent"], cp["remaining_per_intent"], cp["remaining_total"]), (47, 53, 2862))
+        self.assertEqual((len(self.entries), len(self.new)), (54, 162))
+        self.assertEqual((cp["processed_intents"], cp["added_candidates"], cp["added_per_intent"]), (54, 162, 3))
+        self.assertEqual((cp["combined_per_intent"], cp["remaining_per_intent"], cp["remaining_total"]), (48, 52, 2808))
         self.assertEqual((cp["finished_100"], cp["partial_intents"]), (0, 54))
         before = {e["intent_id"]: e for e in self.previous["entries"]}
         self.assertEqual(set(before), {e["intent_id"] for e in self.entries})
@@ -53,7 +53,7 @@ class K2StageTest(unittest.TestCase):
             self.assertEqual(e["canonical_question"], before[e["intent_id"]]["canonical_question"])
             self.assertEqual((e["published_count"], e["previous_staged_count"], e["added_candidates"],
                               e["total_candidates_with_published"], e["remaining"], e["target"]),
-                             (3, 42, 2, 47, 53, 100))
+                             (3, 42, 3, 48, 52, 100))
             self.assertEqual([r["id"] for r in e["replies"]],
                              [f"{e['intent_id']}_supp_{s}" for s in EXPECTED_SUFFIXES])
 
