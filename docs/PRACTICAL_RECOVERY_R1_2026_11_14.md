@@ -1,0 +1,13 @@
+# Practical recovery R1 — 14 November 2026
+
+Source: Bot-Knowledge main `6c9f430da47f137d39a72bbd28c057cfb8f6be96`. This is a separate non-conflicting proposal: the 24 published `practical_recovery_qa` intents were not touched by the currently open PRs #661–#664 or the older changed-pack PRs inspected. Original registered source: `packs/ru/practical_recovery_qa.json`, SHA-256 `be8ae1408cf42816adc3f8ba818b3f004318617ba2e878e72edd85cf7eb4954e` (manifest). No private ImPULS facts are used.
+
+**Actual new content:** 72 synthetic Russian contextual replies over 24 existing canonical questions: 3 new candidate responses per question. Each had 9 published reply fields (one answer and eight variants); pending numerical coverage becomes **12/100** if all new replies pass editorial and consumer review, **88 still missing per question** (2,112 in total). New editorial approvals **0**; independently completed 100/100 sets **0**; all 24 are partial. This arithmetic is candidate-only and does not imply a functioning consumer or 100 meaningful replies.
+
+Subjects: failure reporting, state changes after troubleshooting, partial functionality, reset/rollback risks, safe screenshots, roles and false authority, private/group boundaries, reversible diagnostics, evidence of success, exact one-field edits, read-only examples, error reports, uncertain UI labels, conflicting claims and stopping unwanted advice.
+
+**Automated preflight before commit:** all 72 distinct candidate IDs, normalised texts and context notes; 24/24 canonical questions match source. Published-text word-set Jaccard max 0.16, within-intent new-text max 0.12; no pairs >=0.70. This does not certify semantic novelty. A dedicated Python suite checks actual source-pack SHA-256 and Git blob hash, coverage, context scope, uniqueness, privacy and a fail-closed reference selector. Exact-head read-only CI must actually run and succeed before any ready/merge consideration.
+
+**Delivery and safety:** `consumer_registered=false`; no manifest update, cache invalidation or published knowledge-version change is needed for this staging-only proposal. The registered snapshot is already close to 8 MiB; do not register this whole stage until safe scoped delivery and consumer selection are tested. No bot modification, BotHost deployment, paid services, tokens, sanctions, or live cache changes.
+
+Next: independent semantic comparison with published and overlapping staging proposals, test real consumer context matching; then continue the 24 partial intents with genuinely new situations. Do not mechanically fill the remaining 88 per question.
