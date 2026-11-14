@@ -14,7 +14,7 @@ STAGES = [ROOT / f"staging/ru/impuls_help_context_h{i}_20261114.json"
 
 
 def normalize(value: str) -> str:
-    return " ".join(re.findall(r"[^\\W_]+", value.casefold().replace("ё", "е")))
+    return " ".join(re.findall(r"[^\W_]+", value.casefold().replace("ё", "е")))
 
 
 def terms(value: str) -> set[str]:
@@ -115,7 +115,7 @@ class ContextHelpH11H12(unittest.TestCase):
                     self.assertGreaterEqual(len(reply["context_note"]), 25)
                     self.assertGreaterEqual(len(reply["text"]), 30)
                     self.assertFalse(re.search(
-                        r"https?://|@|\\b(?:ban_user|kick_chat_member)\\b",
+                        r"https?://|@|\b(?:ban_user|kick_chat_member)\b",
                         reply["text"], re.I))
                     key = (entry["intent_id"], normalize(reply["context_note"]))
                     self.assertNotIn(key, contexts)
