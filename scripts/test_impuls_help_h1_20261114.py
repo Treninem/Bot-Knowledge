@@ -10,7 +10,7 @@ STAGE = ROOT / "staging/ru/impuls_help_context_h1_20261114.json"
 SOURCE = ROOT / "packs/ru/impuls_help_qa.json"
 
 def norm(s):
-    return " ".join(re.findall(r"[^\\W_]+", s.casefold().replace("ё", "е")))
+    return " ".join(re.findall(r"[^\W_]+", s.casefold().replace("ё", "е")))
 
 class ContextHelpH1(unittest.TestCase):
     @classmethod
