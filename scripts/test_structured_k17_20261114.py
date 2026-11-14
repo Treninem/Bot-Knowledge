@@ -16,7 +16,7 @@ PRIOR = ["staging/ru/structured_information_20261111_delta_k.json"] + [
     for i in range(14, 17)
 ]
 PACK = ROOT / "packs/ru/structured_information_qa.json"
-WORD = re.compile(r"[^\\W_]+", re.UNICODE)
+WORD = re.compile(r"[^\W_]+", re.UNICODE)
 
 
 def norm(s):
