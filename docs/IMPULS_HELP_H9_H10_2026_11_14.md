@@ -19,3 +19,9 @@ Source Bot-Knowledge main `6c9f430da47f137d39a72bbd28c057cfb8f6be96`, published 
 **Stage-only / consumer_registered=false**: manifest, published pack, operating bot caches and runtime were not changed. Publishing all staging is blocked by existing 8 MiB registered consumer snapshot budget. PR stays Draft/BLOCKED until exact-head CI, independent meaning/context review (including other PRs), actual consumer selection with role/access enforcement and a compatible size-safe release plan. Any merge requires post-main CI on its actual resulting SHA.
 
 Next: verify H9/H10 and full quality CI for final branch head; review semantically similar contexts across open PRs; only then select candidates for bounded registration/delivery.
+
+## Editorial correction after lexical and same-intent review
+
+After H10 staging, a same-intent comparison found several response situations too close to earlier H1–H4 examples. Reworked **four existing** H8/H9 responses (game wedding pending consent, ambiguous continuation after switching chats, consumer search-index update, and distinction between chat rules and contest terms). **0 additional replies counted**. Commits: H8 `53d3968b7ef7bb6f9fa45173f5cfa98e75f6af9e`, H9 `e00c7c11c8b2015cb420cd76557235b5473e8193`.
+
+Rechecked published responses plus *all* H1–H10 records on that precise revision: **535 staged replies, 0 normalized exact duplicates, 0 token-Jaccard >= 0.70**; latest stage maxima H7 0.250, H8 **0.233**, H9 0.286, H10 0.320. This does not substitute for a human review of all similar meanings. PR #665 practical recovery R1 was compared with the original H7/H8 and showed no exact duplicates (max token-Jaccard 0.167); larger PR #663/#664 blobs could not be completely fetched for independent cross-PR review and are still an unresolved gate.
