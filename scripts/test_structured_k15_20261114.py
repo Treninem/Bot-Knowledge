@@ -5,7 +5,7 @@ ROOT=Path(__file__).resolve().parents[1]
 STAGE=ROOT/"staging/ru/structured_information_20261114_delta_k15.json"
 PRIOR=["staging/ru/structured_information_20261111_delta_k.json"]+[f"staging/ru/structured_information_20261113_delta_k{i}.json" for i in range(2,14)]+["staging/ru/structured_information_20261114_delta_k14.json"]
 PACK=ROOT/"packs/ru/structured_information_qa.json"
-WORDS=re.compile(r"[^\\W_]+",re.UNICODE)
+WORDS=re.compile(r"[^\W_]+",re.UNICODE)
 def norm(x): return " ".join(WORDS.findall(unicodedata.normalize("NFKC",x).casefold().replace("ё","е")))
 def tok(x): return set(norm(x).split())
 class K15Tests(unittest.TestCase):
