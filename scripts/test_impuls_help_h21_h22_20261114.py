@@ -14,7 +14,7 @@ STAGES = [ROOT / f"staging/ru/impuls_help_context_h{n}_20261114.json" for n in r
 EXPECTED = [45,45,45,90,50,60,55,45,45,55] + [50] * 12
 SOURCE_SHA = "50edd41dc0c6a868577433944e0ff0b2a36c2c9ebe53d587e5cbb4692185bbc9"
 MAIN_SHA = "6c9f430da47f137d39a72bbd28c057cfb8f6be96"
-IMPULS_SHA = "e6d1bf78ab3c40fa8e7ffc4dce6bb2e4f38d8b9a"
+IMPULS_SHA = "d815dc6338808c881c5ff613c9550dc42e74b44f"
 
 
 def norm(s: str) -> str:
