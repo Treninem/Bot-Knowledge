@@ -19,7 +19,7 @@ STAGES = [ROOT / f"staging/ru/impuls_help_context_h{i}_20261114.json"
 SIZES = [45, 45, 45, 90, 50, 60, 55, 45, 45, 55, 50, 50, 50, 50, 50, 50, 50, 50]
 MAIN = "6c9f430da47f137d39a72bbd28c057cfb8f6be96"
 SOURCE_SHA = "50edd41dc0c6a868577433944e0ff0b2a36c2c9ebe53d587e5cbb4692185bbc9"
-IMPULS = "c92abeabac83c5406aff7ae25857c5d96fb6c49f"
+IMPULS = "e8f24e22a5cc9298c91a3f5bb6e76c07dcf7cc36"
 
 
 def normalize(value: str) -> str:
