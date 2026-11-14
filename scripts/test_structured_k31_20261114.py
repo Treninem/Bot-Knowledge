@@ -82,8 +82,11 @@ class K31Tests(unittest.TestCase):
   c=self.data["checkpoint"]
   self.assertEqual((c["editorial_approved_candidates"],c["editorial_approved_100_sets"]),(0,0))
   self.assertEqual(c["provisional_candidate_complete_sets"],5)
-  flagged=[r for r in self.replies if r.get("editorial_status")=="possible_semantic_duplicate"]
+  flagged=[r for r in self.replies if r.get("editorial_compare_with") is not None]
   self.assertEqual(len(flagged),7)
+  self.assertEqual(sum(r.get("editorial_status")=="rejected_semantic_duplicate" for r in flagged),5)
+  self.assertEqual(sum(r.get("editorial_status")=="distinct_context_pending_full_review" for r in flagged),2)
+  self.assertTrue(all(r.get("editorial_eligible") is not None for r in flagged))
   for r in flagged:
    self.assertTrue(r.get("editorial_compare_with"))
    self.assertTrue(r.get("editorial_reason"))

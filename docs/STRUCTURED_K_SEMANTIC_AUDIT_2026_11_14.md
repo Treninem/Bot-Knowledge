@@ -21,3 +21,12 @@ These are editorial-review **flags**, not automatically proven duplicates. If th
 Next: review each candidate against the full prior corpus, starting with these seven and the remaining K31/K32 first ten intents. Build a reviewed/rejected ledger with explicit surviving IDs, update the per-intent accepted counts after that review, then progress genuinely uncovered practical intents. Source facts, privacy, exact-head CI, consumer context gating and 8 MiB snapshot compatibility remain mandatory before merge. No changes to ImPULS, BotHost, manifest or caches.
 
 Regression follow-up: K31/K32 test suites now assert that unreviewed candidate-complete sets cannot carry an editorial approval count, and the exact-head read-only workflow runs both new suites in standard and Python `-O` modes. These executable checks do not replace manual semantic review.
+
+
+## Editorial decisions and K33 continuation (14 Nov, additional pass)
+
+Seven flagged pairs reviewed against the cited older texts. **Five newer entries are rejected as meaning-equivalent**: `struct_t93_001_supp_102`, `struct_t93_001_supp_104`, `struct_t93_002_supp_103`, `struct_t93_005_supp_102`, `struct_t93_005_supp_104`. They remain visible for audit, flagged `editorial_eligible=false`, but must be excluded from any future approved or consumer set. **Two retained as context-distinct candidates**, not fully approved: `struct_t93_001_supp_105` (worked numerical rounding example) and `struct_t93_001_supp_106` (complaint count plus differing denominator).
+
+The K31/K32 reported 10 provisional 100/100 sets were raw counts. Excluding these five confirmed duplicates, only **7** of those sets still reach numerical 100. Editorially accepted 100/100 sets remain **zero**. No file is consumer-registered; the independent all-stage semantic review is outstanding.
+
+K33 staged 44 new candidates across 44 previously incomplete intents, with 0 of the 44 drafted proposals withheld for preflight lexical/context proximity. The K-series raw cumulative is 4664; subtract the 5 known rejected K31 candidates before any *potentially eligible* count, and do not call the remainder approved. No manifest/cache/live bot changes. Details: `docs/STRUCTURED_K33_2026_11_14.md`.
