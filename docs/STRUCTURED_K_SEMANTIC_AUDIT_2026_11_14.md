@@ -19,3 +19,5 @@ Automated exact/normalized and token Jaccard checks cannot detect every paraphra
 These are editorial-review **flags**, not automatically proven duplicates. If their unique contextual contribution cannot be established, rewrite or drop the new entry and adjust exact cumulative counters; never move it into an approved 100/100 count. Do not simply generate cosmetic alternatives to reach 100.
 
 Next: review each candidate against the full prior corpus, starting with these seven and the remaining K31/K32 first ten intents. Build a reviewed/rejected ledger with explicit surviving IDs, update the per-intent accepted counts after that review, then progress genuinely uncovered practical intents. Source facts, privacy, exact-head CI, consumer context gating and 8 MiB snapshot compatibility remain mandatory before merge. No changes to ImPULS, BotHost, manifest or caches.
+
+Regression follow-up: K31/K32 test suites now assert that unreviewed candidate-complete sets cannot carry an editorial approval count, and the exact-head read-only workflow runs both new suites in standard and Python `-O` modes. These executable checks do not replace manual semantic review.

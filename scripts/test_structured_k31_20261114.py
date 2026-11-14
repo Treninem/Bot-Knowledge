@@ -77,4 +77,15 @@ class K31Tests(unittest.TestCase):
      for old_id,old_g in pools.get(e["intent_id"],[]):
       self.assertLess(len(g&old_g)/max(1,len(g|old_g)),.60,(rr["id"],old_id))
      pools.setdefault(e["intent_id"],[]).append((rr["id"],g))
+
+ def test_editorial_approval_gated(self):
+  c=self.data["checkpoint"]
+  self.assertEqual((c["editorial_approved_candidates"],c["editorial_approved_100_sets"]),(0,0))
+  self.assertEqual(c["provisional_candidate_complete_sets"],5)
+  flagged=[r for r in self.replies if r.get("editorial_status")=="possible_semantic_duplicate"]
+  self.assertEqual(len(flagged),7)
+  for r in flagged:
+   self.assertTrue(r.get("editorial_compare_with"))
+   self.assertTrue(r.get("editorial_reason"))
+   self.assertNotEqual(r["id"],r["editorial_compare_with"])
 if __name__=="__main__":unittest.main()

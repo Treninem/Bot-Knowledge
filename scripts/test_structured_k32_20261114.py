@@ -74,4 +74,10 @@ class K32Tests(unittest.TestCase):
      for old_id,old_g in pool.get(e["intent_id"],[]):
       self.assertLess(len(g&old_g)/max(1,len(g|old_g)),.60,(r["id"],old_id))
      pool.setdefault(e["intent_id"],[]).append((r["id"],g))
+
+ def test_editorial_approval_gated(self):
+  c=self.d["checkpoint"]
+  self.assertEqual((c["editorial_approved_candidates"],c["editorial_approved_100_sets_cumulative"]),(0,0))
+  self.assertEqual(c["provisional_candidate_complete_sets_cumulative"],10)
+  self.assertIn("blocked",c["semantic_review_status"].lower())
 if __name__=="__main__":unittest.main()
