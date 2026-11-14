@@ -21,7 +21,7 @@ IMPULS_SHA = "e94e34e1717231a4788f8d8447d760d2e5e2ba8d"
 
 
 def normalize(value: str) -> str:
-    return " ".join(re.findall(r"[^\\W_]+", value.casefold().replace("ё", "е")))
+    return " ".join(re.findall(r"[^\W_]+", value.casefold().replace("ё", "е")))
 
 
 def jaccard(left: set[str], right: set[str]) -> float:
