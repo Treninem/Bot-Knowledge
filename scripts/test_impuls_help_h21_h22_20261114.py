@@ -18,7 +18,7 @@ IMPULS_SHA = "e6d1bf78ab3c40fa8e7ffc4dce6bb2e4f38d8b9a"
 
 
 def norm(s: str) -> str:
-    return " ".join(re.findall(r"[^\\W_]+", s.casefold().replace("ё", "е")))
+    return " ".join(re.findall(r"[^\W_]+", s.casefold().replace("ё", "е")))
 
 
 def similarity(a: set[str], b: set[str]) -> float:
