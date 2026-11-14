@@ -1,13 +1,16 @@
-# Structured K33 · 14 November 2026
+# Structured K33 · 14 ноября 2026
 
-Source main `6c9f430da47f137d39a72bbd28c057cfb8f6be96`; parent PR #661 head `d70c1db5c1b3e9b92fe457cfafc0c959beb9f6fb` (before this commit). K32 baseline: 10 raw sets 100/100, 44 at 97/100, 132 raw slots still empty.
+Continuation of [Draft PR #661](https://github.com/Treninem/Bot-Knowledge/pull/661), original main `6c9f430da47f137d39a72bbd28c057cfb8f6be96`, parent K32 checkpoint `d70c1db5c1b3e9b92fe457cfafc0c959beb9f6fb`.
 
-**This run:** authored 44 context-specific proposals for the 44 unfinished intents, 44 passed limited normalization/Jaccard preflight and are saved as new read-only *candidates* in `staging/ru/structured_information_20261114_delta_k33.json`; 0 were withheld and not counted. 44 intents have 98/100 raw candidates, 0 remain 97/100; missing raw slots 88. Raw K-series staging cumulative 4664, not the main snapshot.
+Prepared **44** original, contextual, synthetic Russian explanations for the 44 previously partial structured-information intents. All 44 passed initial lexical preflight, but a wider review found **two clear semantic duplicates**, so those are **excluded** from the staged dataset:
 
-Separately, editorial comparison of seven K31 flags against the cited earlier replies marked 5 as semantic duplicates (not eligible) and retained 2 as distinct, context-specific pending candidates. No full independent QA approval is claimed. Excluding the five rejected, 7/54 raw candidate sets still have 100 potentially eligible numerical slots; **0/54** are independently editorial-approved. Prior rejected rows are preserved as traceable rejected records and must not enter consumers.
+- `struct_t93_015_supp_104` repeated `struct_t93_015_supp_38`: translating a Celsius temperature *difference* into Fahrenheit
+- `struct_t90_018_supp_104` repeated `struct_t90_018_supp_98`: positive and negative components of stacked bars
 
-Preflight in this commit compares text token-Jaccard with the original K pool, K30–K32 and the published structured pack; it checks recent trigram context overlap and IDs, applies 0.70/0.60 cutoffs. This is partial corpus coverage; existing exact-head CI must run all K stages and tests before considering readiness. Context notes and consumer selector still need full semantic review and real end-to-end verification.
+**42 new staged candidates remain**, one per other intent. All candidates are pending independent editorial review. Raw coverage: 10 candidate-complete 100/100 sets, 42 at 98/100, 2 at 97/100, 90 raw missing slots. Total K staging = 4,662 raw candidates. Five older K31 entries have also been rejected as semantic duplicates: 4,657 is only an upper bound for potentially eligible raw staging, **not an editorially certified count**. After subtracting the five K31 rejects, only 7 sets still have 100 potentially eligible numeric slots. Editorially approved sets: **0/54**.
 
-Safety: only synthetic cases, `all_ai_bots`, read-only, requires direct address/context match, no sanctions. K33 is **unregistered**; no change to manifest, existing published SHA/cache, ImPULS or BotHost. Consumer snapshot remains constrained to 8 MiB; staging is not for automatic bulk import.
+A reproducible K33 Python test compares the new 42 to **all 32 prior K-stage JSON files**, along with the published structured QA pack, checking normalized exact duplicates and lexical token-Jaccard threshold 0.70. Context trigrams are checked within the same intent at 0.60. Even with this wider scan, conceptually equivalent situations may remain. Semantic, cross-PR, selection and consumer integration QA remain blocked. No original user messages, private chat history or sanctions are included.
 
-Next: inspect new K33 cases against every earlier K stage and parallel PRs, repair overlaps, complete remaining intent slots only for genuinely distinct contexts, independently review the 54 intents and test consumer selection. Keep PR Draft/BLOCKED.
+All K material remains `consumer_registered=false`; original pack and manifest hashes, 8 MiB consumer snapshot, ImPULS, BotHost and working caches are unchanged. Any merge requires exact-head CI, independent review and consumer compatibility; do not import this entire staging dataset into the registered snapshot.
+
+Next: independently compare the remaining 42 against neighboring PR #662/#663/#664, remove further semantic overlap, then finish the remaining genuinely distinct partial intents. Avoid cosmetic quota filling.

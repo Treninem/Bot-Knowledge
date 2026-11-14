@@ -29,4 +29,9 @@ Seven flagged pairs reviewed against the cited older texts. **Five newer entries
 
 The K31/K32 reported 10 provisional 100/100 sets were raw counts. Excluding these five confirmed duplicates, only **7** of those sets still reach numerical 100. Editorially accepted 100/100 sets remain **zero**. No file is consumer-registered; the independent all-stage semantic review is outstanding.
 
-K33 staged 44 new candidates across 44 previously incomplete intents, with 0 of the 44 drafted proposals withheld for preflight lexical/context proximity. The K-series raw cumulative is 4664; subtract the 5 known rejected K31 candidates before any *potentially eligible* count, and do not call the remainder approved. No manifest/cache/live bot changes. Details: `docs/STRUCTURED_K33_2026_11_14.md`.
+K33 prepared 44 proposals; after extended editorial comparison, 2 clear meaning duplicates were excluded and 42 new unapproved candidates remain. The K-series raw cumulative is 4662; subtract the 5 known rejected K31 candidates before any *potentially eligible* count, and do not call the remainder approved. No manifest/cache/live bot changes. Details: `docs/STRUCTURED_K33_2026_11_14.md`.
+
+
+### K33 wider-stage audit correction
+
+Two drafted K33 candidates were removed before this checkpoint: `struct_t93_015_supp_104` repeats the Celsius-difference case `_supp_38`; `struct_t90_018_supp_104` repeats the signed stacked-bar case `_supp_98`. The saved K33 file holds **42** new candidates. Whole-stage test checks exact and high lexical/context overlap against all 32 K ancestor files; fully independent semantic QA remains outstanding.

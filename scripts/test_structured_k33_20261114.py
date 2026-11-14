@@ -43,6 +43,36 @@ class K33(unittest.TestCase):
    self.assertTrue(r["read_only"]);self.assertEqual(r["context"],"direct")
    self.assertIn("не применять санкции",r["avoid"])
    self.assertNotIn("@",r["text"]+r["context_note"])
+
+ def test_cross_stage_normalized_and_lexical(self):
+  src=json.loads((R/self.d["source_pack"]).read_text(encoding="utf-8"))
+  prior=[]
+  for path in self.d["prior_stages"]:
+   pool=json.loads((R/path).read_text(encoding="utf-8"))
+   prior.extend((e["intent_id"],r["id"],r["text"],r["context_note"]) for e in pool["entries"] for r in e["replies"])
+  for e in src["records"]:
+   for t in [e["answer"],*e["variants"]]:
+    prior.append((e["id"],e["id"],t,""))
+  self.assertEqual(len(self.d["prior_stages"]),32)
+  new=[(e["intent_id"],r["id"],r["text"],r["context_note"]) for e in self.entries for r in e["replies"]]
+  self.assertEqual(len(new),42)
+  def toks(s):return set(norm(s).split())
+  def tri(s):
+   s="".join(norm(s).split())
+   return {s[i:i+3] for i in range(max(0,len(s)-2))}
+  old=[(i,k,toks(t),tri(c)) for i,k,t,c in prior]
+  fresh=[(i,k,toks(t),tri(c)) for i,k,t,c in new]
+  known={k for i,k,ts,g in old}
+  for i,k,ts,g in fresh:
+   self.assertNotIn(k,known);known.add(k)
+   for oi,ok,ots,og in old:
+    self.assertNotEqual(ts,ots,(k,ok))
+    overlap=len(ts & ots)/max(1,len(ts | ots))
+    self.assertLess(overlap,.70,(k,ok))
+    if i==oi and og:
+     context_overlap=len(g & og)/max(1,len(g | og))
+     self.assertLess(context_overlap,.60,(k,ok))
+
  def test_no_automatic_approval(self):
   self.assertEqual(self.d["checkpoint"]["editorial_approved_candidates"],0)
   self.assertEqual(self.d["checkpoint"]["editorial_approved_100_sets"],0)
