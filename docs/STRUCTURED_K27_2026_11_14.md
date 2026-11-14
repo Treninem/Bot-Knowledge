@@ -9,3 +9,7 @@ Changes: one staged JSON, one Python regression, this journal, one existing read
 **DRAFT/BLOCKED:** not ready to merge until full exact-head CI, semantic/context routing review and safe delivery within the 8 MiB snapshot budget. No manifest, consumer, ImPULS, BotHost, live cache or paid-resource modifications.
 
 Next: review every candidate's distinct situation against preceding stages and other PRs; then K99 if meaningful examples remain.
+
+## Editorial revision on the same K98 candidate count
+
+After cross-stage semantic spot-check of K2–K26, **15 K98 records were replaced in place**, including repeated clock-change, rounding, speed, indexed-series and confidence-interval examples. These edits do **not** increase the +54 count. The original stage K1 is too large for the connector's direct full-content reader, so a full independent semantic audit is still outstanding. Full lexical checks on K1–K27 remain assigned to CI. This draft must not be marked ready without that review.
