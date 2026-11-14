@@ -1,0 +1,1848 @@
+{
+  "schema_version": 1,
+  "stage_type": "supplemental_contextual_reply_pool",
+  "consumer_registered": false,
+  "language": "ru",
+  "audiences": [
+    "all_ai_bots"
+  ],
+  "constraints": {
+    "read_only": true,
+    "requires_direct_address": true,
+    "requires_context_match": true,
+    "no_personal_data": true,
+    "no_sanctions": true
+  },
+  "scope": "Original RU contextual structured-information K97; 54 stable intents; staged read-only",
+  "source_pack": "packs/ru/structured_information_qa.json",
+  "source_pack_manifest_sha256": "55b3f6126d36cd92687d005b7fedf5a11df9ee61cf453103accdf1f13c8498f0",
+  "source_pack_blob_sha": "8b3d596b5b50d3d319ebf450c96d5623fc99d26a",
+  "checked_source_main_sha": "6c9f430da47f137d39a72bbd28c057cfb8f6be96",
+  "prior_stages": [
+    "staging/ru/structured_information_20261111_delta_k.json",
+    "staging/ru/structured_information_20261113_delta_k2.json",
+    "staging/ru/structured_information_20261113_delta_k3.json",
+    "staging/ru/structured_information_20261113_delta_k4.json",
+    "staging/ru/structured_information_20261113_delta_k5.json",
+    "staging/ru/structured_information_20261113_delta_k6.json",
+    "staging/ru/structured_information_20261113_delta_k7.json",
+    "staging/ru/structured_information_20261113_delta_k8.json",
+    "staging/ru/structured_information_20261113_delta_k9.json",
+    "staging/ru/structured_information_20261113_delta_k10.json",
+    "staging/ru/structured_information_20261113_delta_k11.json",
+    "staging/ru/structured_information_20261113_delta_k12.json",
+    "staging/ru/structured_information_20261113_delta_k13.json",
+    "staging/ru/structured_information_20261114_delta_k14.json",
+    "staging/ru/structured_information_20261114_delta_k15.json",
+    "staging/ru/structured_information_20261114_delta_k16.json",
+    "staging/ru/structured_information_20261114_delta_k17.json",
+    "staging/ru/structured_information_20261114_delta_k18.json",
+    "staging/ru/structured_information_20261114_delta_k19.json",
+    "staging/ru/structured_information_20261114_delta_k20.json",
+    "staging/ru/structured_information_20261114_delta_k21.json",
+    "staging/ru/structured_information_20261114_delta_k22.json",
+    "staging/ru/structured_information_20261114_delta_k23.json",
+    "staging/ru/structured_information_20261114_delta_k24.json",
+    "staging/ru/structured_information_20261114_delta_k25.json"
+  ],
+  "checkpoint": {
+    "stage_id": "STRUCT-20261114-K26-K97",
+    "source_main": "6c9f430da47f137d39a72bbd28c057cfb8f6be96",
+    "processed_intents": 54,
+    "published_per_intent": 3,
+    "previous_staged_per_intent": 87,
+    "added_per_intent": 1,
+    "added_candidates": 54,
+    "combined_per_intent": 91,
+    "remaining_per_intent": 9,
+    "remaining_total": 486,
+    "finished_100": 0,
+    "partial_intents": 54,
+    "duplicate_rejections": 0,
+    "next_action": "Independent semantic review and consumer routing; next K98; 8 MiB snapshot delivery blocked"
+  },
+  "entries": [
+    {
+      "intent_id": "struct_t93_001",
+      "canonical_question": "Как считать процентный рост, если исходное значение равно нулю?",
+      "section": "умение",
+      "language": "ru",
+      "style": "helpful_precision",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 3,
+      "previous_staged_count": 87,
+      "added_candidates": 1,
+      "total_candidates_with_published": 91,
+      "target": 100,
+      "remaining": 9,
+      "replies": [
+        {
+          "id": "struct_t93_001_supp_97",
+          "text": "Если исходный показатель округлён в отчёте до нуля, запроси значение без округления. Например, из 0,04 в 0,4 вычисляется рост на 900%, хотя при грубом отображении исходное число могло выглядеть нулевым.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Исходное значение было округлено до нуля, хотя в первичных данных оно ненулевое",
+          "avoid": "Только по прямому вопросу при совпадающем контексте; не совершать действий, не придумывать факты и не применять санкции.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "struct_t93_002",
+      "canonical_question": "Почему рост на 20% и затем падение на 20% не возвращают исходную сумму?",
+      "section": "умение",
+      "language": "ru",
+      "style": "helpful_precision",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 3,
+      "previous_staged_count": 87,
+      "added_candidates": 1,
+      "total_candidates_with_published": 91,
+      "target": 100,
+      "remaining": 9,
+      "replies": [
+        {
+          "id": "struct_t93_002_supp_97",
+          "text": "Цену подняли со 150 до 180 рублей, затем уменьшили на 20%: вышло 144. Для возврата от 180 к 150 нужна скидка примерно 16,67%, поскольку при снижении основанием стали уже 180 рублей.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Подбирают процент скидки, который отменит предыдущее повышение цены",
+          "avoid": "Только по прямому вопросу при совпадающем контексте; не совершать действий, не придумывать факты и не применять санкции.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "struct_t93_003",
+      "canonical_question": "Чем остаток на дату отличается от поступлений за месяц?",
+      "section": "умение",
+      "language": "ru",
+      "style": "helpful_precision",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 3,
+      "previous_staged_count": 87,
+      "added_candidates": 1,
+      "total_candidates_with_published": 91,
+      "target": 100,
+      "remaining": 9,
+      "replies": [
+        {
+          "id": "struct_t93_003_supp_97",
+          "text": "На складе было 18 коробок, пришло 12, выдали 9 — осталось 21. Поступление за день равно 12, а остаток на конец дня 21. Не подменяй движением товара состояние склада.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Приход и остаток в складском отчёте сравнивают после выдачи части материалов",
+          "avoid": "Только по прямому вопросу при совпадающем контексте; не совершать действий, не придумывать факты и не применять санкции.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "struct_t93_004",
+      "canonical_question": "Как вычислить рабочие дни между датами без списка праздников?",
+      "section": "умение",
+      "language": "ru",
+      "style": "helpful_precision",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 3,
+      "previous_staged_count": 87,
+      "added_candidates": 1,
+      "total_candidates_with_published": 91,
+      "target": 100,
+      "remaining": 9,
+      "replies": [
+        {
+          "id": "struct_t93_004_supp_97",
+          "text": "При подсчёте будней с 1-го по 10-е уточни, входят ли обе крайние даты. Без календаря праздничных переносов получится только условное число дней с понедельника по пятницу.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Неясно, включаются ли начальный и конечный дни заданного периода",
+          "avoid": "Только по прямому вопросу при совпадающем контексте; не совершать действий, не придумывать факты и не применять санкции.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "struct_t93_005",
+      "canonical_question": "Как посчитать смену, которая началась до полуночи и закончилась утром?",
+      "section": "умение",
+      "language": "ru",
+      "style": "helpful_precision",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 3,
+      "previous_staged_count": 87,
+      "added_candidates": 1,
+      "total_candidates_with_published": 91,
+      "target": 100,
+      "remaining": 9,
+      "replies": [
+        {
+          "id": "struct_t93_005_supp_97",
+          "text": "С 22:30 до 06:30 следующего дня проходит восемь часов. Если внутри смены был неоплачиваемый перерыв 30 минут, оплачиваются 7 часов 30 минут; переход через полночь здесь не влияет на длительность.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Ночная смена содержит неоплачиваемый перерыв и пересекает полночь",
+          "avoid": "Только по прямому вопросу при совпадающем контексте; не совершать действий, не придумывать факты и не применять санкции.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "struct_t93_006",
+      "canonical_question": "Почему одинаковая зарплата не равна одинаковой покупательной способности?",
+      "section": "умение",
+      "language": "ru",
+      "style": "helpful_precision",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 3,
+      "previous_staged_count": 87,
+      "added_candidates": 1,
+      "total_candidates_with_published": 91,
+      "target": 100,
+      "remaining": 9,
+      "replies": [
+        {
+          "id": "struct_t93_006_supp_97",
+          "text": "Двое получают по 60 тысяч, но один тратит на обязательные жильё и дорогу 35 тысяч, другой 15 тысяч. Для сравнения покупательной способности учитывай доступный остаток и местные цены.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Одинаковый оклад сравнивают при разной стоимости обязательных расходов",
+          "avoid": "Только по прямому вопросу при совпадающем контексте; не совершать действий, не придумывать факты и не применять санкции.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "struct_t93_007",
+      "canonical_question": "Как сопоставить цену за упаковку и цену за одну штуку?",
+      "section": "умение",
+      "language": "ru",
+      "style": "helpful_precision",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 3,
+      "previous_staged_count": 87,
+      "added_candidates": 1,
+      "total_candidates_with_published": 91,
+      "target": 100,
+      "remaining": 9,
+      "replies": [
+        {
+          "id": "struct_t93_007_supp_97",
+          "text": "Две упаковки одинаковы по цене за килограмм, но одна содержит несъедобную оболочку. Если доля отходов известна, сравни стоимость полезной массы, а не вес вместе с оболочкой.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Сравнивают упаковки с различной долей пригодного содержимого",
+          "avoid": "Только по прямому вопросу при совпадающем контексте; не совершать действий, не придумывать факты и не применять санкции.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "struct_t93_008",
+      "canonical_question": "Почему один случай резко меняет процент в группе из двух человек?",
+      "section": "умение",
+      "language": "ru",
+      "style": "helpful_precision",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 3,
+      "previous_staged_count": 87,
+      "added_candidates": 1,
+      "total_candidates_with_published": 91,
+      "target": 100,
+      "remaining": 9,
+      "replies": [
+        {
+          "id": "struct_t93_008_supp_97",
+          "text": "Один голос «за» из двух — 50%. Если вторую анкету исключили как недействительную, получится 100% среди оставшихся, хотя никто не изменил мнение. Проверь причину изменения знаменателя.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Из двух анкет после опроса одну исключили по условиям исследования",
+          "avoid": "Только по прямому вопросу при совпадающем контексте; не совершать действий, не придумывать факты и не применять санкции.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "struct_t93_009",
+      "canonical_question": "Чем прогнозный интервал отличается от доверительного?",
+      "section": "умение",
+      "language": "ru",
+      "style": "helpful_precision",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 3,
+      "previous_staged_count": 87,
+      "added_candidates": 1,
+      "total_candidates_with_published": 91,
+      "target": 100,
+      "remaining": 9,
+      "replies": [
+        {
+          "id": "struct_t93_009_supp_97",
+          "text": "Доверительный интервал описывает неопределённость оценки среднего, прогнозный — разброс нового отдельного наблюдения. Узкий интервал среднего срока службы не гарантирует такого срока одной новой детали.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "По оценке среднего ресурса пытаются предсказать срок одной детали",
+          "avoid": "Только по прямому вопросу при совпадающем контексте; не совершать действий, не придумывать факты и не применять санкции.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "struct_t93_010",
+      "canonical_question": "Чего p-value не говорит о вероятности гипотезы?",
+      "section": "умение",
+      "language": "ru",
+      "style": "helpful_precision",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 3,
+      "previous_staged_count": 87,
+      "added_candidates": 1,
+      "total_candidates_with_published": 91,
+      "target": 100,
+      "remaining": 9,
+      "replies": [
+        {
+          "id": "struct_t93_010_supp_97",
+          "text": "При p-value 0,42 нельзя объявить доказанным отсутствие эффекта. Данных может быть мало, чтобы выявить небольшой сдвиг; посмотри интервал оценки и требуемую мощность проверки.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Большое p-value ошибочно принимают за доказательство равенства групп",
+          "avoid": "Только по прямому вопросу при совпадающем контексте; не совершать действий, не придумывать факты и не применять санкции.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "struct_t93_011",
+      "canonical_question": "Можно ли удалить выброс только потому, что он необычный?",
+      "section": "умение",
+      "language": "ru",
+      "style": "helpful_precision",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 3,
+      "previous_staged_count": 87,
+      "added_candidates": 1,
+      "total_candidates_with_published": 91,
+      "target": 100,
+      "remaining": 9,
+      "replies": [
+        {
+          "id": "struct_t93_011_supp_97",
+          "text": "Крупный заказ может быть реальным, хотя выглядит выбросом. Сначала проверь документ, затем покажи медиану вместе со средним чеком: так видно влияние редкой большой операции без её удаления.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Редкий крупный заказ подтверждён документами и сильно меняет среднее",
+          "avoid": "Только по прямому вопросу при совпадающем контексте; не совершать действий, не придумывать факты и не применять санкции.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "struct_t93_012",
+      "canonical_question": "Как усечённая вертикальная ось влияет на визуальное сравнение?",
+      "section": "умение",
+      "language": "ru",
+      "style": "helpful_precision",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 3,
+      "previous_staged_count": 87,
+      "added_candidates": 1,
+      "total_candidates_with_published": 91,
+      "target": 100,
+      "remaining": 9,
+      "replies": [
+        {
+          "id": "struct_t93_012_supp_97",
+          "text": "Столбцы 99 и 101 при шкале от 95 до 105 кажутся резко разными, хотя отличаются всего на два пункта. Отметь обрезанный масштаб и подпиши реальные значения.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Столбчатый график сравнивает близкие числа с усечённой шкалой",
+          "avoid": "Только по прямому вопросу при совпадающем контексте; не совершать действий, не придумывать факты и не применять санкции.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "struct_t93_013",
+      "canonical_question": "Как читать диаграмму с двумя вертикальными шкалами?",
+      "section": "умение",
+      "language": "ru",
+      "style": "helpful_precision",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 3,
+      "previous_staged_count": 87,
+      "added_candidates": 1,
+      "total_candidates_with_published": 91,
+      "target": 100,
+      "remaining": 9,
+      "replies": [
+        {
+          "id": "struct_t93_013_supp_97",
+          "text": "Совпадение двух линий можно получить простым изменением масштаба правой вертикальной оси. Визуальное наложение рядов после такой настройки не подтверждает причинную связь.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Оси двух рядов настроены независимо для визуального совпадения",
+          "avoid": "Только по прямому вопросу при совпадающем контексте; не совершать действий, не придумывать факты и не применять санкции.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "struct_t93_014",
+      "canonical_question": "Почему сравнение количества событий без размера населения может вводить в заблуждение?",
+      "section": "умение",
+      "language": "ru",
+      "style": "helpful_precision",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 3,
+      "previous_staged_count": 87,
+      "added_candidates": 1,
+      "total_candidates_with_published": 91,
+      "target": 100,
+      "remaining": 9,
+      "replies": [
+        {
+          "id": "struct_t93_014_supp_97",
+          "text": "Десять происшествий на дороге с миллионом поездок и шесть на дороге со ста тысячами поездок нельзя сравнивать лишь по числу случаев. Рассчитай частоту на одинаковое число поездок.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Сравнивают происшествия при разном количестве поездок",
+          "avoid": "Только по прямому вопросу при совпадающем контексте; не совершать действий, не придумывать факты и не применять санкции.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "struct_t93_015",
+      "canonical_question": "Почему градусы Цельсия нельзя перевести в Фаренгейты одним умножением?",
+      "section": "умение",
+      "language": "ru",
+      "style": "helpful_precision",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 3,
+      "previous_staged_count": 87,
+      "added_candidates": 1,
+      "total_candidates_with_published": 91,
+      "target": 100,
+      "remaining": 9,
+      "replies": [
+        {
+          "id": "struct_t93_015_supp_97",
+          "text": "Пересчёт из Цельсия в Фаренгейты требует прибавить 32 после умножения на 1,8. При −40 обе шкалы дают −40 — удобная контрольная точка для проверки формулы.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Формулу температурного пересчёта проверяют отрицательным значением",
+          "avoid": "Только по прямому вопросу при совпадающем контексте; не совершать действий, не придумывать факты и не применять санкции.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "struct_t93_016",
+      "canonical_question": "Можно ли считать промежутки на порядковой шкале 1–5 одинаковыми?",
+      "section": "умение",
+      "language": "ru",
+      "style": "helpful_precision",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 3,
+      "previous_staged_count": 87,
+      "added_candidates": 1,
+      "total_candidates_with_published": 91,
+      "target": 100,
+      "remaining": 9,
+      "replies": [
+        {
+          "id": "struct_t93_016_supp_97",
+          "text": "Шкала 1–5 задаёт порядок оценок, но расстояния между «плохо», «нормально» и «хорошо» не обязаны быть одинаковыми. Покажи распределение ответов вместе со средним числом.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Субъективные словесные оценки преобразуют в пятибалльную шкалу",
+          "avoid": "Только по прямому вопросу при совпадающем контексте; не совершать действий, не придумывать факты и не применять санкции.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "struct_t93_017",
+      "canonical_question": "Как сравнивать отчёты, которые по-разному определяют активного пользователя?",
+      "section": "умение",
+      "language": "ru",
+      "style": "helpful_precision",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 3,
+      "previous_staged_count": 87,
+      "added_candidates": 1,
+      "total_candidates_with_published": 91,
+      "target": 100,
+      "remaining": 9,
+      "replies": [
+        {
+          "id": "struct_t93_017_supp_97",
+          "text": "Если первый сервис считает активным сам вход, а второй — завершённое действие, показатели DAU у них означают разные вещи. Согласуй критерий, период и часовой пояс либо сравнивай раздельно.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "У двух сервисов разные определения активного пользователя",
+          "avoid": "Только по прямому вопросу при совпадающем контексте; не совершать действий, не придумывать факты и не применять санкции.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "struct_t93_018",
+      "canonical_question": "Как отличить сезонный пик от устойчивого годового роста?",
+      "section": "умение",
+      "language": "ru",
+      "style": "helpful_precision",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 3,
+      "previous_staged_count": 87,
+      "added_candidates": 1,
+      "total_candidates_with_published": 91,
+      "target": 100,
+      "remaining": 9,
+      "replies": [
+        {
+          "id": "struct_t93_018_supp_97",
+          "text": "Декабрьские продажи могут расти перед праздниками каждый год. Сравни декабрь с прошлым декабрём и несколько соседних месяцев, прежде чем называть сезонный всплеск новым трендом.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Декабрьский пик без межгодового сравнения объявили устойчивым ростом",
+          "avoid": "Только по прямому вопросу при совпадающем контексте; не совершать действий, не придумывать факты и не применять санкции.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "struct_t93_019",
+      "canonical_question": "Почему время записи в журнале может быть позже времени самого события?",
+      "section": "умение",
+      "language": "ru",
+      "style": "helpful_precision",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 3,
+      "previous_staged_count": 87,
+      "added_candidates": 1,
+      "total_candidates_with_published": 91,
+      "target": 100,
+      "remaining": 9,
+      "replies": [
+        {
+          "id": "struct_t93_019_supp_97",
+          "text": "Прибор измерил температуру в 11:02, но после потери сети отправил запись в 11:15. Сохраняй время события отдельно от времени получения, чтобы задержку передачи не принять за новое измерение.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Устройство накопило измерения офлайн и отправило пакет позже",
+          "avoid": "Только по прямому вопросу при совпадающем контексте; не совершать действий, не придумывать факты и не применять санкции.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "struct_t93_020",
+      "canonical_question": "Можно ли считать пять измерений одного человека пятью независимыми участниками?",
+      "section": "умение",
+      "language": "ru",
+      "style": "helpful_precision",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 3,
+      "previous_staged_count": 87,
+      "added_candidates": 1,
+      "total_candidates_with_published": 91,
+      "target": 100,
+      "remaining": 9,
+      "replies": [
+        {
+          "id": "struct_t93_020_supp_97",
+          "text": "Пять повторных измерений одним прибором не заменяют пять независимых приборов. Разброс внутри устройства и между устройствами нужно оценивать отдельно.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Один прибор измеряют много раз и ошибочно считают независимой выборкой",
+          "avoid": "Только по прямому вопросу при совпадающем контексте; не совершать действий, не придумывать факты и не применять санкции.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "struct_t93_021",
+      "canonical_question": "Когда при объединении результатов опроса нужны веса групп?",
+      "section": "умение",
+      "language": "ru",
+      "style": "helpful_precision",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 3,
+      "previous_staged_count": 87,
+      "added_candidates": 1,
+      "total_candidates_with_published": 91,
+      "target": 100,
+      "remaining": 9,
+      "replies": [
+        {
+          "id": "struct_t93_021_supp_97",
+          "text": "Если в опрос двух районов взяли по сто человек, хотя один район вчетверо больше, простое среднее мнений переоценит маленький район. Используй доли населения для весов.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Маленький и большой районы одинаково представлены в опросе",
+          "avoid": "Только по прямому вопросу при совпадающем контексте; не совершать действий, не придумывать факты и не применять санкции.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "struct_t93_022",
+      "canonical_question": "Почему статистически значимый результат может быть практически неважным?",
+      "section": "умение",
+      "language": "ru",
+      "style": "helpful_precision",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 3,
+      "previous_staged_count": 87,
+      "added_candidates": 1,
+      "total_candidates_with_published": 91,
+      "target": 100,
+      "remaining": 9,
+      "replies": [
+        {
+          "id": "struct_t93_022_supp_97",
+          "text": "На огромной выборке время ожидания сократилось на 0,02 секунды со статистической значимостью. Прежде чем внедрять исправление, оцени заметность такого эффекта и затраты.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Статистически значимый эффект слишком мал для практической пользы",
+          "avoid": "Только по прямому вопросу при совпадающем контексте; не совершать действий, не придумывать факты и не применять санкции.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "struct_t93_023",
+      "canonical_question": "Почему средняя задержка не заменяет 90-й процентиль времени ответа?",
+      "section": "умение",
+      "language": "ru",
+      "style": "helpful_precision",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 3,
+      "previous_staged_count": 87,
+      "added_candidates": 1,
+      "total_candidates_with_published": 91,
+      "target": 100,
+      "remaining": 9,
+      "replies": [
+        {
+          "id": "struct_t93_023_supp_97",
+          "text": "Средняя задержка сервера 100 мс не исключает, что некоторые запросы ждут почти секунду. Для оценки медленных обращений добавь p90 и долю запросов выше допустимой границы.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Среднее время ответа скрывает отдельные очень медленные запросы",
+          "avoid": "Только по прямому вопросу при совпадающем контексте; не совершать действий, не придумывать факты и не применять санкции.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "struct_t93_024",
+      "canonical_question": "Почему объединение таблиц по ключу иногда увеличивает сумму покупок?",
+      "section": "умение",
+      "language": "ru",
+      "style": "helpful_precision",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 3,
+      "previous_staged_count": 87,
+      "added_candidates": 1,
+      "total_candidates_with_published": 91,
+      "target": 100,
+      "remaining": 9,
+      "replies": [
+        {
+          "id": "struct_t93_024_supp_97",
+          "text": "Если один заказ содержит три позиции, объединение заказов с позициями создаст три строки одного заказа. Сумму из заголовка нельзя суммировать трижды; выбери нужный уровень агрегации.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "JOIN таблицы заказов с позициями размножает суммы из заголовка",
+          "avoid": "Только по прямому вопросу при совпадающем контексте; не совершать действий, не придумывать факты и не применять санкции.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "struct_t93_025",
+      "canonical_question": "Что проверить, если сумма долей взаимоисключающих категорий значительно выше 100%?",
+      "section": "умение",
+      "language": "ru",
+      "style": "helpful_precision",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 3,
+      "previous_staged_count": 87,
+      "added_candidates": 1,
+      "total_candidates_with_published": 91,
+      "target": 100,
+      "remaining": 9,
+      "replies": [
+        {
+          "id": "struct_t93_025_supp_97",
+          "text": "Если доли заявленных непересекающихся категорий дали 118%, округление нескольких строк вряд ли объяснит расхождение. Проверь дубли, знаменатели и саму классификацию.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Суммарная доля непересекающихся категорий значительно превышает 100%",
+          "avoid": "Только по прямому вопросу при совпадающем контексте; не совершать действий, не придумывать факты и не применять санкции.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "struct_t88_022",
+      "canonical_question": "Почему улучшение общей доли может скрывать ухудшение внутри групп?",
+      "section": "умение",
+      "language": "ru",
+      "style": "helpful_precision",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 3,
+      "previous_staged_count": 87,
+      "added_candidates": 1,
+      "total_candidates_with_published": 91,
+      "target": 100,
+      "remaining": 9,
+      "replies": [
+        {
+          "id": "struct_t88_022_supp_97",
+          "text": "Общий показатель может улучшиться даже при ухудшении в каждом филиале, если большая часть клиентов перешла в филиал с изначально лучшим результатом. Сравни структуру групп и их показатели.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Состав выборки между периодами сместился в пользу сильной группы",
+          "avoid": "Только по прямому вопросу при совпадающем контексте; не совершать действий, не придумывать факты и не применять санкции.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "struct_t88_023",
+      "canonical_question": "Можно ли считать пересекающиеся интервалы неопределённости доказательством равенства?",
+      "section": "умение",
+      "language": "ru",
+      "style": "helpful_precision",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 3,
+      "previous_staged_count": 87,
+      "added_candidates": 1,
+      "total_candidates_with_published": 91,
+      "target": 100,
+      "remaining": 9,
+      "replies": [
+        {
+          "id": "struct_t88_023_supp_97",
+          "text": "Пересечение доверительных интервалов само по себе не доказывает равенство показателей. Для измерений у одних участников оцени интервал разности с учётом связи между измерениями.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Две оценки получены на тех же участниках, но рассматриваются отдельно",
+          "avoid": "Только по прямому вопросу при совпадающем контексте; не совершать действий, не придумывать факты и не применять санкции.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "struct_t88_024",
+      "canonical_question": "Как объяснить категорию «прочее» в круговой диаграмме?",
+      "section": "умение",
+      "language": "ru",
+      "style": "helpful_precision",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 3,
+      "previous_staged_count": 87,
+      "added_candidates": 1,
+      "total_candidates_with_published": 91,
+      "target": 100,
+      "remaining": 9,
+      "replies": [
+        {
+          "id": "struct_t88_024_supp_97",
+          "text": "У сектора «прочее» должен быть опубликован состав. Если туда в разные периоды включали разные редкие причины, изменение его размера может быть следствием перегруппировки.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Категория «прочее» меняет набор включённых причин между периодами",
+          "avoid": "Только по прямому вопросу при совпадающем контексте; не совершать действий, не придумывать факты и не применять санкции.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "struct_t88_025",
+      "canonical_question": "Чем девяностый процентиль отличается от максимума?",
+      "section": "умение",
+      "language": "ru",
+      "style": "helpful_precision",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 3,
+      "previous_staged_count": 87,
+      "added_candidates": 1,
+      "total_candidates_with_published": 91,
+      "target": 100,
+      "remaining": 9,
+      "replies": [
+        {
+          "id": "struct_t88_025_supp_97",
+          "text": "Девяностый процентиль — уровень, на котором или ниже находится примерно 90% наблюдений. Максимум может быть значительно выше, поэтому для расследования единичного сбоя нужны оба значения.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Редкую экстремальную задержку пытаются заменить девяностым процентилем",
+          "avoid": "Только по прямому вопросу при совпадающем контексте; не совершать действий, не придумывать факты и не применять санкции.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "struct_t90_001",
+      "canonical_question": "Как читать показатель «1,2 тыс.», если в соседней строке обычные целые числа?",
+      "section": "умение",
+      "language": "ru",
+      "style": "helpful_precision",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 3,
+      "previous_staged_count": 87,
+      "added_candidates": 1,
+      "total_candidates_with_published": 91,
+      "target": 100,
+      "remaining": 9,
+      "replies": [
+        {
+          "id": "struct_t90_001_supp_97",
+          "text": "Запись «1,2 тыс.» означает 1200 единиц. Если в соседней строке стоит просто 1200, приведи строки к одному масштабу и не умножай первую второй раз.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "В соседних строках используются тысячи и обычные целые числа",
+          "avoid": "Только по прямому вопросу при совпадающем контексте; не совершать действий, не придумывать факты и не применять санкции.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "struct_t90_002",
+      "canonical_question": "Как отличить годовую ставку от дохода за два месяца?",
+      "section": "умение",
+      "language": "ru",
+      "style": "helpful_precision",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 3,
+      "previous_staged_count": 87,
+      "added_candidates": 1,
+      "total_candidates_with_published": 91,
+      "target": 100,
+      "remaining": 9,
+      "replies": [
+        {
+          "id": "struct_t90_002_supp_97",
+          "text": "Два месяца при эффективной годовой доходности 12% дают около 1,91% в модели (1,12)^(2/12)−1. В договоре отдельно проверь порядок начисления и возможные комиссии.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Эффективную годовую ставку пересчитывают на короткий период",
+          "avoid": "Только по прямому вопросу при совпадающем контексте; не совершать действий, не придумывать факты и не применять санкции.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "struct_t90_003",
+      "canonical_question": "Почему средняя скорость пути не всегда равна среднему двух скоростей?",
+      "section": "умение",
+      "language": "ru",
+      "style": "helpful_precision",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 3,
+      "previous_staged_count": 87,
+      "added_candidates": 1,
+      "total_candidates_with_published": 91,
+      "target": 100,
+      "remaining": 9,
+      "replies": [
+        {
+          "id": "struct_t90_003_supp_97",
+          "text": "При равных по длине половинах пути со скоростями 40 и 80 км/ч средняя скорость около 53,3 км/ч. Делить нужно суммарное расстояние на общее время, а не усреднять скорости напрямую.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Две равные по расстоянию части маршрута пройдены с разными скоростями",
+          "avoid": "Только по прямому вопросу при совпадающем контексте; не совершать действий, не придумывать факты и не применять санкции.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "struct_t90_004",
+      "canonical_question": "Как трактовать число с символом приблизительности?",
+      "section": "умение",
+      "language": "ru",
+      "style": "helpful_precision",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 3,
+      "previous_staged_count": 87,
+      "added_candidates": 1,
+      "total_candidates_with_published": 91,
+      "target": 100,
+      "remaining": 9,
+      "replies": [
+        {
+          "id": "struct_t90_004_supp_97",
+          "text": "«Примерно 200 деталей» не задаёт допустимый диапазон. Для договора согласуй точное число или границы допуска, вместо того чтобы самому считать 190–210 приемлемыми.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Приблизительное количество деталей хотят применить к обязательству поставки",
+          "avoid": "Только по прямому вопросу при совпадающем контексте; не совершать действий, не придумывать факты и не применять санкции.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "struct_t90_005",
+      "canonical_question": "Что означает индекс 115 при базовом значении 100?",
+      "section": "умение",
+      "language": "ru",
+      "style": "helpful_precision",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 3,
+      "previous_staged_count": 87,
+      "added_candidates": 1,
+      "total_candidates_with_published": 91,
+      "target": 100,
+      "remaining": 9,
+      "replies": [
+        {
+          "id": "struct_t90_005_supp_97",
+          "text": "Индекс 115 при базе 100 показывает рост на 15%. Если в следующем периоде индекс 110 уже относительно предыдущего, к первой базе получится 115 × 1,10 = 126,5.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Цепочка индексов использует последовательно меняющуюся базу",
+          "avoid": "Только по прямому вопросу при совпадающем контексте; не совершать действий, не придумывать факты и не применять санкции.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "struct_t90_006",
+      "canonical_question": "Когда нельзя считать число подписчиков равным числу просмотров?",
+      "section": "умение",
+      "language": "ru",
+      "style": "helpful_precision",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 3,
+      "previous_staged_count": 87,
+      "added_candidates": 1,
+      "total_candidates_with_published": 91,
+      "target": 100,
+      "remaining": 9,
+      "replies": [
+        {
+          "id": "struct_t90_006_supp_97",
+          "text": "Подписчик может пересмотреть ролик несколько раз, а неподписанный зритель тоже оставит просмотр. Уточни, считает платформа воспроизведения или уникальных людей.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Число подписчиков сравнивают с повторными просмотрами ролика",
+          "avoid": "Только по прямому вопросу при совпадающем контексте; не совершать действий, не придумывать факты и не применять санкции.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "struct_t90_007",
+      "canonical_question": "Как сравнивать доходы, если один показатель до вычетов, а другой после?",
+      "section": "умение",
+      "language": "ru",
+      "style": "helpful_precision",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 3,
+      "previous_staged_count": 87,
+      "added_candidates": 1,
+      "total_candidates_with_published": 91,
+      "target": 100,
+      "remaining": 9,
+      "replies": [
+        {
+          "id": "struct_t90_007_supp_97",
+          "text": "Начисленные 80 тысяч рублей и выплаченные на руки 80 тысяч — разные показатели. Приведи суммы к одному основанию до или после удержаний и только потом сравнивай.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Один отчёт показывает зарплату до налогов, другой после удержаний",
+          "avoid": "Только по прямому вопросу при совпадающем контексте; не совершать действий, не придумывать факты и не применять санкции.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "struct_t90_008",
+      "canonical_question": "Почему сумма округлённых строк может не совпасть с округлённым итогом?",
+      "section": "умение",
+      "language": "ru",
+      "style": "helpful_precision",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 3,
+      "previous_staged_count": 87,
+      "added_candidates": 1,
+      "total_candidates_with_published": 91,
+      "target": 100,
+      "remaining": 9,
+      "replies": [
+        {
+          "id": "struct_t90_008_supp_97",
+          "text": "Три позиции по 0,4 при округлении до целого покажут на экране 0 + 0 + 0, а округление исходной суммы 1,2 даст 1. Итог считай по неокруглённым данным.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Округлённые строки не сходятся с итогом из исходных чисел",
+          "avoid": "Только по прямому вопросу при совпадающем контексте; не совершать действий, не придумывать факты и не применять санкции.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "struct_t90_009",
+      "canonical_question": "Что проверять в диаграмме с логарифмической осью?",
+      "section": "умение",
+      "language": "ru",
+      "style": "helpful_precision",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 3,
+      "previous_staged_count": 87,
+      "added_candidates": 1,
+      "total_candidates_with_published": 91,
+      "target": 100,
+      "remaining": 9,
+      "replies": [
+        {
+          "id": "struct_t90_009_supp_97",
+          "text": "Обычная логарифмическая ось не показывает ноль и отрицательные числа. Если такие точки пропали, проверь выбранную шкалу и метод обработки этих значений.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "На логарифмическом графике пропали нули и отрицательные точки",
+          "avoid": "Только по прямому вопросу при совпадающем контексте; не совершать действий, не придумывать факты и не применять санкции.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "struct_t90_010",
+      "canonical_question": "Как складывать суммы из разных валют в одном отчёте?",
+      "section": "умение",
+      "language": "ru",
+      "style": "helpful_precision",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 3,
+      "previous_staged_count": 87,
+      "added_candidates": 1,
+      "total_candidates_with_published": 91,
+      "target": 100,
+      "remaining": 9,
+      "replies": [
+        {
+          "id": "struct_t90_010_supp_97",
+          "text": "Суммы в евро и рублях нельзя складывать без конвертации. Укажи общую валюту, дату применяемого курса и правило пересчёта каждой операции.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Отчёт объединяет финансовые строки в разных валютах",
+          "avoid": "Только по прямому вопросу при совпадающем контексте; не совершать действий, не придумывать факты и не применять санкции.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "struct_t90_011",
+      "canonical_question": "Что означает отрицательный ноль на дисплее измерителя?",
+      "section": "умение",
+      "language": "ru",
+      "style": "helpful_precision",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 3,
+      "previous_staged_count": 87,
+      "added_candidates": 1,
+      "total_candidates_with_published": 91,
+      "target": 100,
+      "remaining": 9,
+      "replies": [
+        {
+          "id": "struct_t90_011_supp_97",
+          "text": "«−0,00» часто возникает после округления маленького отрицательного числа. По одному дисплею нельзя судить о реальном отклонении: проверь точность и погрешность прибора.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Малое отрицательное измерение после округления выглядит как минус ноль",
+          "avoid": "Только по прямому вопросу при совпадающем контексте; не совершать действий, не придумывать факты и не применять санкции.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "struct_t90_012",
+      "canonical_question": "Можно ли сравнивать проценты, если у них разные основания?",
+      "section": "умение",
+      "language": "ru",
+      "style": "helpful_precision",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 3,
+      "previous_staged_count": 87,
+      "added_candidates": 1,
+      "total_candidates_with_published": 91,
+      "target": 100,
+      "remaining": 9,
+      "replies": [
+        {
+          "id": "struct_t90_012_supp_97",
+          "text": "25% от 200 — это 50 случаев, а 25% от 80 — 20 случаев. Одинаковые проценты не означают одинаковое количество; называй размер каждой исходной группы.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Одинаковые доли двух групп ошибочно трактуют как равные абсолютные числа",
+          "avoid": "Только по прямому вопросу при совпадающем контексте; не совершать действий, не придумывать факты и не применять санкции.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "struct_t90_013",
+      "canonical_question": "Как различить накопительный итог и показатель за отдельный день?",
+      "section": "умение",
+      "language": "ru",
+      "style": "helpful_precision",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 3,
+      "previous_staged_count": 87,
+      "added_candidates": 1,
+      "total_candidates_with_published": 91,
+      "target": 100,
+      "remaining": 9,
+      "replies": [
+        {
+          "id": "struct_t90_013_supp_97",
+          "text": "Если утром накопительный счётчик показал 1200, а вечером 1270, за день добавилось 70. Число 1270 включает прошлые дни и не является отдельным дневным итогом.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Показание накопительного счётчика принимают за прирост за день",
+          "avoid": "Только по прямому вопросу при совпадающем контексте; не совершать действий, не придумывать факты и не применять санкции.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "struct_t90_014",
+      "canonical_question": "Почему процент ошибок нельзя оценить без числа проверок?",
+      "section": "умение",
+      "language": "ru",
+      "style": "helpful_precision",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 3,
+      "previous_staged_count": 87,
+      "added_candidates": 1,
+      "total_candidates_with_published": 91,
+      "target": 100,
+      "remaining": 9,
+      "replies": [
+        {
+          "id": "struct_t90_014_supp_97",
+          "text": "Два дефекта из пяти проверок — 40%, а два из ста — 2%. Чтобы понять долю брака, публикуй число ошибок вместе с числом проверенных объектов.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Два одинаковых количества ошибок получены при разных объёмах проверки",
+          "avoid": "Только по прямому вопросу при совпадающем контексте; не совершать действий, не придумывать факты и не применять санкции.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "struct_t90_015",
+      "canonical_question": "Что делать, если таблица смешивает план и выполненный результат?",
+      "section": "умение",
+      "language": "ru",
+      "style": "helpful_precision",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 3,
+      "previous_staged_count": 87,
+      "added_candidates": 1,
+      "total_candidates_with_published": 91,
+      "target": 100,
+      "remaining": 9,
+      "replies": [
+        {
+          "id": "struct_t90_015_supp_97",
+          "text": "Если сделано только 40% работ, сравни расходы с планом именно этой стадии. Полный бюджет проекта отдельно, иначе непотраченные деньги ошибочно покажутся экономией.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Расходы неполного этапа сравниваются с планом всего проекта",
+          "avoid": "Только по прямому вопросу при совпадающем контексте; не совершать действий, не придумывать факты и не применять санкции.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "struct_t90_016",
+      "canonical_question": "Как объяснить ошибку деления нуля на ноль?",
+      "section": "умение",
+      "language": "ru",
+      "style": "helpful_precision",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 3,
+      "previous_staged_count": 87,
+      "added_candidates": 1,
+      "total_candidates_with_published": 91,
+      "target": 100,
+      "remaining": 9,
+      "replies": [
+        {
+          "id": "struct_t90_016_supp_97",
+          "text": "Для 0 ÷ 0 нет единственного ответа: любое число, умноженное на ноль, даёт ноль. Поэтому обратное умножение не позволяет найти частное.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Объясняют неопределённость деления нуля на ноль через умножение",
+          "avoid": "Только по прямому вопросу при совпадающем контексте; не совершать действий, не придумывать факты и не применять санкции.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "struct_t90_017",
+      "canonical_question": "Чем абсолютная погрешность отличается от относительной?",
+      "section": "умение",
+      "language": "ru",
+      "style": "helpful_precision",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 3,
+      "previous_staged_count": 87,
+      "added_candidates": 1,
+      "total_candidates_with_published": 91,
+      "target": 100,
+      "remaining": 9,
+      "replies": [
+        {
+          "id": "struct_t90_017_supp_97",
+          "text": "Абсолютная ошибка выражается в единицах измерения, относительная — как доля эталона. При нулевом эталоне обычная формула относительной ошибки не определена.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Опорное значение для расчёта относительной погрешности равно нулю",
+          "avoid": "Только по прямому вопросу при совпадающем контексте; не совершать действий, не придумывать факты и не применять санкции.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "struct_t90_018",
+      "canonical_question": "Как читать сложенную столбчатую диаграмму?",
+      "section": "умение",
+      "language": "ru",
+      "style": "helpful_precision",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 3,
+      "previous_staged_count": 87,
+      "added_candidates": 1,
+      "total_candidates_with_published": 91,
+      "target": 100,
+      "remaining": 9,
+      "replies": [
+        {
+          "id": "struct_t90_018_supp_97",
+          "text": "На нормированной сложенной диаграмме каждый столбец имеет высоту 100%, даже если в группах разное число объектов. Проверь исходные суммы перед сравнением.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Сравнивают сложенные столбцы с нормированием к ста процентам",
+          "avoid": "Только по прямому вопросу при совпадающем контексте; не совершать действий, не придумывать факты и не применять санкции.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "struct_t90_019",
+      "canonical_question": "Почему нельзя переносить частоту из опроса добровольцев на всех пользователей?",
+      "section": "умение",
+      "language": "ru",
+      "style": "helpful_precision",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 3,
+      "previous_staged_count": 87,
+      "added_candidates": 1,
+      "total_candidates_with_published": 91,
+      "target": 100,
+      "remaining": 9,
+      "replies": [
+        {
+          "id": "struct_t90_019_supp_97",
+          "text": "В добровольном опросе недовольные могут отвечать охотнее остальных. Даже поправка на возраст не устранит весь такой перекос без данных о наборе участников.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Самостоятельный выбор участия в опросе связан с отношением к теме",
+          "avoid": "Только по прямому вопросу при совпадающем контексте; не совершать действий, не придумывать факты и не применять санкции.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "struct_t90_020",
+      "canonical_question": "Как разбирать диапазон «от 3 до 7», если границы не уточнены?",
+      "section": "умение",
+      "language": "ru",
+      "style": "helpful_precision",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 3,
+      "previous_staged_count": 87,
+      "added_candidates": 1,
+      "total_candidates_with_published": 91,
+      "target": 100,
+      "remaining": 9,
+      "replies": [
+        {
+          "id": "struct_t90_020_supp_97",
+          "text": "«От 3 до 7 дней» не всегда однозначно определяет включение крайнего дня. Для автоматической проверки запиши «не менее 3 и не более 7» либо явно исключи границу.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Диапазон времени без указания включённых границ закрепляют в договоре",
+          "avoid": "Только по прямому вопросу при совпадающем контексте; не совершать действий, не придумывать факты и не применять санкции.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "struct_t90_021",
+      "canonical_question": "Как читать матрицу, если перепутаны строки и столбцы?",
+      "section": "умение",
+      "language": "ru",
+      "style": "helpful_precision",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 3,
+      "previous_staged_count": 87,
+      "added_candidates": 1,
+      "total_candidates_with_published": 91,
+      "target": 100,
+      "remaining": 9,
+      "replies": [
+        {
+          "id": "struct_t90_021_supp_97",
+          "text": "У матрицы ошибок истинные классы могут быть по строкам либо столбцам. Сначала проверь подписи осей, иначе точность и полнота положительного класса будут посчитаны неправильно.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Для матрицы классификации не указан порядок факта и прогноза",
+          "avoid": "Только по прямому вопросу при совпадающем контексте; не совершать действий, не придумывать факты и не применять санкции.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "struct_t90_022",
+      "canonical_question": "Как сравнивать выручку и прибыль одного проекта?",
+      "section": "умение",
+      "language": "ru",
+      "style": "helpful_precision",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 3,
+      "previous_staged_count": 87,
+      "added_candidates": 1,
+      "total_candidates_with_published": 91,
+      "target": 100,
+      "remaining": 9,
+      "replies": [
+        {
+          "id": "struct_t90_022_supp_97",
+          "text": "При выручке проекта 500 тысяч рублей и относящихся к ней расходах 540 тысяч результат за период — убыток 40 тысяч. Большая выручка сама по себе не означает прибыль.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Финансовый результат проекта оценивают по выручке без вычета расходов",
+          "avoid": "Только по прямому вопросу при совпадающем контексте; не совершать действий, не придумывать факты и не применять санкции.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "struct_t90_023",
+      "canonical_question": "Почему цена после кешбэка не всегда равна цене покупки?",
+      "section": "умение",
+      "language": "ru",
+      "style": "helpful_precision",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 3,
+      "previous_staged_count": 87,
+      "added_candidates": 1,
+      "total_candidates_with_published": 91,
+      "target": 100,
+      "remaining": 9,
+      "replies": [
+        {
+          "id": "struct_t90_023_supp_97",
+          "text": "Если обещано 10% кешбэка, проверь верхний лимит: при покупке на 20 тысяч и потолке 500 рублей начислят максимум 500 вместо арифметических 2000.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Кешбэк ограничен максимальной суммой на операцию или период",
+          "avoid": "Только по прямому вопросу при совпадающем контексте; не совершать действий, не придумывать факты и не применять санкции.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "struct_t90_024",
+      "canonical_question": "Что делать, если измерения на графике указаны в тысячах, но эта подпись мелкая?",
+      "section": "умение",
+      "language": "ru",
+      "style": "helpful_precision",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 3,
+      "previous_staged_count": 87,
+      "added_candidates": 1,
+      "total_candidates_with_published": 91,
+      "target": 100,
+      "remaining": 9,
+      "replies": [
+        {
+          "id": "struct_t90_024_supp_97",
+          "text": "Если на оси стоит «тыс. человек», отметка 2,4 означает 2400 человек. Перенося график в таблицу, укажи единицу явно, чтобы не потерять множитель.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Значение с оси в тысячах переносят в таблицу с обычными единицами",
+          "avoid": "Только по прямому вопросу при совпадающем контексте; не совершать действий, не придумывать факты и не применять санкции.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "struct_t90_025",
+      "canonical_question": "Как отличить последовательность событий от доказательства причины?",
+      "section": "умение",
+      "language": "ru",
+      "style": "helpful_precision",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 3,
+      "previous_staged_count": 87,
+      "added_candidates": 1,
+      "total_candidates_with_published": 91,
+      "target": 100,
+      "remaining": 9,
+      "replies": [
+        {
+          "id": "struct_t90_025_supp_97",
+          "text": "Температура упала после включения вентилятора, но в тот же момент открыли окно. Нельзя приписать весь эффект вентилятору, пока не проверено влияние второго изменения.",
+          "language": "ru",
+          "style": "helpful_precision",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Два воздействия произошли одновременно до наблюдаемого изменения",
+          "avoid": "Только по прямому вопросу при совпадающем контексте; не совершать действий, не придумывать факты и не применять санкции.",
+          "read_only": true
+        }
+      ]
+    }
+  ]
+}
