@@ -1,0 +1,7 @@
+# K102–K106 / K31 · 14 November 2026
+
+Continues PR #661 from head `d3266450b29b624b0765c00560c9c1b46b6e5734`, main `6c9f430da47f137d39a72bbd28c057cfb8f6be96`. Synthetic, anonymized Russian context-conditioned answers for 54 existing canonical questions. This batch adds **74** candidates: five new replies for each of the first five stable intents, and one for each of the other 49. Before: 4,482 staged and 95/100 including the three published replies for each intent. After: **4,556 staged**; **five sets at 100/100 candidate coverage**, **49 at 96/100**, **196 missing overall**. These numbers describe staged candidates and do not certify independent semantic review.
+
+The new stage is consumer_registered=false; no manifest, cache or consumer changes. The original source snapshot is held by its pinned SHA. Context notes and required selection gates are mandatory. Initial same-intent context comparison against stages K25–K29 at normalized trigram Jaccard threshold 0.60 found no collisions; comprehensive lexical and policy tests must pass on exact new head. No write authority, moderation, or private information enters this language data.
+
+**BLOCKED for merge:** independent meaning and consumer-routing QA; safe delivery within the 8 MiB snapshot limit; full exact-head CI including Bot-Knowledge quality, then post-main CI. Next inspect K102–K106 for real situational novelty and continue other 49 partial intents without mechanical padding.
