@@ -23,7 +23,7 @@ IMPULS = "c92abeabac83c5406aff7ae25857c5d96fb6c49f"
 
 
 def normalize(value: str) -> str:
-    return " ".join(re.findall(r"[^\\W_]+", value.casefold().replace("ё", "е")))
+    return " ".join(re.findall(r"[^\W_]+", value.casefold().replace("ё", "е")))
 
 
 def similarity(a: set[str], b: set[str]) -> float:
