@@ -13,7 +13,7 @@ SOURCE = ROOT / "packs/ru/impuls_help_qa.json"
 
 
 def normalize(text: str) -> str:
-    return " ".join(re.findall(r"[^\\W_]+", text.casefold().replace("ё", "е")))
+    return " ".join(re.findall(r"[^\W_]+", text.casefold().replace("ё", "е")))
 
 
 def tokens(text: str) -> set[str]:
@@ -85,7 +85,7 @@ class H7H8QA(unittest.TestCase):
                     self.assertGreaterEqual(len(reply["context_note"]), 25)
                     self.assertEqual(reply["editorial_status"],
                                      "candidate_pending_full_semantic_review")
-                    self.assertFalse(re.search(r"https?://|@|\\b(?:ban_user|kick_chat_member)\\b",
+                    self.assertFalse(re.search(r"https?://|@|\b(?:ban_user|kick_chat_member)\b",
                                                reply["text"], re.I))
         self.assertEqual(len(reply_ids), 435)
 
