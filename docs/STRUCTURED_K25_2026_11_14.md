@@ -9,3 +9,7 @@ Pre-write screen against K23, K24, and registered source: normalized exact dupli
 The new material remains `consumer_registered=false`, read-only, requires direct address and a matching context, and grants no actions or sanctions. No manifest, ImPULS, BotHost or live cache updates.
 
 BLOCKED for merge until complete exact-head/full CI, independent semantic review, consumer context-routing and a delivery plan within the 8 MiB consumer limit. Next: editorial review, then K97 only for genuinely distinct cases.
+
+## Смысловая редактура после первой структурной проверки
+
+Переписаны 15 из 108 кандидатных ответов без изменения счётчика. Исправлены слишком близкие к K94 ситуации: граница отчётного месяца, несовпадение часов устройств, переполнение счётчика, разные правила округления, пределы 0/0, нормированная сложенная диаграмма и другие. Нужна полная повторная проверка exact-head и независимое сопоставление со всеми стадиями; первоначальный CI прошлого SHA уже не подтверждает новую редакцию.
