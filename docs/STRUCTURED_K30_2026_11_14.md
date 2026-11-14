@@ -9,3 +9,5 @@ The full stage remains `consumer_registered=false`, read-only, directed to `all_
 Files changed: new K30 JSON, K30 Python tests, this journal, read-only exact-head K workflow. Manifest/cache/live consumers and ImPULS unchanged.
 
 **Merge BLOCKED:** complete exact-head CI for this new head, independent semantic/context-choice review, consumer compatibility and safe delivery within 8 MiB. Next action: inspect K101 closely, then K102 only with genuinely different cases; no automatic merging or deployment.
+
+Editorial addendum (K101 exact-head successor): 7 recent K stages were compared by Unicode-normalised character trigram overlap of same-intent context notes; one near-identical K27/K29 scenario for `struct_t90_009` was found. K29 was rewritten to distinguish interpreting a straight line on a semilog graph from zero-value omission. Net new answer count unchanged. A Python regression now rejects same-intent recent near duplicates at trigram Jaccard >= 0.60. Recheck all SHA/CI on the new head.

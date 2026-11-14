@@ -71,6 +71,20 @@ class K30Tests(unittest.TestCase):
    for old in sets:self.assertLess(len(w&old)/len(w|old),.70,r["id"])
    norms.add(s);sets.append(w)
 
+ def test_recent_context_note_near_duplicates(self):
+  def grams(s):
+   s="".join(norm(s).split())
+   return {s[i:i+3] for i in range(max(0,len(s)-2))}
+  pool={}
+  for d in self.old[-6:]+[self.data]:
+   for e in d["entries"]:
+    for r in e["replies"]:
+     g=grams(r["context_note"])
+     for old_id,old_g in pool.get(e["intent_id"],[]):
+      v=len(g&old_g)/max(1,len(g|old_g))
+      self.assertLess(v,.60,(r["id"],old_id,v))
+     pool.setdefault(e["intent_id"],[]).append((r["id"],g))
+
  def test_distinct_context_notes_per_intent(self):
   notes={(e["intent_id"],norm(r["context_note"])) for d in self.old for e in d["entries"] for r in e["replies"]}
   for e in self.entries:
