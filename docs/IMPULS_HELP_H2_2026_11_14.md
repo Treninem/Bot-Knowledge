@@ -1,0 +1,11 @@
+# ImPULS contextual user-help H2 · 14 November 2026
+
+Continues PR #666 H1 on exact branch head `e4dbe1db3320cd0d584a7a80b3642d44a7ecdfd2`. Source published main `6c9f430da47f137d39a72bbd28c057cfb8f6be96`, registered help manifest SHA-256 `50edd41dc0c6a868577433944e0ff0b2a36c2c9ebe53d587e5cbb4692185bbc9`; public ImPULS user-help baseline checked read-only against main `60f08d93c6f0268d63d1c06dc364287d0b18c183`.
+
+**45 new original Russian context-scoped reply candidates for 15 further existing canonical intents**. H1 had 45 across 15 disjoint intents, so this PR now stages **90 new replies across 30 stable intents** (delta only). Numeric per-intent remaining-to-100 fields count the actual published answer + variants and this stage, explicitly excluding unmerged or editorially unverified PRs. All 30 sets remain numerically partial; 0 independently approved 100/100 sets, 0 editorially accepted new answers. H2 covers local chat rules, unclear wording, filter false positives, authorization, reporting, role access, games, Pulses, raffles, consentful jokes, scoped concise answers, privacy, feedback and error reports.
+
+Readback/in-memory preflight: H2 45 ID/text pairs unique; 0 normalized exact duplicates against **all published help variants and H1** and 0 lexical Jaccard >=0.70; maximum observed 0.265 (closest impuls_help_ask_rules_h2_02 / moderation_cross_group). This cannot prove semantic uniqueness across unrelated PRs. Added `scripts/test_impuls_help_h2_20261114.py` with cross-H1 and main exclusion, SHA-256 registered-source verification and isolation tests; read-only H1 workflow now checks both tests normal and `python -O`.
+
+Data is **staging only**, `consumer_registered=false`, `audiences=["impuls"]`, with direct/private/group addressed selection restrictions. No manifest, cache, ImPULS, BotHost or live change; no paid resources, personal data or sanctions.
+
+**BLOCKED for merge:** latest-head exact checkout CI and full quality CI, full cross-PR semantic review, runtime context selector, 8 MiB delivery budget, post-main checks. Do not declare delivery before actual consumer acceptance. Container checkout cannot resolve GitHub DNS; local Python tests are not claimed as run.

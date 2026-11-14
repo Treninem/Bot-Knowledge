@@ -6,6 +6,9 @@ on:
       - 'scripts/test_impuls_help_h1_20261114.py'
       - '.github/workflows/impuls-help-h1-20261114.yml'
       - 'docs/IMPULS_HELP_H1_2026_11_14.md'
+      - 'staging/ru/impuls_help_context_h2_20261114.json'
+      - 'scripts/test_impuls_help_h2_20261114.py'
+      - 'docs/IMPULS_HELP_H2_2026_11_14.md'
   workflow_dispatch:
 permissions:
   contents: read
@@ -27,4 +30,6 @@ jobs:
           python -B scripts/validate_pack.py
           python -B scripts/test_impuls_help_h1_20261114.py
           python -O -B scripts/test_impuls_help_h1_20261114.py
-          sha256sum staging/ru/impuls_help_context_h1_20261114.json
+          python -B scripts/test_impuls_help_h2_20261114.py
+          python -O -B scripts/test_impuls_help_h2_20261114.py
+          sha256sum staging/ru/impuls_help_context_h1_20261114.json staging/ru/impuls_help_context_h2_20261114.json
