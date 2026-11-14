@@ -35,3 +35,8 @@ K33 prepared 44 proposals; after extended editorial comparison, 2 clear meaning 
 ### K33 wider-stage audit correction
 
 Two drafted K33 candidates were removed before this checkpoint: `struct_t93_015_supp_104` repeats the Celsius-difference case `_supp_38`; `struct_t90_018_supp_104` repeats the signed stacked-bar case `_supp_98`. The saved K33 file holds **42** new candidates. Whole-stage test checks exact and high lexical/context overlap against all 32 K ancestor files; fully independent semantic QA remains outstanding.
+
+
+## K34 check · 14.11.2026
+
+Two **additional** K33 semantic duplicates are excluded from future approval: `struct_t93_018_supp_104` duplicates K32 `struct_t93_018_supp_103` (movable holiday shifts calendar-week demand), and `struct_t90_003_supp_104` duplicates K32 `struct_t90_003_supp_103` (stops ignored in travel-speed measurement). Both are flagged `editorial_eligible=false` in K33; they remain visible in git for auditing. Known disqualified staged entries now **7** (5 K31 + 2 K33). K34 adds **24** *pending*, non-certified contexts. Raw staging **4686**, raw incomplete slots **66**, editorially complete sets **0**. See `docs/STRUCTURED_K34_2026_11_14.md`. This is not evidence that other candidates have passed independent review.
