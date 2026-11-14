@@ -12,7 +12,7 @@ OLD = [ROOT / "staging/ru/structured_information_20261111_delta_k.json"]
 OLD += [ROOT / f"staging/ru/structured_information_20261113_delta_k{i}.json" for i in range(2, 14)]
 OLD += [ROOT / f"staging/ru/structured_information_20261114_delta_k{i}.json" for i in range(14, 23)]
 SOURCE = ROOT / "packs/ru/structured_information_qa.json"
-WORD = re.compile(r"[^\\W_]+", re.UNICODE)
+WORD = re.compile(r"[^\W_]+", re.UNICODE)
 
 def norm(s):
     return " ".join(WORD.findall(unicodedata.normalize("NFKC", s).casefold().replace("ё", "е")))
