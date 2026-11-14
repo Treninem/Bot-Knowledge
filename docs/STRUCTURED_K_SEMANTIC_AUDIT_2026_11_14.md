@@ -40,3 +40,12 @@ Two drafted K33 candidates were removed before this checkpoint: `struct_t93_015_
 ## K34 check · 14.11.2026
 
 Two **additional** K33 semantic duplicates are excluded from future approval: `struct_t93_018_supp_104` duplicates K32 `struct_t93_018_supp_103` (movable holiday shifts calendar-week demand), and `struct_t90_003_supp_104` duplicates K32 `struct_t90_003_supp_103` (stops ignored in travel-speed measurement). Both are flagged `editorial_eligible=false` in K33; they remain visible in git for auditing. Known disqualified staged entries now **7** (5 K31 + 2 K33). K34 adds **24** *pending*, non-certified contexts. Raw staging **4686**, raw incomplete slots **66**, editorially complete sets **0**. See `docs/STRUCTURED_K34_2026_11_14.md`. This is not evidence that other candidates have passed independent review.
+
+
+## K38 targeted semantic recheck · 14 November 2026
+
+Compared K38's 11 new contextual candidates with published `structured_information_qa` examples and available earlier K-stage contexts (read-only GitHub snapshot, PR #661). The original `struct_t93_005_supp_107` repeated the spring clock-change example already given in `struct_t93_005_supp_66`: both used 01:30→03:30 and one elapsed hour. The original `_supp_108` also stayed too close to previous fall-back clock examples. Neither previous wording is retained as an extra response.
+
+Both existing K38 IDs are now **replaced in place** by distinct, directly scoped night-shift accounting scenarios: turnstile arrival vs paid shift start (`_supp_107`), and a shift split between two calendar reporting months (`_supp_108`). Their previous rejected meaning is preserved here for audit. A regression test asserts these cases remain separate from clock-change examples. **New response delta = 0** for this correction; K38 still stores 11 pending candidates and overall K raw count stays 4,759. No previously rejected K31/K33 entry is reinstated.
+
+The other nine K38 replies were checked for obvious duplication in sampled prior-stage matches; they remain pending an independent full meaning-based review across all packs/PRs. Neither automated lexical checks nor this targeted editorial pass approve any full 100/100 set. Context selector and 8 MiB delivery remain unverified, so this is not a merge authorization.
