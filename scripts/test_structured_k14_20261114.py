@@ -1,4 +1,4 @@
-"""Verify K77 staged data without enabling consumer actions."""
+"""Verify K77–K78 staged data without enabling consumer actions."""
 import json, re, hashlib, unittest, unicodedata
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
@@ -20,14 +20,14 @@ class K14Tests(unittest.TestCase):
     def test_metadata_counts(self):
         d=self.d;c=d["checkpoint"]
         self.assertEqual(d["prior_stages"],PRIOR)
-        self.assertEqual(len(d["entries"]),54);self.assertEqual(len(self.r),54)
-        for field,n in {"processed_intents":54,"published_per_intent":3,"previous_staged_per_intent":67,"added_per_intent":1,"added_candidates":54,"combined_per_intent":71,"remaining_per_intent":29,"remaining_total":1566,"finished_100":0,"partial_intents":54}.items():self.assertEqual(c[field],n)
+        self.assertEqual(len(d["entries"]),54);self.assertEqual(len(self.r),108)
+        for field,n in {"processed_intents":54,"published_per_intent":3,"previous_staged_per_intent":67,"added_per_intent":2,"added_candidates":108,"combined_per_intent":72,"remaining_per_intent":28,"remaining_total":1512,"finished_100":0,"partial_intents":54}.items():self.assertEqual(c[field],n)
         old={e["intent_id"]:e for e in self.old[-1]["entries"]}
         self.assertEqual(set(old),{e["intent_id"] for e in d["entries"]})
         for e in d["entries"]:
             self.assertEqual(e["canonical_question"],old[e["intent_id"]]["canonical_question"])
-            self.assertEqual((e["published_count"],e["previous_staged_count"],e["added_candidates"],e["total_candidates_with_published"],e["remaining"]),(3,67,1,71,29))
-            self.assertEqual(e["replies"][0]["id"],e["intent_id"]+"_supp_77")
+            self.assertEqual((e["published_count"],e["previous_staged_count"],e["added_candidates"],e["total_candidates_with_published"],e["remaining"]),(3,67,2,72,28))
+            self.assertEqual({r["id"] for r in e["replies"]},{e["intent_id"]+"_supp_77",e["intent_id"]+"_supp_78"})
     def test_safety_source_hash(self):
         d=self.d;m=json.loads((ROOT/"manifest.json").read_text(encoding="utf-8"))
         registered={p["path"]:p["sha256"] for p in m["packs"]}
