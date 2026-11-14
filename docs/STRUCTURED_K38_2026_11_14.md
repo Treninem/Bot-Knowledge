@@ -20,7 +20,7 @@ Created `staging/ru/structured_information_20261114_delta_k38.json`: **11 new sy
 
 Raw K-series candidate total: **4,748 → 4,759**. Raw incomplete slots: **4 → 0**. Numerically, 54/54 stable intents have at least 100 *raw* records, including rejected legacy candidates. **Independently editorially accepted replies this continuation: 0; fully approved 100/100 sets: 0**.
 
-New contexts: offsetting gross flows and net-zero grid use; same-reference percentage adjustments; both daylight-saving transitions; leap-year February comparability; mismatched time zones on a route; spreadsheet formula precedence and sensor scale for temperature; overlapping categories and hidden category gaps on stacked charts. This is a targeted attempt to avoid cosmetic variants in saturated collections.
+New contexts: offsetting gross flows and net-zero grid use; same-reference percentage adjustments; night-shift time-log verification without double-counting overlapping fragments; leap-year February comparability; mismatched time zones on a route; spreadsheet formula precedence and sensor scale for temperature; overlapping categories and hidden category gaps on stacked charts. This is a targeted attempt to avoid cosmetic variants in saturated collections.
 
 ## Safety and QA gates
 
@@ -33,3 +33,7 @@ New contexts: offsetting gross flows and net-zero grid use; same-reference perce
 ## Next
 
 Review all 54 intents against main and other open PRs (#662–#664 and earlier), prioritising repeated high-level motifs in the two saturated temperature/chart intents. Mark exact editorial eligibility and publish only size-safe, meaning-distinct, consumer-tested subsets. Any additional candidates must be contextually distinct and have their own verifiable delta; no claim that numeric 100/100 equals semantic approval.
+
+## K38 editorial correction (14 Nov, follow-up)
+
+`struct_t93_005_supp_108` previously repeated month-boundary allocation already covered by K23 `struct_t93_005_supp_96` and K? `struct_t93_005_supp_85`; this was missed by token thresholds. Replaced the candidate in-place with a different night-shift problem: overlapping intervals from two log sources, correctly counting seven hours after removing twenty duplicated minutes. Original raw candidate total remains **4,759**, added by this correction **0**, editorially certified **0**. The context and Python assertion were updated; full semantic review remains outstanding.

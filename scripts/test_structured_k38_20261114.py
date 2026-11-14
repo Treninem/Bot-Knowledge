@@ -67,15 +67,15 @@ class K38(unittest.TestCase):
                 self.assertNotIn("@", v["text"] + v["context_note"])
 
     def test_night_shift_new_contexts(self):
-        """Avoid recycling the already-staged DST shift scenario as a new reply."""
+        """Reject both an old DST example and a duplicated calendar-month allocation."""
         entry = next(e for e in self.data["entries"] if e["intent_id"] == "struct_t93_005")
         r = {x["id"]: x for x in entry["replies"]}
         first = r["struct_t93_005_supp_107"]
         second = r["struct_t93_005_supp_108"]
         self.assertIn("пропуск", first["text"])
         self.assertIn("табелю", first["text"])
-        self.assertIn("помесячной", second["text"])
-        self.assertIn("первому месяцу", second["text"])
+        self.assertIn("пересекающиеся", second["text"])
+        self.assertIn("двойного счёта", second["context_note"])
         for x in (first, second):
             self.assertNotIn("перевод часов", x["text"] + x["context_note"])
             self.assertEqual(x["editorial_status"], "candidate_pending_full_semantic_review")
