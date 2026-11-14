@@ -13,7 +13,7 @@ SOURCE_PATH = "packs/ru/practical_recovery_qa.json"
 
 def normalize(s):
     s = unicodedata.normalize("NFKC", s).casefold().replace("ё", "е")
-    return " ".join(re.findall(r"[^\\W_]+", s))
+    return " ".join(re.findall(r"[^\W_]+", s))
 
 
 def wordset(s):
@@ -50,7 +50,7 @@ class PracticalRecoveryR1(unittest.TestCase):
         self.assertEqual(known[SOURCE_PATH], d["source_pack_manifest_sha256"])
         self.assertEqual(hashlib.sha256(self.source_bytes).hexdigest(),
                          d["source_pack_manifest_sha256"])
-        blob = b"blob " + str(len(self.source_bytes)).encode() + b"\\0" + self.source_bytes
+        blob = b"blob " + str(len(self.source_bytes)).encode() + b"\0" + self.source_bytes
         self.assertEqual(hashlib.sha1(blob).hexdigest(), d["source_pack_blob_sha"])
         self.assertNotIn(STAGE_PATH, known)
         self.assertFalse(d["consumer_registered"])
