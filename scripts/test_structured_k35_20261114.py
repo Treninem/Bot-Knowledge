@@ -4,7 +4,7 @@ from pathlib import Path
 R=Path(__file__).resolve().parents[1]
 F=R/"staging/ru/structured_information_20261114_delta_k35.json"
 P=R/"staging/ru/structured_information_20261114_delta_k34.json"
-def norm(s): return " ".join(re.findall(r"[^\\W_]+", unicodedata.normalize("NFKC",s).casefold().replace("ё","е")))
+def norm(s): return " ".join(re.findall(r"[^\W_]+", unicodedata.normalize("NFKC",s).casefold().replace("ё","е")))
 def tok(s): return set(norm(s).split())
 def gram(s):
  v="".join(norm(s).split())
