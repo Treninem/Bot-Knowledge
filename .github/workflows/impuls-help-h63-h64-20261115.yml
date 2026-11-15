@@ -1,11 +1,14 @@
-name: ImPULS H63-H64 staged exact-head QA
+name: ImPULS H63-H65 staged exact-head QA
 on:
   pull_request:
     paths:
       - 'staging/ru/impuls_help_context_h63_20261115.json'
       - 'staging/ru/impuls_help_context_h64_20261115.json'
+      - 'staging/ru/impuls_help_context_h65_20261115.json'
       - 'scripts/test_impuls_help_h63_h64_20261115.py'
+      - 'scripts/test_impuls_help_h65_20261115.py'
       - 'docs/IMPULS_HELP_H63_H64_2026_11_15.md'
+      - 'docs/IMPULS_HELP_H65_2026_11_15.md'
       - '.github/workflows/impuls-help-h63-h64-20261115.yml'
   workflow_dispatch:
 permissions:
@@ -28,7 +31,10 @@ jobs:
           python -O -B scripts/test_impuls_help_h61_h62_20261115.py
           python -B scripts/test_impuls_help_h63_h64_20261115.py
           python -O -B scripts/test_impuls_help_h63_h64_20261115.py
+          python -B scripts/test_impuls_help_h65_20261115.py
+          python -O -B scripts/test_impuls_help_h65_20261115.py
       - name: Hash files
         run: |
           sha256sum staging/ru/impuls_help_context_h63_20261115.json
           sha256sum staging/ru/impuls_help_context_h64_20261115.json
+          sha256sum staging/ru/impuls_help_context_h65_20261115.json
