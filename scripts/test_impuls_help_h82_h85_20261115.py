@@ -94,7 +94,7 @@ class TestImPULSH82H85(unittest.TestCase):
                         self.assertIn(reply["context"], ("private", "group_addressed", "direct"))
                         self.assertGreaterEqual(len(reply["text"]), 75)
                         self.assertGreaterEqual(len(reply["context_note"]), 55)
-                        self.assertFalse(re.search(r"https?://|t\\.me/|@[a-z_]|[0-9]{10,}", reply["text"] + reply["context_note"], re.I))
+                        self.assertFalse(re.search(r"https?://|t\.me/|@[a-z_]|[0-9]{10,}", reply["text"] + reply["context_note"], re.I))
                         self.assertNotIn(normalized(reply["text"]), normalized_seen, reply["id"])
                         for past in previous_by_intent[entry["intent_id"]]:
                             self.assertLess(similarity(reply["text"], past), 0.70, reply["id"])
