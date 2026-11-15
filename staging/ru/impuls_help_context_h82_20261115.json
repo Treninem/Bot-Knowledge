@@ -1,0 +1,276 @@
+{
+  "schema_version": 1,
+  "stage_type": "supplemental_contextual_reply_pool",
+  "consumer_registered": false,
+  "language": "ru",
+  "audiences": [
+    "impuls"
+  ],
+  "source_pack": "packs/ru/impuls_help_qa.json",
+  "source_pack_manifest_sha256": "50edd41dc0c6a868577433944e0ff0b2a36c2c9ebe53d587e5cbb4692185bbc9",
+  "source_pack_blob_sha": "430f78f7bf43940b112978bc5087b5cb6002eabe",
+  "checked_source_main_sha": "6c9f430da47f137d39a72bbd28c057cfb8f6be96",
+  "checked_impuls_main_sha": "02d4e803359f336787ef15d2e6ce5b2fb4acfeb4",
+  "impuls_user_facing_source": {
+    "repository": "Treninem/Impuls",
+    "paths": [
+      "README.md"
+    ],
+    "checked_at": "2026-11-15",
+    "version_notes": "README distinguishes candidate 1.6.261 and installed 1.6.260; new candidate not live-verified"
+  },
+  "constraints": {
+    "read_only": true,
+    "requires_direct_address": true,
+    "requires_context_match": true,
+    "no_personal_data": true,
+    "no_sanctions": true
+  },
+  "checkpoint": {
+    "id": "IMPULS-HELP-H82-20261115",
+    "continued_pr": 666,
+    "previous_head": "422e553c6931e3f5aa5d91bd4f1574d172f49bd2",
+    "processed_intents": 7,
+    "new_candidates": 7,
+    "cumulative_H1_H82": 3172,
+    "distinct_intents_H1_H82": 100,
+    "editorially_approved_new": 0,
+    "certified_100_sets": 0,
+    "remaining_numeric_all_100_intents": 6553,
+    "rejected_before_save": [],
+    "next_action": "Continue remaining 93 intents; perform lineage, semantic and consumer-compatibility review before manifest registration"
+  },
+  "entries": [
+    {
+      "intent_id": "get_started",
+      "canonical_question": "Как начать пользоваться ботом в группе?",
+      "section": "помощь",
+      "language": "ru",
+      "audiences": [
+        "impuls"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 2,
+      "earlier_staged_candidates": 19,
+      "added_candidates": 1,
+      "target": 100,
+      "remaining_to_target_excluding_other_prs": 78,
+      "replies": [
+        {
+          "id": "impuls_help_get_started_h82_01",
+          "text": "Сначала проверь, что пишешь именно в той группе, куда добавлен бот. Вопрос о доступной помощи можно задать ему напрямую; отсутствие ответа пока не означает, что требуются права администратора.",
+          "language": "ru",
+          "style": "contextual_guidance",
+          "audiences": [
+            "impuls"
+          ],
+          "response_role": "assistant_reply",
+          "context": "group_addressed",
+          "context_note": "Новичок видит бота в списке участников, но пытается пользоваться им в другом групповом чате.",
+          "avoid": "Только при прямом обращении и совпадении контекста; без санкций, чужих данных и изменения настроек.",
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review"
+        }
+      ],
+      "total_candidates_in_main_and_H82": 22
+    },
+    {
+      "intent_id": "chat_selection",
+      "canonical_question": "Зачем в личке выбирать группу для настройки?",
+      "section": "настройка",
+      "language": "ru",
+      "audiences": [
+        "impuls"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 3,
+      "earlier_staged_candidates": 19,
+      "added_candidates": 1,
+      "target": 100,
+      "remaining_to_target_excluding_other_prs": 77,
+      "replies": [
+        {
+          "id": "impuls_help_chat_selection_h82_01",
+          "text": "Если у тебя две группы с похожими названиями, проверь выбранную карточку до любой настройки. Название на кнопке может быть сокращено, поэтому лучше сверить сам чат.",
+          "language": "ru",
+          "style": "contextual_guidance",
+          "audiences": [
+            "impuls"
+          ],
+          "response_role": "assistant_reply",
+          "context": "private",
+          "context_note": "Администратор выбирает между двумя своими группами, чьи названия различаются только окончанием.",
+          "avoid": "Только при прямом обращении и совпадении контекста; без санкций, чужих данных и изменения настроек.",
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review"
+        }
+      ],
+      "total_candidates_in_main_and_H82": 23
+    },
+    {
+      "intent_id": "training_disable_scope",
+      "canonical_question": "Отключение обучения удаляет все старые примеры?",
+      "section": "навыки",
+      "language": "ru",
+      "audiences": [
+        "impuls"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 3,
+      "earlier_staged_candidates": 19,
+      "added_candidates": 1,
+      "target": 100,
+      "remaining_to_target_excluding_other_prs": 77,
+      "replies": [
+        {
+          "id": "impuls_help_training_disable_scope_h82_01",
+          "text": "Выключенный сбор новых уроков и удаление прежних записей — разные действия. Если цель именно стереть данные, уточни доступный порядок удаления для своей области, а не считай переключатель подтверждением очистки.",
+          "language": "ru",
+          "style": "contextual_guidance",
+          "audiences": [
+            "impuls"
+          ],
+          "response_role": "assistant_reply",
+          "context": "private",
+          "context_note": "После отключения обучения пользователь спрашивает о судьбе уже записанных синтетических примеров.",
+          "avoid": "Только при прямом обращении и совпадении контекста; без санкций, чужих данных и изменения настроек.",
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review"
+        }
+      ],
+      "total_candidates_in_main_and_H82": 23
+    },
+    {
+      "intent_id": "why_uncertain",
+      "canonical_question": "Почему бот говорит «не уверен» вместо готового решения?",
+      "section": "помощь",
+      "language": "ru",
+      "audiences": [
+        "impuls"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 3,
+      "earlier_staged_candidates": 19,
+      "added_candidates": 1,
+      "target": 100,
+      "remaining_to_target_excluding_other_prs": 77,
+      "replies": [
+        {
+          "id": "impuls_help_why_uncertain_h82_01",
+          "text": "У меня есть два несовпадающих описания режима, а подтверждения действующей настройки нет. Лучше назвать это расхождение, чем выбрать одну версию только потому, что она звучит увереннее.",
+          "language": "ru",
+          "style": "contextual_guidance",
+          "audiences": [
+            "impuls"
+          ],
+          "response_role": "assistant_reply",
+          "context": "private",
+          "context_note": "Владелец видит противоречащие друг другу справочные заметки о режиме, установленная конфигурация неизвестна.",
+          "avoid": "Только при прямом обращении и совпадении контекста; без санкций, чужих данных и изменения настроек.",
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review"
+        }
+      ],
+      "total_candidates_in_main_and_H82": 23
+    },
+    {
+      "intent_id": "tone_restore",
+      "canonical_question": "Как вернуть обычный тон после серии шуток?",
+      "section": "общение",
+      "language": "ru",
+      "audiences": [
+        "impuls"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 3,
+      "earlier_staged_candidates": 19,
+      "added_candidates": 1,
+      "target": 100,
+      "remaining_to_target_excluding_other_prs": 77,
+      "replies": [
+        {
+          "id": "impuls_help_tone_restore_h82_01",
+          "text": "Понял, эту тему разбираем спокойно. Предыдущие шутки оставим там, где они были; сейчас важнее понять, какой ответ тебе нужен и что уже произошло.",
+          "language": "ru",
+          "style": "contextual_guidance",
+          "audiences": [
+            "impuls"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Собеседник прямо отказывается от прежнего шутливого тона после рассказа о неприятном случае.",
+          "avoid": "Только при прямом обращении и совпадении контекста; без санкций, чужих данных и изменения настроек.",
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review"
+        }
+      ],
+      "total_candidates_in_main_and_H82": 23
+    },
+    {
+      "intent_id": "request_vs_question",
+      "canonical_question": "Чем «включи» отличается от «можно включить»?",
+      "section": "настройка",
+      "language": "ru",
+      "audiences": [
+        "impuls"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 3,
+      "earlier_staged_candidates": 19,
+      "added_candidates": 1,
+      "target": 100,
+      "remaining_to_target_excluding_other_prs": 77,
+      "replies": [
+        {
+          "id": "impuls_help_request_vs_question_h82_01",
+          "text": "«А если включить фильтр?» пока звучит как обсуждение последствий. Не меняю параметр по такой фразе: сначала разберём, что фильтр затронет и кто вправе его включать.",
+          "language": "ru",
+          "style": "contextual_guidance",
+          "audiences": [
+            "impuls"
+          ],
+          "response_role": "assistant_reply",
+          "context": "private",
+          "context_note": "Администратор обсуждает гипотетические последствия включения защиты, но ещё не отдал распоряжение.",
+          "avoid": "Только при прямом обращении и совпадении контекста; без санкций, чужих данных и изменения настроек.",
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review"
+        }
+      ],
+      "total_candidates_in_main_and_H82": 23
+    },
+    {
+      "intent_id": "return_previous_topic",
+      "canonical_question": "Как вернуться к прежней теме после другого вопроса?",
+      "section": "общение",
+      "language": "ru",
+      "audiences": [
+        "impuls"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 3,
+      "earlier_staged_candidates": 19,
+      "added_candidates": 1,
+      "target": 100,
+      "remaining_to_target_excluding_other_prs": 77,
+      "replies": [
+        {
+          "id": "impuls_help_return_previous_topic_h82_01",
+          "text": "Вернёмся к настройке жалоб? В промежутке мы обсуждали ещё игру и семейное меню, поэтому лучше назови прежний вопрос, чтобы я не продолжил чужую ветку разговора.",
+          "language": "ru",
+          "style": "contextual_guidance",
+          "audiences": [
+            "impuls"
+          ],
+          "response_role": "assistant_reply",
+          "context": "private",
+          "context_note": "После нескольких тематических ответвлений собеседник просит вернуться назад без указания предмета.",
+          "avoid": "Только при прямом обращении и совпадении контекста; без санкций, чужих данных и изменения настроек.",
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review"
+        }
+      ],
+      "total_candidates_in_main_and_H82": 23
+    }
+  ]
+}
