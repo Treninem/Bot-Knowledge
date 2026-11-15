@@ -1,0 +1,36 @@
+name: ImPULS H58-H60 contextual stage exact-head QA
+on:
+  pull_request:
+    paths:
+      - 'staging/ru/impuls_help_context_h58_20261115.json'
+      - 'staging/ru/impuls_help_context_h59_20261115.json'
+      - 'staging/ru/impuls_help_context_h60_20261115.json'
+      - 'scripts/test_impuls_help_h58_h60_20261115.py'
+      - 'docs/IMPULS_HELP_H58_H60_2026_11_15.md'
+      - '.github/workflows/impuls-help-h58-h60-20261115.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout exact PR head (no persistent credentials)
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Ensure actual checkout matches exact head
+        shell: bash
+        run: test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+      - name: Validate registered knowledge packs
+        run: python -B scripts/validate_pack.py
+      - name: Test H1-H60 counters, privacy and distinctness
+        run: |
+          python -B scripts/test_impuls_help_h58_h60_20261115.py
+          python -O -B scripts/test_impuls_help_h58_h60_20261115.py
+      - name: Hash new staged JSON by real bytes
+        run: |
+          sha256sum staging/ru/impuls_help_context_h58_20261115.json
+          sha256sum staging/ru/impuls_help_context_h59_20261115.json
+          sha256sum staging/ru/impuls_help_context_h60_20261115.json
