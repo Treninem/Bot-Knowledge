@@ -1,0 +1,34 @@
+name: ImPULS H86-H88 exact-head QA
+
+on:
+  pull_request:
+    paths:
+      - 'staging/ru/impuls_help_context_h86_20261115.json'
+      - 'staging/ru/impuls_help_context_h87_20261115.json'
+      - 'staging/ru/impuls_help_context_h88_20261115.json'
+      - 'scripts/test_impuls_help_h86_h88_20261115.py'
+      - 'docs/IMPULS_HELP_H86_H88_2026_11_15.md'
+      - '.github/workflows/impuls-help-h86-h88-20261115.yml'
+permissions:
+  contents: read
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout actual PR head with credentials disabled
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Confirm exact checkout commit
+        shell: bash
+        run: |
+          test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+      - name: Validate manifest and contextual candidate lineage
+        run: |
+          python -B scripts/validate_pack.py
+          python -B scripts/test_impuls_help_h82_h85_20261115.py
+          python -O -B scripts/test_impuls_help_h82_h85_20261115.py
+          python -B scripts/test_impuls_help_h86_h88_20261115.py
+          python -O -B scripts/test_impuls_help_h86_h88_20261115.py
+          sha256sum staging/ru/impuls_help_context_h86_20261115.json staging/ru/impuls_help_context_h87_20261115.json staging/ru/impuls_help_context_h88_20261115.json
