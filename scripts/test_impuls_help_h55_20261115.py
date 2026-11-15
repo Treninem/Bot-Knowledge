@@ -5,7 +5,7 @@ from pathlib import Path
 from collections import Counter,defaultdict
 R=Path(__file__).resolve().parents[1]
 def read(p): return json.loads((R/p).read_text(encoding="utf-8"))
-def norm(s): return " ".join(re.findall(r"[^\\W_]+",s.lower().replace("ё","е")))
+def norm(s): return " ".join(re.findall(r"[^\W_]+",s.lower().replace("ё","е")))
 def sim(a,b):
  a,b=set(norm(a).split()),set(norm(b).split())
  return len(a&b)/max(1,len(a|b))
@@ -53,7 +53,7 @@ class H55(unittest.TestCase):
     self.assertIn(r["context"],("private","direct","group_addressed"))
     self.assertGreaterEqual(len(r["text"]),75)
     self.assertGreaterEqual(len(r["context_note"]),55)
-    self.assertIsNone(re.search(r"https?://|t\\.me/|@[a-z_]|\\d{10,}",r["text"]+" "+r["context_note"],re.I))
+    self.assertIsNone(re.search(r"https?://|t\.me/|@[a-z_]|\d{10,}",r["text"]+" "+r["context_note"],re.I))
     self.assertNotIn("я забанил",r["text"].lower())
  def test_uniqueness(self):
   old=[t for r in self.faq["records"] for t in (r["answer"],*r["variants"])]
