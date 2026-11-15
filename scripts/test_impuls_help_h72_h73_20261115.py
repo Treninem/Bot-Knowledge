@@ -82,7 +82,7 @@ class H72H73StageQA(unittest.TestCase):
                     self.assertGreaterEqual(len(reply["text"]), 75)
                     self.assertGreaterEqual(len(reply["context_note"]), 55)
                     self.assertTrue(reply["avoid"])
-                    self.assertFalse(re.search(r"https?://|t\\.me/|@[a-z_]|[0-9]{10,}",
+                    self.assertFalse(re.search(r"https?://|t\.me/|@[a-z_]|[0-9]{10,}",
                                                reply["text"] + reply["context_note"], re.I))
 
     def test_normalized_duplicates_and_near_lexical_overlap(self):
