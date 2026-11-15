@@ -67,7 +67,7 @@ class H33QA(unittest.TestCase):
         for key,words in {
             "greeting":("приветств","правил"),
             "purpose":("бот","верс"),
-            "old_rule_timing":("правил","момент"),
+            "old_rule_timing":("правил","времени"),
             "request_vs_question":("просьб","подтвержд"),
             "private_vs_group":("личк","групп"),
         }.items():
