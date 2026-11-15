@@ -64,6 +64,9 @@ class H40H43QA(unittest.TestCase):
                 self.assertNotIn(key, seen_intents)
                 seen_intents.add(key)
                 self.assertEqual(entry["canonical_question"], self.index[key]["question"])
+                if i >= 40:
+                    self.assertEqual([name for name in entry if name.startswith("total_candidates_in_main_and_")],
+                                     [f"total_candidates_in_main_and_H{i}"])
                 published = 1 + len(self.index[key]["variants"])
                 if i >= 41:
                     self.assertEqual(entry["published_count"], published)
