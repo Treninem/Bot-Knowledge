@@ -122,7 +122,7 @@ class H40H43QA(unittest.TestCase):
     def test_intent_meaning_and_no_hidden_actions(self):
         by_id = {e["intent_id"]: e for s in self.stages[40:] for e in s["entries"]}
         self.assertIn("привет", by_id["greeting"]["replies"][0]["text"].casefold())
-        self.assertIn("цитат", by_id["quoted_setting"]["replies"][0]["text"].casefold())
+        self.assertIn("пересказ", by_id["quoted_setting"]["replies"][0]["text"].casefold())
         self.assertIn("верс", by_id["version_runtime"]["replies"][0]["text"].casefold())
         for stage in self.stages[40:]:
             for entry in stage["entries"]:
