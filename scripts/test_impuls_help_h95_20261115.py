@@ -75,7 +75,7 @@ class H95FullLineage(unittest.TestCase):
                 self.assertGreaterEqual(len(reply["text"]),75)
                 self.assertGreaterEqual(len(reply["context_note"]),55)
                 self.assertGreaterEqual(len(reply["avoid"]),70)
-                self.assertFalse(re.search(r"https?://|t\\.me/|@[a-z_]|[0-9]{10,}",reply["text"]+" "+reply["context_note"],re.I))
+                self.assertFalse(re.search(r"https?://|t\.me/|@[a-z_]|[0-9]{10,}",reply["text"]+" "+reply["context_note"],re.I))
                 self.assertFalse(re.search(r"я (?:забанил|удалил сообщение|изменил настройки|начислил)",reply["text"],re.I))
                 self.assertNotIn(normalized(reply["text"]),used)
                 self.assertTrue(all(similarity(reply["text"],other)<0.70 for other in older),reply["id"])
