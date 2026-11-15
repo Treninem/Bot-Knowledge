@@ -1,10 +1,13 @@
-name: ImPULS H101 exact-head staged QA
+name: ImPULS H101-H102 exact-head staged QA
 on:
   pull_request:
     paths:
       - 'staging/ru/impuls_help_context_h101_20261116.json'
+      - 'staging/ru/impuls_help_context_h102_20261116.json'
       - 'scripts/test_impuls_help_h101_20261116.py'
+      - 'scripts/test_impuls_help_h102_20261116.py'
       - 'docs/IMPULS_HELP_H101_2026_11_16.md'
+      - 'docs/IMPULS_HELP_H102_2026_11_16.md'
       - '.github/workflows/impuls-help-h101-20261116.yml'
 permissions:
   contents: read
@@ -30,5 +33,7 @@ jobs:
           python -O -B scripts/test_impuls_help_h100_20261116.py
           python -B scripts/test_impuls_help_h101_20261116.py
           python -O -B scripts/test_impuls_help_h101_20261116.py
+          python -B scripts/test_impuls_help_h102_20261116.py
+          python -O -B scripts/test_impuls_help_h102_20261116.py
       - name: Verify actual bytes
-        run: sha256sum staging/ru/impuls_help_context_h101_20261116.json
+        run: sha256sum staging/ru/impuls_help_context_h101_20261116.json staging/ru/impuls_help_context_h102_20261116.json
