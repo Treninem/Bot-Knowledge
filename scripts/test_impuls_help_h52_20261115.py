@@ -8,7 +8,7 @@ from pathlib import Path
 from collections import Counter,defaultdict
 ROOT=Path(__file__).resolve().parents[1]
 def read(p): return json.loads((ROOT/p).read_text(encoding="utf-8"))
-def norm(t): return " ".join(re.findall(r"[^\\W_]+",t.lower().replace("ё","е")))
+def norm(t): return " ".join(re.findall(r"[^\W_]+",t.lower().replace("ё","е")))
 def sim(a,b):
     a,b=set(norm(a).split()),set(norm(b).split())
     return len(a & b)/max(1,len(a | b))
@@ -61,7 +61,7 @@ class H52(unittest.TestCase):
                 self.assertGreaterEqual(len(reply["text"]),75)
                 self.assertGreaterEqual(len(reply["context_note"]),55)
                 self.assertNotEqual(norm(reply["text"]),norm(reply["context_note"]))
-                self.assertIsNone(re.search(r"https?://|t\\.me/|@[a-z_]|\\d{10,}",reply["text"]+" "+reply["context_note"],re.I))
+                self.assertIsNone(re.search(r"https?://|t\.me/|@[a-z_]|\d{10,}",reply["text"]+" "+reply["context_note"],re.I))
                 self.assertNotIn("я забанил",reply["text"].lower())
     def test_lexical_uniqueness(self):
         old=[s for r in self.faq["records"] for s in (r["answer"],*r["variants"])]
