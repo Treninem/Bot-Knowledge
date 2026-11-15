@@ -1,0 +1,30 @@
+name: ImPULS H69-H71 exact-head staged QA
+on:
+  pull_request:
+    paths:
+      - 'staging/ru/impuls_help_context_h69_20261115.json'
+      - 'staging/ru/impuls_help_context_h70_20261115.json'
+      - 'staging/ru/impuls_help_context_h71_20261115.json'
+      - 'scripts/test_impuls_help_h69_h71_20261115.py'
+      - '.github/workflows/impuls-help-h69-h71-20261115.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout exact PR head without persisted token
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Verify actual checkout
+        shell: bash
+        run: test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+      - name: Validate published manifest and staged H69-H71
+        run: |
+          python -B scripts/validate_pack.py
+          python -B scripts/test_impuls_help_h69_h71_20261115.py
+          python -O -B scripts/test_impuls_help_h69_h71_20261115.py
+          sha256sum staging/ru/impuls_help_context_h{69,70,71}_20261115.json
