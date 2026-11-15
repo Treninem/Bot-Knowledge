@@ -23,3 +23,22 @@ Changed IDs:
 - `impuls_help_negated_prohibition_h101_01`
 
 **Status:** Stage-only, no manifest or consumer integration. The original 50 H101 candidates remain 50; H100 remains 80. This correction requires a **new exact-head CI run** on the resulting commit. Semantic review across all H1–H101 and other PRs remains incomplete; do not mistake this focused edit for independent acceptance.
+
+## Additional H99-versus-H101 meaning review
+
+Compared the 22 intents newly covered by H101 with the immediately preceding H99 candidates. **11 more H101 replies** were rewritten to avoid counting a near-paraphrase as a new scenario. Examples now cover GitHub write-token separation, privilege to promote the bot, partial-response continuation, disabled group dialogue, local-memory deletion, readiness of an enabled game, fictional versus factual sources, exception to a general rule, and screenshot authenticity.
+
+Rewritten IDs:
+- `impuls_help_bot_publication_rights_h101_01`
+- `impuls_help_purpose_h101_01`
+- `impuls_help_group_admin_grants_bot_rights_h101_01`
+- `impuls_help_feedback_h101_01`
+- `impuls_help_reply_more_h101_01`
+- `impuls_help_silent_group_h101_01`
+- `impuls_help_privacy_h101_01`
+- `impuls_help_game_help_h101_01`
+- `impuls_help_ask_for_source_h101_01`
+- `impuls_help_conflicting_chat_rules_h101_01`
+- `impuls_help_evidence_context_h101_01`
+
+Combined focused semantic rewrites in H101: **27**, no additional candidates claimed. Full corpus review and actual consumer routing remain outstanding.
