@@ -1,0 +1,7 @@
+# ImPULS help H76 — 2026-11-15
+
+Continuation of [PR #666](https://github.com/Treninem/Bot-Knowledge/pull/666) from head `e99aa2e6c745b0c85fc71882e8bc969ce70c0ee9`. **+20 new synthetic RU contextual replies for 20 additional practical intents** (H73 lineage), disjoint from H75's 33 moderation/privacy intents. Previous 38–41/100 groups each gain one. **This run H75+H76: +53 answers across 53 distinct intents.** Accumulated H1–H76: **3,025 staged candidates across 100 still partial intents; 6,700 numeric vacancies; 0 completed 100/100; 0 editorially approved/published**. Per-intent previous, added, total and remaining counts are in JSON; other unmerged PRs excluded.
+
+Read-only sources: Bot-Knowledge main `6c9f430da47f137d39a72bbd28c057cfb8f6be96`, published `packs/ru/impuls_help_qa.json` manifest SHA `50edd41dc0c6a868577433944e0ff0b2a36c2c9ebe53d587e5cbb4692185bbc9`, ImPULS `README.md` main `a9004b2d4b8a09f5ff2866eb15cdfab14cd3c410` (live state not confirmed). No private source changed.
+
+The new H76 test rechecks all H1–H76 deltas/IDs, privacy, context and lexical duplication, and runs in normal/`-O` modes in the existing read-only exact-head workflow. Only actual final-head CI results establish test success. Keep PR **DRAFT/BLOCKED** until independent semantic review against #662–#665, contextual consumer delivery and 8 MiB registration budget. No manifest, live bot or cache modifications.
