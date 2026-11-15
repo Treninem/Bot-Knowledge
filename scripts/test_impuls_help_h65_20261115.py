@@ -11,7 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 def read(path):
     return json.loads((ROOT / path).read_text(encoding="utf-8"))
 def normalized(s):
-    return " ".join(re.findall(r"[^\\W_]+", s.casefold().replace("ё", "е")))
+    return " ".join(re.findall(r"[^\W_]+", s.casefold().replace("ё", "е")))
 def similarity(a, b):
     x, y = set(normalized(a).split()), set(normalized(b).split())
     return len(x & y) / max(1, len(x | y))
@@ -74,7 +74,7 @@ class H65ContextQA(unittest.TestCase):
                 self.assertIn(reply["context"], ("private", "group_addressed", "direct"))
                 self.assertGreaterEqual(len(reply["text"]), 75)
                 self.assertGreaterEqual(len(reply["context_note"]), 55)
-                self.assertFalse(re.search(r"https?://|t\\.me/|@[a-z_]|[0-9]{10,}", reply["text"] + reply["context_note"], re.I))
+                self.assertFalse(re.search(r"https?://|t\.me/|@[a-z_]|[0-9]{10,}", reply["text"] + reply["context_note"], re.I))
                 self.assertNotIn(normalized(reply["text"]), seen)
                 self.assertTrue(all(similarity(reply["text"], prior) < .70 for prior in previous), reply["id"])
                 previous.append(reply["text"])
