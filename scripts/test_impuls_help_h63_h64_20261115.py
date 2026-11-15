@@ -45,7 +45,7 @@ class StageH63H64(unittest.TestCase):
                 self.assertEqual(s["checkpoint"]["cumulative_H1_H"+str(n)],2594 if n==63 else 2614)
         self.assertEqual(len(c),100)
         self.assertEqual(sum(c.values()),2614)
-        self.assertEqual(sum(100-1-len(x["variants"])-c[k] for k,x in self.source.items()),7111)
+        self.assertEqual(sum(100-1-len(self.source[k]["variants"])-v for k,v in c.items()),7111)
     def test_privacy_and_distinctness(self):
         previous=[s for r in self.q["records"] for s in (r["answer"],*r["variants"])]
         for n,stage in enumerate(self.stages,1):
