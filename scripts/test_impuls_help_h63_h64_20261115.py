@@ -5,7 +5,7 @@ from pathlib import Path
 from collections import Counter
 R=Path(__file__).resolve().parents[1]
 def read(p): return json.loads((R/p).read_text(encoding="utf-8"))
-def norm(s): return " ".join(re.findall(r"[^\\W_]+",s.lower().replace("ё","е")))
+def norm(s): return " ".join(re.findall(r"[^\W_]+",s.lower().replace("ё","е")))
 def near(a,b):
     x,y=set(norm(a).split()),set(norm(b).split())
     return len(x&y)/max(1,len(x|y))
@@ -58,7 +58,7 @@ class StageH63H64(unittest.TestCase):
                         self.assertGreaterEqual(len(v["context_note"]),55)
                         self.assertIn(v["context"],("private","group_addressed","direct"))
                         self.assertTrue(v["read_only"])
-                        self.assertFalse(re.search(r"https?://|t\\.me/|@[a-z_]|[0-9]{10,}",v["text"]+" "+v["context_note"],re.I))
+                        self.assertFalse(re.search(r"https?://|t\.me/|@[a-z_]|[0-9]{10,}",v["text"]+" "+v["context_note"],re.I))
                         self.assertNotIn(norm(v["text"]),{norm(t) for t in previous})
                         self.assertTrue(all(near(v["text"],t)<.70 for t in previous),v["id"])
                     previous.append(v["text"])
