@@ -39,7 +39,7 @@ class ReplyRoleContract(unittest.TestCase):
     def test_manually_checked_anchors_are_in_correct_fields(self):
         anchors = {
             (27, "silent_group"): ("Проверь, кому был адресован вопрос.", "В старой ветке"),
-            (27, "greeting"): ("Привет!", "После технического обсуждения"),
+            (27, "greeting"): ("Когда после обсуждения настроек", "После технического обсуждения"),
             (27, "knowledge_delivery"): ("Коммит сам по себе", "После коммита"),
             (28, "moderation_swearing"): ("Грубое восклицание", "После собственного проигрыша"),
             (28, "request_to_stop"): ("Остановлю шутки", "Собеседник прямо попросил"),
