@@ -1,12 +1,12 @@
-# ImPULS H90 — 57 contextual Russian candidate replies (15 November 2026)
+# ImPULS H90 — 106 contextual Russian candidate replies (15 November 2026)
 
-Continues [Draft PR #666](https://github.com/Treninem/Bot-Knowledge/pull/666) from exact head `e42344697b8779351d0a5ee14b0a66d81f32fb34`. Published Bot-Knowledge `main`: `6c9f430da47f137d39a72bbd28c057cfb8f6be96`. Read-only ImPULS `main`: `54b8a3a813fec82c1f953408942ba327eb181c37`, `README.md`: candidate 1.6.263, installed 1.6.262; live AI quality not accepted.
+Continues [Draft PR #666](https://github.com/Treninem/Bot-Knowledge/pull/666) from exact head `e42344697b8779351d0a5ee14b0a66d81f32fb34`; the intermediate H90 57-answer checkpoint is commit `30bab054658c6c90d00eddc6be6379db74579e12`. Published Bot-Knowledge `main`: `6c9f430da47f137d39a72bbd28c057cfb8f6be96`. Read-only ImPULS `main`: `54b8a3a813fec82c1f953408942ba327eb181c37`, `README.md`: candidate 1.6.263, installed 1.6.262; live AI quality not accepted.
 
 ## Delta
-- **57 new synthetic reply candidates** for **51 distinct existing intents**, including four additional context-dependent greeting answers, two feedback, two follow-up, and two onboarding cases.
-- Coverage: greeting without unsolicited chat rules, addressing, missing context, private/group isolation, error reports, conflicting rules, game availability, roles, learning boundaries, privacy and uncertainty.
+- **106 new synthetic reply candidates** across **all 100 tracked existing intents**, including four additional context-dependent greeting answers, two feedback, two follow-up and two onboarding cases. The second checkpoint extends the original 57 by another 49 independently contextualized answers.
+- Coverage: greeting without unsolicited chat rules, addressing, missing context, private/group isolation, error reports, conflicting rules, game availability, roles, learning boundaries, privacy, uncertainty, distinction between quotes and commands, moderation appeals, lost rewards and permissions.
 - Every record is scoped to `impuls`, Russian, direct-address requirement, declared delivery context and read-only/no-sanction behavior. Contexts intentionally differ; these are *not independently editorially accepted*.
-- H1–H89: 3,465 previous candidates. H90 adds 57: **3,522 staged**; these 100 tracked intents have 275 published source answers, 6,203 numerical gaps. All 100 remain partial; certified complete 100/100: 0; newly approved/registered: 0.
+- H1–H89: 3,465 previous candidates. H90 adds 106: **3,571 staged**; these 100 tracked intents have 275 published source answers, 6,154 numerical gaps. All 100 remain partial; certified complete 100/100: 0; newly approved/registered: 0.
 - Manifest, registered source package, working consumer cache and private ImPULS were not modified.
 
 ## Tests and publication gates

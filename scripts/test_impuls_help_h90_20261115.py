@@ -9,10 +9,10 @@ from collections import Counter
 from test_impuls_help_h65_20261115 import ROOT, read, normalized, similarity
 
 PACK = "packs/ru/impuls_help_qa.json"
-EXPECTED_NEW = 57
-EXPECTED_INTENTS = 51
-EXPECTED_STAGED = 3522
-EXPECTED_GAPS = 6203
+EXPECTED_NEW = 106
+EXPECTED_INTENTS = 100
+EXPECTED_STAGED = 3571
+EXPECTED_GAPS = 6154
 
 def stage(i):
     suffix = "20261114" if i <= 30 else "20261115"
