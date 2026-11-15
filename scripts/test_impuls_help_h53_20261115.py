@@ -27,7 +27,7 @@ class H53(unittest.TestCase):
                 self.assertIn(key,self.records)
                 self.assertEqual(entry["canonical_question"],self.records[key]["question"])
                 self.assertEqual(len(entry["replies"]),entry["added_candidates"])
-                if i==52:
+                if i==53:
                     original=1+len(self.records[key]["variants"])
                     self.assertEqual(entry["published_count"],original)
                     self.assertEqual(entry["earlier_staged_candidates"],counts[key])
@@ -69,7 +69,7 @@ class H53(unittest.TestCase):
         for i,stage in enumerate(self.stages,1):
             for entry in stage["entries"]:
                 for reply in entry["replies"]:
-                    if i==52:
+                    if i==53:
                         self.assertNotIn(norm(reply["text"]),seen,reply["id"])
                         self.assertTrue(all(sim(reply["text"],x)<.70 for x in old),reply["id"])
                         self.assertTrue(all(sim(reply["context_note"],x)<.65 for x in notes[entry["intent_id"]]),reply["id"])
