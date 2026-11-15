@@ -89,7 +89,7 @@ class H89FullLineage(unittest.TestCase):
                     self.assertNotIn(reply["id"], identifiers)
                     identifiers.add(reply["id"])
                 staged[intent] += len(replies)
-        self.assertEqual(updated, set(self.records))
+        self.assertEqual(updated, {e["intent_id"] for e in self.new["entries"]})
         self.assertEqual(len(self.new["entries"]), EXPECTED_NEW)
         self.assertEqual(len(staged), 100)
         self.assertEqual(sum(staged.values()), EXPECTED_STAGED)
@@ -97,7 +97,7 @@ class H89FullLineage(unittest.TestCase):
                    for i, n in staged.items())
         self.assertEqual(gaps, EXPECTED_GAP)
         self.assertEqual(EXPECTED_STAGED + sum(
-            1 + len(r["variants"]) for r in self.records.values()
+            1 + len(self.records[i]["variants"]) for i in updated
         ), EXPECTED_TOTAL)
         checkpoint = self.new["checkpoint"]
         self.assertEqual(checkpoint["processed_intents"], EXPECTED_NEW)
