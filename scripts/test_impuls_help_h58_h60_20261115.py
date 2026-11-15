@@ -15,7 +15,7 @@ def read(path):
     return json.loads((ROOT / path).read_text(encoding="utf-8"))
 
 def norm(value):
-    return " ".join(re.findall(r"[^\\W_]+", value.lower().replace("ё", "е")))
+    return " ".join(re.findall(r"[^\W_]+", value.lower().replace("ё", "е")))
 
 def jaccard(a, b):
     a, b = set(norm(a).split()), set(norm(b).split())
@@ -82,7 +82,7 @@ class StageH58H60(unittest.TestCase):
                     self.assertTrue(reply["read_only"])
                     self.assertGreaterEqual(len(reply["text"]), 75)
                     self.assertGreaterEqual(len(reply["context_note"]), 55)
-                    self.assertIsNone(re.search(r"https?://|t\\.me/|@[a-z_]|[0-9]{10,}", reply["text"] + " " + reply["context_note"], re.I))
+                    self.assertIsNone(re.search(r"https?://|t\.me/|@[a-z_]|[0-9]{10,}", reply["text"] + " " + reply["context_note"], re.I))
                     self.assertNotIn("я забанил", reply["text"].lower())
 
     def test_new_exact_and_near_duplicates(self):
