@@ -1,4 +1,4 @@
-name: ImPULS H58-H60 contextual stage exact-head QA
+name: ImPULS H58-H62 contextual stage exact-head QA
 on:
   pull_request:
     paths:
@@ -6,6 +6,10 @@ on:
       - 'staging/ru/impuls_help_context_h59_20261115.json'
       - 'staging/ru/impuls_help_context_h60_20261115.json'
       - 'scripts/test_impuls_help_h58_h60_20261115.py'
+      - 'staging/ru/impuls_help_context_h61_20261115.json'
+      - 'staging/ru/impuls_help_context_h62_20261115.json'
+      - 'scripts/test_impuls_help_h61_h62_20261115.py'
+      - 'docs/IMPULS_HELP_H61_H62_2026_11_15.md'
       - 'docs/IMPULS_HELP_H58_H60_2026_11_15.md'
       - '.github/workflows/impuls-help-h58-h60-20261115.yml'
   workflow_dispatch:
@@ -25,12 +29,16 @@ jobs:
         run: test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
       - name: Validate registered knowledge packs
         run: python -B scripts/validate_pack.py
-      - name: Test H1-H60 counters, privacy and distinctness
+      - name: Test H1-H62 counters, privacy and distinctness
         run: |
           python -B scripts/test_impuls_help_h58_h60_20261115.py
           python -O -B scripts/test_impuls_help_h58_h60_20261115.py
+          python -B scripts/test_impuls_help_h61_h62_20261115.py
+          python -O -B scripts/test_impuls_help_h61_h62_20261115.py
       - name: Hash new staged JSON by real bytes
         run: |
           sha256sum staging/ru/impuls_help_context_h58_20261115.json
           sha256sum staging/ru/impuls_help_context_h59_20261115.json
           sha256sum staging/ru/impuls_help_context_h60_20261115.json
+          sha256sum staging/ru/impuls_help_context_h61_20261115.json
+          sha256sum staging/ru/impuls_help_context_h62_20261115.json
