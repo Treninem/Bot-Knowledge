@@ -1,0 +1,34 @@
+name: ImPULS H97 exact-head candidate QA
+on:
+  pull_request:
+    paths:
+      - 'staging/ru/impuls_help_context_h97_20261115.json'
+      - 'scripts/test_impuls_help_h97_20261115.py'
+      - 'docs/IMPULS_HELP_H97_2026_11_15.md'
+      - '.github/workflows/impuls-help-h97-20261115.yml'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          persist-credentials: false
+      - name: Check exact checkout
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate read-only data and lineage
+        run: |
+          python -B scripts/validate_pack.py
+          python -B scripts/test_impuls_help_h96_20261115.py
+          python -O -B scripts/test_impuls_help_h96_20261115.py
+          python -B scripts/test_impuls_help_h97_20261115.py
+          python -O -B scripts/test_impuls_help_h97_20261115.py
+      - name: Show SHA256
+        run: sha256sum staging/ru/impuls_help_context_h97_20261115.json
