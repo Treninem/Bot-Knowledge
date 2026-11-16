@@ -14,6 +14,7 @@ from validate_qa_v1 import validate_qa_manifest
 ROOT = Path(__file__).resolve().parents[1]
 PACK = "packs/ru/conversation_precision_qa.json"
 SOURCE = "dad37607ee1656e40cc8dba25fc6e27f5a8f1ac0"
+PUBLISHED_V017 = "0cfeaa025099bae0b9685225a7ed9d5290b341f1"
 OLD_HASH = "cfa59cbab852ec8f4042f4d7c2e53918716aa3b7c91447f1b4d44bd2fc255b15"
 NEW_HASH = "04efb36529b1d6e19b7cbb5ad84a9a842c40e716cdaee91ae24920a93cb45039"
 
@@ -25,10 +26,10 @@ class PrecisionV017(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.old_raw = subprocess.check_output(["git", "show", f"{SOURCE}:{PACK}"], cwd=ROOT)
-        cls.new_raw = (ROOT / PACK).read_bytes()
+        cls.new_raw = subprocess.check_output(["git", "show", f"{PUBLISHED_V017}:{PACK}"], cwd=ROOT)
         cls.old = json.loads(cls.old_raw)
         cls.new = json.loads(cls.new_raw)
-        cls.manifest_raw = (ROOT / "manifest.json").read_bytes()
+        cls.manifest_raw = subprocess.check_output(["git", "show", f"{PUBLISHED_V017}:manifest.json"], cwd=ROOT)
         cls.manifest = json.loads(cls.manifest_raw)
         cls.old_rows = {x["id"]: x for x in cls.old["records"]}
         cls.new_rows = {x["id"]: x for x in cls.new["records"]}
@@ -91,9 +92,11 @@ class PrecisionV017(unittest.TestCase):
         self.assertEqual(self.manifest["knowledge_version"], "2026.11.16.017")
         entry = next(x for x in self.manifest["packs"] if x["path"] == PACK)
         self.assertEqual(entry["sha256"], NEW_HASH)
+        current_manifest_raw = (ROOT / "manifest.json").read_bytes()
+        current_manifest = json.loads(current_manifest_raw)
         total, remaining = evaluate_snapshot_budget(
-            len(self.manifest_raw),
-            [(ROOT / x["path"]).stat().st_size for x in self.manifest["packs"]]
+            len(current_manifest_raw),
+            [(ROOT / x["path"]).stat().st_size for x in current_manifest["packs"]]
         )
         self.assertLessEqual(total, MAX_CONSUMER_SNAPSHOT_BYTES)
         self.assertGreaterEqual(remaining, 0)
