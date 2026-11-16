@@ -1,0 +1,30 @@
+name: Moderation fairness v005 exact-head
+on:
+  pull_request:
+    paths:
+      - 'packs/ru/moderation_dialogue_fairness_qa.json'
+      - 'manifest.json'
+      - 'scripts/test_moderation_fairness_t87.py'
+      - 'scripts/test_moderation_fairness_v005_20261116.py'
+      - '.github/workflows/modfair-v005-20261116.yml'
+permissions:
+  contents: read
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          persist-credentials: false
+      - name: Check exact PR head
+        run: test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha }}"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate pack and QA
+        run: |
+          python scripts/validate_pack.py
+          python -m scripts.validate_qa_v1
+          python -m unittest scripts.test_moderation_fairness_t87 scripts.test_moderation_fairness_v005_20261116
+          python -O -m unittest scripts.test_moderation_fairness_t87 scripts.test_moderation_fairness_v005_20261116

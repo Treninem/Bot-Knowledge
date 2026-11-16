@@ -3,7 +3,6 @@ from __future__ import annotations
 
 import hashlib
 import json
-import subprocess
 import shutil
 import tempfile
 import unittest
@@ -38,14 +37,34 @@ class FollowthroughT383Test(unittest.TestCase):
         # Reconstruct the immutable source for which T383 was reviewed.
         # The current published pack may evolve; the old staging pool must
         # remain unusable until its own source proof is regenerated.
-        for rel in ("manifest.json", SOURCE, STAGE):
-            destination = cls.pinned_root / rel
-            destination.parent.mkdir(parents=True, exist_ok=True)
-            if rel == STAGE:
-                shutil.copyfile(ROOT / rel, destination)
-            else:
-                destination.write_bytes(subprocess.check_output(
-                    ["git", "show", f"{PUBLISHED_SOURCE_COMMIT}:{rel}"], cwd=ROOT))
+        # Rebuild the reviewed immutable T383 source without relying on an
+        # unavailable old git commit in shallow read-only GitHub Actions.
+        # Verify full source bytes against both stage SHA and known blob.
+        live = json.loads((ROOT / SOURCE).read_text("utf-8"))
+        if len(live.get("records", [])) != 82:
+            raise ValueError("changed canonical source inventory")
+        live["pack_version"] = "2026.11.04.023"
+        for row in live["records"]:
+            if len(row.get("variants", [])) < 2:
+                raise ValueError("missing historical variants")
+            row["variants"] = row["variants"][:2]
+        historical_raw = (json.dumps(live, ensure_ascii=False, indent=2) + "\\n").replace("\\n", "\n").encode("utf-8")
+        expected_sha = cls.stage["source_pack_manifest_sha256"]
+        if (hashlib.sha256(historical_raw).hexdigest() != expected_sha
+                or _blob(historical_raw) != cls.stage["source_pack_blob_sha"]
+                or cls.stage["source_pack_blob_sha"] != "707fcaa6440d398a730840362602d4532ab92036"):
+            raise ValueError("reconstructed T383 source differs from pinned release")
+        stage_file = cls.pinned_root / STAGE
+        stage_file.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(ROOT / STAGE, stage_file)
+        source_file = cls.pinned_root / SOURCE
+        source_file.parent.mkdir(parents=True, exist_ok=True)
+        source_file.write_bytes(historical_raw)
+        # The selector needs only the historical registered source mapping.
+        (cls.pinned_root / "manifest.json").write_text(
+            json.dumps({"packs": [{"path": SOURCE, "sha256": expected_sha}]}) + "\\n",
+            encoding="utf-8",
+        )
         cls.registered = json.loads((cls.pinned_root / SOURCE).read_text("utf-8"))
         cls.selector = StagedContextSelector(cls.pinned_root, STAGE)
 

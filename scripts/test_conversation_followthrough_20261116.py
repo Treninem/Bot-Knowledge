@@ -7,8 +7,8 @@ import re
 import unittest
 ROOT=pathlib.Path(__file__).resolve().parents[1]
 FILE=ROOT/"packs/ru/conversation_followthrough_qa.json"
-DIGEST="32e3050a71f1e3c23b8164132df91de7bffb3606f2f8ea5aee1c040605862d7e"
-VERSION="2026.11.16.005"
+DIGEST="e4393e724bf3852bac969cf7fbe2c1e02c86b04e232aa1aaf79b380d6f34eca5"
+VERSION="2026.11.16.007"
 def normalize(s):
     return " ".join(re.findall(r"[^\W_]+",s.casefold().replace("ё","е"),flags=re.UNICODE))
 class TestFollowthrough(unittest.TestCase):
