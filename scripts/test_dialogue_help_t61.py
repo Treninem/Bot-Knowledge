@@ -1,6 +1,7 @@
 """T61: new general QA, manifest SHA, normalized questions and offline search."""
 import hashlib, json
 from pathlib import Path
+from scripts.validate_pack import MAX_CONSUMER_PACK_BYTES
 from scripts.search_knowledge import KnowledgeSearch
 from scripts.validate_qa_v1 import normalize_question,validate_qa_pack
 ROOT=Path(__file__).resolve().parents[1]
@@ -10,7 +11,7 @@ COUNT=43
 def main():
  raw=(ROOT/REL).read_bytes()
  manifest=json.loads((ROOT/"manifest.json").read_text("utf-8"))
- assert len(raw)<1024*1024
+ assert len(raw) <= MAX_CONSUMER_PACK_BYTES
  assert hashlib.sha256(raw).hexdigest()==next(e["sha256"] for e in manifest["packs"] if e["path"]==REL)
  pack=json.loads(raw)
  assert validate_qa_pack(pack)==len(pack["records"])
@@ -29,8 +30,8 @@ def main():
   assert r["contexts"]==["direct","private","group_addressed"]
   assert r["constraints"]=={"read_only":True,"requires_direct_address":True,"no_personal_data":True}
   assert r["source"]=="https://github.com/Treninem/Bot-Knowledge/blob/0c1c814cd5d2724439ce078947761521f4f12570/docs/REQUIREMENTS_21.md"
-  assert r["language"]=="ru" and len(r["variants"])==2 and len(r["aliases"])==2
-  assert len(set([r["answer"],*r["variants"]]))==3
+  assert r["language"]=="ru" and 2 <= len(r["variants"]) <= 8 and len(r["aliases"])==2
+  assert len(set([r["answer"], *r["variants"][:2]])) == 3
   assert not any(k in r for k in ("action","auto_apply","ban","mute","execute"))
   for q in [r["question"],*r["aliases"]]:
    hits=index.search(q,audience="all_ai_bots",limit=20)

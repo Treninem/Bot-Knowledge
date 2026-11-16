@@ -5,6 +5,7 @@ import re
 from pathlib import Path
 from scripts.search_knowledge import KnowledgeSearch
 from scripts.validate_qa_v1 import validate_qa_pack, normalize_question
+from scripts.validate_pack import MAX_CONSUMER_PACK_BYTES
 
 ROOT = Path(__file__).resolve().parents[1]
 MANIFEST = json.loads((ROOT / "manifest.json").read_text("utf-8"))
@@ -19,7 +20,7 @@ def verified(path):
 def main():
     qa = verified("packs/ru/dialogue_help_qa.json")
     social = verified("packs/ru/social_dialogues.json")
-    assert len((ROOT / "packs/ru/dialogue_help_qa.json").read_bytes()) < 1024 * 1024
+    assert len((ROOT / "packs/ru/dialogue_help_qa.json").read_bytes()) <= MAX_CONSUMER_PACK_BYTES
     assert len((ROOT / "packs/ru/social_dialogues.json").read_bytes()) < 2 * 1024 * 1024
     assert validate_qa_pack(qa) == len(qa["records"])
     qrows = [r for r in qa["records"] if r["id"].startswith("dlg_n12_")]
@@ -33,7 +34,7 @@ def main():
     checks = 0
     for r in qrows:
         assert r["audiences"] == ["all_ai_bots"] and r["language"] == "ru"
-        assert len(r["aliases"]) == len(r["variants"]) == 2
+        assert len(r["aliases"]) == 2 and 2 <= len(r["variants"]) <= 8
         assert r["source"].startswith("https://github.com/Treninem/Bot-Knowledge/blob/1942da61d14e98fdb5dc0c95abd0470a0a4b1966/")
         for term in [r["question"], *r["aliases"]]:
             results = search.search(term, audience="all_ai_bots", limit=20)

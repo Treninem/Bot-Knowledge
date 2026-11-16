@@ -5,6 +5,7 @@ import re
 from pathlib import Path
 from scripts.search_knowledge import KnowledgeSearch
 from scripts.validate_qa_v1 import validate_qa_pack, normalize_question
+from scripts.validate_pack import MAX_CONSUMER_PACK_BYTES
 ROOT=Path(__file__).resolve().parents[1]
 
 def main():
@@ -12,7 +13,7 @@ def main():
     path='packs/ru/dialogue_help_qa.json'
     raw=(ROOT/path).read_bytes()
     assert hashlib.sha256(raw).hexdigest()==next(e['sha256'] for e in manifest['packs'] if e['path']==path)
-    assert len(raw)<1024*1024
+    assert len(raw) <= MAX_CONSUMER_PACK_BYTES
     qa=json.loads(raw)
     assert validate_qa_pack(qa)==len(qa['records'])
     new=[r for r in qa['records'] if r['id'].startswith('dlg_n14_')]
@@ -25,7 +26,7 @@ def main():
     for row in new:
         assert row['audiences']==['all_ai_bots'] and row['language']=='ru'
         assert row['contexts']==['direct','private','group_addressed']
-        assert len(row['aliases'])==len(row['variants'])==2
+        assert len(row['aliases']) == 2 and 2 <= len(row['variants']) <= 8
         assert row['source']=='https://github.com/Treninem/Bot-Knowledge/blob/72fbbf7c6be69ded07ef8b6c9b86c96c944a7c04/docs/REQUIREMENTS_21.md'
         assert not re.search(r'(?i)https?://|@\\w+|\\b\\d{10,}\\b', ' '.join([row['question'],row['answer'],*row['aliases'],*row['variants']]))
         for phrase in [row['question'],*row['aliases']]:

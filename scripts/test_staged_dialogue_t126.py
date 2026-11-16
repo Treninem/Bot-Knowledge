@@ -93,9 +93,16 @@ class StagedDialogueT126(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.stage = load(STAGE)
-        cls.pack = load(PACK)
+        cls.pack = load(PACK)  # current registered pack; not the stage's historical source
         cls.manifest = load("manifest.json")
-        cls.rows = {r["id"]: r for r in cls.pack["records"]}
+        cls.source_blob = "5ec9e134e0b70fc839eda6b23561f6c9808b8f16"
+        # Historical source blob is no longer reachable in the new checkout's
+        # Git history. Pin its exact 30 relevant rows as a locally immutable
+        # subset instead of comparing stage counts to a moving main pack.
+        cls.fixture_blob = "0930b82092215892f9c4cca5ef0ef7bb81dd96a8"
+        cls.source_raw = (ROOT / "staging/pinned_sources/dialogue_t125_30_rows.json").read_bytes()
+        cls.source_pack = json.loads(cls.source_raw)
+        cls.rows = {r["id"]: r for r in cls.source_pack["records"]}
         cls.proposed = [r for e in cls.stage["entries"] for r in e["replies"]]
 
     def test_inventory_and_stable_ids(self):
@@ -138,12 +145,20 @@ class StagedDialogueT126(unittest.TestCase):
             self.assertIsNone(wrapper.fullmatch(reply["text"].strip()), reply["text"])
 
     def test_source_blob_and_manifest_unchanged(self):
-        raw = (ROOT / PACK).read_bytes()
-        git_blob = hashlib.sha1(b"blob " + str(len(raw)).encode() + b"\0" + raw).hexdigest()
-        self.assertEqual(git_blob, self.stage["source_pack_blob_sha"])
+        fixture = self.source_raw
+        git_blob = hashlib.sha1(b"blob " + str(len(fixture)).encode() + b"\0" + fixture).hexdigest()
+        self.assertEqual(git_blob, self.fixture_blob)
+        self.assertEqual(self.source_pack["origin"]["source_pack_blob_sha"], self.source_blob)
+        self.assertEqual(self.stage["source_pack_blob_sha"], self.source_blob)
+        self.assertEqual(self.source_pack["origin"]["source_pack"], PACK)
+        self.assertEqual(self.source_pack["origin"]["source_pack_version"], "2026.11.05.027")
+        self.assertEqual(len(self.rows), 30)
+        self.assertEqual(set(self.rows), set(EXPECTED_STAGE_BY_ID))
         manifests = {p["path"]: p["sha256"] for p in self.manifest["packs"]}
-        self.assertEqual(hashlib.sha256(raw).hexdigest(), manifests[PACK])
+        live = (ROOT / PACK).read_bytes()
+        self.assertEqual(hashlib.sha256(live).hexdigest(), manifests[PACK])
         self.assertNotIn(STAGE, manifests)
+        self.assertNotIn("staging/pinned_sources/dialogue_t125_30_rows.json", manifests)
 
     def test_scopes_and_no_secrets(self):
         for e in self.stage["entries"]:

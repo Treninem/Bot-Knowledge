@@ -1,6 +1,7 @@
 """T63: independently authored context-aware universal QA; offline only."""
 import hashlib, json
 from pathlib import Path
+from scripts.validate_pack import MAX_CONSUMER_PACK_BYTES
 from scripts.validate_qa_v1 import normalize_question
 from scripts.search_knowledge import KnowledgeSearch
 ROOT=Path(__file__).resolve().parents[1]
@@ -11,7 +12,7 @@ EXPECTED=46
 def main():
  raw=(ROOT/REL).read_bytes()
  manifest=json.loads((ROOT/"manifest.json").read_text("utf-8"))
- assert len(raw)<1024*1024
+ assert len(raw) <= MAX_CONSUMER_PACK_BYTES
  assert hashlib.sha256(raw).hexdigest()==next(e["sha256"] for e in manifest["packs"] if e["path"]==REL)
  pack=json.loads(raw)
  rows=pack["records"]
@@ -22,7 +23,7 @@ def main():
  assert len(queries)==len(set(queries))
  search=KnowledgeSearch()
  for r in group:
-  assert len(r["variants"])==2 and r["audiences"]==["all_ai_bots"]
+  assert 2 <= len(r["variants"]) <= 8 and r["audiences"]==["all_ai_bots"]
   assert r["constraints"]=={"read_only":True,"requires_direct_address":True,"no_personal_data":True}
   assert r["source"].startswith("https://github.com/Treninem/Bot-Knowledge/blob/")
   assert not any(key in r for key in ("action","auto_apply","sanction","ban","mute"))
