@@ -113,7 +113,7 @@ CHANGED = json.loads(r'''{
 }''')
 
 def norm(v: str) -> str:
-    return " ".join(re.sub(r"[^\\w]+", " ", v.casefold().replace("ё", "е")).split())
+    return " ".join(re.sub(r"[^\w]+", " ", v.casefold().replace("ё", "е")).split())
 
 class CuratedPromotion(unittest.TestCase):
     @classmethod
@@ -153,7 +153,7 @@ class CuratedPromotion(unittest.TestCase):
             self.assertEqual(len(normalized),len(set(normalized)),k)
             for value in diff:
                 self.assertTrue(55 <= len(value) <= 1600, k)
-                self.assertFalse(re.search(r"https?://|t\\.me/|@[A-Za-z0-9_]|[0-9]{10,}",value,re.I),k)
+                self.assertFalse(re.search(r"https?://|t\.me/|@[A-Za-z0-9_]|[0-9]{10,}",value,re.I),k)
         self.assertEqual(actual,CHANGED)
         self.assertEqual(sum(len(x["variants"]) for x in self.qa["records"]),1890)
     def test_read_only_scope(self):
