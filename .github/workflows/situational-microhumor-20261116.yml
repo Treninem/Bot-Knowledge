@@ -1,0 +1,36 @@
+name: Situational microhumor QA
+on:
+  pull_request:
+    paths:
+      - "packs/ru/situational_microhumor_qa.json"
+      - "manifest.json"
+      - "scripts/test_situational_microhumor_20261116.py"
+      - ".github/workflows/situational-microhumor-20261116.yml"
+  push:
+    branches: [main]
+    paths:
+      - "packs/ru/situational_microhumor_qa.json"
+      - "manifest.json"
+      - "scripts/test_situational_microhumor_20261116.py"
+permissions:
+  contents: read
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Verify exact head
+        if: github.event_name == 'pull_request'
+        run: test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha }}"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate pack and compatibility
+        run: |
+          python scripts/validate_pack.py
+          python scripts/validate_qa_v1.py
+          python scripts/test_situational_microhumor_20261116.py
+          python -O scripts/test_situational_microhumor_20261116.py
