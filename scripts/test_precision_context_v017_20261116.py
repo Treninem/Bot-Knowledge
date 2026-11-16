@@ -15,7 +15,7 @@ ROOT = Path(__file__).resolve().parents[1]
 PACK = "packs/ru/conversation_precision_qa.json"
 SOURCE = "dad37607ee1656e40cc8dba25fc6e27f5a8f1ac0"
 OLD_HASH = "cfa59cbab852ec8f4042f4d7c2e53918716aa3b7c91447f1b4d44bd2fc255b15"
-NEW_HASH = "18e34a1401afd47b527dc2633793f76b14cc0a10e55f8ffa92b1c171d43d71f6"
+NEW_HASH = "d55f0ec718f921d8e28a9e80f02fcee6c4bf49c02ced83db2b6e3d81cb45eda6"
 
 def normalized(s):
     s = unicodedata.normalize("NFKC", s).casefold().replace("ё", "е")
@@ -33,7 +33,7 @@ class PrecisionV017(unittest.TestCase):
         cls.old_rows = {x["id"]: x for x in cls.old["records"]}
         cls.new_rows = {x["id"]: x for x in cls.new["records"]}
 
-    def test_unchanged_existing_records_and_exact_100_delta(self):
+    def test_unchanged_existing_records_and_exact_200_delta(self):
         self.assertEqual(hashlib.sha256(self.old_raw).hexdigest(), OLD_HASH)
         self.assertEqual(len(self.old_rows), 132)
         self.assertEqual(set(self.old_rows), set(self.new_rows))
@@ -43,7 +43,7 @@ class PrecisionV017(unittest.TestCase):
         )
         changed = []
         additions = []
-        first_fifty = {x["id"] for x in self.old["records"][:50]}
+        first_hundred = {x["id"] for x in self.old["records"][:100]}
         for ident, previous in self.old_rows.items():
             current = self.new_rows[ident]
             self.assertEqual(
@@ -52,13 +52,13 @@ class PrecisionV017(unittest.TestCase):
             )
             self.assertEqual(current["variants"][:len(previous["variants"])], previous["variants"])
             extra = current["variants"][len(previous["variants"]):]
-            self.assertEqual(len(extra), 2 if ident in first_fifty else 0, ident)
+            self.assertEqual(len(extra), 2 if ident in first_hundred else 0, ident)
             self.assertLessEqual(len(current["variants"]), 8)
             if extra:
                 changed.append(ident)
                 additions.extend(extra)
-        self.assertEqual(set(changed), first_fifty)
-        self.assertEqual(len(additions), 100)
+        self.assertEqual(set(changed), first_hundred)
+        self.assertEqual(len(additions), 200)
         self.assertEqual(self.new["pack_version"], "2026.11.16.017")
 
     def test_normalized_dedup_privacy_and_audience(self):
@@ -69,7 +69,7 @@ class PrecisionV017(unittest.TestCase):
         self.assertEqual(len(normalized_replies), len(set(normalized_replies)))
         source = self.old_rows
         additions = []
-        for row in self.new["records"][:50]:
+        for row in self.new["records"][:100]:
             old = source[row["id"]]
             additions += row["variants"][len(old["variants"]):]
             self.assertEqual(row["audiences"], ["all_ai_bots"])
