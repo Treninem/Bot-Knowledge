@@ -1,0 +1,27 @@
+name: ImPULS H111 exact-head 100-context candidate QA
+on:
+  pull_request:
+    paths:
+      - 'staging/ru/impuls_help_context_h111_20261116.json'
+      - 'scripts/test_impuls_help_h111_20261116.py'
+      - '.github/workflows/impuls-help-h111-20261116.yml'
+      - 'docs/IMPULS_HELP_H111_2026_11_16.md'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+          fetch-depth: 1
+      - name: Verify real exact PR head
+        if: github.event_name == 'pull_request'
+        run: test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha }}"
+      - name: Run full structural checks with ordinary and optimized Python
+        run: |
+          python scripts/test_impuls_help_h111_20261116.py
+          python -O scripts/test_impuls_help_h111_20261116.py
