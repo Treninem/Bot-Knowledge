@@ -1,0 +1,39 @@
+name: Spoken context followups qa.v1 exact-head
+on:
+  pull_request:
+    paths:
+      - "packs/ru/spoken_context_followups_qa.json"
+      - "packs/ru/spoken_pragmatics_qa.json"
+      - "manifest.json"
+      - "scripts/test_spoken_pragmatics_nov2026.py"
+      - ".github/workflows/spoken-context-followups-20261116.yml"
+  push:
+    branches: [main]
+    paths:
+      - "packs/ru/spoken_context_followups_qa.json"
+      - "manifest.json"
+      - "scripts/test_spoken_pragmatics_nov2026.py"
+permissions:
+  contents: read
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Check exact PR head
+        if: github.event_name == 'pull_request'
+        run: test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha }}"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate registered snapshot and all QA schemas
+        run: |
+          python scripts/validate_pack.py
+          python scripts/validate_qa_v1.py
+      - name: Verify new context responses and unchanged pinned source
+        run: |
+          python -m unittest scripts.test_spoken_pragmatics_nov2026 -q
+          python -O -m unittest scripts.test_spoken_pragmatics_nov2026 -q
