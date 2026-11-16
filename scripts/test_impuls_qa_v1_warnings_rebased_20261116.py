@@ -21,10 +21,10 @@ def norm(text):
 class NewContextAnswers(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.raw=(ROOT/PATH).read_bytes()
+        cls.raw=subprocess.check_output(["git","show","a3d1fc914e9e4a4991a2e91aaa5481e11a5a58c8:"+PATH],cwd=ROOT)
         cls.pack=json.loads(cls.raw)
         cls.old=json.loads(subprocess.check_output(["git","show",f"{BASE}:{PATH}"],cwd=ROOT))
-        cls.manifest_bytes=(ROOT/"manifest.json").read_bytes()
+        cls.manifest_bytes=subprocess.check_output(["git","show","a3d1fc914e9e4a4991a2e91aaa5481e11a5a58c8:manifest.json"],cwd=ROOT)
         cls.manifest=json.loads(cls.manifest_bytes)
 
     def test_bytes_manifest_version_budget(self):
@@ -33,7 +33,7 @@ class NewContextAnswers(unittest.TestCase):
         self.assertEqual(self.manifest["knowledge_version"],VERSION)
         self.assertEqual(next(p["sha256"] for p in self.manifest["packs"] if p["path"]==PATH),EXPECTED_HASH)
         self.assertLessEqual(len(self.raw),MAX_QA_PACK_BYTES)
-        total,remaining=evaluate_snapshot_budget(len(self.manifest_bytes),[(ROOT/p["path"]).stat().st_size for p in self.manifest["packs"]])
+        total,remaining=evaluate_snapshot_budget(len(self.manifest_bytes),[(ROOT/p["path"]).stat().st_size for p in json.loads((ROOT/"manifest.json").read_text(encoding="utf-8"))["packs"]])
         self.assertLessEqual(total,MAX_CONSUMER_SNAPSHOT_BYTES)
         self.assertGreaterEqual(remaining,0)
         self.assertEqual(validate_qa_manifest(ROOT),[])

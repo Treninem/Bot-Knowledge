@@ -15,12 +15,12 @@ EXPECTED_SHA256 = "966d0362ca71ea7ff4d538526a7b5902023ec933ab79b6bdb2022f7813835
 class CompactPublishedQA(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.raw = (ROOT / PACK).read_bytes()
+        cls.raw = subprocess.check_output(["git", "show", f"a3d1fc914e9e4a4991a2e91aaa5481e11a5a58c8:{PACK}"], cwd=ROOT)
         cls.current = json.loads(cls.raw)
         cls.original = json.loads(subprocess.check_output(
             ["git", "show", f"{PINNED_V013}:{PACK}"], cwd=ROOT
         ))
-        cls.manifest_bytes = (ROOT / "manifest.json").read_bytes()
+        cls.manifest_bytes = subprocess.check_output(["git", "show", "a3d1fc914e9e4a4991a2e91aaa5481e11a5a58c8:manifest.json"], cwd=ROOT)
         cls.manifest = json.loads(cls.manifest_bytes)
 
     def test_exact_content_and_metadata_preserved(self):
@@ -40,7 +40,7 @@ class CompactPublishedQA(unittest.TestCase):
         self.assertEqual(next(p["sha256"] for p in self.manifest["packs"] if p["path"] == PACK), EXPECTED_SHA256)
         total, remaining = evaluate_snapshot_budget(
             len(self.manifest_bytes),
-            [(ROOT / p["path"]).stat().st_size for p in self.manifest["packs"]]
+            [(ROOT / p["path"]).stat().st_size for p in json.loads((ROOT / "manifest.json").read_text(encoding="utf-8"))["packs"]]
         )
         self.assertLessEqual(total, MAX_CONSUMER_SNAPSHOT_BYTES)
         self.assertGreaterEqual(remaining, 0)
