@@ -9,7 +9,7 @@ import unittest
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 FILE = ROOT / "packs/ru/situational_microhumor_qa.json"
 STAGE = ROOT / "staging/ru/situational_microhumor_unregistered_48_20261116.json"
-PACK_SHA = "fc82d4122364a4be8961a98f4af57f1f0d059b99fd7721049d88fbfac3779bb1"
+PACK_SHA = "436cb4eb4b9067fc82b8c96545a8fb5d10b65bdb7ea50d956e398d62051d8ec4"
 STAGE_SHA = "8905b9a9bfe8601adf53aba1ae280e27b542746bbb392c2e87c4bb687f65d3cc"
 BASELINE_SHA = "f5c236fff6afdd40cc4dde6e42dfde5d5fe86bec859280d9f3936f2573a584a3"
 VERSION = "2026.11.16.008"

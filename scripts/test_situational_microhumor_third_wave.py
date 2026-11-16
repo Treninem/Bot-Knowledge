@@ -9,7 +9,7 @@ import unittest
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 FILE = ROOT / "packs/ru/situational_microhumor_qa.json"
 STAGE = ROOT / "staging/ru/situational_microhumor_unregistered_48_20261116.json"
-PACK_SHA = "fc82d4122364a4be8961a98f4af57f1f0d059b99fd7721049d88fbfac3779bb1"
+PACK_SHA = "436cb4eb4b9067fc82b8c96545a8fb5d10b65bdb7ea50d956e398d62051d8ec4"
 PREFIX_SHA = "bfd5683423ff72e0ff3d0bbdbcb2decd27d42a8c6be653425efec2c9a68ebade"
 NEW_IDS = ["humor_scene_alarms","humor_scene_video_calls","humor_scene_groceries","humor_scene_coffee_tea","humor_scene_needlework","humor_scene_office_supplies","humor_scene_home_network","humor_scene_cinema"]
 

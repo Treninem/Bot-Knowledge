@@ -7,7 +7,7 @@ import re
 import unittest
 ROOT=pathlib.Path(__file__).resolve().parents[1]
 FILE=ROOT/"packs/ru/situational_microhumor_qa.json"
-SHA="fc82d4122364a4be8961a98f4af57f1f0d059b99fd7721049d88fbfac3779bb1"
+SHA="436cb4eb4b9067fc82b8c96545a8fb5d10b65bdb7ea50d956e398d62051d8ec4"
 VERSION="2026.11.16.008"
 def norm(s):
     return " ".join(re.findall(r"[^\W_]+",s.casefold().replace("ё","е"),flags=re.UNICODE))
