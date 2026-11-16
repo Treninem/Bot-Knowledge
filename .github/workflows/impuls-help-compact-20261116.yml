@@ -1,0 +1,34 @@
+name: ImPULS qa.v1 lossless compact v014 exact-head
+on:
+  pull_request:
+    paths:
+      - 'manifest.json'
+      - 'packs/ru/impuls_help_qa.json'
+      - 'scripts/test_impuls_help_compact_20261116.py'
+      - 'scripts/test_impuls_qa_v1_warnings_rebased_20261116.py'
+      - '.github/workflows/impuls-help-compact-20261116.yml'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Confirm exact head
+        if: github.event_name == 'pull_request'
+        run: test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha }}"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: |
+          python scripts/validate_pack.py
+          python scripts/validate_qa_v1.py
+      - run: |
+          PYTHONPATH=scripts python scripts/test_impuls_help_compact_20261116.py
+          PYTHONPATH=scripts python -O scripts/test_impuls_help_compact_20261116.py
+          PYTHONPATH=scripts python scripts/test_impuls_qa_v1_warnings_rebased_20261116.py
+          PYTHONPATH=scripts python -O scripts/test_impuls_qa_v1_warnings_rebased_20261116.py
