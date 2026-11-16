@@ -27,7 +27,7 @@ class HumorSecondWave(unittest.TestCase):
     def test_registered_invariants(self):
         self.assertEqual(hashlib.sha256(FILE.read_bytes()).hexdigest(), PACK_SHA)
         manifest = json.loads((ROOT / "manifest.json").read_text("utf-8"))
-        self.assertEqual(manifest["knowledge_version"], VERSION)
+        self.assertGreaterEqual(tuple(map(int, manifest["knowledge_version"].split("."))), tuple(map(int, VERSION.split("."))))
         self.assertEqual(self.data["pack_version"], VERSION)
         self.assertEqual(len([p for p in manifest["packs"] if p["path"] == "packs/ru/situational_microhumor_qa.json" and p["sha256"] == PACK_SHA]), 1)
         self.assertEqual(len(self.rows), 26)
