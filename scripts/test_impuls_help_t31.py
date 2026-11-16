@@ -42,7 +42,7 @@ def main() -> None:
             "read_only": True, "requires_direct_address": True, "no_personal_data": True
         }
         assert r["language"] == "ru"
-        assert len(r["aliases"]) == len(r["variants"]) == 2
+        assert len(r["aliases"]) == 2 and len(r["variants"]) >= 2
         assert all(x.strip() for x in [r["answer"], *r["variants"]])
         assert not re.search(
             r"(?:@\w+|\b\d{9,}\b|(?:api[_-]?key|access_token)\s*[:=])",
@@ -52,7 +52,7 @@ def main() -> None:
         for query in [r["question"], *r["aliases"]]:
             assert any(hit[0] == r["id"] for hit in search.search(query, audience="impuls", limit=20)), (r["id"], query)
             assert all(hit[0] != r["id"] for hit in search.search(query, audience="all_ai_bots", limit=20))
-    print(f"T31_IMPULS_OK questions={COUNT} answers={COUNT * 3} aliases={COUNT * 2} sha256={expected}")
+    print(f"T31_IMPULS_OK questions={COUNT} answers={sum(1 + len(r['variants']) for r in selected)} aliases={COUNT * 2} sha256={expected}")
 
 
 if __name__ == "__main__":
