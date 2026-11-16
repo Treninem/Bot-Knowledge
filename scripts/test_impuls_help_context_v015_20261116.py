@@ -5,6 +5,7 @@ from pathlib import Path
 from validate_pack import evaluate_snapshot_budget, MAX_CONSUMER_SNAPSHOT_BYTES
 from validate_qa_v1 import validate_qa_manifest
 ROOT = Path(__file__).resolve().parents[1]
+PINNED_V015 = "57d28d2640ce3c32f74964f52121555836b562ea"
 SRC = "a3d1fc914e9e4a4991a2e91aaa5481e11a5a58c8"
 PACK = "packs/ru/impuls_help_qa.json"
 DEFERRED = "staging/ru/impuls_qa_v1_warnings_deferred_20261116.json"
@@ -18,11 +19,11 @@ def norm(s):
 class ContextExtensionV015(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.raw=(ROOT/PACK).read_bytes()
+        cls.raw=subprocess.check_output(["git","show",f"{PINNED_V015}:{PACK}"],cwd=ROOT)
         cls.cur=json.loads(cls.raw)
         cls.old=json.loads(subprocess.check_output(["git","show",f"{SRC}:{PACK}"],cwd=ROOT))
         cls.deferral=json.loads((ROOT/DEFERRED).read_text(encoding="utf-8"))
-        cls.manifest_raw=(ROOT/"manifest.json").read_bytes()
+        cls.manifest_raw=subprocess.check_output(["git","show",f"{PINNED_V015}:manifest.json"],cwd=ROOT)
         cls.manifest=json.loads(cls.manifest_raw)
 
     def test_exact_delta(self):
@@ -68,7 +69,9 @@ class ContextExtensionV015(unittest.TestCase):
         self.assertEqual(hashlib.sha256(self.raw).hexdigest(),HASH)
         self.assertEqual(self.manifest["knowledge_version"],"2026.11.16.015")
         self.assertEqual(next(p["sha256"] for p in self.manifest["packs"] if p["path"]==PACK),HASH)
-        total,remaining=evaluate_snapshot_budget(len(self.manifest_raw),[(ROOT/p["path"]).stat().st_size for p in self.manifest["packs"]])
+        live_raw=(ROOT/"manifest.json").read_bytes()
+        live=json.loads(live_raw)
+        total,remaining=evaluate_snapshot_budget(len(live_raw),[(ROOT/p["path"]).stat().st_size for p in live["packs"]])
         self.assertLessEqual(total,MAX_CONSUMER_SNAPSHOT_BYTES)
         self.assertGreaterEqual(remaining,0)
         self.assertEqual(validate_qa_manifest(ROOT),[])
