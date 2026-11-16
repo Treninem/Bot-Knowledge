@@ -14,6 +14,7 @@ from validate_qa_v1 import validate_qa_manifest
 ROOT = Path(__file__).resolve().parents[1]
 PATH = "packs/ru/conversation_precision_qa.json"
 PUBLISHED_V017 = "0cfeaa025099bae0b9685225a7ed9d5290b341f1"
+PUBLISHED_V018 = "059ee2f93892b47891cf181be266cae005f97305"
 SOURCE_HASH = "04efb36529b1d6e19b7cbb5ad84a9a842c40e716cdaee91ae24920a93cb45039"
 NEW_HASH = "976b073b94eb26eaa8f5cbffe4be161b37940c8679b368819b72b9fd8c1db394"
 
@@ -30,10 +31,10 @@ class PrecisionV018(unittest.TestCase):
     def setUpClass(cls):
         cls.old_raw = subprocess.check_output(
             ["git", "show", f"{PUBLISHED_V017}:{PATH}"], cwd=ROOT)
-        cls.new_raw = (ROOT / PATH).read_bytes()
+        cls.new_raw = subprocess.check_output(["git","show",f"{PUBLISHED_V018}:{PATH}"],cwd=ROOT)
         cls.old = json.loads(cls.old_raw)
         cls.new = json.loads(cls.new_raw)
-        cls.manifest_raw = (ROOT / "manifest.json").read_bytes()
+        cls.manifest_raw = subprocess.check_output(["git","show",f"{PUBLISHED_V018}:manifest.json"],cwd=ROOT)
         cls.manifest = json.loads(cls.manifest_raw)
         cls.old_rows = {r["id"]: r for r in cls.old["records"]}
         cls.new_rows = {r["id"]: r for r in cls.new["records"]}
