@@ -28,7 +28,7 @@ NEW_IDS = [
 ]
 
 def norm(value: str) -> str:
-    return re.sub(r"[^\\w]+", " ", value.replace("ё", "е").casefold(), flags=re.UNICODE).strip()
+    return re.sub(r"[^\w]+", " ", value.replace("ё", "е").casefold(), flags=re.UNICODE).strip()
 
 class NewSpokenPragmaticsTest(unittest.TestCase):
     @classmethod
