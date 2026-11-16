@@ -9,7 +9,7 @@ import unittest
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 FILE = ROOT / "packs/ru/situational_microhumor_qa.json"
 STAGE = ROOT / "staging/ru/situational_microhumor_unregistered_48_20261116.json"
-PACK_SHA = "1d4299e4d56622e4a2ab7a411638b792096742280549ca16b26d9a14508a8888"
+PACK_SHA = "fc82d4122364a4be8961a98f4af57f1f0d059b99fd7721049d88fbfac3779bb1"
 STAGE_SHA = "8905b9a9bfe8601adf53aba1ae280e27b542746bbb392c2e87c4bb687f65d3cc"
 BASELINE_SHA = "f5c236fff6afdd40cc4dde6e42dfde5d5fe86bec859280d9f3936f2573a584a3"
 VERSION = "2026.11.16.008"
@@ -30,8 +30,8 @@ class HumorSecondWave(unittest.TestCase):
         self.assertEqual(manifest["knowledge_version"], VERSION)
         self.assertEqual(self.data["pack_version"], VERSION)
         self.assertEqual(len([p for p in manifest["packs"] if p["path"] == "packs/ru/situational_microhumor_qa.json" and p["sha256"] == PACK_SHA]), 1)
-        self.assertEqual(len(self.rows), 18)
-        self.assertEqual([r["id"] for r in self.rows[12:]], NEW_IDS)
+        self.assertEqual(len(self.rows), 26)
+        self.assertEqual([r["id"] for r in self.rows[12:18]], NEW_IDS)
         self.assertTrue(all(len(r["variants"]) == 8 for r in self.rows))
         self.assertLessEqual(sum((ROOT / p["path"]).stat().st_size for p in manifest["packs"]), 8 * 1024 * 1024)
 
@@ -43,8 +43,8 @@ class HumorSecondWave(unittest.TestCase):
 
     def test_54_new_scoped_and_unique(self):
         phrases = [text for r in self.rows for text in [r["answer"], *r["variants"]]]
-        self.assertEqual(len(phrases), 162)
-        self.assertEqual(len(set(map(norm, phrases))), 162)
+        self.assertEqual(len(phrases), 234)
+        self.assertEqual(len(set(map(norm, phrases))), 234)
         for row in self.rows:
             self.assertEqual(row["audiences"], ["all_ai_bots"])
             self.assertEqual(row["language"], "ru")
