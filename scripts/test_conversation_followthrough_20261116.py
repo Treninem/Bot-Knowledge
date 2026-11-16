@@ -7,7 +7,7 @@ import re
 import unittest
 ROOT=pathlib.Path(__file__).resolve().parents[1]
 FILE=ROOT/"packs/ru/conversation_followthrough_qa.json"
-DIGEST="e4393e724bf3852bac969cf7fbe2c1e02c86b04e232aa1aaf79b380d6f34eca5"
+DIGEST="9a0afe7fb8c9182adab1035dad4ad6950bf8563138fef5f331a89b2f869d346b"
 VERSION="2026.11.16.007"
 def normalize(s):
     return " ".join(re.findall(r"[^\W_]+",s.casefold().replace("ё","е"),flags=re.UNICODE))
@@ -35,6 +35,27 @@ class TestFollowthrough(unittest.TestCase):
             phrases.extend([r["answer"],*r["variants"]])
         self.assertEqual(len(phrases),410)
         self.assertEqual(len(set(map(normalize,phrases))),410)
+    def test_crosspack_lexical_overlap(self):
+        neighbors = (
+            "packs/ru/dialogue_help_qa.json",
+            "packs/ru/collaborative_dialogue_qa.json",
+            "packs/ru/response_boundaries_qa.json",
+            "packs/ru/practical_recovery_qa.json",
+        )
+        prior = []
+        for path in neighbors:
+            data = json.loads((ROOT / path).read_text(encoding="utf-8"))
+            for row in data["records"]:
+                prior.extend((row["answer"], *row.get("variants", [])))
+        prior_tokens = [set(normalize(x).split()) for x in prior]
+        for row in self.records:
+            for response in row["variants"][2:]:
+                tokens = set(normalize(response).split())
+                for other in prior_tokens:
+                    overlap = len(tokens & other)
+                    union = len(tokens | other)
+                    self.assertLess(overlap / union if union else 0, 0.40, row["id"])
+
     def test_pack_and_snapshot_limits(self):
         manifest=json.loads((ROOT/"manifest.json").read_text(encoding="utf-8"))
         self.assertLessEqual(sum((ROOT/p["path"]).stat().st_size for p in manifest["packs"]),8*1024*1024)
