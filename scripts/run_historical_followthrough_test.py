@@ -28,7 +28,7 @@ HISTORICAL_BLOB = "707fcaa6440d398a730840362602d4532ab92036"
 ALLOWED_MODULES = {
     "scripts.test_followthrough_stage_catalog",
     "scripts.test_recent_followthrough_selector",
-    *(f"scripts.test_followthrough_t{n}" for n in range(384, 457)),
+    *(f"scripts.test_followthrough_t{n}" for n in range(384, 500)),
 }
 
 
