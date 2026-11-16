@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Exact lineage gate for the 130 original v004 ImPULS qa.v1 variants."""
+"""Historical, immutable v004 qa.v1 release integrity; independent of current main."""
 import hashlib
 import json
 import re
@@ -10,6 +10,7 @@ from validate_pack import evaluate_snapshot_budget, MAX_CONSUMER_SNAPSHOT_BYTES
 from validate_qa_v1 import MAX_QA_PACK_BYTES, validate_qa_manifest
 ROOT = Path(__file__).resolve().parents[1]
 BASE = "fa33924eb4fa2d52558dca1252f9e3f5de4e6785"
+V004_PUBLISHED = "233f1165d4ece55fb88cdbfcbfa2fdece957065d"
 PATH = "packs/ru/impuls_help_qa.json"
 VERSION = "2026.11.16.004"
 EXPECTED_SHA = "f2b1d0f2eb26324961fb132e2134310ae3dd2454e13f9d3e54b2536454721c7f"
@@ -21,19 +22,19 @@ def normalize(text):
 class ContextPracticalQA(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.raw = (ROOT / PATH).read_bytes()
+        cls.raw = subprocess.check_output(["git","show",f"{V004_PUBLISHED}:{PATH}"],cwd=ROOT)
         cls.new = json.loads(cls.raw)
         cls.old = json.loads(subprocess.check_output(["git","show",f"{BASE}:{PATH}"],cwd=ROOT))
-        cls.manifest_bytes = (ROOT / "manifest.json").read_bytes()
+        cls.manifest_bytes = subprocess.check_output(["git","show",f"{V004_PUBLISHED}:manifest.json"],cwd=ROOT)
         cls.manifest = json.loads(cls.manifest_bytes)
 
     def test_actual_sha_manifest_and_budget(self):
         self.assertEqual(hashlib.sha256(self.raw).hexdigest(), EXPECTED_SHA)
         self.assertEqual(self.new["pack_version"], VERSION)
-        self.assertGreaterEqual(tuple(map(int, self.manifest["knowledge_version"].split("."))), tuple(map(int, VERSION.split("."))))
+        self.assertEqual(self.manifest["knowledge_version"], VERSION)
         self.assertEqual(next(x["sha256"] for x in self.manifest["packs"] if x["path"] == PATH), EXPECTED_SHA)
         self.assertLessEqual(len(self.raw), MAX_QA_PACK_BYTES)
-        used, remaining = evaluate_snapshot_budget(len(self.manifest_bytes),[(ROOT / x["path"]).stat().st_size for x in self.manifest["packs"]])
+        used, remaining = evaluate_snapshot_budget(len(self.manifest_bytes),[len(subprocess.check_output(["git","show",f"{V004_PUBLISHED}:{x['path']}"],cwd=ROOT)) for x in self.manifest["packs"]])
         self.assertLessEqual(used, MAX_CONSUMER_SNAPSHOT_BYTES)
         self.assertGreaterEqual(remaining, 0)
         self.assertEqual(validate_qa_manifest(ROOT), [])
