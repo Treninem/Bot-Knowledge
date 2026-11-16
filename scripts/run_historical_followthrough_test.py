@@ -28,6 +28,11 @@ HISTORICAL_BLOB = "707fcaa6440d398a730840362602d4532ab92036"
 ALLOWED_MODULES = {
     "scripts.test_followthrough_stage_catalog",
     "scripts.test_recent_followthrough_selector",
+    "scripts.test_followthrough_t438_catalog",
+    "scripts.test_followthrough_t443_catalog",
+    "scripts.test_followthrough_t447_catalog",
+    "scripts.test_followthrough_t453_catalog",
+    "scripts.test_followthrough_t457_catalog",
     *(f"scripts.test_followthrough_t{n}" for n in range(384, 500)),
 }
 
