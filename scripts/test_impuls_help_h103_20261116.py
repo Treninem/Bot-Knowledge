@@ -97,7 +97,7 @@ class H103QA(unittest.TestCase):
                 self.assertGreaterEqual(len(r["context_note"]), 55)
                 self.assertIn("без санкций", r["avoid"])
                 self.assertFalse(re.search(
-                    r"https?://|t\\.me/|@[a-z_]|[0-9]{10,}",
+                    r"https?://|t\.me/|@[a-z_]|[0-9]{10,}",
                     r["text"] + r["context_note"], re.I
                 ))
                 note = normalized(r["context_note"])
