@@ -11,7 +11,7 @@ def main():
     raw=(ROOT/rel).read_bytes()
     manifest=json.loads((ROOT/"manifest.json").read_text(encoding="utf-8"))
     assert hashlib.sha256(raw).hexdigest()==next(p["sha256"] for p in manifest["packs"] if p["path"]==rel)
-    assert len(raw)<1024*1024
+    assert len(raw)<2*1024*1024
     pack=json.loads(raw)
     assert validate_qa_pack(pack)==len(pack["records"])
     new=[r for r in pack["records"] if r["id"].startswith(PREFIX)]

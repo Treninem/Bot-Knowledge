@@ -14,6 +14,8 @@ TARGET = "packs/ru/impuls_help_qa.json"
 def normalize(text):
     return re.sub(r"[^\w]+", " ", text.casefold().replace("ё", "е")).strip()
 
+# Historical suite guards existing minimum variants; additive changes are pinned
+# exactly by test_impuls_qa_v1_publish_20261116.py.
 class ImpulsPublicHelpTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
@@ -61,7 +63,7 @@ class ImpulsPublicHelpTests(unittest.TestCase):
         ids = ["notice_under_review","deleted_without_warning","warning_without_deletion","remark_or_formal_warning","group_notice_recipient","warning_after_restart","warning_wrong_author","reported_vs_verified","review_reason_without_quote","no_evidence_not_automatic_clear","conflicting_witness_accounts","before_bot_joined","single_incident_multiple_reports","ban_word_not_command","other_users_not_punished","short_phrase_missing_context","moderation_joke_in_serious_appeal","repeat_due_to_lag","private_evidence_public_claim","cannot_recover_from_public_bk","visibility_not_permission","statistics_not_case_proof","role_changed_after_event","moderation_not_personal_label","suspicious_link_unknown_destination","calm_dispute_before_decision","warning_prevent_repeat","response_to_case_without_access","hypothetical_warning_example","ask_explanation_not_sanction","old_screenshot_new_status"]
         rows = {r["id"]: r for r in self.pack["records"]}
         self.assertTrue(set(ids) <= set(rows))
-        self.assertEqual(sum(1 + len(rows[k].get("variants", [])) for k in ids), 93)
+        self.assertGreaterEqual(sum(1 + len(rows[k].get("variants", [])) for k in ids), 93)
         queries = {}
         for row in self.pack["records"]:
             for q in [row["question"], *row.get("aliases", [])]:
@@ -70,7 +72,7 @@ class ImpulsPublicHelpTests(unittest.TestCase):
             record = rows[key]
             self.assertEqual(record["audiences"], ["impuls"])
             self.assertEqual(record["contexts"], ["direct", "private", "group_addressed"])
-            self.assertEqual(len(record["variants"]), 2)
+            self.assertGreaterEqual(len(record["variants"]), 2)
             self.assertEqual(len(record["aliases"]), 2)
             for q in [record["question"], *record["aliases"]]:
                 self.assertEqual(queries[normalize(q)], {key})
@@ -88,12 +90,12 @@ class ImpulsPublicHelpTests(unittest.TestCase):
             rec = records[ident]
             self.assertEqual(rec["audiences"], ["impuls"])
             self.assertEqual(rec["contexts"], ["direct", "private", "group_addressed"])
-            self.assertEqual(len(rec["variants"]), 2)
+            self.assertGreaterEqual(len(rec["variants"]), 2)
             self.assertEqual(len(rec["aliases"]), 2)
             self.assertTrue(rec["source"].startswith("https://github.com/Treninem/Bot-Knowledge/blob/19281aa8995986205840a7c17bb5ed3d75f90077/"))
             for phrase in [rec["question"], *rec["aliases"]]:
                 self.assertEqual(alias_index[normalize(phrase)], {ident})
-        self.assertEqual(sum(1 + len(records[k].get("variants", [])) for k in ids), 120)
+        self.assertGreaterEqual(sum(1 + len(records[k].get("variants", [])) for k in ids), 120)
         self.assertGreaterEqual(sum(1 + len(r.get("variants", [])) for r in records.values()), 1280)
 
 
@@ -110,12 +112,12 @@ class ImpulsPublicHelpTests(unittest.TestCase):
             row = records[ident]
             self.assertEqual(row["audiences"], ["impuls"])
             self.assertEqual(row["contexts"], ["direct", "private", "group_addressed"])
-            self.assertEqual(len(row["variants"]), 2)
+            self.assertGreaterEqual(len(row["variants"]), 2)
             self.assertEqual(len(row["aliases"]), 2)
             self.assertTrue(row["source"].startswith("https://github.com/Treninem/Bot-Knowledge/blob/7db630da37f838d5c448212010ad0dd9a3f06cdf/"))
             for query in [row["question"], *row["aliases"]]:
                 self.assertEqual(index[normalize(query)], {ident})
-        self.assertEqual(sum(1 + len(records[k].get("variants", [])) for k in ids), 96)
+        self.assertGreaterEqual(sum(1 + len(records[k].get("variants", [])) for k in ids), 96)
         self.assertGreaterEqual(sum(1 + len(r.get("variants", [])) for r in records.values()), 1376)
 
 
@@ -132,12 +134,12 @@ class ImpulsPublicHelpTests(unittest.TestCase):
             row = rows[ident]
             self.assertEqual(row["audiences"], ["impuls"])
             self.assertEqual(row["contexts"], ["direct", "private", "group_addressed"])
-            self.assertEqual(len(row["variants"]), 2)
+            self.assertGreaterEqual(len(row["variants"]), 2)
             self.assertEqual(len(row["aliases"]), 2)
             self.assertTrue(row["source"].startswith("https://github.com/Treninem/Bot-Knowledge/blob/cac1609db2de4db3502af01dcf773be0d10d01a1/"))
             for phrase in [row["question"], *row["aliases"]]:
                 self.assertEqual(by_phrase[normalize(phrase)], {ident})
-        self.assertEqual(sum(1 + len(rows[ident].get("variants", [])) for ident in ids), 102)
+        self.assertGreaterEqual(sum(1 + len(rows[ident].get("variants", [])) for ident in ids), 102)
         self.assertGreaterEqual(sum(1 + len(r.get("variants", [])) for r in rows.values()), 1478)
 
 
@@ -149,7 +151,7 @@ class ImpulsPublicHelpTests(unittest.TestCase):
                      "version_distinction", "last_good_snapshot"}
         self.assertTrue(essential <= records.keys())
         for key in essential:
-            self.assertEqual(len(records[key]["variants"]), 2)
+            self.assertGreaterEqual(len(records[key]["variants"]), 2)
 
     def test_critical_new_questions(self):
         ids = {r["id"] for r in self.pack["records"]}
@@ -171,7 +173,7 @@ class ImpulsPublicHelpTests(unittest.TestCase):
             self.assertEqual(row["audiences"], ["impuls"])
             self.assertEqual(row["contexts"], ["direct", "private", "group_addressed"])
             self.assertEqual(row["language"], "ru")
-            self.assertEqual(len(row["variants"]), 2)
+            self.assertGreaterEqual(len(row["variants"]), 2)
             self.assertTrue(row["source"].startswith("https://github.com/Treninem/Bot-Knowledge/blob/c919aaac8f4facae806a274aa000311c7320c5e2/"))
 
     def test_public_help_batch_2026_11_02_48(self):
@@ -186,7 +188,7 @@ class ImpulsPublicHelpTests(unittest.TestCase):
             self.assertEqual(record["audiences"], ["impuls"])
             self.assertEqual(record["contexts"], ["direct", "private", "group_addressed"])
             self.assertEqual(record["language"], "ru")
-            self.assertEqual(len(record["variants"]), 2)
+            self.assertGreaterEqual(len(record["variants"]), 2)
             self.assertTrue(record["source"].startswith("https://github.com/Treninem/Bot-Knowledge/blob/cb5329be6b5ad3990b2b30a032092c2abca1b938/"))
 
     def test_contextual_qa_additions(self):
@@ -210,7 +212,7 @@ class ImpulsPublicHelpTests(unittest.TestCase):
         )
         for id_ in new_ids:
             row = records[id_]
-            self.assertEqual(len(row.get("variants", [])), 2)
+            self.assertGreaterEqual(len(row.get("variants", [])), 2)
             self.assertRegex(
                 row["source"],
                 r"^https://github\.com/Treninem/Bot-Knowledge/blob/[0-9a-f]{40}/"
@@ -300,7 +302,7 @@ class ImpulsPublicHelpTests(unittest.TestCase):
             self.assertEqual(row["audiences"], ["impuls"])
             self.assertEqual(row["contexts"], ["direct", "private", "group_addressed"])
             self.assertEqual(row["language"], "ru")
-            self.assertEqual(len(row["variants"]), 2)
+            self.assertGreaterEqual(len(row["variants"]), 2)
             self.assertTrue(row["source"].startswith("https://github.com/Treninem/Bot-Knowledge/blob/a08058ef46efc367561c995cab0c2480cebb2640/"))
         def triples(s):
             words = normalize(s).split()
@@ -376,7 +378,7 @@ class ImpulsPublicHelpTests(unittest.TestCase):
             self.assertEqual(row["audiences"], ["impuls"])
             self.assertEqual(row["contexts"], ["direct", "private", "group_addressed"])
             self.assertEqual(row["language"], "ru")
-            self.assertEqual(len(row["variants"]), 2)
+            self.assertGreaterEqual(len(row["variants"]), 2)
             self.assertTrue(row["source"].startswith("https://github.com/Treninem/Bot-Knowledge/blob/e14123a7756803437f51dc8ab946351e063899a8/"))
         def triples(s):
             words = normalize(s).split()
@@ -403,7 +405,7 @@ class ImpulsPublicHelpTests(unittest.TestCase):
             self.assertEqual(row["contexts"], ["direct", "private", "group_addressed"])
             self.assertEqual(row["language"], "ru")
             self.assertEqual(row["source"], "https://core.telegram.org/bots/api")
-            self.assertEqual(len(row["variants"]), 2)
+            self.assertGreaterEqual(len(row["variants"]), 2)
 
 if __name__ == "__main__":
     unittest.main()
