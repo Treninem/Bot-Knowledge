@@ -1,0 +1,38 @@
+name: ImPULS qa.v1 60 verified answers exact-head
+on:
+  pull_request:
+    paths:
+      - 'packs/ru/impuls_help_qa.json'
+      - 'manifest.json'
+      - 'scripts/validate_qa_v1.py'
+      - 'scripts/test_impuls_qa_v1_publish_20261116.py'
+      - 'docs/IMPULS_QA_V1_PUBLISH_2026_11_16.md'
+      - '.github/workflows/impuls-qa-v1-publish-20261116.yml'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Verify exact head SHA
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate manifest packs and qa.v1
+        run: |
+          python -B scripts/validate_pack.py
+          python -B scripts/validate_qa_v1.py
+      - name: Verify 60 original-source deltas, no extra edits, SHA, audience and limits
+        run: |
+          python -B scripts/test_impuls_qa_v1_publish_20261116.py
+          python -O -B scripts/test_impuls_qa_v1_publish_20261116.py
+      - name: Actual published bytes digest
+        run: sha256sum packs/ru/impuls_help_qa.json
