@@ -5,6 +5,7 @@ import re
 from pathlib import Path
 from scripts.search_knowledge import KnowledgeSearch
 from scripts.validate_qa_v1 import validate_qa_pack, normalize_question
+from scripts.validate_pack import MAX_CONSUMER_PACK_BYTES
 
 ROOT = Path(__file__).resolve().parents[1]
 PREFIX = "dlg_t29_"
@@ -15,7 +16,9 @@ def main():
     raw = (ROOT / rel).read_bytes()
     manifest = json.loads((ROOT / "manifest.json").read_text(encoding="utf-8"))
     assert hashlib.sha256(raw).hexdigest() == next(x["sha256"] for x in manifest["packs"] if x["path"] == rel)
-    assert len(raw) < 1024 * 1024
+    # T29 predates qa.v1 growth; enforce the actual 2 MiB per-pack consumer cap.
+    # The full 8 MiB snapshot budget is separately checked by validate_pack.
+    assert len(raw) <= MAX_CONSUMER_PACK_BYTES
     data = json.loads(raw)
     assert validate_qa_pack(data) == len(data["records"])
     chosen = [r for r in data["records"] if r["id"].startswith(PREFIX)]

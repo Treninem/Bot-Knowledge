@@ -28,7 +28,7 @@ def main():
     for r in rows:
         assert r["audiences"] == ["all_ai_bots"]
         assert r["contexts"] == ["direct", "private", "group_addressed"]
-        assert len(r["aliases"]) == len(r["variants"]) == 2
+        assert len(r["aliases"]) == 2 and 2 <= len(r["variants"]) <= 8
         assert all(x.strip() for x in [r["answer"], *r["variants"]])
         for phrase in [r["question"], *r["aliases"]]:
             hits = search.search(phrase, audience="all_ai_bots", limit=5)

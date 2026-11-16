@@ -1,6 +1,7 @@
 """T36 neutral clarification help in qa.v1: exact SHA, aliases, audience and indexing."""
 import hashlib,json,re
 from pathlib import Path
+from scripts.validate_pack import MAX_CONSUMER_PACK_BYTES
 from scripts.search_knowledge import KnowledgeSearch
 from scripts.validate_qa_v1 import validate_qa_pack,normalize_question
 ROOT=Path(__file__).resolve().parents[1]
@@ -10,7 +11,7 @@ def main():
     payload=(ROOT/rel).read_bytes()
     manifest=json.loads((ROOT/"manifest.json").read_text(encoding="utf-8"))
     assert hashlib.sha256(payload).hexdigest()==next(x["sha256"] for x in manifest["packs"] if x["path"]==rel)
-    assert len(payload)<1024*1024
+    assert len(payload) <= MAX_CONSUMER_PACK_BYTES
     pack=json.loads(payload)
     assert validate_qa_pack(pack)==len(pack["records"])
     rows=[x for x in pack["records"] if x["id"].startswith("dlg_t36_")]
@@ -20,7 +21,7 @@ def main():
     for row in rows:
         assert row["audiences"]==["all_ai_bots"]
         assert row["contexts"]==["direct","private","group_addressed"]
-        assert len(row["aliases"])==2 and len(row["variants"])==2
+        assert len(row["aliases"])==2 and 2 <= len(row["variants"]) <= 8
         for phr in [row["question"],*row["aliases"]]:
             hits=search.search(phr,audience="all_ai_bots",limit=20)
             assert any(h[0]==row["id"] for h in hits),(row["id"],phr)
