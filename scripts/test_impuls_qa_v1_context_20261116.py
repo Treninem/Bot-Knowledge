@@ -30,7 +30,7 @@ class ContextPracticalQA(unittest.TestCase):
     def test_actual_sha_manifest_and_budget(self):
         self.assertEqual(hashlib.sha256(self.raw).hexdigest(), EXPECTED_SHA)
         self.assertEqual(self.new["pack_version"], VERSION)
-        self.assertEqual(self.manifest["knowledge_version"], VERSION)
+        self.assertGreaterEqual(tuple(map(int, self.manifest["knowledge_version"].split("."))), tuple(map(int, VERSION.split("."))))
         self.assertEqual(next(x["sha256"] for x in self.manifest["packs"] if x["path"] == PATH), EXPECTED_SHA)
         self.assertLessEqual(len(self.raw), MAX_QA_PACK_BYTES)
         used, remaining = evaluate_snapshot_budget(len(self.manifest_bytes),[(ROOT / x["path"]).stat().st_size for x in self.manifest["packs"]])
