@@ -14,7 +14,7 @@ PREFIX_SHA = "bfd5683423ff72e0ff3d0bbdbcb2decd27d42a8c6be653425efec2c9a68ebade"
 NEW_IDS = ["humor_scene_alarms","humor_scene_video_calls","humor_scene_groceries","humor_scene_coffee_tea","humor_scene_needlework","humor_scene_office_supplies","humor_scene_home_network","humor_scene_cinema"]
 
 def norm(text):
-    return " ".join(re.findall(r"[^\\W_]+", text.casefold().replace("ё", "е")))
+    return " ".join(re.findall(r"[^\W_]+", text.casefold().replace("ё", "е")))
 
 class ThirdWave(unittest.TestCase):
     @classmethod
@@ -46,7 +46,7 @@ class ThirdWave(unittest.TestCase):
             self.assertEqual(row["constraints"], {"read_only": True, "requires_direct_address": True, "no_personal_data": True})
             self.assertFalse(set(row) & {"action", "sanction", "mute", "ban", "execute"})
             for sentence in [row["answer"], *row["variants"]]:
-                self.assertFalse(re.search(r"https?://|t\\.me/|@[A-Za-z0-9_]|[0-9]{10,}", sentence, re.I))
+                self.assertFalse(re.search(r"https?://|t\.me/|@[A-Za-z0-9_]|[0-9]{10,}", sentence, re.I))
 
 if __name__ == "__main__":
     unittest.main()
