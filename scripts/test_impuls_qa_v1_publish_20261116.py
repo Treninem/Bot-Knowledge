@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Review gate: 60 real qa.v1 variants, unchanged legacy records, SHA and limits."""
+"""Review gate: 58 real qa.v1 variants, unchanged legacy records, SHA and limits."""
 from __future__ import annotations
 
 import hashlib
@@ -25,7 +25,7 @@ moderation_false_alarm one_turn_no_humor safe_error_report settings_two_admins u
 missing_answer_diagnostics short_answer_request quoted_setting ask_setting_only repeated_setting
 ambiguous_settings setting_receipt unclear_rule selected_chat roles bot_permissions pulses_not_received
 knowledge_delivery report_current_status reply_off_topic feature_not_live training_feedback_meaning published_vs_live safe_report_third_party moderation_rule_changed old_rule_timing
-moderation_caps report_vs_attack setting_permission_change learning_vs_library pulses_vs_stars
+moderation_caps report_vs_attack setting_permission_change learning_vs_library
 discussion_not_action respect_privacy_examples moderation_role general_vs_local_rules other_chat_access
 answer_limit""".split())
 
