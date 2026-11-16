@@ -13,7 +13,7 @@ BASELINE_SHA = "f5c236fff6afdd40cc4dde6e42dfde5d5fe86bec859280d9f3936f2573a584a3
 VERSION = "2026.11.16.008"
 
 def normalize(value):
-    return " ".join(re.findall(r"[^\\W_]+", value.casefold().replace("ё", "е"), re.UNICODE))
+    return " ".join(re.findall(r"[^\W_]+", value.casefold().replace("ё", "е"), re.UNICODE))
 
 class HumorSecondWave(unittest.TestCase):
     @classmethod
@@ -52,7 +52,21 @@ class HumorSecondWave(unittest.TestCase):
             phrases.extend([row["answer"], *row["variants"]])
         self.assertEqual(len(phrases), 156)
         self.assertEqual(len(set(map(normalize, phrases))), 156)
-        self.assertTrue(all(not re.search(r"https?://|t\\.me/|@[A-Za-z0-9_]|[0-9]{10,}", p, re.I) for p in phrases))
+        self.assertTrue(all(not re.search(r"https?://|t\.me/|@[A-Za-z0-9_]|[0-9]{10,}", p, re.I) for p in phrases))
+
+
+    def test_optional_humor_neighbor_lexical_gate(self):
+        # Limited cross-pack check, not a semantic certification.
+        neighbor = json.loads((ROOT / "packs/ru/optional_humor_qa.json").read_text(encoding="utf-8"))
+        previous = [set(normalize(s).split()) for r in neighbor["records"]
+                    for s in [r["answer"], *r.get("variants", [])]]
+        for row in self.records:
+            for response in row["variants"][-4:]:
+                current = set(normalize(response).split())
+                for old in previous:
+                    union = len(current | old)
+                    score = len(current & old) / union if union else 0
+                    self.assertLess(score, 0.35, row["id"])
 
 if __name__ == "__main__":
     unittest.main()
