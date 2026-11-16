@@ -7,8 +7,8 @@ import re
 import unittest
 ROOT=pathlib.Path(__file__).resolve().parents[1]
 FILE=ROOT/"packs/ru/situational_microhumor_qa.json"
-SHA="ef19b0cf56c5b937185515c96a8ef92812ba705f3d26191de4a0a0693ef81c77"
-VERSION="2026.11.16.006"
+SHA="436cb4eb4b9067fc82b8c96545a8fb5d10b65bdb7ea50d956e398d62051d8ec4"
+VERSION="2026.11.16.008"
 def norm(s):
     return " ".join(re.findall(r"[^\W_]+",s.casefold().replace("ё","е"),flags=re.UNICODE))
 class MicroHumorTest(unittest.TestCase):
@@ -26,8 +26,8 @@ class MicroHumorTest(unittest.TestCase):
         self.assertLessEqual(FILE.stat().st_size,2*1024*1024)
     def test_originality_and_scope(self):
         rec=self.pack["records"]
-        self.assertEqual(len(rec),12)
-        self.assertEqual(len({x["id"] for x in rec}),12)
+        self.assertEqual(len(rec),26)
+        self.assertEqual(len({x["id"] for x in rec}),26)
         phrases=[]
         for r in rec:
             self.assertTrue(r["question"].lower().startswith(("пошути","придумай","расскажи","дай")))
@@ -36,8 +36,8 @@ class MicroHumorTest(unittest.TestCase):
             self.assertEqual(r["constraints"],{"read_only":True,"requires_direct_address":True,"no_personal_data":True})
             self.assertEqual(r["language"],"ru")
             phrases.extend([r["answer"],*r["variants"]])
-        self.assertEqual(len(phrases),108)
-        self.assertEqual(len(set(map(norm,phrases))),108)
+        self.assertEqual(len(phrases),234)
+        self.assertEqual(len(set(map(norm,phrases))),234)
         self.assertTrue(all(not re.search(r"https?://|t\.me/|@[A-Za-z0-9_]|[0-9]{10,}",s,re.I) for s in phrases))
 if __name__=="__main__":
     unittest.main()
