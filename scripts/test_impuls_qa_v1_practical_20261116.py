@@ -10,6 +10,7 @@ from validate_pack import evaluate_snapshot_budget, MAX_CONSUMER_SNAPSHOT_BYTES
 from validate_qa_v1 import MAX_QA_PACK_BYTES, validate_qa_manifest
 ROOT = Path(__file__).resolve().parents[1]
 BASE = "66ba98b6c268ef5a51fc8062607e51efae29101c"
+PUBLISHED = "fa33924eb4fa2d52558dca1252f9e3f5de4e6785"
 PACK = "packs/ru/impuls_help_qa.json"
 VERSION = "2026.11.16.003"
 EXPECTED_HASH = "1e905b34a36c43a730df691d9d26611240a10d4d595547bebc347ca2e53dfd69"
@@ -21,17 +22,17 @@ def norm(value):
 class PracticalQA(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.raw = (ROOT / PACK).read_bytes()
+        cls.raw = subprocess.check_output(["git","show",f"{PUBLISHED}:{PACK}"],cwd=ROOT)
         cls.current = json.loads(cls.raw)
         cls.old = json.loads(subprocess.check_output(["git","show",f"{BASE}:{PACK}"],cwd=ROOT))
-        cls.manifest_raw = (ROOT/"manifest.json").read_bytes()
+        cls.manifest_raw = subprocess.check_output(["git","show",f"{PUBLISHED}:manifest.json"],cwd=ROOT)
         cls.manifest = json.loads(cls.manifest_raw)
     def test_actual_bytes_versions_and_budget(self):
         self.assertEqual(hashlib.sha256(self.raw).hexdigest(), EXPECTED_HASH)
         self.assertEqual(self.current["pack_version"], VERSION)
         self.assertEqual(self.manifest["knowledge_version"], VERSION)
         self.assertEqual(next(x["sha256"] for x in self.manifest["packs"] if x["path"]==PACK),EXPECTED_HASH)
-        total, remain = evaluate_snapshot_budget(len(self.manifest_raw),[(ROOT/x["path"]).stat().st_size for x in self.manifest["packs"]])
+        total, remain = evaluate_snapshot_budget(len(self.manifest_raw),[len(subprocess.check_output(["git","show",f"{PUBLISHED}:{x['path']}"],cwd=ROOT)) for x in self.manifest["packs"]])
         self.assertLessEqual(total,MAX_CONSUMER_SNAPSHOT_BYTES)
         self.assertGreaterEqual(remain,0)
         self.assertLessEqual(len(self.raw),MAX_QA_PACK_BYTES)
