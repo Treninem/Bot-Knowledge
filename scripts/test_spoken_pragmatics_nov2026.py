@@ -6,7 +6,7 @@ import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-PACK_PATH = ROOT / "packs/ru/spoken_pragmatics_qa.json"
+PACK_PATH = ROOT / "packs/ru/spoken_context_followups_qa.json"
 MANIFEST_PATH = ROOT / "manifest.json"
 NEW_IDS = [
   "bk_phrase_no_objection",
@@ -38,26 +38,31 @@ class NewSpokenPragmaticsTest(unittest.TestCase):
 
     def test_version_hash(self):
         self.assertEqual(self.manifest["knowledge_version"], "2026.11.16.009")
+        original = ROOT / "packs/ru/spoken_pragmatics_qa.json"
+        pinned = next(x["sha256"] for x in self.manifest["packs"]
+                      if x["path"] == "packs/ru/spoken_pragmatics_qa.json")
+        self.assertEqual(hashlib.sha256(original.read_bytes()).hexdigest(), pinned)
+        self.assertEqual(pinned, "ac379077dedbdb6202ec96d3f5d141afa017eb48a002c62c5ce2594aee7e1a85")
         expected = next(x["sha256"] for x in self.manifest["packs"]
-                        if x["path"] == "packs/ru/spoken_pragmatics_qa.json")
+                        if x["path"] == "packs/ru/spoken_context_followups_qa.json")
         self.assertEqual(hashlib.sha256(PACK_PATH.read_bytes()).hexdigest(), expected)
 
     def test_new_counts_and_original_intents(self):
         rows = self.pack["records"]
-        self.assertEqual(len(rows), 40)
+        self.assertEqual(len(rows), 16)
         ids = [r["id"] for r in rows]
         self.assertEqual(len(ids), len(set(ids)))
-        self.assertEqual(ids[-16:], NEW_IDS)
+        self.assertEqual(ids, NEW_IDS)
         self.assertEqual(len(set(r["question"] for r in rows)), len(rows))
 
     def test_normalized_uniqueness(self):
         rows = self.pack["records"]
         answers = [reply for r in rows for reply in [r["answer"], *r["variants"]]]
-        self.assertEqual(len(answers), 360)
+        self.assertEqual(len(answers), 144)
         self.assertEqual(len(set(map(norm, answers))), len(answers))
 
     def test_schema_friendly_scopes(self):
-        for r in self.pack["records"][-16:]:
+        for r in self.pack["records"]:
             self.assertEqual(r["audiences"], ["all_ai_bots"])
             self.assertEqual(r["contexts"], ["direct", "private", "group_addressed"])
             self.assertEqual(r["language"], "ru")
