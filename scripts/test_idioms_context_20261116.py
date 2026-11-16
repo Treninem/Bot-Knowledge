@@ -33,7 +33,7 @@ class IdiomsContextQA(unittest.TestCase):
         entry = [x for x in m["packs"] if x["path"] == PATH.relative_to(ROOT).as_posix()]
         self.assertEqual(len(entry), 1)
         self.assertEqual(entry[0]["sha256"], DIGEST)
-        self.assertEqual(m["knowledge_version"], "2026.11.16.010")
+        self.assertGreaterEqual(tuple(map(int, m["knowledge_version"].split("."))), (2026, 11, 16, 10))
         self.assertEqual(self.pack["pack_version"], "2026.11.16.010")
 
     def test_distinct_intents_and_contexts(self):

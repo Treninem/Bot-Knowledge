@@ -1,0 +1,35 @@
+name: RU discourse markers contextual QA
+
+on:
+  pull_request:
+    paths:
+      - 'packs/ru/discourse_markers_context_qa.json'
+      - 'manifest.json'
+      - 'scripts/test_discourse_markers_context_20261116.py'
+      - '.github/workflows/discourse-markers-context-20261116.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout exact pull request head
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - name: Verify actual checkout ref
+        run: |
+          ACTUAL="$(git rev-parse HEAD)"
+          EXPECTED="${{ github.event.pull_request.head.sha || github.sha }}"
+          test "$ACTUAL" = "$EXPECTED"
+          echo "Exact checkout: $ACTUAL"
+      - name: Validate manifest, SHA and consumer budget
+        run: python scripts/validate_pack.py
+      - name: Verify contextual language pack in Python
+        run: python scripts/test_discourse_markers_context_20261116.py
+      - name: Verify under Python -O
+        run: python -O scripts/test_discourse_markers_context_20261116.py
