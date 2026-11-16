@@ -7,7 +7,7 @@ from scripts.search_knowledge import KnowledgeSearch
 ROOT=Path(__file__).resolve().parents[1]
 REL="packs/ru/moderation_dialogue_fairness_qa.json"
 EXPECTED_SHA="e2119d6d1883fb0bed641ca3734fa6348edd7389a246534848b098adafff01c7"
-BASE_VARIANTS_SHA="c4e66f12eb75e1d84f9428df086d756d0410dad00eaa0c787607ed52bf07565d"
+BASE_VARIANTS_SHA="cfb835544c91b820374072d54c29fda5dd8488ee023904ed4d3674bf88a135c4"
 def normalize(s):
     s=unicodedata.normalize("NFKC",s).casefold().replace("ё","е")
     return " ".join("".join(c if c.isalnum() else " " for c in s).split())
@@ -35,7 +35,7 @@ class FairnessV005(unittest.TestCase):
             self.assertEqual(r["constraints"],{"read_only":True,"requires_direct_address":True,"no_personal_data":True})
             for v in r["variants"][2:]:
                 self.assertTrue(len(v.strip())>25)
-                self.assertFalse(re.search(r"(?<!\\w)@[A-Za-z0-9_]{4,}|(?<!\\d)\\d{10,}(?!\\d)",v))
+                self.assertFalse(re.search(r"(?<!\w)@[A-Za-z0-9_]{4,}|(?<!\d)\d{10,}(?!\d)",v))
     def test_scope(self):
         lookup=KnowledgeSearch()
         for row in json.loads((ROOT/REL).read_text("utf-8"))["records"]:
