@@ -61,7 +61,7 @@ class PublishedImPULSQA(unittest.TestCase):
         self.assertGreaterEqual(remaining, 0)
         self.assertEqual(validate_qa_manifest(ROOT), [])
 
-    def test_exactly_sixty_additions_with_no_unrelated_edits(self):
+    def test_exactly_fifty_eight_additions_with_no_unrelated_edits(self):
         self.assertEqual(len(CHANGED), 58)
         self.assertEqual(len(self.current["records"]), 869)
         old_meta = {k: v for k, v in self.old.items() if k not in {"records", "pack_version"}}
