@@ -17,6 +17,12 @@ EXPECTED_INTENTS = {
 }
 
 
+def check(condition: bool, message: str = "QA invariant failed") -> None:
+    # Keep test checks active under python -O.
+    if not condition:
+        raise AssertionError(message)
+
+
 def normalized(value: str) -> str:
     value = value.casefold().replace("ё", "е")
     return " ".join(re.findall(r"\w+", value, flags=re.UNICODE))
@@ -28,33 +34,33 @@ def phrases(record: dict) -> list[str]:
 
 def main() -> None:
     raw = (ROOT / PACK).read_bytes()
-    assert hashlib.sha256(raw).hexdigest() == EXPECTED_SHA256, "candidate pack changed"
+    check(hashlib.sha256(raw).hexdigest() == EXPECTED_SHA256, "candidate pack changed")
     data = json.loads(raw)
     manifest = json.loads((ROOT / "manifest.json").read_text(encoding="utf-8"))
-    assert data["schema_version"] == 1 and data["pack_version"] == "2026.11.16.011"
-    assert manifest["knowledge_version"] == "2026.11.16.011"
+    check(data["schema_version"] == 1 and data["pack_version"] == "2026.11.16.011", "QA invariant failed")
+    check(manifest["knowledge_version"] == "2026.11.16.011", "QA invariant failed")
     entry = [x for x in manifest["packs"] if x["path"] == PACK.as_posix()]
-    assert len(entry) == 1 and entry[0]["sha256"] == EXPECTED_SHA256
-    assert data["language"] == "ru" and data["catalog"]["adapter"] == "qa.v1"
-    assert data["catalog"]["audiences"] == ["all_ai_bots"]
-    assert data["catalog"]["constraints"]["read_only"] is True
+    check(len(entry) == 1 and entry[0]["sha256"] == EXPECTED_SHA256, "QA invariant failed")
+    check(data["language"] == "ru" and data["catalog"]["adapter"] == "qa.v1", "QA invariant failed")
+    check(data["catalog"]["audiences"] == ["all_ai_bots"], "QA invariant failed")
+    check(data["catalog"]["constraints"]["read_only"] is True, "QA invariant failed")
     records = data["records"]
-    assert len(records) == 15
-    assert {r["id"].removeprefix("bk_discourse_marker_") for r in records} == EXPECTED_INTENTS
+    check(len(records) == 15, "QA invariant failed")
+    check({r["id"].removeprefix("bk_discourse_marker_") for r in records} == EXPECTED_INTENTS, "QA invariant failed")
     current: set[str] = set()
     for r in records:
-        assert len(r["variants"]) == 8
-        assert r["language"] == "ru" and r["audiences"] == ["all_ai_bots"]
-        assert r["constraints"]["read_only"] is True
-        assert r["constraints"]["requires_direct_address"] is True
-        assert r["constraints"]["no_personal_data"] is True
-        assert r["source"].endswith("/docs/REQUIREMENTS_21.md")
+        check(len(r["variants"]) == 8, "QA invariant failed")
+        check(r["language"] == "ru" and r["audiences"] == ["all_ai_bots"], "QA invariant failed")
+        check(r["constraints"]["read_only"] is True, "QA invariant failed")
+        check(r["constraints"]["requires_direct_address"] is True, "QA invariant failed")
+        check(r["constraints"]["no_personal_data"] is True, "QA invariant failed")
+        check(r["source"].endswith("/docs/REQUIREMENTS_21.md"), "QA invariant failed")
         for sentence in phrases(r):
-            assert isinstance(sentence, str) and 20 <= len(sentence) <= 320
+            check(isinstance(sentence, str) and 20 <= len(sentence) <= 320, "QA invariant failed")
             key = normalized(sentence)
-            assert key and key not in current, f"internal duplicate: {r['id']}"
+            check(key and key not in current, f"internal duplicate: {r['id']}")
             current.add(key)
-    assert len(current) == 135
+    check(len(current) == 135, "QA invariant failed")
     # Cross-check against all existing registered response records, not just neighbours.
     others: dict[str, tuple[str, str]] = {}
     for item in manifest["packs"]:
@@ -69,10 +75,10 @@ def main() -> None:
                 if isinstance(s, str):
                     others.setdefault(normalized(s), (item["path"], str(r.get("id"))))
     overlap = current.intersection(others)
-    assert not overlap, f"cross-pack normalized duplicates: {[(s, others[s]) for s in sorted(overlap)[:10]]}"
+    check(not overlap, f"cross-pack normalized duplicates: {[(s, others[s]) for s in sorted(overlap)[:10]]}")
     # Language data cannot silently become a command to issue sanctions.
     forbidden = re.compile(r"\b(?:забаню|забанить|замьючу|замутить|заблокирую|оштрафую)\b", re.I)
-    assert not any(forbidden.search(s) for r in records for s in phrases(r))
+    check(not any(forbidden.search(s) for r in records for s in phrases(r)), "QA invariant failed")
     print(f"PASS: 15 intents, 135 unique replies, no cross-pack exact duplicates; SHA-256 {EXPECTED_SHA256}")
 
 
