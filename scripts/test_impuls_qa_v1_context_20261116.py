@@ -10,6 +10,7 @@ from validate_pack import evaluate_snapshot_budget, MAX_CONSUMER_SNAPSHOT_BYTES
 from validate_qa_v1 import MAX_QA_PACK_BYTES, validate_qa_manifest
 ROOT = Path(__file__).resolve().parents[1]
 BASE = "fa33924eb4fa2d52558dca1252f9e3f5de4e6785"
+PUBLISHED = "233f1165d4ece55fb88cdbfcbfa2fdece957065d"  # immutable v004 main
 PATH = "packs/ru/impuls_help_qa.json"
 VERSION = "2026.11.16.004"
 EXPECTED_SHA = "f2b1d0f2eb26324961fb132e2134310ae3dd2454e13f9d3e54b2536454721c7f"
@@ -21,10 +22,10 @@ def normalize(text):
 class ContextPracticalQA(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.raw = (ROOT / PATH).read_bytes()
+        cls.raw = subprocess.check_output(["git", "show", f"{PUBLISHED}:{PATH}"], cwd=ROOT)
         cls.new = json.loads(cls.raw)
         cls.old = json.loads(subprocess.check_output(["git","show",f"{BASE}:{PATH}"],cwd=ROOT))
-        cls.manifest_bytes = (ROOT / "manifest.json").read_bytes()
+        cls.manifest_bytes = subprocess.check_output(["git", "show", f"{PUBLISHED}:manifest.json"], cwd=ROOT)
         cls.manifest = json.loads(cls.manifest_bytes)
 
     def test_actual_sha_manifest_and_budget(self):
@@ -33,7 +34,9 @@ class ContextPracticalQA(unittest.TestCase):
         self.assertEqual(self.manifest["knowledge_version"], VERSION)
         self.assertEqual(next(x["sha256"] for x in self.manifest["packs"] if x["path"] == PATH), EXPECTED_SHA)
         self.assertLessEqual(len(self.raw), MAX_QA_PACK_BYTES)
-        used, remaining = evaluate_snapshot_budget(len(self.manifest_bytes),[(ROOT / x["path"]).stat().st_size for x in self.manifest["packs"]])
+        current_manifest_bytes = (ROOT / "manifest.json").read_bytes()
+        current_manifest = json.loads(current_manifest_bytes)
+        used, remaining = evaluate_snapshot_budget(len(current_manifest_bytes), [(ROOT / x["path"]).stat().st_size for x in current_manifest["packs"]])
         self.assertLessEqual(used, MAX_CONSUMER_SNAPSHOT_BYTES)
         self.assertGreaterEqual(remaining, 0)
         self.assertEqual(validate_qa_manifest(ROOT), [])
