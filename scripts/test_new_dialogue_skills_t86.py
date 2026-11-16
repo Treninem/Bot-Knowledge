@@ -27,7 +27,7 @@ class NewKnowledgeT86(unittest.TestCase):
             self.assertEqual(validate_qa_pack(data), EXPECTED[path])
             for r in data["records"]:
                 self.assertEqual(len(r["aliases"]),2)
-                self.assertEqual(len(r["variants"]),2)
+                self.assertGreaterEqual(len(r["variants"]), 2)  # original T86 replies remain; later approved additions are allowed
                 self.assertEqual(r["audiences"],["all_ai_bots"])
                 self.assertEqual(r["contexts"],["direct","private","group_addressed"])
                 self.assertEqual(r["constraints"],{"read_only":True,"requires_direct_address":True,"no_personal_data":True})

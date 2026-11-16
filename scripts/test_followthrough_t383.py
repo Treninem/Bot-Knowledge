@@ -21,6 +21,7 @@ RELATED = (
     "packs/ru/practical_recovery_qa.json",
 )
 PINNED_BLOB = "6aa6b98c0a3fdb5a68ebcc0071d6c80f0967f5f3"
+PUBLISHED_SOURCE_COMMIT = "233f1165d4ece55fb88cdbfcbfa2fdece957065d"
 
 
 def _blob(raw: bytes) -> str:
@@ -31,13 +32,50 @@ class FollowthroughT383Test(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.stage = json.loads((ROOT / STAGE).read_text("utf-8"))
-        cls.registered = json.loads((ROOT / SOURCE).read_text("utf-8"))
-        cls.selector = StagedContextSelector(ROOT, STAGE)
+        cls.pinned_directory = tempfile.TemporaryDirectory()
+        cls.pinned_root = Path(cls.pinned_directory.name)
+        # Reconstruct the immutable source for which T383 was reviewed.
+        # The current published pack may evolve; the old staging pool must
+        # remain unusable until its own source proof is regenerated.
+        # Rebuild the reviewed immutable T383 source without relying on an
+        # unavailable old git commit in shallow read-only GitHub Actions.
+        # Verify full source bytes against both stage SHA and known blob.
+        live = json.loads((ROOT / SOURCE).read_text("utf-8"))
+        if len(live.get("records", [])) != 82:
+            raise ValueError("changed canonical source inventory")
+        live["pack_version"] = "2026.11.04.023"
+        for row in live["records"]:
+            if len(row.get("variants", [])) < 2:
+                raise ValueError("missing historical variants")
+            row["variants"] = row["variants"][:2]
+        historical_raw = (json.dumps(live, ensure_ascii=False, indent=2) + "\n").encode("utf-8")
+        expected_sha = cls.stage["source_pack_manifest_sha256"]
+        if (hashlib.sha256(historical_raw).hexdigest() != expected_sha
+                or _blob(historical_raw) != cls.stage["source_pack_blob_sha"]
+                or cls.stage["source_pack_blob_sha"] != "707fcaa6440d398a730840362602d4532ab92036"):
+            raise ValueError("reconstructed T383 source differs from pinned release")
+        stage_file = cls.pinned_root / STAGE
+        stage_file.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(ROOT / STAGE, stage_file)
+        source_file = cls.pinned_root / SOURCE
+        source_file.parent.mkdir(parents=True, exist_ok=True)
+        source_file.write_bytes(historical_raw)
+        # The selector needs only the historical registered source mapping.
+        (cls.pinned_root / "manifest.json").write_text(
+            json.dumps({"packs": [{"path": SOURCE, "sha256": expected_sha}]}) + "\n",
+            encoding="utf-8",
+        )
+        cls.registered = json.loads((cls.pinned_root / SOURCE).read_text("utf-8"))
+        cls.selector = StagedContextSelector(cls.pinned_root, STAGE)
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.pinned_directory.cleanup()
 
     def test_pinned_source_and_exact_checkpoint(self):
-        source_bytes = (ROOT / SOURCE).read_bytes()
-        stage_bytes = (ROOT / STAGE).read_bytes()
-        manifest = json.loads((ROOT / "manifest.json").read_text("utf-8"))
+        source_bytes = (self.pinned_root / SOURCE).read_bytes()
+        stage_bytes = (self.pinned_root / STAGE).read_bytes()
+        manifest = json.loads((self.pinned_root / "manifest.json").read_text("utf-8"))
         source_digest = next(x["sha256"] for x in manifest["packs"] if x["path"] == SOURCE)
         self.assertEqual(hashlib.sha256(source_bytes).hexdigest(), source_digest)
         self.assertEqual(self.stage["source_pack_manifest_sha256"], source_digest)
@@ -111,8 +149,12 @@ class FollowthroughT383Test(unittest.TestCase):
             for rel in ("manifest.json", SOURCE, STAGE):
                 p = tmp / rel
                 p.parent.mkdir(parents=True, exist_ok=True)
-                shutil.copyfile(ROOT / rel, p)
+                shutil.copyfile(self.pinned_root / rel, p)
             self.assertIsInstance(StagedContextSelector(tmp, STAGE), StagedContextSelector)
+            # A source updated after T383 invalidates that old candidate pool.
+            # Do not waive the SHA check to make stale staging usable.
+            with self.assertRaises(ValueError):
+                StagedContextSelector(ROOT, STAGE)
             stage_file = tmp / STAGE
             stage_file.write_bytes(stage_file.read_bytes() + b" ")
             with self.assertRaises(ValueError):
