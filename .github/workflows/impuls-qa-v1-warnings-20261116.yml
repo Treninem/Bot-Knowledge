@@ -1,0 +1,35 @@
+name: ImPULS warnings-rules-reports v005 exact-head
+on:
+  pull_request:
+    paths:
+      - 'packs/ru/impuls_help_qa.json'
+      - 'manifest.json'
+      - 'scripts/test_impuls_qa_v1_context_20261116.py'
+      - 'scripts/test_impuls_qa_v1_warnings_20261116.py'
+      - '.github/workflows/impuls-qa-v1-warnings-20261116.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Verify exact PR head
+        if: github.event_name == 'pull_request'
+        run: test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha }}"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: |
+          python scripts/validate_pack.py
+          python scripts/validate_qa_v1.py
+      - run: |
+          PYTHONPATH=scripts python scripts/test_impuls_qa_v1_context_20261116.py
+          PYTHONPATH=scripts python -O scripts/test_impuls_qa_v1_context_20261116.py
+          PYTHONPATH=scripts python scripts/test_impuls_qa_v1_warnings_20261116.py
+          PYTHONPATH=scripts python -O scripts/test_impuls_qa_v1_warnings_20261116.py

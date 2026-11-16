@@ -21,10 +21,10 @@ def normalize(text):
 class ContextPracticalQA(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.raw = (ROOT / PATH).read_bytes()
+        cls.raw = subprocess.check_output(["git","show","233f1165d4ece55fb88cdbfcbfa2fdece957065d:"+PATH],cwd=ROOT)
         cls.new = json.loads(cls.raw)
         cls.old = json.loads(subprocess.check_output(["git","show",f"{BASE}:{PATH}"],cwd=ROOT))
-        cls.manifest_bytes = (ROOT / "manifest.json").read_bytes()
+        cls.manifest_bytes = subprocess.check_output(["git","show","233f1165d4ece55fb88cdbfcbfa2fdece957065d:manifest.json"],cwd=ROOT)
         cls.manifest = json.loads(cls.manifest_bytes)
 
     def test_actual_sha_manifest_and_budget(self):
