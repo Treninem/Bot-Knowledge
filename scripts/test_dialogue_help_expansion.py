@@ -16,6 +16,8 @@ def main() -> None:
     manifest = json.loads((ROOT / "manifest.json").read_text(encoding="utf-8"))
     entry = next(row for row in manifest["packs"] if row["path"] == rel)
     assert hashlib.sha256(raw).hexdigest() == entry["sha256"]
+    # A new answer variant does not change the frozen two query aliases.
+    # Keep strict alias lookup, allow additive qa.v1 replies up to schema maximum 8.
     selected = [r for r in pack["records"] if r["id"].startswith("dlg_t7_")]
     assert len(selected) == 45, len(selected)
     assert len({r["id"] for r in selected}) == len(selected)
@@ -24,7 +26,7 @@ def main() -> None:
     for row in selected:
         assert row["audiences"] == ["all_ai_bots"]
         assert row["contexts"] == (["group_addressed"] if row["id"].startswith("dlg_t7_group_") else ["direct", "private", "group_addressed"])
-        assert len(row["aliases"]) == len(row["variants"]) == 2
+        assert len(row["aliases"]) == 2 and 2 <= len(row["variants"]) <= 8
         for phrase in [row["question"], *row["aliases"]]:
             hits = index.search(phrase, audience="all_ai_bots", limit=5)
             assert hits and hits[0][0] == row["id"], (row["id"], phrase, hits)
@@ -36,7 +38,7 @@ def main() -> None:
     for row in expanded:
         assert row["audiences"] == ["all_ai_bots"]
         assert row["contexts"] == ["direct", "private", "group_addressed"]
-        assert len(row["aliases"]) == len(row["variants"]) == 2
+        assert len(row["aliases"]) == 2 and 2 <= len(row["variants"]) <= 8
         for phrase in [row["question"], *row["aliases"]]:
             hits = index.search(phrase, audience="all_ai_bots", limit=5)
             assert hits and hits[0][0] == row["id"], (row["id"], phrase, hits)
@@ -48,7 +50,7 @@ def main() -> None:
     for row in newer:
         assert row["audiences"] == ["all_ai_bots"]
         assert row["contexts"] == ["direct", "private", "group_addressed"]
-        assert len(row["aliases"]) == len(row["variants"]) == 2
+        assert len(row["aliases"]) == 2 and 2 <= len(row["variants"]) <= 8
         for phrase in [row["question"], *row["aliases"]]:
             hits = index.search(phrase, audience="all_ai_bots", limit=5)
             assert hits and hits[0][0] == row["id"], (row["id"], phrase, hits)
@@ -61,7 +63,7 @@ def main() -> None:
     for row in latest:
         assert row["audiences"] == ["all_ai_bots"]
         assert row["contexts"] == ["direct", "private", "group_addressed"]
-        assert 2 <= len(row["aliases"]) <= 4 and len(row["variants"]) == 2
+        assert 2 <= len(row["aliases"]) <= 4 and 2 <= len(row["variants"]) <= 8
         for phrase in [row["question"], *row["aliases"]]:
             hits = index.search(phrase, audience="all_ai_bots", limit=5)
             assert hits and hits[0][0] == row["id"], (row["id"], phrase, hits)
@@ -73,7 +75,7 @@ def main() -> None:
     for row in newest:
         assert row["audiences"] == ["all_ai_bots"]
         assert row["contexts"] == ["direct", "private", "group_addressed"]
-        assert len(row["aliases"]) == len(row["variants"]) == 2
+        assert len(row["aliases"]) == 2 and 2 <= len(row["variants"]) <= 8
         for phrase in [row["question"], *row["aliases"]]:
             hits = index.search(phrase, audience="all_ai_bots", limit=5)
             assert hits and hits[0][0] == row["id"], (row["id"], phrase, hits)
@@ -87,7 +89,7 @@ def main() -> None:
     assert {r["id"] for r in t12 if r["contexts"] == ["group_addressed"]} == set(expected_groups)
     for row in t12:
         assert row["audiences"] == ["all_ai_bots"]
-        assert len(row["aliases"]) == len(row["variants"]) == 2
+        assert len(row["aliases"]) == 2 and 2 <= len(row["variants"]) <= 8
         for query in [row["question"], *row["aliases"]]:
             hits = index.search(query, audience="all_ai_bots", limit=5)
             assert hits and hits[0][0] == row["id"], (row["id"], query, hits)
@@ -102,7 +104,7 @@ def main() -> None:
     assert {r["id"] for r in t13 if r["contexts"] == ["group_addressed"]} == expected_groups
     for row in t13:
         assert row["audiences"] == ["all_ai_bots"]
-        assert len(row["aliases"]) == len(row["variants"]) == 2
+        assert len(row["aliases"]) == 2 and 2 <= len(row["variants"]) <= 8
         for phrase in [row["question"], *row["aliases"]]:
             hits = index.search(phrase, audience="all_ai_bots", limit=5)
             assert hits and hits[0][0] == row["id"], (row["id"], phrase, hits)
