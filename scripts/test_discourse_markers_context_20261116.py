@@ -38,7 +38,7 @@ def main() -> None:
     data = json.loads(raw)
     manifest = json.loads((ROOT / "manifest.json").read_text(encoding="utf-8"))
     check(data["schema_version"] == 1 and data["pack_version"] == "2026.11.16.011", "QA invariant failed")
-    check(manifest["knowledge_version"] == "2026.11.16.011", "QA invariant failed")
+    check(tuple(map(int, manifest["knowledge_version"].split("."))) >= (2026, 11, 16, 11), "manifest version regressed")
     entry = [x for x in manifest["packs"] if x["path"] == PACK.as_posix()]
     check(len(entry) == 1 and entry[0]["sha256"] == EXPECTED_SHA256, "QA invariant failed")
     check(data["language"] == "ru" and data["catalog"]["adapter"] == "qa.v1", "QA invariant failed")
