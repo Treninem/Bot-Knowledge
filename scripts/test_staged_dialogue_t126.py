@@ -93,9 +93,17 @@ class StagedDialogueT126(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.stage = load(STAGE)
-        cls.pack = load(PACK)
+        cls.pack = load(PACK)  # current registered pack; not the stage's historical source
         cls.manifest = load("manifest.json")
-        cls.rows = {r["id"]: r for r in cls.pack["records"]}
+        cls.source_blob = "5ec9e134e0b70fc839eda6b23561f6c9808b8f16"
+        # Staging is pinned to the exact historical Git blob, not a moving main file.
+        # A missing or changed Git object must fail instead of silently rebasing candidates.
+        import subprocess
+        cls.source_raw = subprocess.check_output(
+            ["git", "cat-file", "blob", cls.source_blob], cwd=ROOT
+        )
+        cls.source_pack = json.loads(cls.source_raw)
+        cls.rows = {r["id"]: r for r in cls.source_pack["records"]}
         cls.proposed = [r for e in cls.stage["entries"] for r in e["replies"]]
 
     def test_inventory_and_stable_ids(self):
@@ -138,11 +146,13 @@ class StagedDialogueT126(unittest.TestCase):
             self.assertIsNone(wrapper.fullmatch(reply["text"].strip()), reply["text"])
 
     def test_source_blob_and_manifest_unchanged(self):
-        raw = (ROOT / PACK).read_bytes()
-        git_blob = hashlib.sha1(b"blob " + str(len(raw)).encode() + b"\0" + raw).hexdigest()
-        self.assertEqual(git_blob, self.stage["source_pack_blob_sha"])
+        source = self.source_raw
+        git_blob = hashlib.sha1(b"blob " + str(len(source)).encode() + b"\0" + source).hexdigest()
+        self.assertEqual(git_blob, self.source_blob)
+        self.assertEqual(self.stage["source_pack_blob_sha"], self.source_blob)
         manifests = {p["path"]: p["sha256"] for p in self.manifest["packs"]}
-        self.assertEqual(hashlib.sha256(raw).hexdigest(), manifests[PACK])
+        live = (ROOT / PACK).read_bytes()
+        self.assertEqual(hashlib.sha256(live).hexdigest(), manifests[PACK])
         self.assertNotIn(STAGE, manifests)
 
     def test_scopes_and_no_secrets(self):
