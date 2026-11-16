@@ -7,8 +7,8 @@ import re
 import unittest
 ROOT=pathlib.Path(__file__).resolve().parents[1]
 FILE=ROOT/"packs/ru/situational_microhumor_qa.json"
-SHA="ef19b0cf56c5b937185515c96a8ef92812ba705f3d26191de4a0a0693ef81c77"
-VERSION="2026.11.16.006"
+SHA="469ff1f0f05a4ef14cae1881af4c72632f31c9d5d70e7f5c694a13e69544e4d5"
+VERSION="2026.11.16.008"
 def norm(s):
     return " ".join(re.findall(r"[^\W_]+",s.casefold().replace("ё","е"),flags=re.UNICODE))
 class MicroHumorTest(unittest.TestCase):
@@ -31,12 +31,12 @@ class MicroHumorTest(unittest.TestCase):
         phrases=[]
         for r in rec:
             self.assertTrue(r["question"].lower().startswith(("пошути","придумай","расскажи","дай")))
-            self.assertEqual(len(r["variants"]),8)
+            self.assertEqual(len(r["variants"]),12)
             self.assertEqual(r["audiences"],["all_ai_bots"])
             self.assertEqual(r["constraints"],{"read_only":True,"requires_direct_address":True,"no_personal_data":True})
             self.assertEqual(r["language"],"ru")
             phrases.extend([r["answer"],*r["variants"]])
-        self.assertEqual(len(phrases),108)
+        self.assertEqual(len(phrases),156)
         self.assertEqual(len(set(map(norm,phrases))),108)
         self.assertTrue(all(not re.search(r"https?://|t\.me/|@[A-Za-z0-9_]|[0-9]{10,}",s,re.I) for s in phrases))
 if __name__=="__main__":
