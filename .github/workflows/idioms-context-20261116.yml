@@ -1,0 +1,33 @@
+name: Russian idioms context qa.v1 exact-head
+on:
+  pull_request:
+    paths:
+      - 'packs/ru/idioms_context_guidance_qa.json'
+      - 'manifest.json'
+      - 'scripts/test_idioms_context_20261116.py'
+      - '.github/workflows/idioms-context-20261116.yml'
+permissions:
+  contents: read
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          persist-credentials: false
+      - name: Confirm exact head
+        env:
+          EXPECTED_HEAD: ${{ github.event.pull_request.head.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_HEAD"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Validate manifest and schemas
+        run: |
+          python scripts/validate_pack.py
+          python scripts/validate_qa_v1.py
+      - name: Verify 135 examples and related pack uniqueness
+        run: |
+          PYTHONPATH=scripts python -m unittest scripts/test_idioms_context_20261116.py -v
+          PYTHONPATH=scripts python -O -m unittest scripts/test_idioms_context_20261116.py -v
