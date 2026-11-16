@@ -32,7 +32,7 @@ answer_limit""".split())
 
 
 def normal(value: str) -> str:
-    return " ".join(re.sub(r"[^\\w]+", " ", value.casefold().replace("ё", "е")).split())
+    return " ".join(re.sub(r"[^\w]+", " ", value.casefold().replace("ё", "е")).split())
 
 
 class PublishedImPULSQA(unittest.TestCase):
@@ -90,7 +90,7 @@ class PublishedImPULSQA(unittest.TestCase):
             self.assertEqual(len({normal(v) for v in [old["answer"], *after]}),
                              len(after) + 1, key)
             self.assertFalse(re.search(
-                r"https?://|t\\.me/|@[A-Za-z0-9_]|[0-9]{10,}", proposed,
+                r"https?://|t\.me/|@[A-Za-z0-9_]|[0-9]{10,}", proposed,
                 re.IGNORECASE
             ), key)
         self.assertEqual(actual_changed, CHANGED)
