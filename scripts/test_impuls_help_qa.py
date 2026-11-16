@@ -14,7 +14,9 @@ TARGET = "packs/ru/impuls_help_qa.json"
 def normalize(text):
     return re.sub(r"[^\w]+", " ", text.casefold().replace("ё", "е")).strip()
 
-# Historical suite guards existing minimum variants; additive changes are pinned\n# exactly by test_impuls_qa_v1_publish_20261116.py.\nclass ImpulsPublicHelpTests(unittest.TestCase):
+# Historical suite guards existing minimum variants; additive changes are pinned
+# exactly by test_impuls_qa_v1_publish_20261116.py.
+class ImpulsPublicHelpTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.raw = (ROOT / TARGET).read_bytes()
