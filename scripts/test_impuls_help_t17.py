@@ -2,6 +2,7 @@
 from __future__ import annotations
 import hashlib, json, re
 from pathlib import Path
+from scripts.validate_pack import MAX_CONSUMER_PACK_BYTES
 from scripts.validate_qa_v1 import validate_qa_pack
 from scripts.search_knowledge import KnowledgeSearch
 ROOT=Path(__file__).resolve().parents[1]
@@ -15,7 +16,7 @@ def main():
     manifest=json.loads((ROOT/"manifest.json").read_text(encoding="utf-8"))
     entry=next(x for x in manifest["packs"] if x["path"]==TARGET)
     if hashlib.sha256(raw).hexdigest()!=entry["sha256"]: raise ValueError("T17 manifest hash mismatch")
-    if len(raw)>1024*1024: raise ValueError("T17 qa.v1 size exceeded")
+    if len(raw)>MAX_CONSUMER_PACK_BYTES: raise ValueError("T17 qa.v1 consumer pack limit exceeded")
     if validate_qa_pack(pack)!=len(pack["records"]): raise ValueError("T17 invalid schema")
     chosen=[r for r in pack["records"] if r["id"].startswith("help_t17_")]
     if len(chosen)!=len(IDS) or set(x["id"] for x in chosen)!=set(IDS): raise ValueError("T17 incomplete set")
