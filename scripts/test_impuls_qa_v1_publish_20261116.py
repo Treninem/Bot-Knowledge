@@ -16,7 +16,7 @@ ROOT = Path(__file__).resolve().parents[1]
 PACK = "packs/ru/impuls_help_qa.json"
 BASE = "6c9f430da47f137d39a72bbd28c057cfb8f6be96"
 BASE_HASH = "50edd41dc0c6a868577433944e0ff0b2a36c2c9ebe53d587e5cbb4692185bbc9"
-PUBLISHED_HASH = "99103b48938bbb0dae1def05b4d0f8add7b2f3d6719ab49057baa4ef3b2a871c"
+PUBLISHED_HASH = "5cb5f4f4003b2d5f9541ae6190d6521999344d4b52c91df71546c9596464569f"
 CHANGED = set("""greeting get_started chat_selection training_disable_scope why_uncertain tone_restore
 request_vs_question return_previous_topic explain_previous_step fiction_or_fact game_switch_rights
 humor_consent request_to_stop version_runtime moderation_authority false_positive acknowledgement_only
@@ -24,8 +24,7 @@ address_in_group after_long_pause conversation_forget followup_missing_reference
 moderation_false_alarm one_turn_no_humor safe_error_report settings_two_admins unknown_phrase
 missing_answer_diagnostics short_answer_request quoted_setting ask_setting_only repeated_setting
 ambiguous_settings setting_receipt unclear_rule selected_chat roles bot_permissions pulses_not_received
-knowledge_delivery report_current_status reply_off_topic feature_not_live help_t14_group_dm_menu
-training_feedback_meaning published_vs_live safe_report_third_party moderation_rule_changed old_rule_timing
+knowledge_delivery report_current_status reply_off_topic feature_not_live training_feedback_meaning published_vs_live safe_report_third_party moderation_rule_changed old_rule_timing
 moderation_caps report_vs_attack setting_permission_change learning_vs_library pulses_vs_stars
 discussion_not_action respect_privacy_examples moderation_role general_vs_local_rules other_chat_access
 answer_limit""".split())
@@ -63,7 +62,7 @@ class PublishedImPULSQA(unittest.TestCase):
         self.assertEqual(validate_qa_manifest(ROOT), [])
 
     def test_exactly_sixty_additions_with_no_unrelated_edits(self):
-        self.assertEqual(len(CHANGED), 60)
+        self.assertEqual(len(CHANGED), 58)
         self.assertEqual(len(self.current["records"]), 869)
         old_meta = {k: v for k, v in self.old.items() if k not in {"records", "pack_version"}}
         new_meta = {k: v for k, v in self.current.items() if k not in {"records", "pack_version"}}
@@ -95,7 +94,7 @@ class PublishedImPULSQA(unittest.TestCase):
             ), key)
         self.assertEqual(actual_changed, CHANGED)
         self.assertEqual(sum(len(r["variants"]) for r in self.old["records"]), 1693)
-        self.assertEqual(sum(len(r["variants"]) for r in self.current["records"]), 1753)
+        self.assertEqual(sum(len(r["variants"]) for r in self.current["records"]), 1751)
 
     def test_staged_pools_are_not_consumer_registered(self):
         self.assertFalse(any("staging/" in entry["path"] for entry in self.manifest["packs"]))
