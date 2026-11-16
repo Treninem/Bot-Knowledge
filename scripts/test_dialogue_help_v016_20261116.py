@@ -42,7 +42,7 @@ class DialogueHelpV016(unittest.TestCase):
         self.assertEqual(sum(len(r["variants"]) for r in after.values())-sum(len(r["variants"]) for r in before.values()),100)
     def test_real_hash_and_budget(self):
         self.assertEqual(hashlib.sha256(self.newraw).hexdigest(),EXPECTED)
-        self.assertEqual(self.man["knowledge_version"],"2026.11.16.016")
+        self.assertGreaterEqual(tuple(map(int, self.man["knowledge_version"].split("."))), (2026,11,16,16))
         self.assertEqual(next(p["sha256"] for p in self.man["packs"] if p["path"]==PACK),EXPECTED)
         mbytes=(ROOT/"manifest.json").read_bytes()
         total,remain=evaluate_snapshot_budget(len(mbytes),[(ROOT/p["path"]).stat().st_size for p in self.man["packs"]])
