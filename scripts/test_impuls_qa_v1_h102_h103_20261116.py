@@ -10,6 +10,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 BASE = "f5273c55516901e27f7a466374a838187d0ebfc6"
+PUBLISHED_H102_H103 = "66ba98b6c268ef5a51fc8062607e51efae29101c"
 PATH = "packs/ru/impuls_help_qa.json"
 VERSION = "2026.11.16.002"
 EXPECTED_SHA = "62a7bb52d1795fbcd7aab4293d3725ec74a0b86b4ae7fbf87885c7a6cef9acca"
@@ -118,9 +119,9 @@ def norm(v: str) -> str:
 class CuratedPromotion(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.raw = (ROOT / PATH).read_bytes()
+        cls.raw = subprocess.check_output(["git", "show", f"{PUBLISHED_H102_H103}:{PATH}"], cwd=ROOT)
         cls.qa = json.loads(cls.raw)
-        cls.manifest_bytes = (ROOT / "manifest.json").read_bytes()
+        cls.manifest_bytes = subprocess.check_output(["git", "show", f"{PUBLISHED_H102_H103}:manifest.json"], cwd=ROOT)
         cls.manifest = json.loads(cls.manifest_bytes)
         cls.old = json.loads(subprocess.check_output(["git","show",f"{BASE}:{PATH}"], cwd=ROOT))
     def test_exact_sha_manifest_version_budget(self):
