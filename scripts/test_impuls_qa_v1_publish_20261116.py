@@ -14,6 +14,7 @@ from validate_qa_v1 import MAX_QA_PACK_BYTES, validate_qa_manifest
 
 ROOT = Path(__file__).resolve().parents[1]
 PACK = "packs/ru/impuls_help_qa.json"
+PUBLISHED_COMMIT = "f5273c55516901e27f7a466374a838187d0ebfc6"
 BASE = "6c9f430da47f137d39a72bbd28c057cfb8f6be96"
 BASE_HASH = "50edd41dc0c6a868577433944e0ff0b2a36c2c9ebe53d587e5cbb4692185bbc9"
 PUBLISHED_HASH = "5cb5f4f4003b2d5f9541ae6190d6521999344d4b52c91df71546c9596464569f"
@@ -37,9 +38,9 @@ def normal(value: str) -> str:
 class PublishedImPULSQA(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.raw = (ROOT / PACK).read_bytes()
+        cls.raw = subprocess.check_output(["git", "show", f"{PUBLISHED_COMMIT}:{PACK}"], cwd=ROOT)
         cls.current = json.loads(cls.raw)
-        cls.manifest_raw = (ROOT / "manifest.json").read_bytes()
+        cls.manifest_raw = subprocess.check_output(["git", "show", f"{PUBLISHED_COMMIT}:manifest.json"], cwd=ROOT)
         cls.manifest = json.loads(cls.manifest_raw)
         cls.base_raw = subprocess.check_output(
             ["git", "show", f"{BASE}:{PACK}"], cwd=ROOT
