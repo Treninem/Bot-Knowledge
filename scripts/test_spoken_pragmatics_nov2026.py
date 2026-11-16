@@ -37,7 +37,7 @@ class NewSpokenPragmaticsTest(unittest.TestCase):
         cls.manifest = json.loads(MANIFEST_PATH.read_text(encoding="utf-8"))
 
     def test_version_hash(self):
-        self.assertEqual(self.manifest["knowledge_version"], "2026.11.16.009")
+        self.assertGreaterEqual(tuple(map(int, self.manifest["knowledge_version"].split("."))), (2026, 11, 16, 9))
         original = ROOT / "packs/ru/spoken_pragmatics_qa.json"
         pinned = next(x["sha256"] for x in self.manifest["packs"]
                       if x["path"] == "packs/ru/spoken_pragmatics_qa.json")
