@@ -64,7 +64,7 @@ class KnowledgeFormatV030Stage(unittest.TestCase):
             self.assertEqual(len(original_texts), 9)
             self.assertEqual(candidate["base_registered_count"], 9)
             self.assertEqual(candidate["prior_unregistered_count"], 0)
-            self.assertEqual(len(candidate["variants"]), 8)
+            self.assertEqual(len(candidate["variants"]), 10)
             contexts_seen = set()
             stage_seen = []
             for position, item in enumerate(candidate["variants"], 10):
@@ -93,7 +93,7 @@ class KnowledgeFormatV030Stage(unittest.TestCase):
                 seen_texts.add(normalized)
                 original_texts.append(text)
         self.assertEqual(seen_ids, set(by_id))
-        self.assertEqual(len(seen_texts), 320)
+        self.assertEqual(len(seen_texts), 400)
 
     def test_all_registered_qa_lexical_collision(self):
         stage = read(STAGE)
