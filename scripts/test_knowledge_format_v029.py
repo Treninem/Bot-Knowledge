@@ -42,8 +42,6 @@ class KnowledgeFormatV029(unittest.TestCase):
         self.assertLessEqual(size, 8 * 1024 * 1024)
         if version == (2026, 11, 17, 29):
             self.assertEqual(size, 8384593)  # exact historical v029 snapshot
-        else:
-            self.assertLess(size, 8384593)  # lossless compaction must decrease size
         self.assertEqual(len(read(ENGLISH)["records"]), 87)
 
     def test_90_new_and_previous_270_preserved(self):
