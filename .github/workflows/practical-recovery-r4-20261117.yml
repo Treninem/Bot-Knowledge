@@ -1,0 +1,27 @@
+name: Practical recovery R4 exact-head contextual QA
+on:
+  pull_request:
+    paths:
+      - 'staging/ru/practical_recovery_context_r4_20261117.json'
+      - 'scripts/test_practical_recovery_r4_20261117.py'
+      - 'docs/PRACTICAL_RECOVERY_R4_2026_11_17.md'
+      - '.github/workflows/practical-recovery-r4-20261117.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+          fetch-depth: 1
+      - name: Verify actual PR checkout head
+        if: github.event_name == 'pull_request'
+        run: test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha }}"
+      - name: Run R1-R4 lineage, privacy, uniqueness and context checks
+        run: |
+          python scripts/test_practical_recovery_r4_20261117.py
+          python -O scripts/test_practical_recovery_r4_20261117.py
