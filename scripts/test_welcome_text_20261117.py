@@ -1,4 +1,4 @@
-"""Two 100-answer newcomer sets: source-pinned, scoped, privacy-safe staging QA."""
+"""Three 100-answer newcomer sets: source-pinned, scoped, privacy-safe staging QA."""
 import hashlib
 import json
 import re
@@ -76,7 +76,7 @@ class NewcomerWelcome20261117(unittest.TestCase):
         self.assertFalse(self.pool["consumer_registered"])
         self.assertNotIn("staging/ru/newcomer_welcome_20261117_context_pool.json", declared)
 
-    def test_two_stable_intents_and_exact_counts(self):
+    def test_three_stable_intents_and_exact_counts(self):
         self.assertEqual(self.pool["schema_version"], 1)
         self.assertEqual(self.pool["stage_type"], "supplemental_contextual_reply_pool")
         self.assertEqual(self.pool["audiences"], ["all_ai_bots"])
@@ -129,9 +129,9 @@ class NewcomerWelcome20261117(unittest.TestCase):
                 all_replies.append(reply)
             self.assertEqual(len(family_counts), 10)
             self.assertTrue(all(count == 10 for count in family_counts.values()))
-        self.assertEqual(len(ids), 200)
-        self.assertEqual(len(texts), 200)
-        self.assertEqual(len(notes), 200)
+        self.assertEqual(len(ids), 300)
+        self.assertEqual(len(texts), 300)
+        self.assertEqual(len(notes), 300)
         for i, left in enumerate(all_replies):
             for right in all_replies[i + 1:]:
                 self.assertLess(jaccard(left["text"], right["text"]), 0.78)
