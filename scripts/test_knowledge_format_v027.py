@@ -23,10 +23,14 @@ class KnowledgeFormatV027(unittest.TestCase):
     def test_manifest_and_size(self):
         manifest = load("manifest.json")
         entries = {entry["path"]: entry["sha256"] for entry in manifest["packs"]}
-        self.assertEqual(manifest["knowledge_version"], "2026.11.17.027")
-        self.assertEqual(entries[KNOWLEDGE], KNOWLEDGE_SHA)
+        version = tuple(int(x) for x in manifest["knowledge_version"].split("."))
+        self.assertGreaterEqual(version, (2026, 11, 17, 27))
+        if version == (2026, 11, 17, 27):
+            self.assertEqual(entries[KNOWLEDGE], KNOWLEDGE_SHA)
+        else:
+            self.assertEqual(entries[KNOWLEDGE], hashlib.sha256((ROOT/KNOWLEDGE).read_bytes()).hexdigest())
         self.assertEqual(entries[CONTEXT], CONTEXT_SHA)
-        for name, digest in ((KNOWLEDGE, KNOWLEDGE_SHA), (CONTEXT, CONTEXT_SHA)):
+        for name, digest in ((CONTEXT, CONTEXT_SHA),):
             self.assertEqual(hashlib.sha256((ROOT/name).read_bytes()).hexdigest(), digest)
         total = len((ROOT/"manifest.json").read_bytes())
         total += sum(len((ROOT/entry).read_bytes()) for entry in entries)
@@ -48,7 +52,10 @@ class KnowledgeFormatV027(unittest.TestCase):
         rows = data["records"]
         self.assertEqual(len(rows), 40)
         self.assertEqual(len(set(row["id"] for row in rows)), 40)
-        self.assertEqual(sorted(1+len(r["variants"]) for r in rows), [4]*10+[5]*30)
+        version = load("manifest.json")["knowledge_version"]
+        v028 = version >= "2026.11.17.028"
+        self.assertEqual(sorted(1+len(r["variants"]) for r in rows),
+                         ([6]*10+[7]*30) if v028 else ([4]*10+[5]*30))
         new = set()
         for row in rows:
             self.assertTrue(row["question"].strip())
@@ -56,14 +63,15 @@ class KnowledgeFormatV027(unittest.TestCase):
             all_answers = [row["answer"], *row["variants"]]
             normalized = [normalize_question(x) for x in all_answers]
             self.assertEqual(len(normalized), len(set(normalized)), row["id"])
-            for candidate in row["variants"][-2:]:
+            earlier = [row["answer"], *row["variants"][:(-4 if v028 else -2)]]
+            for candidate in row["variants"][-4:-2] if v028 else row["variants"][-2:]:
                 self.assertTrue(45 <= len(candidate) <= 280, (row["id"], candidate))
                 n = normalize_question(candidate)
                 self.assertNotIn(n, new)
                 new.add(n)
                 self.assertNotRegex(candidate, r"(?<!\w)(?:https?://\S+|@\w+|[\w.+-]+@[\w.-]+\.[A-Za-z]{2,})(?!\w)")
                 a = token_set(candidate)
-                for previous in all_answers[:-2]:
+                for previous in earlier:
                     b = token_set(previous)
                     score = len(a & b) / len(a | b) if (a | b) else 1.0
                     self.assertLess(score, .75, (row["id"], score))
@@ -71,7 +79,9 @@ class KnowledgeFormatV027(unittest.TestCase):
 
     def test_no_cross_registered_exact_replies(self):
         manifest = load("manifest.json")
-        fresh = {normalize_question(x) for row in load(KNOWLEDGE)["records"] for x in row["variants"][-2:]}
+        v028 = load("manifest.json")["knowledge_version"] >= "2026.11.17.028"
+        fresh = {normalize_question(x) for row in load(KNOWLEDGE)["records"]
+                 for x in (row["variants"][-4:-2] if v028 else row["variants"][-2:])}
         others = set()
         for pack in manifest["packs"]:
             if pack["path"] == KNOWLEDGE:
