@@ -1,0 +1,27 @@
+name: ImPULS H112 greeting exact-head candidate QA
+on:
+  pull_request:
+    paths:
+      - 'staging/ru/impuls_help_context_h112_20261117.json'
+      - 'scripts/test_impuls_help_h112_20261117.py'
+      - '.github/workflows/impuls-help-h112-20261117.yml'
+      - 'docs/IMPULS_HELP_H112_2026_11_17.md'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+          fetch-depth: 1
+      - name: Verify actual PR checkout head
+        if: github.event_name == 'pull_request'
+        run: test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha }}"
+      - name: Run H1-H112 lineage, privacy, uniqueness and context checks
+        run: |
+          python scripts/test_impuls_help_h112_20261117.py
+          python -O scripts/test_impuls_help_h112_20261117.py
