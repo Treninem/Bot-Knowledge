@@ -1,4 +1,4 @@
-"""Three 100-answer newcomer sets: source-pinned, scoped, privacy-safe staging QA."""
+"""Four 100-answer newcomer sets: source-pinned, scoped, privacy-safe staging QA."""
 import hashlib
 import json
 import re
@@ -14,7 +14,7 @@ SOURCE = "packs/ru/intents.json"
 EXPECTED_MAIN = "d43134b9072c7ceff44cfcf63d5d11c0d0771d7a"
 EXPECTED_SOURCE_SHA256 = "0bd5810de43f14e0c8cb454f71adbf11bf2e92e00477bf841bb66db477a7c39b"
 EXPECTED_SOURCE_BLOB = "71be015a85471c22697f16f5dd3246d126be290c"
-EXPECTED = {"welcome_text", "newcomer_help", "respond_to_self_introduction"}
+EXPECTED = {"welcome_text", "newcomer_help", "respond_to_self_introduction", "self_introduction_text"}
 ALLOWED_CONTEXTS = {"direct", "group_addressed"}
 
 def norm(value):
@@ -68,7 +68,7 @@ class NewcomerWelcome20261117(unittest.TestCase):
         self.assertEqual(blob, EXPECTED_SOURCE_BLOB)
         source_intents = {item["id"] for item in json.loads((ROOT / SOURCE).read_text(encoding="utf-8"))["intents"]}
         self.assertTrue({"welcome_text", "newcomer_help"} <= source_intents)
-        self.assertNotIn("respond_to_self_introduction", source_intents, "New intent must remain unregistered until consumer routing is designed")
+        self.assertTrue({"respond_to_self_introduction", "self_introduction_text"}.isdisjoint(source_intents), "New intents must remain unregistered until consumer routing is designed")
         self.assertEqual(self.pool["source_pack"], SOURCE)
         self.assertEqual(self.pool["source_pack_manifest_sha256"], digest)
         self.assertEqual(self.pool["source_pack_blob_sha"], blob)
@@ -76,7 +76,7 @@ class NewcomerWelcome20261117(unittest.TestCase):
         self.assertFalse(self.pool["consumer_registered"])
         self.assertNotIn("staging/ru/newcomer_welcome_20261117_context_pool.json", declared)
 
-    def test_three_stable_intents_and_exact_counts(self):
+    def test_four_stable_intents_and_exact_counts(self):
         self.assertEqual(self.pool["schema_version"], 1)
         self.assertEqual(self.pool["stage_type"], "supplemental_contextual_reply_pool")
         self.assertEqual(self.pool["audiences"], ["all_ai_bots"])
@@ -88,8 +88,8 @@ class NewcomerWelcome20261117(unittest.TestCase):
             "no_unverified_product_claims": True
         })
         self.assertEqual({entry["intent_id"] for entry in self.pool["entries"]}, EXPECTED)
-        self.assertEqual(self.pool["checkpoint"]["intent_count"], 3)
-        self.assertEqual(self.pool["checkpoint"]["cumulative_candidates"], 300)
+        self.assertEqual(self.pool["checkpoint"]["intent_count"], 4)
+        self.assertEqual(self.pool["checkpoint"]["cumulative_candidates"], 400)
         self.assertEqual(self.pool["checkpoint"]["remaining_total"], 0)
         for entry in self.pool["entries"]:
             self.assertEqual(entry["baseline_registered"], 0)
@@ -129,9 +129,9 @@ class NewcomerWelcome20261117(unittest.TestCase):
                 all_replies.append(reply)
             self.assertEqual(len(family_counts), 10)
             self.assertTrue(all(count == 10 for count in family_counts.values()))
-        self.assertEqual(len(ids), 300)
-        self.assertEqual(len(texts), 300)
-        self.assertEqual(len(notes), 300)
+        self.assertEqual(len(ids), 400)
+        self.assertEqual(len(texts), 400)
+        self.assertEqual(len(notes), 400)
         for i, left in enumerate(all_replies):
             for right in all_replies[i + 1:]:
                 self.assertLess(jaccard(left["text"], right["text"]), 0.55)
