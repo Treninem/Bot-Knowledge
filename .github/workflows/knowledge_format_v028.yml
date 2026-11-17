@@ -1,0 +1,32 @@
+name: Knowledge format v028 exact-head QA
+on:
+  pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Verify checkout of actual head SHA
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Validate snapshot, dynamic package schemas and sizes
+        run: python scripts/validate_pack.py
+      - name: Verify original v027 and new v028 replies (normal and optimized)
+        run: |
+          python -m unittest scripts.test_knowledge_format_v027 scripts.test_knowledge_format_v028 -q
+          python -O -m unittest scripts.test_knowledge_format_v027 scripts.test_knowledge_format_v028 -q
+      - name: Check pragmatic contrasts and scoped search after lossless compaction
+        run: |
+          python scripts/test_pragmatics.py
+          python scripts/test_pragmatic_search.py
