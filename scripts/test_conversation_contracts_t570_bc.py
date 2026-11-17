@@ -11,6 +11,8 @@ ROOT = Path(__file__).resolve().parents[1]
 POOL = "staging/ru/conversation_contracts_t570_context_pool.json"
 B = "staging/ru/conversation_contracts_t570_context_delta_b.json"
 C = "staging/ru/conversation_contracts_t570_context_delta_c.json"
+D = "staging/ru/conversation_contracts_t570_context_delta_d.json"
+E = "staging/ru/conversation_contracts_t570_context_delta_e.json"
 SOURCE = "packs/ru/response_boundaries_qa.json"
 RELATED = (
     "packs/ru/dialogue_help_qa.json",
@@ -30,6 +32,8 @@ EXPECTED_SOURCE_SHA256 = "e0d704a2a03d5aabb3db479eb47f07c2ba229ca76955a3cfc0f89d
 EXPECTED_SOURCE_BLOB = "f15104dbf08d3691b198abb7f0bd52d81383b5a0"
 EXPECTED_POOL_BLOB = "7b3fd3e231223818a8baa1e54622b8f5776ccf83"
 EXPECTED_B_BLOB = "fe641a3015d288f18eed2e320b8c9ccd42aa867f"
+EXPECTED_C_BLOB = "0da53da620ec554b6852e676ac9627ac33e8962d"
+EXPECTED_D_BLOB = "172cbea5af0cb09131ad5f0db75340c0a4dd3ace"
 EXPECTED_POOL_MAIN = "9a41aae633d3266e4c600d93e9c6e2b08e0638f0"
 EXPECTED_MAIN = "4e2cd1a48694c5727a1a84ce40cdc1a96a68e89d"
 
@@ -67,11 +71,15 @@ class TestT570ContinuationBC(unittest.TestCase):
         cls.pool = json.loads((ROOT / POOL).read_text(encoding="utf-8"))
         cls.b = json.loads((ROOT / B).read_text(encoding="utf-8"))
         cls.c = json.loads((ROOT / C).read_text(encoding="utf-8"))
-        cls.stages = (cls.pool, cls.b, cls.c)
+        cls.d = json.loads((ROOT / D).read_text(encoding="utf-8"))
+        cls.e = json.loads((ROOT / E).read_text(encoding="utf-8"))
+        cls.stages = (cls.pool, cls.b, cls.c, cls.d, cls.e)
         cls.base_replies = [r for e in cls.pool["entries"] for r in e["replies"]]
         cls.b_replies = [r for e in cls.b["entries"] for r in e["replies"]]
         cls.c_replies = [r for e in cls.c["entries"] for r in e["replies"]]
-        cls.all_replies = cls.base_replies + cls.b_replies + cls.c_replies
+        cls.d_replies = [r for e in cls.d["entries"] for r in e["replies"]]
+        cls.e_replies = [r for e in cls.e["entries"] for r in e["replies"]]
+        cls.all_replies = cls.base_replies + cls.b_replies + cls.c_replies + cls.d_replies + cls.e_replies
 
     def test_source_and_parent_blob_chain(self):
         manifest = json.loads((ROOT / "manifest.json").read_text(encoding="utf-8"))
@@ -88,21 +96,31 @@ class TestT570ContinuationBC(unittest.TestCase):
         self.assertEqual(self.pool["checked_source_main_sha"], EXPECTED_POOL_MAIN)
         self.assertEqual(self.b["checked_source_main_sha"], EXPECTED_MAIN)
         self.assertEqual(self.c["checked_source_main_sha"], EXPECTED_MAIN)
+        self.assertEqual(self.d["checked_source_main_sha"], EXPECTED_MAIN)
+        self.assertEqual(self.e["checked_source_main_sha"], EXPECTED_MAIN)
         self.assertEqual(self.b["parent_stage"], POOL)
         self.assertEqual(self.b["parent_stage_blob_sha"], EXPECTED_POOL_BLOB)
         self.assertEqual(git_blob(POOL), EXPECTED_POOL_BLOB)
         self.assertEqual(self.c["parent_stage"], B)
         self.assertEqual(self.c["parent_stage_blob_sha"], EXPECTED_B_BLOB)
         self.assertEqual(git_blob(B), EXPECTED_B_BLOB)
+        self.assertEqual(self.d["parent_stage"], C)
+        self.assertEqual(self.d["parent_stage_blob_sha"], EXPECTED_C_BLOB)
+        self.assertEqual(git_blob(C), EXPECTED_C_BLOB)
+        self.assertEqual(self.e["parent_stage"], D)
+        self.assertEqual(self.e["parent_stage_blob_sha"], EXPECTED_D_BLOB)
+        self.assertEqual(git_blob(D), EXPECTED_D_BLOB)
         self.assertIsNone(self.pool["parent_stage"])
         registered_paths = {item["path"] for item in manifest["packs"]}
-        for path in (POOL, B, C):
+        for path in (POOL, B, C, D, E):
             self.assertNotIn(path, registered_paths)
 
     def test_exact_counts_ids_context_and_safety(self):
         expected = ((100, 100, 100, 0, 10, 900),
                     (100, 100, 200, 0, 10, 800),
-                    (200, 100, 300, 0, 10, 700))
+                    (200, 100, 300, 0, 10, 700),
+                    (300, 100, 400, 0, 10, 600),
+                    (400, 100, 500, 0, 10, 500))
         for stage, values in zip(self.stages, expected):
             cp = stage["checkpoint"]
             actual = (cp["prior_candidates"], cp["added_candidates"],
@@ -120,12 +138,12 @@ class TestT570ContinuationBC(unittest.TestCase):
         ids, texts, notes = set(), set(), set()
         by_intent = {}
         for stage_index, stage in enumerate(self.stages):
-            start = (1, 11, 21)[stage_index]
-            expected_total = (10, 20, 30)[stage_index]
+            start = (1, 11, 21, 31, 41)[stage_index]
+            expected_total = (10, 20, 30, 40, 50)[stage_index]
             for entry in stage["entries"]:
                 by_intent.setdefault(entry["intent_id"], []).extend(entry["replies"])
                 self.assertEqual(entry["target"], 100)
-                self.assertEqual(entry["prior_for_stable_id"], (0, 10, 20)[stage_index])
+                self.assertEqual(entry["prior_for_stable_id"], (0, 10, 20, 30, 40)[stage_index])
                 self.assertEqual(entry["added_candidates"], 10)
                 self.assertEqual(entry["total_staged"], expected_total)
                 self.assertEqual(entry["remaining"], 100 - expected_total)
@@ -148,9 +166,9 @@ class TestT570ContinuationBC(unittest.TestCase):
                     self.assertNotRegex(reply["text"], r"(?<!\w)\+?\d[\d ()-]{8,}\d(?!\w)")
                     self.assertNotRegex(reply["text"].casefold(),
                                         r"\b(забаню|замучу|выдам санкцию|удалю участника)\b")
-        self.assertEqual((len(ids), len(texts), len(notes)), (300, 300, 300))
+        self.assertEqual((len(ids), len(texts), len(notes)), (500, 500, 500))
         self.assertEqual(len(by_intent), 10)
-        self.assertTrue(all(len(rows) == 30 for rows in by_intent.values()))
+        self.assertTrue(all(len(rows) == 50 for rows in by_intent.values()))
 
     def test_near_duplicates_inside_series_and_related_sample(self):
         texts = [r["text"] for r in self.all_replies]
@@ -162,18 +180,18 @@ class TestT570ContinuationBC(unittest.TestCase):
             obj = json.loads((ROOT / path).read_text(encoding="utf-8"))
             related.extend(candidate_texts(obj))
         self.assertGreater(len(related), 100)
-        for answer in self.b_replies + self.c_replies:
+        for answer in self.b_replies + self.c_replies + self.d_replies + self.e_replies:
             self.assertFalse(any(norm(answer["text"]) == norm(x) for x in related))
             self.assertLess(max((jaccard(answer["text"], x) for x in related), default=0), 0.78)
 
     def test_no_exact_duplicate_in_registered_packs_or_other_staging(self):
         manifest = json.loads((ROOT / "manifest.json").read_text(encoding="utf-8"))
-        fresh = {norm(r["text"]) for r in self.b_replies + self.c_replies}
+        fresh = {norm(r["text"]) for r in self.b_replies + self.c_replies + self.d_replies + self.e_replies}
         for pack in manifest["packs"]:
             obj = json.loads((ROOT / pack["path"]).read_text(encoding="utf-8"))
             for value in candidate_texts(obj):
                 self.assertNotIn(norm(value), fresh, f"Registered duplicate in {pack['path']}")
-        excluded = {POOL, B, C}
+        excluded = {POOL, B, C, D, E}
         for path in (ROOT / "staging/ru").glob("*.json"):
             rel = path.relative_to(ROOT).as_posix()
             if rel in excluded:
