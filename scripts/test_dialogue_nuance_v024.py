@@ -1,29 +1,40 @@
-"""v024 new Russian dialogue intents and read-only manifest acceptance."""
+"""Verify v024 baseline, approved v025 ceiling and saved overflow."""
 import hashlib,json,unittest
 from pathlib import Path
 from scripts.validate_qa_v1 import normalize_question,validate_qa_pack
 ROOT=Path(__file__).resolve().parents[1]
 P="packs/ru/dialogue_nuance_v024_qa.json"
-HASH="b3366a4f9ae8f822c96d9bba0c26f89d618cc58126b065fdfe1536f11084b9fe"
-class DialogueV024(unittest.TestCase):
+STAGE="staging/ru/dialogue_nuance_v025_overflow_20261117.json"
+HASH="721ebd555f86a2106ccd3cd1d4dc721fc0ffd7030d20f6df96a7709f1a08c8d0"
+BASELINE="ba7527d5f4cf94804583cac8b74e07fba864807a3cc6fb85eb130a59e544a3be"
+class DialogueV025(unittest.TestCase):
  def test_data(self):
   m=json.loads((ROOT/"manifest.json").read_text("utf-8"))
-  self.assertGreaterEqual(tuple(map(int,m["knowledge_version"].split("."))),(2026,11,17,24))
-  e={x["path"]:x["sha256"] for x in m["packs"]}
+  self.assertEqual(m["knowledge_version"],"2026.11.17.025")
+  entries={x["path"]:x["sha256"] for x in m["packs"]}
   raw=(ROOT/P).read_bytes()
   self.assertEqual(hashlib.sha256(raw).hexdigest(),HASH)
-  self.assertEqual(e[P],HASH)
-  o=json.loads(raw)
-  self.assertEqual(validate_qa_pack(o),15)
+  self.assertEqual(entries[P],HASH)
+  o=json.loads(raw); self.assertEqual(validate_qa_pack(o),15)
+  self.assertEqual(o["pack_version"],"2026.11.17.025")
+  base=[[r["id"],r["answer"],*r["variants"][:4]] for r in o["records"]]
+  original=json.dumps(base,ensure_ascii=False,separators=(",",":")).encode("utf-8")
+  self.assertEqual(hashlib.sha256(original).hexdigest(),BASELINE)
+  staged=json.loads((ROOT/STAGE).read_text("utf-8"))
+  self.assertEqual(len(staged["records"]),15)
+  indexed={x["intent_id"]:x["variants"] for x in staged["records"]}
+  self.assertEqual(set(indexed),{r["id"] for r in o["records"]})
   seen=set()
   for r in o["records"]:
-   self.assertEqual(len(r["variants"]),4)
+   self.assertEqual(len(r["variants"]),8)
    self.assertTrue(r["constraints"]["read_only"])
    self.assertTrue(r["constraints"]["requires_direct_address"])
    self.assertEqual(r["audiences"],["all_ai_bots"])
-   for v in [r["answer"],*r["variants"]]:
-    z=normalize_question(v)
-    self.assertNotIn(z,seen);seen.add(z)
-  self.assertEqual(len(seen),75)
-  self.assertLessEqual(len((ROOT/"manifest.json").read_bytes())+sum(len((ROOT/p).read_bytes()) for p in e),8*1024*1024)
-if __name__=="__main__": unittest.main()
+   self.assertEqual(len(indexed[r["id"]]),2)
+   for t in [r["answer"],*r["variants"],*indexed[r["id"]]]:
+    n=normalize_question(t)
+    self.assertNotIn(n,seen)
+    seen.add(n)
+  self.assertEqual(len(seen),165)
+  self.assertLessEqual(len((ROOT/"manifest.json").read_bytes())+sum(len((ROOT/p).read_bytes()) for p in entries),8*1024*1024)
+if __name__=="__main__":unittest.main()
