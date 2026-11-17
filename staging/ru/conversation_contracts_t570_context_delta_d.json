@@ -1,0 +1,1513 @@
+{
+  "schema_version": 1,
+  "stage_type": "supplemental_contextual_reply_delta",
+  "consumer_registered": false,
+  "language": "ru",
+  "audiences": [
+    "all_ai_bots"
+  ],
+  "constraints": {
+    "read_only": true,
+    "requires_direct_address": true,
+    "no_personal_data": true,
+    "no_sanctions": true,
+    "requires_context_match": true
+  },
+  "source_pack": "packs/ru/response_boundaries_qa.json",
+  "source_pack_manifest_sha256": "e0d704a2a03d5aabb3db479eb47f07c2ba229ca76955a3cfc0f89dd5386538d9",
+  "source_pack_blob_sha": "f15104dbf08d3691b198abb7f0bd52d81383b5a0",
+  "parent_stage": "staging/ru/conversation_contracts_t570_context_delta_c.json",
+  "parent_stage_blob_sha": "0da53da620ec554b6852e676ac9627ac33e8962d",
+  "checked_source_main_sha": "4e2cd1a48694c5727a1a84ce40cdc1a96a68e89d",
+  "source_documents": [
+    "AGENTS.md",
+    "POLICY.md",
+    "docs/REQUIREMENTS_21.md"
+  ],
+  "scope": "T570 ten independent practical conversation-contract intents with 10 uniquely contextual RU replies each; stage-only, not consumer delivered",
+  "checkpoint": {
+    "stage_id": "T570-D",
+    "prior_candidates": 300,
+    "added_candidates": 100,
+    "cumulative_candidates": 400,
+    "processed_intents": 10,
+    "finished_100": 0,
+    "partial_intents": 10,
+    "remaining_total": 600,
+    "duplicate_rejections": 0,
+    "max_jaccard": 0.3333,
+    "next_action": "Continue stable t570_* IDs from response 41; 60 remain per intent."
+  },
+  "entries": [
+    {
+      "intent_id": "t570_staged_input",
+      "canonical_question": "Я пришлю сведения несколькими сообщениями. Как лучше продолжить?",
+      "section": "общение",
+      "language": "ru",
+      "style": "neutral",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "prior_for_stable_id": 30,
+      "added_candidates": 10,
+      "total_staged": 40,
+      "target": 100,
+      "remaining": 60,
+      "replies": [
+        {
+          "id": "t570_staged_input_31",
+          "text": "В начале документа есть страницы без номеров. Сверю их по заголовкам и не буду угадывать порядок.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Несколько первых страниц не пронумерованы",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t570_staged_input_32",
+          "text": "Этот фрагмент относится к другой редакции. Отложу его отдельно, пока не станет ясно, нужен ли он в текущем наборе.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Пришёл абзац из старой версии",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t570_staged_input_33",
+          "text": "В таблице заголовок оказался в отдельном сообщении. Привяжу его к нужным столбцам до чтения значений.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Заголовки таблицы отправлены отдельно от строк",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t570_staged_input_34",
+          "text": "В коде один блок разорван между сообщениями. Соединю его только после проверки границ фрагментов.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Код прислан двумя частями без явного разделителя",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t570_staged_input_35",
+          "text": "Последний файл отправил другой участник. Уточню, заменяет ли он предыдущую версию или дополняет её.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Новый файл прислан другим участником группы",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t570_staged_input_36",
+          "text": "В одном фрагменте данные скрыты. Не стану восстанавливать их по соседним строкам.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Часть таблицы намеренно закрыта",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t570_staged_input_37",
+          "text": "Здесь повторяется заголовок, но содержание отличается. Сохраню оба раздела и отмечу их различие.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Два фрагмента имеют одинаковый заголовок",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t570_staged_input_38",
+          "text": "Дата в имени файла и дата внутри документа расходятся. Сначала уточню, какая из них относится к версии.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "У вложения не совпадают даты в имени и тексте",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t570_staged_input_39",
+          "text": "Пока не хватает приложения, на которое ссылается основной текст. Отмечу зависимые выводы как предварительные.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Основной документ ссылается на отсутствующее приложение",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t570_staged_input_40",
+          "text": "Принял просьбу остановить разбор. Сохраню полученный объём без попытки продолжать по старому плану.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Пользователь просит прекратить обработку материала",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "t570_multi_question_order",
+      "canonical_question": "Можешь ответить на несколько разных вопросов по порядку?",
+      "section": "помощь",
+      "language": "ru",
+      "style": "neutral",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "prior_for_stable_id": 30,
+      "added_candidates": 10,
+      "total_staged": 40,
+      "target": 100,
+      "remaining": 60,
+      "replies": [
+        {
+          "id": "t570_multi_question_order_31",
+          "text": "Разделю пункты на те, где есть прямые данные, и те, где пока нужны дополнительные сведения.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "В списке смешаны вопросы с разной обеспеченностью данными",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t570_multi_question_order_32",
+          "text": "Сначала отвечу на вопрос, от которого зависит выбор в последнем пункте.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Один ответ определяет последующее решение",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t570_multi_question_order_33",
+          "text": "Для вопроса об изображении отмечу, что самого изображения в сообщении нет. Остальные пункты разберу отдельно.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Вложение с изображением не прикрепилось",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t570_multi_question_order_34",
+          "text": "Этот пункт выходит за согласованный объём. Отмечу его отдельно, чтобы не расширять задачу молча.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Один вопрос не входит в заданные границы работы",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t570_multi_question_order_35",
+          "text": "Вопрос о внешнем действии превращу в описание возможных шагов, без утверждения, что действие уже выполнено.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Среди вопросов есть просьба выполнить действие",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t570_multi_question_order_36",
+          "text": "Похоже, эта фраза риторическая. Не буду приписывать ей отдельный запрос без подтверждения.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Вопрос задан как эмоциональная реплика",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t570_multi_question_order_37",
+          "text": "Здесь есть просьба, сформулированная без вопросительного знака. Учту её как отдельный пункт.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Одно требование записано как утверждение",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t570_multi_question_order_38",
+          "text": "Соберу ответы в таблицу с отдельной строкой на каждый исходный пункт.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Пользователь просит сравнить ответы в одной таблице",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t570_multi_question_order_39",
+          "text": "Уточню, к какому объекту относится слово «он». Без этого можно ответить не о том предмете.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "В одном вопросе неоднозначное местоимение",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t570_multi_question_order_40",
+          "text": "Для каждого пункта отдельно укажу допущения, если они нужны для ответа.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Ответы зависят от разных исходных предположений",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "t570_keep_fixed_parts",
+      "canonical_question": "Можешь отредактировать только разрешённые части текста?",
+      "section": "навыки",
+      "language": "ru",
+      "style": "neutral",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "prior_for_stable_id": 30,
+      "added_candidates": 10,
+      "total_staged": 40,
+      "target": 100,
+      "remaining": 60,
+      "replies": [
+        {
+          "id": "t570_keep_fixed_parts_31",
+          "text": "Сохраню комментарии к таблице, даже если они не отображаются в печатной версии.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "В файле есть комментарии к ячейкам",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t570_keep_fixed_parts_32",
+          "text": "Версионные метки оставлю без изменений. Они используются для сопоставления релизов.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Текст содержит обязательные номера версий",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t570_keep_fixed_parts_33",
+          "text": "Не переименую HTML-идентификаторы. На них могут ссылаться стили и скрипты.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Редактируется HTML с привязками к элементам",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t570_keep_fixed_parts_34",
+          "text": "Сохраню ссылки между ячейками и формулами. Изменение внешнего вида не должно ломать расчёт.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Таблица содержит перекрёстные формулы",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t570_keep_fixed_parts_35",
+          "text": "Юридически значимый пункт оставлю дословно и вынесу замечание рядом.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Есть условие, согласованное сторонами",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t570_keep_fixed_parts_36",
+          "text": "Текст альтернативного описания изображения не сокращу без проверки: он передаёт содержимое для тех, кто не видит картинку.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Нужно отредактировать подпись к изображению",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t570_keep_fixed_parts_37",
+          "text": "Сохраню пробелы и табуляцию внутри кодового примера, если они влияют на синтаксис.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Код зависит от отступов",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t570_keep_fixed_parts_38",
+          "text": "Порядок элементов массива оставлю прежним, если он задан как приоритетный.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "JSON-массив должен сохранить порядок",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t570_keep_fixed_parts_39",
+          "text": "Формат даты не буду менять на привычный мне. Сначала проверю, какой стандарт принят в документе.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "В документе используется заданный формат даты",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t570_keep_fixed_parts_40",
+          "text": "Источник цитаты останется рядом с ней. Без атрибуции текст может выглядеть как утверждение автора.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Цитата должна сохранить ссылку на источник",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "t570_criteria_priorities",
+      "canonical_question": "Как выбрать между вариантами, если критериев несколько?",
+      "section": "рассуждение",
+      "language": "ru",
+      "style": "neutral",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "prior_for_stable_id": 30,
+      "added_candidates": 10,
+      "total_staged": 40,
+      "target": 100,
+      "remaining": 60,
+      "replies": [
+        {
+          "id": "t570_criteria_priorities_31",
+          "text": "Если важнее ограничить возможный ущерб, сравним варианты по худшему последствию, а не по средней выгоде.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Пользователь ставит снижение риска выше экономии",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t570_criteria_priorities_32",
+          "text": "Считаем полную стоимость владения: покупку, расходники, поддержку и время обслуживания.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Нужно сравнить долгосрочные затраты",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t570_criteria_priorities_33",
+          "text": "Сначала отметим обязательные критерии, затем оценим желательные. Иначе высокий балл скроет неприемлемый недостаток.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Есть условия, без которых вариант не подходит",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t570_criteria_priorities_34",
+          "text": "Вес критериев зафиксируем до сравнения, чтобы не менять правила под понравившийся вариант.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Участники склонны менять веса после просмотра результатов",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t570_criteria_priorities_35",
+          "text": "Покажу, какие оценки подтверждены данными, а какие основаны на экспертном суждении.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Часть критериев оценена субъективно",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t570_criteria_priorities_36",
+          "text": "Учтём время на обучение команды. Быстрый запуск может потребовать долгой адаптации.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Варианты различаются сложностью освоения",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t570_criteria_priorities_37",
+          "text": "Сравним расход энергии за одинаковый период и при сопоставимой нагрузке.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "У решений разное энергопотребление",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t570_criteria_priorities_38",
+          "text": "Проверим доступность поддержки в нужные часы и на нужном языке.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Важна помощь после покупки",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t570_criteria_priorities_39",
+          "text": "Добавим конфиденциальность как отдельный критерий, а не спрячем её внутри удобства.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Вариант требует передачи данных третьей стороне",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t570_criteria_priorities_40",
+          "text": "Сначала проверим совместимость с уже используемыми форматами и устройствами.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Есть ограничения по совместимости",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "t570_fact_vs_assumption",
+      "canonical_question": "Где в твоём ответе факты, а где предположения?",
+      "section": "умение",
+      "language": "ru",
+      "style": "neutral",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "prior_for_stable_id": 30,
+      "added_candidates": 10,
+      "total_staged": 40,
+      "target": 100,
+      "remaining": 60,
+      "replies": [
+        {
+          "id": "t570_fact_vs_assumption_31",
+          "text": "Время изменения файла не обязательно совпадает с датой публикации. Не буду делать из него вывод о версии.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Известна только дата изменения файла",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t570_fact_vs_assumption_32",
+          "text": "Это утверждение принадлежит источнику. Само по себе оно не подтверждает, что измерение проводилось.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Документ пересказывает чужое заявление",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t570_fact_vs_assumption_33",
+          "text": "Демонстрационные данные созданы для примера. Они не описывают реальных пользователей.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "В материале есть искусственный набор данных",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t570_fact_vs_assumption_34",
+          "text": "Одна жалоба подтверждает конкретный случай, но не распространённость проблемы.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Поступило единичное сообщение о сбое",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t570_fact_vs_assumption_35",
+          "text": "Без предыдущего сообщения неясно, к чему относится слово «так». Отмечу эту неопределённость.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Вырванная из переписки фраза теряет контекст",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t570_fact_vs_assumption_36",
+          "text": "Фраза о причине пока остаётся версией. Для вывода нужны наблюдения, которые отличают её от альтернатив.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Причина заявлена без проверяемых признаков",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t570_fact_vs_assumption_37",
+          "text": "Число названо приблизительно. Сохраню диапазон, не превращая его в точное значение.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "В источнике есть оценочное количество",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t570_fact_vs_assumption_38",
+          "text": "Инструкция могла устареть после обновления. Сверю её с текущей версией перед практическим выводом.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Есть только старая редакция документации",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t570_fact_vs_assumption_39",
+          "text": "Перевод передаёт общий смысл, но не доказывает точную формулировку оригинала.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Доступен только перевод сообщения",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t570_fact_vs_assumption_40",
+          "text": "Слова «должно работать» описывают ожидание. Фактический результат пока не проверен.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Документ обещает поведение, но теста нет",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "t570_format_change",
+      "canonical_question": "Можешь поменять форму ответа, не искажая его смысл?",
+      "section": "навыки",
+      "language": "ru",
+      "style": "neutral",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "prior_for_stable_id": 30,
+      "added_candidates": 10,
+      "total_staged": 40,
+      "target": 100,
+      "remaining": 60,
+      "replies": [
+        {
+          "id": "t570_format_change_31",
+          "text": "Сделаю список с коротким пояснением к каждому пункту, чтобы сохранить детали без длинных абзацев.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Нужна версия для быстрого просмотра",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t570_format_change_32",
+          "text": "Оформлю действия как чек-лист, но не отмечу пункты выполненными заранее.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Пользователь хочет контролировать этапы",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t570_format_change_33",
+          "text": "Соберу последовательность событий в хронологию и сохраню даты у каждого события.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Нужно представить историю по времени",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t570_format_change_34",
+          "text": "Добавлю небольшой словарь терминов после основного объяснения, не заменяя ими исходные формулировки.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Аудитория впервые встречает специальные термины",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t570_format_change_35",
+          "text": "Сделаю формат вопрос–ответ, чтобы читатель мог быстро найти нужный пункт.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Нужно оформить справочную страницу",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t570_format_change_36",
+          "text": "Подготовлю матрицу сравнения с одинаковыми колонками для всех вариантов.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Есть несколько вариантов и общие критерии",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t570_format_change_37",
+          "text": "Для чтения вслух заменю таблицу последовательным перечислением строк и значений.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Материал будут слушать в аудиоформате",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t570_format_change_38",
+          "text": "Соберу машинно-читаемый JSON по заданной схеме и отдельно проверю обязательные поля.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Результат передаётся другой программе",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t570_format_change_39",
+          "text": "Сделаю обычный текст без Markdown, сохранив заголовки словами и порядок разделов.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Площадка не поддерживает разметку",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t570_format_change_40",
+          "text": "Разнесу основное содержание и пояснения по разным уровням заголовков.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Документ слишком плотный для навигации",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "t570_draft_not_execute",
+      "canonical_question": "Можешь подготовить материал, но ничего не выполнять и не отправлять?",
+      "section": "помощь",
+      "language": "ru",
+      "style": "neutral",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "prior_for_stable_id": 30,
+      "added_candidates": 10,
+      "total_staged": 40,
+      "target": 100,
+      "remaining": 60,
+      "replies": [
+        {
+          "id": "t570_draft_not_execute_31",
+          "text": "Подготовлю черновик issue с описанием проблемы, но не отправлю его в репозиторий.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Нужно оформить проблему для GitHub",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t570_draft_not_execute_32",
+          "text": "Составлю описание PR и список проверок, не создавая коммит и не открывая запрос.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Нужен текст будущего pull request",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t570_draft_not_execute_33",
+          "text": "Напишу команду и поясню её параметры. Выполнять её в терминале не буду.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Пользователь просит команду для будущего запуска",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t570_draft_not_execute_34",
+          "text": "Составлю план резервного копирования, но не буду создавать копию данных.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Нужен план до начала обслуживания",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t570_draft_not_execute_35",
+          "text": "Подготовлю текст отмены встречи, не отправляя его участникам.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Нужно написать уведомление об отмене",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t570_draft_not_execute_36",
+          "text": "Сделаю черновик приглашения в календарь без создания события.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Планируется встреча, но дату ещё согласуют",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t570_draft_not_execute_37",
+          "text": "Покажу SQL для выборки, не выполняя запрос и не меняя базу.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Нужно проверить структуру будущего запроса",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t570_draft_not_execute_38",
+          "text": "Составлю таблицу ролей и предполагаемых прав, не выдавая доступ никому.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Обсуждается новая схема доступа",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t570_draft_not_execute_39",
+          "text": "Перечислю файлы-кандидаты и причины, по которым их стоит проверить. Удаления не будет.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Нужно подготовить список на очистку",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t570_draft_not_execute_40",
+          "text": "Подготовлю детали будущего перевода для сверки, но не отправлю деньги.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Пользователь просит пример платёжных данных",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "t570_disagreement_repair",
+      "canonical_question": "Что делать, если я не согласен с твоим советом?",
+      "section": "общение",
+      "language": "ru",
+      "style": "neutral",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "prior_for_stable_id": 30,
+      "added_candidates": 10,
+      "total_staged": 40,
+      "target": 100,
+      "remaining": 60,
+      "replies": [
+        {
+          "id": "t570_disagreement_repair_31",
+          "text": "Тогда пересмотрю цель: прежний вариант решал другую задачу.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Пользователь уточняет, что цель понята неверно",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t570_disagreement_repair_32",
+          "text": "Ты указал более свежий источник. Сверю вывод с ним и отмечу, что изменилось.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Пользователь приносит обновлённый источник",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t570_disagreement_repair_33",
+          "text": "Исправлю имя и все места, где оно повторяется. Не буду оставлять старую форму в примерах.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Пользователь поправляет имя или название",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t570_disagreement_repair_34",
+          "text": "Новое условие меняет выбор. Пересчитаю варианты, не пытаясь сохранить старую рекомендацию.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Пользователь добавляет ограничение",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t570_disagreement_repair_35",
+          "text": "Сделаю объяснение проще, но не уберу оговорки, от которых зависит точность.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Пользователь просит менее сложный ответ",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t570_disagreement_repair_36",
+          "text": "Разберём риск отдельно: возможно, спор не о выгоде, а о допустимых последствиях.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Пользователь просит оценить опасность варианта",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t570_disagreement_repair_37",
+          "text": "Остановлюсь на текущем выводе и не буду продолжать тему без твоего запроса.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Пользователь хочет завершить обсуждение",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t570_disagreement_repair_38",
+          "text": "Здесь я ошибся в факте. Исправлю его и пересмотрю все выводы, которые от него зависели.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Пользователь находит фактическую ошибку",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t570_disagreement_repair_39",
+          "text": "Могу сравнить альтернативы по одним и тем же критериям, не продвигая заранее выбранную.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Пользователь просит нейтральное сравнение",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t570_disagreement_repair_40",
+          "text": "Тогда рекомендация не нужна. Кратко зафиксирую варианты и оставлю решение тебе.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Пользователь отказывается от совета",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "t570_preflight_review",
+      "canonical_question": "Как проверить предложенное решение до применения?",
+      "section": "помощь",
+      "language": "ru",
+      "style": "neutral",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "prior_for_stable_id": 30,
+      "added_candidates": 10,
+      "total_staged": 40,
+      "target": 100,
+      "remaining": 60,
+      "replies": [
+        {
+          "id": "t570_preflight_review_31",
+          "text": "Проверь кодировку и переносы строк на файле с кириллицей до импорта.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Данные содержат русский текст",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t570_preflight_review_32",
+          "text": "Сверь минимальные права процесса с реальной задачей. Лишние разрешения увеличивают последствия ошибки.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Изменение требует доступа к файлам",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t570_preflight_review_33",
+          "text": "Проверь, что тестовые данные обезличены и не содержат скрытых идентификаторов.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Готовится набор для проверки",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t570_preflight_review_34",
+          "text": "Перед миграцией проверь план возврата на копии с тем же форматом данных.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Планируется перенос между версиями схемы",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t570_preflight_review_35",
+          "text": "Сверь фактический ответ API с ожидаемым контрактом, включая пустые и ошибочные ответы.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Изменяется интеграция с API",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t570_preflight_review_36",
+          "text": "Проверь поведение при большом объёме и медленном соединении, а не только на локальном примере.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Решение будет работать при нестабильной сети",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t570_preflight_review_37",
+          "text": "Убедись, что журнал теста не сохраняет содержимое приватных сообщений.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "В тесте включено подробное логирование",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t570_preflight_review_38",
+          "text": "Проверь совместимость с минимальной поддерживаемой версией, а не только с последней.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "У пользователей могут быть старые версии",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t570_preflight_review_39",
+          "text": "Смоделируй два одновременных изменения, чтобы увидеть возможную потерю обновления.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Несколько участников могут менять данные одновременно",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t570_preflight_review_40",
+          "text": "Проверь, что частичный сбой не оставляет систему в неясном промежуточном состоянии.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Операция состоит из нескольких этапов",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "intent_id": "t570_resume_checkpoint",
+      "canonical_question": "Как продолжить незавершённую задачу и не сделать работу дважды?",
+      "section": "умение",
+      "language": "ru",
+      "style": "neutral",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "prior_for_stable_id": 30,
+      "added_candidates": 10,
+      "total_staged": 40,
+      "target": 100,
+      "remaining": 60,
+      "replies": [
+        {
+          "id": "t570_resume_checkpoint_31",
+          "text": "После слияния сверим фактический merge commit и состав файлов. Статус PR сам по себе не заменяет эту проверку.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "PR отмечен как merged",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t570_resume_checkpoint_32",
+          "text": "Если ветка изменилась после checkpoint, пересчитаем разницу от новой основы.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "В рабочую ветку добавили новые коммиты",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t570_resume_checkpoint_33",
+          "text": "Отменённый workflow не равен проваленному тесту. Запишем его статус отдельно и решим, как повторить проверку.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "CI был отменён вручную",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t570_resume_checkpoint_34",
+          "text": "При частичном импорте сравним контрольные суммы уже загруженных файлов и продолжим только с отсутствующих.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Импорт оборвался на нескольких файлах",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t570_resume_checkpoint_35",
+          "text": "Если файл переименован, проверим историю и ссылки на старый путь перед переносом.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Ветка содержит переименованные файлы",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t570_resume_checkpoint_36",
+          "text": "Новое требование внесём в журнал отдельно от старого результата, чтобы было видно, что изменилось.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Пользователь обновил критерии приёмки",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t570_resume_checkpoint_37",
+          "text": "Перед повторным добавлением проверим ID в основной ветке и всех открытых PR.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Возможен конфликт уникальных идентификаторов",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t570_resume_checkpoint_38",
+          "text": "После изменения manifest пересчитаем SHA по фактическим байтам каждого затронутого пакета.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Изменился зарегистрированный список пакетов",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t570_resume_checkpoint_39",
+          "text": "Найдём предыдущий результат по ссылке или SHA. Похожее имя файла не доказывает, что это та же версия.",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Не удаётся найти прежний файл по названию",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        },
+        {
+          "id": "t570_resume_checkpoint_40",
+          "text": "Следующим шагом запишем конкретный тест или действие, а не обещание «продолжить позже».",
+          "language": "ru",
+          "style": "neutral",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "context": "direct",
+          "context_note": "Нужно оставить исполнимую точку продолжения",
+          "avoid": "Только при подтверждённом контексте; не приписывать факты, действия, полномочия или санкции.",
+          "read_only": true
+        }
+      ]
+    }
+  ]
+}
