@@ -2,7 +2,7 @@
 
 Source main: `178a1d36062a6b77d62ad83586eb17a26bb20d5c`, manifest `2026.11.17.021`.
 
-This candidate adds **18 conversation-repair intents × 3 original replies = 54 replies** and **10 explicit-humor intents × 3 original replies = 30 replies**. Total **28 canonical intents, 84 candidate answers**. All are synthetic, RU, read-only, no private data or sanctions, with direct-address gates; jokes additionally require explicit user request and appropriate mood.
+This candidate adds **18 conversation-repair intents × 5 original replies = 90 replies** and **10 explicit-humor intents × 5 original replies = 50 replies**. Total **28 canonical intents, 140 candidate answers**. All are synthetic, RU, read-only, no private data or sanctions, with direct-address gates; jokes additionally require explicit user request and appropriate mood.
 
 The 100 published direct greeting responses remain in `dialogue.reactions.greeting`. The separate PR #666 explanatory `greeting` intent is about *why ordinary greetings should not trigger group rules*; its numeric quota must not be mistaken for another set of direct hello replies.
 
@@ -11,3 +11,7 @@ Published source `english_dialogues.json` was reserialized with JSON parsing and
 Snapshot estimate including manifest: **8325508 / 8388608 bytes**, free **63100**. Files changed: English JSON, two qa.v1 packs, manifest, validation test, read-only workflow, this note.
 
 Expected tests: `python scripts/validate_pack.py`, `python scripts/validate_qa_v1.py`, `python -m unittest scripts.test_context_repair_v022 -q`, `python -O -m unittest scripts.test_context_repair_v022 -q`. New replies remain candidate content until exact-head GitHub CI and editorial/consumer checks. No ImPULS repository, BotHost, payments, or live bot changes.
+
+## Second checked batch
+
+Two further context-sensitive original replies were added for each of the same 28 canonical questions (**+56 new**, total 140 / 28 × 5, 95 remaining per question). Within-intent Jaccard maximum 0.148. This is an automated lexical screen; independent semantic/editorial acceptance remains required. The snapshot is checked against the actual current branch after each edit; no change to live consumers.

@@ -37,7 +37,8 @@ class ContextRepairV022(unittest.TestCase):
             self.assertTrue(data["catalog"]["constraints"]["read_only"])
             self.assertGreaterEqual(len(data["records"]), expected)
             for row in data["records"]:
-                self.assertEqual(len(row["variants"]), 2)
+                self.assertGreaterEqual(len(row["variants"]), 4)
+                self.assertLessEqual(len(row["variants"]), 8)
                 self.assertTrue(row["constraints"]["requires_direct_address"])
                 self.assertEqual(row["language"], "ru")
                 q = normalize_question(row["question"])
@@ -47,7 +48,7 @@ class ContextRepairV022(unittest.TestCase):
                     n = normalize_question(answer)
                     self.assertNotIn(n, seen_responses)
                     seen_responses.add(n)
-        self.assertGreaterEqual(len(seen_responses), 84)
+        self.assertGreaterEqual(len(seen_responses), 140)
     def test_humor_explicit_opt_in(self):
         p = json.loads((ROOT / "packs/ru/requested_microhumor_v022_qa.json").read_text(encoding="utf-8"))
         self.assertIn("Только при явном запросе", p["catalog"]["description"])
