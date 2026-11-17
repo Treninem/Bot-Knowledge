@@ -50,7 +50,7 @@ class DialogueStageV027(unittest.TestCase):
             self.assertEqual(len(old_staged), 2)
             self.assertEqual(item["base_registered_count"], 9)
             self.assertEqual(item["prior_unregistered_count"], 2)
-            self.assertEqual(len(item["variants"]), 5)
+            self.assertEqual(len(item["variants"]), 10)
             existing = [normalize_question(x) for x in original + old_staged]
             self.assertEqual(len(existing), len(set(existing)))
             context_notes = set()
@@ -79,7 +79,7 @@ class DialogueStageV027(unittest.TestCase):
                 new_texts.add(norm)
                 self.assertNotRegex(text, r"(?<!\w)(?:https?://\S+|@\w+|[\w.+-]+@[\w.-]+\.[A-Za-z]{2,})(?!\w)")
         self.assertEqual(len(seen_ids), 15)
-        self.assertEqual(len(new_texts), 75)
+        self.assertEqual(len(new_texts), 150)
 
     def test_no_registered_text_collision(self):
         stage = read(STAGE)
