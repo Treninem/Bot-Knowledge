@@ -46,7 +46,8 @@ class KnowledgeFormatV028(unittest.TestCase):
         self.assertLessEqual(size, 8 * 1024 * 1024)
         self.assertEqual(len(load(COMPACT)["pairs"]), 48)
         self.assertEqual(len(load(COMPACT)["categories"]), 12)
-        self.assertFalse(load(COMPACT)["usage_policy"]["automatic_sanctions_allowed"])
+        self.assertTrue(load(COMPACT)["usage_policy"]["no_automatic_sanctions"])
+        self.assertTrue(load(COMPACT)["usage_policy"]["no_privileged_actions"])
         print("V028_SNAPSHOT_OK bytes=", size)
 
     def test_80_new_and_190_preserved(self):
