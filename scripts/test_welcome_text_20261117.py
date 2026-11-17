@@ -14,7 +14,7 @@ SOURCE = "packs/ru/intents.json"
 EXPECTED_MAIN = "d43134b9072c7ceff44cfcf63d5d11c0d0771d7a"
 EXPECTED_SOURCE_SHA256 = "0bd5810de43f14e0c8cb454f71adbf11bf2e92e00477bf841bb66db477a7c39b"
 EXPECTED_SOURCE_BLOB = "71be015a85471c22697f16f5dd3246d126be290c"
-EXPECTED = {"welcome_text", "newcomer_help"}
+EXPECTED = {"welcome_text", "newcomer_help", "respond_to_self_introduction"}
 ALLOWED_CONTEXTS = {"direct", "group_addressed"}
 
 def norm(value):
@@ -66,6 +66,9 @@ class NewcomerWelcome20261117(unittest.TestCase):
         self.assertEqual(declared[SOURCE], EXPECTED_SOURCE_SHA256)
         self.assertEqual(digest, EXPECTED_SOURCE_SHA256)
         self.assertEqual(blob, EXPECTED_SOURCE_BLOB)
+        source_intents = {item["id"] for item in json.loads((ROOT / SOURCE).read_text(encoding="utf-8"))["intents"]}
+        self.assertTrue({"welcome_text", "newcomer_help"} <= source_intents)
+        self.assertNotIn("respond_to_self_introduction", source_intents, "New intent must remain unregistered until consumer routing is designed")
         self.assertEqual(self.pool["source_pack"], SOURCE)
         self.assertEqual(self.pool["source_pack_manifest_sha256"], digest)
         self.assertEqual(self.pool["source_pack_blob_sha"], blob)
@@ -85,8 +88,8 @@ class NewcomerWelcome20261117(unittest.TestCase):
             "no_unverified_product_claims": True
         })
         self.assertEqual({entry["intent_id"] for entry in self.pool["entries"]}, EXPECTED)
-        self.assertEqual(self.pool["checkpoint"]["intent_count"], 2)
-        self.assertEqual(self.pool["checkpoint"]["cumulative_candidates"], 200)
+        self.assertEqual(self.pool["checkpoint"]["intent_count"], 3)
+        self.assertEqual(self.pool["checkpoint"]["cumulative_candidates"], 300)
         self.assertEqual(self.pool["checkpoint"]["remaining_total"], 0)
         for entry in self.pool["entries"]:
             self.assertEqual(entry["baseline_registered"], 0)
