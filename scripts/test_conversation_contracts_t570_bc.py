@@ -30,6 +30,7 @@ EXPECTED_SOURCE_SHA256 = "e0d704a2a03d5aabb3db479eb47f07c2ba229ca76955a3cfc0f89d
 EXPECTED_SOURCE_BLOB = "f15104dbf08d3691b198abb7f0bd52d81383b5a0"
 EXPECTED_POOL_BLOB = "7b3fd3e231223818a8baa1e54622b8f5776ccf83"
 EXPECTED_B_BLOB = "fe641a3015d288f18eed2e320b8c9ccd42aa867f"
+EXPECTED_POOL_MAIN = "9a41aae633d3266e4c600d93e9c6e2b08e0638f0"
 EXPECTED_MAIN = "4e2cd1a48694c5727a1a84ce40cdc1a96a68e89d"
 
 def norm(value):
@@ -83,8 +84,10 @@ class TestT570ContinuationBC(unittest.TestCase):
             self.assertEqual(stage["source_pack_manifest_sha256"], digest)
             self.assertEqual(stage["source_pack_blob_sha"], EXPECTED_SOURCE_BLOB)
             self.assertEqual(stage["source_pack"], SOURCE)
-            self.assertEqual(stage["checked_source_main_sha"], EXPECTED_MAIN)
             self.assertFalse(stage["consumer_registered"])
+        self.assertEqual(self.pool["checked_source_main_sha"], EXPECTED_POOL_MAIN)
+        self.assertEqual(self.b["checked_source_main_sha"], EXPECTED_MAIN)
+        self.assertEqual(self.c["checked_source_main_sha"], EXPECTED_MAIN)
         self.assertEqual(self.b["parent_stage"], POOL)
         self.assertEqual(self.b["parent_stage_blob_sha"], EXPECTED_POOL_BLOB)
         self.assertEqual(git_blob(POOL), EXPECTED_POOL_BLOB)
@@ -122,6 +125,8 @@ class TestT570ContinuationBC(unittest.TestCase):
             for entry in stage["entries"]:
                 by_intent.setdefault(entry["intent_id"], []).extend(entry["replies"])
                 self.assertEqual(entry["target"], 100)
+                self.assertEqual(entry["prior_for_stable_id"], (0, 10, 20)[stage_index])
+                self.assertEqual(entry["added_candidates"], 10)
                 self.assertEqual(entry["total_staged"], expected_total)
                 self.assertEqual(entry["remaining"], 100 - expected_total)
                 self.assertEqual(len(entry["replies"]), 10)
