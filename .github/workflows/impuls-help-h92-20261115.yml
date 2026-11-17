@@ -1,0 +1,47 @@
+name: ImPULS H92-H94 exact-head staged QA
+on:
+  pull_request:
+    paths:
+      - 'staging/ru/impuls_help_context_h92_20261115.json'
+      - 'staging/ru/impuls_help_context_h93_20261115.json'
+      - 'staging/ru/impuls_help_context_h94_20261115.json'
+      - 'scripts/test_impuls_help_h92_20261115.py'
+      - 'scripts/test_impuls_help_h93_20261115.py'
+      - 'scripts/test_impuls_help_h94_20261115.py'
+      - 'scripts/impuls_help_h93_preview.py'
+      - 'scripts/test_impuls_help_h93_preview.py'
+      - 'docs/IMPULS_HELP_H92_2026_11_15.md'
+      - 'docs/IMPULS_HELP_H93_2026_11_15.md'
+      - 'docs/IMPULS_HELP_H94_2026_11_15.md'
+      - '.github/workflows/impuls-help-h92-20261115.yml'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          persist-credentials: false
+      - name: Check exact PR head
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Source SHA, candidate lineage and privacy
+        run: |
+          python -B scripts/validate_pack.py
+          python -B scripts/test_impuls_help_h92_20261115.py
+          python -O -B scripts/test_impuls_help_h92_20261115.py
+          python -B scripts/test_impuls_help_h93_20261115.py
+          python -O -B scripts/test_impuls_help_h93_20261115.py
+          python -B scripts/test_impuls_help_h94_20261115.py
+          python -O -B scripts/test_impuls_help_h94_20261115.py
+          python -B scripts/test_impuls_help_h93_preview.py
+          python -O -B scripts/test_impuls_help_h93_preview.py
+      - name: Show raw H92-H94 SHA-256
+        run: sha256sum staging/ru/impuls_help_context_h92_20261115.json staging/ru/impuls_help_context_h93_20261115.json staging/ru/impuls_help_context_h94_20261115.json
+

@@ -1,0 +1,37 @@
+name: ImPULS H107 exact-head staged QA
+on:
+  pull_request:
+    paths:
+      - 'staging/ru/impuls_help_context_h107_20261116.json'
+      - 'scripts/test_impuls_help_h107_20261116.py'
+      - 'docs/IMPULS_HELP_H107_2026_11_16.md'
+      - '.github/workflows/impuls-help-h107-20261116.yml'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          persist-credentials: false
+      - name: Verify exact checkout
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate published and H107 stage, normal and optimized Python
+        run: |
+          python -B scripts/validate_pack.py
+          python -B scripts/validate_qa_v1.py
+          python -B scripts/test_impuls_help_h105_20261116.py
+          python -O -B scripts/test_impuls_help_h105_20261116.py
+          python -B scripts/test_impuls_help_h106_20261116.py
+          python -O -B scripts/test_impuls_help_h106_20261116.py
+          python -B scripts/test_impuls_help_h107_20261116.py
+          python -O -B scripts/test_impuls_help_h107_20261116.py
+      - name: Check actual SHA-256
+        run: sha256sum staging/ru/impuls_help_context_h107_20261116.json

@@ -1,0 +1,58 @@
+name: ImPULS help H72-H81 exact-head QA
+
+on:
+  pull_request:
+    paths:
+      - 'staging/ru/impuls_help_context_h72_20261115.json'
+      - 'staging/ru/impuls_help_context_h73_20261115.json'
+      - 'scripts/test_impuls_help_h72_h73_20261115.py'
+      - 'staging/ru/impuls_help_context_h74_20261115.json'
+      - 'scripts/test_impuls_help_h74_20261115.py'
+      - 'staging/ru/impuls_help_context_h75_20261115.json'
+      - 'scripts/test_impuls_help_h75_20261115.py'
+      - 'staging/ru/impuls_help_context_h76_20261115.json'
+      - 'scripts/test_impuls_help_h76_20261115.py'
+      - 'staging/ru/impuls_help_context_h77_20261115.json'
+      - 'scripts/test_impuls_help_h77_20261115.py'
+      - 'staging/ru/impuls_help_context_h78_20261115.json'
+      - 'staging/ru/impuls_help_context_h79_20261115.json'
+      - 'staging/ru/impuls_help_context_h80_20261115.json'
+      - 'staging/ru/impuls_help_context_h81_20261115.json'
+      - 'scripts/test_impuls_help_h78_h81_20261115.py'
+      - 'docs/IMPULS_HELP_H78_H81_2026_11_15.md'
+      - '.github/workflows/impuls-help-h72-h73-20261115.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout exact head without persisting credentials
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Confirm actual HEAD
+        shell: bash
+        run: |
+          test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+      - name: Validate manifest and H72/H73
+        run: |
+          python -B scripts/validate_pack.py
+          python -B scripts/test_impuls_help_h72_h73_20261115.py
+          python -O -B scripts/test_impuls_help_h72_h73_20261115.py
+          python -B scripts/test_impuls_help_h74_20261115.py
+          python -O -B scripts/test_impuls_help_h74_20261115.py
+          python -B scripts/test_impuls_help_h75_20261115.py
+          python -O -B scripts/test_impuls_help_h75_20261115.py
+          python -B scripts/test_impuls_help_h76_20261115.py
+          python -O -B scripts/test_impuls_help_h76_20261115.py
+          python -B scripts/test_impuls_help_h77_20261115.py
+          python -O -B scripts/test_impuls_help_h77_20261115.py
+          python -B scripts/test_impuls_help_h78_h81_20261115.py
+          python -O -B scripts/test_impuls_help_h78_h81_20261115.py
+          sha256sum staging/ru/impuls_help_context_h78_20261115.json staging/ru/impuls_help_context_h79_20261115.json staging/ru/impuls_help_context_h80_20261115.json staging/ru/impuls_help_context_h81_20261115.json
+          sha256sum staging/ru/impuls_help_context_h72_20261115.json staging/ru/impuls_help_context_h73_20261115.json staging/ru/impuls_help_context_h74_20261115.json staging/ru/impuls_help_context_h75_20261115.json staging/ru/impuls_help_context_h76_20261115.json staging/ru/impuls_help_context_h77_20261115.json

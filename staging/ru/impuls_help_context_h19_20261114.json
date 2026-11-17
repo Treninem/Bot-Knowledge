@@ -1,0 +1,1694 @@
+{
+  "schema_version": 1,
+  "stage_type": "supplemental_contextual_reply_pool",
+  "consumer_registered": false,
+  "language": "ru",
+  "audiences": [
+    "impuls"
+  ],
+  "source_pack": "packs/ru/impuls_help_qa.json",
+  "source_pack_manifest_sha256": "50edd41dc0c6a868577433944e0ff0b2a36c2c9ebe53d587e5cbb4692185bbc9",
+  "source_pack_blob_sha": "430f78f7bf43940b112978bc5087b5cb6002eabe",
+  "checked_source_main_sha": "6c9f430da47f137d39a72bbd28c057cfb8f6be96",
+  "checked_impuls_main_sha": "e6d1bf78ab3c40fa8e7ffc4dce6bb2e4f38d8b9a",
+  "impuls_user_facing_source": {
+    "repository": "Treninem/Impuls",
+    "paths": [
+      "README.md"
+    ],
+    "checked_at": "2026-11-14",
+    "version_notes": "main candidate 1.6.249; README says installed 1.6.248; no live check"
+  },
+  "constraints": {
+    "read_only": true,
+    "requires_direct_address": true,
+    "requires_context_match": true,
+    "no_personal_data": true,
+    "no_sanctions": true
+  },
+  "checkpoint": {
+    "id": "IMPULS-HELP-H19-20261114",
+    "continued_pr": 666,
+    "previous_head": "2c9c7ba7aeb52b85839cc43aff424fd56702659b",
+    "processed_intents": 50,
+    "new_candidates": 50,
+    "cumulative_H1_H19": 985,
+    "distinct_intents_H1_H19": 100,
+    "editorially_approved_new": 0,
+    "certified_100_sets": 0,
+    "remaining_numeric_all_100_intents": 8740,
+    "next_action": "Continue H20 on other 50 intents, then semantic audit and consumer selector check"
+  },
+  "entries": [
+    {
+      "intent_id": "silent_group",
+      "canonical_question": "Почему бот не ответил на сообщение в группе?",
+      "section": "общение",
+      "language": "ru",
+      "audiences": [
+        "impuls"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 2,
+      "earlier_staged_candidates": 11,
+      "added_candidates": 1,
+      "target": 100,
+      "remaining_to_target_excluding_other_prs": 86,
+      "replies": [
+        {
+          "id": "impuls_help_silent_group_h19_01",
+          "text": "Если сообщение состояло из одной картинки без подписи, я могу не понять, что именно ты хочешь узнать. Напиши вопрос словами и укажи, какая часть изображения важна.",
+          "language": "ru",
+          "style": "natural_explanation",
+          "audiences": [
+            "impuls"
+          ],
+          "response_role": "assistant_reply",
+          "context": "group_addressed",
+          "context_note": "В группе загрузили изображение меню без текста, а позже спросили, почему бот ничего не объяснил",
+          "avoid": "Только для адресованного вопроса и проверенного контекста. Без санкций, изменения настроек, раскрытия личных сведений и обещаний неподтверждённых возможностей.",
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review"
+        }
+      ],
+      "total_candidates_in_main_and_H19": 14
+    },
+    {
+      "intent_id": "address_in_group",
+      "canonical_question": "Как задать вопрос боту в общем чате?",
+      "section": "общение",
+      "language": "ru",
+      "audiences": [
+        "impuls"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 3,
+      "earlier_staged_candidates": 11,
+      "added_candidates": 1,
+      "target": 100,
+      "remaining_to_target_excluding_other_prs": 85,
+      "replies": [
+        {
+          "id": "impuls_help_address_in_group_h19_01",
+          "text": "Когда обсуждаешь чужой ответ, сначала обозначь, что обращаешься именно к ImPULS: «Объясни, что означает этот пункт». Если пункт не назван, добавь его текст.",
+          "language": "ru",
+          "style": "natural_explanation",
+          "audiences": [
+            "impuls"
+          ],
+          "response_role": "assistant_reply",
+          "context": "group_addressed",
+          "context_note": "Участник хочет уточнить термин из предыдущей реплики человека, но бот не был адресатом исходного обсуждения",
+          "avoid": "Только для адресованного вопроса и проверенного контекста. Без санкций, изменения настроек, раскрытия личных сведений и обещаний неподтверждённых возможностей.",
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review"
+        }
+      ],
+      "total_candidates_in_main_and_H19": 15
+    },
+    {
+      "intent_id": "reply_off_topic",
+      "canonical_question": "Как исправить ответ бота не по теме?",
+      "section": "помощь",
+      "language": "ru",
+      "audiences": [
+        "impuls"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 3,
+      "earlier_staged_candidates": 11,
+      "added_candidates": 1,
+      "target": 100,
+      "remaining_to_target_excluding_other_prs": 85,
+      "replies": [
+        {
+          "id": "impuls_help_reply_off_topic_h19_01",
+          "text": "Похоже, я ответил про включение функции, хотя вопрос был о её стоимости. Сначала разберёмся со стоимостью: уточни, о какой функции и каком виде оплаты речь.",
+          "language": "ru",
+          "style": "natural_explanation",
+          "audiences": [
+            "impuls"
+          ],
+          "response_role": "assistant_reply",
+          "context": "private",
+          "context_note": "Бот спутал вопрос о стоимости функции с просьбой включить её в личном меню",
+          "avoid": "Только для адресованного вопроса и проверенного контекста. Без санкций, изменения настроек, раскрытия личных сведений и обещаний неподтверждённых возможностей.",
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review"
+        }
+      ],
+      "total_candidates_in_main_and_H19": 15
+    },
+    {
+      "intent_id": "selected_chat",
+      "canonical_question": "Почему нельзя применять настройки чужой группы?",
+      "section": "настройка",
+      "language": "ru",
+      "audiences": [
+        "impuls"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 2,
+      "earlier_staged_candidates": 11,
+      "added_candidates": 1,
+      "target": 100,
+      "remaining_to_target_excluding_other_prs": 86,
+      "replies": [
+        {
+          "id": "impuls_help_selected_chat_h19_01",
+          "text": "Перед сохранением проверь не только название, но и то, какая группа сейчас выбрана в панели. После перехода назад открытая карточка могла относиться к прошлому выбору.",
+          "language": "ru",
+          "style": "natural_explanation",
+          "audiences": [
+            "impuls"
+          ],
+          "response_role": "assistant_reply",
+          "context": "private",
+          "context_note": "Пользователь вернулся кнопкой назад к ранее открытой карточке другой группы после выбора нового чата",
+          "avoid": "Только для адресованного вопроса и проверенного контекста. Без санкций, изменения настроек, раскрытия личных сведений и обещаний неподтверждённых возможностей.",
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review"
+        }
+      ],
+      "total_candidates_in_main_and_H19": 14
+    },
+    {
+      "intent_id": "setting_receipt",
+      "canonical_question": "Как убедиться, что настройка действительно изменилась?",
+      "section": "настройка",
+      "language": "ru",
+      "audiences": [
+        "impuls"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 3,
+      "earlier_staged_candidates": 11,
+      "added_candidates": 1,
+      "target": 100,
+      "remaining_to_target_excluding_other_prs": 85,
+      "replies": [
+        {
+          "id": "impuls_help_setting_receipt_h19_01",
+          "text": "Старый снимок экрана подтверждает только то, что было видно в момент снимка. Для ответа о настройке сейчас нужно заново посмотреть актуальное состояние выбранной группы.",
+          "language": "ru",
+          "style": "natural_explanation",
+          "audiences": [
+            "impuls"
+          ],
+          "response_role": "assistant_reply",
+          "context": "private",
+          "context_note": "Пользователь пытается подтвердить сегодняшнюю настройку фотографией экрана, сделанной несколько дней назад",
+          "avoid": "Только для адресованного вопроса и проверенного контекста. Без санкций, изменения настроек, раскрытия личных сведений и обещаний неподтверждённых возможностей.",
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review"
+        }
+      ],
+      "total_candidates_in_main_and_H19": 15
+    },
+    {
+      "intent_id": "game_start_diagnosis",
+      "canonical_question": "Что делать, если игра не запускается?",
+      "section": "помощь",
+      "language": "ru",
+      "audiences": [
+        "impuls"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 3,
+      "earlier_staged_candidates": 11,
+      "added_candidates": 1,
+      "target": 100,
+      "remaining_to_target_excluding_other_prs": 85,
+      "replies": [
+        {
+          "id": "impuls_help_game_start_diagnosis_h19_01",
+          "text": "Уточни, пытаешься начать новую партию или продолжить прежнюю. Если предыдущая сессия ещё не завершена, сообщение об отказе не обязательно означает, что игра выключена.",
+          "language": "ru",
+          "style": "natural_explanation",
+          "audiences": [
+            "impuls"
+          ],
+          "response_role": "assistant_reply",
+          "context": "group_addressed",
+          "context_note": "Игрок нажал начало новой партии, хотя у него остаётся открытая незавершённая игровая сессия",
+          "avoid": "Только для адресованного вопроса и проверенного контекста. Без санкций, изменения настроек, раскрытия личных сведений и обещаний неподтверждённых возможностей.",
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review"
+        }
+      ],
+      "total_candidates_in_main_and_H19": 15
+    },
+    {
+      "intent_id": "pulses_not_received",
+      "canonical_question": "Что делать, если Пульсы не начислились?",
+      "section": "помощь",
+      "language": "ru",
+      "audiences": [
+        "impuls"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 3,
+      "earlier_staged_candidates": 11,
+      "added_candidates": 1,
+      "target": 100,
+      "remaining_to_target_excluding_other_prs": 85,
+      "replies": [
+        {
+          "id": "impuls_help_pulses_not_received_h19_01",
+          "text": "Нужно сверить условия выдачи и момент фактического завершения задания. Сообщение «награда возможна» ещё не подтверждает начисление Пульсов.",
+          "language": "ru",
+          "style": "natural_explanation",
+          "audiences": [
+            "impuls"
+          ],
+          "response_role": "assistant_reply",
+          "context": "private",
+          "context_note": "Участник принял предварительное объявление о будущей награде за подтверждение уже выполненного начисления",
+          "avoid": "Только для адресованного вопроса и проверенного контекста. Без санкций, изменения настроек, раскрытия личных сведений и обещаний неподтверждённых возможностей.",
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review"
+        }
+      ],
+      "total_candidates_in_main_and_H19": 15
+    },
+    {
+      "intent_id": "moderation_false_alarm",
+      "canonical_question": "Как сообщить о ложном срабатывании фильтра?",
+      "section": "правила",
+      "language": "ru",
+      "audiences": [
+        "impuls"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 3,
+      "earlier_staged_candidates": 11,
+      "added_candidates": 1,
+      "target": 100,
+      "remaining_to_target_excluding_other_prs": 85,
+      "replies": [
+        {
+          "id": "impuls_help_moderation_false_alarm_h19_01",
+          "text": "Сочетание букв и цифр само по себе не доказывает попытку обойти фильтр. Если это название модели устройства, такой контекст стоит учесть при проверке.",
+          "language": "ru",
+          "style": "natural_explanation",
+          "audiences": [
+            "impuls"
+          ],
+          "response_role": "assistant_reply",
+          "context": "group_addressed",
+          "context_note": "Фильтр пометил буквенно-цифровое обозначение детали, опубликованное в техническом обсуждении",
+          "avoid": "Только для адресованного вопроса и проверенного контекста. Без санкций, изменения настроек, раскрытия личных сведений и обещаний неподтверждённых возможностей.",
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review"
+        }
+      ],
+      "total_candidates_in_main_and_H19": 15
+    },
+    {
+      "intent_id": "knowledge_delivery",
+      "canonical_question": "Когда новая справка из Bot-Knowledge попадёт к боту?",
+      "section": "помощь",
+      "language": "ru",
+      "audiences": [
+        "impuls"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 3,
+      "earlier_staged_candidates": 11,
+      "added_candidates": 1,
+      "target": 100,
+      "remaining_to_target_excluding_other_prs": 85,
+      "replies": [
+        {
+          "id": "impuls_help_knowledge_delivery_h19_01",
+          "text": "Сравни версию проверенного пакета и версию локального снимка, который реально использует бот. Успешная загрузка одного файла ещё не гарантирует обновление всего набора.",
+          "language": "ru",
+          "style": "natural_explanation",
+          "audiences": [
+            "impuls"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "В логах есть подтверждение загрузки отдельного файла, но неизвестно, прошла ли проверка всего снимка базы",
+          "avoid": "Только для адресованного вопроса и проверенного контекста. Без санкций, изменения настроек, раскрытия личных сведений и обещаний неподтверждённых возможностей.",
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review"
+        }
+      ],
+      "total_candidates_in_main_and_H19": 15
+    },
+    {
+      "intent_id": "feature_not_live",
+      "canonical_question": "Почему функция есть в документации, но нет у живого бота?",
+      "section": "помощь",
+      "language": "ru",
+      "audiences": [
+        "impuls"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 3,
+      "earlier_staged_candidates": 11,
+      "added_candidates": 1,
+      "target": 100,
+      "remaining_to_target_excluding_other_prs": 85,
+      "replies": [
+        {
+          "id": "impuls_help_feature_not_live_h19_01",
+          "text": "Дата анонса и дата включения функции могут различаться. Сначала проверь установленный выпуск и его описание, а уже потом ищи пункт в действующем меню.",
+          "language": "ru",
+          "style": "natural_explanation",
+          "audiences": [
+            "impuls"
+          ],
+          "response_role": "assistant_reply",
+          "context": "private",
+          "context_note": "Пользователь увидел предварительный анонс функции с будущей датой включения и решил, что она уже доступна",
+          "avoid": "Только для адресованного вопроса и проверенного контекста. Без санкций, изменения настроек, раскрытия личных сведений и обещаний неподтверждённых возможностей.",
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review"
+        }
+      ],
+      "total_candidates_in_main_and_H19": 15
+    },
+    {
+      "intent_id": "conversation_forget",
+      "canonical_question": "Как убрать текущий разговорный контекст?",
+      "section": "навыки",
+      "language": "ru",
+      "audiences": [
+        "impuls"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 3,
+      "earlier_staged_candidates": 11,
+      "added_candidates": 1,
+      "target": 100,
+      "remaining_to_target_excluding_other_prs": 85,
+      "replies": [
+        {
+          "id": "impuls_help_conversation_forget_h19_01",
+          "text": "Эту тему больше не продолжаю. Если новый вопрос связан с прежним лишь случайным словом, не буду переносить старые предположения в ответ.",
+          "language": "ru",
+          "style": "natural_explanation",
+          "audiences": [
+            "impuls"
+          ],
+          "response_role": "assistant_reply",
+          "context": "private",
+          "context_note": "Собеседник прямо отменил обсуждение прежней чувствительной темы и сменил предмет разговора",
+          "avoid": "Только для адресованного вопроса и проверенного контекста. Без санкций, изменения настроек, раскрытия личных сведений и обещаний неподтверждённых возможностей.",
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review"
+        }
+      ],
+      "total_candidates_in_main_and_H19": 15
+    },
+    {
+      "intent_id": "help_t14_group_dm_menu",
+      "canonical_question": "Почему одни функции ищут в группе, а другие в личке?",
+      "section": "настройка",
+      "language": "ru",
+      "audiences": [
+        "impuls"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 3,
+      "earlier_staged_candidates": 11,
+      "added_candidates": 1,
+      "target": 100,
+      "remaining_to_target_excluding_other_prs": 85,
+      "replies": [
+        {
+          "id": "impuls_help_help_t14_group_dm_menu_h19_01",
+          "text": "Наличие кнопки в личном меню ещё не означает, что она доступна каждому участнику группы. Уточни, какой именно экран ты открыл и с какой ролью.",
+          "language": "ru",
+          "style": "natural_explanation",
+          "audiences": [
+            "impuls"
+          ],
+          "response_role": "assistant_reply",
+          "context": "group_addressed",
+          "context_note": "Человек переслал скрин личного административного меню участнику без управленческих прав",
+          "avoid": "Только для адресованного вопроса и проверенного контекста. Без санкций, изменения настроек, раскрытия личных сведений и обещаний неподтверждённых возможностей.",
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review"
+        }
+      ],
+      "total_candidates_in_main_and_H19": 15
+    },
+    {
+      "intent_id": "help_t31_004",
+      "canonical_question": "Почему в семейном дереве не виден мой игровой брат?",
+      "section": "помощь",
+      "language": "ru",
+      "audiences": [
+        "impuls"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 3,
+      "earlier_staged_candidates": 11,
+      "added_candidates": 1,
+      "target": 100,
+      "remaining_to_target_excluding_other_prs": 85,
+      "replies": [
+        {
+          "id": "impuls_help_help_t31_004_h19_01",
+          "text": "Игровое семейное дерево отражает подтверждённые связи внутри игры. Одно совпадение фамилии в карточке не устанавливает ни игровое, ни настоящее родство.",
+          "language": "ru",
+          "style": "natural_explanation",
+          "audiences": [
+            "impuls"
+          ],
+          "response_role": "assistant_reply",
+          "context": "private",
+          "context_note": "Игрок считает другого участника родственником лишь потому, что у персонажей одинаковая фамилия",
+          "avoid": "Только для адресованного вопроса и проверенного контекста. Без санкций, изменения настроек, раскрытия личных сведений и обещаний неподтверждённых возможностей.",
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review"
+        }
+      ],
+      "total_candidates_in_main_and_H19": 15
+    },
+    {
+      "intent_id": "help_t41_023",
+      "canonical_question": "Мне предложили игровую свадьбу. От меня нужен ответ или молчание считается согласием?",
+      "section": "правила",
+      "language": "ru",
+      "audiences": [
+        "impuls"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 3,
+      "earlier_staged_candidates": 11,
+      "added_candidates": 1,
+      "target": 100,
+      "remaining_to_target_excluding_other_prs": 85,
+      "replies": [
+        {
+          "id": "impuls_help_help_t41_023_h19_01",
+          "text": "Реакция под сообщением с предложением не равна подтверждению игровой связи. Для действительного согласия требуется предусмотренное самой игрой подтверждение адресата.",
+          "language": "ru",
+          "style": "natural_explanation",
+          "audiences": [
+            "impuls"
+          ],
+          "response_role": "assistant_reply",
+          "context": "group_addressed",
+          "context_note": "Участник поставил сердечко под предложением виртуальной свадьбы, а остальные посчитали это формальным согласием",
+          "avoid": "Только для адресованного вопроса и проверенного контекста. Без санкций, изменения настроек, раскрытия личных сведений и обещаний неподтверждённых возможностей.",
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review"
+        }
+      ],
+      "total_candidates_in_main_and_H19": 15
+    },
+    {
+      "intent_id": "report_current_status",
+      "canonical_question": "Как узнать, рассматривается ли моя жалоба?",
+      "section": "помощь",
+      "language": "ru",
+      "audiences": [
+        "impuls"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 3,
+      "earlier_staged_candidates": 11,
+      "added_candidates": 1,
+      "target": 100,
+      "remaining_to_target_excluding_other_prs": 85,
+      "replies": [
+        {
+          "id": "impuls_help_report_current_status_h19_01",
+          "text": "Сведения о ходе чужой жалобы не должны раскрываться только потому, что вопрос задан публично. Можно объяснить порядок проверки, сохранив частные детали обращения.",
+          "language": "ru",
+          "style": "natural_explanation",
+          "audiences": [
+            "impuls"
+          ],
+          "response_role": "assistant_reply",
+          "context": "group_addressed",
+          "context_note": "Участник спрашивает в общем чате подробности личной жалобы другого игрока и её текущего рассмотрения",
+          "avoid": "Только для адресованного вопроса и проверенного контекста. Без санкций, изменения настроек, раскрытия личных сведений и обещаний неподтверждённых возможностей.",
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review"
+        }
+      ],
+      "total_candidates_in_main_and_H19": 15
+    },
+    {
+      "intent_id": "ask_rules",
+      "canonical_question": "Как узнать правила конкретной группы?",
+      "section": "правила",
+      "language": "ru",
+      "audiences": [
+        "impuls"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 2,
+      "earlier_staged_candidates": 11,
+      "added_candidates": 1,
+      "target": 100,
+      "remaining_to_target_excluding_other_prs": 86,
+      "replies": [
+        {
+          "id": "impuls_help_ask_rules_h19_01",
+          "text": "Если ссылку на правила прислали без названия группы и даты, не стоит сразу считать их актуальными. Попроси действующую редакцию у администрации этого сообщества.",
+          "language": "ru",
+          "style": "natural_explanation",
+          "audiences": [
+            "impuls"
+          ],
+          "response_role": "assistant_reply",
+          "context": "group_addressed",
+          "context_note": "В чате обсуждают внешнюю страницу с правилами без признаков того, к какой группе она относится",
+          "avoid": "Только для адресованного вопроса и проверенного контекста. Без санкций, изменения настроек, раскрытия личных сведений и обещаний неподтверждённых возможностей.",
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review"
+        }
+      ],
+      "total_candidates_in_main_and_H19": 14
+    },
+    {
+      "intent_id": "unclear_rule",
+      "canonical_question": "Что делать, если правило сформулировано неоднозначно?",
+      "section": "правила",
+      "language": "ru",
+      "audiences": [
+        "impuls"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 2,
+      "earlier_staged_candidates": 11,
+      "added_candidates": 1,
+      "target": 100,
+      "remaining_to_target_excluding_other_prs": 86,
+      "replies": [
+        {
+          "id": "impuls_help_unclear_rule_h19_01",
+          "text": "«Запрещена реклама» может означать разные вещи для личной рекомендации и платного объявления. Если местное правило этого не объясняет, лучше уточнить границу у администратора.",
+          "language": "ru",
+          "style": "natural_explanation",
+          "audiences": [
+            "impuls"
+          ],
+          "response_role": "assistant_reply",
+          "context": "group_addressed",
+          "context_note": "Участник хочет порекомендовать бесплатную программу, но неясно, относится ли такое сообщение к запрету рекламы",
+          "avoid": "Только для адресованного вопроса и проверенного контекста. Без санкций, изменения настроек, раскрытия личных сведений и обещаний неподтверждённых возможностей.",
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review"
+        }
+      ],
+      "total_candidates_in_main_and_H19": 14
+    },
+    {
+      "intent_id": "false_positive",
+      "canonical_question": "Может ли случайная опечатка считаться обходом запрета?",
+      "section": "правила",
+      "language": "ru",
+      "audiences": [
+        "impuls"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 2,
+      "earlier_staged_candidates": 11,
+      "added_candidates": 1,
+      "target": 100,
+      "remaining_to_target_excluding_other_prs": 86,
+      "replies": [
+        {
+          "id": "impuls_help_false_positive_h19_01",
+          "text": "Разрыв слова переносом строки может возникнуть при копировании текста из документа. Для оценки нарушения надо восстановить смысл всей фразы и учесть источник форматирования.",
+          "language": "ru",
+          "style": "natural_explanation",
+          "audiences": [
+            "impuls"
+          ],
+          "response_role": "assistant_reply",
+          "context": "group_addressed",
+          "context_note": "Фильтр счёл перенос слова между строками попыткой замаскировать запрещённое выражение",
+          "avoid": "Только для адресованного вопроса и проверенного контекста. Без санкций, изменения настроек, раскрытия личных сведений и обещаний неподтверждённых возможностей.",
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review"
+        }
+      ],
+      "total_candidates_in_main_and_H19": 14
+    },
+    {
+      "intent_id": "moderation_authority",
+      "canonical_question": "Может ли общий ответ бота самостоятельно выдать бан?",
+      "section": "правила",
+      "language": "ru",
+      "audiences": [
+        "impuls"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 2,
+      "earlier_staged_candidates": 11,
+      "added_candidates": 1,
+      "target": 100,
+      "remaining_to_target_excluding_other_prs": 86,
+      "replies": [
+        {
+          "id": "impuls_help_moderation_authority_h19_01",
+          "text": "Даже если я могу разобрать аргументы жалобы, итоговое решение зависит от правил сообщества и полномочий его модераторов. В справочном ответе санкция не выполняется.",
+          "language": "ru",
+          "style": "natural_explanation",
+          "audiences": [
+            "impuls"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Участник просит по одному пересказу спора немедленно назначить наказание от имени всей команды модерации",
+          "avoid": "Только для адресованного вопроса и проверенного контекста. Без санкций, изменения настроек, раскрытия личных сведений и обещаний неподтверждённых возможностей.",
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review"
+        }
+      ],
+      "total_candidates_in_main_and_H19": 14
+    },
+    {
+      "intent_id": "report_problem",
+      "canonical_question": "Что делать, если в чате появилось подозрительное сообщение?",
+      "section": "помощь",
+      "language": "ru",
+      "audiences": [
+        "impuls"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 2,
+      "earlier_staged_candidates": 11,
+      "added_candidates": 1,
+      "target": 100,
+      "remaining_to_target_excluding_other_prs": 86,
+      "replies": [
+        {
+          "id": "impuls_help_report_problem_h19_01",
+          "text": "Похожая аватарка и имя ещё не подтверждают, что сообщение отправил официальный бот. Не открывай подозрительные ссылки; сообщи администрации о возможном подражателе.",
+          "language": "ru",
+          "style": "natural_explanation",
+          "audiences": [
+            "impuls"
+          ],
+          "response_role": "assistant_reply",
+          "context": "group_addressed",
+          "context_note": "В общем чате появился аккаунт с оформлением под ImPULS и прислал ссылку на якобы новое меню",
+          "avoid": "Только для адресованного вопроса и проверенного контекста. Без санкций, изменения настроек, раскрытия личных сведений и обещаний неподтверждённых возможностей.",
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review"
+        }
+      ],
+      "total_candidates_in_main_and_H19": 14
+    },
+    {
+      "intent_id": "roles",
+      "canonical_question": "Почему не всем доступны настройки чата?",
+      "section": "настройка",
+      "language": "ru",
+      "audiences": [
+        "impuls"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 2,
+      "earlier_staged_candidates": 11,
+      "added_candidates": 1,
+      "target": 100,
+      "remaining_to_target_excluding_other_prs": 86,
+      "replies": [
+        {
+          "id": "impuls_help_roles_h19_01",
+          "text": "После выхода из группы и повторного вступления прежний статус не стоит предполагать автоматически. Проверь текущие права в Telegram и доступ именно к нужному действию.",
+          "language": "ru",
+          "style": "natural_explanation",
+          "audiences": [
+            "impuls"
+          ],
+          "response_role": "assistant_reply",
+          "context": "private",
+          "context_note": "Бывший модератор вернулся в группу и предполагает, что его прежние полномочия сохранились без проверки",
+          "avoid": "Только для адресованного вопроса и проверенного контекста. Без санкций, изменения настроек, раскрытия личных сведений и обещаний неподтверждённых возможностей.",
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review"
+        }
+      ],
+      "total_candidates_in_main_and_H19": 14
+    },
+    {
+      "intent_id": "game_help",
+      "canonical_question": "Как узнать, какие игры сейчас доступны?",
+      "section": "помощь",
+      "language": "ru",
+      "audiences": [
+        "impuls"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 2,
+      "earlier_staged_candidates": 11,
+      "added_candidates": 1,
+      "target": 100,
+      "remaining_to_target_excluding_other_prs": 86,
+      "replies": [
+        {
+          "id": "impuls_help_game_help_h19_01",
+          "text": "Прогресс одной игры нельзя автоматически переносить в другую беседу по одному совпадению имени. Сначала уточни, где создана партия и какой режим выбран.",
+          "language": "ru",
+          "style": "natural_explanation",
+          "audiences": [
+            "impuls"
+          ],
+          "response_role": "assistant_reply",
+          "context": "group_addressed",
+          "context_note": "Участник начал игру в личном чате и ожидает увидеть ту же партию в группе без подтверждения переноса",
+          "avoid": "Только для адресованного вопроса и проверенного контекста. Без санкций, изменения настроек, раскрытия личных сведений и обещаний неподтверждённых возможностей.",
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review"
+        }
+      ],
+      "total_candidates_in_main_and_H19": 14
+    },
+    {
+      "intent_id": "pulses",
+      "canonical_question": "Что такое Пульсы в ImPULS?",
+      "section": "умение",
+      "language": "ru",
+      "audiences": [
+        "impuls"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 2,
+      "earlier_staged_candidates": 11,
+      "added_candidates": 1,
+      "target": 100,
+      "remaining_to_target_excluding_other_prs": 86,
+      "replies": [
+        {
+          "id": "impuls_help_pulses_h19_01",
+          "text": "Если другой игрок обещает вернуть Пульсы после обмена, это ещё не подтверждённая операция системы. Проверяй фактический баланс и правила именно этой игровой механики.",
+          "language": "ru",
+          "style": "natural_explanation",
+          "audiences": [
+            "impuls"
+          ],
+          "response_role": "assistant_reply",
+          "context": "group_addressed",
+          "context_note": "В чате участник обещал вручную компенсировать другому Пульсы после неофициального соглашения",
+          "avoid": "Только для адресованного вопроса и проверенного контекста. Без санкций, изменения настроек, раскрытия личных сведений и обещаний неподтверждённых возможностей.",
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review"
+        }
+      ],
+      "total_candidates_in_main_and_H19": 14
+    },
+    {
+      "intent_id": "raffle",
+      "canonical_question": "Как спросить о розыгрыше?",
+      "section": "помощь",
+      "language": "ru",
+      "audiences": [
+        "impuls"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 2,
+      "earlier_staged_candidates": 11,
+      "added_candidates": 1,
+      "target": 100,
+      "remaining_to_target_excluding_other_prs": 86,
+      "replies": [
+        {
+          "id": "impuls_help_raffle_h19_01",
+          "text": "Скриншот со словом «победитель» без исходного объявления не позволяет проверить итог. Сверь официальный результат, условия и способ уведомления, прежде чем считать приз подтверждённым.",
+          "language": "ru",
+          "style": "natural_explanation",
+          "audiences": [
+            "impuls"
+          ],
+          "response_role": "assistant_reply",
+          "context": "private",
+          "context_note": "Игрок увидел в пересланной картинке своё имя среди победителей, но исходной записи организатора нет",
+          "avoid": "Только для адресованного вопроса и проверенного контекста. Без санкций, изменения настроек, раскрытия личных сведений и обещаний неподтверждённых возможностей.",
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review"
+        }
+      ],
+      "total_candidates_in_main_and_H19": 14
+    },
+    {
+      "intent_id": "joke_context",
+      "canonical_question": "Можно ли попросить бота пошутить?",
+      "section": "общение",
+      "language": "ru",
+      "audiences": [
+        "impuls"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 2,
+      "earlier_staged_candidates": 11,
+      "added_candidates": 1,
+      "target": 100,
+      "remaining_to_target_excluding_other_prs": 86,
+      "replies": [
+        {
+          "id": "impuls_help_joke_context_h19_01",
+          "text": "Если человек сначала смеялся, а затем попросил прекратить шутки на его счёт, ориентируйся на последнюю просьбу. Можно сменить тему без дальнейших подколов.",
+          "language": "ru",
+          "style": "natural_explanation",
+          "audiences": [
+            "impuls"
+          ],
+          "response_role": "assistant_reply",
+          "context": "group_addressed",
+          "context_note": "Адресат шуточных сообщений сначала участвовал в розыгрыше, но позже прямо отказался от такого общения",
+          "avoid": "Только для адресованного вопроса и проверенного контекста. Без санкций, изменения настроек, раскрытия личных сведений и обещаний неподтверждённых возможностей.",
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review"
+        }
+      ],
+      "total_candidates_in_main_and_H19": 14
+    },
+    {
+      "intent_id": "tone",
+      "canonical_question": "Как попросить отвечать короче и проще?",
+      "section": "навыки",
+      "language": "ru",
+      "audiences": [
+        "impuls"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 2,
+      "earlier_staged_candidates": 11,
+      "added_candidates": 1,
+      "target": 100,
+      "remaining_to_target_excluding_other_prs": 86,
+      "replies": [
+        {
+          "id": "impuls_help_tone_h19_01",
+          "text": "Для инструкции, которую будут читать дети, можно убрать сложные термины и двусмысленные шутки. Смысл прав и ограничений при этом должен остаться точным.",
+          "language": "ru",
+          "style": "natural_explanation",
+          "audiences": [
+            "impuls"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Администратор просит объяснить правила участия в игре простыми словами для младших пользователей без персональных историй",
+          "avoid": "Только для адресованного вопроса и проверенного контекста. Без санкций, изменения настроек, раскрытия личных сведений и обещаний неподтверждённых возможностей.",
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review"
+        }
+      ],
+      "total_candidates_in_main_and_H19": 14
+    },
+    {
+      "intent_id": "privacy",
+      "canonical_question": "Попадают ли личные сообщения в общую базу знаний?",
+      "section": "правила",
+      "language": "ru",
+      "audiences": [
+        "impuls"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 2,
+      "earlier_staged_candidates": 11,
+      "added_candidates": 1,
+      "target": 100,
+      "remaining_to_target_excluding_other_prs": 86,
+      "replies": [
+        {
+          "id": "impuls_help_privacy_h19_01",
+          "text": "Даже если имя закрыто плашкой, место, время и детали переписки могут выдать человека. Лучше составить новый обезличенный пример, сохранив только причину ошибки.",
+          "language": "ru",
+          "style": "natural_explanation",
+          "audiences": [
+            "impuls"
+          ],
+          "response_role": "assistant_reply",
+          "context": "private",
+          "context_note": "Автор учебного примера закрыл имя на скриншоте, но оставил узнаваемые обстоятельства и отметки времени",
+          "avoid": "Только для адресованного вопроса и проверенного контекста. Без санкций, изменения настроек, раскрытия личных сведений и обещаний неподтверждённых возможностей.",
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review"
+        }
+      ],
+      "total_candidates_in_main_and_H19": 14
+    },
+    {
+      "intent_id": "bot_permissions",
+      "canonical_question": "Может ли бот действовать без разрешений Telegram?",
+      "section": "настройка",
+      "language": "ru",
+      "audiences": [
+        "impuls"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 2,
+      "earlier_staged_candidates": 11,
+      "added_candidates": 1,
+      "target": 100,
+      "remaining_to_target_excluding_other_prs": 86,
+      "replies": [
+        {
+          "id": "impuls_help_bot_permissions_h19_01",
+          "text": "Право удалять сообщения и право ограничивать участников в Telegram различаются. Если доступно только первое, не следует обещать, что второе действие тоже сработает.",
+          "language": "ru",
+          "style": "natural_explanation",
+          "audiences": [
+            "impuls"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "У бота есть отдельное разрешение на удаление сообщений, а администратор требует применить ограничение участника",
+          "avoid": "Только для адресованного вопроса и проверенного контекста. Без санкций, изменения настроек, раскрытия личных сведений и обещаний неподтверждённых возможностей.",
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review"
+        }
+      ],
+      "total_candidates_in_main_and_H19": 14
+    },
+    {
+      "intent_id": "training_feedback_meaning",
+      "canonical_question": "Что меняют лайк и дизлайк под ответом ИИ?",
+      "section": "навыки",
+      "language": "ru",
+      "audiences": [
+        "impuls"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 3,
+      "earlier_staged_candidates": 11,
+      "added_candidates": 1,
+      "target": 100,
+      "remaining_to_target_excluding_other_prs": 85,
+      "replies": [
+        {
+          "id": "impuls_help_training_feedback_meaning_h19_01",
+          "text": "Реакция на удачную шутку ничего не говорит о точности факта в том же ответе. Для исправления сведений нужны конкретное замечание и проверяемый источник.",
+          "language": "ru",
+          "style": "natural_explanation",
+          "audiences": [
+            "impuls"
+          ],
+          "response_role": "assistant_reply",
+          "context": "private",
+          "context_note": "Пользователь поставил положительную реакцию на смешной ответ и позже обнаружил в нём неверное утверждение",
+          "avoid": "Только для адресованного вопроса и проверенного контекста. Без санкций, изменения настроек, раскрытия личных сведений и обещаний неподтверждённых возможностей.",
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review"
+        }
+      ],
+      "total_candidates_in_main_and_H19": 15
+    },
+    {
+      "intent_id": "safe_error_report",
+      "canonical_question": "Как правильно сообщить об ошибке ImPULS?",
+      "section": "помощь",
+      "language": "ru",
+      "audiences": [
+        "impuls"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 3,
+      "earlier_staged_candidates": 11,
+      "added_candidates": 1,
+      "target": 100,
+      "remaining_to_target_excluding_other_prs": 85,
+      "replies": [
+        {
+          "id": "impuls_help_safe_error_report_h19_01",
+          "text": "Перед отправкой снимка ошибки закрой адресную строку, если в ней есть ключ или ссылка для входа. Для диагностики достаточно текста ошибки и безопасных шагов воспроизведения.",
+          "language": "ru",
+          "style": "natural_explanation",
+          "audiences": [
+            "impuls"
+          ],
+          "response_role": "assistant_reply",
+          "context": "private",
+          "context_note": "Скриншот сбоя сделан в браузере, где в адресной строке виден одноразовый ключ доступа",
+          "avoid": "Только для адресованного вопроса и проверенного контекста. Без санкций, изменения настроек, раскрытия личных сведений и обещаний неподтверждённых возможностей.",
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review"
+        }
+      ],
+      "total_candidates_in_main_and_H19": 15
+    },
+    {
+      "intent_id": "get_started",
+      "canonical_question": "Как начать пользоваться ботом в группе?",
+      "section": "помощь",
+      "language": "ru",
+      "audiences": [
+        "impuls"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 2,
+      "earlier_staged_candidates": 11,
+      "added_candidates": 1,
+      "target": 100,
+      "remaining_to_target_excluding_other_prs": 86,
+      "replies": [
+        {
+          "id": "impuls_help_get_started_h19_01",
+          "text": "Для знакомства можно спросить о доступных разделах справки без изменения настроек. Если ты обычный участник, начни с интересующей игры или правил своей группы.",
+          "language": "ru",
+          "style": "natural_explanation",
+          "audiences": [
+            "impuls"
+          ],
+          "response_role": "assistant_reply",
+          "context": "private",
+          "context_note": "Новичок не владеет группой и хочет узнать, какие вопросы можно задать боту без доступа к административным меню",
+          "avoid": "Только для адресованного вопроса и проверенного контекста. Без санкций, изменения настроек, раскрытия личных сведений и обещаний неподтверждённых возможностей.",
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review"
+        }
+      ],
+      "total_candidates_in_main_and_H19": 14
+    },
+    {
+      "intent_id": "private_vs_group",
+      "canonical_question": "Чем разговор в личке отличается от общения в группе?",
+      "section": "общение",
+      "language": "ru",
+      "audiences": [
+        "impuls"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 2,
+      "earlier_staged_candidates": 11,
+      "added_candidates": 1,
+      "target": 100,
+      "remaining_to_target_excluding_other_prs": 86,
+      "replies": [
+        {
+          "id": "impuls_help_private_vs_group_h19_01",
+          "text": "Не стоит цитировать чей-то личный разговор для ответа в общей группе без разрешения. Попроси сформулировать публичный вопрос отдельно, без личных деталей.",
+          "language": "ru",
+          "style": "natural_explanation",
+          "audiences": [
+            "impuls"
+          ],
+          "response_role": "assistant_reply",
+          "context": "group_addressed",
+          "context_note": "В общем чате просят бота подтвердить слова человека из его прежней переписки один на один",
+          "avoid": "Только для адресованного вопроса и проверенного контекста. Без санкций, изменения настроек, раскрытия личных сведений и обещаний неподтверждённых возможностей.",
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review"
+        }
+      ],
+      "total_candidates_in_main_and_H19": 14
+    },
+    {
+      "intent_id": "greeting",
+      "canonical_question": "Почему на обычное «привет» не нужны правила чата?",
+      "section": "общение",
+      "language": "ru",
+      "audiences": [
+        "impuls"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 2,
+      "earlier_staged_candidates": 11,
+      "added_candidates": 1,
+      "target": 100,
+      "remaining_to_target_excluding_other_prs": 86,
+      "replies": [
+        {
+          "id": "impuls_help_greeting_h19_01",
+          "text": "Приветствие посреди ночи не требует ни объяснения правил, ни предположений о времени других участников. Ответь приветствием, если обращаются к боту, и не навязывай новую тему.",
+          "language": "ru",
+          "style": "natural_explanation",
+          "audiences": [
+            "impuls"
+          ],
+          "response_role": "assistant_reply",
+          "context": "group_addressed",
+          "context_note": "Участник здоровается ночью по своему времени, но время остальных участников неизвестно",
+          "avoid": "Только для адресованного вопроса и проверенного контекста. Без санкций, изменения настроек, раскрытия личных сведений и обещаний неподтверждённых возможностей.",
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review"
+        }
+      ],
+      "total_candidates_in_main_and_H19": 14
+    },
+    {
+      "intent_id": "appeal",
+      "canonical_question": "Как попросить пересмотреть ошибочное наказание?",
+      "section": "правила",
+      "language": "ru",
+      "audiences": [
+        "impuls"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 2,
+      "earlier_staged_candidates": 11,
+      "added_candidates": 1,
+      "target": 100,
+      "remaining_to_target_excluding_other_prs": 86,
+      "replies": [
+        {
+          "id": "impuls_help_appeal_h19_01",
+          "text": "Если ограничение кажется ошибочным, лучше привести конкретную дату и обстоятельства, а не пересказ знакомого. Решение о пересмотре принимает уполномоченная сторона.",
+          "language": "ru",
+          "style": "natural_explanation",
+          "audiences": [
+            "impuls"
+          ],
+          "response_role": "assistant_reply",
+          "context": "private",
+          "context_note": "Участник узнал о своём ограничении со слов знакомого, но сам не видел сообщение с основанием",
+          "avoid": "Только для адресованного вопроса и проверенного контекста. Без санкций, изменения настроек, раскрытия личных сведений и обещаний неподтверждённых возможностей.",
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review"
+        }
+      ],
+      "total_candidates_in_main_and_H19": 14
+    },
+    {
+      "intent_id": "chat_selection",
+      "canonical_question": "Зачем в личке выбирать группу для настройки?",
+      "section": "настройка",
+      "language": "ru",
+      "audiences": [
+        "impuls"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 3,
+      "earlier_staged_candidates": 11,
+      "added_candidates": 1,
+      "target": 100,
+      "remaining_to_target_excluding_other_prs": 85,
+      "replies": [
+        {
+          "id": "impuls_help_chat_selection_h19_01",
+          "text": "Группу могли переименовать, поэтому одного старого названия недостаточно. Перед изменением параметров проверь текущую карточку выбранного сообщества.",
+          "language": "ru",
+          "style": "natural_explanation",
+          "audiences": [
+            "impuls"
+          ],
+          "response_role": "assistant_reply",
+          "context": "private",
+          "context_note": "Администратор переименовал одну из своих групп, а позже открыл список под прежним названием",
+          "avoid": "Только для адресованного вопроса и проверенного контекста. Без санкций, изменения настроек, раскрытия личных сведений и обещаний неподтверждённых возможностей.",
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review"
+        }
+      ],
+      "total_candidates_in_main_and_H19": 15
+    },
+    {
+      "intent_id": "training_disable_scope",
+      "canonical_question": "Отключение обучения удаляет все старые примеры?",
+      "section": "навыки",
+      "language": "ru",
+      "audiences": [
+        "impuls"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 3,
+      "earlier_staged_candidates": 11,
+      "added_candidates": 1,
+      "target": 100,
+      "remaining_to_target_excluding_other_prs": 85,
+      "replies": [
+        {
+          "id": "impuls_help_training_disable_scope_h19_01",
+          "text": "Отключение записи уроков в одной группе не следует автоматически переносить на все остальные. Проверяй, для какого чата и какой функции менялось разрешение.",
+          "language": "ru",
+          "style": "natural_explanation",
+          "audiences": [
+            "impuls"
+          ],
+          "response_role": "assistant_reply",
+          "context": "private",
+          "context_note": "Владелец отключил обучение для одной группы и спрашивает, сохранились ли прежние настройки других сообществ",
+          "avoid": "Только для адресованного вопроса и проверенного контекста. Без санкций, изменения настроек, раскрытия личных сведений и обещаний неподтверждённых возможностей.",
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review"
+        }
+      ],
+      "total_candidates_in_main_and_H19": 15
+    },
+    {
+      "intent_id": "one_turn_no_humor",
+      "canonical_question": "Как попросить серьёзный ответ без шуток только сейчас?",
+      "section": "общение",
+      "language": "ru",
+      "audiences": [
+        "impuls"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 3,
+      "earlier_staged_candidates": 11,
+      "added_candidates": 1,
+      "target": 100,
+      "remaining_to_target_excluding_other_prs": 85,
+      "replies": [
+        {
+          "id": "impuls_help_one_turn_no_humor_h19_01",
+          "text": "Сейчас без шуток. Сначала разберём ошибку по шагам: что ты нажал, что ожидал и что появилось на экране.",
+          "language": "ru",
+          "style": "natural_explanation",
+          "audiences": [
+            "impuls"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "После шуточного обсуждения участник попросил серьёзно разобраться с неисправной кнопкой, не меняя стиль навсегда",
+          "avoid": "Только для адресованного вопроса и проверенного контекста. Без санкций, изменения настроек, раскрытия личных сведений и обещаний неподтверждённых возможностей.",
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review"
+        }
+      ],
+      "total_candidates_in_main_and_H19": 15
+    },
+    {
+      "intent_id": "why_uncertain",
+      "canonical_question": "Почему бот говорит «не уверен» вместо готового решения?",
+      "section": "помощь",
+      "language": "ru",
+      "audiences": [
+        "impuls"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 3,
+      "earlier_staged_candidates": 11,
+      "added_candidates": 1,
+      "target": 100,
+      "remaining_to_target_excluding_other_prs": 85,
+      "replies": [
+        {
+          "id": "impuls_help_why_uncertain_h19_01",
+          "text": "Мне не хватает данных о текущем состоянии, а старый скриншот может вводить в заблуждение. Назови версию и момент, когда ты увидел ошибку.",
+          "language": "ru",
+          "style": "natural_explanation",
+          "audiences": [
+            "impuls"
+          ],
+          "response_role": "assistant_reply",
+          "context": "private",
+          "context_note": "Пользователь требует однозначного вывода о действующем релизе по изображению, сделанному до последнего обновления",
+          "avoid": "Только для адресованного вопроса и проверенного контекста. Без санкций, изменения настроек, раскрытия личных сведений и обещаний неподтверждённых возможностей.",
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review"
+        }
+      ],
+      "total_candidates_in_main_and_H19": 15
+    },
+    {
+      "intent_id": "tone_restore",
+      "canonical_question": "Как вернуть обычный тон после серии шуток?",
+      "section": "общение",
+      "language": "ru",
+      "audiences": [
+        "impuls"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 3,
+      "earlier_staged_candidates": 11,
+      "added_candidates": 1,
+      "target": 100,
+      "remaining_to_target_excluding_other_prs": 85,
+      "replies": [
+        {
+          "id": "impuls_help_tone_restore_h19_01",
+          "text": "Ранее ты просил отвечать одним словом только на тот вопрос. Теперь могу снова объяснять развёрнуто, если это помогает разобраться.",
+          "language": "ru",
+          "style": "natural_explanation",
+          "audiences": [
+            "impuls"
+          ],
+          "response_role": "assistant_reply",
+          "context": "private",
+          "context_note": "В предыдущей реплике было одноразовое требование к длине ответа, а новый вопрос требует подробной инструкции",
+          "avoid": "Только для адресованного вопроса и проверенного контекста. Без санкций, изменения настроек, раскрытия личных сведений и обещаний неподтверждённых возможностей.",
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review"
+        }
+      ],
+      "total_candidates_in_main_and_H19": 15
+    },
+    {
+      "intent_id": "request_vs_question",
+      "canonical_question": "Чем «включи» отличается от «можно включить»?",
+      "section": "настройка",
+      "language": "ru",
+      "audiences": [
+        "impuls"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 3,
+      "earlier_staged_candidates": 11,
+      "added_candidates": 1,
+      "target": 100,
+      "remaining_to_target_excluding_other_prs": 85,
+      "replies": [
+        {
+          "id": "impuls_help_request_vs_question_h19_01",
+          "text": "Вопрос «что изменится, если выключить защиту?» сам по себе не поручает её отключить. Сначала отвечу о последствиях, не трогая настройки.",
+          "language": "ru",
+          "style": "natural_explanation",
+          "audiences": [
+            "impuls"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Администратор изучает возможные последствия отключения фильтра, не отдавая команду изменить конфигурацию",
+          "avoid": "Только для адресованного вопроса и проверенного контекста. Без санкций, изменения настроек, раскрытия личных сведений и обещаний неподтверждённых возможностей.",
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review"
+        }
+      ],
+      "total_candidates_in_main_and_H19": 15
+    },
+    {
+      "intent_id": "followup_missing_reference",
+      "canonical_question": "Что делать, если я написал «и дальше?», а бот не понимает, о чём речь?",
+      "section": "общение",
+      "language": "ru",
+      "audiences": [
+        "impuls"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 3,
+      "earlier_staged_candidates": 11,
+      "added_candidates": 1,
+      "target": 100,
+      "remaining_to_target_excluding_other_prs": 85,
+      "replies": [
+        {
+          "id": "impuls_help_followup_missing_reference_h19_01",
+          "text": "Я вижу просьбу показать «третий», но в текущем сообщении нет списка. Укажи название пункта или пришли безопасный фрагмент перечня.",
+          "language": "ru",
+          "style": "natural_explanation",
+          "audiences": [
+            "impuls"
+          ],
+          "response_role": "assistant_reply",
+          "context": "private",
+          "context_note": "Собеседник ссылается на третий вариант из переписки, которая не передана в текущий контекст",
+          "avoid": "Только для адресованного вопроса и проверенного контекста. Без санкций, изменения настроек, раскрытия личных сведений и обещаний неподтверждённых возможностей.",
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review"
+        }
+      ],
+      "total_candidates_in_main_and_H19": 15
+    },
+    {
+      "intent_id": "return_previous_topic",
+      "canonical_question": "Как вернуться к прежней теме после другого вопроса?",
+      "section": "общение",
+      "language": "ru",
+      "audiences": [
+        "impuls"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 3,
+      "earlier_staged_candidates": 11,
+      "added_candidates": 1,
+      "target": 100,
+      "remaining_to_target_excluding_other_prs": 85,
+      "replies": [
+        {
+          "id": "impuls_help_return_previous_topic_h19_01",
+          "text": "Мы обсуждали и игры, и права доступа. К какой из этих тем хочешь вернуться? Не буду выбирать за тебя.",
+          "language": "ru",
+          "style": "natural_explanation",
+          "audiences": [
+            "impuls"
+          ],
+          "response_role": "assistant_reply",
+          "context": "private",
+          "context_note": "После нескольких переключений собеседник пишет «вернись к прежнему», хотя прежних тем было две",
+          "avoid": "Только для адресованного вопроса и проверенного контекста. Без санкций, изменения настроек, раскрытия личных сведений и обещаний неподтверждённых возможностей.",
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review"
+        }
+      ],
+      "total_candidates_in_main_and_H19": 15
+    },
+    {
+      "intent_id": "after_long_pause",
+      "canonical_question": "Почему после долгой паузы бот просит напомнить тему?",
+      "section": "общение",
+      "language": "ru",
+      "audiences": [
+        "impuls"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 3,
+      "earlier_staged_candidates": 11,
+      "added_candidates": 1,
+      "target": 100,
+      "remaining_to_target_excluding_other_prs": 85,
+      "replies": [
+        {
+          "id": "impuls_help_after_long_pause_h19_01",
+          "text": "С тех пор настройки могли измениться. Если продолжаем старое обсуждение, сначала уточни, какие параметры и ограничения действуют сейчас.",
+          "language": "ru",
+          "style": "natural_explanation",
+          "audiences": [
+            "impuls"
+          ],
+          "response_role": "assistant_reply",
+          "context": "private",
+          "context_note": "Диалог о настройке возобновился через длительное время после смены администраторов группы",
+          "avoid": "Только для адресованного вопроса и проверенного контекста. Без санкций, изменения настроек, раскрытия личных сведений и обещаний неподтверждённых возможностей.",
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review"
+        }
+      ],
+      "total_candidates_in_main_and_H19": 15
+    },
+    {
+      "intent_id": "acknowledgement_only",
+      "canonical_question": "Почему короткое «понятно» не должно запускать новую инструкцию?",
+      "section": "общение",
+      "language": "ru",
+      "audiences": [
+        "impuls"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 3,
+      "earlier_staged_candidates": 11,
+      "added_candidates": 1,
+      "target": 100,
+      "remaining_to_target_excluding_other_prs": 85,
+      "replies": [
+        {
+          "id": "impuls_help_acknowledgement_only_h19_01",
+          "text": "Понял. Оставлю эту тему здесь и не буду начинать новый совет без вопроса.",
+          "language": "ru",
+          "style": "natural_explanation",
+          "audiences": [
+            "impuls"
+          ],
+          "response_role": "assistant_reply",
+          "context": "private",
+          "context_note": "После разъяснения пользователь прислал короткое «окей», не задавая новых вопросов",
+          "avoid": "Только для адресованного вопроса и проверенного контекста. Без санкций, изменения настроек, раскрытия личных сведений и обещаний неподтверждённых возможностей.",
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review"
+        }
+      ],
+      "total_candidates_in_main_and_H19": 15
+    },
+    {
+      "intent_id": "settings_two_admins",
+      "canonical_question": "Что делать, если два администратора просят противоположные настройки?",
+      "section": "настройка",
+      "language": "ru",
+      "audiences": [
+        "impuls"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 3,
+      "earlier_staged_candidates": 11,
+      "added_candidates": 1,
+      "target": 100,
+      "remaining_to_target_excluding_other_prs": 85,
+      "replies": [
+        {
+          "id": "impuls_help_settings_two_admins_h19_01",
+          "text": "Когда два администратора меняют параметр по очереди, нельзя определять итог по тому, кто написал последним. Нужна проверка сохранённого состояния.",
+          "language": "ru",
+          "style": "natural_explanation",
+          "audiences": [
+            "impuls"
+          ],
+          "response_role": "assistant_reply",
+          "context": "private",
+          "context_note": "Администраторы спорят о настройке, сравнивая время своих сообщений вместо фактического значения в группе",
+          "avoid": "Только для адресованного вопроса и проверенного контекста. Без санкций, изменения настроек, раскрытия личных сведений и обещаний неподтверждённых возможностей.",
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review"
+        }
+      ],
+      "total_candidates_in_main_and_H19": 15
+    },
+    {
+      "intent_id": "purpose",
+      "canonical_question": "Для чего нужен ImPULS?",
+      "section": "общение",
+      "language": "ru",
+      "audiences": [
+        "impuls"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 2,
+      "earlier_staged_candidates": 8,
+      "added_candidates": 1,
+      "target": 100,
+      "remaining_to_target_excluding_other_prs": 89,
+      "replies": [
+        {
+          "id": "impuls_help_purpose_h19_01",
+          "text": "Я могу помочь разобраться в возможностях бота и сформулировать вопрос по делу. Решения администрации или правила сторонних сервисов нужно проверять отдельно.",
+          "language": "ru",
+          "style": "natural_explanation",
+          "audiences": [
+            "impuls"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Человек считает любое пояснение ImPULS обязательным решением по условиям внешнего сервиса",
+          "avoid": "Только для адресованного вопроса и проверенного контекста. Без санкций, изменения настроек, раскрытия личных сведений и обещаний неподтверждённых возможностей.",
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review"
+        }
+      ],
+      "total_candidates_in_main_and_H19": 11
+    },
+    {
+      "intent_id": "uncertain_fact",
+      "canonical_question": "Что должен делать бот, если не знает точного ответа?",
+      "section": "помощь",
+      "language": "ru",
+      "audiences": [
+        "impuls"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 2,
+      "earlier_staged_candidates": 8,
+      "added_candidates": 1,
+      "target": 100,
+      "remaining_to_target_excluding_other_prs": 89,
+      "replies": [
+        {
+          "id": "impuls_help_uncertain_fact_h19_01",
+          "text": "Если речь о свежем изменении, без актуального источника я не стану утверждать, что оно уже произошло. Уточни документ или дату, на которую нужен ответ.",
+          "language": "ru",
+          "style": "natural_explanation",
+          "audiences": [
+            "impuls"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Участник спрашивает о недавно объявленных изменениях Telegram, но не приводит подтверждённую дату вступления в силу",
+          "avoid": "Только для адресованного вопроса и проверенного контекста. Без санкций, изменения настроек, раскрытия личных сведений и обещаний неподтверждённых возможностей.",
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review"
+        }
+      ],
+      "total_candidates_in_main_and_H19": 11
+    },
+    {
+      "intent_id": "feedback",
+      "canonical_question": "Как исправить неверный ответ бота?",
+      "section": "помощь",
+      "language": "ru",
+      "audiences": [
+        "impuls"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 2,
+      "earlier_staged_candidates": 8,
+      "added_candidates": 1,
+      "target": 100,
+      "remaining_to_target_excluding_other_prs": 89,
+      "replies": [
+        {
+          "id": "impuls_help_feedback_h19_01",
+          "text": "Если речь о слишком резком тоне, скажи, какая фраза прозвучала грубо. Могу переформулировать ответ без изменения проверяемых фактов.",
+          "language": "ru",
+          "style": "natural_explanation",
+          "audiences": [
+            "impuls"
+          ],
+          "response_role": "assistant_reply",
+          "context": "private",
+          "context_note": "Пользователь недоволен резким стилем разъяснения, хотя сама техническая информация была верной",
+          "avoid": "Только для адресованного вопроса и проверенного контекста. Без санкций, изменения настроек, раскрытия личных сведений и обещаний неподтверждённых возможностей.",
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review"
+        }
+      ],
+      "total_candidates_in_main_and_H19": 11
+    },
+    {
+      "intent_id": "reply_more",
+      "canonical_question": "Что значит «ещё» после ответа бота?",
+      "section": "общение",
+      "language": "ru",
+      "audiences": [
+        "impuls"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 2,
+      "earlier_staged_candidates": 8,
+      "added_candidates": 1,
+      "target": 100,
+      "remaining_to_target_excluding_other_prs": 89,
+      "replies": [
+        {
+          "id": "impuls_help_reply_more_h19_01",
+          "text": "Могу подробнее разобрать только проверку прав перед сохранением. Остальные шаги повторять не стану, если они уже понятны.",
+          "language": "ru",
+          "style": "natural_explanation",
+          "audiences": [
+            "impuls"
+          ],
+          "response_role": "assistant_reply",
+          "context": "private",
+          "context_note": "Собеседник понял весь порядок настройки, кроме одного указанного шага, и просит объяснить именно его",
+          "avoid": "Только для адресованного вопроса и проверенного контекста. Без санкций, изменения настроек, раскрытия личных сведений и обещаний неподтверждённых возможностей.",
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review"
+        }
+      ],
+      "total_candidates_in_main_and_H19": 11
+    },
+    {
+      "intent_id": "published_vs_live",
+      "canonical_question": "Если ответ есть в Bot-Knowledge, он уже работает в ImPULS?",
+      "section": "помощь",
+      "language": "ru",
+      "audiences": [
+        "impuls"
+      ],
+      "response_role": "assistant_reply",
+      "published_count": 2,
+      "earlier_staged_candidates": 8,
+      "added_candidates": 1,
+      "target": 100,
+      "remaining_to_target_excluding_other_prs": 89,
+      "replies": [
+        {
+          "id": "impuls_help_published_vs_live_h19_01",
+          "text": "Даже после включения пакета в опубликованный список бот может продолжать использовать прошлую проверенную копию. Проверяй версию локального снимка, а не одну дату публикации.",
+          "language": "ru",
+          "style": "natural_explanation",
+          "audiences": [
+            "impuls"
+          ],
+          "response_role": "assistant_reply",
+          "context": "direct",
+          "context_note": "Новый пакет добавлен в манифест, но потребитель ещё не подтвердил загрузку и выбор именно этого пакета",
+          "avoid": "Только для адресованного вопроса и проверенного контекста. Без санкций, изменения настроек, раскрытия личных сведений и обещаний неподтверждённых возможностей.",
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review"
+        }
+      ],
+      "total_candidates_in_main_and_H19": 11
+    }
+  ]
+}

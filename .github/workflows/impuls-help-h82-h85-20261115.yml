@@ -1,0 +1,35 @@
+name: ImPULS H82-H85 exact-head QA
+
+on:
+  pull_request:
+    paths:
+      - 'staging/ru/impuls_help_context_h82_20261115.json'
+      - 'staging/ru/impuls_help_context_h83_20261115.json'
+      - 'staging/ru/impuls_help_context_h84_20261115.json'
+      - 'staging/ru/impuls_help_context_h85_20261115.json'
+      - 'scripts/test_impuls_help_h82_h85_20261115.py'
+      - 'docs/IMPULS_HELP_H82_H85_2026_11_15.md'
+      - '.github/workflows/impuls-help-h82-h85-20261115.yml'
+permissions:
+  contents: read
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout exact PR head without persisted credentials
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Confirm exact checkout commit
+        shell: bash
+        run: |
+          test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+      - name: Validate existing published manifests and staged H82-H85
+        run: |
+          python -B scripts/validate_pack.py
+          python -B scripts/test_impuls_help_h78_h81_20261115.py
+          python -O -B scripts/test_impuls_help_h78_h81_20261115.py
+          python -B scripts/test_impuls_help_h82_h85_20261115.py
+          python -O -B scripts/test_impuls_help_h82_h85_20261115.py
+          sha256sum staging/ru/impuls_help_context_h82_20261115.json staging/ru/impuls_help_context_h83_20261115.json staging/ru/impuls_help_context_h84_20261115.json staging/ru/impuls_help_context_h85_20261115.json

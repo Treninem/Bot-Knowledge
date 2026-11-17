@@ -1,0 +1,103 @@
+#!/usr/bin/env python3
+"""H105: 20 additional intents, full H1-H105 ledger and safe contextual staging."""
+import hashlib
+import re
+import unittest
+from collections import Counter
+from test_impuls_help_h101_20261116 import ROOT, read, normalized, similarity, load
+
+PACK = "packs/ru/impuls_help_qa.json"
+STAGE = "staging/ru/impuls_help_context_h105_20261116.json"
+
+class H105QA(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.src = {r["id"]: r for r in read(PACK)["records"]}
+        cls.prior = [load(i) for i in range(1, 102)]
+        cls.prior.extend(read(f"staging/ru/impuls_help_context_h{i}_20261116.json")
+                         for i in (102, 103, 104))
+        cls.stage = read(STAGE)
+
+    def test_pinned_source_and_staging_isolation(self):
+        manifest = read("manifest.json")
+        digest = hashlib.sha256((ROOT / PACK).read_bytes()).hexdigest()
+        self.assertEqual(digest, next(p["sha256"] for p in manifest["packs"] if p["path"] == PACK))
+        self.assertEqual(self.stage["source_pack_manifest_sha256"], digest)
+        self.assertFalse(self.stage["consumer_registered"])
+        self.assertNotIn(STAGE, {p["path"] for p in manifest["packs"]})
+        self.assertEqual(self.stage["audiences"], ["impuls"])
+        self.assertEqual(self.stage["constraints"], dict(
+            read_only=True, requires_direct_address=True,
+            requires_context_match=True, no_personal_data=True, no_sanctions=True))
+
+    def test_lineage_100_intents_and_exact_deltas(self):
+        counts, old_ids = Counter(), set()
+        for old in self.prior:
+            for e in old["entries"]:
+                for r in e["replies"]:
+                    self.assertNotIn(r["id"], old_ids)
+                    old_ids.add(r["id"])
+                counts[e["intent_id"]] += len(e["replies"])
+        self.assertEqual(len(counts), 100)
+        self.assertEqual(sum(counts.values()), 4465)
+        touched, new = set(), 0
+        for e in self.stage["entries"]:
+            key = e["intent_id"]
+            self.assertIn(key, self.src)
+            self.assertNotIn(key, touched)
+            touched.add(key)
+            pub = 1 + len(self.src[key]["variants"])
+            count = len(e["replies"])
+            self.assertEqual(e["canonical_question"], self.src[key]["question"])
+            self.assertEqual(e["published_count"], pub)
+            self.assertEqual(e["earlier_staged_candidates"], counts[key])
+            self.assertEqual(e["added_candidates"], count)
+            self.assertEqual(e["total_candidates_in_main_and_H105"], pub + counts[key] + count)
+            self.assertEqual(e["remaining_to_target_excluding_other_prs"], 100 - pub - counts[key] - count)
+            self.assertGreater(e["remaining_to_target_excluding_other_prs"], 0)
+            for r in e["replies"]:
+                self.assertNotIn(r["id"], old_ids)
+                old_ids.add(r["id"])
+            counts[key] += count
+            new += count
+        self.assertEqual(len(touched), 20)
+        self.assertEqual(new, 60)
+        self.assertEqual(sum(counts.values()), 4525)
+        self.assertEqual(sum(100 - 1 - len(self.src[k]["variants"]) - v for k, v in counts.items()), 5200)
+        self.assertEqual(self.stage["checkpoint"]["new_candidates"], 60)
+        self.assertEqual(self.stage["checkpoint"]["cumulative_H1_H105"], 4525)
+        self.assertEqual(self.stage["checkpoint"]["remaining_numeric_all_100_intents"], 5200)
+        self.assertEqual(self.stage["checkpoint"]["greeting_count_candidate"], 76)
+        self.assertEqual(self.stage["checkpoint"]["certified_100_sets"], 0)
+        self.assertEqual(self.stage["checkpoint"]["editorially_approved_new"], 0)
+
+    def test_responses_normalization_context_and_privacy(self):
+        old = [t for v in self.src.values() for t in (v["answer"], *v["variants"])]
+        old.extend(r["text"] for stage in self.prior for e in stage["entries"]
+                   for r in e["replies"])
+        norms = {normalized(t) for t in old}
+        notes = set()
+        for e in self.stage["entries"]:
+            for i, r in enumerate(e["replies"], 1):
+                self.assertEqual(r["id"], f'impuls_help_{e["intent_id"]}_h105_{i:02d}')
+                self.assertEqual(r["language"], "ru")
+                self.assertEqual(r["audiences"], ["impuls"])
+                self.assertEqual(r["response_role"], "assistant_reply")
+                self.assertEqual(r["editorial_status"], "candidate_pending_full_semantic_review")
+                self.assertTrue(r["read_only"])
+                self.assertIn(r["context"], ("private", "direct", "group_addressed"))
+                self.assertGreaterEqual(len(r["text"]), 75)
+                self.assertGreaterEqual(len(r["context_note"]), 55)
+                self.assertIn("без санкций", r["avoid"])
+                self.assertFalse(re.search(r"https?://|t\\.me/|@[a-z_]|[0-9]{10,}", r["text"]+r["context_note"], re.I))
+                note = normalized(r["context_note"])
+                self.assertNotIn(note, notes)
+                notes.add(note)
+                norm = normalized(r["text"])
+                self.assertNotIn(norm, norms, r["id"])
+                self.assertTrue(all(similarity(r["text"], prev) < 0.70 for prev in old), r["id"])
+                norms.add(norm)
+                old.append(r["text"])
+
+if __name__ == "__main__":
+    unittest.main()
