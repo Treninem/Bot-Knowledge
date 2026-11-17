@@ -8,10 +8,12 @@ The 100 published direct greeting responses remain in `dialogue.reactions.greeti
 
 Published source `english_dialogues.json` was reserialized with JSON parsing and `JSON.stringify` only: data objects, order, and values unchanged. Source SHA-256 `4f0d9352ad8d17a34b90a6669a269390ce5d3bf526e06d142b616149ea83a786`, reserialized SHA-256 `b9a718f3815b41e67ca0a4abaec63de16cd889d1ed4b352361226b88fbbf8185`. This frees 98253 exact UTF-8 bytes without removing training examples. Work only on this feature branch, never live cache.
 
-Snapshot estimate including manifest: **8325508 / 8388608 bytes**, free **63100**. Files changed: English JSON, two qa.v1 packs, manifest, validation test, read-only workflow, this note.
+Snapshot estimate including manifest: **8337484 / 8388608 bytes**, free **51124**. Files changed: English JSON, two qa.v1 packs, manifest, validation test, read-only workflow, this note.
 
 Expected tests: `python scripts/validate_pack.py`, `python scripts/validate_qa_v1.py`, `python -m unittest scripts.test_context_repair_v022 -q`, `python -O -m unittest scripts.test_context_repair_v022 -q`. New replies remain candidate content until exact-head GitHub CI and editorial/consumer checks. No ImPULS repository, BotHost, payments, or live bot changes.
 
 ## Second checked batch
 
 Two further context-sensitive original replies were added for each of the same 28 canonical questions (**+56 new**, total 140 / 28 × 5, 95 remaining per question). Within-intent Jaccard maximum 0.148. This is an automated lexical screen; independent semantic/editorial acceptance remains required. The snapshot is checked against the actual current branch after each edit; no change to live consumers.
+
+Automated cross-pack lexical screen at this checkpoint: **140 new replies × 2,872 existing replies across 10 readable, relevant packages = 402,080 pairs**; no normalized exact collision or token-Jaccard ≥0.48. One additional very large legacy QA pack could not be fully fetched, so this is not a complete cross-repository semantic audit. No claim of independent editorial acceptance.
