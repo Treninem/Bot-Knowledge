@@ -21,7 +21,7 @@ Each set has ten context families with ten individually written examples each. T
 
 The pool is **staging only**: `consumer_registered=false`. The manifest, registered packs, SHA-256 values, search index, cache key, ImPULS, and live consumers are unchanged. The 300 candidates are not presented as deployed behaviour or as an enabled bot feature.
 
-The exact-head workflow checks the source pack's real SHA-256 and Git blob, stable IDs, exact counts, 10×10 context-family coverage, style/audience/context constraints, privacy/sanctions boundaries, normalized exact duplicates against all registered packs and staged reply pools, and within-batch near-duplicate similarity. The repository-wide quality workflow remains an independent gate. Automated similarity checks do not prove complete semantic uniqueness; editorial review remains required.
+The repository-wide quality workflow checks out the exact PR head (and asserts that SHA) and now runs this test alongside the existing suite. The new test checks the source pack's real SHA-256 and Git blob, stable IDs, exact counts, 10×10 context-family coverage, style/audience/context constraints, privacy/sanctions boundaries, normalized exact duplicates against all registered packs and staged reply pools, and within-batch near-duplicate similarity. Automated similarity checks do not prove complete semantic uniqueness; editorial review remains required.
 
 ## Next action
 
