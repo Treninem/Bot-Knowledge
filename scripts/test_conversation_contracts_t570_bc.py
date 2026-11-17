@@ -116,7 +116,7 @@ class TestT570ContinuationBC(unittest.TestCase):
             self.assertNotIn(path, registered_paths)
 
     def test_exact_counts_ids_context_and_safety(self):
-        expected = ((100, 100, 100, 0, 10, 900),
+        expected = ((0, 100, 100, 0, 10, 900),
                     (100, 100, 200, 0, 10, 800),
                     (200, 100, 300, 0, 10, 700),
                     (300, 100, 400, 0, 10, 600),
