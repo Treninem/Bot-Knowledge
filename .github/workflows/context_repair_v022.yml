@@ -1,0 +1,30 @@
+name: Context repair and opt-in humor v022 (read-only)
+on:
+  pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Verify actual exact checkout
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Validate registered snapshot and qa.v1
+        run: |
+          python scripts/validate_pack.py
+          python scripts/validate_qa_v1.py
+      - name: Test original contextual data (normal and optimized)
+        run: |
+          python -m unittest scripts.test_context_repair_v022 -q
+          python -O -m unittest scripts.test_context_repair_v022 -q
