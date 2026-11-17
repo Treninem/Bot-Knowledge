@@ -134,7 +134,7 @@ class NewcomerWelcome20261117(unittest.TestCase):
         self.assertEqual(len(notes), 300)
         for i, left in enumerate(all_replies):
             for right in all_replies[i + 1:]:
-                self.assertLess(jaccard(left["text"], right["text"]), 0.78)
+                self.assertLess(jaccard(left["text"], right["text"]), 0.55)
 
     def test_no_exact_answer_collision_with_registered_or_staged_data(self):
         candidates = {norm(reply["text"]) for entry in self.pool["entries"] for reply in entry["replies"]}
