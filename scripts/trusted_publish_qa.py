@@ -172,7 +172,7 @@ def prepare_changes(candidate: dict, *, token: str, base: str) -> tuple[str, str
     if target_entries[0].get("sha256") != hashlib.sha256(pack_raw).hexdigest():
         raise PublishError("target package SHA-256 differs from manifest")
     current_version = manifest.get("knowledge_version")
-    version_pattern = r"[0-9]{4}\\.[0-9]{1,2}\\.[0-9]{1,2}\\.[0-9]+"
+    version_pattern = r"[0-9]{4}[.][0-9]{1,2}[.][0-9]{1,2}[.][0-9]+"
     if (not isinstance(current_version, str) or not re.fullmatch(version_pattern, current_version)
             or not re.fullmatch(version_pattern, version)
             or tuple(map(int, version.split("."))) <= tuple(map(int, current_version.split(".")))):
