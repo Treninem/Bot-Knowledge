@@ -1,0 +1,35 @@
+name: Snapshot v030 whitespace-only compaction exact-head
+on:
+  pull_request:
+    paths:
+      - 'manifest.json'
+      - 'packs/ru/skills.json'
+      - 'packs/ru/dialogue.json'
+      - 'packs/ru/moderation_cases.json'
+      - 'packs/ru/conversation_precision_qa.json'
+      - 'scripts/test_snapshot_compaction_v030.py'
+      - '.github/workflows/snapshot_compaction_v030.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'manifest.json'
+      - 'packs/ru/**'
+      - 'scripts/test_snapshot_compaction_v030.py'
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Verify actual checkout commit
+        shell: bash
+        run: test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha || github.sha }}"
+      - name: Validate sha, sizes and schema
+        run: |
+          python -m unittest scripts.test_snapshot_compaction_v030 -q
+          python -O -m unittest scripts.test_snapshot_compaction_v030 -q
+          python scripts/validate_pack.py
