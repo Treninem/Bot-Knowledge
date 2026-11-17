@@ -1,0 +1,31 @@
+# Welcome text and newcomer orientation — 17.11.2026
+
+Current branch base: `4e2cd1a48694c5727a1a84ce40cdc1a96a68e89d` (main merged into the branch without overlapping-file conflicts). Original source snapshot: `d43134b9072c7ceff44cfcf63d5d11c0d0771d7a`, manifest `2026.11.17.030`.
+Source intent definitions: `packs/ru/intents.json`, Git blob `71be015a85471c22697f16f5dd3246d126be290c`, manifest SHA-256 `0bd5810de43f14e0c8cb454f71adbf11bf2e92e00477bf841bb66db477a7c39b`.
+
+## Scope
+
+The existing `greeting` reaction already has 100 entries, and the five T544 greeting/return/farewell/scope intents are each 100/100 in staging. The next uncovered general-language intent in `intents.json` is `welcome_text`; it is distinct from replying to a plain “привет”. A second existing intent, `newcomer_help`, covers orientation advice rather than drafting a welcome message.
+
+This checkpoint now contains **600 original Russian candidates** across six canonical intents. The first 500 remain unchanged; this continuation adds **100 new candidates**:
+
+| Stable intent | Canonical question | New | Staged | Remaining |
+|---|---|---:|---:|---:|
+| `welcome_text` | Как написать приветственное сообщение новому участнику сообщества? | 100 | 100/100 | 0 |
+| `newcomer_help` | Что новичку стоит сделать, чтобы спокойно освоиться в сообществе? | 100 | 100/100 | 0 |
+| `respond_to_self_introduction` | Как ответить человеку, который впервые представился в группе? | 100 | 100/100 | 0 |
+| `self_introduction_text` | Как представиться в новой группе коротко и без лишней личной информации? | 100 | 100/100 | 0 |
+| `answer_how_are_you` | Как ответить на «как дела?» честно и без лишних подробностей? | 100 | 100/100 | 0 |
+| `notify_delay` | Как предупредить, что опаздываешь, и сообщить реальное время прибытия? | 100 | 100/100 | 0 |
+
+The continuation adds first-person self-introduction drafts, distinct from replies to another member's introduction. Each set has ten context families with ten individually written examples each. All three new IDs remain unregistered until routing and consumer selection are designed. The third ID is a new candidate absent from the current intent registry; it remains staging-only until routing and consumer selection are designed. Contexts cover public and hobby communities, work teams, learning groups, temporary projects, quiet participation, orientation, joining an ongoing discussion, formal channels, privacy, roles/access, language accessibility, and conflict triage. Light humour appears only in the family explicitly requested by the caller. Every candidate carries language, style, audience, direct/group context, a specific context note, read-only status, and selection restrictions.
+
+## Verification boundary
+
+The pool is **staging only**: `consumer_registered=false`. The manifest, registered packs, SHA-256 values, search index, cache key, ImPULS, and live consumers are unchanged. The 300 candidates are not presented as deployed behaviour or as an enabled bot feature.
+
+The repository-wide quality workflow checks out the exact PR head (and asserts that SHA) and now runs this test alongside the existing suite. The new test checks the source pack's real SHA-256 and Git blob, stable IDs, exact counts, 10×10 context-family coverage, style/audience/context constraints, privacy/sanctions boundaries, normalized exact duplicates against all registered packs and staged reply pools, and within-batch near-duplicate similarity. A separate editorial sweep rewrote the closest cross-intent overlaps; the strongest remaining token-Jaccard pair is recorded by the test threshold of 0.55. The first exact-head run exposed one duplicated `context_note` in `notify_delay` (reply `notify_delay_60` / `notify_delay_72`). The second note was rewritten to describe a materially different rescheduling context; this is a correction, not a new answer. Automated similarity checks still do not prove complete semantic uniqueness.
+
+## Next action
+
+The branch now contains current main `4e2cd1a48694c5727a1a84ce40cdc1a96a68e89d`; the four non-overlapping main changes were preserved in a two-parent merge commit. The previous exact-head quality run failed only on the duplicated context note; a corrected head still requires a fresh full quality run. After that run passes, compare all six sets against newer PR additions and review meaning-level overlap. Only then consider a separate registered-pack proposal with consumer compatibility checks. Do not update ImPULS or any live bot from this staging change.
