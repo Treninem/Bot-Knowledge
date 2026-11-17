@@ -18,9 +18,9 @@ class PrecisionV020(unittest.TestCase):
  @classmethod
  def setUpClass(cls):
   cls.old_bytes=subprocess.check_output(["git","show",f"{OLD}:{PATH}"],cwd=ROOT)
-  cls.new_bytes=(ROOT/PATH).read_bytes()
+  cls.new_bytes=subprocess.check_output(["git","show","10fc0c437639eb8ad54d58cc97d0ad6958f74800:"+PATH],cwd=ROOT)
   cls.old=json.loads(cls.old_bytes);cls.new=json.loads(cls.new_bytes)
-  cls.manifest=json.loads((ROOT/"manifest.json").read_bytes())
+  cls.manifest=json.loads(subprocess.check_output(["git","show","10fc0c437639eb8ad54d58cc97d0ad6958f74800:manifest.json"],cwd=ROOT))
  def test_delta(self):
   self.assertEqual(hashlib.sha256(self.old_bytes).hexdigest(),OLD_HASH)
   self.assertEqual(hashlib.sha256(self.new_bytes).hexdigest(),NEW_HASH)
