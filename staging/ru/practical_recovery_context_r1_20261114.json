@@ -1,0 +1,2010 @@
+{
+  "schema_version": "qa.v1_contextual_staging",
+  "stage_type": "portable_practical_recovery_ru",
+  "consumer_registered": false,
+  "language": "ru",
+  "audiences": [
+    "all_ai_bots"
+  ],
+  "source_pack": "packs/ru/practical_recovery_qa.json",
+  "source_pack_manifest_sha256": "be8ae1408cf42816adc3f8ba818b3f004318617ba2e878e72edd85cf7eb4954e",
+  "source_pack_blob_sha": "21bf261970d1bdcf0f9fb8fb3383772b86b2dc2f",
+  "checked_source_main_sha": "6c9f430da47f137d39a72bbd28c057cfb8f6be96",
+  "constraints": {
+    "requires_direct_address": true,
+    "requires_context_match": true,
+    "read_only": true,
+    "no_personal_data": true,
+    "no_sanctions": true
+  },
+  "checkpoint": {
+    "stage_id": "PRREC-20261114-R1",
+    "processed_intents": 24,
+    "new_candidates": 120,
+    "published_answers_per_intent": 9,
+    "total_if_all_pass": 14,
+    "target": 100,
+    "remaining_per_intent_if_all_pass": 86,
+    "editorial_approved_candidates": 0,
+    "editorial_approved_100_sets": 0,
+    "next_action": "Independently review the 120 contextual candidates and compare all relevant open staging PRs before the next delta.",
+    "prior_stage_candidates": 72,
+    "delta_this_checkpoint": 48
+  },
+  "entries": [
+    {
+      "intent_id": "bk_recovery_no_steps",
+      "canonical_question": "Что прислать, если я написал только «не работает»?",
+      "section": "помощь",
+      "language": "ru",
+      "published_count": 9,
+      "added_candidates": 5,
+      "eligible_numeric_if_all_accepted": 14,
+      "target": 100,
+      "replies": [
+        {
+          "id": "bk_recovery_no_steps_ctx_010",
+          "text": "Уточни, что именно не работает: экран не включается, кнопки не реагируют или действие не даёт ожидаемого результата. Эти симптомы проверяют по-разному.",
+          "context_note": "Оборудование подаёт питание, но в сообщении не указано, есть ли изображение или отклик",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_no_steps_ctx_011",
+          "text": "Если сбой возникает после пробуждения, напиши, работает ли функция после обычного запуска. Это поможет отделить проблему возобновления работы от постоянной неисправности.",
+          "context_note": "Неполадка появляется только после выхода устройства из спящего режима",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_no_steps_ctx_012",
+          "text": "Уточни, меняется ли результат при смене сети, без сброса настроек. Не присылай сетевые ключи: достаточно назвать условия, в которых попытка удалась и не удалась.",
+          "context_note": "Один и тот же запрос работает через домашнюю сеть, но не через мобильную",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_no_steps_ctx_13",
+          "text": "Укажи, на каком экране возникает сбой: основном или дополнительном, и меняется ли он после отключения второго дисплея. Не меняй разрешение и драйвер одновременно, иначе причина останется неясной.",
+          "context_note": "Ошибка появляется после подключения второго монитора, а без него приложение открывается штатно",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_no_steps_ctx_14",
+          "text": "Если предупреждение пропадает сразу, запиши точное время и опиши действие перед ним. Не записывай экран с личными данными; достаточно безопасного описания или снимка без посторонних сведений.",
+          "context_note": "Сообщение об ошибке видно меньше секунды и исчезает до того, как пользователь успевает его прочитать",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        }
+      ]
+    },
+    {
+      "intent_id": "bk_recovery_changed_symptom",
+      "canonical_question": "Что делать, если после исправления появилась другая ошибка?",
+      "section": "помощь",
+      "language": "ru",
+      "published_count": 9,
+      "added_candidates": 5,
+      "eligible_numeric_if_all_accepted": 14,
+      "target": 100,
+      "replies": [
+        {
+          "id": "bk_recovery_changed_symptom_ctx_010",
+          "text": "Раньше запрос не устанавливал соединение, а теперь возвращает ошибку заполнения формы. Зафиксируем, что связь появилась, и отдельно проверим поля; отменять сетевое исправление пока нет оснований.",
+          "context_note": "После исправления соединения запрос доходит до проверки введённых данных",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_changed_symptom_ctx_011",
+          "text": "Если вход теперь проходит, а содержимое не загружается, проверь отдельно этап получения данных после авторизации. Это другая точка отказа; прежний сбой мог скрывать её.",
+          "context_note": "Исправление устранило ошибку входа, но обнаружилась пустая страница после авторизации",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_changed_symptom_ctx_012",
+          "text": "Первая попытка проходит, а повторная выдаёт новое предупреждение? Уточни, допускается ли повтор операции вообще. Иногда система предотвращает дублирование, и повторять действие без проверки нельзя.",
+          "context_note": "Новая ошибка появляется только при повторном запуске ранее успешно завершённой операции",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_changed_symptom_ctx_13",
+          "text": "Сравни настройки и область прав двух профилей, не раскрывая их личные данные. Если отличается один параметр, проверь его отдельно; автоматически переносить доступ с работающего профиля нельзя.",
+          "context_note": "После исправления проблема исчезла у одного профиля, но сохранилась у другого на том же устройстве",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_changed_symptom_ctx_14",
+          "text": "Отметь, что операция теперь завершается, и отдельно проверь формат результата. Не переименовывай файл наугад: сначала выясни, какой тип данных фактически записан.",
+          "context_note": "Раньше операция завершалась ошибкой, теперь проходит, но создаёт файл с неверным расширением",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        }
+      ]
+    },
+    {
+      "intent_id": "bk_recovery_partial_success",
+      "canonical_question": "Как разобраться, если часть функций работает, а одна нет?",
+      "section": "помощь",
+      "language": "ru",
+      "published_count": 9,
+      "added_candidates": 5,
+      "eligible_numeric_if_all_accepted": 14,
+      "target": 100,
+      "replies": [
+        {
+          "id": "bk_recovery_partial_success_ctx_010",
+          "text": "Текст проходит, а файл не отправляется. Проверь размер и допустимый тип одного обезличенного тестового вложения; это отдельный путь обработки, состояние обычной переписки он не опровергает.",
+          "context_note": "Не работает только отправка вложений, хотя обычные текстовые сообщения доставляются",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_partial_success_ctx_011",
+          "text": "Если функция работает при подключении, но отсутствует офлайн, сначала выясни, предусмотрена ли локальная работа для этого действия. Нельзя объявлять локальную неисправность, не зная требований функции.",
+          "context_note": "Одна и та же функция доступна в обычном режиме, но исчезает при работе без сети",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_partial_success_ctx_012",
+          "text": "Если сохранение сообщает об успехе, а изменение видно лишь после перезагрузки экрана, проверь отдельно запись данных и обновление отображения. Не повторяй запись вслепую: можно создать дубликат.",
+          "context_note": "Операция завершается, но результат появляется только после повторного открытия страницы",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_partial_success_ctx_13",
+          "text": "Сравни фактические роли и область действия разрешений для этих двух учётных записей. Не выдавай дополнительный доступ ради проверки; сначала установи, какое чтение предусмотрено для каждой роли.",
+          "context_note": "Владелец видит нужный раздел, а участник с правом чтения получает отказ на том же экране",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_partial_success_ctx_14",
+          "text": "Отдели чтение новых записей от совместимости со старым форматом. Укажи, какие данные открываются и какого периода не хватает; миграцию архива не запускай без проверенной копии.",
+          "context_note": "Новые записи открываются без ошибки, но старые данные из архива не отображаются",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        }
+      ]
+    },
+    {
+      "intent_id": "bk_recovery_reset_risk",
+      "canonical_question": "Стоит ли сразу сбрасывать настройки ради исправления ошибки?",
+      "section": "помощь",
+      "language": "ru",
+      "published_count": 9,
+      "added_candidates": 5,
+      "eligible_numeric_if_all_accepted": 14,
+      "target": 100,
+      "replies": [
+        {
+          "id": "bk_recovery_reset_risk_ctx_010",
+          "text": "Если доступ подтверждается только через устройство, которое собираешься сбросить, сначала проверь запасной способ входа. Иначе исправление одной ошибки может оставить тебя без аккаунта.",
+          "context_note": "Перед полным сбросом неизвестно, есть ли у пользователя действующий способ восстановления доступа",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_reset_risk_ctx_011",
+          "text": "Перед переустановкой уточни, где хранится ключ расшифровки и доступна ли восстановимая копия. Обычное сохранение файлов не всегда возвращает возможность их прочитать.",
+          "context_note": "Система хранит зашифрованные данные с ключом, привязанным к текущей установке",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_reset_risk_ctx_012",
+          "text": "Старую копию можно восстановить только после оценки новых изменений других людей. Полный сброс вернёт прежние параметры вместе с уже исправленными ошибками; сначала сравни версии конфигурации.",
+          "context_note": "Настройки общей системы меняли несколько сотрудников после последней резервной копии",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_reset_risk_ctx_13",
+          "text": "До сброса проверь возможность восстановить копию в отдельной тестовой среде и доступность ключа. Наличие файла резервной копии само по себе не гарантирует, что данные получится прочитать.",
+          "context_note": "Резервная копия зашифрована, но неизвестно, доступен ли ключ восстановления на другом устройстве",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_reset_risk_ctx_14",
+          "text": "Сначала сравни текущее состояние с датой резервной копии и сохрани новые изменения отдельно. Старый снимок может вернуть прежнюю конфигурацию и потерять работу, сделанную позже.",
+          "context_note": "После последнего резервного копирования были изменения, которые ещё не попали в сохранённый снимок",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        }
+      ]
+    },
+    {
+      "intent_id": "bk_recovery_many_requests",
+      "canonical_question": "Как помочь, если в сообщении сразу несколько независимых задач?",
+      "section": "помощь",
+      "language": "ru",
+      "published_count": 9,
+      "added_candidates": 5,
+      "eligible_numeric_if_all_accepted": 14,
+      "target": 100,
+      "replies": [
+        {
+          "id": "bk_recovery_many_requests_ctx_010",
+          "text": "Сделаю независимые части, для которых всё известно. Для задачи с отсутствующими данными оставлю один конкретный вопрос, не задерживая остальной результат.",
+          "context_note": "Одна из нескольких задач требует неизвестных данных, а другие полностью определены",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_many_requests_ctx_011",
+          "text": "Сначала подготовлю проверяемый отчёт из имеющихся сведений. Удаление исходников требует отдельной проверки последствий; нельзя терять доказательства до окончания работы.",
+          "context_note": "Пользователь просит одновременно подготовить отчёт и удалить исходные материалы",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_many_requests_ctx_012",
+          "text": "Сначала проверю исходный расчёт, от которого зависят остальные выводы. Если ошибка в нём изменит несколько результатов, не стоит оформлять их как готовые по отдельности.",
+          "context_note": "Несколько просьб зависят от общего расчёта, который ещё не проверен",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_many_requests_ctx_13",
+          "text": "Сначала прочитаю исходник один раз и подготовлю отдельные результаты, сохранив оригинал без изменений. Для каждого выхода зафиксирую собственное имя и проверку, чтобы файлы не перезаписали друг друга.",
+          "context_note": "Несколько результатов нужно получить из одного исходного файла, который нельзя перезаписывать",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_many_requests_ctx_14",
+          "text": "Отделю срочную часть от той, у которой нет ближайшего срока, и отмечу зависимость между ними. Если порядок не влияет на результат, начну с полностью определённой задачи.",
+          "context_note": "В одном сообщении есть срочная задача и отдельная просьба, которую можно выполнить позже",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        }
+      ]
+    },
+    {
+      "intent_id": "bk_recovery_no_logs",
+      "canonical_question": "Как диагностировать проблему, если журнал ошибок недоступен?",
+      "section": "помощь",
+      "language": "ru",
+      "published_count": 9,
+      "added_candidates": 5,
+      "eligible_numeric_if_all_accepted": 14,
+      "target": 100,
+      "replies": [
+        {
+          "id": "bk_recovery_no_logs_ctx_010",
+          "text": "Если экран показывает номер попытки, сохрани его в закрытом обращении и укажи время с часовым поясом. Публично такой номер лучше не размещать; сам по себе он не раскрывает причину сбоя.",
+          "context_note": "Журнал сервиса закрыт, но на экране есть идентификатор пользовательской попытки",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_no_logs_ctx_011",
+          "text": "Запиши ожидаемый и фактический результат каждой проверки в одинаковых условиях. Эти наблюдения помогут сузить неисправный этап без выдуманных записей из недоступного журнала.",
+          "context_note": "Нет внутреннего журнала, зато доступны результаты двух безопасных проверок до и после ошибки",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_no_logs_ctx_012",
+          "text": "Когда повторять действие опасно, сохрани уже наблюдавшиеся признаки и отметь отсутствие логов. Не нужно провоцировать ещё один сбой ради красивого отчёта.",
+          "context_note": "Ошибка возникает редко, а повторение операции может затронуть реальные данные",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_no_logs_ctx_13",
+          "text": "Попроси ответственного предоставить обезличенный фрагмент за нужный промежуток и указать часовой пояс. Не пытайся обходить доступ и не подменяй отсутствие журнала предположительной причиной.",
+          "context_note": "Журнал находится у внешнего поставщика, а у пользователя нет прав просматривать его содержимое",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_no_logs_ctx_14",
+          "text": "Запиши оба времени вместе с часовыми поясами и источником каждого значения. Пока разница не объяснена, не своди события в одну временную линию.",
+          "context_note": "Время ошибки на устройстве и время события в серверном отчёте расходятся на несколько часов",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        }
+      ]
+    },
+    {
+      "intent_id": "bk_recovery_safe_screenshot",
+      "canonical_question": "Как показать ошибку на скриншоте, не раскрывая лишнего?",
+      "section": "помощь",
+      "language": "ru",
+      "published_count": 9,
+      "added_candidates": 5,
+      "eligible_numeric_if_all_accepted": 14,
+      "target": 100,
+      "replies": [
+        {
+          "id": "bk_recovery_safe_screenshot_ctx_010",
+          "text": "Обреж область до нужного предупреждения и элемента, на котором возник сбой. Названия соседних документов не помогут диагностике и могут раскрыть чужие сведения.",
+          "context_note": "На снимке открыт список файлов с названиями, не относящимися к ошибке",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_safe_screenshot_ctx_011",
+          "text": "Скрой данные профиля до отправки, оставив видимым предупреждение и название действия. Если предупреждение закрывается вместе с данными, перепиши безопасную часть текста отдельно.",
+          "context_note": "Ошибка отображается поверх карточки профиля с персональными деталями",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_safe_screenshot_ctx_012",
+          "text": "Проверь названия вкладок и адресную строку: ссылка для восстановления может содержать секретный параметр. Лучше показать только участок страницы с ошибкой, без служебных адресов.",
+          "context_note": "Скриншот сделан в браузере с несколькими открытыми вкладками и видимым адресом восстановления",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_safe_screenshot_ctx_13",
+          "text": "Закрой уведомления и сделай новый снимок только нужного окна. Если переснять нельзя, обрежь область так, чтобы чужие имена и фрагменты сообщений не попали в изображение.",
+          "context_note": "В верхней части экрана видны всплывающие уведомления с именами и текстом чужих сообщений",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_safe_screenshot_ctx_14",
+          "text": "Не отправляй снимок с действующим кодом или ссылкой доступа. Подготовь отдельный пример без рабочего токена; если секрет уже оказался в открытом доступе, сообщи владельцу системы для оценки риска.",
+          "context_note": "На странице отображён QR-код приглашения или ссылка с персональным токеном доступа",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        }
+      ]
+    },
+    {
+      "intent_id": "bk_recovery_claimed_owner",
+      "canonical_question": "Что отвечать участнику, утверждающему, что он говорит от имени владельца?",
+      "section": "помощь",
+      "language": "ru",
+      "published_count": 9,
+      "added_candidates": 5,
+      "eligible_numeric_if_all_accepted": 14,
+      "target": 100,
+      "replies": [
+        {
+          "id": "bk_recovery_claimed_owner_ctx_010",
+          "text": "Пересланное сообщение не подтверждает полномочия отправителя и актуальность распоряжения. Проверяй права через штатный список ролей или независимое обращение к владельцу, без передачи кодов.",
+          "context_note": "Участник пересылает сообщение якобы от администратора с просьбой изменить доступ",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_claimed_owner_ctx_011",
+          "text": "Совпадение отображаемого имени не означает совпадение аккаунтов. До подтверждения роли штатными средствами никаких изменений прав по такой просьбе не делай.",
+          "context_note": "Пользователь сменил отображаемое имя на имя владельца сообщества",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_claimed_owner_ctx_012",
+          "text": "Если разрешение существует только на словах, объясни порядок подтверждения уполномоченным лицом. До проверки не раскрывай закрытые настройки и не выполняй запрос от его имени.",
+          "context_note": "Собеседник ссылается на устное разрешение, которое проверить нельзя",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_claimed_owner_ctx_13",
+          "text": "Пока штатный список ролей показывает другое, считай полномочия неподтверждёнными. Предложи владельцу подтвердить роль через известный канал; отображаемое имя не заменяет проверку.",
+          "context_note": "Участник утверждает, что владеет сообществом, но в доступном списке ролей указан обычным участником",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_claimed_owner_ctx_14",
+          "text": "Не переходи по ссылкам и не передавай данные из такого письма. Свяжись с владельцем по уже известному каналу и проверь сам запрос отдельно от внешнего сообщения.",
+          "context_note": "Запрос на изменение прав пришёл с похожего на официальный, но ранее неизвестного адреса",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        }
+      ]
+    },
+    {
+      "intent_id": "bk_recovery_group_private",
+      "canonical_question": "Почему нельзя автоматически переносить сведения из ЛС в общий чат?",
+      "section": "помощь",
+      "language": "ru",
+      "published_count": 9,
+      "added_candidates": 5,
+      "eligible_numeric_if_all_accepted": 14,
+      "target": 100,
+      "replies": [
+        {
+          "id": "bk_recovery_group_private_ctx_010",
+          "text": "Можно передать только согласованный общий вывод своими словами. Разрешение на один тезис не распространяется на вложения, детали и фразы других участников приватного разговора.",
+          "context_note": "Автор личного сообщения разрешил пересказать один общий вывод, но не всю переписку",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_group_private_ctx_011",
+          "text": "Если по обстоятельствам понятно, о ком речь, удаление имени не делает пример безопасным. Лучше изложить общее правило без узнаваемой последовательности событий.",
+          "context_note": "Группа очень маленькая, поэтому даже обезличенная история легко узнаётся",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_group_private_ctx_012",
+          "text": "Ответь на опубликованный вопрос по открытым данным. Не добавляй детали из ЛС и не намекай, что знаешь скрытые обстоятельства.",
+          "context_note": "Участник публично задаёт близкий вопрос, который раньше обсуждался в личных сообщениях",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_group_private_ctx_13",
+          "text": "Согласие одного участника не разрешает раскрывать слова второго. Можно предложить обсудить вопрос с автором исходного сообщения или изложить общий принцип без пересказа частной беседы.",
+          "context_note": "Человек просит пересказать личную переписку, где участвовал ещё один собеседник",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_group_private_ctx_14",
+          "text": "Убери редкую последовательность обстоятельств и точную дату либо откажись от примера. Если участника всё равно можно узнать по деталям, публикация не становится безопасной после удаления имени.",
+          "context_note": "Запрошенный анонимный пример содержит редкое событие и точную дату, по которым легко узнать участников",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        }
+      ]
+    },
+    {
+      "intent_id": "bk_recovery_missing_rights",
+      "canonical_question": "Как действовать, когда нет доступа для проверки роли или настройки?",
+      "section": "помощь",
+      "language": "ru",
+      "published_count": 9,
+      "added_candidates": 5,
+      "eligible_numeric_if_all_accepted": 14,
+      "target": 100,
+      "replies": [
+        {
+          "id": "bk_recovery_missing_rights_ctx_010",
+          "text": "Опиши, что действительно видно в твоём режиме, и не делай вывод о скрытом переключателе. Попроси администратора проверить его штатно, без выдачи доступа тебе.",
+          "context_note": "Видна только часть настроек, а переключатель доступен администраторам",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_missing_rights_ctx_011",
+          "text": "Снимок показывает состояние в момент съёмки, но не подтверждает нынешнее значение. Нужна свежая проверка уполномоченным участником с указанием даты.",
+          "context_note": "Пользователь просит доказать, что параметр включён, по старому изображению экрана",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_missing_rights_ctx_012",
+          "text": "Можно разобрать доступные сведения и предложить безопасную последовательность для владельца прав. Обход ограничения или обещание переключить настройку здесь недопустимы.",
+          "context_note": "Чтение данных разрешено, но изменение параметров запрещено ролью",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_missing_rights_ctx_13",
+          "text": "По доступной странице нельзя судить о полном составе участников. Попроси уполномоченного администратора проверить список штатным способом; скрытые данные не нужно обходить.",
+          "context_note": "Пользователь видит страницу настроек, но список участников скрыт его текущей ролью",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_missing_rights_ctx_14",
+          "text": "Не используй старую открытую вкладку как подтверждение текущих прав. Останови проверку и заново оцени доступ через штатный интерфейс; сохранённое изображение не возвращает разрешение.",
+          "context_note": "Во время диагностики доступ к разделу был отозван, а в старом окне осталась открытая копия",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        }
+      ]
+    },
+    {
+      "intent_id": "bk_recovery_reversible_test",
+      "canonical_question": "Как выбрать безопасную первую проверку перед исправлением?",
+      "section": "помощь",
+      "language": "ru",
+      "published_count": 9,
+      "added_candidates": 5,
+      "eligible_numeric_if_all_accepted": 14,
+      "target": 100,
+      "replies": [
+        {
+          "id": "bk_recovery_reversible_test_ctx_010",
+          "text": "Прежде чем проверять переключатель, выясни, не создаст ли тест реальные оповещения. Если создаст, используй отдельный тестовый контур или ограничься чтением состояния.",
+          "context_note": "Проверка может отправить уведомления в общий чат, даже если настройка затем возвращается",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_reversible_test_ctx_011",
+          "text": "Зафиксируй исходные параметры и меняй один за раз. Иначе два разных результата нельзя будет объяснить именно проверяемой причиной.",
+          "context_note": "Результат теста зависит от того, были ли изменены исходные настройки между попытками",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_reversible_test_ctx_012",
+          "text": "Такой шаг не подходит для первого диагностического опыта. Выбери чтение статуса, тестовый режим без списаний или симуляцию с вымышленными данными.",
+          "context_note": "Возможная проверка включает внешнюю оплату или необратимую запись",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_reversible_test_ctx_13",
+          "text": "Для первой проверки используй имитацию запроса или тестовый адрес, если такой режим предусмотрен. Не отправляй пробные события реальным получателям без согласования.",
+          "context_note": "Диагностический запрос автоматически отправляет уведомление во внешний сервис",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_reversible_test_ctx_14",
+          "text": "Проводи проверку на отдельном тестовом наборе и явно помечай его. Если изолировать данные нельзя, сначала выбери проверку чтением, чтобы не загрязнить рабочую статистику.",
+          "context_note": "Тест меняет счётчик или статистику, которую затем используют в рабочем отчёте",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        }
+      ]
+    },
+    {
+      "intent_id": "bk_recovery_unverified_success",
+      "canonical_question": "Можно ли считать действие выполненным, когда нет подтверждения результата?",
+      "section": "помощь",
+      "language": "ru",
+      "published_count": 9,
+      "added_candidates": 5,
+      "eligible_numeric_if_all_accepted": 14,
+      "target": 100,
+      "replies": [
+        {
+          "id": "bk_recovery_unverified_success_ctx_010",
+          "text": "Статус «в очереди» подтверждает приём запроса, а не получение результата. Для отчёта нужен отдельный признак завершения и проверка того, что итог доступен.",
+          "context_note": "Система сообщила, что задание принято в очередь, но не завершено",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_unverified_success_ctx_011",
+          "text": "Создание файла подтверждено, совместимость пока нет. Скажи об этом отдельно и не называй задачу полностью завершённой без проверки открытия и содержимого.",
+          "context_note": "Файл записан на диск, но неизвестно, открылся ли он в целевом приложении",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_unverified_success_ctx_012",
+          "text": "Черновик ещё никому не отправлен. Без подтверждения отправки и доставки нельзя утверждать, что адресат видел сообщение.",
+          "context_note": "Сообщение подготовлено как черновик, а собеседник спрашивает, получено ли оно адресатом",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_unverified_success_ctx_13",
+          "text": "Ответ о принятии подтверждает, что запрос поставлен в обработку. Дождись отдельного статуса завершения и проверь итоговый объект, прежде чем сообщать об успехе.",
+          "context_note": "Внешний API ответил кодом принятия запроса, но отдельный статус выполнения ещё не появился",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_unverified_success_ctx_14",
+          "text": "Нулевой код завершения не доказывает создание нужного файла. Проверь фактический путь, имя и содержимое результата; пока артефакт не найден, отметь задачу как неподтверждённую.",
+          "context_note": "Команда завершилась без ошибки, но ожидаемый файл по указанному пути отсутствует",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        }
+      ]
+    },
+    {
+      "intent_id": "bk_recovery_tradeoffs",
+      "canonical_question": "Как объяснить выбор между двумя способами решения?",
+      "section": "помощь",
+      "language": "ru",
+      "published_count": 9,
+      "added_candidates": 5,
+      "eligible_numeric_if_all_accepted": 14,
+      "target": 100,
+      "replies": [
+        {
+          "id": "bk_recovery_tradeoffs_ctx_010",
+          "text": "Сравни временный перерыв с последствиями работы на неисправной схеме. Если остановка затрагивает других людей, заранее обозначь её длительность и способ возврата.",
+          "context_note": "Один способ требует короткой остановки сервиса, второй работает без остановки, но сохраняет старую ошибку",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_tradeoffs_ctx_011",
+          "text": "Для редкой операции ручной путь может быть разумнее, пока стоимость настройки автоматизации выше пользы. Если число повторов вырастет, оценку стоит пересчитать.",
+          "context_note": "Автоматическое решение требует сложной настройки, ручное выполняется редко",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_tradeoffs_ctx_012",
+          "text": "Предпочтение стоит отдать проверяемому результату, если ошибка дорого обойдётся. Сравни, можно ли восстановить ход решения и заметить неверный итог до его применения.",
+          "context_note": "Оба способа дают верный результат, но один нельзя проверить независимо",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_tradeoffs_ctx_13",
+          "text": "Сравни скорость восстановления с потерей наблюдаемости и обозначь срок действия обхода. Если причину всё ещё нужно искать, сохрани безопасный способ собирать диагностику отдельно.",
+          "context_note": "Быстрый обходной путь устраняет симптом, но скрывает подробности для последующей диагностики",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_tradeoffs_ctx_14",
+          "text": "Сравни цену зависимости с затратами на сопровождение переносимого формата. Решение зависит от вероятности смены поставщика и от того, кто будет поддерживать преобразование.",
+          "context_note": "Один вариант привязывает данные к формату поставщика, второй проще переносить, но требует поддержки",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        }
+      ]
+    },
+    {
+      "intent_id": "bk_recovery_small_change",
+      "canonical_question": "Что делать, если человек просит исправить только одну деталь?",
+      "section": "помощь",
+      "language": "ru",
+      "published_count": 9,
+      "added_candidates": 5,
+      "eligible_numeric_if_all_accepted": 14,
+      "target": 100,
+      "replies": [
+        {
+          "id": "bk_recovery_small_change_ctx_010",
+          "text": "Исправлю коэффициент и пересчитаю связанные результаты. Остальные исходные числа и оформление не трону: зависимые итоги меняются по причине формулы, а не новой редакции документа.",
+          "context_note": "Изменён один коэффициент в таблице, от него зависят несколько итоговых ячеек",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_small_change_ctx_011",
+          "text": "Проверю только подпись, перенос строки и то, помещается ли текст на экране. Назначение кнопки и её действия останутся прежними, если это возможно в текущей реализации.",
+          "context_note": "В интерфейсе нужно поправить текст одной кнопки без изменения её поведения",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_small_change_ctx_012",
+          "text": "Сначала обновлю названный пункт, затем сверю ссылку из следующего шага. Если она стала неверной, обозначу необходимую связанную правку, не переписывая остальные этапы.",
+          "context_note": "Просят заменить один пункт инструкции, но на него ссылается следующий шаг",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_small_change_ctx_13",
+          "text": "Проверь связанные языковые строки и доступное имя элемента, но не меняй его действие. Одна видимая подпись может иметь отдельные текстовые версии для перевода и экранного диктора.",
+          "context_note": "Изменяется подпись одного элемента, которая также используется в переводах и озвучивании интерфейса",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_small_change_ctx_14",
+          "text": "Перед правкой выясни, задано ли локальное значение или используется наследование. Иначе исправление одной записи может незаметно изменить поведение других элементов, которые берут общий параметр.",
+          "context_note": "Изменяемое поле наследует значение по умолчанию, если локальное значение отсутствует",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        }
+      ]
+    },
+    {
+      "intent_id": "bk_recovery_example_only",
+      "canonical_question": "Как ответить на просьбу показать пример, не применяя его?",
+      "section": "помощь",
+      "language": "ru",
+      "published_count": 9,
+      "added_candidates": 5,
+      "eligible_numeric_if_all_accepted": 14,
+      "target": 100,
+      "replies": [
+        {
+          "id": "bk_recovery_example_only_ctx_010",
+          "text": "Покажу команду как текст и объясню, какие параметры нужно подставить. Фактический запуск и изменения на устройстве не выполняются.",
+          "context_note": "Человек просит пример терминальной команды, но не разрешает ничего запускать",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_example_only_ctx_011",
+          "text": "Составлю вымышленный диалог с нейтральным разъяснением и уточнением правила. Ни предупреждений реальным участникам, ни блокировок из такого примера не следует.",
+          "context_note": "Нужен образец реакции модератора на условную ситуацию без санкций",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_example_only_ctx_012",
+          "text": "Возьму условные числа, отмечу их как пример и покажу метод расчёта. Получившийся итог нельзя переносить в реальный отчёт до замены исходных значений.",
+          "context_note": "Пользователь просит пример результата расчёта, когда настоящие исходные данные ещё не известны",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_example_only_ctx_13",
+          "text": "Используй явно фиктивное значение вроде PLACEHOLDER_NOT_A_SECRET и подпиши его как пример. Не вставляй действующий ключ даже в закрытый фрагмент документации.",
+          "context_note": "Пример конфигурации должен показать поле ключа, но настоящий секрет для демонстрации не нужен",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_example_only_ctx_14",
+          "text": "Покажи нейтральную реплику с уточнением, какой пункт правила имеется в виду. Пример должен демонстрировать разговор, а не создавать впечатление, что языковой пакет сам назначает санкцию.",
+          "context_note": "Нужен пример ответа модератора, который разъясняет правило без предупреждения и наказания",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        }
+      ]
+    },
+    {
+      "intent_id": "bk_recovery_issue_report",
+      "canonical_question": "Как составить понятное сообщение об ошибке для разработчика?",
+      "section": "помощь",
+      "language": "ru",
+      "published_count": 9,
+      "added_candidates": 5,
+      "eligible_numeric_if_all_accepted": 14,
+      "target": 100,
+      "replies": [
+        {
+          "id": "bk_recovery_issue_report_ctx_010",
+          "text": "Укажи время события вместе со смещением от UTC, а не только «вчера вечером». Иначе разработчик может сопоставить ошибку с неверным отрезком журнала.",
+          "context_note": "Проблема проявляется лишь в определённом часовом поясе и плохо воспроизводится",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_issue_report_ctx_011",
+          "text": "Опиши масштаб обезличенно: например, несколько попыток на одной версии клиента. Личные идентификаторы и переписку участников в публичный отчёт добавлять не нужно.",
+          "context_note": "Ошибка затронула несколько людей, но нельзя раскрывать данные их аккаунтов",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_issue_report_ctx_012",
+          "text": "Сведи сценарий к минимальной безопасной последовательности, при которой ошибка сохраняется. Это облегчает проверку и исключает шаги, не влияющие на симптом.",
+          "context_note": "Сбой возникает только после длинной цепочки действий, часть из которых необязательна",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_issue_report_ctx_13",
+          "text": "Укажи версию браузера и факт включённого расширения, не называя его виновником заранее. Если безопасно, сравни результат с чистым профилем без расширений и сохрани различие.",
+          "context_note": "Ошибка появляется только при включённом расширении браузера, но название расширения не подтверждено",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_issue_report_ctx_14",
+          "text": "Добавь модель устройства в обобщённом виде, версию системы и состояние энергосбережения. Не публикуй идентификаторы аккаунта или полный снимок личных уведомлений.",
+          "context_note": "Сбой на телефоне зависит от режима энергосбережения и разрешения приложения",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        }
+      ]
+    },
+    {
+      "intent_id": "bk_recovery_terms_mixed",
+      "canonical_question": "Что уточнить, когда одним словом называют разные элементы интерфейса?",
+      "section": "помощь",
+      "language": "ru",
+      "published_count": 9,
+      "added_candidates": 5,
+      "eligible_numeric_if_all_accepted": 14,
+      "target": 100,
+      "replies": [
+        {
+          "id": "bk_recovery_terms_mixed_ctx_010",
+          "text": "Уточни, нужно ли открыть информацию для чтения или дать возможность изменять её. Это разные права, и совет по настройке зависит от выбранного действия.",
+          "context_note": "Словом «доступ» называют и возможность видеть страницу, и право её редактировать",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_terms_mixed_ctx_011",
+          "text": "Сначала различим скрытие из списка и окончательное удаление. Если речь о стирании данных, надо отдельно проверить восстановление и последствия.",
+          "context_note": "В вопросе «удалить» непонятно, требуется скрыть элемент или безвозвратно стереть данные",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_terms_mixed_ctx_012",
+          "text": "Уточни, какую кнопку нажимают и на каком экране. Системный возврат и переход по истории приложения могут вести себя по-разному.",
+          "context_note": "Под словом «назад» подразумевают системную кнопку телефона или элемент внутри приложения",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_terms_mixed_ctx_13",
+          "text": "Уточни, речь о плательщике, договоре или профиле для входа. Эти сущности могут иметь разные права и способы восстановления; инструкция для одного аккаунта не подойдёт другому.",
+          "context_note": "Вопрос об аккаунте относится к платёжной организации, а не к профилю входа",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_terms_mixed_ctx_14",
+          "text": "Спроси, нужно ли убрать запись из текущего списка или сохранить отдельную копию для восстановления. Скрытие и резервирование решают разные задачи и не заменяют друг друга.",
+          "context_note": "Под архивом понимают и скрытие старой записи из списка, и создание резервной копии",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        }
+      ]
+    },
+    {
+      "intent_id": "bk_recovery_rollback",
+      "canonical_question": "Как понять, когда нужно откатить неудачное изменение?",
+      "section": "помощь",
+      "language": "ru",
+      "published_count": 9,
+      "added_candidates": 5,
+      "eligible_numeric_if_all_accepted": 14,
+      "target": 100,
+      "replies": [
+        {
+          "id": "bk_recovery_rollback_ctx_010",
+          "text": "Прежняя версия программы может не прочитать новую структуру данных. Перед откатом проверь совместимость формата и доступную копию до миграции; одного возврата файлов приложения может быть мало.",
+          "context_note": "После обновления программу вернули на старую версию, но формат базы данных уже изменился",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_rollback_ctx_011",
+          "text": "Восстанавливай тестовый профиль отдельно. Глобальный откат создаст лишний риск для рабочего окружения, которое не участвовало в проверке.",
+          "context_note": "Неудачная настройка затронула только тестовый профиль, а рабочий профиль не менялся",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_rollback_ctx_012",
+          "text": "Сравни изменения с контрольной точкой до возврата. Полный откат может удалить чужую новую работу, поэтому безопаснее сначала определить минимальную неисправную правку.",
+          "context_note": "После последнего стабильного снимка другие участники внесли полезные изменения",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_rollback_ctx_13",
+          "text": "Не возвращай старую версию поверх уже изменённой базы без плана обратной миграции. Сначала выясни, поддерживает ли прежняя версия новый формат и как восстановить согласованную копию.",
+          "context_note": "Старая версия приложения несовместима с форматом базы после миграции",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_rollback_ctx_14",
+          "text": "Перед откатом проверь восстановление копии в отдельной среде и сравни потерю изменений после снимка. Сам факт наличия резервной копии ещё не подтверждает, что она подходит для возврата.",
+          "context_note": "Схема данных уже изменилась, а резервная копия сделана до преобразования",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        }
+      ]
+    },
+    {
+      "intent_id": "bk_recovery_unknown_live_state",
+      "canonical_question": "Что отвечать о состоянии сервиса, к которому нет живого доступа?",
+      "section": "помощь",
+      "language": "ru",
+      "published_count": 9,
+      "added_candidates": 5,
+      "eligible_numeric_if_all_accepted": 14,
+      "target": 100,
+      "replies": [
+        {
+          "id": "bk_recovery_unknown_live_state_ctx_010",
+          "text": "Общий статус говорит лишь о проверяемых компонентах сервиса. Для твоего случая нужно отдельно проверить регион, аккаунт или маршрут запроса; нельзя объявить локальную проблему невозможной.",
+          "context_note": "Страница состояния сервиса зелёная, но конкретный пользователь получает ошибку",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_unknown_live_state_ctx_011",
+          "text": "Этот ответ доказывает доступность в момент проверки. Для утверждения о состоянии сейчас нужна новая отметка времени и тот же проверяемый компонент.",
+          "context_note": "Известен успешный ответ на запрос, отправленный несколько часов назад",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_unknown_live_state_ctx_012",
+          "text": "Открытая главная страница не подтверждает работу операции записи или обработки данных. Раздели проверку публичной страницы и конкретного рабочего действия.",
+          "context_note": "Мониторинг показывает доступность главной страницы, а ошибка возникает при выполнении операции",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_unknown_live_state_ctx_13",
+          "text": "Укажи, какой регион охватывает опубликованный статус и какой маршрут затронут. Общая зелёная отметка не подтверждает доступность каждого региона и каждой операции.",
+          "context_note": "Страница состояния показывает общий регион, но пользователь работает из другого региона",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_unknown_live_state_ctx_14",
+          "text": "Посмотри время последнего обновления статуса и назови его явно. Пока нет свежей проверки, корректно говорить о последнем известном состоянии, а не о работе сервиса сейчас.",
+          "context_note": "Мониторинг обновлялся давно, поэтому его отметка может не отражать текущее состояние",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        }
+      ]
+    },
+    {
+      "intent_id": "bk_recovery_no_blame",
+      "canonical_question": "Как обсудить ошибку, не обвиняя собеседника или администратора?",
+      "section": "помощь",
+      "language": "ru",
+      "published_count": 9,
+      "added_candidates": 5,
+      "eligible_numeric_if_all_accepted": 14,
+      "target": 100,
+      "replies": [
+        {
+          "id": "bk_recovery_no_blame_ctx_010",
+          "text": "Опиши, какие два действия интерфейс позволял спутать. Предложение уточнить подпись поможет избежать повторения, а оценка внимательности пользователя не устранит причину.",
+          "context_note": "Ошибка появилась из-за непонятного предупреждения, после которого человек выбрал неверный пункт",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_no_blame_ctx_011",
+          "text": "Совпадение времени ещё не доказывает связь. Проверим последовательность событий и права процесса без публичного обвинения человека, который работал рядом.",
+          "context_note": "Сбой возник в автоматическом процессе и время события совпало с действиями администратора",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_no_blame_ctx_012",
+          "text": "Исправь неоднозначную формулировку и уточни ожидаемый результат каждого шага. Обсуждать ошибку полезнее через текст инструкции, чем искать виновного.",
+          "context_note": "Инструкция допускает два разумных прочтения и участники выбрали разные шаги",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_no_blame_ctx_13",
+          "text": "Сначала сопоставим версию инструкции с текущим экраном. Если названия элементов изменились, уточним актуальный шаг; ошибка чтения старой инструкции не доказывает невнимательность человека.",
+          "context_note": "Инструкция написана для прежней версии, а пользователь выполняет шаги в обновлённом интерфейсе",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_no_blame_ctx_14",
+          "text": "Сверь точный перечень доступных действий с ответственным администратором и зафиксируй расхождение в описании. Не делай вывод о компетентности человека по неоднозначному названию роли.",
+          "context_note": "Роль участника описана разными словами в документации и фактическом списке прав",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        }
+      ]
+    },
+    {
+      "intent_id": "bk_recovery_addressed_or_chat",
+      "canonical_question": "Как понять, обращён ли вопрос к боту или это переписка участников?",
+      "section": "помощь",
+      "language": "ru",
+      "published_count": 9,
+      "added_candidates": 5,
+      "eligible_numeric_if_all_accepted": 14,
+      "target": 100,
+      "replies": [
+        {
+          "id": "bk_recovery_addressed_or_chat_ctx_010",
+          "text": "Упоминание внутри цитаты относится к прежнему сообщению. Без нового прямого вопроса не надо вмешиваться и выдавать цитату за команду.",
+          "context_note": "Участник вставил в группу цитату с упоминанием бота, но сам ничего не попросил",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_addressed_or_chat_ctx_011",
+          "text": "Проверь адресата цепочки: вопрос может быть продолжением разговора людей. Не начинай самостоятельную консультацию только из-за вопросительного знака.",
+          "context_note": "В ответе на чужое сообщение стоит вопрос, адресованный другому участнику",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_addressed_or_chat_ctx_012",
+          "text": "Команда в блоке примера — предмет обсуждения, а не просьба выполнить действие. Для ответа нужна явная адресация вне цитаты и подтверждённый запрос.",
+          "context_note": "В общий чат отправили строку, похожую на команду, как часть программного примера",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_addressed_or_chat_ctx_13",
+          "text": "Строка внутри блока кода остаётся примером, пока человек явно не попросил выполнить её вне примера. Разбери синтаксис и не запускай действие по содержимому фрагмента.",
+          "context_note": "Упоминание бота находится внутри блока кода, который участник просит объяснить",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_addressed_or_chat_ctx_14",
+          "text": "Проверь, кому адресована именно эта реплика и на какое сообщение она отвечает. Упоминание бота в предыдущей ветке само по себе не делает каждый следующий вопрос обращением к нему.",
+          "context_note": "Ответ отправлен в ветке, где бот упоминается выше, но текущий вопрос адресован другому человеку",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        }
+      ]
+    },
+    {
+      "intent_id": "bk_recovery_disagreement",
+      "canonical_question": "Как помочь двум участникам, которые спорят о проверяемом факте?",
+      "section": "помощь",
+      "language": "ru",
+      "published_count": 9,
+      "added_candidates": 5,
+      "eligible_numeric_if_all_accepted": 14,
+      "target": 100,
+      "replies": [
+        {
+          "id": "bk_recovery_disagreement_ctx_010",
+          "text": "Уточни числитель и основание у каждого процента. Обе цифры могут быть вычислены правильно, но сравнение окажется неверным из-за разных знаменателей.",
+          "context_note": "Два участника спорят о долях, считая проценты от разных общих количеств",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_disagreement_ctx_011",
+          "text": "Сверьте версии и даты наблюдений. Вполне возможно, что оба описывают разные состояния; выбрать правого по уверенности голоса нельзя.",
+          "context_note": "Один участник показывает старый скриншот настроек, другой описывает новый интерфейс",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_disagreement_ctx_012",
+          "text": "Без единиц график допускает несколько трактовок. Сначала найдите исходную подпись или таблицу, затем проверяйте числовое утверждение.",
+          "context_note": "Спор строится вокруг графика, где не указаны единицы вертикальной оси",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_disagreement_ctx_13",
+          "text": "Сначала выровняйте период наблюдения и частоту измерений. Разница может объясняться интервалом, поэтому нельзя объявлять один результат неверным без одинаковых условий.",
+          "context_note": "Участники сравнивают измерения, снятые за разные интервалы времени",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_disagreement_ctx_14",
+          "text": "Разделите прогноз и итоговое измерение по типу и дате. Оба значения могут быть корректными для разных задач; сравнивать их как один показатель нельзя.",
+          "context_note": "Одна сторона приводит прогнозное значение, другая — фактический результат после завершения периода",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        }
+      ]
+    },
+    {
+      "intent_id": "bk_recovery_progress_status",
+      "canonical_question": "Что говорить о задаче, если готова только часть результата?",
+      "section": "помощь",
+      "language": "ru",
+      "published_count": 9,
+      "added_candidates": 5,
+      "eligible_numeric_if_all_accepted": 14,
+      "target": 100,
+      "replies": [
+        {
+          "id": "bk_recovery_progress_status_ctx_010",
+          "text": "Файл создан, однако итог ещё не принят: проверка нашла ошибку внутри. Назову конкретную неисправную часть и оставлю статус «требует исправления» до повторной проверки.",
+          "context_note": "Файл результата сформирован, но контрольное открытие обнаружило проблему с содержимым",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_progress_status_ctx_011",
+          "text": "Локальная проверка успешна, выпуск в рабочей среде не подтверждён. В отчёте отдельно укажу коммит, тесты и отсутствие подтверждения доставки пользователям.",
+          "context_note": "Код изменён и тесты проходят локально, но новый выпуск ещё не распространялся",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_progress_status_ctx_012",
+          "text": "Назову отдельно подготовленные и одобренные записи, с точным остатком по каждому вопросу. Сырой размер файла не должен подменять счётчик пригодных ответов.",
+          "context_note": "Из большой партии принято несколько ответов, а часть не прошла смысловой отбор",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_progress_status_ctx_13",
+          "text": "Отчитайся, что файл создан и сохранён по указанному пути. Проверку структуры и читаемости отметь отдельно; до неё не называй результат принятым.",
+          "context_note": "Артефакт уже лежит в указанной папке, но его содержимое ещё не открывали после записи",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_progress_status_ctx_14",
+          "text": "Укажи названия и итог только тех тестов, которые действительно завершились. Полный статус проекта оставь неподтверждённым, пока не пройдёт общий набор.",
+          "context_note": "Пройдены тесты одного модуля, но общий набор проверок ещё не запускался",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        }
+      ]
+    },
+    {
+      "intent_id": "bk_recovery_no_more_advice",
+      "canonical_question": "Как ответить человеку, который больше не хочет советов?",
+      "section": "помощь",
+      "language": "ru",
+      "published_count": 9,
+      "added_candidates": 5,
+      "eligible_numeric_if_all_accepted": 14,
+      "target": 100,
+      "replies": [
+        {
+          "id": "bk_recovery_no_more_advice_ctx_010",
+          "text": "Понял, заканчиваю на этом. Не буду снова поднимать вопрос или добавлять советы, пока ты сам не вернёшься к теме.",
+          "context_note": "Собеседник попросил прекратить объяснения в личной беседе",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_no_more_advice_ctx_011",
+          "text": "Остановлю публичное обсуждение здесь. Не стану пересказывать детали другим участникам или переводить разговор в личные сообщения без приглашения.",
+          "context_note": "В общем чате участник просит не продолжать публичный разбор своей проблемы",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_no_more_advice_ctx_012",
+          "text": "Хорошо, завершим здесь. Без новых вопросов и рекомендаций: решение продолжить разговор остаётся за тобой.",
+          "context_note": "Человек прямо написал, что сейчас хочет закончить разговор без продолжения",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_no_more_advice_ctx_13",
+          "text": "Понимаю, что сейчас тебе тяжело с этим разбираться. Ничего советовать или уточнять не буду; можем оставить разговор на этом.",
+          "context_note": "Собеседник просит только признать, что его ситуация неприятная, без вопросов и советов",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        },
+        {
+          "id": "bk_recovery_no_more_advice_ctx_14",
+          "text": "Хорошо, прекращаю отвечать в этой ветке. Не буду продолжать обсуждение и переносить его в другое место без твоей просьбы.",
+          "context_note": "Участник общего чата прямо просит не отвечать дальше в этой ветке",
+          "context": "direct",
+          "language": "ru",
+          "style": "plain_help",
+          "audiences": [
+            "all_ai_bots"
+          ],
+          "read_only": true,
+          "editorial_status": "candidate_pending_full_semantic_review",
+          "avoid": "Только при прямом обращении и подтверждённом контексте; без действий, санкций или раскрытия личных сведений."
+        }
+      ]
+    }
+  ],
+  "current_main_reverification": {
+    "commit_sha": "d43134b9072c7ceff44cfcf63d5d11c0d0771d7a",
+    "manifest_version": "2026.11.17.030",
+    "source_pack_manifest_sha256": "be8ae1408cf42816adc3f8ba818b3f004318617ba2e878e72edd85cf7eb4954e",
+    "source_pack_blob_sha": "21bf261970d1bdcf0f9fb8fb3383772b86b2dc2f"
+  }
+}
