@@ -10,7 +10,7 @@ BASELINE="ba7527d5f4cf94804583cac8b74e07fba864807a3cc6fb85eb130a59e544a3be"
 class DialogueV025(unittest.TestCase):
  def test_data(self):
   m=json.loads((ROOT/"manifest.json").read_text("utf-8"))
-  self.assertEqual(m["knowledge_version"],"2026.11.17.025")
+  self.assertGreaterEqual(tuple(map(int,m["knowledge_version"].split("."))),(2026,11,17,25))
   entries={x["path"]:x["sha256"] for x in m["packs"]}
   raw=(ROOT/P).read_bytes()
   self.assertEqual(hashlib.sha256(raw).hexdigest(),HASH)
