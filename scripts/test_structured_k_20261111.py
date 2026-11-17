@@ -1,0 +1,45 @@
+"""Structured K: 54 original-intent continuation, exact source and duplicate guards."""
+import hashlib, json, re, unicodedata, unittest
+from pathlib import Path
+ROOT=Path(__file__).resolve().parents[1]
+SRC=ROOT/"packs/ru/structured_information_qa.json"
+SHA="55b3f6126d36cd92687d005b7fedf5a11df9ee61cf453103accdf1f13c8498f0"
+BLOB="8b3d596b5b50d3d319ebf450c96d5623fc99d26a"
+PATH=ROOT/"staging/ru/structured_information_20261111_delta_k.json"
+PREV=[ROOT/f"staging/ru/structured_information_20261111_delta_{x}.json" for x in "abcdefghj"]
+RX=re.compile(r"[^\W_]+",re.UNICODE)
+def norm(s):return " ".join(RX.findall(unicodedata.normalize("NFKC",s).casefold().replace("ё","е")))
+class TestStructuredK(unittest.TestCase):
+ @classmethod
+ def setUpClass(cls):
+  cls.data=json.loads(PATH.read_text("utf-8"));cls.entries=cls.data["entries"];cls.current=[r for e in cls.entries for r in e["replies"]]
+ def test_manifest_source(self):
+  raw=SRC.read_bytes();m=json.loads((ROOT/"manifest.json").read_text("utf-8"))
+  self.assertEqual(hashlib.sha256(raw).hexdigest(),SHA)
+  self.assertEqual(hashlib.sha1(b"blob "+str(len(raw)).encode()+b"\0"+raw).hexdigest(),BLOB)
+  self.assertEqual({x["path"]:x["sha256"] for x in m["packs"]}["packs/ru/structured_information_qa.json"],SHA)
+  self.assertNotIn("staging/ru/structured_information_20261111_delta_k.json",{x["path"] for x in m["packs"]})
+ def test_checkpoint(self):
+  d=self.data;self.assertFalse(d["consumer_registered"]);self.assertEqual(d["audiences"],["all_ai_bots"])
+  for key in ("read_only","requires_direct_address","requires_context_match","no_personal_data","no_sanctions"):self.assertTrue(d["constraints"][key])
+  cp=d["checkpoint"];n=cp["added_per_intent"]
+  self.assertGreaterEqual(n,25)
+  self.assertLessEqual(n,88)
+  self.assertEqual(cp["added_candidates"],54*n)
+  self.assertEqual((cp["combined_per_intent"],cp["remaining_per_intent"],cp["remaining_total"]),(12+n,88-n,54*(88-n)))
+  self.assertEqual((cp["finished_100"],cp["partial_intents"]),(54 if n==88 else 0,0 if n==88 else 54))
+  self.assertEqual((len(self.entries),len(self.current)),(54,54*n))
+  for e in self.entries:
+   self.assertEqual((e["published_count"],e["previous_staged_count"],e["added_candidates"],e["total_candidates_with_published"],e["remaining"]),(3,9,n,12+n,88-n))
+   self.assertEqual([v["id"] for v in e["replies"]],[f"{e['intent_id']}_supp_{i}" for i in range(19, 19+e["added_candidates"])])
+ def test_unique_and_safe(self):
+  older=[r["text"] for p in PREV for e in json.loads(p.read_text("utf-8"))["entries"] for r in e["replies"]]
+  registered=json.loads(SRC.read_text("utf-8"));older += [t for rec in registered["records"] for t in [rec["answer"],*rec["variants"]]]
+  seen=set(map(norm,older));ids=set();ctx=set();token_sets=[set(x.split()) for x in seen]
+  for r in self.current:
+   n=norm(r["text"]);nc=norm(r["context_note"]);self.assertNotIn(n,seen,r["id"]);self.assertNotIn(nc,ctx)
+   self.assertNotIn(r["id"],ids);self.assertTrue(r["read_only"]);self.assertEqual(r["context"],"direct");self.assertEqual(r["language"],"ru");self.assertEqual(r["audiences"],["all_ai_bots"]);self.assertEqual(r["response_role"],"assistant_reply");self.assertGreater(len(r["text"]),39);self.assertGreater(len(r["context_note"]),25)
+   self.assertIsNone(re.search(r"[\w.+-]+@[\w.-]+\.[A-Za-z]{2,}",r["text"]+" "+r["context_note"]))
+   a=set(n.split());self.assertTrue(all(len(a&b)/len(a|b)<.70 for b in token_sets),r["id"])
+   seen.add(n);ids.add(r["id"]);ctx.add(nc);token_sets.append(a)
+if __name__=="__main__":unittest.main()

@@ -1,0 +1,5 @@
+# K22 / K91 — 14 ноября 2026
+
+Продолжен [PR #661](https://github.com/Treninem/Bot-Knowledge/pull/661) от точного head `3689938dcff878215173e0d242fd1f1ef9393e17`. Исходное покрытие 54 намерений × 84/100, в PR 3888 staging. Создано 54 новых русскоязычных оригинальных контекстных кандидата, по одному на намерение. Новый итог в PR **3942 staging**, 54 набора по **85/100**, остаётся по 15, суммарно 810; 0 завершённых 100/100.
+
+K22 в unregistered staging: обязательны direct address, соответствие контексту, read-only, all_ai_bots, no_sanctions. Источник `packs/ru/structured_information_qa.json` на main `6c9f430da47f137d39a72bbd28c057cfb8f6be96`, SHA-256 из manifest `55b3f6126d36cd92687d005b7fedf5a11df9ee61cf453103accdf1f13c8498f0`. Добавлены структурный тест K22, сравнение с K1–K21 и read-only exact-head workflow. После коммита нужно независимо проверить semantic/context и получить успешный полный CI на фактическом head; лексический тест не доказывает семантической неповторяемости. Доставка из staging и лимит 8 МиБ не подтверждены. Manifest, ImPULS, BotHost и рабочие кэши не изменены.
