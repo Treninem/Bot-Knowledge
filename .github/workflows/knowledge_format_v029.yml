@@ -1,0 +1,30 @@
+name: Knowledge format v029 exact-head QA
+on:
+  pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Assert actual head checkout
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate manifest integrity, limits and packages
+        run: python scripts/validate_pack.py
+      - name: Verify v027-v029 lineage and English compaction (normal and optimized)
+        run: |
+          python -m unittest scripts.test_knowledge_format_v027 scripts.test_knowledge_format_v028 scripts.test_knowledge_format_v029 scripts.test_english_conversation_nuance_t80 -q
+          python -O -m unittest scripts.test_knowledge_format_v027 scripts.test_knowledge_format_v028 scripts.test_knowledge_format_v029 scripts.test_english_conversation_nuance_t80 -q
+      - name: Search regression
+        run: python scripts/test_pragmatic_search.py

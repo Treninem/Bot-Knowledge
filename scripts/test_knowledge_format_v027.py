@@ -19,6 +19,14 @@ def load(rel):
 def token_set(value):
     return set(re.findall(r"\w+", normalize_question(value), re.UNICODE))
 
+def historical_v027_variants(row, index, version):
+    if version >= "2026.11.17.029":
+        return row["variants"][1:3] if index < 10 else row["variants"][2:4]
+    if version >= "2026.11.17.028":
+        return row["variants"][-4:-2]
+    return row["variants"][-2:]
+
+
 class KnowledgeFormatV027(unittest.TestCase):
     def test_manifest_and_size(self):
         manifest = load("manifest.json")
@@ -54,17 +62,21 @@ class KnowledgeFormatV027(unittest.TestCase):
         self.assertEqual(len(set(row["id"] for row in rows)), 40)
         version = load("manifest.json")["knowledge_version"]
         v028 = version >= "2026.11.17.028"
+        v029 = version >= "2026.11.17.029"
         self.assertEqual(sorted(1+len(r["variants"]) for r in rows),
-                         ([6]*10+[7]*30) if v028 else ([4]*10+[5]*30))
+                         ([9]*40) if v029 else (([6]*10+[7]*30) if v028 else ([4]*10+[5]*30)))
         new = set()
-        for row in rows:
+        for index, row in enumerate(rows):
             self.assertTrue(row["question"].strip())
             self.assertLessEqual(len(row["variants"]), 8)
             all_answers = [row["answer"], *row["variants"]]
             normalized = [normalize_question(x) for x in all_answers]
             self.assertEqual(len(normalized), len(set(normalized)), row["id"])
-            earlier = [row["answer"], *row["variants"][:(-4 if v028 else -2)]]
-            for candidate in row["variants"][-4:-2] if v028 else row["variants"][-2:]:
+            if v029:
+                earlier = [row["answer"], *row["variants"][:(1 if index < 10 else 2)]]
+            else:
+                earlier = [row["answer"], *row["variants"][:(-4 if v028 else -2)]]
+            for candidate in historical_v027_variants(row, index, version):
                 self.assertTrue(45 <= len(candidate) <= 280, (row["id"], candidate))
                 n = normalize_question(candidate)
                 self.assertNotIn(n, new)
@@ -80,8 +92,9 @@ class KnowledgeFormatV027(unittest.TestCase):
     def test_no_cross_registered_exact_replies(self):
         manifest = load("manifest.json")
         v028 = load("manifest.json")["knowledge_version"] >= "2026.11.17.028"
-        fresh = {normalize_question(x) for row in load(KNOWLEDGE)["records"]
-                 for x in (row["variants"][-4:-2] if v028 else row["variants"][-2:])}
+        version = load("manifest.json")["knowledge_version"]
+        fresh = {normalize_question(x) for index, row in enumerate(load(KNOWLEDGE)["records"])
+                 for x in historical_v027_variants(row, index, version)}
         others = set()
         for pack in manifest["packs"]:
             if pack["path"] == KNOWLEDGE:
