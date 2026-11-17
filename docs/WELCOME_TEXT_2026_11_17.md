@@ -1,6 +1,6 @@
 # Welcome text and newcomer orientation — 17.11.2026
 
-Base: `d43134b9072c7ceff44cfcf63d5d11c0d0771d7a`, manifest `2026.11.17.030`.
+Current branch base: `4e2cd1a48694c5727a1a84ce40cdc1a96a68e89d` (main merged into the branch without overlapping-file conflicts). Original source snapshot: `d43134b9072c7ceff44cfcf63d5d11c0d0771d7a`, manifest `2026.11.17.030`.
 Source intent definitions: `packs/ru/intents.json`, Git blob `71be015a85471c22697f16f5dd3246d126be290c`, manifest SHA-256 `0bd5810de43f14e0c8cb454f71adbf11bf2e92e00477bf841bb66db477a7c39b`.
 
 ## Scope
@@ -24,8 +24,8 @@ The continuation adds first-person self-introduction drafts, distinct from repli
 
 The pool is **staging only**: `consumer_registered=false`. The manifest, registered packs, SHA-256 values, search index, cache key, ImPULS, and live consumers are unchanged. The 300 candidates are not presented as deployed behaviour or as an enabled bot feature.
 
-The repository-wide quality workflow checks out the exact PR head (and asserts that SHA) and now runs this test alongside the existing suite. The new test checks the source pack's real SHA-256 and Git blob, stable IDs, exact counts, 10×10 context-family coverage, style/audience/context constraints, privacy/sanctions boundaries, normalized exact duplicates against all registered packs and staged reply pools, and within-batch near-duplicate similarity. A separate editorial sweep rewrote the closest cross-intent overlaps; the strongest remaining token-Jaccard pair is recorded by the test threshold of 0.55. Automated similarity checks still do not prove complete semantic uniqueness.
+The repository-wide quality workflow checks out the exact PR head (and asserts that SHA) and now runs this test alongside the existing suite. The new test checks the source pack's real SHA-256 and Git blob, stable IDs, exact counts, 10×10 context-family coverage, style/audience/context constraints, privacy/sanctions boundaries, normalized exact duplicates against all registered packs and staged reply pools, and within-batch near-duplicate similarity. A separate editorial sweep rewrote the closest cross-intent overlaps; the strongest remaining token-Jaccard pair is recorded by the test threshold of 0.55. The first exact-head run exposed one duplicated `context_note` in `notify_delay` (reply `notify_delay_60` / `notify_delay_72`). The second note was rewritten to describe a materially different rescheduling context; this is a correction, not a new answer. Automated similarity checks still do not prove complete semantic uniqueness.
 
 ## Next action
 
-After exact-head and full quality CI pass, compare all six sets against newer main/PR additions and review meaning-level overlap. Only then consider a separate registered-pack proposal with consumer compatibility checks. Do not update ImPULS or any live bot from this staging change.
+The branch now contains current main `4e2cd1a48694c5727a1a84ce40cdc1a96a68e89d`; the four non-overlapping main changes were preserved in a two-parent merge commit. The previous exact-head quality run failed only on the duplicated context note; a corrected head still requires a fresh full quality run. After that run passes, compare all six sets against newer PR additions and review meaning-level overlap. Only then consider a separate registered-pack proposal with consumer compatibility checks. Do not update ImPULS or any live bot from this staging change.
