@@ -1,0 +1,32 @@
+name: Practical recovery R1 contextual exact-head QA
+on:
+  pull_request:
+    paths:
+      - 'staging/ru/practical_recovery_context_r1_20261114.json'
+      - 'scripts/test_practical_recovery_r1_20261114.py'
+      - 'docs/PRACTICAL_RECOVERY_R1_2026_11_14.md'
+      - '.github/workflows/practical-recovery-r1-20261114.yml'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          persist-credentials: false
+      - name: Verify actual checkout is exact PR head
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate registered packs and scoped staged candidates
+        run: |
+          python scripts/validate_pack.py
+          python -m unittest scripts.test_practical_recovery_r1_20261114 -v
+          python -O -m unittest scripts.test_practical_recovery_r1_20261114 -v
+      - name: Verify stage payload SHA-256
+        run: sha256sum staging/ru/practical_recovery_context_r1_20261114.json
