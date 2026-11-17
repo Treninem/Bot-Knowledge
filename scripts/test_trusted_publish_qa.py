@@ -1,7 +1,11 @@
 from __future__ import annotations
 
+import json
 import unittest
+from pathlib import Path
 from unittest.mock import patch
+
+ROOT = Path(__file__).resolve().parents[1]
 
 try:
     from scripts import trusted_publish_qa as publisher
@@ -150,6 +154,34 @@ class PublisherValidationTests(unittest.TestCase):
                 publisher.publish(candidate(), token="fake", base="main", branch="reviewed-test",
                                   skip_ci=False, merge_if_green=True)
             api.assert_not_called()
+
+
+    def test_prepare_requires_strictly_increasing_numeric_version(self):
+        manifest_raw = (ROOT / "manifest.json").read_bytes()
+        manifest = json.loads(manifest_raw)
+        pack_raw = (ROOT / "packs/ru/knowledge_format.json").read_bytes()
+        current_parts = [int(part) for part in manifest["knowledge_version"].split(".")]
+        next_version = ".".join(str(part) for part in (*current_parts[:-1], current_parts[-1] + 1))
+        older_version = ".".join(str(part) for part in (*current_parts[:-1], max(0, current_parts[-1] - 1)))
+
+        def contents(path, *, token, ref):
+            if path == "manifest.json":
+                return {"sha": "manifest-fixture"}, manifest_raw
+            return {"sha": "pack-fixture"}, pack_raw
+
+        value = candidate()
+        value["record"]["id"] = "publisher_monotonic_version_fixture"
+        value["record"]["question"] = "Как проверить, что версия публикации новее текущей?"
+        value["record"]["aliases"] = ["Как не перезаписать старую версию базы?"]
+        value["knowledge_version"] = next_version
+        with patch.object(publisher, "_contents", side_effect=contents):
+            _, _, new_manifest, _ = publisher.prepare_changes(value, token="fixture", base="main")
+            self.assertEqual(json.loads(new_manifest)["knowledge_version"], next_version)
+            for invalid in (manifest["knowledge_version"], older_version):
+                value["knowledge_version"] = invalid
+                with self.subTest(version=invalid), self.assertRaisesRegex(
+                        PublishError, "increase numerically"):
+                    publisher.prepare_changes(value, token="fixture", base="main")
 
 
 if __name__ == "__main__":
