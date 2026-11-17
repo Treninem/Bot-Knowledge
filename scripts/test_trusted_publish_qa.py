@@ -1,7 +1,12 @@
 from __future__ import annotations
 
+import hashlib
+import json
 import unittest
+from pathlib import Path
 from unittest.mock import patch
+
+ROOT = Path(__file__).resolve().parents[1]
 
 try:
     from scripts import trusted_publish_qa as publisher
@@ -150,6 +155,74 @@ class PublisherValidationTests(unittest.TestCase):
                 publisher.publish(candidate(), token="fake", base="main", branch="reviewed-test",
                                   skip_ci=False, merge_if_green=True)
             api.assert_not_called()
+
+
+    def test_prepare_requires_strictly_increasing_numeric_version(self):
+        manifest_raw = (ROOT / "manifest.json").read_bytes()
+        manifest = json.loads(manifest_raw)
+        pack_raw = (ROOT / "packs/ru/knowledge_format.json").read_bytes()
+        current_parts = [int(part) for part in manifest["knowledge_version"].split(".")]
+        next_version = ".".join(str(part) for part in (*current_parts[:-1], current_parts[-1] + 1))
+        older_version = ".".join(str(part) for part in (*current_parts[:-1], max(0, current_parts[-1] - 1)))
+
+        def contents(path, *, token, ref):
+            if path == "manifest.json":
+                return {"sha": "manifest-fixture"}, manifest_raw
+            return {"sha": "pack-fixture"}, pack_raw
+
+        value = candidate()
+        value["record"]["id"] = "publisher_monotonic_version_fixture"
+        value["record"]["question"] = "Как проверить, что версия публикации новее текущей?"
+        value["record"]["aliases"] = ["Как не перезаписать старую версию базы?"]
+        value["knowledge_version"] = next_version
+        with patch.object(publisher, "_contents", side_effect=contents):
+            _, _, new_manifest, _ = publisher.prepare_changes(value, token="fixture", base="main")
+            self.assertEqual(json.loads(new_manifest)["knowledge_version"], next_version)
+            for invalid in (manifest["knowledge_version"], older_version):
+                value["knowledge_version"] = invalid
+                with self.subTest(version=invalid), self.assertRaisesRegex(
+                        PublishError, "increase numerically"):
+                    publisher.prepare_changes(value, token="fixture", base="main")
+
+
+    def test_prepare_checks_base_sha_and_forward_version_in_ten_rounds(self):
+        for number in range(10):
+            with self.subTest(round=number):
+                value = candidate()
+                value["record"]["id"] = f"publisher_test_record_{number}"
+                value["knowledge_version"] = f"2026.11.04.{number + 2}"
+                catalog = {
+                    "adapter": "qa.v1", "records": "records",
+                    "audiences": ["all_ai_bots"], "contexts": ["direct"],
+                    "language": "ru", "constraints": dict(publisher.QA_CONSTRAINTS),
+                }
+                pack = {
+                    "schema_version": 1, "pack_version": f"2026.11.04.{number + 1}",
+                    "catalog": catalog, "records": [],
+                }
+                raw = json.dumps(pack, ensure_ascii=False).encode("utf-8")
+                manifest = {
+                    "schema_version": 1,
+                    "knowledge_version": f"2026.11.04.{number + 1}",
+                    "packs": [{"path": value["section_path"],
+                               "sha256": hashlib.sha256(raw).hexdigest()}],
+                }
+
+                def contents(path, *, token, ref):
+                    payload = raw if path != "manifest.json" else json.dumps(manifest).encode("utf-8")
+                    return {"sha": "fixture"}, payload
+
+                with patch.object(publisher, "_contents", side_effect=contents):
+                    _, new_pack, new_manifest, _ = publisher.prepare_changes(value, token="fixture", base="main")
+                    self.assertEqual(json.loads(new_pack)["records"][0]["id"], value["record"]["id"])
+                    self.assertEqual(json.loads(new_manifest)["knowledge_version"], value["knowledge_version"])
+                    manifest["packs"][0]["sha256"] = "0" * 64
+                    with self.assertRaisesRegex(PublishError, "differs from manifest"):
+                        publisher.prepare_changes(value, token="fixture", base="main")
+                    manifest["packs"][0]["sha256"] = hashlib.sha256(raw).hexdigest()
+                    value["knowledge_version"] = manifest["knowledge_version"]
+                    with self.assertRaisesRegex(PublishError, "increase numerically"):
+                        publisher.prepare_changes(value, token="fixture", base="main")
 
 
 if __name__ == "__main__":
