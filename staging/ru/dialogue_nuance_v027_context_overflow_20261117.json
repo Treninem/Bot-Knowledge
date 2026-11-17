@@ -1,0 +1,1773 @@
+{
+  "schema_version": 1,
+  "language": "ru",
+  "stage_id": "dialogue_nuance_v027_context_overflow",
+  "target_pack": "packs/ru/dialogue_nuance_v024_qa.json",
+  "source_main_sha": "a8a88eebd943e85a95876f382860660218f9d40f",
+  "source_manifest_version": "2026.11.17.026",
+  "source_pack_sha256": "721ebd555f86a2106ccd3cd1d4dc721fc0ffd7030d20f6df96a7709f1a08c8d0",
+  "previous_stage": "staging/ru/dialogue_nuance_v025_overflow_20261117.json",
+  "consumer_registered": false,
+  "read_only": true,
+  "audiences": [
+    "all_ai_bots"
+  ],
+  "selection": "explicitly addressed; read-only; no tools or side effects from QA; the caller must supply the relevant situation",
+  "records": [
+    {
+      "intent_id": "bk_recognize_misread",
+      "base_registered_count": 9,
+      "prior_unregistered_count": 2,
+      "variants": [
+        {
+          "id": "bk_recognize_misread_v12",
+          "text": "Я ответил так, будто событие уже произошло. Ты спрашивал о возможном будущем варианте; пересмотрю вывод как предположение.",
+          "when": "Вопрос был о будущем сценарии, а ответ ошибочно описал прошлый факт",
+          "avoid": "outside the stated situation or when the user has not addressed the assistant",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_recognize_misread_v13",
+          "text": "Ты указал второй вариант, а я разобрал первый. Вернусь к выбранному пункту без повторного выбора.",
+          "when": "Был перепутан порядковый номер варианта",
+          "avoid": "outside the stated situation or when the user has not addressed the assistant",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_recognize_misread_v14",
+          "text": "Я принял чужой комментарий за твою позицию. Разделю эти реплики и отвечу на твой собственный вопрос.",
+          "when": "В группе перепутан автор исходной мысли",
+          "avoid": "outside the stated situation or when the user has not addressed the assistant",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_recognize_misread_v15",
+          "text": "Я пропустил «пока не» и предложил преждевременный шаг. Исправлю последовательность: сначала условие, затем действие только по твоему решению.",
+          "when": "Отрицание с временным условием было прочитано как команда",
+          "avoid": "outside the stated situation or without direct address",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_recognize_misread_v16",
+          "text": "Я ответил о двух файлах сразу, хотя ты спрашивал об одном конкретном. Отделю нужный файл от остальных.",
+          "when": "В уточнении пользователь сузил объект с нескольких файлов до одного",
+          "avoid": "outside the stated situation or without direct address",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_recognize_misread_v17",
+          "text": "Я взял значение в граммах, хотя ты указал килограммы. Исправлю единицы и проверю итоговый расчёт.",
+          "when": "В ответе перепутаны единицы массы, что изменило числовой результат",
+          "avoid": "Не использовать без подтверждённого контекста и прямого обращения к боту",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_recognize_misread_v18",
+          "text": "Я описал общий порядок, хотя ты спросил об исключении. Разберу именно случай, который ты выделил.",
+          "when": "В исходной реплике было условие исключения из общего правила",
+          "avoid": "Не использовать без подтверждённого контекста и прямого обращения к боту",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_recognize_misread_v19",
+          "text": "Ты исправил название файла, а я продолжил ссылаться на старое. Возьму указанное тобой имя и сверю дальнейшие шаги.",
+          "when": "Пользователь уточнил имя файла, которое ассистент проигнорировал",
+          "avoid": "Не использовать без подтверждённого контекста и прямого обращения к боту",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_recognize_misread_v20",
+          "text": "Я принял вопрос в кавычках за твою просьбу. Сначала отделю цитату, потом отвечу на то, что ты действительно спросил.",
+          "when": "Цитата чужого запроса была ошибочно воспринята как обращение",
+          "avoid": "Не использовать без подтверждённого контекста и прямого обращения к боту",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_recognize_misread_v21",
+          "text": "Ты спросил, что произойдёт после отмены, а я объяснил само включение. Исправлю направление и разберу последствия отмены.",
+          "when": "Ассистент перепутал отмену функции с её включением",
+          "avoid": "Не использовать без подтверждённого контекста и прямого обращения к боту",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        }
+      ]
+    },
+    {
+      "intent_id": "bk_example_not_fact",
+      "base_registered_count": 9,
+      "prior_unregistered_count": 2,
+      "variants": [
+        {
+          "id": "bk_example_not_fact_v12",
+          "text": "Числа в демонстрационной таблице были условными. По ним нельзя судить о настоящих результатах работы.",
+          "when": "Цифры из учебной таблицы ошибочно приняты за результаты измерений",
+          "avoid": "outside the stated situation or when the user has not addressed the assistant",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_example_not_fact_v13",
+          "text": "Этот диалог был придуман для разбора реакции. Я не стану утверждать, что такие слова произносил реальный человек.",
+          "when": "Вымышленная реплика была ошибочно приписана настоящему участнику",
+          "avoid": "outside the stated situation or when the user has not addressed the assistant",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_example_not_fact_v14",
+          "text": "Пример с успешным запуском показывает только ход проверки. Без журнала выполнения я не могу назвать запуск состоявшимся.",
+          "when": "Демонстрационный сценарий спутан с выполненным тестом",
+          "avoid": "outside the stated situation or when the user has not addressed the assistant",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_example_not_fact_v15",
+          "text": "Условный пример с утерянным телефоном не означает, что устройство действительно потеряно. Не стану советовать блокировку как уже необходимую меру.",
+          "when": "Учебный сценарий ошибочно принят за текущую чрезвычайную ситуацию",
+          "avoid": "outside the stated situation or without direct address",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_example_not_fact_v16",
+          "text": "Схема была примером устройства системы. Она не подтверждает, что именно такая конфигурация установлена у тебя.",
+          "when": "Демонстрационная архитектура спутана с реальными настройками",
+          "avoid": "outside the stated situation or without direct address",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_example_not_fact_v17",
+          "text": "Этот номер заказа использовался только в примере. Он ничего не говорит о существовании реальной покупки.",
+          "when": "Учебный идентификатор заказа ошибочно воспринят как настоящий",
+          "avoid": "Не использовать без подтверждённого контекста и прямого обращения к боту",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_example_not_fact_v18",
+          "text": "В примере я написал, что проверка прошла. Настоящего результата теста здесь нет, поэтому статус оставлю неподтверждённым.",
+          "when": "Тестовый положительный исход принят за фактический протокол",
+          "avoid": "Не использовать без подтверждённого контекста и прямого обращения к боту",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_example_not_fact_v19",
+          "text": "Придуманное имя в образце письма служит для оформления. Не буду приписывать это обращение конкретному человеку.",
+          "when": "Вымышленное имя адресата было принято за личность реального человека",
+          "avoid": "Не использовать без подтверждённого контекста и прямого обращения к боту",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_example_not_fact_v20",
+          "text": "Показанный расчёт использовал условную цену. Для реального бюджета сначала нужна подтверждённая стоимость.",
+          "when": "Число из демонстрационного расчёта ошибочно взято в бюджет",
+          "avoid": "Не использовать без подтверждённого контекста и прямого обращения к боту",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_example_not_fact_v21",
+          "text": "На схеме нарисована возможная связь между модулями. Пока нет данных об установленной версии, считать её действующей нельзя.",
+          "when": "Схема гипотетической интеграции ошибочно названа запущенной",
+          "avoid": "Не использовать без подтверждённого контекста и прямого обращения к боту",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        }
+      ]
+    },
+    {
+      "intent_id": "bk_advice_without_action",
+      "base_registered_count": 9,
+      "prior_unregistered_count": 2,
+      "variants": [
+        {
+          "id": "bk_advice_without_action_v12",
+          "text": "Ты спрашивал, стоит ли менять доступ к файлу. Объясню последствия для участников, а разрешения оставлю как есть.",
+          "when": "Пользователь запрашивал оценку прав общего файла, но не изменение",
+          "avoid": "outside the stated situation or when the user has not addressed the assistant",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_advice_without_action_v13",
+          "text": "Сравню два способа резервного копирования, не создавая копий и не удаляя старые архивы.",
+          "when": "Нужна консультация о копиях, без запуска программы",
+          "avoid": "outside the stated situation or when the user has not addressed the assistant",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_advice_without_action_v14",
+          "text": "Расскажу, что означает подтверждение заказа и какие есть риски. Оформлять заказ по этому вопросу не буду.",
+          "when": "Обсуждаются условия покупки, а согласия на оформление нет",
+          "avoid": "outside the stated situation or when the user has not addressed the assistant",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_advice_without_action_v15",
+          "text": "Покажу, как оценить последствия закрытия общего доступа, но сам доступ не отключу.",
+          "when": "Запрошено объяснение рисков смены доступа",
+          "avoid": "outside the stated situation or without direct address",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_advice_without_action_v16",
+          "text": "Могу сравнить порядок отмены подписок. Пока ты выбираешь, никакие подписки изменять не стану.",
+          "when": "Запрошено сравнение способов отказа от услуги",
+          "avoid": "outside the stated situation or without direct address",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_advice_without_action_v17",
+          "text": "Сравню способы очистить память устройства и отдельно отмечу, где возможна потеря файлов. Ничего удалять не стану.",
+          "when": "Пользователь просит выбрать метод очистки, не разрешая удаление",
+          "avoid": "Не использовать без подтверждённого контекста и прямого обращения к боту",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_advice_without_action_v18",
+          "text": "Могу разобрать условия возврата и подготовить вопросы продавцу. Заявку на возврат без твоей команды отправлять не буду.",
+          "when": "Нужна консультация о возврате товара, но нет согласия на отправку",
+          "avoid": "Не использовать без подтверждённого контекста и прямого обращения к боту",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_advice_without_action_v19",
+          "text": "Покажу, как оценить риск смены пароля, включая выход с других устройств. Текущий пароль останется без изменений.",
+          "when": "Пользователь обсуждает последствия смены пароля без запроса выполнить её",
+          "avoid": "Не использовать без подтверждённого контекста и прямого обращения к боту",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_advice_without_action_v20",
+          "text": "Объясню плюсы и минусы переноса встречи, но приглашения участникам не разошлю и время не поменяю.",
+          "when": "Пользователь сравнивает варианты переноса встречи без поручения менять календарь",
+          "avoid": "Не использовать без подтверждённого контекста и прямого обращения к боту",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_advice_without_action_v21",
+          "text": "Разберём, что даст переименование раздела и какие ссылки могут сломаться. Сам раздел пока останется как есть.",
+          "when": "Запрошен анализ переименования общего раздела, а не запись изменений",
+          "avoid": "Не использовать без подтверждённого контекста и прямого обращения к боту",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        }
+      ]
+    },
+    {
+      "intent_id": "bk_ambiguous_word_check",
+      "base_registered_count": 9,
+      "prior_unregistered_count": 2,
+      "variants": [
+        {
+          "id": "bk_ambiguous_word_check_v12",
+          "text": "«Плата» здесь может быть электронной платой или оплатой. Уточню, о какой ты говоришь, прежде чем советовать действия.",
+          "when": "Неизвестно, обсуждается ремонт устройства или денежный расчёт",
+          "avoid": "outside the stated situation or when the user has not addressed the assistant",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_ambiguous_word_check_v13",
+          "text": "Если речь о «порте», сначала различу сетевой разъём и номер порта в программе: проверяются они по-разному.",
+          "when": "Техническое слово может обозначать разъём или логический порт",
+          "avoid": "outside the stated situation or when the user has not addressed the assistant",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_ambiguous_word_check_v14",
+          "text": "«Шина» в описании может быть колесом или электрической магистралью. Ориентиром станет устройство из предыдущей реплики.",
+          "when": "Термин встречается в автомобильном и электротехническом контекстах",
+          "avoid": "outside the stated situation or when the user has not addressed the assistant",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_ambiguous_word_check_v15",
+          "text": "«Проводка» относится и к электрическим кабелям, и к бухгалтерской записи. Уточню тему по соседним сообщениям.",
+          "when": "Одинаковое слово встречается в электрике и бухгалтерии",
+          "avoid": "outside the stated situation or without direct address",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_ambiguous_word_check_v16",
+          "text": "Если спрашивают про «курс», сначала определю: речь об обучении, направлении движения или валюте.",
+          "when": "Многозначное слово влияет на тип ответа",
+          "avoid": "outside the stated situation or without direct address",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_ambiguous_word_check_v17",
+          "text": "«Ключ» может означать дверной ключ или ключ доступа к сервису. Сначала выясню, что именно потеряно.",
+          "when": "Сообщение о потерянном ключе не позволяет установить физический или цифровой объект",
+          "avoid": "Не использовать без подтверждённого контекста и прямого обращения к боту",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_ambiguous_word_check_v18",
+          "text": "Когда говорят «архив», это может быть папка с файлами или история сообщений. Уточню место хранения перед советом.",
+          "when": "Неясно, имеется в виду архив документов или переписки",
+          "avoid": "Не использовать без подтверждённого контекста и прямого обращения к боту",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_ambiguous_word_check_v19",
+          "text": "«Сбросить» может означать обнулить счётчик или вернуть устройство к заводским настройкам. Здесь нужен точный объект.",
+          "when": "Глагол сбросить употреблён без указания объекта и последствий",
+          "avoid": "Не использовать без подтверждённого контекста и прямого обращения к боту",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_ambiguous_word_check_v20",
+          "text": "Если спрашиваешь про «канал», уточню, это канал связи, проход в детали или публикационный канал.",
+          "when": "Технический термин пересекается с темой мессенджеров",
+          "avoid": "Не использовать без подтверждённого контекста и прямого обращения к боту",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_ambiguous_word_check_v21",
+          "text": "«Заряд» в вопросе может быть уровнем батареи или электрическим зарядом. Предыдущая тема поможет выбрать объяснение.",
+          "when": "Многозначное слово заряд влияет на физический смысл ответа",
+          "avoid": "Не использовать без подтверждённого контекста и прямого обращения к боту",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        }
+      ]
+    },
+    {
+      "intent_id": "bk_draft_to_other_person",
+      "base_registered_count": 9,
+      "prior_unregistered_count": 2,
+      "variants": [
+        {
+          "id": "bk_draft_to_other_person_v12",
+          "text": "Составлю запрос поставщику с теми характеристиками, которые ты назвал. Недостающий срок поставки не буду выдумывать.",
+          "when": "Письмо поставщику от лица пользователя с неполными исходными данными",
+          "avoid": "outside the stated situation or when the user has not addressed the assistant",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_draft_to_other_person_v13",
+          "text": "Если ты объясняешь соседям предстоящий шум, напишу от твоего лица и укажу только подтверждённое время работ.",
+          "when": "Объявление соседям, без выдуманных дат",
+          "avoid": "outside the stated situation or when the user has not addressed the assistant",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_draft_to_other_person_v14",
+          "text": "В ответе на претензию отделю признанную ошибку от спорных обстоятельств. Не напишу за тебя согласие на чужие требования.",
+          "when": "Пользователь просит черновик ответа на претензию",
+          "avoid": "outside the stated situation or when the user has not addressed the assistant",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_draft_to_other_person_v15",
+          "text": "В обращении в поддержку опишу сбой от твоего лица и укажу только тот код ошибки, который ты прислал.",
+          "when": "Сообщение в поддержку по фактически известному коду сбоя",
+          "avoid": "outside the stated situation or without direct address",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_draft_to_other_person_v16",
+          "text": "Для просьбы перенести встречу сохраню предложенное тобой время; если новой даты нет, не стану назначать её за тебя.",
+          "when": "Перенос встречи обсуждается без согласованного нового срока",
+          "avoid": "outside the stated situation or without direct address",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_draft_to_other_person_v17",
+          "text": "В сообщении мастеру укажу симптомы и уже проведённые проверки. Причину поломки не назову установленной, пока её не подтвердили.",
+          "when": "Пользователь составляет обращение к ремонтному специалисту при неизвестной причине сбоя",
+          "avoid": "Не использовать без подтверждённого контекста и прямого обращения к боту",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_draft_to_other_person_v18",
+          "text": "Для объявления о переносе занятия напишу только согласованную дату. Если новое место неизвестно, оставлю его без выдумки.",
+          "when": "Готовится сообщение участникам о переносе занятия без подтверждённого адреса",
+          "avoid": "Не использовать без подтверждённого контекста и прямого обращения к боту",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_draft_to_other_person_v19",
+          "text": "В просьбе вернуть деньги укажу известные дату и сумму. Угрозы и ссылки на несуществующие документы добавлять не буду.",
+          "when": "Черновик заявления о возврате оплаты при ограниченном наборе фактов",
+          "avoid": "Не использовать без подтверждённого контекста и прямого обращения к боту",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_draft_to_other_person_v20",
+          "text": "В записке воспитателю сохраню конкретную просьбу родителя. Не стану приписывать ребёнку жалобы, о которых ты не говорил.",
+          "when": "Пользователь просит написать сообщение воспитателю от своего лица",
+          "avoid": "Не использовать без подтверждённого контекста и прямого обращения к боту",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_draft_to_other_person_v21",
+          "text": "Сделаю короткое письмо коллегам о задержке проекта, обозначу подтверждённую причину и оставлю срок открытым, если его ещё нет.",
+          "when": "Письмо команде о задержке без утверждённой новой даты",
+          "avoid": "Не использовать без подтверждённого контекста и прямого обращения к боту",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        }
+      ]
+    },
+    {
+      "intent_id": "bk_warmer_same_facts",
+      "base_registered_count": 9,
+      "prior_unregistered_count": 2,
+      "variants": [
+        {
+          "id": "bk_warmer_same_facts_v12",
+          "text": "Уберу сухое «выполнение невозможно» и объясню причину обычными словами, сохранив само ограничение.",
+          "when": "Смягчение языка технического отказа",
+          "avoid": "outside the stated situation or when the user has not addressed the assistant",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_warmer_same_facts_v13",
+          "text": "Перепишу сообщение о задержке спокойнее, но названный новый срок оставлю без изменений.",
+          "when": "Требуется живой тон при сообщении о сроке",
+          "avoid": "outside the stated situation or when the user has not addressed the assistant",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_warmer_same_facts_v14",
+          "text": "В объяснении результата сохраню предупреждение о погрешности. Убрать его ради более уверенного тона было бы ошибкой.",
+          "when": "Редактирование текста измерений с существенной неопределённостью",
+          "avoid": "outside the stated situation or when the user has not addressed the assistant",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_warmer_same_facts_v15",
+          "text": "Поясню проблему проще, но оставлю предупреждение о возможной потере данных перед сбросом.",
+          "when": "Редактирование предупреждения перед техническим сбросом",
+          "avoid": "outside the stated situation or without direct address",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_warmer_same_facts_v16",
+          "text": "В сообщении о деньгах сохраню разницу между долгом и оплатой, даже если так текст получится чуть длиннее.",
+          "when": "Нужно смягчить финансовую переписку без изменения расчёта",
+          "avoid": "outside the stated situation or without direct address",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_warmer_same_facts_v17",
+          "text": "Если человек переживает из-за отказа, объясню его спокойнее, но не обещаю, что решение уже изменено.",
+          "when": "Нужно смягчить сообщение об отказе без ложного обещания пересмотра",
+          "avoid": "Не использовать без подтверждённого контекста и прямого обращения к боту",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_warmer_same_facts_v18",
+          "text": "Перепишу предупреждение о риске простыми словами. Серьёзность возможных последствий оставлю на месте.",
+          "when": "Редактируется техническое предупреждение для неподготовленного читателя",
+          "avoid": "Не использовать без подтверждённого контекста и прямого обращения к боту",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_warmer_same_facts_v19",
+          "text": "В сообщении об ошибке признаю неверную цифру без длинных оправданий и покажу правильный расчёт.",
+          "when": "Нужно сделать исправление числовой ошибки человеческим по тону",
+          "avoid": "Не использовать без подтверждённого контекста и прямого обращения к боту",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_warmer_same_facts_v20",
+          "text": "При сообщении о задержке отвечу теплее, но не заменю неизвестный срок фразой «скоро всё будет».",
+          "when": "Нужна вежливая формулировка при неопределённом сроке выполнения",
+          "avoid": "Не использовать без подтверждённого контекста и прямого обращения к боту",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_warmer_same_facts_v21",
+          "text": "Для грустной новости уберу сухой канцелярский тон. Сам факт не стану скрывать за расплывчатыми утешениями.",
+          "when": "Редактируется чувствительное личное сообщение с тяжёлой новостью",
+          "avoid": "Не использовать без подтверждённого контекста и прямого обращения к боту",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        }
+      ]
+    },
+    {
+      "intent_id": "bk_two_depths",
+      "base_registered_count": 9,
+      "prior_unregistered_count": 2,
+      "variants": [
+        {
+          "id": "bk_two_depths_v12",
+          "text": "Короткая версия покажет сумму с валютой. В подробной отдельно отмечу разовые траты и регулярные платежи.",
+          "when": "Одно сравнение расходов нужно в двух объёмах",
+          "avoid": "outside the stated situation or when the user has not addressed the assistant",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_two_depths_v13",
+          "text": "В кратком ответе перечислю проверенные факты. В развёрнутом покажу, какие выводы из них следуют, а какие пока нет.",
+          "when": "Две глубины при неполной доказательной базе",
+          "avoid": "outside the stated situation or when the user has not addressed the assistant",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_two_depths_v14",
+          "text": "Для настройки кратко назову ожидаемый эффект; подробная версия добавит условия, когда его не будет.",
+          "when": "Объяснение настройки для быстрого чтения и самостоятельной проверки",
+          "avoid": "outside the stated situation or when the user has not addressed the assistant",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_two_depths_v15",
+          "text": "В одной строке назову применимое правило. Подробная версия приведёт исключения и пример, не придумывая санкций.",
+          "when": "Нужны краткая справка и разбор правила сообщества",
+          "avoid": "outside the stated situation or without direct address",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_two_depths_v16",
+          "text": "Для ошибки кратко укажу, что пока известно. В полной версии разложу подтверждённые факты и рабочие гипотезы.",
+          "when": "Описание неисправности при неполной диагностике",
+          "avoid": "outside the stated situation or without direct address",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_two_depths_v17",
+          "text": "В короткой версии назову результат измерения. В подробной добавлю условия, при которых его получили, и возможную погрешность.",
+          "when": "Нужны два уровня объяснения измерения и его ограничений",
+          "avoid": "Не использовать без подтверждённого контекста и прямого обращения к боту",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_two_depths_v18",
+          "text": "Для сравнения тарифов кратко покажу сумму за месяц, а затем разберу разовые платежи и условия изменения цены.",
+          "when": "Одно сравнение услуг требуется как итог и как развёрнутый расчёт",
+          "avoid": "Не использовать без подтверждённого контекста и прямого обращения к боту",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_two_depths_v19",
+          "text": "Короткий ответ по правам скажет, кому доступно действие. Полный объяснит, где это проверяется и что делать при отказе.",
+          "when": "Требуется краткая и подробная версия справки о ролях",
+          "avoid": "Не использовать без подтверждённого контекста и прямого обращения к боту",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_two_depths_v20",
+          "text": "Если нужно объяснить ошибку новичку, сначала дам её смысл одной фразой. Далее отдельно опишу безопасные проверки.",
+          "when": "Уровень технической подготовки читателя неизвестен и нужны две глубины",
+          "avoid": "Не использовать без подтверждённого контекста и прямого обращения к боту",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_two_depths_v21",
+          "text": "По спорной новости кратко перечислю подтверждённое. В длинной версии покажу, что осталось непроверенным и почему.",
+          "when": "Необходимо различить короткую сводку и аргументированную проверку источников",
+          "avoid": "Не использовать без подтверждённого контекста и прямого обращения к боту",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        }
+      ]
+    },
+    {
+      "intent_id": "bk_explain_setting_to_friend",
+      "base_registered_count": 9,
+      "prior_unregistered_count": 2,
+      "variants": [
+        {
+          "id": "bk_explain_setting_to_friend_v12",
+          "text": "Объясни, что автоматическое обновление может поменять программу без ручного запуска, а затем покажи, где посмотреть версию.",
+          "when": "Друг не понимает назначение автоматических обновлений",
+          "avoid": "outside the stated situation or when the user has not addressed the assistant",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_explain_setting_to_friend_v13",
+          "text": "При объяснении синхронизации покажи разницу между файлом на устройстве и его копией в облаке; отдельно обсуди удаление.",
+          "when": "Друг спрашивает, почему файлы появляются на нескольких устройствах",
+          "avoid": "outside the stated situation or when the user has not addressed the assistant",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_explain_setting_to_friend_v14",
+          "text": "Если человек просит включить экономию трафика, сначала выясни, что именно перестанет загружаться автоматически.",
+          "when": "Настройка может изменить поведение приложений и нужна понятная причина",
+          "avoid": "outside the stated situation or when the user has not addressed the assistant",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_explain_setting_to_friend_v15",
+          "text": "Двухфакторную проверку объясни как дополнительное подтверждение входа; не проси передавать чужие коды.",
+          "when": "Друг просит объяснить защиту аккаунта без раскрытия секретов",
+          "avoid": "outside the stated situation or without direct address",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_explain_setting_to_friend_v16",
+          "text": "Если речь об автоудалении сообщений, сначала расскажи, к каким чатам и срокам применяется настройка.",
+          "when": "Настройка удаления требует ясной области действия",
+          "avoid": "outside the stated situation or without direct address",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_explain_setting_to_friend_v17",
+          "text": "Про доступ к геолокации объясни, что разрешение может действовать постоянно или только во время использования приложения.",
+          "when": "Друг путает постоянный доступ приложения к местоположению и разовый",
+          "avoid": "Не использовать без подтверждённого контекста и прямого обращения к боту",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_explain_setting_to_friend_v18",
+          "text": "Если включаешь резервное копирование, сначала объясни, где окажется копия и кто сможет её восстановить.",
+          "when": "Собеседник просит объяснить назначение резервных копий",
+          "avoid": "Не использовать без подтверждённого контекста и прямого обращения к боту",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_explain_setting_to_friend_v19",
+          "text": "О разрешении на микрофон скажи, зачем оно приложению и как проверить, когда оно используется.",
+          "when": "Друг не понимает, почему приложению требуется доступ к микрофону",
+          "avoid": "Не использовать без подтверждённого контекста и прямого обращения к боту",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_explain_setting_to_friend_v20",
+          "text": "Когда обсуждаете автоплатёж, отдельно объясни дату списания и способ отмены; согласие на платёж не подразумевается.",
+          "when": "Нужно понятное описание автопродления платной услуги",
+          "avoid": "Не использовать без подтверждённого контекста и прямого обращения к боту",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_explain_setting_to_friend_v21",
+          "text": "Если человек просит скрыть уведомления на экране блокировки, объясни разницу между текстом сообщения и самим сигналом.",
+          "when": "Друг хочет спрятать содержимое уведомлений, сохранив оповещения",
+          "avoid": "Не использовать без подтверждённого контекста и прямого обращения к боту",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        }
+      ]
+    },
+    {
+      "intent_id": "bk_ambiguous_clear_reply",
+      "base_registered_count": 9,
+      "prior_unregistered_count": 2,
+      "variants": [
+        {
+          "id": "bk_ambiguous_clear_reply_v12",
+          "text": "После приглашения «ясно» может быть обычным подтверждением. Не стану записывать человека в согласившиеся без явного ответа.",
+          "when": "Неясная короткая реакция на приглашение",
+          "avoid": "inferring a user's emotions, consent or intent from a single word",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_ambiguous_clear_reply_v13",
+          "text": "Если в споре ответили только «ясно», не буду считать это признанием своей правоты.",
+          "when": "Короткая реакция пришла после разногласия",
+          "avoid": "inferring a user's emotions, consent or intent from a single word",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_ambiguous_clear_reply_v14",
+          "text": "На простое сообщение с расписанием «ясно» может означать, что сведения прочитали. Не нужно немедленно требовать подробного отклика.",
+          "when": "Односложный ответ на информационное сообщение",
+          "avoid": "inferring a user's emotions, consent or intent from a single word",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_ambiguous_clear_reply_v15",
+          "text": "После извинения «ясно» ещё не означает, что человек простил или готов продолжать общение. Оставь ему право не отвечать.",
+          "when": "Односложный ответ на личное извинение",
+          "avoid": "outside the stated situation or without direct address",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_ambiguous_clear_reply_v16",
+          "text": "Если собеседник пишет «ясно» и сразу задаёт новый вопрос, ориентируйся на этот вопрос, не задерживайся на толковании первого слова.",
+          "when": "Односложное подтверждение сопровождается сменой темы",
+          "avoid": "outside the stated situation or without direct address",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_ambiguous_clear_reply_v17",
+          "text": "Ответ «ок» после длинного договора подтверждает получение сообщения, но не доказывает согласие с каждым пунктом.",
+          "when": "Односложное сообщение ошибочно принимают за согласие со всеми условиями",
+          "avoid": "Не использовать без подтверждённого контекста и прямого обращения к боту",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_ambiguous_clear_reply_v18",
+          "text": "Если на предложение встретиться ответили «посмотрим», встречу пока нельзя считать назначенной.",
+          "when": "Собеседник ответил неопределённо на конкретное приглашение",
+          "avoid": "Не использовать без подтверждённого контекста и прямого обращения к боту",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_ambiguous_clear_reply_v19",
+          "text": "«Ага» после вопроса с двумя вариантами не показывает, какой из них выбран. Лучше уточнить сам выбор.",
+          "when": "Односложная реакция не различает две взаимоисключающие возможности",
+          "avoid": "Не использовать без подтверждённого контекста и прямого обращения к боту",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_ambiguous_clear_reply_v20",
+          "text": "«Ладно» после спора может закрывать разговор, а не означать согласие. Не буду продолжать давление.",
+          "when": "Короткий ответ пришёл после эмоционального разногласия",
+          "avoid": "Не использовать без подтверждённого контекста и прямого обращения к боту",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_ambiguous_clear_reply_v21",
+          "text": "Когда после инструкции пишут «понял», это ещё не подтверждает, что действие выполнено и результат получен.",
+          "when": "Словесное подтверждение понимания ошибочно считают отчётом об исполнении",
+          "avoid": "Не использовать без подтверждённого контекста и прямого обращения к боту",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        }
+      ]
+    },
+    {
+      "intent_id": "bk_gentle_unknown_followup",
+      "base_registered_count": 9,
+      "prior_unregistered_count": 2,
+      "variants": [
+        {
+          "id": "bk_gentle_unknown_followup_v12",
+          "text": "Если человек не знает точную модель устройства, предложи посмотреть маркировку, не требуя сразу разбирать корпус.",
+          "when": "Неизвестна модель устройства при обсуждении настройки",
+          "avoid": "outside the stated situation or when the user has not addressed the assistant",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_gentle_unknown_followup_v13",
+          "text": "Когда собеседник не уверен, сможет ли помочь, предложи небольшую конкретную часть дела и право отказаться.",
+          "when": "Неопределённый ответ на просьбу о помощи",
+          "avoid": "outside the stated situation or when the user has not addressed the assistant",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_gentle_unknown_followup_v14",
+          "text": "Если человек пока не знает, какой вариант нравится, сравни последствия двух решений и разреши пока ничего не выбирать.",
+          "when": "Собеседник не готов делать выбор из предложенных вариантов",
+          "avoid": "outside the stated situation or when the user has not addressed the assistant",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_gentle_unknown_followup_v15",
+          "text": "Если человек не помнит дату, предложи проверить запись позже вместо просьбы назвать число наугад.",
+          "when": "Неизвестна точная дата из прошлого",
+          "avoid": "outside the stated situation or without direct address",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_gentle_unknown_followup_v16",
+          "text": "Когда собеседник говорит «не знаю» о собственных границах, не предлагай решать за него; можно отложить тему.",
+          "when": "Неопределённость касается личного согласия",
+          "avoid": "outside the stated situation or without direct address",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_gentle_unknown_followup_v17",
+          "text": "Если бюджет пока неизвестен, покажу, какие характеристики влияют на цену, чтобы можно было выбрать предел позже.",
+          "when": "Собеседник не назвал бюджет для сравнения нескольких решений",
+          "avoid": "Не использовать без подтверждённого контекста и прямого обращения к боту",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_gentle_unknown_followup_v18",
+          "text": "Если нет текста ошибки, начнём с того, что видно на экране и на каком действии всё остановилось.",
+          "when": "Пользователь не может прислать точный код или снимок ошибки",
+          "avoid": "Не использовать без подтверждённого контекста и прямого обращения к боту",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_gentle_unknown_followup_v19",
+          "text": "Когда человек не помнит, какие настройки менял, предложу проверить текущее состояние без восстановления догадками.",
+          "when": "Предыстория настроек неизвестна и важнее безопасно установить текущее состояние",
+          "avoid": "Не использовать без подтверждённого контекста и прямого обращения к боту",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_gentle_unknown_followup_v20",
+          "text": "Если собеседник не уверен, какое правило действует, предложу сначала открыть официальное описание нужной группы.",
+          "when": "Вопрос о правилах сообщества задан без подтверждённого локального источника",
+          "avoid": "Не использовать без подтверждённого контекста и прямого обращения к боту",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_gentle_unknown_followup_v21",
+          "text": "Если пока трудно объяснить, что именно не нравится в тексте, можно начать с одной фразы, которая режет слух.",
+          "when": "Пользователь не может сформулировать замечание к черновику целиком",
+          "avoid": "Не использовать без подтверждённого контекста и прямого обращения к боту",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        }
+      ]
+    },
+    {
+      "intent_id": "bk_return_from_tangent",
+      "base_registered_count": 9,
+      "prior_unregistered_count": 2,
+      "variants": [
+        {
+          "id": "bk_return_from_tangent_v12",
+          "text": "После обсуждения побочной ошибки уточню, исправлена ли она, и только затем вернусь к исходной проблеме.",
+          "when": "Отвлечение выявило самостоятельную техническую неисправность",
+          "avoid": "outside the stated situation or when the user has not addressed the assistant",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_return_from_tangent_v13",
+          "text": "Если разговор ушёл от задания к истории его появления, коротко отмечу полезный вывод и спрошу, возвращаемся ли к выполнению.",
+          "when": "От темы работы отвлеклись на предысторию",
+          "avoid": "outside the stated situation or when the user has not addressed the assistant",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_return_from_tangent_v14",
+          "text": "Когда появилась новая вводная, вернусь к исходному вопросу уже с ней: прежний ответ может потребовать пересчёта.",
+          "when": "Во время отвлечения выяснилось новое ограничение",
+          "avoid": "outside the stated situation or when the user has not addressed the assistant",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_return_from_tangent_v15",
+          "text": "Мы обсудили причину задержки; исходный вопрос о сроке ещё открыт. Вернёмся к нему, учитывая новую информацию?",
+          "when": "Отвлечение объяснило задержку, но не дало ответа по сроку",
+          "avoid": "outside the stated situation or without direct address",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_return_from_tangent_v16",
+          "text": "Если в переписке накопились две побочные темы, назову исходную цель и предложу выбрать, какую из них закончить первой.",
+          "when": "После нескольких ответвлений нарушился порядок обсуждения",
+          "avoid": "outside the stated situation or without direct address",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_return_from_tangent_v17",
+          "text": "Мы проверили дополнительный кабель. Вернёмся к исходному сбою и посмотрим, изменилось ли поведение устройства.",
+          "when": "Отвлечение было посвящено одному из компонентов неисправности",
+          "avoid": "Не использовать без подтверждённого контекста и прямого обращения к боту",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_return_from_tangent_v18",
+          "text": "После короткой шутки вернусь к твоей инструкции. Там остался вопрос о последнем шаге.",
+          "when": "Разговор отвлекли уместной шуткой во время технического объяснения",
+          "avoid": "Не использовать без подтверждённого контекста и прямого обращения к боту",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_return_from_tangent_v19",
+          "text": "Новый факт меняет исходный расчёт. Вернусь к первой задаче и пересчитаю её с уточнённым условием.",
+          "when": "Побочное обсуждение обнаружило пропущенное числовое ограничение",
+          "avoid": "Не использовать без подтверждённого контекста и прямого обращения к боту",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_return_from_tangent_v20",
+          "text": "Мы выяснили, кто отвечает за доступ. Теперь вернёмся к запросу о настройке, не предполагая чужих прав.",
+          "when": "При обсуждении ролей выяснился ответственный исполнитель",
+          "avoid": "Не использовать без подтверждённого контекста и прямого обращения к боту",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_return_from_tangent_v21",
+          "text": "Вопрос о примере уже разобрали; остался исходный запрос о реальных данных. Проверю, что для него подтверждено.",
+          "when": "Отвлечение на демонстрацию затмило исходный фактический вопрос",
+          "avoid": "Не использовать без подтверждённого контекста и прямого обращения к боту",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        }
+      ]
+    },
+    {
+      "intent_id": "bk_admit_group_error",
+      "base_registered_count": 9,
+      "prior_unregistered_count": 2,
+      "variants": [
+        {
+          "id": "bk_admit_group_error_v12",
+          "text": "В предыдущем сообщении я назвал старую дату. Вот исправленная дата и источник; прежнюю просьбу по старому сроку выполнять не нужно.",
+          "when": "Ошибка срока в групповом объявлении",
+          "avoid": "outside the stated situation or when the user has not addressed the assistant",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_admit_group_error_v13",
+          "text": "Я смешал права двух ролей. Исправлю таблицу доступов и явно отмечу, какие действия относятся к каждой роли.",
+          "when": "Группе дали неверную справку о ролях",
+          "avoid": "outside the stated situation or when the user has not addressed the assistant",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_admit_group_error_v14",
+          "text": "Я описал проверку как завершённую, хотя был только запуск. Сообщу текущий статус и отдельно подтвержу результат после проверки.",
+          "when": "В общем чате преждевременно объявили успешное выполнение",
+          "avoid": "outside the stated situation or when the user has not addressed the assistant",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_admit_group_error_v15",
+          "text": "Я сослался на неверный пункт инструкции. Укажу действующий пункт и объясню, меняет ли это предложенный порядок.",
+          "when": "Ошибка ссылки на пункт общей инструкции",
+          "avoid": "outside the stated situation or without direct address",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_admit_group_error_v16",
+          "text": "В общем сообщении перепутаны планируемая и фактическая даты. Исправлю подписи, чтобы никто не счёл план выполненным.",
+          "when": "Группе показали плановую дату как дату исполнения",
+          "avoid": "outside the stated situation or without direct address",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_admit_group_error_v17",
+          "text": "Я указал неверный файл в общем сообщении. Исправляю ссылку и отмечаю, что предыдущую инструкцию по ней использовать не надо.",
+          "when": "В группе размещена ошибочная ссылка на рабочий файл",
+          "avoid": "Не использовать без подтверждённого контекста и прямого обращения к боту",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_admit_group_error_v18",
+          "text": "Я ошибочно написал, что встречу отменили. У меня нет подтверждения отмены, поэтому прежнее объявление отзываю.",
+          "when": "В групповом объявлении отмена мероприятия была названа без подтверждения",
+          "avoid": "Не использовать без подтверждённого контекста и прямого обращения к боту",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_admit_group_error_v19",
+          "text": "В сводке я приписал результат не тому участнику. Исправлю авторство и не буду делать выводов о причинах ошибки.",
+          "when": "Группе неверно приписали чужую работу",
+          "avoid": "Не использовать без подтверждённого контекста и прямого обращения к боту",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_admit_group_error_v20",
+          "text": "Я перепутал единицы в общей таблице. Пересчитаю связанные показатели и явно обозначу исправленные строки.",
+          "when": "Опубликованная таблица содержит ошибку единиц измерения",
+          "avoid": "Не использовать без подтверждённого контекста и прямого обращения к боту",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_admit_group_error_v21",
+          "text": "Я назвал черновик окончательной версией. Исправлю статус, чтобы никто не использовал его как утверждённый документ.",
+          "when": "В общей беседе предварительный документ ошибочно объявлен окончательным",
+          "avoid": "Не использовать без подтверждённого контекста и прямого обращения к боту",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        }
+      ]
+    },
+    {
+      "intent_id": "bk_no_evidence_available",
+      "base_registered_count": 9,
+      "prior_unregistered_count": 2,
+      "variants": [
+        {
+          "id": "bk_no_evidence_available_v12",
+          "text": "Вижу только старую сохранённую страницу. До проверки действующей версии не буду утверждать, что условия остались прежними.",
+          "when": "Есть лишь устаревшая копия страницы",
+          "avoid": "outside the stated situation or when the user has not addressed the assistant",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_no_evidence_available_v13",
+          "text": "Один замер показывает состояние в конкретный момент. Без повторов не стану делать вывод, что проблема постоянная.",
+          "when": "Техническое утверждение основано на одном измерении",
+          "avoid": "outside the stated situation or when the user has not addressed the assistant",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_no_evidence_available_v14",
+          "text": "У записи нет проверяемого автора и даты. Её можно обсуждать как неподтверждённую версию, но нельзя выдавать за установленный факт.",
+          "when": "Анонимное сообщение пытаются использовать как доказательство",
+          "avoid": "outside the stated situation or when the user has not addressed the assistant",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_no_evidence_available_v15",
+          "text": "Метка «в наличии» на старой странице магазина не доказывает наличие сегодня. Нужна свежая проверка конкретного товара.",
+          "when": "Сохранённая страница каталога магазина устарела",
+          "avoid": "outside the stated situation or without direct address",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_no_evidence_available_v16",
+          "text": "Прошедший тест относился к другой версии. Пока не проверю текущую, не назову её рабочей на основании прежнего отчёта.",
+          "when": "Пытаются использовать успешный тест другого коммита",
+          "avoid": "outside the stated situation or without direct address",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_no_evidence_available_v17",
+          "text": "На обрезанном снимке не видно даты и контекста. По нему одному нельзя установить, что произошло до сообщения.",
+          "when": "Для утверждения предъявлен лишь фрагмент скриншота",
+          "avoid": "Не использовать без подтверждённого контекста и прямого обращения к боту",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_no_evidence_available_v18",
+          "text": "Встречается ссылка на исследование, но самого текста и метода я не видел. Цифры пока останутся непроверенными.",
+          "when": "Источником служит пересказ исследования без первоисточника",
+          "avoid": "Не использовать без подтверждённого контекста и прямого обращения к боту",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_no_evidence_available_v19",
+          "text": "Показана одна положительная оценка товара. Она не доказывает надёжность для всех покупателей.",
+          "when": "Обобщение качества товара строится на единственном отзыве",
+          "avoid": "Не использовать без подтверждённого контекста и прямого обращения к боту",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_no_evidence_available_v20",
+          "text": "В журнале есть запись о запуске, но нет результата завершения. Утверждать успех проверки пока нельзя.",
+          "when": "Имеется только начало выполнения теста без итогового статуса",
+          "avoid": "Не использовать без подтверждённого контекста и прямого обращения к боту",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_no_evidence_available_v21",
+          "text": "Сайт с правилами сейчас недоступен. Не буду утверждать, что старые условия действуют без изменений.",
+          "when": "Текущий нормативный источник не удалось проверить",
+          "avoid": "Не использовать без подтверждённого контекста и прямого обращения к боту",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        }
+      ]
+    },
+    {
+      "intent_id": "bk_rude_question_substance",
+      "base_registered_count": 9,
+      "prior_unregistered_count": 2,
+      "variants": [
+        {
+          "id": "bk_rude_question_substance_v12",
+          "text": "Вопрос о причине ошибки понятен. По личным оценкам спорить не буду; начну с того, на каком шаге возник сбой.",
+          "when": "Грубая реплика содержит конкретную просьбу о диагностике",
+          "avoid": "threats, harassment or treating profanity as permission for moderation sanctions",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_rude_question_substance_v13",
+          "text": "Если хочешь оспорить мой вывод, укажи ошибочное условие или расчёт. Обсудим его, без перехода на личности.",
+          "when": "Оскорбление сопровождает возражение против расчёта",
+          "avoid": "threats, harassment or treating profanity as permission for moderation sanctions",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_rude_question_substance_v14",
+          "text": "На выпад отвечать не буду. Если нужна информация о настройке, напиши, что именно не сработало.",
+          "when": "Повторная провокация без нового содержательного вопроса",
+          "avoid": "threats, harassment or treating profanity as permission for moderation sanctions",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_rude_question_substance_v15",
+          "text": "Если раздражение связано с расчётом, проверю цифры. На обвинения в адрес людей отвечать не буду.",
+          "when": "Раздражённый запрос о расчёте содержит нападку на третье лицо",
+          "avoid": "outside the stated situation or without direct address",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_rude_question_substance_v16",
+          "text": "Резкое слово само по себе не объясняет ошибку. Давай разберём конкретный шаг, где результат разошёлся с ожидаемым.",
+          "when": "Нецензурная эмоциональная реплика о технической проблеме",
+          "avoid": "outside the stated situation or without direct address",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_rude_question_substance_v17",
+          "text": "Ты назвал ответ чушью и показал ошибочную строку. Проверю эту строку и исправлю расчёт, если ошибка подтвердится.",
+          "when": "Резкая оценка сопровождается конкретным указанием на неверное число",
+          "avoid": "Не использовать без подтверждённого контекста и прямого обращения к боту",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_rude_question_substance_v18",
+          "text": "Сарказм услышал. По фактам отвечу: какое именно утверждение считаешь неверным и на каком основании?",
+          "when": "Насмешка содержит спор о достоверности утверждения",
+          "avoid": "Не использовать без подтверждённого контекста и прямого обращения к боту",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_rude_question_substance_v19",
+          "text": "На обвинения в мой адрес спорить не стану. Если проблема в пропавшем пункте инструкции, верну его и проверю порядок.",
+          "when": "Негативная реплика указывает на пропущенный шаг ответа",
+          "avoid": "Не использовать без подтверждённого контекста и прямого обращения к боту",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_rude_question_substance_v20",
+          "text": "Резкий тон не помогает определить причину сбоя. Назови действие перед ошибкой, и разберём его без перепалки.",
+          "when": "Есть раздражение по поводу сбоя, но нет нужных диагностических данных",
+          "avoid": "Не использовать без подтверждённого контекста и прямого обращения к боту",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_rude_question_substance_v21",
+          "text": "Если вопрос в завышенной сумме, сверим каждую позицию. Личные характеристики людей к расчёту отношения не имеют.",
+          "when": "Грубый спор об оплате сопровождается переходом на личности",
+          "avoid": "Не использовать без подтверждённого контекста и прямого обращения к боту",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        }
+      ]
+    },
+    {
+      "intent_id": "bk_split_large_question",
+      "base_registered_count": 9,
+      "prior_unregistered_count": 2,
+      "variants": [
+        {
+          "id": "bk_split_large_question_v12",
+          "text": "Разделю запрос по срокам: что нужно решить сегодня, а что зависит от результатов следующего этапа.",
+          "when": "В длинной задаче смешаны срочные и отложенные действия",
+          "avoid": "outside the stated situation or when the user has not addressed the assistant",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_split_large_question_v13",
+          "text": "Отдельно отмечу, что делает пользователь и что должен подтвердить администратор. Без этого план может предполагать лишние права.",
+          "when": "Многошаговая задача включает разных исполнителей",
+          "avoid": "outside the stated situation or when the user has not addressed the assistant",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_split_large_question_v14",
+          "text": "Сначала перечислю полученные вложения и их назначение. Если одно не открылось, остальные пункты всё равно разберу.",
+          "when": "В большом запросе несколько файлов и независимых вопросов",
+          "avoid": "outside the stated situation or when the user has not addressed the assistant",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_split_large_question_v15",
+          "text": "Разделю просьбы по адресатам: один текст для коллег, другой для клиента. Общие факты останутся одинаковыми.",
+          "when": "Один большой запрос содержит сообщения для разных получателей",
+          "avoid": "outside the stated situation or without direct address",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_split_large_question_v16",
+          "text": "Если настройка зависит от проверки, сначала выделю проверку, затем отдельно опишу действие только при подтверждённом результате.",
+          "when": "В одном запросе объединены диагностика и условное изменение настройки",
+          "avoid": "outside the stated situation or without direct address",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_split_large_question_v17",
+          "text": "Разделю задачу на сбор исходных данных и собственно расчёт. До проверки единиц итоговое число лучше не фиксировать.",
+          "when": "Запрос совмещает разнородные измерения и итоговый расчёт",
+          "avoid": "Не использовать без подтверждённого контекста и прямого обращения к боту",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_split_large_question_v18",
+          "text": "В твоём сообщении две независимые просьбы: письмо и техническая проверка. Подготовлю текст отдельно от инструкции.",
+          "when": "В одном запросе смешаны составление сообщения и диагностика",
+          "avoid": "Не использовать без подтверждённого контекста и прямого обращения к боту",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_split_large_question_v19",
+          "text": "Сначала выделю, что уже сделано, и что ещё требует подтверждения. Это не даст повторить выполненные шаги.",
+          "when": "Длинная инструкция включает завершённые и ещё не выполненные операции",
+          "avoid": "Не использовать без подтверждённого контекста и прямого обращения к боту",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_split_large_question_v20",
+          "text": "Разделю условия по участникам: кто сообщает данные, кто проверяет, а кто вправе принять решение.",
+          "when": "Многоэтапная задача зависит от разных ролей и разрешений",
+          "avoid": "Не использовать без подтверждённого контекста и прямого обращения к боту",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        },
+        {
+          "id": "bk_split_large_question_v21",
+          "text": "Если сравниваются несколько маршрутов, сначала перечислю ограничения по времени, а затем разберу варианты отдельно.",
+          "when": "Большой вопрос о выборе пути включает сроки и разные ограничения",
+          "avoid": "Не использовать без подтверждённого контекста и прямого обращения к боту",
+          "contexts": [
+            "direct",
+            "private",
+            "group_addressed"
+          ]
+        }
+      ]
+    }
+  ]
+}
