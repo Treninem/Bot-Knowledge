@@ -78,7 +78,10 @@ def main() -> None:
     for entry in general_qa:
         if entry["id"] not in general_ids:
             continue
-        assert len(entry["aliases"]) == 2 and len(entry["variants"]) == 2
+        # Legacy aliases remain exactly two for these 29 original reference intents.
+        # Later reviewed variants may extend the original two without changing the intent.
+        assert len(entry["aliases"]) == 2 and 2 <= len(entry["variants"]) <= 8
+        assert len({normalize_general_q(v) for v in entry["variants"]}) == len(entry["variants"])
         for phrase in [entry["question"], *entry["aliases"]]:
             assert general_index[normalize_general_q(phrase)] == entry["id"]
         assert entry["source"].startswith("https://github.com/Treninem/Bot-Knowledge/blob/8f7a88548b93db24dcbe6bff1f44f662802f780d/")
