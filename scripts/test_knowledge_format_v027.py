@@ -41,6 +41,7 @@ class KnowledgeFormatV027(unittest.TestCase):
         data = load(KNOWLEDGE)
         self.assertEqual(validate_qa_pack(data), 40)
         self.assertEqual(data["catalog"]["id"], "knowledge_format")
+        self.assertEqual(data["language"], "ru")
         self.assertEqual(data["catalog"]["audiences"], ["all_ai_bots"])
         self.assertTrue(data["catalog"]["constraints"]["read_only"])
         self.assertTrue(data["catalog"]["constraints"]["requires_direct_address"])
@@ -50,10 +51,6 @@ class KnowledgeFormatV027(unittest.TestCase):
         self.assertEqual(sorted(1+len(r["variants"]) for r in rows), [4]*10+[5]*30)
         new = set()
         for row in rows:
-            self.assertEqual(row["language"], "ru")
-            self.assertEqual(row["audiences"], ["all_ai_bots"])
-            self.assertTrue(row["constraints"]["read_only"])
-            self.assertTrue(row["constraints"]["requires_direct_address"])
             self.assertTrue(row["question"].strip())
             self.assertLessEqual(len(row["variants"]), 8)
             all_answers = [row["answer"], *row["variants"]]
