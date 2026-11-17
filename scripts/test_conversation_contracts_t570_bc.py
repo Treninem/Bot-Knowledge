@@ -34,7 +34,7 @@ EXPECTED_MAIN = "4e2cd1a48694c5727a1a84ce40cdc1a96a68e89d"
 
 def norm(value):
     value = unicodedata.normalize("NFKC", value).casefold().replace("ё", "е")
-    return " ".join(re.findall(r"[^\\W_]+", value, flags=re.UNICODE))
+    return " ".join(re.findall(r"[^\W_]+", value, flags=re.UNICODE))
 
 def tokens(value):
     return set(norm(value).split())
@@ -139,10 +139,10 @@ class TestT570ContinuationBC(unittest.TestCase):
                                       reply["read_only"]),
                                      ("ru", "neutral", ["all_ai_bots"], "direct", True))
                     self.assertTrue(reply["avoid"])
-                    self.assertNotRegex(reply["text"], r"https?://|[\\w.+-]+@[\\w.-]+\\.[A-Za-z]{2,}")
-                    self.assertNotRegex(reply["text"], r"(?<!\\w)\\+?\\d[\\d ()-]{8,}\\d(?!\\w)")
+                    self.assertNotRegex(reply["text"], r"https?://|[\w.+-]+@[\w.-]+\.[A-Za-z]{2,}")
+                    self.assertNotRegex(reply["text"], r"(?<!\w)\+?\d[\d ()-]{8,}\d(?!\w)")
                     self.assertNotRegex(reply["text"].casefold(),
-                                        r"\\b(забаню|замучу|выдам санкцию|удалю участника)\\b")
+                                        r"\b(забаню|замучу|выдам санкцию|удалю участника)\b")
         self.assertEqual((len(ids), len(texts), len(notes)), (300, 300, 300))
         self.assertEqual(len(by_intent), 10)
         self.assertTrue(all(len(rows) == 30 for rows in by_intent.values()))
