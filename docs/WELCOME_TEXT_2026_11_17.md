@@ -25,4 +25,4 @@ The exact-head workflow checks the source pack's real SHA-256 and Git blob, stab
 
 ## Next action
 
-After exact-head and full quality CI pass, compare the two sets against any newer main/PR additions and review meaning-level overlap. Only then consider a separate registered-pack proposal with consumer compatibility checks. Do not update ImPULS or any live bot from this staging change.
+After exact-head and full quality CI pass, compare all three sets against any newer main/PR additions and review meaning-level overlap. Only then consider a separate registered-pack proposal with consumer compatibility checks. Do not update ImPULS or any live bot from this staging change.
