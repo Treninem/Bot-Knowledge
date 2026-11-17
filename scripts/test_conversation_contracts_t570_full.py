@@ -1,4 +1,4 @@
-"""Full T570 lineage and contextual QA through checkpoint G (700/1000)."""
+"""Full T570 lineage and contextual QA through checkpoint J (1000/1000)."""
 import hashlib
 import json
 import re
@@ -74,7 +74,7 @@ def candidate_texts(obj):
         for item in obj:
             yield from candidate_texts(item)
 
-class TestT570FullLineageG(unittest.TestCase):
+class TestT570FullLineageJ(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.pool = json.loads((ROOT / POOL).read_text(encoding="utf-8"))
