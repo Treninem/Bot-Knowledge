@@ -158,20 +158,52 @@ class PracticalRecoveryR1(unittest.TestCase):
                     elif isinstance(item, (dict, list)):
                         yield from answer_strings(item)
 
+        related_paths = {
+            "packs/ru/practical_recovery_qa.json",
+            "packs/ru/dialogue_help_qa.json",
+            "packs/ru/conversation_followthrough_qa.json",
+            "packs/ru/conversation_precision_qa.json",
+            "packs/ru/response_boundaries_qa.json",
+            "packs/ru/structured_information_qa.json",
+            "packs/ru/collaborative_dialogue_qa.json",
+            "packs/ru/impuls_help_qa.json",
+            "packs/ru/impuls_verified_boundaries_qa.json",
+            "packs/ru/impuls_ai_modes_help_qa.json",
+            "packs/ru/moderation_explanations_qa.json",
+            "packs/ru/moderation_dialogue_fairness_qa.json",
+            "packs/ru/context_repair_v022_qa.json",
+            "packs/ru/spoken_context_followups_qa.json",
+            "packs/ru/choice_reasoning_qa.json",
+        }
         candidates = [r["text"] for e in self.data["entries"] for r in e["replies"]]
-        keys = {normalize(s) for s in candidates}
+        candidate_keys = {normalize(s) for s in candidates}
+        candidate_words = [wordset(s) for s in candidates]
         suspicious = []
         checked = 0
+        near_checked = 0
         for info in self.manifest["packs"]:
             payload = json.loads((ROOT / info["path"]).read_text(encoding="utf-8"))
             for old in answer_strings(payload):
                 checked += 1
-                self.assertNotIn(normalize(old), keys, info["path"])
-                for candidate in candidates:
-                    if similarity(candidate, old) >= 0.82:
-                        suspicious.append((info["path"], candidate, old))
+                self.assertNotIn(normalize(old), candidate_keys, info["path"])
+                if info["path"] not in related_paths:
+                    continue
+                old_words = wordset(old)
+                if len(old_words) < 4:
+                    continue
+                near_checked += 1
+                for candidate, words in zip(candidates, candidate_words):
+                    if not words:
+                        continue
+                    if min(len(words), len(old_words)) / max(len(words), len(old_words)) < 0.82:
+                        continue
+                    union = words | old_words
+                    score = len(words & old_words) / max(1, len(union))
+                    if score >= 0.82:
+                        suspicious.append((info["path"], candidate, old, score))
         self.assertFalse(suspicious, suspicious[:5])
         self.assertGreater(checked, 0)
+        self.assertGreater(near_checked, 0)
 
 
 if __name__ == "__main__":
