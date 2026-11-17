@@ -11,7 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 POOL = "staging/ru/conversation_contracts_t570_context_pool.json"
 STAGES = tuple(
     f"staging/ru/conversation_contracts_t570_context_delta_{letter}.json"
-    for letter in "bcdefg"
+    for letter in "bcdefghij"
 )
 SOURCE = "packs/ru/response_boundaries_qa.json"
 EXPECTED_SOURCE_SHA256 = "e0d704a2a03d5aabb3db479eb47f07c2ba229ca76955a3cfc0f89dd5386538d9"
@@ -24,6 +24,9 @@ EXPECTED_BLOBS = {
     STAGES[3]: "16052c0e42d016e9fbd0255e0ab7af30f798b0db",
     STAGES[4]: "97f1fbe4f5c0f232e1575d92fed422f887380dc7",
     STAGES[5]: "899aa17c07581e834be10597b02f37d9a28ab297",
+    STAGES[6]: "769fdb84b8bf38b0ab3be354a8b916a977b16016",
+    STAGES[7]: "68924dd1e5b5689c66121786282fc44f2ac79390",
+    STAGES[8]: "edb3217f51ee25805ca68eb651de75daa2908ad0",
 }
 EXPECTED_POOL_MAIN = "9a41aae633d3266e4c600d93e9c6e2b08e0638f0"
 EXPECTED_PREVIOUS_MAIN = "4e2cd1a48694c5727a1a84ce40cdc1a96a68e89d"
@@ -99,7 +102,7 @@ class TestT570FullLineageG(unittest.TestCase):
             self.assertEqual(stage["parent_stage"], parent_path)
             self.assertEqual(stage["parent_stage_blob_sha"], parent_blob)
             self.assertEqual(stage["checked_source_main_sha"],
-                             EXPECTED_CURRENT_MAIN if index == 5 else EXPECTED_PREVIOUS_MAIN)
+                             EXPECTED_CURRENT_MAIN if index >= 5 else EXPECTED_PREVIOUS_MAIN)
             parent_path, parent_blob = path, EXPECTED_BLOBS[path]
         registered = {item["path"] for item in manifest["packs"]}
         for path in (POOL,) + STAGES:
@@ -119,9 +122,12 @@ class TestT570FullLineageG(unittest.TestCase):
             (400, 100, 500, 0, 10, 500),
             (500, 100, 600, 0, 10, 400),
             (600, 100, 700, 0, 10, 300),
+            (700, 100, 800, 0, 10, 200),
+            (800, 100, 900, 0, 10, 100),
+            (900, 100, 1000, 10, 0, 0),
         )
         ids, texts, notes, by_intent = set(), set(), set(), {}
-        starts, totals = (1, 11, 21, 31, 41, 51, 61), (10, 20, 30, 40, 50, 60, 70)
+        starts, totals = (1, 11, 21, 31, 41, 51, 61, 71, 81, 91), (10, 20, 30, 40, 50, 60, 70, 80, 90, 100)
         for index, (stage, expected) in enumerate(zip(self.all_stages, checkpoints)):
             cp = stage["checkpoint"]
             actual = (cp["prior_candidates"], cp["added_candidates"],
@@ -160,9 +166,9 @@ class TestT570FullLineageG(unittest.TestCase):
                     self.assertNotRegex(reply["text"], r"(?<!\w)\+?\d[\d ()-]{8,}\d(?!\w)")
                     self.assertNotRegex(reply["text"].casefold(),
                                         r"\b(забаню|замучу|выдам санкцию|удалю участника)\b")
-        self.assertEqual((len(ids), len(texts), len(notes)), (700, 700, 700))
+        self.assertEqual((len(ids), len(texts), len(notes)), (1000, 1000, 1000))
         self.assertEqual(len(by_intent), 10)
-        self.assertTrue(all(len(rows) == 70 for rows in by_intent.values()))
+        self.assertTrue(all(len(rows) == 100 for rows in by_intent.values()))
 
     def test_near_duplicates_and_related_contexts(self):
         values = [r["text"] for r in self.all_replies]
@@ -174,13 +180,13 @@ class TestT570FullLineageG(unittest.TestCase):
             obj = json.loads((ROOT / path).read_text(encoding="utf-8"))
             related.extend(candidate_texts(obj))
         self.assertGreater(len(related), 100)
-        for answer in self.replies_by_stage[-2] + self.replies_by_stage[-1]:
+        for answer in sum(self.replies_by_stage[-4:], []):
             self.assertFalse(any(norm(answer["text"]) == norm(x) for x in related))
             self.assertLess(max((jaccard(answer["text"], x) for x in related), default=0), 0.78)
 
     def test_no_exact_duplicates_in_registered_packs_or_other_staging(self):
         manifest = json.loads((ROOT / "manifest.json").read_text(encoding="utf-8"))
-        fresh = {norm(r["text"]) for r in self.replies_by_stage[-1]}
+        fresh = {norm(r["text"]) for rows in self.replies_by_stage[-4:] for r in rows}
         for pack in manifest["packs"]:
             obj = json.loads((ROOT / pack["path"]).read_text(encoding="utf-8"))
             for value in candidate_texts(obj):
