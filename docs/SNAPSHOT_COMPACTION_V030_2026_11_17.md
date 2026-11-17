@@ -1,12 +1,12 @@
-# Consumer snapshot v030: byte-safe JSON compaction (17.11.2026)
+# Consumer snapshot v030: осторожное сжатие без изменения данных (17.11.2026)
 
-Based on main `a975b7f6f40e32b13654edfd1f57b1574a3b08ea` and manifest `2026.11.17.029`. **No new responses were added or removed.** Four existing packages are serialized to compact JSON: the parsed JSON values before and after are strictly equal under JSON.stringify/parse. Every old byte SHA-256 matched the actual existing manifest entry before writing, and every new SHA-256 was calculated from final UTF-8 bytes. 
+Основа — проверенный main `a975b7f6f40e32b13654edfd1f57b1574a3b08ea`, manifest `2026.11.17.029`. После первого exact-head CI исходный вариант с уплотнением **четырёх** файлов обнаружил регрессии: исторические тесты требуют побайтового SHA-256 `packs/ru/dialogue.json` и `packs/ru/conversation_precision_qa.json`. В этом исправлении **оба файла возвращены побайтно к main**, включая старые SHA. Их изменение отклонено; защита исторических данных не отключена.
 
-- `packs/ru/skills.json`: 118037 → 95175 bytes (saved 22862); new SHA-256 `202030953fb98d6397fe795407f813553298cb9e49dcbf1ee8cc4791a2328a2c`
-- `packs/ru/dialogue.json`: 116547 → 99218 bytes (saved 17329); new SHA-256 `6ce8eeead4bd9213fdbc522d623c278960d313e10ed02c3048849a269072bd6c`
-- `packs/ru/moderation_cases.json`: 95922 → 80592 bytes (saved 15330); new SHA-256 `5b48d80f2d425ef980e7643e2548a546c2f0c69178cd77dd51043e613e433f0f`
-- `packs/ru/conversation_precision_qa.json`: 319694 → 297911 bytes (saved 21783); new SHA-256 `d45cb71eb8d028a8bc9eb88cddb56a9bef7c7e3cc693d63760b81f238383c622`
+В кандидате `2026.11.17.030` остаётся только без потерь сериализация двух пакетов с подтверждённой эквивалентностью JSON и пересчитанными SHA-256:
 
-**Total saved from registered packages: 77304 bytes.** No cache, bot, ImPULS, or code of a consumer was changed. This is a capacity checkpoint, not a claim that staged replies have been delivered. Manifest candidate `2026.11.17.030`, references exact new hashes. Scripts and read-only exact-head workflow check sizes, digest, manifest linkage and 8 MiB budget. Existing validator and quality CI remain required. Review exact-head CI, source merge SHA and post-main CI before calling the candidate published.
+- `packs/ru/skills.json`: 118037 → 95175 байт; освобождено **22862**, SHA-256 `202030953fb98d6397fe795407f813553298cb9e49dcbf1ee8cc4791a2328a2c`.
+- `packs/ru/moderation_cases.json`: 95922 → 80592 байт; освобождено **15330**, SHA-256 `5b48d80f2d425ef980e7643e2548a546c2f0c69178cd77dd51043e613e433f0f`.
 
-Note: PR #699 is based on older main v029 and holds unrelated unregistered staged answers. After compaction merges, it must be revisited against new main; do not discard or double-count its candidates.
+**Итого освобождается 38192 байта. Новых ответов: 0.** Прежние записи, ключи, аудитории и JSON-структуры сохранены. Для оставшихся двух изменённых файлов исходные SHA-256 сверены с manifest до замены, новые SHA вычислены по записанным UTF-8 байтам. Скрипт `scripts/test_snapshot_compaction_v030.py` проверяет также байтовые SHA двух возвращённых пакетов, лимит снимка и итоговый manifest. Публикация возможна только при успехе всех проверок точного head и post-main CI; если другие старые тесты закрепляют SHA оставшихся файлов, исправить конфликт без обхода защиты.
+
+Рабочие боты, их кэши, ImPULS и BotHost не менялись. PR #699 по прежнему содержит 160 независимых ответов в staging и требует отдельного согласования после возможного merge этого выпуска.

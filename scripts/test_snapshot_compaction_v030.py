@@ -7,9 +7,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 EXPECTED = {
     "packs/ru/skills.json": ("202030953fb98d6397fe795407f813553298cb9e49dcbf1ee8cc4791a2328a2c", 95175),
-    "packs/ru/dialogue.json": ("6ce8eeead4bd9213fdbc522d623c278960d313e10ed02c3048849a269072bd6c", 99218),
+    "packs/ru/dialogue.json": ("3e63012f2823ea1896e9d9612f68f19a3cf2fe6bbf2c8296fc98ac29fb18a024", 116547),
     "packs/ru/moderation_cases.json": ("5b48d80f2d425ef980e7643e2548a546c2f0c69178cd77dd51043e613e433f0f", 80592),
-    "packs/ru/conversation_precision_qa.json": ("d45cb71eb8d028a8bc9eb88cddb56a9bef7c7e3cc693d63760b81f238383c622", 297911),
+    "packs/ru/conversation_precision_qa.json": ("b37d35a98d6dd919bace2275b838f61a7973b9d3a4207b44a7a1b6040164350b", 319694),
 }
 
 class CompactSnapshotV030(unittest.TestCase):
