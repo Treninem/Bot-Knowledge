@@ -1,0 +1,31 @@
+name: T570 conversation contracts continuation
+on:
+  pull_request:
+    paths:
+      - "staging/ru/conversation_contracts_t570_context_delta_b.json"
+      - "staging/ru/conversation_contracts_t570_context_delta_c.json"
+      - "scripts/test_conversation_contracts_t570_bc.py"
+      - "docs/CONVERSATION_CONTRACTS_T570_2026_11_10.md"
+      - ".github/workflows/t570-conversation-contracts-continuation.yml"
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          persist-credentials: false
+      - name: Verify actual PR head
+        run: test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha }}"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Validate registered packs
+        run: python scripts/validate_pack.py
+      - name: Run T570 history and continuation tests
+        run: |
+          python -m unittest scripts.test_conversation_contracts_t570 -q
+          python -m unittest scripts.test_conversation_contracts_t570_bc -q
+          python -O -m unittest scripts.test_conversation_contracts_t570_bc -q
