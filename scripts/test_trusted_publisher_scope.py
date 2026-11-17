@@ -16,6 +16,13 @@ PATH = "packs/ru/impuls_help_qa.json"
 SOURCE = "https://github.com/Treninem/Bot-Knowledge/blob/main/docs/REQUIREMENTS_21.md"
 
 
+def next_knowledge_version():
+    manifest = json.loads((ROOT / "manifest.json").read_text(encoding="utf-8"))
+    parts = [int(part) for part in manifest["knowledge_version"].split(".")]
+    parts[-1] += 1
+    return ".".join(str(part) for part in parts)
+
+
 def candidate():
     return {"section_path": PATH, "record": {
         "id": "reviewed_scope_probe", "question": "Как проверить область записи?",
@@ -24,7 +31,7 @@ def candidate():
         "variants": [], "audiences": ["impuls"], "contexts": ["direct"],
         "language": "ru", "constraints": dict(publisher.QA_CONSTRAINTS),
     }, "source": SOURCE, "origin": "verified_source", "reviewed": True,
-        "knowledge_version": "2026.11.06.test"}
+        "knowledge_version": next_knowledge_version()}
 
 
 def prepare(value):
@@ -38,12 +45,13 @@ def prepare(value):
 
 class PublisherScopeTests(unittest.TestCase):
     def test_valid_candidate_updates_pack_and_manifest(self):
+        expected_version = candidate()["knowledge_version"]
         path, pack_text, manifest_text, _ = prepare(candidate())
         self.assertEqual(path, PATH)
         record = next(x for x in json.loads(pack_text)["records"] if x["id"] == "reviewed_scope_probe")
         self.assertEqual(record["audiences"], ["impuls"])
         self.assertEqual(record["contexts"], ["direct"])
-        self.assertEqual(json.loads(manifest_text)["knowledge_version"], "2026.11.06.test")
+        self.assertEqual(json.loads(manifest_text)["knowledge_version"], expected_version)
 
     def test_bad_optional_types_and_values_are_rejected(self):
         bad = (("audiences", "impuls"), ("audiences", ["owner"]),

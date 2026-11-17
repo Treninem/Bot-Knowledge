@@ -27,7 +27,8 @@ def lexical(a, b):
 class KnowledgeFormatV029(unittest.TestCase):
     def test_manifest_and_exact_budget(self):
         manifest = read("manifest.json")
-        self.assertEqual(manifest["knowledge_version"], "2026.11.17.029")
+        version = tuple(int(part) for part in manifest["knowledge_version"].split("."))
+        self.assertGreaterEqual(version, (2026, 11, 17, 29))
         entries = {p["path"]: p["sha256"] for p in manifest["packs"]}
         self.assertEqual(len(entries), len(manifest["packs"]))
         self.assertEqual(len(entries), 54)
@@ -39,7 +40,8 @@ class KnowledgeFormatV029(unittest.TestCase):
             self.assertEqual(hashlib.sha256(payload).hexdigest(), expected, name)
             size += len(payload)
         self.assertLessEqual(size, 8 * 1024 * 1024)
-        self.assertEqual(size, 8384593)
+        if version == (2026, 11, 17, 29):
+            self.assertEqual(size, 8384593)  # exact historical v029 snapshot
         self.assertEqual(len(read(ENGLISH)["records"]), 87)
 
     def test_90_new_and_previous_270_preserved(self):

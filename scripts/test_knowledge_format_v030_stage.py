@@ -44,7 +44,7 @@ class KnowledgeFormatV030Stage(unittest.TestCase):
         self.assertEqual(stage["source_main_sha"], MAIN_SHA)
         self.assertEqual(stage["source_manifest_version"], "2026.11.17.029")
         self.assertEqual(stage["source_pack_sha256"], SOURCE_SHA)
-        self.assertEqual(stage["main_reverified_sha"], "d43134b9072c7ceff44cfcf63d5d11c0d0771d7a")
+        self.assertEqual(stage["main_reverified_sha"], "16bcdd62b379b8759fb15c798fbf1ac5174147d7")
         self.assertEqual(stage["main_reverified_manifest_version"], "2026.11.17.030")
         self.assertEqual(stage["target_pack"], PACK)
         self.assertEqual(stage["consumer_registered"], False)
@@ -108,6 +108,39 @@ class KnowledgeFormatV030Stage(unittest.TestCase):
                             if isinstance(text, str):
                                 registered.add(normalize_question(text))
         self.assertFalse(candidates & registered)
+
+
+def candidate_texts(value):
+    if isinstance(value, dict):
+        for key in ("text", "answer", "reply", "response"):
+            if isinstance(value.get(key), str):
+                yield value[key]
+        for child in value.values():
+            if isinstance(child, (dict, list)):
+                yield from candidate_texts(child)
+    elif isinstance(value, list):
+        for child in value:
+            yield from candidate_texts(child)
+
+
+class KnowledgeFormatV030CrossStage(unittest.TestCase):
+    def test_no_exact_duplicates_in_other_staging(self):
+        fresh = {normalize_question(v["text"]) for record in read(STAGE)["records"] for v in record["variants"]}
+        for path in (ROOT / "staging/ru").glob("*.json"):
+            relative = path.relative_to(ROOT).as_posix()
+            if relative == STAGE:
+                continue
+            data = json.loads(path.read_text(encoding="utf-8"))
+            for value in candidate_texts(data):
+                self.assertNotIn(normalize_question(value), fresh, f"staging collision: {relative}")
+
+    def test_near_duplicates_in_related_packs(self):
+        related = ("packs/ru/dialogue_help_qa.json", "packs/ru/conversation_followthrough_qa.json", "packs/ru/practical_recovery_qa.json", "packs/ru/response_boundaries_qa.json", "packs/ru/social_dialogues.json")
+        candidates = [v["text"] for record in read(STAGE)["records"] for v in record["variants"]]
+        for path in related:
+            for value in candidate_texts(read(path)):
+                for candidate in candidates:
+                    self.assertLess(similarity(candidate, value), 0.78, (path, candidate, value))
 
 
 if __name__ == "__main__":
