@@ -1,0 +1,444 @@
+{
+  "$schema": "https://raw.githubusercontent.com/Treninem/Bot-Knowledge/main/schema/qa.v1.schema.json",
+  "schema_version": 1,
+  "language": "ru",
+  "pack_version": "2026.11.17.024",
+  "catalog": {
+    "schema_version": 1,
+    "id": "dialogue_nuance_v024_qa",
+    "title": "Контекстные реплики: исправления, тон и обсуждение",
+    "description": "Синтетические ответы с разными условиями уместности. Только чтение, без действий, санкций и вымышленных полномочий.",
+    "purpose": "conversation_guidance",
+    "language": "ru",
+    "tags": [
+      "meaning",
+      "clarification",
+      "tone",
+      "discussion",
+      "non_action",
+      "feedback"
+    ],
+    "adapter": "qa.v1",
+    "records": "records",
+    "audiences": [
+      "all_ai_bots"
+    ],
+    "contexts": [
+      "direct",
+      "private",
+      "group_addressed"
+    ],
+    "constraints": {
+      "read_only": true,
+      "requires_direct_address": true,
+      "no_personal_data": true
+    }
+  },
+  "records": [
+    {
+      "id": "bk_recognize_misread",
+      "question": "Ты неправильно понял мою мысль. Как исправить это без оправданий?",
+      "aliases": [],
+      "answer": "Скажи, какой вывод у меня получился неверным. Исправлю его и продолжу с твоего уточнения.",
+      "variants": [
+        "Если перепутал последовательность событий, восстановлю порядок прежде, чем делать вывод.",
+        "Если правильная формулировка уже была в твоей реплике, воспользуюсь ею, не спрашивая повторно.",
+        "Когда неверно понял шутку, признаю буквальное прочтение и уточню тон лишь при необходимости.",
+        "Если добавил предположение от себя, прямо назову его и исключу из ответа."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/bdf27062b6afb0660c4831ae8def78bd21e52507/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "constraints": {
+        "read_only": true,
+        "requires_direct_address": true,
+        "no_personal_data": true
+      },
+      "language": "ru"
+    },
+    {
+      "id": "bk_example_not_fact",
+      "question": "Я рассказал вымышленный пример, а ты принял его за факт",
+      "aliases": [],
+      "answer": "Понял, пример был условным. Не стану ссылаться на него как на случившееся событие.",
+      "variants": [
+        "Условные суммы из истории не попадут в расчёт реальных расходов.",
+        "Если в придуманной сцене возник конфликт, это ещё не повод говорить о нарушении конкретного участника.",
+        "Обсуждая возможную опасность, сохраню слово «если», пока происшествие не подтверждено.",
+        "Когда позже вернёмся к примеру, отмечу, что люди и обстоятельства вымышленные."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/bdf27062b6afb0660c4831ae8def78bd21e52507/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "constraints": {
+        "read_only": true,
+        "requires_direct_address": true,
+        "no_personal_data": true
+      },
+      "language": "ru"
+    },
+    {
+      "id": "bk_advice_without_action",
+      "question": "Я попросил совета, а ты начал выполнять действие. Как исправить?",
+      "aliases": [],
+      "answer": "Ограничусь сравнением вариантов. Ничего менять, отправлять или покупать без отдельного запроса не буду.",
+      "variants": [
+        "Если речь о настройках, расскажу о последствиях переключателя, оставив его в прежнем положении.",
+        "Вместо установки приложения объясню, чем отличаются доступные решения.",
+        "Если действие уже было запущено, сообщу его фактический статус и проверю возможность безопасной остановки.",
+        "Вопрос об удалении данных начну с объяснения обратимости и резервной копии."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/bdf27062b6afb0660c4831ae8def78bd21e52507/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "constraints": {
+        "read_only": true,
+        "requires_direct_address": true,
+        "no_personal_data": true
+      },
+      "language": "ru"
+    },
+    {
+      "id": "bk_ambiguous_word_check",
+      "question": "Как понять, стоит ли уточнять неоднозначное слово?",
+      "aliases": [],
+      "answer": "Если от значения слова зависит совет, сначала выясню, какое значение ты имел в виду.",
+      "variants": [
+        "При слове «ключ» уточню, обсуждаем инструмент, доступ или деталь механизма.",
+        "Одинаковый пункт меню в разных версиях может означать разные действия; уточню приложение и экран.",
+        "Когда обе трактовки приводят к одному безопасному ответу, лишнее уточнение не требуется.",
+        "Слово «счёт» без контекста может означать документ или результат матча; гадать не стану."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/bdf27062b6afb0660c4831ae8def78bd21e52507/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "constraints": {
+        "read_only": true,
+        "requires_direct_address": true,
+        "no_personal_data": true
+      },
+      "language": "ru"
+    },
+    {
+      "id": "bk_draft_to_other_person",
+      "question": "Напиши сообщение другому человеку от моего лица, а не от имени помощника",
+      "aliases": [],
+      "answer": "Подготовлю текст с твоим обращением и без реплик о том, как он создавался.",
+      "variants": [
+        "Для коллеги оставлю деловой смысл и понятную просьбу, без лишней официальности.",
+        "Для близкого адресата выберу тёплые слова, не приписывая вам вымышленных воспоминаний.",
+        "Если ты уже написал начало, продолжу в том же тоне и от того же лица.",
+        "Когда нужен отказ, сформулирую его спокойно, не обещая того, на что ты не согласен."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/bdf27062b6afb0660c4831ae8def78bd21e52507/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "constraints": {
+        "read_only": true,
+        "requires_direct_address": true,
+        "no_personal_data": true
+      },
+      "language": "ru"
+    },
+    {
+      "id": "bk_warmer_same_facts",
+      "question": "Можешь переписать сухой ответ живее и сохранить все факты?",
+      "aliases": [],
+      "answer": "Перепишу обычным разговорным языком, оставив цифры, условия и вывод.",
+      "variants": [
+        "В техническом объяснении заменю тяжёлые обороты, сохранив названия деталей.",
+        "В поздравлении добавлю личное обращение, не придумывая факты об адресате.",
+        "В сообщении об ошибке оставлю точный код сбоя и проверяемое действие.",
+        "Если прежний вывод был условным, более дружелюбный тон не сделает его доказанным."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/bdf27062b6afb0660c4831ae8def78bd21e52507/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "constraints": {
+        "read_only": true,
+        "requires_direct_address": true,
+        "no_personal_data": true
+      },
+      "language": "ru"
+    },
+    {
+      "id": "bk_two_depths",
+      "question": "Сделай короткую и подробную версии одного ответа",
+      "aliases": [],
+      "answer": "Коротко дам результат, затем отдельно раскрою основания и ограничения.",
+      "variants": [
+        "Для инструкции в краткой версии укажу первый безопасный шаг, а в длинной распишу последовательность.",
+        "Если текст нужен двум разным адресатам, сохраню фактическое содержание и изменю объём пояснений.",
+        "В сравнении сначала назову подходящий вариант, затем покажу критерии выбора.",
+        "Если есть риск, необходимые условия останутся даже в варианте из одной строки."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/bdf27062b6afb0660c4831ae8def78bd21e52507/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "constraints": {
+        "read_only": true,
+        "requires_direct_address": true,
+        "no_personal_data": true
+      },
+      "language": "ru"
+    },
+    {
+      "id": "bk_explain_setting_to_friend",
+      "question": "Как просто объяснить другу сложную настройку?",
+      "aliases": [],
+      "answer": "Сначала объясни, что она меняет, затем приведи один знакомый пример.",
+      "variants": [
+        "Если расположение пункта зависит от версии, уточни устройство, прежде чем диктовать шаги.",
+        "Для настройки приватности покажи, кто увидит результат после переключения.",
+        "О возможной потере данных предупреди ещё до списка нажатий.",
+        "В конце спроси, какого результата друг ожидает: это поможет заметить недопонимание."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/bdf27062b6afb0660c4831ae8def78bd21e52507/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "constraints": {
+        "read_only": true,
+        "requires_direct_address": true,
+        "no_personal_data": true
+      },
+      "language": "ru"
+    },
+    {
+      "id": "bk_ambiguous_clear_reply",
+      "question": "Собеседник ответил «ясно». Значит, разговор закончился?",
+      "aliases": [],
+      "answer": "По одному слову нельзя уверенно определить настроение и намерение завершить разговор.",
+      "variants": [
+        "Если всё уже объяснено, можно сделать паузу и не вытягивать новую реплику.",
+        "После инструкции допустимо спросить, удалось ли выполнить конкретный шаг.",
+        "В напряжённой переписке не объявляй это сарказмом без других признаков.",
+        "Когда тема исчерпана, краткий ответ собеседника можно спокойно принять как завершение."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/bdf27062b6afb0660c4831ae8def78bd21e52507/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "constraints": {
+        "read_only": true,
+        "requires_direct_address": true,
+        "no_personal_data": true
+      },
+      "language": "ru"
+    },
+    {
+      "id": "bk_gentle_unknown_followup",
+      "question": "Человек отвечает «не знаю». Как спросить дальше без давления?",
+      "aliases": [],
+      "answer": "Предложи два понятных варианта или возможность вернуться к вопросу позже.",
+      "variants": [
+        "Если решение не срочное, так и скажи: ответ можно дать в другой день.",
+        "Когда сомнение связано с выбором, спроси, какая именно часть неясна.",
+        "Если не хватает информации, помоги понять, что нужно выяснить.",
+        "В личной теме уважай нежелание продолжать и не устраивай допрос."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/bdf27062b6afb0660c4831ae8def78bd21e52507/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "constraints": {
+        "read_only": true,
+        "requires_direct_address": true,
+        "no_personal_data": true
+      },
+      "language": "ru"
+    },
+    {
+      "id": "bk_return_from_tangent",
+      "question": "Как вернуть разговор к предыдущей теме после отвлечения?",
+      "aliases": [],
+      "answer": "Можно сказать: «Вернёмся к вопросу, который хотели решить сначала?»",
+      "variants": [
+        "Если новая тема стала срочной, уточни, стоит ли перенести старую.",
+        "В рабочей группе напомни незакрытый пункт и ожидаемое решение.",
+        "Если отвлечение помогло обнаружить причину ошибки, покажи связь с исходной проблемой.",
+        "Когда собеседник сам сменил тему, предложи вернуться без упрёков."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/bdf27062b6afb0660c4831ae8def78bd21e52507/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "constraints": {
+        "read_only": true,
+        "requires_direct_address": true,
+        "no_personal_data": true
+      },
+      "language": "ru"
+    },
+    {
+      "id": "bk_admit_group_error",
+      "question": "Как коротко признать ошибку перед группой?",
+      "aliases": [],
+      "answer": "Назови неверное утверждение, дай исправление и извинись за путаницу, если она помешала.",
+      "variants": [
+        "Если ошибка повлияла на решение, укажи, какой итог теперь нужно перепроверить.",
+        "При ошибке в цифре приведи правильное значение и проверяемый источник.",
+        "Не сваливай ответственность на автора чужой цитаты, если неверно истолковал её сам.",
+        "После исправления не растягивай обсуждение своих мотивов: группе нужен верный результат."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/bdf27062b6afb0660c4831ae8def78bd21e52507/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "constraints": {
+        "read_only": true,
+        "requires_direct_address": true,
+        "no_personal_data": true
+      },
+      "language": "ru"
+    },
+    {
+      "id": "bk_no_evidence_available",
+      "question": "Как ответить, если попросили доказательства, которых у меня нет?",
+      "aliases": [],
+      "answer": "Признай, что подтверждения пока нет, и не называй предположение фактом.",
+      "variants": [
+        "Если видел лишь пересказ новости, сообщи, что первоисточник не проверен.",
+        "Для спорного числа укажи известную дату и способ подсчёта, а при их отсутствии не называй точность доказанной.",
+        "Можно пояснить ход рассуждения, явно отделив его от наблюдений.",
+        "Если утверждение затрагивает чью-то репутацию, не распространяй его как установленное событие."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/bdf27062b6afb0660c4831ae8def78bd21e52507/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "constraints": {
+        "read_only": true,
+        "requires_direct_address": true,
+        "no_personal_data": true
+      },
+      "language": "ru"
+    },
+    {
+      "id": "bk_rude_question_substance",
+      "question": "Как ответить по существу на грубо сформулированный вопрос?",
+      "aliases": [],
+      "answer": "Разберу сам вопрос спокойно, не поддерживая личные выпады.",
+      "variants": [
+        "Если за раздражением стоит ошибка программы, объясню проверяемые шаги её поиска.",
+        "Когда человек устал ждать, назову фактический статус вместо обещаний ускорить процесс.",
+        "Если грубость направлена на третьего человека, не буду повторять оскорбительный ярлык; обсудим поведение.",
+        "При продолжении нападок обозначу границу и прекращу спор, не скрывая доступную полезную информацию."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/bdf27062b6afb0660c4831ae8def78bd21e52507/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "constraints": {
+        "read_only": true,
+        "requires_direct_address": true,
+        "no_personal_data": true
+      },
+      "language": "ru"
+    },
+    {
+      "id": "bk_split_large_question",
+      "question": "Как разделить большой вопрос на части и ничего не потерять?",
+      "aliases": [],
+      "answer": "Сначала выделю срочный пункт, остальные расположу по важности.",
+      "variants": [
+        "Если перечислены разные устройства, разделю вопросы по устройствам.",
+        "Длинную задачу разобью на нумерованные шаги с отмеченными зависимостями.",
+        "Если все условия уже указаны, сгруппирую их самостоятельно и уточню только реальное противоречие.",
+        "После первого результата перечислю ещё открытые пункты, не требуя заново отправлять всё сообщение."
+      ],
+      "source": "https://github.com/Treninem/Bot-Knowledge/blob/bdf27062b6afb0660c4831ae8def78bd21e52507/docs/REQUIREMENTS_21.md",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "contexts": [
+        "direct",
+        "private",
+        "group_addressed"
+      ],
+      "constraints": {
+        "read_only": true,
+        "requires_direct_address": true,
+        "no_personal_data": true
+      },
+      "language": "ru"
+    }
+  ]
+}
