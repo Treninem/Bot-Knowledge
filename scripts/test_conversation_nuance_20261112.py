@@ -15,6 +15,20 @@ def norm(text):
     text = unicodedata.normalize("NFKC", text).casefold().replace("ё", "е")
     return " ".join(re.findall(r"[^\W_]+", text, re.UNICODE))
 
+
+def candidate_texts(value):
+    if isinstance(value, dict):
+        for key in ("text", "answer", "reply", "response"):
+            if isinstance(value.get(key), str):
+                yield value[key]
+        for child in value.values():
+            if isinstance(child, (dict, list)):
+                yield from candidate_texts(child)
+    elif isinstance(value, list):
+        for child in value:
+            yield from candidate_texts(child)
+
+
 class TestConversationNuance(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
@@ -98,6 +112,20 @@ class TestConversationNuance(unittest.TestCase):
                 overlap = len(tokens & previous)
                 similarity = overlap / len(tokens | previous)
                 self.assertLess(similarity, 0.70, f"published near duplicate: {reply['id']}")
+
+
+    def test_no_exact_duplicates_against_current_staging(self):
+        candidates = {norm(reply["text"]) for reply in self.replies}
+        checked = 0
+        for path in (ROOT / "staging/ru").glob("*.json"):
+            if path == STAGE:
+                continue
+            payload = json.loads(path.read_text("utf-8"))
+            for text in candidate_texts(payload):
+                checked += 1
+                self.assertNotIn(norm(text), candidates, f"staging collision: {path.name}")
+        self.assertGreater(checked, 0)
+
 
 if __name__ == "__main__":
     unittest.main()

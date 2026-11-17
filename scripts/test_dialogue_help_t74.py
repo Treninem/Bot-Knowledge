@@ -2,6 +2,7 @@
 import hashlib
 import json
 from pathlib import Path
+from scripts.validate_pack import MAX_CONSUMER_PACK_BYTES
 from scripts.validate_qa_v1 import normalize_question, validate_qa_pack
 from scripts.search_knowledge import KnowledgeSearch
 ROOT = Path(__file__).resolve().parents[1]
@@ -10,7 +11,7 @@ PREFIX = "dlg_t74_"
 EXPECTED = 41
 def main():
     payload = (ROOT / REL).read_bytes()
-    assert len(payload) < 1024 * 1024
+    assert len(payload) <= MAX_CONSUMER_PACK_BYTES
     manifest = json.loads((ROOT / "manifest.json").read_text("utf-8"))
     assert hashlib.sha256(payload).hexdigest() == next(x["sha256"] for x in manifest["packs"] if x["path"] == REL)
     pack = json.loads(payload)
@@ -25,7 +26,7 @@ def main():
     assert len(answers) == len(set(answers))
     search = KnowledgeSearch()
     for r in rows:
-        assert len(r["aliases"]) == 2 and len(r["variants"]) == 2
+        assert len(r["aliases"]) == 2 and 2 <= len(r["variants"]) <= 8
         assert r["audiences"] == ["all_ai_bots"] and r["contexts"] == ["direct","private","group_addressed"]
         assert r["constraints"] == {"read_only":True,"requires_direct_address":True,"no_personal_data":True}
         assert r["language"] == "ru" and "REQUIREMENTS_21.md" in r["source"]

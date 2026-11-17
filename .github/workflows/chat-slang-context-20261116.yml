@@ -1,0 +1,39 @@
+name: RU chat-slang contextual QA
+on:
+  pull_request:
+    paths:
+      - 'packs/ru/chat_slang_context_qa.json'
+      - 'manifest.json'
+      - 'scripts/test_chat_slang_context_20261116.py'
+      - '.github/workflows/chat-slang-context-20261116.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'packs/ru/chat_slang_context_qa.json'
+      - 'manifest.json'
+      - 'scripts/test_chat_slang_context_20261116.py'
+permissions:
+  contents: read
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Verify actual checkout
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Validate manifest and qa.v1
+        run: |
+          python scripts/validate_pack.py
+          python scripts/validate_qa_v1.py
+      - name: Check new corpus normal and -O
+        run: |
+          python scripts/test_chat_slang_context_20261116.py
+          python -O scripts/test_chat_slang_context_20261116.py

@@ -5,6 +5,7 @@ import json
 import re
 from pathlib import Path
 from scripts.search_knowledge import KnowledgeSearch
+from scripts.validate_pack import MAX_CONSUMER_PACK_BYTES
 from scripts.validate_qa_v1 import validate_qa_pack, normalize_question
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -15,7 +16,7 @@ def main() -> None:
     raw = (ROOT / relative).read_bytes()
     manifest = json.loads((ROOT / "manifest.json").read_text(encoding="utf-8"))
     assert hashlib.sha256(raw).hexdigest() == next(x["sha256"] for x in manifest["packs"] if x["path"] == relative)
-    assert len(raw) < 1024 * 1024
+    assert len(raw) <= MAX_CONSUMER_PACK_BYTES
     pack = json.loads(raw)
     assert validate_qa_pack(pack) == len(pack["records"])
     new = [r for r in pack["records"] if r["id"].startswith(PREFIX)]

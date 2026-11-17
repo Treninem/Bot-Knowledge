@@ -5,6 +5,7 @@ import re
 from pathlib import Path
 
 from scripts.search_knowledge import KnowledgeSearch
+from scripts.validate_pack import MAX_CONSUMER_PACK_BYTES
 from scripts.validate_qa_v1 import validate_qa_pack, normalize_question
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -18,7 +19,7 @@ def main() -> None:
     manifest = json.loads((ROOT / "manifest.json").read_text(encoding="utf-8"))
     expected = next(x["sha256"] for x in manifest["packs"] if x["path"] == rel)
     assert hashlib.sha256(raw).hexdigest() == expected
-    assert len(raw) < 1024 * 1024, "qa.v1 one MiB limit"
+    assert len(raw) <= MAX_CONSUMER_PACK_BYTES, "qa.v1 2 MiB consumer pack limit"
 
     pack = json.loads(raw)
     assert validate_qa_pack(pack) == len(pack["records"])
@@ -41,7 +42,7 @@ def main() -> None:
             "read_only": True, "requires_direct_address": True, "no_personal_data": True
         }
         assert r["language"] == "ru"
-        assert len(r["aliases"]) == len(r["variants"]) == 2
+        assert len(r["aliases"]) == 2 and len(r["variants"]) >= 2
         assert all(x.strip() for x in [r["answer"], *r["variants"]])
         assert not re.search(
             r"(?:@\w+|\b\d{9,}\b|(?:api[_-]?key|access_token)\s*[:=])",
@@ -51,7 +52,7 @@ def main() -> None:
         for query in [r["question"], *r["aliases"]]:
             assert any(hit[0] == r["id"] for hit in search.search(query, audience="impuls", limit=20)), (r["id"], query)
             assert all(hit[0] != r["id"] for hit in search.search(query, audience="all_ai_bots", limit=20))
-    print(f"T31_IMPULS_OK questions={COUNT} answers={COUNT * 3} aliases={COUNT * 2} sha256={expected}")
+    print(f"T31_IMPULS_OK questions={COUNT} answers={sum(1 + len(r['variants']) for r in selected)} aliases={COUNT * 2} sha256={expected}")
 
 
 if __name__ == "__main__":

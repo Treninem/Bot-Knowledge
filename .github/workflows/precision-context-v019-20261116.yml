@@ -1,0 +1,33 @@
+name: Conversation precision v019 exact-head QA
+on:
+  pull_request:
+    paths:
+      - 'packs/ru/conversation_precision_qa.json'
+      - 'manifest.json'
+      - 'scripts/test_precision_context_v018_20261116.py'
+      - 'scripts/test_precision_context_v019_20261116.py'
+      - '.github/workflows/precision-context-v019-20261116.yml'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Assert exact PR HEAD
+        run: test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha }}"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate pack, historical v018 and v019 delta normal and optimized
+        run: |
+          python scripts/validate_pack.py
+          python scripts/validate_qa_v1.py
+          PYTHONPATH=scripts python scripts/test_precision_context_v018_20261116.py
+          PYTHONPATH=scripts python -O scripts/test_precision_context_v018_20261116.py
+          PYTHONPATH=scripts python scripts/test_precision_context_v019_20261116.py
+          PYTHONPATH=scripts python -O scripts/test_precision_context_v019_20261116.py

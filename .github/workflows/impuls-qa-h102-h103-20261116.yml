@@ -1,0 +1,35 @@
+name: ImPULS qa.v1 curated H102-H103 exact-head
+on:
+  pull_request:
+    paths:
+      - 'packs/ru/impuls_help_qa.json'
+      - 'manifest.json'
+      - 'scripts/test_impuls_qa_v1_h102_h103_20261116.py'
+      - 'scripts/test_impuls_qa_v1_publish_20261116.py'
+      - '.github/workflows/impuls-qa-h102-h103-20261116.yml'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Verify actual checkout head
+        env:
+          EXPECTED: ${{ github.event.pull_request.head.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Validate schema, snapshot and both releases
+        run: |
+          python scripts/validate_pack.py
+          python scripts/validate_qa_v1.py
+          PYTHONPATH=scripts python scripts/test_impuls_qa_v1_publish_20261116.py
+          PYTHONPATH=scripts python scripts/test_impuls_qa_v1_h102_h103_20261116.py
+          PYTHONPATH=scripts python -O scripts/test_impuls_qa_v1_publish_20261116.py
+          PYTHONPATH=scripts python -O scripts/test_impuls_qa_v1_h102_h103_20261116.py

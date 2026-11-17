@@ -1,0 +1,32 @@
+name: Dialogue help v016 100 original replies exact-head
+on:
+  pull_request:
+    paths:
+      - 'manifest.json'
+      - 'packs/ru/dialogue_help_qa.json'
+      - 'scripts/test_dialogue_help_v016_20261116.py'
+      - '.github/workflows/dialogue-help-v016-20261116.yml'
+permissions:
+  contents: read
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Verify actual head
+        run: test "$(git rev-parse HEAD)" = "${{ github.event.pull_request.head.sha }}"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Pack and qa validators
+        run: |
+          python scripts/validate_pack.py
+          python scripts/validate_qa_v1.py
+      - name: Pinned replies normal and optimized
+        run: |
+          PYTHONPATH=scripts python scripts/test_dialogue_help_v016_20261116.py
+          PYTHONPATH=scripts python -O scripts/test_dialogue_help_v016_20261116.py

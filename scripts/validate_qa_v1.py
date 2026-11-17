@@ -21,6 +21,9 @@ ID = re.compile(r"[A-Za-z0-9][A-Za-z0-9_-]{0,95}\Z")
 FIELD = re.compile(r"[A-Za-z][A-Za-z0-9_]{0,63}\Z")
 FIELDS = frozenset({"id", "question", "aliases", "answer", "variants", "source", "audiences", "contexts", "constraints", "language"})
 CONTEXTS = frozenset({"direct", "private", "group_addressed"})
+# Match the established 2 MiB per-pack consumer limit (scripts/validate_pack.py).
+# The separate 8 MiB full-snapshot limit remains mandatory.
+MAX_QA_PACK_BYTES = 2 * 1024 * 1024
 CONSTRAINTS = {"read_only": True, "requires_direct_address": True, "no_personal_data": True}
 FORBIDDEN = frozenset({
     "action", "actions", "auto_apply", "execute", "permissions", "command", "commands",
@@ -222,7 +225,7 @@ def validate_qa_manifest(root: Path) -> list[str]:
                 seen_ids.add(metadata["id"])
             if not isinstance(metadata, dict) or metadata.get("adapter") != "qa.v1":
                 continue
-            if len(raw) > 1024 * 1024 or hashlib.sha256(raw).hexdigest() != entry.get("sha256"):
+            if len(raw) > MAX_QA_PACK_BYTES or hashlib.sha256(raw).hexdigest() != entry.get("sha256"):
                 raise ValueError("qa_size_or_hash_mismatch")
             total += validate_qa_pack(pack, metadata)
             if total > 4096:

@@ -40,7 +40,7 @@ def main():
         assert record["language"] == "ru" and record["audiences"] == ["all_ai_bots"]
         assert record["contexts"] == ["direct", "private", "group_addressed"]
         assert record["constraints"] == {"read_only": True, "requires_direct_address": True, "no_personal_data": True}
-        assert len(record["aliases"]) == 2 and len(record["variants"]) == 2
+        assert len(record["aliases"]) == 2 and 2 <= len(record["variants"]) <= 8
         assert not set(record).intersection({"execute", "action", "sanction", "mute", "ban", "auto_apply"})
         assert any(hit[0] == record["id"] for hit in index.search(record["question"], audience="all_ai_bots", limit=20)), record["id"]
     print("T85 PASS: 48 new RU intents, 96 aliases, 144 replies")

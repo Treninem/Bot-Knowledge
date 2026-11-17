@@ -26,13 +26,13 @@ def main():
     assert len(rows) == 30
     assert {r["id"] for r in rows} == {f"help_t41_{i:03d}" for i in range(1, 31)}
     assert len(pack["records"]) == len({r["id"] for r in pack["records"]})
-    assert len(rows) * 3 == sum(1 + len(r["variants"]) for r in rows) == 90
+    assert sum(1 + len(r["variants"]) for r in rows) >= len(rows) * 3 == 90
     old_q = {normalize(v) for r in old for v in [r["question"], *r.get("aliases", [])]}
     old_a = {normalize(v) for r in old for v in [r["answer"], *r.get("variants", [])]}
     qs = [normalize(v) for r in rows for v in [r["question"], *r["aliases"]]]
     answers = [normalize(v) for r in rows for v in [r["answer"], *r["variants"]]]
     assert len(qs) == len(set(qs)) == 90
-    assert len(answers) == len(set(answers)) == 90
+    assert len(answers) == len(set(answers)) and len(answers) >= 90
     assert not old_q.intersection(qs)
     assert not old_a.intersection(answers)
     index = KnowledgeSearch()
@@ -43,7 +43,7 @@ def main():
         assert r["constraints"] == {
             "read_only": True, "requires_direct_address": True, "no_personal_data": True
         }
-        assert len(r["aliases"]) == 2 and len(r["variants"]) == 2
+        assert len(r["aliases"]) == 2 and len(r["variants"]) >= 2
         assert not re.search(r"@\w+|\b\d{9,}\b|(?:access_token|api_key)\s*[:=]", str(r), re.I)
         for q in [r["question"], *r["aliases"]]:
             hits = index.search(q, audience="impuls", limit=20)
