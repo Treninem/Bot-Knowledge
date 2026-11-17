@@ -33,10 +33,14 @@ def lexical_similarity(x, y):
 class KnowledgeFormatV028(unittest.TestCase):
     def test_manifest_real_sha_and_snapshot(self):
         m = load("manifest.json")
-        self.assertEqual(m["knowledge_version"], "2026.11.17.028")
+        self.assertGreaterEqual(
+            tuple(map(int, m["knowledge_version"].split("."))), (2026, 11, 17, 28))
         files = {item["path"]: item["sha256"] for item in m["packs"]}
         self.assertEqual(len(files), len(m["packs"]))
-        self.assertEqual(files[PACK], PACK_SHA)
+        if m["knowledge_version"] == "2026.11.17.028":
+            self.assertEqual(files[PACK], PACK_SHA)
+        else:
+            self.assertEqual(files[PACK], hashlib.sha256((ROOT / PACK).read_bytes()).hexdigest())
         self.assertEqual(files[COMPACT], COMPACT_SHA)
         size = (ROOT / "manifest.json").stat().st_size
         for path, expected in files.items():
@@ -58,19 +62,24 @@ class KnowledgeFormatV028(unittest.TestCase):
         self.assertTrue(pack["catalog"]["constraints"]["requires_direct_address"])
         self.assertEqual(len(pack["records"]), 40)
         self.assertEqual(len({r["id"] for r in pack["records"]}), 40)
-        self.assertEqual(sorted(1 + len(r["variants"]) for r in pack["records"]), [6] * 10 + [7] * 30)
+        extended = load("manifest.json")["knowledge_version"] >= "2026.11.17.029"
+        self.assertEqual(sorted(1 + len(r["variants"]) for r in pack["records"]),
+                         [9] * 40 if extended else [6] * 10 + [7] * 30)
         prev = copy.deepcopy(pack)
+        v028 = copy.deepcopy(pack)
         answers, seen, new = 0, set(), []
-        for row, past in zip(pack["records"], prev["records"]):
-            self.assertEqual(len(row["variants"][-2:]), 2)
-            past["variants"] = past["variants"][:-2]
+        for index, (row, past) in enumerate(zip(pack["records"], prev["records"])):
+            count_v028 = 5 if index < 10 else 6
+            self.assertEqual(len(row["variants"]), 8 if extended else count_v028)
+            v028["records"][index]["variants"] = row["variants"][:count_v028]
+            past["variants"] = row["variants"][:count_v028-2]
             answers += 1 + len(past["variants"])
             earlier = [row["answer"], *past["variants"]]
             for answer in [row["answer"], *row["variants"]]:
                 key = normalize(answer)
                 self.assertNotIn(key, seen, row["id"])
                 seen.add(key)
-            for answer in row["variants"][-2:]:
+            for answer in row["variants"][count_v028-2:count_v028]:
                 self.assertTrue(80 <= len(answer) <= 350, (row["id"], answer))
                 self.assertNotRegex(answer, r"(?<!\w)(?:https?://\S+|@\w+|[\w.+-]+@[\w.-]+\.[A-Za-z]{2,})(?!\w)")
                 self.assertNotRegex(answer.lower(), r"\b(?:забаню|заблокировал участника|выдал мут)\b")
@@ -78,6 +87,8 @@ class KnowledgeFormatV028(unittest.TestCase):
                 new.append(answer)
         original = json.dumps(prev, ensure_ascii=False, separators=(",", ":")) + "\n"
         self.assertEqual(hashlib.sha256(original.encode("utf-8")).hexdigest(), PREVIOUS_PACK_SHA)
+        v028_serialized = json.dumps(v028, ensure_ascii=False, separators=(",", ":")) + "\n"
+        self.assertEqual(hashlib.sha256(v028_serialized.encode("utf-8")).hexdigest(), PACK_SHA)
         self.assertEqual(answers, 190)
         self.assertEqual(len(new), 80)
         self.assertEqual(len({normalize(x) for x in new}), 80)
