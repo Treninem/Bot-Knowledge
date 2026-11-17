@@ -184,5 +184,45 @@ class PublisherValidationTests(unittest.TestCase):
                     publisher.prepare_changes(value, token="fixture", base="main")
 
 
+    def test_prepare_checks_base_sha_and_forward_version_in_ten_rounds(self):
+        for number in range(10):
+            with self.subTest(round=number):
+                value = candidate()
+                value["record"]["id"] = f"publisher_test_record_{number}"
+                value["knowledge_version"] = f"2026.11.04.{number + 2}"
+                catalog = {
+                    "adapter": "qa.v1", "records": "records",
+                    "audiences": ["all_ai_bots"], "contexts": ["direct"],
+                    "language": "ru", "constraints": dict(publisher.QA_CONSTRAINTS),
+                }
+                pack = {
+                    "schema_version": 1, "pack_version": f"2026.11.04.{number + 1}",
+                    "catalog": catalog, "records": [],
+                }
+                raw = json.dumps(pack, ensure_ascii=False).encode("utf-8")
+                manifest = {
+                    "schema_version": 1,
+                    "knowledge_version": f"2026.11.04.{number + 1}",
+                    "packs": [{"path": value["section_path"],
+                               "sha256": hashlib.sha256(raw).hexdigest()}],
+                }
+
+                def contents(path, *, token, ref):
+                    payload = raw if path != "manifest.json" else json.dumps(manifest).encode("utf-8")
+                    return {"sha": "fixture"}, payload
+
+                with patch.object(publisher, "_contents", side_effect=contents):
+                    _, new_pack, new_manifest, _ = publisher.prepare_changes(value, token="fixture", base="main")
+                    self.assertEqual(json.loads(new_pack)["records"][0]["id"], value["record"]["id"])
+                    self.assertEqual(json.loads(new_manifest)["knowledge_version"], value["knowledge_version"])
+                    manifest["packs"][0]["sha256"] = "0" * 64
+                    with self.assertRaisesRegex(PublishError, "differs from manifest"):
+                        publisher.prepare_changes(value, token="fixture", base="main")
+                    manifest["packs"][0]["sha256"] = hashlib.sha256(raw).hexdigest()
+                    value["knowledge_version"] = manifest["knowledge_version"]
+                    with self.assertRaisesRegex(PublishError, "increase numerically"):
+                        publisher.prepare_changes(value, token="fixture", base="main")
+
+
 if __name__ == "__main__":
     unittest.main()
