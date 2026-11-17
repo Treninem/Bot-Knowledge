@@ -7,15 +7,16 @@ Source intent definitions: `packs/ru/intents.json`, Git blob `71be015a85471c2269
 
 The existing `greeting` reaction already has 100 entries, and the five T544 greeting/return/farewell/scope intents are each 100/100 in staging. The next uncovered general-language intent in `intents.json` is `welcome_text`; it is distinct from replying to a plain “привет”. A second existing intent, `newcomer_help`, covers orientation advice rather than drafting a welcome message.
 
-This checkpoint adds **300 original Russian candidates**:
+This checkpoint now contains **400 original Russian candidates** across four canonical intents. The first 300 remain unchanged; this continuation adds **100 new candidates**:
 
 | Stable intent | Canonical question | New | Staged | Remaining |
 |---|---|---:|---:|---:|
 | `welcome_text` | Как написать приветственное сообщение новому участнику сообщества? | 100 | 100/100 | 0 |
 | `newcomer_help` | Что новичку стоит сделать, чтобы спокойно освоиться в сообществе? | 100 | 100/100 | 0 |
 | `respond_to_self_introduction` | Как ответить человеку, который впервые представился в группе? | 100 | 100/100 | 0 |
+| `self_introduction_text` | Как представиться в новой группе коротко и без лишней личной информации? | 100 | 100/100 | 0 |
 
-Each set has ten context families with ten individually written examples each. The third ID is a new candidate absent from the current intent registry; it remains staging-only until routing and consumer selection are designed. Contexts cover public and hobby communities, work teams, learning groups, temporary projects, quiet participation, orientation, joining an ongoing discussion, formal channels, privacy, roles/access, language accessibility, and conflict triage. Light humour appears only in the family explicitly requested by the caller. Every candidate carries language, style, audience, direct/group context, a specific context note, read-only status, and selection restrictions.
+The continuation adds first-person self-introduction drafts, distinct from replies to another member's introduction. Each set has ten context families with ten individually written examples each. The new ID remains unregistered until routing and consumer selection are designed. The third ID is a new candidate absent from the current intent registry; it remains staging-only until routing and consumer selection are designed. Contexts cover public and hobby communities, work teams, learning groups, temporary projects, quiet participation, orientation, joining an ongoing discussion, formal channels, privacy, roles/access, language accessibility, and conflict triage. Light humour appears only in the family explicitly requested by the caller. Every candidate carries language, style, audience, direct/group context, a specific context note, read-only status, and selection restrictions.
 
 ## Verification boundary
 
@@ -25,4 +26,4 @@ The repository-wide quality workflow checks out the exact PR head (and asserts t
 
 ## Next action
 
-After exact-head and full quality CI pass, compare all three sets against any newer main/PR additions and review meaning-level overlap. Only then consider a separate registered-pack proposal with consumer compatibility checks. Do not update ImPULS or any live bot from this staging change.
+After exact-head and full quality CI pass, compare all four sets against newer main/PR additions and review meaning-level overlap. Only then consider a separate registered-pack proposal with consumer compatibility checks. Do not update ImPULS or any live bot from this staging change.
