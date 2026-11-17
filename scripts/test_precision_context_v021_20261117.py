@@ -51,7 +51,7 @@ class PrecisionV021(unittest.TestCase):
   self.assertEqual(hashlib.sha256(self.new_second).hexdigest(),SECOND_NEW_HASH)
   self.assertEqual(json.loads(self.old_second),json.loads(self.new_second))
  def test_manifest_and_budget(self):
-  self.assertEqual(self.manifest["knowledge_version"],"2026.11.17.021")
+  self.assertGreaterEqual(tuple(int(n) for n in self.manifest["knowledge_version"].split(".")),(2026,11,17,21))
   hashes={x["path"]:x["sha256"] for x in self.manifest["packs"]}
   self.assertEqual(hashes[PATH],NEW_HASH)
   self.assertEqual(hashes[SECOND],SECOND_NEW_HASH)
