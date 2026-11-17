@@ -44,6 +44,8 @@ class KnowledgeFormatV030Stage(unittest.TestCase):
         self.assertEqual(stage["source_main_sha"], MAIN_SHA)
         self.assertEqual(stage["source_manifest_version"], "2026.11.17.029")
         self.assertEqual(stage["source_pack_sha256"], SOURCE_SHA)
+        self.assertEqual(stage["main_reverified_sha"], "d43134b9072c7ceff44cfcf63d5d11c0d0771d7a")
+        self.assertEqual(stage["main_reverified_manifest_version"], "2026.11.17.030")
         self.assertEqual(stage["target_pack"], PACK)
         self.assertEqual(stage["consumer_registered"], False)
         self.assertEqual(stage["read_only"], True)
@@ -62,8 +64,9 @@ class KnowledgeFormatV030Stage(unittest.TestCase):
             self.assertEqual(len(original_texts), 9)
             self.assertEqual(candidate["base_registered_count"], 9)
             self.assertEqual(candidate["prior_unregistered_count"], 0)
-            self.assertEqual(len(candidate["variants"]), 6)
+            self.assertEqual(len(candidate["variants"]), 8)
             contexts_seen = set()
+            stage_seen = []
             for position, item in enumerate(candidate["variants"], 10):
                 self.assertEqual(item["id"], f"{intent}_v{position}")
                 self.assertGreaterEqual(len(item["text"]), 55)
@@ -77,6 +80,12 @@ class KnowledgeFormatV030Stage(unittest.TestCase):
                 text = item["text"]
                 normalized = normalize_question(text)
                 self.assertNotIn(normalized, seen_texts)
+                for previous in stage_seen:
+                    self.assertLess(similarity(text, previous), 0.7, (intent, text, previous))
+                stage_seen.append(text)
+                if position >= 16:
+                    self.assertEqual(item["style"], "neutral")
+                    self.assertIn(item["format"], {"explanation", "instruction"})
                 self.assertNotIn(normalized, [normalize_question(t) for t in original_texts])
                 for old in original_texts:
                     self.assertLess(similarity(text, old), 0.7, (intent, text, old))
@@ -84,7 +93,7 @@ class KnowledgeFormatV030Stage(unittest.TestCase):
                 seen_texts.add(normalized)
                 original_texts.append(text)
         self.assertEqual(seen_ids, set(by_id))
-        self.assertEqual(len(seen_texts), 240)
+        self.assertEqual(len(seen_texts), 320)
 
     def test_all_registered_qa_lexical_collision(self):
         stage = read(STAGE)
