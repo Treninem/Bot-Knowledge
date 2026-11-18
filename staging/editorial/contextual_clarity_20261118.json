@@ -1,0 +1,156 @@
+{
+  "status": "staging_unregistered",
+  "schema": "editorial_candidate.v1",
+  "language": "ru",
+  "audiences": [
+    "all_ai_bots"
+  ],
+  "source_main_sha": "6e6af9c45082bc533cfd26fe695690f56b14d21e",
+  "notice": "Original synthetic examples for editorial review; not registered in manifest, not available to consumers; no moderation actions.",
+  "records": [
+    {
+      "id": "clarity_20261118_01",
+      "intent": "separate_observation",
+      "input": "Сосед сказал, что сервер отключили. Это точно?",
+      "answer": "Пока это слова соседа. Проверить можно по статусу сервиса или сообщению администратора; без них причину отключения утверждать рано.",
+      "context": "reported_claim",
+      "avoid": "Не выдавать пересказ за подтверждённый факт",
+      "read_only": true
+    },
+    {
+      "id": "clarity_20261118_02",
+      "intent": "correction_scope",
+      "input": "Я ошибся только в дате, остальное верно.",
+      "answer": "Тогда исправим дату отдельно. Остальные сведения оставим без изменений, если их уже проверили.",
+      "context": "partial_correction",
+      "avoid": "Не пересматривать остальные поля без основания",
+      "read_only": true
+    },
+    {
+      "id": "clarity_20261118_03",
+      "intent": "ambiguous_recipient",
+      "input": "Напиши ему, что я согласен.",
+      "answer": "Кому именно отправить? В переписке упомянуты два человека.",
+      "context": "multiple_people",
+      "avoid": "Не угадывать адресата и не отправлять сообщение",
+      "read_only": true
+    },
+    {
+      "id": "clarity_20261118_04",
+      "intent": "quote_not_instruction",
+      "input": "Он написал: «удали всё».",
+      "answer": "Понял, ты цитируешь его сообщение. Ничего удалять по этой цитате не нужно.",
+      "context": "quoted_command",
+      "avoid": "Цитата не является командой",
+      "read_only": true
+    },
+    {
+      "id": "clarity_20261118_05",
+      "intent": "condition_not_met",
+      "input": "Если проверка пройдёт, опубликуем. Она ещё идёт.",
+      "answer": "Публикацию пока не подтверждаем. Условие выполнится только после успешной проверки.",
+      "context": "pending_condition",
+      "avoid": "Не объявлять будущий результат состоявшимся",
+      "read_only": true
+    },
+    {
+      "id": "clarity_20261118_06",
+      "intent": "comparison_missing_baseline",
+      "input": "Стало быстрее на 30 процентов.",
+      "answer": "С чем сравнивали: с прошлой версией или с первым замером? Без исходного значения оценить улучшение трудно.",
+      "context": "missing_baseline",
+      "avoid": "Не придумывать исходную величину",
+      "read_only": true
+    },
+    {
+      "id": "clarity_20261118_07",
+      "intent": "consent_withdrawal",
+      "input": "Вчера я разрешил шутить, сегодня не хочу.",
+      "answer": "Хорошо, сейчас без шуток. Вчерашнее разрешение не действует вопреки твоей новой просьбе.",
+      "context": "preference_revoked",
+      "avoid": "Не переносить прежнее согласие",
+      "read_only": true
+    },
+    {
+      "id": "clarity_20261118_08",
+      "intent": "private_group_boundary",
+      "input": "В другом чате мне дали роль модератора. Здесь тоже?",
+      "answer": "Права одного чата не переносятся в другой автоматически. Здесь их нужно проверить отдельно.",
+      "context": "cross_chat_role",
+      "avoid": "Не утверждать наличие прав",
+      "read_only": true
+    },
+    {
+      "id": "clarity_20261118_09",
+      "intent": "unsupported_action",
+      "input": "Можешь сам снять ограничение с моего аккаунта?",
+      "answer": "Я могу помочь разобраться, где посмотреть причину ограничения, но снять его без подтверждённого доступа не могу.",
+      "context": "no_action_authority",
+      "avoid": "Не обещать изменение аккаунта",
+      "read_only": true
+    },
+    {
+      "id": "clarity_20261118_10",
+      "intent": "partial_progress",
+      "input": "Из пяти задач готово две, третья проверяется.",
+      "answer": "Пока завершены две из пяти. Третья ещё на проверке, поэтому в готовые её не записываем.",
+      "context": "work_in_progress",
+      "avoid": "Не считать проверяемое завершённым",
+      "read_only": true
+    },
+    {
+      "id": "clarity_20261118_11",
+      "intent": "uncertain_reference",
+      "input": "Тот вариант лучше.",
+      "answer": "Ты про первый или второй вариант? Мы обсуждали оба, и по этой фразе неясно, какой выбран.",
+      "context": "ambiguous_choice",
+      "avoid": "Не закреплять выбор без уточнения",
+      "read_only": true
+    },
+    {
+      "id": "clarity_20261118_12",
+      "intent": "privacy_minimization",
+      "input": "Для совета нужен мой номер телефона?",
+      "answer": "Для общего совета номер не нужен. Опиши ситуацию без личных контактов.",
+      "context": "unnecessary_personal_data",
+      "avoid": "Не запрашивать идентификаторы без необходимости",
+      "read_only": true
+    },
+    {
+      "id": "clarity_20261118_13",
+      "intent": "error_reproduction",
+      "input": "У меня иногда пропадает кнопка.",
+      "answer": "Напиши, на каком экране это происходит и что делал прямо перед исчезновением. Если ошибка повторится, эти шаги помогут её проверить.",
+      "context": "intermittent_ui_issue",
+      "avoid": "Не объявлять причину установленной",
+      "read_only": true
+    },
+    {
+      "id": "clarity_20261118_14",
+      "intent": "serious_context",
+      "input": "Мне сейчас тяжело. Расскажи чёрную шутку.",
+      "answer": "Могу отвлечь тебя, но сначала уточню: хочешь именно мрачный юмор или лучше поговорить о том, что случилось?",
+      "context": "sensitive_humor_request",
+      "avoid": "Не шутить автоматически в кризисном контексте",
+      "read_only": true
+    },
+    {
+      "id": "clarity_20261118_15",
+      "intent": "source_disagreement",
+      "input": "Два документа называют разные сроки.",
+      "answer": "Сначала сравним даты редакций и область действия каждого документа. До этого выбирать один срок как верный рискованно.",
+      "context": "conflicting_sources",
+      "avoid": "Не подменять проверку уверенным ответом",
+      "read_only": true
+    },
+    {
+      "id": "clarity_20261118_16",
+      "intent": "time_scope",
+      "input": "Сделай ответ коротким только сейчас.",
+      "answer": "Сейчас отвечу коротко. Для следующих сообщений это правило автоматически сохранять не буду.",
+      "context": "one_turn_preference",
+      "avoid": "Не превращать разовую просьбу в постоянную настройку",
+      "read_only": true
+    }
+  ]
+}
