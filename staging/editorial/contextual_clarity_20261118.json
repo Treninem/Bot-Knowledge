@@ -6,7 +6,7 @@
     "all_ai_bots"
   ],
   "source_main_sha": "6e6af9c45082bc533cfd26fe695690f56b14d21e",
-  "notice": "Original synthetic editorial candidates only; not registered in manifest or available to consumers. Exact and semantic cross-pack review, consumer routing, and exact-head CI pending.",
+  "notice": "Original synthetic editorial candidates only; not registered in manifest or available to consumers. Structural uniqueness checked within this staging file; semantic cross-pack review, consumer routing, and exact-head CI pending.",
   "records": [
     {
       "id": "clarity_20261118_01",
@@ -312,6 +312,132 @@
       "answer": "Эти условия одновременно выполнить не получится. Что важнее сейчас: одно слово или подробное объяснение?",
       "context": "incompatible_output_constraints",
       "avoid": "Не обещать несовместимые форматы",
+      "read_only": true
+    },
+    {
+      "id": "clarity_20261118_35",
+      "intent": "aggregate_vs_individual",
+      "input": "В среднем за неделю было десять обращений. Значит, каждый день ровно десять?",
+      "answer": "Нет. Среднее за неделю не показывает число обращений в конкретный день. Для этого нужна разбивка по дням.",
+      "context": "aggregate_not_daily",
+      "avoid": "Не подменять среднее ежедневным значением",
+      "read_only": true
+    },
+    {
+      "id": "clarity_20261118_36",
+      "intent": "percentage_points",
+      "input": "Доля выросла с 20 до 25 процентов. Это рост на пять процентов?",
+      "answer": "Разница составляет пять процентных пунктов. Относительно прежних 20 процентов рост равен 25 процентам.",
+      "context": "relative_vs_absolute_change",
+      "avoid": "Не путать процентные пункты с относительным приростом",
+      "read_only": true
+    },
+    {
+      "id": "clarity_20261118_37",
+      "intent": "unknown_unit",
+      "input": "У меня расход 12 за час. Это много?",
+      "answer": "Двенадцать чего именно: литров, киловатт-часов или чего-то другого? И для какого устройства? Без единицы измерения сравнение ничего не даст.",
+      "context": "missing_measurement_unit",
+      "avoid": "Не угадывать единицы и норму",
+      "read_only": true
+    },
+    {
+      "id": "clarity_20261118_38",
+      "intent": "missing_denominator",
+      "input": "Из группы ответили восемь человек. Какой процент?",
+      "answer": "Сколько всего человек было в группе? Восемь ответов без общего числа не позволяют вычислить процент.",
+      "context": "unknown_population_size",
+      "avoid": "Не подставлять выдуманное общее количество",
+      "read_only": true
+    },
+    {
+      "id": "clarity_20261118_39",
+      "intent": "correlation_not_causation",
+      "input": "После обновления телефон стал быстрее разряжаться. Обновление виновато?",
+      "answer": "Связь по времени есть, но причина пока неизвестна. Сравни расход батареи по приложениям и условия использования до и после обновления.",
+      "context": "temporal_association",
+      "avoid": "Не выдавать последовательность событий за доказательство причины",
+      "read_only": true
+    },
+    {
+      "id": "clarity_20261118_40",
+      "intent": "conditional_permission",
+      "input": "Разрешаю публиковать текст, если сначала покажешь мне окончательный вариант.",
+      "answer": "Сначала подготовлю окончательный вариант для проверки. До твоего согласия после просмотра публикации не будет.",
+      "context": "approval_required_before_publish",
+      "avoid": "Не трактовать условное разрешение как окончательное",
+      "read_only": true
+    },
+    {
+      "id": "clarity_20261118_41",
+      "intent": "partial_quote",
+      "input": "Вырвали одно предложение из моего сообщения. Как ответить?",
+      "answer": "Покажи исходный абзац и опубликованный фрагмент. Тогда можно будет объяснить, какой смысл потерялся из-за сокращения.",
+      "context": "missing_surrounding_context",
+      "avoid": "Не заявлять об искажении без сравнения",
+      "read_only": true
+    },
+    {
+      "id": "clarity_20261118_42",
+      "intent": "reported_vs_verified_bug",
+      "input": "Пользователь пишет, что всё сломано. Это подтверждённый баг?",
+      "answer": "Пока есть сообщение о проблеме. Для подтверждения нужны шаги воспроизведения, ожидаемый и фактический результат.",
+      "context": "unreproduced_report",
+      "avoid": "Не объявлять обращение установленным дефектом",
+      "read_only": true
+    },
+    {
+      "id": "clarity_20261118_43",
+      "intent": "stale_status",
+      "input": "Вчера сервер работал. Он доступен сейчас?",
+      "answer": "Вчерашняя проверка не подтверждает доступность сейчас. Нужен свежий статус или новая проверка подключения.",
+      "context": "historical_status_not_current",
+      "avoid": "Не переносить вчерашний статус на настоящее",
+      "read_only": true
+    },
+    {
+      "id": "clarity_20261118_44",
+      "intent": "ambiguous_currency",
+      "input": "Товар стоит 1500. Сколько это в рублях?",
+      "answer": "В какой валюте указаны 1500? Без исходной валюты пересчитать сумму в рубли нельзя.",
+      "context": "missing_currency",
+      "avoid": "Не считать сумму рублёвой по умолчанию",
+      "read_only": true
+    },
+    {
+      "id": "clarity_20261118_45",
+      "intent": "example_vs_instruction",
+      "input": "В примере написано удалить папку. Мне тоже её удалять?",
+      "answer": "Сначала нужно понять, относится ли этот пример к твоей ситуации. Не удаляй папку только потому, что такое действие показано в инструкции.",
+      "context": "illustrative_destructive_step",
+      "avoid": "Не превращать пример в команду к удалению",
+      "read_only": true
+    },
+    {
+      "id": "clarity_20261118_46",
+      "intent": "distinguish_estimate",
+      "input": "Когда закончишь? Назови точную минуту, хотя данных о скорости нет.",
+      "answer": "Точную минуту без замеров назвать нельзя. Могу оценить срок после того, как узнаем объём оставшейся работы и скорость выполнения.",
+      "context": "unmeasured_duration",
+      "avoid": "Не выдавать предположение за точный прогноз",
+      "read_only": true
+    },
+    {
+      "id": "clarity_20261118_47",
+      "intent": "conflicting_preferences_scope",
+      "input": "В этой переписке отвечай коротко, но инструкцию для установки распиши подробно.",
+      "answer": "В обычных ответах буду краток, а инструкцию распишу по шагам. Для неё подробность важнее общего ограничения на длину.",
+      "context": "specific_exception_to_general_style",
+      "avoid": "Не применять общее ограничение вопреки явному исключению",
+      "read_only": true
+    },
+    {
+      "id": "clarity_20261118_48",
+      "intent": "unconfirmed_delivery",
+      "input": "Сообщение отправилось, но стоит одна галочка. Получатель прочитал?",
+      "answer": "По одной отметке нельзя уверенно утверждать, что сообщение прочитано. Значение индикатора зависит от приложения и его настроек.",
+      "context": "delivery_vs_read_receipt",
+      "avoid": "Не приписывать статус прочтения неизвестному интерфейсу",
       "read_only": true
     }
   ]
