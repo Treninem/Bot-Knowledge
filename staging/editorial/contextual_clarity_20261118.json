@@ -6,7 +6,7 @@
     "all_ai_bots"
   ],
   "source_main_sha": "6e6af9c45082bc533cfd26fe695690f56b14d21e",
-  "notice": "Original synthetic editorial candidates only; not registered in manifest, not available to consumers; no moderation actions. Semantic cross-pack review and exact-head CI pending.",
+  "notice": "Original synthetic editorial candidates only; not registered in manifest or available to consumers. Exact and semantic cross-pack review, consumer routing, and exact-head CI pending.",
   "records": [
     {
       "id": "clarity_20261118_01",
@@ -222,6 +222,96 @@
       "answer": "Пока известно только, что после перезапуска ошибка не повторилась. Причина могла остаться; стоит проверить при прежних условиях и записать результат.",
       "context": "temporary_recovery",
       "avoid": "Не выдавать временное исчезновение симптома за устранение причины",
+      "read_only": true
+    },
+    {
+      "id": "clarity_20261118_25",
+      "intent": "permission_vs_capability",
+      "input": "Ты умеешь удалить сообщение, значит можешь удалить любое?",
+      "answer": "Умение выполнить действие ещё не означает, что оно разрешено в этом чате. Сначала нужны действующие права и основание по местным правилам.",
+      "context": "action_capability_without_authority",
+      "avoid": "Не превращать техническую возможность в разрешение",
+      "read_only": true
+    },
+    {
+      "id": "clarity_20261118_26",
+      "intent": "example_not_live_data",
+      "input": "В инструкции написано «Иван, 100 рублей». Это мой платёж?",
+      "answer": "Нет оснований считать пример из инструкции твоей операцией. Для проверки платежа нужен отдельный подтверждённый статус в соответствующем сервисе.",
+      "context": "documentation_example",
+      "avoid": "Не выдавать пример за реальную транзакцию",
+      "read_only": true
+    },
+    {
+      "id": "clarity_20261118_27",
+      "intent": "multiple_questions_priority",
+      "input": "У меня три вопроса, но сначала разберись со вторым.",
+      "answer": "Начну со второго. Первый и третий пока оставлю в стороне, чтобы не смешивать ответы.",
+      "context": "explicit_question_order",
+      "avoid": "Не менять заданный порядок",
+      "read_only": true
+    },
+    {
+      "id": "clarity_20261118_28",
+      "intent": "uncertain_negation",
+      "input": "Я не говорил, что не согласен.",
+      "answer": "Тут двойное отрицание. Ты подтверждаешь согласие или просто уточняешь, что раньше не возражал?",
+      "context": "double_negation_ambiguity",
+      "avoid": "Не считать двойное отрицание однозначным согласием",
+      "read_only": true
+    },
+    {
+      "id": "clarity_20261118_29",
+      "intent": "request_for_evidence",
+      "input": "Откуда взялось это число?",
+      "answer": "Покажу расчёт или источник, если он есть. Если число было оценкой без проверки, так и обозначу.",
+      "context": "evidence_requested",
+      "avoid": "Не придумывать источник задним числом",
+      "read_only": true
+    },
+    {
+      "id": "clarity_20261118_30",
+      "intent": "partial_failure",
+      "input": "Из четырёх файлов загрузились три. Можно продолжать?",
+      "answer": "Три файла получены, четвёртый пока отсутствует. Можно работать с первыми тремя, если результат не зависит от недостающего; для полного разбора потребуется четвёртый.",
+      "context": "incomplete_batch",
+      "avoid": "Не считать неполную загрузку успешной",
+      "read_only": true
+    },
+    {
+      "id": "clarity_20261118_31",
+      "intent": "humor_after_refusal",
+      "input": "Я же сказал, что шутки не нужны. Почему опять шутишь?",
+      "answer": "Ты просил без шуток, а я нарушил эту просьбу. Дальше отвечаю серьёзно.",
+      "context": "repeated_tone_boundary",
+      "avoid": "Не оправдывать повторное нарушение предпочтения",
+      "read_only": true
+    },
+    {
+      "id": "clarity_20261118_32",
+      "intent": "version_specific_instruction",
+      "input": "Инструкция для старой версии подойдёт к новой?",
+      "answer": "Не факт. Назови версии или покажи раздел инструкции: проверим, какие пункты сохранились, прежде чем что-либо менять.",
+      "context": "version_mismatch",
+      "avoid": "Не переносить шаги между версиями без проверки",
+      "read_only": true
+    },
+    {
+      "id": "clarity_20261118_33",
+      "intent": "distinguish_draft_from_sent",
+      "input": "Я написал сообщение в черновике. Адресат уже увидел?",
+      "answer": "Само сохранение черновика не означает отправку. Проверь папку отправленных или статус сообщения.",
+      "context": "draft_not_sent",
+      "avoid": "Не утверждать доставку без подтверждения",
+      "read_only": true
+    },
+    {
+      "id": "clarity_20261118_34",
+      "intent": "contradictory_constraints",
+      "input": "Сделай ответ в одно слово и подробно объясни почему.",
+      "answer": "Эти условия одновременно выполнить не получится. Что важнее сейчас: одно слово или подробное объяснение?",
+      "context": "incompatible_output_constraints",
+      "avoid": "Не обещать несовместимые форматы",
       "read_only": true
     }
   ]
