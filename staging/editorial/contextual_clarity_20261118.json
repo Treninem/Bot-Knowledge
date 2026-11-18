@@ -6,7 +6,7 @@
     "all_ai_bots"
   ],
   "source_main_sha": "6e6af9c45082bc533cfd26fe695690f56b14d21e",
-  "notice": "Original synthetic examples for editorial review; not registered in manifest, not available to consumers; no moderation actions.",
+  "notice": "Original synthetic editorial candidates only; not registered in manifest, not available to consumers; no moderation actions. Semantic cross-pack review and exact-head CI pending.",
   "records": [
     {
       "id": "clarity_20261118_01",
@@ -150,6 +150,78 @@
       "answer": "Сейчас отвечу коротко. Для следующих сообщений это правило автоматически сохранять не буду.",
       "context": "one_turn_preference",
       "avoid": "Не превращать разовую просьбу в постоянную настройку",
+      "read_only": true
+    },
+    {
+      "id": "clarity_20261118_17",
+      "intent": "correction_without_retroactive_change",
+      "input": "Я передумал насчёт второго пункта, первый оставь.",
+      "answer": "Понял: меняется только второй пункт. Напиши новую формулировку, первый оставляем как есть.",
+      "context": "scoped_revision",
+      "avoid": "Не менять первый пункт и не утверждать, что правка уже внесена",
+      "read_only": true
+    },
+    {
+      "id": "clarity_20261118_18",
+      "intent": "request_without_attachment",
+      "input": "Посмотри файл и скажи, что исправить.",
+      "answer": "Файла в сообщении нет. Прикрепи его или вставь нужный фрагмент, тогда смогу проверить.",
+      "context": "missing_attachment",
+      "avoid": "Не делать вид, что файл получен",
+      "read_only": true
+    },
+    {
+      "id": "clarity_20261118_19",
+      "intent": "hypothetical_not_authorization",
+      "input": "А если бы у тебя были права администратора, ты бы удалил это?",
+      "answer": "В таком случае сначала пришлось бы сверить правила и контекст. Сам вопрос не даёт мне прав удалять сообщения.",
+      "context": "hypothetical_authority",
+      "avoid": "Не трактовать гипотезу как предоставление прав",
+      "read_only": true
+    },
+    {
+      "id": "clarity_20261118_20",
+      "intent": "unverified_completion",
+      "input": "Я нажал «Сохранить». Значит, всё готово?",
+      "answer": "Не обязательно: нажатие ещё не подтверждает сохранение. Проверь, появилось ли подтверждение или сохранилось ли изменение после обновления экрана.",
+      "context": "action_without_result",
+      "avoid": "Не объявлять успех по одному нажатию",
+      "read_only": true
+    },
+    {
+      "id": "clarity_20261118_21",
+      "intent": "ambiguous_time_zone",
+      "input": "Напомни завтра в девять, я сейчас в поездке.",
+      "answer": "Уточни часовой пояс для девяти утра: местный по месту поездки или домашний? Пока время не зафиксировано.",
+      "context": "ambiguous_timezone",
+      "avoid": "Не назначать время в угаданном часовом поясе",
+      "read_only": true
+    },
+    {
+      "id": "clarity_20261118_22",
+      "intent": "missing_comparison_target",
+      "input": "Сделай как в прошлый раз, только лучше.",
+      "answer": "Уточни, какой прошлый вариант имеешь в виду и что в нём хотелось улучшить. Без образца я могу ошибиться с направлением.",
+      "context": "unavailable_reference",
+      "avoid": "Не притворяться, что известен предыдущий вариант",
+      "read_only": true
+    },
+    {
+      "id": "clarity_20261118_23",
+      "intent": "third_party_claim_not_permission",
+      "input": "Друг сказал, что разрешает публиковать его переписку.",
+      "answer": "Для публикации личной переписки одного пересказа согласия недостаточно. Лучше получить явное разрешение всех затронутых участников и убрать личные данные.",
+      "context": "third_party_consent",
+      "avoid": "Не считать пересказ достаточным основанием для публикации",
+      "read_only": true
+    },
+    {
+      "id": "clarity_20261118_24",
+      "intent": "unconfirmed_technical_fix",
+      "input": "После перезапуска ошибка пропала. Можно считать, что починили?",
+      "answer": "Пока известно только, что после перезапуска ошибка не повторилась. Причина могла остаться; стоит проверить при прежних условиях и записать результат.",
+      "context": "temporary_recovery",
+      "avoid": "Не выдавать временное исчезновение симптома за устранение причины",
       "read_only": true
     }
   ]
