@@ -6,7 +6,7 @@
     "all_ai_bots"
   ],
   "source_main_sha": "6e6af9c45082bc533cfd26fe695690f56b14d21e",
-  "notice": "Original synthetic editorial candidates only; not registered in manifest or available to consumers. Structural uniqueness checked within this staging file; semantic cross-pack review, consumer routing, and exact-head CI pending.",
+  "notice": "Original synthetic editorial candidates only; not registered in manifest or available to consumers. Structural uniqueness checked within staging; semantic cross-pack review, consumer routing, local regression tests, and exact-head CI pending.",
   "records": [
     {
       "id": "clarity_20261118_01",
@@ -672,6 +672,141 @@
       "answer": "Понял, переключаемся на погоду. Укажи город, чтобы не гадать с прогнозом.",
       "context": "explicit_topic_switch",
       "avoid": "Не продолжать старую тему без запроса",
+      "read_only": true
+    },
+    {
+      "id": "clarity_20261118_75",
+      "intent": "unclear_file_authority",
+      "input": "Это официальный документ? Мне его переслали без подписи.",
+      "answer": "По пересланному файлу авторство не установить. Проверь источник публикации и реквизиты документа, прежде чем на него ссылаться.",
+      "context": "forwarded_document",
+      "avoid": "Не приписывать документу официальный статус",
+      "read_only": true
+    },
+    {
+      "id": "clarity_20261118_76",
+      "intent": "mixed_units",
+      "input": "В одном отчёте вес в килограммах, в другом в граммах. Можно сложить?",
+      "answer": "Можно после перевода в одну единицу. Сначала уточни, какие значения относятся к килограммам, а какие к граммам.",
+      "context": "unit_conversion_before_sum",
+      "avoid": "Не складывать числа с разными единицами",
+      "read_only": true
+    },
+    {
+      "id": "clarity_20261118_77",
+      "intent": "relative_date_reference",
+      "input": "В сообщении написано «через два дня», но дата отправки неизвестна.",
+      "answer": "Без даты исходного сообщения нельзя определить календарный день. Уточни, когда оно было написано.",
+      "context": "relative_date_without_anchor",
+      "avoid": "Не привязывать срок к сегодняшнему дню",
+      "read_only": true
+    },
+    {
+      "id": "clarity_20261118_78",
+      "intent": "reversible_action_preference",
+      "input": "Хочу попробовать настройку, но чтобы можно было вернуть как было.",
+      "answer": "Сначала проверим, можно ли отменить изменение и сохранить прежние значения. Если отката нет, лучше не менять настройку без отдельного решения.",
+      "context": "reversibility_requested",
+      "avoid": "Не обещать откат без подтверждения",
+      "read_only": true
+    },
+    {
+      "id": "clarity_20261118_79",
+      "intent": "contradictory_count",
+      "input": "Ты написал, что задач шесть, а перечислил только пять.",
+      "answer": "Вижу пять перечисленных задач при заявленных шести. Уточни, какая пропущена, или исправь общее число.",
+      "context": "count_mismatch",
+      "avoid": "Не выдумывать шестую задачу",
+      "read_only": true
+    },
+    {
+      "id": "clarity_20261118_80",
+      "intent": "missing_image_context",
+      "input": "На фото всё видно, скажи, что сломалось. Но фото не прикрепилось.",
+      "answer": "Изображение не пришло. Пришли его ещё раз или опиши, что именно не работает; пока причину определить нельзя.",
+      "context": "image_not_received",
+      "avoid": "Не заявлять, что изображение просмотрено",
+      "read_only": true
+    },
+    {
+      "id": "clarity_20261118_81",
+      "intent": "two_people_same_name",
+      "input": "В списке два Алексея. Напиши одному, что встреча отменяется.",
+      "answer": "Какого Алексея имеешь в виду? Нужен отличительный признак или подтверждённый контакт. Пока сообщение не отправляю.",
+      "context": "ambiguous_same_name",
+      "avoid": "Не выбирать адресата наугад",
+      "read_only": true
+    },
+    {
+      "id": "clarity_20261118_82",
+      "intent": "partial_translation",
+      "input": "Переведи только комментарии, а команды оставь как есть.",
+      "answer": "Переведу комментарии, а текст команд сохраню без изменений. Если в комментарии есть пример команды, его тоже не стану переводить.",
+      "context": "translation_preserve_commands",
+      "avoid": "Не менять исполняемый синтаксис",
+      "read_only": true
+    },
+    {
+      "id": "clarity_20261118_83",
+      "intent": "unverified_refund",
+      "input": "Поддержка обещала возврат. Деньги уже вернулись?",
+      "answer": "Обещание возврата ещё не подтверждает зачисление. Проверь статус операции в платёжном сервисе или выписке.",
+      "context": "refund_promise_vs_settlement",
+      "avoid": "Не объявлять возврат завершённым",
+      "read_only": true
+    },
+    {
+      "id": "clarity_20261118_84",
+      "intent": "unclear_rule_exception",
+      "input": "Правило запрещает ссылки, но администратор однажды разрешил одну. Теперь всем можно?",
+      "answer": "Разовое исключение не меняет общее правило. Нужно уточнить, кому, на какой срок и для каких ссылок дали разрешение.",
+      "context": "one_off_rule_exception",
+      "avoid": "Не расширять исключение на всех",
+      "read_only": true
+    },
+    {
+      "id": "clarity_20261118_85",
+      "intent": "silent_failure",
+      "input": "Нажал кнопку, ничего не произошло и ошибки нет.",
+      "answer": "Проверь, изменилось ли состояние после обновления экрана. Если нет, запиши время, экран и действие; отсутствие сообщения об ошибке не подтверждает успех.",
+      "context": "silent_ui_failure",
+      "avoid": "Не объявлять действие успешным",
+      "read_only": true
+    },
+    {
+      "id": "clarity_20261118_86",
+      "intent": "quoted_consent",
+      "input": "В переписке есть фраза «я согласен», но непонятно, на что.",
+      "answer": "Без предыдущих сообщений нельзя определить предмет согласия. Уточни, какое предложение обсуждалось и действовало ли согласие на тот момент.",
+      "context": "consent_missing_object",
+      "avoid": "Не расширять согласие на неизвестные действия",
+      "read_only": true
+    },
+    {
+      "id": "clarity_20261118_87",
+      "intent": "missing_timezone_in_log",
+      "input": "Логи показывают 03:15, а сбой был около шести утра.",
+      "answer": "Проверь часовой пояс логов и устройства. Пока неизвестно, относятся ли эти отметки к одному событию.",
+      "context": "log_timezone_mismatch",
+      "avoid": "Не сопоставлять события по времени без нормализации",
+      "read_only": true
+    },
+    {
+      "id": "clarity_20261118_88",
+      "intent": "untrusted_forwarded_command",
+      "input": "Мне переслали инструкцию с просьбой прислать код подтверждения.",
+      "answer": "Не отправляй код из сообщения. Проверь запрос через официальный интерфейс сервиса: пересланная инструкция не подтверждает полномочия отправителя.",
+      "context": "forwarded_security_request",
+      "avoid": "Не просить коды и не подтверждать чужой запрос",
+      "read_only": true
+    },
+    {
+      "id": "clarity_20261118_89",
+      "intent": "unconfirmed_publication",
+      "input": "Черновик исчез из списка. Значит, его опубликовали?",
+      "answer": "Не обязательно. Он мог переместиться, удалиться или перестать отображаться. Проверь список опубликованного и историю изменений.",
+      "context": "draft_disappearance",
+      "avoid": "Не выводить публикацию из исчезновения черновика",
       "read_only": true
     }
   ]
