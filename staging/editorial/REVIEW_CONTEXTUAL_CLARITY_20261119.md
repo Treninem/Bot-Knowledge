@@ -36,3 +36,14 @@ Added 18 original read-only contextual clarification candidates to `contextual_c
 New total: **183 records = 101 + 55 + 27**, across three files. The 18 added records have 18 distinct new intent labels, yielding **178 distinct intent labels** across the staging files if the prior 160-label count is unchanged. Within the modified extension file, normalized IDs, inputs and answers remain distinct (case, ё/е, punctuation and whitespace normalization). No cross-pack or cross-PR semantic uniqueness is claimed. The five previously identified repeated intent families still need review; new candidates also require manual cross-pack comparison.
 
 **This checkpoint:** 18 new staged candidates, 0 editorially accepted or manifest-registered answers, 0 complete 100/100 sets. No consumer, manifest, cache, ImPULS or live bot changes. Local Python regression tests, SHA-256 of published packages and independent editorial acceptance have not been performed. Exact-head CI must be checked against the final commit; do not merge until all gates pass.
+
+## Cross-pack editorial comparison — 2026-11-19 (focused, read-only)
+
+Compared the extension candidates against registered `packs/ru/clarification_boundaries.json` on main `6e6af9c45082bc533cfd26fe695690f56b14d21e` (source blob `c082bd5149e595278696ee499810315303654d2c`). This is a focused comparison, **not** a full corpus duplicate scan or editorial acceptance.
+
+- `clarity_extension_20261119_04` (meeting across time zones) overlaps the registered `clarify_ru_deadline` / `clarify_en_deadline` missing-time-zone pattern. Its meeting-participant context differs from deadline selection, but publication needs a distinct context selector; do not count it as a new canonical timezone question without grouping.
+- `clarity_extension_20261119_01` and `clarity_extension_20261119_13` both warn against trusting an untested backup. The first concerns deleting originals; the second concerns confidence in restoration. Preserve the different risk conditions, but group under a backup-verification family before counting unique intents.
+- `clarity_extension_20261119_02` (visible delete button) is distinct from the registered `clarify_ru_reference` (unknown file target). They address authorization versus reference ambiguity; avoid collapsing them solely because both mention deletion.
+- `clarity_extension_20261119_05` (rounded count) should not be routed to the registered `clarify_ru_units` case (unknown percent/absolute unit); these are different missing facts.
+
+Editorial disposition: **four extension records reviewed for this narrow comparison; zero accepted, zero rejected, zero registered**. Pending cross-pack and cross-PR search remains mandatory, as do schema/context-routing tests, privacy review and exact-head CI after any final content change. Existing staged totals remain 183 records / 178 labels; these are labels, not 178 proven independent canonical questions.
