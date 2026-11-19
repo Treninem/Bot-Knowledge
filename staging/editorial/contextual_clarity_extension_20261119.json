@@ -5,7 +5,7 @@
   "audiences": [
     "all_ai_bots"
   ],
-  "notice": "27 synthetic editorial candidates (9 prior + 18 new). All remain unregistered, pending cross-pack semantic review, consumer routing, privacy checks and local tests.",
+  "notice": "39 synthetic editorial candidates (27 prior + 12 new). All remain unregistered pending cross-pack semantic review, consumer routing, privacy checks and local tests.",
   "records": [
     {
       "id": "clarity_extension_20261119_01",
@@ -248,6 +248,114 @@
       "answer": "Интерфейс мог измениться между версиями. Для точной инструкции нужен экран из версии 2 или подтверждение, что нужный пункт сохранился.",
       "context": "version_mismatch",
       "avoid": "Не выдавать старый интерфейс за текущий",
+      "read_only": true
+    },
+    {
+      "id": "clarity_extension_20261119_31",
+      "intent": "conditional_publication",
+      "input": "Пост готов, но его просили показать редактору перед публикацией.",
+      "answer": "Тогда пока оставь его на согласовании. Готовый текст ещё не означает разрешение публиковать.",
+      "context": "editor_approval_pending",
+      "avoid": "Не объявлять согласование состоявшимся и не публиковать без него",
+      "read_only": true
+    },
+    {
+      "id": "clarity_extension_20261119_32",
+      "intent": "ambiguous_currency",
+      "input": "В смете стоит 1200, но валюту нигде не написали.",
+      "answer": "Уточни валюту у составителя. По одному числу нельзя понять стоимость.",
+      "context": "currency_not_specified",
+      "avoid": "Не подставлять рубли, евро или доллары по догадке",
+      "read_only": true
+    },
+    {
+      "id": "clarity_extension_20261119_33",
+      "intent": "partial_refund",
+      "input": "Мне вернули часть суммы. Значит, возврат закрыт?",
+      "answer": "Сверь сумму возврата с исходным платежом и условиями обращения. Частичный возврат сам по себе не подтверждает закрытие вопроса.",
+      "context": "partial_refund_status",
+      "avoid": "Не выдавать частичный возврат за полный",
+      "read_only": true
+    },
+    {
+      "id": "clarity_extension_20261119_34",
+      "intent": "uncertain_recipient",
+      "input": "Отправь договор Алексею. У меня два контакта с таким именем.",
+      "answer": "Нужен конкретный получатель: уточни фамилию или адрес из проверенного контакта. Пока отправлять нельзя.",
+      "context": "duplicate_contact_names",
+      "avoid": "Не выбирать адресата случайно и не раскрывать договор постороннему",
+      "read_only": true
+    },
+    {
+      "id": "clarity_extension_20261119_35",
+      "intent": "historical_vs_current_price",
+      "input": "Вчера товар стоил 900. Могу указать эту цену как сегодняшнюю?",
+      "answer": "Вчерашняя цена подтверждает только вчерашнее предложение. Перед публикацией проверь актуальную стоимость.",
+      "context": "historical_price_only",
+      "avoid": "Не представлять историческую цену действующей",
+      "read_only": true
+    },
+    {
+      "id": "clarity_extension_20261119_36",
+      "intent": "unverified_payment",
+      "input": "Покупатель прислал скриншот оплаты. Можно считать деньги полученными?",
+      "answer": "Скриншот не подтверждает зачисление. Проверь поступление через надёжный платёжный источник, доступный владельцу счёта.",
+      "context": "payment_screenshot_only",
+      "avoid": "Не подтверждать получение денег по изображению",
+      "read_only": true
+    },
+    {
+      "id": "clarity_extension_20261119_37",
+      "intent": "conflicting_deadlines",
+      "input": "В письме срок до пятницы, а в задаче до четверга.",
+      "answer": "Сроки расходятся. Уточни у ответственного, какой из них действует, и не заменяй один другим без подтверждения.",
+      "context": "deadline_sources_conflict",
+      "avoid": "Не выбирать более поздний срок автоматически",
+      "read_only": true
+    },
+    {
+      "id": "clarity_extension_20261119_38",
+      "intent": "draft_vs_sent",
+      "input": "В папке «Черновики» есть письмо. Значит, клиент его получил?",
+      "answer": "Нет, наличие черновика подтверждает подготовку письма. Для отправки нужно отдельное подтверждение статуса.",
+      "context": "draft_not_sent",
+      "avoid": "Не путать подготовку с отправкой",
+      "read_only": true
+    },
+    {
+      "id": "clarity_extension_20261119_39",
+      "intent": "ambiguous_file_revision",
+      "input": "В архиве два файла с одинаковым названием, но разным размером.",
+      "answer": "По размеру нельзя определить актуальную редакцию. Сравни содержимое и историю изменений, прежде чем выбрать файл.",
+      "context": "same_name_different_content",
+      "avoid": "Не считать больший файл более новым",
+      "read_only": true
+    },
+    {
+      "id": "clarity_extension_20261119_40",
+      "intent": "missing_sample_size",
+      "input": "В опросе 80% довольны. Это надёжный результат?",
+      "answer": "Нужно знать, сколько людей ответило и как их выбирали. Без этого процент мало говорит о достоверности опроса.",
+      "context": "survey_sample_unknown",
+      "avoid": "Не объявлять процент репрезентативным без данных",
+      "read_only": true
+    },
+    {
+      "id": "clarity_extension_20261119_41",
+      "intent": "uncertain_time_basis",
+      "input": "Написано «через два дня». От какого момента считать?",
+      "answer": "Уточни исходную дату и часовой пояс, если важен точный час. Иначе срок можно посчитать по-разному.",
+      "context": "relative_deadline_anchor_missing",
+      "avoid": "Не назначать дату без точки отсчёта",
+      "read_only": true
+    },
+    {
+      "id": "clarity_extension_20261119_42",
+      "intent": "unverified_sync",
+      "input": "На одном устройстве изменения видны, на втором пока нет.",
+      "answer": "Синхронизация ещё не подтверждена на втором устройстве. Проверь подключение и состояние синхронизации, прежде чем считать данные одинаковыми.",
+      "context": "cross_device_sync_unconfirmed",
+      "avoid": "Не обещать, что изменения уже появились на всех устройствах",
       "read_only": true
     }
   ]
