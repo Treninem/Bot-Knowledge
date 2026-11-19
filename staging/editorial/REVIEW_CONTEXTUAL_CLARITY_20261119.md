@@ -47,3 +47,11 @@ Compared the extension candidates against registered `packs/ru/clarification_bou
 - `clarity_extension_20261119_05` (rounded count) should not be routed to the registered `clarify_ru_units` case (unknown percent/absolute unit); these are different missing facts.
 
 Editorial disposition: **four extension records reviewed for this narrow comparison; zero accepted, zero rejected, zero registered**. Pending cross-pack and cross-PR search remains mandatory, as do schema/context-routing tests, privacy review and exact-head CI after any final content change. Existing staged totals remain 183 records / 178 labels; these are labels, not 178 proven independent canonical questions.
+
+## Context-bound staging continuation — 2026-11-19
+
+Added 12 original synthetic read-only candidates (`clarity_extension_20261119_31`–`_42`) to the existing extension file, commit `ff25730a1736b1cbce59ff6e6ec3e854514332de`. Topics: editorial approval, unspecified currency, partial refunds, ambiguous recipient, outdated prices, screenshot-only payment claims, conflicting deadlines, draft-vs-sent, ambiguous file revision, survey sample size, relative deadlines, and unverified cross-device sync.
+
+Staging arithmetic: **195 records = 101 + 55 + 39** across three JSON files; **190 distinct intent labels** if the earlier cross-file count of 178 remains unchanged. This is a label count, not a verified canonical-question count. Within the modified extension file, all 39 IDs, inputs and answers are distinct after case, `ё/е`, punctuation and whitespace normalization. No full cross-pack/cross-PR semantic scan or local regression run is claimed. Editorially accepted **0**, manifest-registered **0**, completed 100/100 sets **0**. The five existing repeated intent families still require review. No published pack, manifest, cache, ImPULS or main changes.
+
+Next: compare these 12 and the earlier 183 against registered packs and concurrent PRs; verify routing and semantic uniqueness; select compatible entries, run local schema/privacy/regression tests, update real-byte SHA-256 and manifest, and require exact-head CI before any merge. This staging PR remains **DRAFT/BLOCKED**.
