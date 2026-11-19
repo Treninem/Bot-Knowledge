@@ -28,3 +28,11 @@ Five repeated intent families require context-aware editorial routing:
 - `silent_failure` (2): `clarity_20261118_85`, `clarity_extension_20261119_03`. This family crosses into the third staging file.
 
 The count of five duplicated *families* and five extra records over unique intents is not a count of rejected answers. Decide which variants are useful only after inspecting their triggering context and comparing published packs and other open PRs. **Accepted: 0; registered: 0; completed 100/100 sets: 0.**
+
+## Additional staging checkpoint — 2026-11-19
+
+Added 18 original read-only contextual clarification candidates to `contextual_clarity_extension_20261119.json`, IDs `clarity_extension_20261119_13` through `_30`, commit `4ac5a0ee6015355afb28aee46bb691fe0f1168d1`. Topics include untested restoration, ambiguous deletion target, outdated instructions, partial uploads, mismatched totals, scoped translation, revoked sending consent and version mismatch. This is a **staging-only** increment, not publication.
+
+New total: **183 records = 101 + 55 + 27**, across three files. The 18 added records have 18 distinct new intent labels, yielding **178 distinct intent labels** across the staging files if the prior 160-label count is unchanged. Within the modified extension file, normalized IDs, inputs and answers remain distinct (case, ё/е, punctuation and whitespace normalization). No cross-pack or cross-PR semantic uniqueness is claimed. The five previously identified repeated intent families still need review; new candidates also require manual cross-pack comparison.
+
+**This checkpoint:** 18 new staged candidates, 0 editorially accepted or manifest-registered answers, 0 complete 100/100 sets. No consumer, manifest, cache, ImPULS or live bot changes. Local Python regression tests, SHA-256 of published packages and independent editorial acceptance have not been performed. Exact-head CI must be checked against the final commit; do not merge until all gates pass.
