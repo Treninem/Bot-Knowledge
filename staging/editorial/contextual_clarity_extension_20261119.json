@@ -5,7 +5,7 @@
   "audiences": [
     "all_ai_bots"
   ],
-  "notice": "9 synthetic editorial candidates after removal of 3 same-PR semantic overlaps (07, 08, 11). Context-specific contraindications revised. Still unregistered; cross-pack semantic review, routing, privacy and local tests pending.",
+  "notice": "27 synthetic editorial candidates (9 prior + 18 new). All remain unregistered, pending cross-pack semantic review, consumer routing, privacy checks and local tests.",
   "records": [
     {
       "id": "clarity_extension_20261119_01",
@@ -86,6 +86,168 @@
       "answer": "Уточни, сохраняется ли прежнее значение и есть ли побочные последствия. Не всякое изменение полностью обратимо.",
       "context": "reversible_action",
       "avoid": "Не обещать полного отката без проверки побочных эффектов",
+      "read_only": true
+    },
+    {
+      "id": "clarity_extension_20261119_13",
+      "intent": "unverified_restore",
+      "input": "Резервную копию нашли. Значит, восстановление точно получится?",
+      "answer": "Наличие копии ещё не доказывает, что она читается и содержит нужные данные. Сначала проверь её целостность и возможность восстановления на безопасной тестовой среде.",
+      "context": "backup_found_not_tested",
+      "avoid": "Не объявлять восстановление гарантированным",
+      "read_only": true
+    },
+    {
+      "id": "clarity_extension_20261119_14",
+      "intent": "mixed_time_units",
+      "input": "В отчёте написано 2,5 часа, а в журнале 150. Это разные значения?",
+      "answer": "Если в журнале минуты, значения совпадают: 2,5 часа — это 150 минут. Но сначала проверь единицу измерения в журнале.",
+      "context": "unit_unspecified",
+      "avoid": "Не приписывать числу 150 минуты без подтверждения",
+      "read_only": true
+    },
+    {
+      "id": "clarity_extension_20261119_15",
+      "intent": "conditional_permission",
+      "input": "Администратор сказал: «Если тест пройдёт, включай». Тест ещё не закончен.",
+      "answer": "Разрешение привязано к успешному тесту. Пока результата нет, включать по этой фразе рано.",
+      "context": "conditional_authorization",
+      "avoid": "Не превращать условное разрешение в немедленное",
+      "read_only": true
+    },
+    {
+      "id": "clarity_extension_20261119_16",
+      "intent": "ambiguous_delete_target",
+      "input": "Удали старую версию. У нас их три.",
+      "answer": "Какую из трёх версий считаем старой? Укажи дату или номер. Пока ничего не удаляем.",
+      "context": "multiple_possible_targets",
+      "avoid": "Не выбирать объект удаления по догадке",
+      "read_only": true
+    },
+    {
+      "id": "clarity_extension_20261119_17",
+      "intent": "metric_without_period",
+      "input": "Заказы выросли до 120. Это хороший результат?",
+      "answer": "За какой период получены 120 заказов и сколько было раньше? Без этих данных нельзя оценить рост.",
+      "context": "metric_missing_period_and_baseline",
+      "avoid": "Не сравнивать показатели разных периодов",
+      "read_only": true
+    },
+    {
+      "id": "clarity_extension_20261119_18",
+      "intent": "quoted_approval",
+      "input": "В переписке написано «согласовано», но непонятно кем.",
+      "answer": "Одного слова «согласовано» мало. Нужно установить, кто его написал и имел ли право утверждать решение.",
+      "context": "approval_authority_unknown",
+      "avoid": "Не приписывать цитате юридическую или рабочую силу",
+      "read_only": true
+    },
+    {
+      "id": "clarity_extension_20261119_19",
+      "intent": "ambiguous_attachment",
+      "input": "Возьми файл из прошлого сообщения. Там два вложения.",
+      "answer": "Какое из двух вложений нужно: первое или второе? Название файла тоже подойдёт.",
+      "context": "multiple_attachments",
+      "avoid": "Не выбирать вложение произвольно",
+      "read_only": true
+    },
+    {
+      "id": "clarity_extension_20261119_20",
+      "intent": "stale_instruction",
+      "input": "Инструкция была актуальна в прошлом году. Можно действовать по ней сейчас?",
+      "answer": "Проверь дату редакции и действующие правила. Старая инструкция может быть полезной справкой, но её актуальность пока не подтверждена.",
+      "context": "outdated_document",
+      "avoid": "Не утверждать действительность устаревшего порядка",
+      "read_only": true
+    },
+    {
+      "id": "clarity_extension_20261119_21",
+      "intent": "partial_upload",
+      "input": "Загрузилось 8 файлов из 10. Можно сказать, что архив готов?",
+      "answer": "Пока подтверждены восемь загрузок. Два файла ещё отсутствуют, поэтому полный архив готовым считать нельзя.",
+      "context": "incomplete_upload",
+      "avoid": "Не смешивать частичную загрузку с завершённой",
+      "read_only": true
+    },
+    {
+      "id": "clarity_extension_20261119_22",
+      "intent": "unknown_error_scope",
+      "input": "Ошибка появилась у одного участника. Значит, сервис упал у всех?",
+      "answer": "По одному случаю нельзя судить о работе сервиса для всех. Проверь другие независимые подключения или страницу состояния.",
+      "context": "single_user_failure",
+      "avoid": "Не объявлять глобальный сбой по единичному сообщению",
+      "read_only": true
+    },
+    {
+      "id": "clarity_extension_20261119_23",
+      "intent": "contradictory_counts",
+      "input": "В таблице 18 записей, а в итоговой строке 19.",
+      "answer": "Итог не сходится с количеством строк. Проверь фильтры, скрытые записи и формулу, прежде чем использовать число 19.",
+      "context": "count_discrepancy",
+      "avoid": "Не исправлять число без проверки причины",
+      "read_only": true
+    },
+    {
+      "id": "clarity_extension_20261119_24",
+      "intent": "unclear_comparison_direction",
+      "input": "Написано «на 15% меньше», но не указано, чего именно.",
+      "answer": "Нужно уточнить показатель и базу сравнения. Иначе процент не говорит, что изменилось.",
+      "context": "comparison_target_missing",
+      "avoid": "Не придумывать объект сравнения",
+      "read_only": true
+    },
+    {
+      "id": "clarity_extension_20261119_25",
+      "intent": "unverified_read_receipt",
+      "input": "Сообщение доставлено. Значит, человек уже прочитал?",
+      "answer": "Доставка и прочтение — разные статусы. Пока подтверждена только доставка.",
+      "context": "delivery_not_read",
+      "avoid": "Не приписывать адресату прочтение",
+      "read_only": true
+    },
+    {
+      "id": "clarity_extension_20261119_26",
+      "intent": "retracted_instruction",
+      "input": "Я передумал, не отправляй подготовленный текст.",
+      "answer": "Понял, отправку отменяем. Подготовленный текст остаётся черновиком; ничего не отправляю.",
+      "context": "instruction_revoked_before_send",
+      "avoid": "Не выполнять ранее согласованную отправку",
+      "read_only": true
+    },
+    {
+      "id": "clarity_extension_20261119_27",
+      "intent": "scope_of_translation",
+      "input": "Переведи только подпись под картинкой, остальное оставь.",
+      "answer": "Переведу только подпись. Текст внутри изображения и остальные части сообщения не меняю.",
+      "context": "translation_scope",
+      "avoid": "Не переводить соседние фрагменты",
+      "read_only": true
+    },
+    {
+      "id": "clarity_extension_20261119_28",
+      "intent": "uncertain_ownership",
+      "input": "Файл лежит в общей папке. Значит, я могу его публиковать?",
+      "answer": "Доступ к общей папке сам по себе не даёт разрешения на публичное распространение. Проверь владельца и условия использования.",
+      "context": "shared_access_not_publication_right",
+      "avoid": "Не выводить право публикации из права чтения",
+      "read_only": true
+    },
+    {
+      "id": "clarity_extension_20261119_29",
+      "intent": "pending_confirmation",
+      "input": "Я нажал «отправить», но подтверждения нет.",
+      "answer": "Пока неизвестно, прошла ли операция. Проверь её статус перед повторной отправкой, чтобы не создать дубль.",
+      "context": "submission_status_unknown",
+      "avoid": "Не утверждать успех и не советовать слепо повторять действие",
+      "read_only": true
+    },
+    {
+      "id": "clarity_extension_20261119_30",
+      "intent": "mixed_versions",
+      "input": "В описании указана версия 2, а скриншот сделан в версии 1.",
+      "answer": "Интерфейс мог измениться между версиями. Для точной инструкции нужен экран из версии 2 или подтверждение, что нужный пункт сохранился.",
+      "context": "version_mismatch",
+      "avoid": "Не выдавать старый интерфейс за текущий",
       "read_only": true
     }
   ]
