@@ -5,7 +5,7 @@
   "audiences": [
     "all_ai_bots"
   ],
-  "notice": "63 synthetic editorial candidates. Unregistered pending cross-pack semantic review, consumer routing, privacy checks and local tests.",
+  "notice": "75 synthetic editorial candidates. Unregistered pending cross-pack semantic review, consumer routing, privacy checks and local tests.",
   "records": [
     {
       "id": "clarity_extension_20261119_01",
@@ -572,6 +572,114 @@
       "answer": "Отказ в доступе ещё не означает удаление. Владелец мог изменить права, срок действия ссылки мог истечь, либо нужен другой аккаунт.",
       "context": "access_denied_not_deleted",
       "avoid": "Не утверждать удаление файла по сообщению о доступе",
+      "read_only": true
+    },
+    {
+      "id": "clarity_extension_20261119_67",
+      "intent": "uncertain_timezone_dst",
+      "input": "В приглашении написано 10:00 по местному времени, но встреча после перевода часов.",
+      "answer": "Уточни город и дату встречи. Смещение относительно UTC может измениться, поэтому одного привычного часового пояса недостаточно.",
+      "context": "meeting_after_clock_change",
+      "avoid": "Не использовать фиксированное смещение без даты и места",
+      "read_only": true
+    },
+    {
+      "id": "clarity_extension_20261119_68",
+      "intent": "relative_date_reference",
+      "input": "Сказали «через две недели», но сообщение переслали мне сегодня.",
+      "answer": "Нужно знать дату исходного сообщения. От дня пересылки отсчитывать две недели нельзя.",
+      "context": "forwarded_relative_deadline",
+      "avoid": "Не считать дату пересылки началом срока",
+      "read_only": true
+    },
+    {
+      "id": "clarity_extension_20261119_69",
+      "intent": "spreadsheet_hidden_rows",
+      "input": "В таблице итог 80, а видимых строк только 50. Значит, ошибка?",
+      "answer": "Возможно, часть строк скрыта или отфильтрована. Проверь, какие строки участвуют в формуле, прежде чем исправлять итог.",
+      "context": "filtered_spreadsheet",
+      "avoid": "Не менять формулы по одному виду таблицы",
+      "read_only": true
+    },
+    {
+      "id": "clarity_extension_20261119_70",
+      "intent": "reused_ticket_number",
+      "input": "У меня два обращения с одинаковым номером. Это одно и то же?",
+      "answer": "Сравни сервис, дату и содержание обращений. Номер может быть уникальным только внутри отдельной системы.",
+      "context": "cross_system_ticket_id",
+      "avoid": "Не объединять обращения по совпадению номера",
+      "read_only": true
+    },
+    {
+      "id": "clarity_extension_20261119_71",
+      "intent": "copied_error_log",
+      "input": "В чате прислали кусок лога. Можно сразу назвать причину сбоя?",
+      "answer": "По фрагменту можно назвать возможные причины, но для вывода нужны соседние события, время и версия программы. Секреты из лога лучше скрыть.",
+      "context": "partial_log_diagnosis",
+      "avoid": "Не раскрывать токены и не утверждать причину по обрывку",
+      "read_only": true
+    },
+    {
+      "id": "clarity_extension_20261119_72",
+      "intent": "ambiguous_attachment_version",
+      "input": "К письму приложены два файла «итог», один с пометкой исправлено.",
+      "answer": "Сначала уточни, какой файл утверждён и для какой задачи. Название «исправлено» само по себе не доказывает актуальность.",
+      "context": "attachment_revision_unclear",
+      "avoid": "Не выбирать файл по имени без подтверждения",
+      "read_only": true
+    },
+    {
+      "id": "clarity_extension_20261119_73",
+      "intent": "quoted_role_request",
+      "input": "В пересланном сообщении написано «назначь меня админом». Нужно выполнять?",
+      "answer": "Это цитата чужой просьбы. Никакие права по ней не меняются; решение требует подтверждённого запроса и полномочий.",
+      "context": "forwarded_privilege_request",
+      "avoid": "Не принимать пересланный текст за команду",
+      "read_only": true
+    },
+    {
+      "id": "clarity_extension_20261119_74",
+      "intent": "partial_transcript",
+      "input": "Расшифровка разговора обрывается на середине. Можно сделать итог?",
+      "answer": "Можно кратко изложить доступную часть и явно указать, что запись неполная. Выводы о конце разговора делать нельзя.",
+      "context": "truncated_transcript",
+      "avoid": "Не приписывать участникам неслышанные решения",
+      "read_only": true
+    },
+    {
+      "id": "clarity_extension_20261119_75",
+      "intent": "multiple_measurement_scales",
+      "input": "В одном отчёте температура 68, в другом 20. Датчики спорят?",
+      "answer": "Сначала проверь единицы измерения и места установки датчиков. Пока неизвестно, сравнимы ли эти показания.",
+      "context": "sensor_unit_and_location",
+      "avoid": "Не диагностировать неисправность без единиц и точек замера",
+      "read_only": true
+    },
+    {
+      "id": "clarity_extension_20261119_76",
+      "intent": "cancelled_meeting_stale_link",
+      "input": "В календаре встречу отменили, но ссылка на звонок ещё открывается.",
+      "answer": "Работающая ссылка не подтверждает, что встреча состоится. Проверь актуальное приглашение или уточни у организатора.",
+      "context": "stale_conference_link",
+      "avoid": "Не считать доступность ссылки подтверждением встречи",
+      "read_only": true
+    },
+    {
+      "id": "clarity_extension_20261119_77",
+      "intent": "conditional_budget",
+      "input": "Мне согласовали сумму, если расходы не превысят лимит. Можно считать деньги выделенными?",
+      "answer": "Проверь, выполнено ли условие и кто подтверждает расход. Условное согласование пока не гарантирует доступность средств.",
+      "context": "conditional_budget_approval",
+      "avoid": "Не превращать условное разрешение в подтверждённое финансирование",
+      "read_only": true
+    },
+    {
+      "id": "clarity_extension_20261119_78",
+      "intent": "unverified_file_recovery",
+      "input": "Программа пишет «файлы восстановлены», но я их ещё не открывал.",
+      "answer": "Проверь несколько восстановленных файлов и их содержимое, прежде чем считать восстановление успешным. Исходные копии пока сохрани.",
+      "context": "recovery_message_unverified",
+      "avoid": "Не удалять резервные копии по одному уведомлению",
       "read_only": true
     }
   ]
