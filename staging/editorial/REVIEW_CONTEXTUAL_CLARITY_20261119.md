@@ -68,3 +68,24 @@ Added 12 synthetic read-only examples to `contextual_clarity_extension_20261119.
 Added 12 synthetic read-only clarification candidates `clarity_extension_20261119_55`–`_66` in commit `1e1ac519a090d21022e3804b5b8b51a30a163ae5`. Topics: conflicting time-zone information, empty exports, read-only access, drafts, partial imports, duplicate attachment names, quoting private chats, measurement units, recipient exclusions, cross-region deadlines, aggregate scope and expired sharing access.
 
 Staging total **219 = 101 + 55 + 63** records across three JSON files. Within the extension file, all 63 IDs, inputs and answers are distinct after case, `ё/е`, punctuation and whitespace normalization; all 63 records contain required editorial fields and `read_only=true`. This is a scoped structural check only. Cross-file canonical intent counts, semantic uniqueness, published-pack comparisons, privacy/consumer integration, local Python regression and exact-head CI remain unverified. **Editorially accepted: 0; registered: 0; completed 100/100 sets: 0.** Do not merge this staging PR as a published knowledge pack. Next: cross-pack semantic triage and promotion of genuinely distinct entries through the full test/manifest gate.
+
+## Complete three-file structural recount — 2026-11-19
+
+At PR head `5d377cf75df8d954bf89a5fff8fe3cd712dac04a`, fetched all three staging JSON files and parsed their `records` arrays: **101 + 55 + 63 = 219 records**. All 219 have `id`, `intent`, `input`, `answer`, `context`, `avoid` and `read_only=true`. Normalizing lower case, ё/е and non-alphanumeric separators found **zero exact collisions** in IDs, inputs or answers across the three files. This is a deterministic structural check, not a semantic acceptance test.
+
+There are **209 distinct literal intent labels**, with **10 repeated two-record families** (20 records total):
+
+| Intent | IDs |
+| --- | --- |
+| `missing_denominator` | `clarity_20261118_38`, `clarity_extra_20261119_20` |
+| `conditional_permission` | `clarity_20261118_40`, `clarity_extension_20261119_15` |
+| `ambiguous_currency` | `clarity_20261118_44`, `clarity_extension_20261119_32` |
+| `unconfirmed_delivery` | `clarity_20261118_48`, `clarity_extra_20261119_48` |
+| `duplicate_submission` | `clarity_20261118_56`, `clarity_extra_20261119_33` |
+| `ambiguous_timezone` | `clarity_20261118_63`, `clarity_extra_20261119_16` |
+| `partial_upload` | `clarity_20261118_64`, `clarity_extension_20261119_21` |
+| `stale_instruction` | `clarity_20261118_70`, `clarity_extension_20261119_20` |
+| `silent_failure` | `clarity_20261118_85`, `clarity_extension_20261119_03` |
+| `missing_measurement_unit` | `clarity_extension_20261119_44`, `clarity_extension_20261119_62` |
+
+The 209 literal labels are **not** 209 proven distinct canonical questions; semantically related labels may need consolidation. Earlier five-family recounts apply to earlier snapshots and must not be reused as current totals. No candidate is editorially accepted or manifest-registered, and no set is verified 100/100. Cross-pack and cross-PR semantic comparison, consumer routing, local regression, actual-byte SHA/cache and exact-head CI remain pending. GitHub Actions lookup for this pre-update head returned **zero** PR workflow runs; the new head requires its own CI check. No change to ImPULS or main.
