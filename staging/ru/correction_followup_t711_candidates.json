@@ -20,13 +20,13 @@
   "prior_verified_accepted": 0,
   "new_staged_candidates": 100,
   "remaining_to_target_if_all_accepted": 0,
-  "editorial_status": "three_near_overlap_replacements_pending_cross_pack_editorial_review",
+  "editorial_status": "privacy_specificity_rewrites_pending_cross_pack_editorial_review",
   "replies": [
     {
       "id": "correction_followup_001",
-      "scenario": "object_misidentified",
-      "context_note": "Пользователь уточняет, что на снимке платок, а не спички",
-      "text": "Понял, это платок. Тогда не буду предлагать зажигать что-либо. Посмотрим, где его можно применить.",
+      "scenario": "material_identification",
+      "context_note": "Пользователь уточняет материал детали, который помощник определил по изображению неверно",
+      "text": "Уточнение принято: деталь пластиковая. Предложение для металлической детали здесь не подходит; сначала сверю способ крепления.",
       "language": "ru",
       "audiences": [
         "all_ai_bots"
@@ -37,9 +37,9 @@
     },
     {
       "id": "correction_followup_002",
-      "scenario": "door_locked",
-      "context_note": "Пользователь повторяет, что дверь заперта",
-      "text": "Дверь закрыта, это уже установили. Нужен способ открыть её; повторять попытку войти без ключа бессмысленно.",
+      "scenario": "unavailable_access_route",
+      "context_note": "Пользователь сообщает, что предложенный проход недоступен",
+      "text": "Этот проход недоступен. Исключаю его из маршрута и проверю другой вариант по доступной схеме.",
       "language": "ru",
       "audiences": [
         "all_ai_bots"
@@ -63,9 +63,9 @@
     },
     {
       "id": "correction_followup_004",
-      "scenario": "count_correction",
-      "context_note": "Пользователь исправляет количество мешков с 11 на 5",
-      "text": "Принял: пять мешков. Пересчитаю расход от пяти, прежние одиннадцать больше не использую.",
+      "scenario": "quantity_revised",
+      "context_note": "Пользователь исправляет количество элементов в расчёте",
+      "text": "Теперь элементов восемь. Пересчитаю итог по этому количеству, не используя прежнюю цифру.",
       "language": "ru",
       "audiences": [
         "all_ai_bots"
@@ -89,9 +89,9 @@
     },
     {
       "id": "correction_followup_006",
-      "scenario": "time_correction",
-      "context_note": "Время начала смены исправлено с 9:00 на 8:00",
-      "text": "Начало смены — 8:00. В расчёте часов заменю прежнее время и проверю итог.",
+      "scenario": "start_time_revised",
+      "context_note": "Пользователь исправляет время начала мероприятия",
+      "text": "Начало в 10:30. Обновлю расчёт длительности с учётом этого времени.",
       "language": "ru",
       "audiences": [
         "all_ai_bots"
@@ -102,9 +102,9 @@
     },
     {
       "id": "correction_followup_007",
-      "scenario": "scope_correction",
-      "context_note": "Пользователь уточняет, что речь о сегодняшнем выпуске, не общем накопленном",
-      "text": "Нужно количество за сегодня. Возьму разницу между текущим и вчерашним итогом, без повторного сложения накопленных значений.",
+      "scenario": "daily_vs_cumulative",
+      "context_note": "Пользователь уточняет, что нужен прирост за период, а не накопленный итог",
+      "text": "Нужен прирост за выбранный период. Вычту начальное накопленное значение из конечного и проверю, что оба относятся к одному показателю.",
       "language": "ru",
       "audiences": [
         "all_ai_bots"
@@ -115,9 +115,9 @@
     },
     {
       "id": "correction_followup_008",
-      "scenario": "recipient_correction",
-      "context_note": "Пользователь просит убрать упоминание ребёнка из личного пожелания",
-      "text": "Упоминание ребёнка убираю. Оставлю короткое пожелание только для адресата.",
+      "scenario": "recipient_scope_revised",
+      "context_note": "Пользователь просит убрать упоминание третьего лица из текста",
+      "text": "Уберу упоминание третьего лица и оставлю обращение только к адресату.",
       "language": "ru",
       "audiences": [
         "all_ai_bots"
@@ -180,9 +180,9 @@
     },
     {
       "id": "correction_followup_013",
-      "scenario": "wrong_variant",
-      "context_note": "Пользователь указывает, что расчёт сделан для другого комплекта",
-      "text": "Я взял не тот комплект. Прежние нормы использовать нельзя; сверю состав нужного варианта перед пересчётом.",
+      "scenario": "configuration_variant",
+      "context_note": "Пользователь уточняет вариант конфигурации, для которого нужен расчёт",
+      "text": "Я выбрал другую конфигурацию. Проверю параметры нужного варианта и пересчитаю результат.",
       "language": "ru",
       "audiences": [
         "all_ai_bots"
@@ -1322,5 +1322,6 @@
       "read_only": true,
       "avoid": "Не утверждать, что действие выполнено; не подменять факты догадкой; проверять текущие данные и область исправления."
     }
-  ]
+  ],
+  "privacy_rewrite_note": "Seven candidate scenarios rewritten as independently synthetic generic cases; still unregistered and not editorially accepted."
 }
