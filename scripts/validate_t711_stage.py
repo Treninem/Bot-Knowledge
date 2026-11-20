@@ -15,7 +15,7 @@ EXPECTED = "user_corrects_prior_assumption"
 
 def norm(value):
     value = unicodedata.normalize("NFKC", value).casefold().replace("ё", "е")
-    return " ".join(re.findall(r"\\w+", value))
+    return " ".join(re.findall(r"\w+", value))
 
 
 def validate(path=PATH):
@@ -51,7 +51,7 @@ def validate(path=PATH):
                 or not row["context_note"].strip()
                 or not isinstance(row.get("avoid"), str) or not row["avoid"].strip()):
             raise ValueError(f"invalid selection metadata at {i}")
-        if re.search(r"(?i)(?:https?://|(?:[\\w.+-]+)@(?:[\\w.-]+)\\.[a-z]{2,})", row["text"]):
+        if re.search(r"(?i)(?:https?://|(?:[\w.+-]+)@(?:[\w.-]+)\.[a-z]{2,})", row["text"]):
             raise ValueError(f"possible URL or email in reply {i}")
     return len(rows)
 
