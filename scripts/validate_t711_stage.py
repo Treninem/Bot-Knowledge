@@ -39,9 +39,11 @@ def validate(path=PATH):
     if not isinstance(rows, list) or len(rows) != 100:
         raise ValueError("expected 100 staging candidates")
     for i, row in enumerate(rows, 1):
+        if not isinstance(row, dict):
+            raise ValueError(f"invalid candidate object at {i}")
         if row.get("id") != f"correction_followup_{i:03d}":
             raise ValueError(f"non-sequential or unexpected candidate ID at {i}")
-    for key in ("id", "scenario", "text"):
+    for key in ("id", "scenario", "text", "context_note"):
         values = []
         for i, row in enumerate(rows, 1):
             if not isinstance(row, dict) or not isinstance(row.get(key), str):
