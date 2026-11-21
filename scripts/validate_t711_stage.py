@@ -62,8 +62,10 @@ def validate(path=PATH):
                 or not row["context_note"].strip()
                 or not isinstance(row.get("avoid"), str) or not row["avoid"].strip()):
             raise ValueError(f"invalid selection metadata at {i}")
-        if re.search(r"(?i)(?:https?://|(?:[\w.+-]+)@(?:[\w.-]+)\.[a-z]{2,})", row["text"]):
-            raise ValueError(f"possible URL or email in reply {i}")
+        # Context notes and exclusion guidance are public staging content too.
+        for field in ("scenario", "context_note", "text", "avoid"):
+            if re.search(r"(?i)(?:https?://|(?:[\\w.+-]+)@(?:[\\w.-]+)\\.[a-z]{2,})", row[field]):
+                raise ValueError(f"possible URL or email in {field} at reply {i}")
     return len(rows)
 
 
