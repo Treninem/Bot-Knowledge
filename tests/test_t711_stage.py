@@ -70,6 +70,13 @@ class T711StageTests(unittest.TestCase):
         data["replies"][0]["text"] += " user@example.com"
         self.check(data, False)
 
+    def test_reject_unicode_domain_email_in_public_fields(self):
+        for field in ("scenario", "context_note", "text", "avoid"):
+            with self.subTest(field=field):
+                data = copy.deepcopy(self.source)
+                data["replies"][0][field] += " user@пример.рф"
+                self.check(data, False)
+
     def test_reject_missing_selection_context(self):
         data = copy.deepcopy(self.source)
         data["replies"][0]["context"] = "unconditional"
