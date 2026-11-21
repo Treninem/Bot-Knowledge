@@ -29,9 +29,18 @@ def validate(path=PATH):
            ("read_only", "requires_direct_address", "requires_context_match",
             "no_sanctions", "no_personal_data")):
         raise ValueError("unsafe constraints")
+    if (data.get("editorially_accepted") != 0 or
+            data.get("remaining_to_target_accepted") != 100 or
+            data.get("new_staged_candidates") != 100 or
+            data.get("prior_verified_accepted") != 0 or
+            data.get("remaining_to_target_if_all_accepted") != 0):
+        raise ValueError("staging accounting mismatch: candidates are not accepted")
     rows = data.get("replies")
     if not isinstance(rows, list) or len(rows) != 100:
         raise ValueError("expected 100 staging candidates")
+    for i, row in enumerate(rows, 1):
+        if row.get("id") != f"correction_followup_{i:03d}":
+            raise ValueError(f"non-sequential or unexpected candidate ID at {i}")
     for key in ("id", "scenario", "text"):
         values = []
         for i, row in enumerate(rows, 1):
