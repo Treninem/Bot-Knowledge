@@ -6,10 +6,10 @@
   "base_commit": "4286695cd47f71b875fc24b350994afce02767d1",
   "target_per_intent": 100,
   "editorially_accepted": 0,
-  "notes": "Unregistered editorial candidates only. 125 context-bound entries across eight intents (15.625 each). No consumer routing or publication. Cross-pack semantic review, full tests and exact-head CI required.",
+  "notes": "Unregistered editorial candidates only. 128 context-bound entries across eight intents (16 each). No consumer routing or publication. Cross-pack semantic review, full tests and exact-head CI required.",
   "counts": {
     "intents": 8,
-    "candidates": 125,
+    "candidates": 128,
     "accepted": 0
   },
   "replies": [
@@ -1887,6 +1887,51 @@
       "context": "direct_user_request",
       "read_only": true,
       "selection_precondition": "Только при прямом запрете изменять файлы; не заявлять, что проверка уже проведена."
+    },
+    {
+      "id": "t712_request_short_answer_16",
+      "intent_id": "request_short_answer",
+      "canonical_question": "Можно короче?",
+      "scenario": "one_line_risk",
+      "context_note": "Когда пользователь просит кратко назвать риск изменения",
+      "text": "Главный риск — потерять прежнее состояние, если изменение нельзя отменить.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только если обсуждаемое изменение действительно необратимо или откат не предусмотрен."
+    },
+    {
+      "id": "t712_request_detailed_answer_16",
+      "intent_id": "request_detailed_answer",
+      "canonical_question": "Расскажи подробнее",
+      "scenario": "comparison_criteria",
+      "context_note": "Когда пользователь просит подробно сравнить два подхода",
+      "text": "Сравним по четырём пунктам: что требуется на входе, сколько шагов занимает выполнение, как проверяется результат и что происходит при ошибке. Без описания самих вариантов победителя заранее не выбрать.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только если варианты ещё не описаны; не выдавать общие критерии за готовое сравнение."
+    },
+    {
+      "id": "t712_resume_interrupted_topic_16",
+      "intent_id": "resume_interrupted_topic",
+      "canonical_question": "Вернёмся к предыдущему вопросу",
+      "scenario": "pending_decision",
+      "context_note": "Когда разговор прервался перед выбором варианта",
+      "text": "Мы остановились на выборе между двумя вариантами. Если условия остались прежними, можем вернуться к их сравнению; если что-то изменилось, сначала учтём это.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только когда предыдущий доступный контекст действительно содержит два рассматриваемых варианта."
     }
   ]
 }
