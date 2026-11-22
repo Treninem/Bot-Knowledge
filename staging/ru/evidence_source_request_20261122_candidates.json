@@ -8,10 +8,10 @@
   "editorially_accepted": 0,
   "counts": {
     "intents": 1,
-    "candidates": 58,
+    "candidates": 100,
     "accepted": 0
   },
-  "notes": "Unregistered editorial staging only; 0 accepted. Pending cross-pack editorial review, full local tests, actual-byte SHA/manifest, exact-head CI. Each reply requires its specific scenario.",
+  "notes": "100 synthetic candidates staged; 0 editorially accepted or registered. Requires cross-pack review, local tests, SHA/manifest and exact-head CI.",
   "replies": [
     {
       "id": "evidence_source_request_001",
@@ -882,6 +882,636 @@
       "context": "direct_user_request",
       "read_only": true,
       "selection_precondition": "Когда пример API не совпадает с текущим поведением сервиса."
+    },
+    {
+      "id": "evidence_source_request_059",
+      "intent_id": "request_evidence_for_claim",
+      "canonical_question": "Откуда это известно?",
+      "scenario": "unreported_denominator",
+      "context_note": "Когда процент указан без общего количества наблюдений.",
+      "text": "Процент сам по себе мало говорит о масштабе. Нужно знать, из скольких случаев его посчитали.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда процент указан без общего количества наблюдений."
+    },
+    {
+      "id": "evidence_source_request_060",
+      "intent_id": "request_evidence_for_claim",
+      "canonical_question": "Откуда это известно?",
+      "scenario": "relative_vs_absolute_risk",
+      "context_note": "Когда относительное изменение риска представлено без исходной вероятности.",
+      "text": "Увеличение вдвое звучит внушительно, но без исходного риска нельзя оценить абсолютную разницу.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда относительное изменение риска представлено без исходной вероятности."
+    },
+    {
+      "id": "evidence_source_request_061",
+      "intent_id": "request_evidence_for_claim",
+      "canonical_question": "Откуда это известно?",
+      "scenario": "time_window_cherry_picking",
+      "context_note": "Когда график показывает только удобный короткий период.",
+      "text": "Этот отрезок может скрывать противоположную динамику. Посмотрим, что происходило до и после него.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда график показывает только удобный короткий период."
+    },
+    {
+      "id": "evidence_source_request_062",
+      "intent_id": "request_evidence_for_claim",
+      "canonical_question": "Откуда это известно?",
+      "scenario": "multiple_testing",
+      "context_note": "Когда один значимый результат выделен из множества проверок.",
+      "text": "Если проверяли десятки гипотез, случайное совпадение вероятнее. Нужны число проверок и способ поправки.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда один значимый результат выделен из множества проверок."
+    },
+    {
+      "id": "evidence_source_request_063",
+      "intent_id": "request_evidence_for_claim",
+      "canonical_question": "Откуда это известно?",
+      "scenario": "publication_bias",
+      "context_note": "Когда вывод строится лишь на опубликованных успешных экспериментах.",
+      "text": "Публикации могут не отражать неудачные попытки. Стоит проверить, были ли зарегистрированы все исследования.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда вывод строится лишь на опубликованных успешных экспериментах."
+    },
+    {
+      "id": "evidence_source_request_064",
+      "intent_id": "request_evidence_for_claim",
+      "canonical_question": "Откуда это известно?",
+      "scenario": "missing_control_group",
+      "context_note": "Когда эффект приписывают вмешательству без контрольной группы.",
+      "text": "Без сравнения с похожей группой трудно понять, что изменилось именно из-за вмешательства.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда эффект приписывают вмешательству без контрольной группы."
+    },
+    {
+      "id": "evidence_source_request_065",
+      "intent_id": "request_evidence_for_claim",
+      "canonical_question": "Откуда это известно?",
+      "scenario": "nonrandom_assignment",
+      "context_note": "Когда сравниваемые группы изначально различаются.",
+      "text": "Если группы формировались по-разному, результат может объясняться исходными различиями, а не проверяемым фактором.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда сравниваемые группы изначально различаются."
+    },
+    {
+      "id": "evidence_source_request_066",
+      "intent_id": "request_evidence_for_claim",
+      "canonical_question": "Откуда это известно?",
+      "scenario": "self_report_vs_observed",
+      "context_note": "Когда самооценку участников называют объективно измеренным поведением.",
+      "text": "Здесь участники рассказали о себе. Это другой тип данных, чем непосредственное наблюдение.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда самооценку участников называют объективно измеренным поведением."
+    },
+    {
+      "id": "evidence_source_request_067",
+      "intent_id": "request_evidence_for_claim",
+      "canonical_question": "Откуда это известно?",
+      "scenario": "survey_nonresponse",
+      "context_note": "Когда результаты опроса распространяют на тех, кто не ответил.",
+      "text": "Нужно знать, сколько людей отказались отвечать и отличаются ли они от участников.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда результаты опроса распространяют на тех, кто не ответил."
+    },
+    {
+      "id": "evidence_source_request_068",
+      "intent_id": "request_evidence_for_claim",
+      "canonical_question": "Откуда это известно?",
+      "scenario": "unweighted_poll",
+      "context_note": "Когда данные опроса не учитывают состав опрошенных.",
+      "text": "Посмотрим, соответствует ли состав выборки населению. Без этого общая доля может быть смещена.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда данные опроса не учитывают состав опрошенных."
+    },
+    {
+      "id": "evidence_source_request_069",
+      "intent_id": "request_evidence_for_claim",
+      "canonical_question": "Откуда это известно?",
+      "scenario": "margin_of_error",
+      "context_note": "Когда небольшое различие результатов опроса называют доказанным.",
+      "text": "Разница может укладываться в погрешность. Нужны интервалы неопределённости и размер выборки.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда небольшое различие результатов опроса называют доказанным."
+    },
+    {
+      "id": "evidence_source_request_070",
+      "intent_id": "request_evidence_for_claim",
+      "canonical_question": "Откуда это известно?",
+      "scenario": "statistical_significance_vs_importance",
+      "context_note": "Когда статистически значимый результат объявляют практически большим.",
+      "text": "Значимость ещё не говорит о размере эффекта. Посмотрим на величину изменения в понятных единицах.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда статистически значимый результат объявляют практически большим."
+    },
+    {
+      "id": "evidence_source_request_071",
+      "intent_id": "request_evidence_for_claim",
+      "canonical_question": "Откуда это известно?",
+      "scenario": "missing_raw_data",
+      "context_note": "Когда опубликован итоговый показатель без исходных наблюдений.",
+      "text": "Итог можно процитировать, но независимо пересчитать его без данных и методики пока нельзя.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда опубликован итоговый показатель без исходных наблюдений."
+    },
+    {
+      "id": "evidence_source_request_072",
+      "intent_id": "request_evidence_for_claim",
+      "canonical_question": "Откуда это известно?",
+      "scenario": "data_cleaning_undocumented",
+      "context_note": "Когда неизвестно, какие записи исключили из расчёта.",
+      "text": "Результат зависит и от отбора записей. Нужны правила очистки данных и число исключений.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда неизвестно, какие записи исключили из расчёта."
+    },
+    {
+      "id": "evidence_source_request_073",
+      "intent_id": "request_evidence_for_claim",
+      "canonical_question": "Откуда это известно?",
+      "scenario": "duplicated_records",
+      "context_note": "Когда число событий могло включать повторные записи одного случая.",
+      "text": "Надо проверить, считаются ли здесь события или уникальные случаи. Иначе итог окажется завышенным.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда число событий могло включать повторные записи одного случая."
+    },
+    {
+      "id": "evidence_source_request_074",
+      "intent_id": "request_evidence_for_claim",
+      "canonical_question": "Откуда это известно?",
+      "scenario": "timezone_boundary",
+      "context_note": "Когда суточные показатели разных источников расходятся.",
+      "text": "Источники могли использовать разные часовые пояса. Сверим границы суток перед сравнением.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда суточные показатели разных источников расходятся."
+    },
+    {
+      "id": "evidence_source_request_075",
+      "intent_id": "request_evidence_for_claim",
+      "canonical_question": "Откуда это известно?",
+      "scenario": "currency_conversion_date",
+      "context_note": "Когда старую сумму пересчитывают по сегодняшнему курсу.",
+      "text": "Для исторической суммы нужен курс на соответствующую дату и уточнение, учитывается ли инфляция.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда старую сумму пересчитывают по сегодняшнему курсу."
+    },
+    {
+      "id": "evidence_source_request_076",
+      "intent_id": "request_evidence_for_claim",
+      "canonical_question": "Откуда это известно?",
+      "scenario": "nominal_vs_real_values",
+      "context_note": "Когда рост денежных показателей трактуют без поправки на цены.",
+      "text": "Номинальная сумма выросла, но для сравнения покупательной способности нужна поправка на изменение цен.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда рост денежных показателей трактуют без поправки на цены."
+    },
+    {
+      "id": "evidence_source_request_077",
+      "intent_id": "request_evidence_for_claim",
+      "canonical_question": "Откуда это известно?",
+      "scenario": "seasonal_pattern",
+      "context_note": "Когда сезонный всплеск объявляют устойчивым трендом.",
+      "text": "Сравним тот же период прошлых лет: сезонность может объяснить изменение без нового тренда.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда сезонный всплеск объявляют устойчивым трендом."
+    },
+    {
+      "id": "evidence_source_request_078",
+      "intent_id": "request_evidence_for_claim",
+      "canonical_question": "Откуда это известно?",
+      "scenario": "administrative_vs_survey_data",
+      "context_note": "Когда ведомственную статистику напрямую сравнивают с опросом.",
+      "text": "Один источник считает зарегистрированные случаи, другой — ответы людей. Сначала сверим определения.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда ведомственную статистику напрямую сравнивают с опросом."
+    },
+    {
+      "id": "evidence_source_request_079",
+      "intent_id": "request_evidence_for_claim",
+      "canonical_question": "Откуда это известно?",
+      "scenario": "definition_changed",
+      "context_note": "Когда показатель вырос после изменения критериев учёта.",
+      "text": "Возможно, изменилось само определение случая. Проверим методику по обе стороны даты изменения.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда показатель вырос после изменения критериев учёта."
+    },
+    {
+      "id": "evidence_source_request_080",
+      "intent_id": "request_evidence_for_claim",
+      "canonical_question": "Откуда это известно?",
+      "scenario": "estimated_vs_counted",
+      "context_note": "Когда оценочное число представляют как точный подсчёт.",
+      "text": "Это оценка по модели или выборке. Её нужно приводить вместе с методом и диапазоном неопределённости.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда оценочное число представляют как точный подсчёт."
+    },
+    {
+      "id": "evidence_source_request_081",
+      "intent_id": "request_evidence_for_claim",
+      "canonical_question": "Откуда это известно?",
+      "scenario": "rounding_error",
+      "context_note": "Когда небольшое расхождение сумм возникает из округления.",
+      "text": "Проверим расчёт по неокруглённым значениям: сумма округлённых частей может отличаться от итога.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда небольшое расхождение сумм возникает из округления."
+    },
+    {
+      "id": "evidence_source_request_082",
+      "intent_id": "request_evidence_for_claim",
+      "canonical_question": "Откуда это известно?",
+      "scenario": "transcription_error",
+      "context_note": "Когда число перенесено вручную из таблицы в публикацию.",
+      "text": "Сверим цифру с исходной строкой таблицы. При перепечатке легко потерять разряд или знак.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда число перенесено вручную из таблицы в публикацию."
+    },
+    {
+      "id": "evidence_source_request_083",
+      "intent_id": "request_evidence_for_claim",
+      "canonical_question": "Откуда это известно?",
+      "scenario": "optical_illusion_photo",
+      "context_note": "Когда по фотографии судят о реальных размерах предмета.",
+      "text": "Перспектива меняет видимые пропорции. Без масштаба и расстояния до камеры размер не установить.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда по фотографии судят о реальных размерах предмета."
+    },
+    {
+      "id": "evidence_source_request_084",
+      "intent_id": "request_evidence_for_claim",
+      "canonical_question": "Откуда это известно?",
+      "scenario": "reverse_image_search_limits",
+      "context_note": "Когда совпадение картинки в поиске принимают за доказательство авторства.",
+      "text": "Самая ранняя найденная копия ещё не обязательно оригинал. Нужны происхождение файла и независимые подтверждения.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда совпадение картинки в поиске принимают за доказательство авторства."
+    },
+    {
+      "id": "evidence_source_request_085",
+      "intent_id": "request_evidence_for_claim",
+      "canonical_question": "Откуда это известно?",
+      "scenario": "geolocation_landmark",
+      "context_note": "Когда место съёмки называют по одному похожему зданию.",
+      "text": "Похожий фасад не доказывает место. Сверим несколько независимых ориентиров и планировку улицы.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда место съёмки называют по одному похожему зданию."
+    },
+    {
+      "id": "evidence_source_request_086",
+      "intent_id": "request_evidence_for_claim",
+      "canonical_question": "Откуда это известно?",
+      "scenario": "weather_photo_verification",
+      "context_note": "Когда погоду на снимке используют для датировки события.",
+      "text": "Облачность сама по себе не даёт точной даты. Понадобятся место съёмки и архив наблюдений.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда погоду на снимке используют для датировки события."
+    },
+    {
+      "id": "evidence_source_request_087",
+      "intent_id": "request_evidence_for_claim",
+      "canonical_question": "Откуда это известно?",
+      "scenario": "eyewitness_distance",
+      "context_note": "Когда свидетель описывает детали события издалека.",
+      "text": "Уточним расстояние, освещение и обзор. От них зависит, какие детали человек мог различить.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда свидетель описывает детали события издалека."
+    },
+    {
+      "id": "evidence_source_request_088",
+      "intent_id": "request_evidence_for_claim",
+      "canonical_question": "Откуда это известно?",
+      "scenario": "witnesses_same_origin",
+      "context_note": "Когда несколько публикаций ссылаются на одно свидетельство.",
+      "text": "Три пересказа одного сообщения не становятся тремя независимыми подтверждениями. Найдём исходную цепочку.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда несколько публикаций ссылаются на одно свидетельство."
+    },
+    {
+      "id": "evidence_source_request_089",
+      "intent_id": "request_evidence_for_claim",
+      "canonical_question": "Откуда это известно?",
+      "scenario": "anonymous_expert",
+      "context_note": "Когда мнение приписано неназванному специалисту.",
+      "text": "Без имени, специализации и исходного высказывания проверить такую экспертную оценку трудно.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда мнение приписано неназванному специалисту."
+    },
+    {
+      "id": "evidence_source_request_090",
+      "intent_id": "request_evidence_for_claim",
+      "canonical_question": "Откуда это известно?",
+      "scenario": "expert_outside_field",
+      "context_note": "Когда авторитет специалиста используют за пределами его области.",
+      "text": "Проверим, относится ли вопрос к его профессиональной компетенции, и на какие данные он опирается.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда авторитет специалиста используют за пределами его области."
+    },
+    {
+      "id": "evidence_source_request_091",
+      "intent_id": "request_evidence_for_claim",
+      "canonical_question": "Откуда это известно?",
+      "scenario": "consensus_vs_single_opinion",
+      "context_note": "Когда одну экспертную позицию называют общим научным согласием.",
+      "text": "Один комментарий не показывает согласия специалистов. Нужны обзоры исследований или позиции профильных организаций.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда одну экспертную позицию называют общим научным согласием."
+    },
+    {
+      "id": "evidence_source_request_092",
+      "intent_id": "request_evidence_for_claim",
+      "canonical_question": "Откуда это известно?",
+      "scenario": "regulatory_approval_scope",
+      "context_note": "Когда разрешение регулятора трактуют как подтверждение любых применений.",
+      "text": "Надо посмотреть, что именно разрешено: продукт, способ применения и условия могут быть строго ограничены.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда разрешение регулятора трактуют как подтверждение любых применений."
+    },
+    {
+      "id": "evidence_source_request_093",
+      "intent_id": "request_evidence_for_claim",
+      "canonical_question": "Откуда это известно?",
+      "scenario": "standard_optional_vs_mandatory",
+      "context_note": "Когда технический стандарт автоматически называют обязательным законом.",
+      "text": "Стандарт может быть добровольным. Проверим, делает ли его обязательным конкретный нормативный акт или договор.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда технический стандарт автоматически называют обязательным законом."
+    },
+    {
+      "id": "evidence_source_request_094",
+      "intent_id": "request_evidence_for_claim",
+      "canonical_question": "Откуда это известно?",
+      "scenario": "test_lab_accreditation",
+      "context_note": "Когда лабораторный результат называют официально подтверждённым.",
+      "text": "Уточним, аккредитована ли лаборатория именно на этот метод и относится ли протокол к нужному образцу.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда лабораторный результат называют официально подтверждённым."
+    },
+    {
+      "id": "evidence_source_request_095",
+      "intent_id": "request_evidence_for_claim",
+      "canonical_question": "Откуда это известно?",
+      "scenario": "certificate_expired",
+      "context_note": "Когда предъявлен сертификат без проверки срока действия.",
+      "text": "Номер документа ещё не подтверждает его актуальность. Нужны срок, реестр и область действия.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда предъявлен сертификат без проверки срока действия."
+    },
+    {
+      "id": "evidence_source_request_096",
+      "intent_id": "request_evidence_for_claim",
+      "canonical_question": "Откуда это известно?",
+      "scenario": "software_release_candidate",
+      "context_note": "Когда функцию из тестовой сборки считают доступной всем пользователям.",
+      "text": "Описание предварительной версии не гарантирует наличие функции в стабильном выпуске. Проверим канал и номер сборки.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда функцию из тестовой сборки считают доступной всем пользователям."
+    },
+    {
+      "id": "evidence_source_request_097",
+      "intent_id": "request_evidence_for_claim",
+      "canonical_question": "Откуда это известно?",
+      "scenario": "feature_flag_rollout",
+      "context_note": "Когда функция видна одному пользователю, но отсутствует у другого.",
+      "text": "Возможен поэтапный запуск или эксперимент. Один аккаунт не доказывает доступность для всех.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда функция видна одному пользователю, но отсутствует у другого."
+    },
+    {
+      "id": "evidence_source_request_098",
+      "intent_id": "request_evidence_for_claim",
+      "canonical_question": "Откуда это известно?",
+      "scenario": "cached_search_snippet",
+      "context_note": "Когда вывод делают по фрагменту поисковой выдачи.",
+      "text": "Краткий фрагмент мог устареть или обрезать условие. Нужна актуальная страница целиком.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда вывод делают по фрагменту поисковой выдачи."
+    },
+    {
+      "id": "evidence_source_request_099",
+      "intent_id": "request_evidence_for_claim",
+      "canonical_question": "Откуда это известно?",
+      "scenario": "machine_translation_nuance",
+      "context_note": "Когда смысл спорного термина установлен только машинным переводом.",
+      "text": "Проверим оригинальную формулировку и контекст термина: автоматический перевод мог убрать оговорку.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда смысл спорного термина установлен только машинным переводом."
+    },
+    {
+      "id": "evidence_source_request_100",
+      "intent_id": "request_evidence_for_claim",
+      "canonical_question": "Откуда это известно?",
+      "scenario": "historical_attribution",
+      "context_note": "Когда известную фразу приписывают историческому человеку без раннего источника.",
+      "text": "Для авторства нужна ранняя датированная запись. Поздние сборники цитат могут повторять ошибку.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда известную фразу приписывают историческому человеку без раннего источника."
     }
   ]
 }
