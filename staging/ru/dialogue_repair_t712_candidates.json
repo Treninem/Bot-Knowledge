@@ -6,10 +6,10 @@
   "base_commit": "4286695cd47f71b875fc24b350994afce02767d1",
   "target_per_intent": 100,
   "editorially_accepted": 0,
-  "notes": "Unregistered editorial candidates only. 128 context-bound entries across eight intents (16 each). No consumer routing or publication. Cross-pack semantic review, full tests and exact-head CI required.",
+  "notes": "Unregistered editorial candidates only. 136 context-bound entries across eight intents. No consumer routing or publication. Cross-pack semantic review, full tests and exact-head CI required.",
   "counts": {
     "intents": 8,
-    "candidates": 128,
+    "candidates": 136,
     "accepted": 0
   },
   "replies": [
@@ -1932,6 +1932,126 @@
       "context": "direct_user_request",
       "read_only": true,
       "selection_precondition": "Только когда предыдущий доступный контекст действительно содержит два рассматриваемых варианта."
+    },
+    {
+      "id": "t712_ask_for_example_17",
+      "intent_id": "ask_for_example",
+      "canonical_question": "Можешь привести пример?",
+      "scenario": "queue_order",
+      "context_note": "Когда обсуждается порядок обработки задач",
+      "text": "Допустим, пришли три заявки: одна аварийная, другая со сроком сегодня, третья без срока. Сначала уточняем, действительно ли первая аварийная, и только потом определяем очередь.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только при обсуждении приоритизации заявок; это учебный пример, не действующий регламент."
+    },
+    {
+      "id": "t712_ask_for_example_18",
+      "intent_id": "ask_for_example",
+      "canonical_question": "Можешь привести пример?",
+      "scenario": "version_conflict",
+      "context_note": "Когда нужно объяснить конфликт изменений",
+      "text": "Два человека открыли один документ. Первый исправил заголовок и сохранил, второй продолжил работу со старой копией. Если второй просто заменит файл целиком, правка заголовка пропадёт.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только при обсуждении одновременного редактирования файлов и риска перезаписи."
+    },
+    {
+      "id": "t712_explain_in_plain_words_17",
+      "intent_id": "explain_in_plain_words",
+      "canonical_question": "Объясни простыми словами",
+      "scenario": "permission_denied",
+      "context_note": "Когда нужно объяснить отказ в доступе",
+      "text": "Файл может существовать, но у твоей учётной записи нет разрешения его открыть. Ошибка доступа сама по себе не означает, что файл удалён.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только при диагностике отказа в доступе, без утверждения, что конкретный файл существует."
+    },
+    {
+      "id": "t712_separate_fact_from_guess_17",
+      "intent_id": "separate_fact_from_guess",
+      "canonical_question": "Где факт, а где твоя догадка?",
+      "scenario": "delivery_status",
+      "context_note": "Когда путают отправку и получение",
+      "text": "Подтверждена отправка запроса. Получил ли его адресат и обработал ли — из этого статуса неизвестно.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только если источник подтверждает именно отправку, а не доставку или обработку."
+    },
+    {
+      "id": "t712_request_short_answer_17",
+      "intent_id": "request_short_answer",
+      "canonical_question": "Можно короче?",
+      "scenario": "status_summary",
+      "context_note": "Когда требуется коротко сообщить о незавершённой проверке",
+      "text": "Проверка ещё идёт. Подтверждённого результата пока нет.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только если процесс действительно запущен и ещё не завершён."
+    },
+    {
+      "id": "t712_request_short_answer_18",
+      "intent_id": "request_short_answer",
+      "canonical_question": "Можно короче?",
+      "scenario": "tradeoff",
+      "context_note": "Когда нужно сжать сравнение стоимости и времени",
+      "text": "Первый вариант дешевле, второй быстрее. Что важнее сейчас: срок или бюджет?",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только если сравнение цены и срока уже подтверждено для двух вариантов."
+    },
+    {
+      "id": "t712_request_detailed_answer_17",
+      "intent_id": "request_detailed_answer",
+      "canonical_question": "Расскажи подробнее",
+      "scenario": "source_trace",
+      "context_note": "Когда пользователь просит раскрыть происхождение вывода",
+      "text": "Покажу, на чём держится вывод: сначала исходное утверждение, затем источник и его дата, после этого — что именно из него следует. Отдельно отмечу места, где данных недостаточно.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только при запросе на проверяемое обоснование; не обещать источник, которого нет."
+    },
+    {
+      "id": "t712_request_detailed_answer_18",
+      "intent_id": "request_detailed_answer",
+      "canonical_question": "Расскажи подробнее",
+      "scenario": "failure_reproduction",
+      "context_note": "Когда нужно подробно разобрать воспроизводимую ошибку",
+      "text": "Чтобы отделить случайный сбой от повторяемого, запишем последовательность действий, условия запуска, ожидаемый результат и фактический. Затем повторим в безопасной тестовой среде, не затрагивая рабочие данные.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только если повторение безопасно и есть отдельная тестовая среда."
     }
   ]
 }
