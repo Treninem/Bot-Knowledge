@@ -8,7 +8,7 @@
   "editorially_accepted": 0,
   "counts": {
     "intents": 1,
-    "candidates": 16,
+    "candidates": 32,
     "accepted": 0
   },
   "notes": "Independent synthetic staging; requires cross-pack review, repository tests, SHA-256 and exact-head CI before promotion.",
@@ -252,6 +252,246 @@
       "context": "direct_user_request",
       "read_only": true,
       "selection_precondition": "Когда собеседник прислал ссылку, содержимое которой нельзя прочитать в текущей среде"
+    },
+    {
+      "id": "link_access_recovery_017",
+      "intent_id": "link_does_not_open",
+      "canonical_question": "Что делать, если ссылка не открывается?",
+      "scenario": "dns_resolution",
+      "context_note": "Когда браузер пишет, что доменное имя не найдено",
+      "text": "Проверь написание домена и попробуй открыть главную страницу этого же сайта. Если не открывается и она, сообщи точный текст ошибки: по нему можно отличить ошибку адреса от сбоя DNS.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда браузер пишет, что доменное имя не найдено"
+    },
+    {
+      "id": "link_access_recovery_018",
+      "intent_id": "link_does_not_open",
+      "canonical_question": "Что делать, если ссылка не открывается?",
+      "scenario": "http_429",
+      "context_note": "Когда сервер возвращает 429 Too Many Requests",
+      "text": "Сайт ограничил частоту запросов. Подожди время, указанное в ответе сервера, если оно есть; многократное обновление страницы может продлить ограничение.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда сервер возвращает 429 Too Many Requests"
+    },
+    {
+      "id": "link_access_recovery_019",
+      "intent_id": "link_does_not_open",
+      "canonical_question": "Что делать, если ссылка не открывается?",
+      "scenario": "http_500",
+      "context_note": "Когда сайт показывает внутреннюю ошибку 500",
+      "text": "Это ошибка обработки запроса на стороне сервера. Запиши время и адрес страницы без секретных параметров, а затем попробуй позже или обратись в поддержку сайта.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда сайт показывает внутреннюю ошибку 500"
+    },
+    {
+      "id": "link_access_recovery_020",
+      "intent_id": "link_does_not_open",
+      "canonical_question": "Что делать, если ссылка не открывается?",
+      "scenario": "http_502",
+      "context_note": "Когда сервер сообщает 502 Bad Gateway",
+      "text": "Промежуточный сервер не получил корректный ответ от другого сервера. Проверь официальное сообщение о сбое и повтори попытку позже; менять настройки аккаунта из-за одного 502 не нужно.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда сервер сообщает 502 Bad Gateway"
+    },
+    {
+      "id": "link_access_recovery_021",
+      "intent_id": "link_does_not_open",
+      "canonical_question": "Что делать, если ссылка не открывается?",
+      "scenario": "http_503",
+      "context_note": "Когда сайт возвращает 503 Service Unavailable",
+      "text": "Сервис временно недоступен, например из-за нагрузки или обслуживания. Если ответ содержит время повторной попытки, ориентируйся на него; иначе проверь официальные объявления.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда сайт возвращает 503 Service Unavailable"
+    },
+    {
+      "id": "link_access_recovery_022",
+      "intent_id": "link_does_not_open",
+      "canonical_question": "Что делать, если ссылка не открывается?",
+      "scenario": "http_504",
+      "context_note": "Когда сервер возвращает 504 Gateway Timeout",
+      "text": "Сервер-посредник не дождался ответа. Если операция могла изменить данные, сначала проверь, прошла ли она, и лишь потом повторяй запрос, чтобы избежать дубля.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда сервер возвращает 504 Gateway Timeout"
+    },
+    {
+      "id": "link_access_recovery_023",
+      "intent_id": "link_does_not_open",
+      "canonical_question": "Что делать, если ссылка не открывается?",
+      "scenario": "browser_extension_block",
+      "context_note": "Когда ссылка не открывается из-за блокировки расширением браузера",
+      "text": "Посмотри, какое расширение заблокировало переход и почему. Для незнакомого адреса не отключай защиту вслепую; сначала проверь домен через официальный источник.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда ссылка не открывается из-за блокировки расширением браузера"
+    },
+    {
+      "id": "link_access_recovery_024",
+      "intent_id": "link_does_not_open",
+      "canonical_question": "Что делать, если ссылка не открывается?",
+      "scenario": "fragment_anchor_missing",
+      "context_note": "Когда страница открывается, но переход к нужному разделу не работает",
+      "text": "Открой саму страницу и найди заголовок через поиск по тексту. Якорь после символа # мог устареть, хотя документ остался на месте.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда страница открывается, но переход к нужному разделу не работает"
+    },
+    {
+      "id": "link_access_recovery_025",
+      "intent_id": "link_does_not_open",
+      "canonical_question": "Что делать, если ссылка не открывается?",
+      "scenario": "download_instead_of_page",
+      "context_note": "Когда по ссылке начинается скачивание вместо открытия страницы",
+      "text": "Уточни тип файла и ожидаемое поведение. Не запускай скачанный файл только ради просмотра: сначала проверь источник и открой его подходящим безопасным просмотрщиком.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда по ссылке начинается скачивание вместо открытия страницы"
+    },
+    {
+      "id": "link_access_recovery_026",
+      "intent_id": "link_does_not_open",
+      "canonical_question": "Что делать, если ссылка не открывается?",
+      "scenario": "email_link_wrong_app",
+      "context_note": "Когда ссылка из письма открывается не в том приложении",
+      "text": "Скопируй адрес без личных токенов и проверь, какой обработчик ссылок назначен устройством. Если адрес ведёт на авторизацию, лучше перейти к сервису через его официальный сайт.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда ссылка из письма открывается не в том приложении"
+    },
+    {
+      "id": "link_access_recovery_027",
+      "intent_id": "link_does_not_open",
+      "canonical_question": "Что делать, если ссылка не открывается?",
+      "scenario": "http_410",
+      "context_note": "Когда сервер возвращает 410 Gone",
+      "text": "Код 410 обычно означает, что ресурс намеренно убран. Поищи актуальный адрес в официальном каталоге сайта или попроси автора дать замену; старую ссылку нельзя считать действующей.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда сервер возвращает 410 Gone"
+    },
+    {
+      "id": "link_access_recovery_028",
+      "intent_id": "link_does_not_open",
+      "canonical_question": "Что делать, если ссылка не открывается?",
+      "scenario": "single_sign_on_wrong_account",
+      "context_note": "Когда ссылка на рабочий документ открывает доступ другого аккаунта",
+      "text": "Проверь, под каким аккаунтом выполнен вход, и переключись на тот, которому выдали доступ. Не проси владельца открывать документ всем ради решения проблемы с учётной записью.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда ссылка на рабочий документ открывает доступ другого аккаунта"
+    },
+    {
+      "id": "link_access_recovery_029",
+      "intent_id": "link_does_not_open",
+      "canonical_question": "Что делать, если ссылка не открывается?",
+      "scenario": "javascript_disabled",
+      "context_note": "Когда сайт сообщает, что для открытия нужен JavaScript",
+      "text": "Проверь, разрешён ли JavaScript для доверенного сайта в браузере. Для незнакомой страницы сначала оцени её происхождение; включать скрипты повсюду ради одной ссылки не стоит.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда сайт сообщает, что для открытия нужен JavaScript"
+    },
+    {
+      "id": "link_access_recovery_030",
+      "intent_id": "link_does_not_open",
+      "canonical_question": "Что делать, если ссылка не открывается?",
+      "scenario": "http_401",
+      "context_note": "Когда сервер отвечает 401 Unauthorized",
+      "text": "Запрос не прошёл проверку авторизации. Войди штатным способом, если у тебя есть доступ, и повтори переход; пароль или код подтверждения сюда присылать не нужно.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда сервер отвечает 401 Unauthorized"
+    },
+    {
+      "id": "link_access_recovery_031",
+      "intent_id": "link_does_not_open",
+      "canonical_question": "Что делать, если ссылка не открывается?",
+      "scenario": "mixed_content_block",
+      "context_note": "Когда защищённая страница блокирует встроенный небезопасный ресурс",
+      "text": "Если основной сайт открылся, но вложение не загрузилось, посмотри предупреждение браузера. Не отключай защиту смешанного содержимого; лучше запросить у владельца безопасную HTTPS-ссылку.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда защищённая страница блокирует встроенный небезопасный ресурс"
+    },
+    {
+      "id": "link_access_recovery_032",
+      "intent_id": "link_does_not_open",
+      "canonical_question": "Что делать, если ссылка не открывается?",
+      "scenario": "unsupported_url_scheme",
+      "context_note": "Когда устройство сообщает, что не знает, чем открыть ссылку",
+      "text": "Посмотри, с какого префикса начинается адрес. Если это ссылка на определённое приложение, проверь наличие официального обработчика; неизвестные программы по подсказке случайной страницы не устанавливай.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда устройство сообщает, что не знает, чем открыть ссылку"
     }
   ]
 }
