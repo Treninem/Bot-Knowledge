@@ -6,10 +6,10 @@
   "base_commit": "4286695cd47f71b875fc24b350994afce02767d1",
   "target_per_intent": 100,
   "editorially_accepted": 0,
-  "notes": "Unregistered editorial candidates only. 104 context-bound entries across eight intents (13 each). No consumer routing or publication; each reply requires its scenario-specific selection_precondition and verified prior context. Cross-pack semantic review, full tests and exact-head CI remain required.",
+  "notes": "Unregistered editorial candidates only. 112 context-bound entries across eight intents (14 each). No consumer routing or publication. Cross-pack semantic review, full tests and exact-head CI required.",
   "counts": {
     "intents": 8,
-    "candidates": 104,
+    "candidates": 112,
     "accepted": 0
   },
   "replies": [
@@ -1572,6 +1572,126 @@
       "context": "direct_user_request",
       "read_only": true,
       "selection_precondition": "Только если пользователь запретил установку и ответ не запускает установщик."
+    },
+    {
+      "id": "t712_ask_for_example_14",
+      "intent_id": "ask_for_example",
+      "canonical_question": "Можешь привести пример?",
+      "scenario": "conflicting_instructions",
+      "context_note": "Дополнительный контекстный сценарий",
+      "text": "Допустим, одна инструкция требует сохранить исходный файл, а другая — заменить его новым. Выполнять обе сразу нельзя: сначала выясняем, какая версия правила действует.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только при обсуждении конфликта инструкций без установленного приоритета."
+    },
+    {
+      "id": "t712_explain_in_plain_words_14",
+      "intent_id": "explain_in_plain_words",
+      "canonical_question": "Объясни простыми словами",
+      "scenario": "idempotency",
+      "context_note": "Дополнительный контекстный сценарий",
+      "text": "Если действие уже выполнилось, повторная отправка иногда запускает его ещё раз. Поэтому сначала проверяют результат первой попытки.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только когда действие допускает повтор и результат первой попытки неизвестен."
+    },
+    {
+      "id": "t712_separate_fact_from_guess_14",
+      "intent_id": "separate_fact_from_guess",
+      "canonical_question": "Где факт, а где твоя догадка?",
+      "scenario": "unverified_success",
+      "context_note": "Дополнительный контекстный сценарий",
+      "text": "Подтверждено, что запрос был отправлен. Получил ли его адресат и обработал ли успешно, из этих данных пока неизвестно.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только если отправка подтверждена журналом, но нет подтверждения доставки или обработки."
+    },
+    {
+      "id": "t712_request_short_answer_14",
+      "intent_id": "request_short_answer",
+      "canonical_question": "Можно короче?",
+      "scenario": "missing_source",
+      "context_note": "Дополнительный контекстный сценарий",
+      "text": "Без исходного документа точную формулировку подтвердить не могу.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только если первоисточник действительно недоступен."
+    },
+    {
+      "id": "t712_request_detailed_answer_14",
+      "intent_id": "request_detailed_answer",
+      "canonical_question": "Расскажи подробнее",
+      "scenario": "negative_result",
+      "context_note": "Дополнительный контекстный сценарий",
+      "text": "Отрицательный результат говорит лишь о том, что в проверенных условиях ожидаемое поведение не проявилось. Нужно записать входные данные, версию, окружение и критерий успеха. Без этого нельзя понять, воспроизводится ли ошибка и относится ли вывод к другим условиям.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только для разбора отрицательного результата теста."
+    },
+    {
+      "id": "t712_resume_interrupted_topic_14",
+      "intent_id": "resume_interrupted_topic",
+      "canonical_question": "Вернёмся к предыдущему вопросу",
+      "scenario": "unresolved_units",
+      "context_note": "Дополнительный контекстный сценарий",
+      "text": "Мы дошли до расчёта, но единицы в двух значениях не совпадали. Прежде чем продолжать, надо уточнить, что измеряет каждое число.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только если несогласованные единицы зафиксированы в предыдущем ходе."
+    },
+    {
+      "id": "t712_handle_user_disagreement_14",
+      "intent_id": "handle_user_disagreement",
+      "canonical_question": "Я с тобой не согласен",
+      "scenario": "different_timeframe",
+      "context_note": "Дополнительный контекстный сценарий",
+      "text": "Кажется, мы сравниваем разные отрезки времени. Мой вывод относился к прошлой неделе, а твой пример — к сегодняшнему дню. Проверим оба периода отдельно.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только если периоды в предыдущих репликах действительно различаются."
+    },
+    {
+      "id": "t712_acknowledge_no_action_14",
+      "intent_id": "acknowledge_no_action",
+      "canonical_question": "Не делай ничего, только объясни",
+      "scenario": "no_purchase",
+      "context_note": "Дополнительный контекстный сценарий",
+      "text": "Сравню условия и возможные расходы, но ничего покупать, бронировать или оплачивать не стану.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только если пользователь ограничил задачу анализом без транзакций."
     }
   ]
 }
