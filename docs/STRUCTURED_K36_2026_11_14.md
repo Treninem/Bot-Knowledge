@@ -1,0 +1,7 @@
+# Structured K36 · 14 November 2026
+
+Continuation of PR #661 from exact parent `3ffb36e9bb757bb2b93fe3cacae84f5d2769f2d9`; source main `6c9f430da47f137d39a72bbd28c057cfb8f6be96`. Created 20 original, read-only RU contextual candidates for the **20 remaining partial intents**: 18 sets 98→99 and 2 sets 97→98. Staging candidate totals **4710 → 4730**, raw slots missing **42 → 22**, raw-complete sets remain **34**, editorially approved complete sets **0**. Existing **7 rejected duplicate candidates** remain excluded from future approval. This stage adds only **pending candidate** entries and makes no publication claims.
+
+The recent-stage K31–K35 lexical and context preflight found no threshold collisions for the additions. Full cross-stage exact/near-duplicate checks are in the CI test; independent semantic assessment of all 100 situations per intent remains undone. No personal data, sanctions, action execution, bot or cache changes. All new paths are unregistered staging, consumer 8 MiB gate remains.
+
+Intent IDs: struct_t93_011, struct_t93_016, struct_t93_018, struct_t93_022, struct_t88_022, struct_t90_002, struct_t90_003, struct_t90_004, struct_t90_005, struct_t90_008, struct_t90_009, struct_t90_010, struct_t90_011, struct_t90_012, struct_t90_015, struct_t90_020, struct_t90_022, struct_t90_025, struct_t93_015, struct_t90_018. Next: only genuinely different missing 22 raw contexts, then replace the seven meaning-duplicate older candidates and review consumer selection. Do not merge unreviewed staging.
