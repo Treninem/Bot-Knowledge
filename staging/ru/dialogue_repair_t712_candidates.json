@@ -6,10 +6,10 @@
   "base_commit": "4286695cd47f71b875fc24b350994afce02767d1",
   "target_per_intent": 100,
   "editorially_accepted": 0,
-  "notes": "Unregistered editorial candidates only. 40 context-bound entries across eight intents. No consumer routing or publication; each reply requires its scenario-specific selection_precondition and verified prior context. Full cross-pack semantic review, tests and exact-head CI are still required.",
+  "notes": "Unregistered editorial candidates only. 56 context-bound entries across eight intents (7 each). No consumer routing or publication; each reply requires its scenario-specific selection_precondition and verified prior context. Cross-pack semantic review, full tests and exact-head CI remain required.",
   "counts": {
     "intents": 8,
-    "candidates": 40,
+    "candidates": 56,
     "accepted": 0
   },
   "replies": [
@@ -612,6 +612,246 @@
       "context": "direct_user_request",
       "read_only": true,
       "selection_precondition": "Только если доступен режим чтения и нет отдельного разрешения на изменение состояния."
+    },
+    {
+      "id": "t712_ask_for_example_6",
+      "intent_id": "ask_for_example",
+      "canonical_question": "Можешь привести пример?",
+      "scenario": "negative_test",
+      "context_note": "Пример отсутствия результатов поиска",
+      "text": "Представь, что поиск вернул пустой список. Это ещё не доказывает, что записи нет: фильтр мог исключить её из выдачи.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Если речь об отличии пустой выдачи от отсутствия записи."
+    },
+    {
+      "id": "t712_ask_for_example_7",
+      "intent_id": "ask_for_example",
+      "canonical_question": "Можешь привести пример?",
+      "scenario": "ambiguous_reference",
+      "context_note": "Пример неоднозначной ссылки",
+      "text": "Ты написал «проверь его», но перед этим назвал файл и сервер. Без уточнения непонятно, что проверять.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Если в доступном контексте действительно два возможных объекта."
+    },
+    {
+      "id": "t712_explain_in_plain_words_6",
+      "intent_id": "explain_in_plain_words",
+      "canonical_question": "Объясни простыми словами",
+      "scenario": "checksum",
+      "context_note": "Что означает контрольная сумма",
+      "text": "Контрольная сумма помогает заметить изменение файла. Кто его изменил и зачем, по ней не узнать.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Если пользователь просит объяснить назначение контрольной суммы."
+    },
+    {
+      "id": "t712_explain_in_plain_words_7",
+      "intent_id": "explain_in_plain_words",
+      "canonical_question": "Объясни простыми словами",
+      "scenario": "rollback",
+      "context_note": "Что означает откат версии",
+      "text": "Откат возвращает прежнюю версию. Перед ним нужно проверить, не потеряются ли данные, появившиеся позже.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Если обсуждается возврат версии и сохранность новых данных ещё не проверена."
+    },
+    {
+      "id": "t712_separate_fact_from_guess_6",
+      "intent_id": "separate_fact_from_guess",
+      "canonical_question": "Где факт, а где твоя догадка?",
+      "scenario": "test_environment",
+      "context_note": "Тест и рабочая среда",
+      "text": "В тестовой среде запрос прошёл. Как он поведёт себя на рабочем сервере, пока неизвестно: настройки могут отличаться.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Если тест подтверждён, но рабочая среда отдельно не проверена."
+    },
+    {
+      "id": "t712_separate_fact_from_guess_7",
+      "intent_id": "separate_fact_from_guess",
+      "canonical_question": "Где факт, а где твоя догадка?",
+      "scenario": "missing_baseline",
+      "context_note": "Замер без точки сравнения",
+      "text": "Сейчас отклик занимает две секунды. Ускорилась ли система, сказать нельзя: прежнее время отклика неизвестно.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Если есть текущий замер, но нет сопоставимого прежнего."
+    },
+    {
+      "id": "t712_request_short_answer_6",
+      "intent_id": "request_short_answer",
+      "canonical_question": "Можно короче?",
+      "scenario": "partial_success",
+      "context_note": "Частичный результат",
+      "text": "Файл загрузился, но обработка завершилась ошибкой. Задача ещё не выполнена.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Если загрузка прошла, а обработка не прошла."
+    },
+    {
+      "id": "t712_request_short_answer_7",
+      "intent_id": "request_short_answer",
+      "canonical_question": "Можно короче?",
+      "scenario": "unknown_version",
+      "context_note": "Неизвестная версия",
+      "text": "Версию пока не подтвердили. По этой картинке номер сборки не определить.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Если изображение не содержит проверяемого номера версии."
+    },
+    {
+      "id": "t712_request_detailed_answer_6",
+      "intent_id": "request_detailed_answer",
+      "canonical_question": "Расскажи подробнее",
+      "scenario": "two_sources",
+      "context_note": "Сравнение противоречащих документов",
+      "text": "Сначала сверю даты и версии документов. Потом сравню конкретные утверждения. Возможно, они описывают разные условия.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Если пользователь предоставил два источника с расхождениями."
+    },
+    {
+      "id": "t712_request_detailed_answer_7",
+      "intent_id": "request_detailed_answer",
+      "canonical_question": "Расскажи подробнее",
+      "scenario": "rounding",
+      "context_note": "Проверка округления",
+      "text": "Покажу исходные числа, промежуточный результат без округления и итог в нужных единицах. Так можно найти место расхождения.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Если обсуждается расхождение чисел при округлении."
+    },
+    {
+      "id": "t712_resume_interrupted_topic_6",
+      "intent_id": "resume_interrupted_topic",
+      "canonical_question": "Вернёмся к предыдущему вопросу",
+      "scenario": "changed_requirement",
+      "context_note": "Возврат после изменения бюджета",
+      "text": "Ты изменил предел расходов. Пересмотрю варианты, которые в него не укладываются, а остальные сравню по прежним критериям.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Если новый бюджет явно заменяет старый."
+    },
+    {
+      "id": "t712_resume_interrupted_topic_7",
+      "intent_id": "resume_interrupted_topic",
+      "canonical_question": "Вернёмся к предыдущему вопросу",
+      "scenario": "failed_test",
+      "context_note": "Возврат после неудачной проверки",
+      "text": "Последняя проверка не прошла. Разберём сообщение об ошибке именно этого шага, не повторяя уже исключённые причины.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Если известны результат теста и ранее исключённые причины."
+    },
+    {
+      "id": "t712_handle_user_disagreement_6",
+      "intent_id": "handle_user_disagreement",
+      "canonical_question": "Я с тобой не согласен",
+      "scenario": "scope_mismatch",
+      "context_note": "Разные предметы сравнения",
+      "text": "Я говорил о времени загрузки, а ты — о скорости работы после запуска. Это разные показатели; проверим их отдельно.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Если спор касается именно этих двух показателей."
+    },
+    {
+      "id": "t712_handle_user_disagreement_7",
+      "intent_id": "handle_user_disagreement",
+      "canonical_question": "Я с тобой не согласен",
+      "scenario": "counterexample",
+      "context_note": "Признание контрпримера",
+      "text": "Твой пример опровергает моё «так бывает всегда». Уберу это обобщение и уточню условия, при которых вывод верен.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Если пользователь привёл действительный контрпример."
+    },
+    {
+      "id": "t712_acknowledge_no_action_6",
+      "intent_id": "acknowledge_no_action",
+      "canonical_question": "Не делай ничего, только объясни",
+      "scenario": "no_delete",
+      "context_note": "Запрет удаления",
+      "text": "Удалять записи не буду. Могу показать возможные дубликаты, чтобы решение осталось за тобой.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Если пользователь запретил удаление и разрешил анализ."
+    },
+    {
+      "id": "t712_acknowledge_no_action_7",
+      "intent_id": "acknowledge_no_action",
+      "canonical_question": "Не делай ничего, только объясни",
+      "scenario": "no_restart",
+      "context_note": "Запрет перезапуска",
+      "text": "Перезапускать службу не буду. Проверю доступные журналы и объясню, что можно установить без остановки.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Если пользователь запретил перезапуск и разрешил чтение журналов."
     }
   ]
 }
