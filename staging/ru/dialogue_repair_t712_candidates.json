@@ -6,7 +6,7 @@
   "base_commit": "4286695cd47f71b875fc24b350994afce02767d1",
   "target_per_intent": 100,
   "editorially_accepted": 0,
-  "notes": "Unregistered candidates; no consumer routing or publication. Verify cross-pack/PR semantic uniqueness, contexts, and exact-head CI before promotion. Three candidates per intent are not a completed 100/100 set.",
+  "notes": "Unregistered candidates; no consumer routing or publication. Verify cross-pack/PR semantic uniqueness, contexts, and exact-head CI before promotion. Three candidates per intent are not a completed 100/100 set. Selection requires the scenario-specific selection_precondition and actual prior context; generic intent match alone is insufficient. Synthetic numbers and scenarios must not be represented as observed facts.",
   "counts": {
     "intents": 8,
     "candidates": 24,
@@ -25,7 +25,8 @@
         "all_ai_bots"
       ],
       "context": "direct_user_request",
-      "read_only": true
+      "read_only": true,
+      "selection_precondition": "Только если предыдущая тема — неопределённость причин молчания собеседника; не использовать как универсальный пример."
     },
     {
       "id": "t712_ask_for_example_2",
@@ -33,13 +34,14 @@
       "canonical_question": "Можешь привести пример?",
       "scenario": "technical_example",
       "context_note": "Когда пользователь просит пример к правилу проверки",
-      "text": "Например, если в таблице итог 120, а строки дают 115, сначала проверяем пропущенные пять единиц, а не меняем итог наугад.",
+      "text": "Например, если в таблице указан итог 120, а сумма строк равна 115, расхождение составляет пять единиц. Сначала выясняем, где ошибка; менять итог без проверки нельзя.",
       "language": "ru",
       "audiences": [
         "all_ai_bots"
       ],
       "context": "direct_user_request",
-      "read_only": true
+      "read_only": true,
+      "selection_precondition": "Только при обсуждении проверки суммы строк; числа 120 и 115 — вымышленные учебные значения."
     },
     {
       "id": "t712_ask_for_example_3",
@@ -53,7 +55,8 @@
         "all_ai_bots"
       ],
       "context": "direct_user_request",
-      "read_only": true
+      "read_only": true,
+      "selection_precondition": "Только при сравнении ясности формулировок рабочих заметок; не выдавать за проверенную инструкцию по оборудованию."
     },
     {
       "id": "t712_explain_in_plain_words_1",
@@ -67,7 +70,8 @@
         "all_ai_bots"
       ],
       "context": "direct_user_request",
-      "read_only": true
+      "read_only": true,
+      "selection_precondition": "Только если обсуждаемая система действительно сверяет вход с ожидаемым значением и сигнализирует об ошибке."
     },
     {
       "id": "t712_explain_in_plain_words_2",
@@ -81,7 +85,8 @@
         "all_ai_bots"
       ],
       "context": "direct_user_request",
-      "read_only": true
+      "read_only": true,
+      "selection_precondition": "Только если описанный процесс состоит из проверки входа, действия и контроля результата."
     },
     {
       "id": "t712_explain_in_plain_words_3",
@@ -95,7 +100,8 @@
         "all_ai_bots"
       ],
       "context": "direct_user_request",
-      "read_only": true
+      "read_only": true,
+      "selection_precondition": "Только когда прежний ответ содержал неподтверждённую гипотезу и проверка ещё не выполнена."
     },
     {
       "id": "t712_separate_fact_from_guess_1",
@@ -109,7 +115,8 @@
         "all_ai_bots"
       ],
       "context": "direct_user_request",
-      "read_only": true
+      "read_only": true,
+      "selection_precondition": "Только если пользователь подтвердил факт незапуска, а причина и состояние питания не установлены."
     },
     {
       "id": "t712_separate_fact_from_guess_2",
@@ -123,7 +130,8 @@
         "all_ai_bots"
       ],
       "context": "direct_user_request",
-      "read_only": true
+      "read_only": true,
+      "selection_precondition": "Только если в доступном сообщении есть дата и ранее была высказана неподтверждённая причина переноса."
     },
     {
       "id": "t712_separate_fact_from_guess_3",
@@ -137,7 +145,8 @@
         "all_ai_bots"
       ],
       "context": "direct_user_request",
-      "read_only": true
+      "read_only": true,
+      "selection_precondition": "Только если на доступном изображении действительно различимо повреждение края; не утверждать наблюдение без изображения."
     },
     {
       "id": "t712_request_short_answer_1",
@@ -151,7 +160,8 @@
         "all_ai_bots"
       ],
       "context": "direct_user_request",
-      "read_only": true
+      "read_only": true,
+      "selection_precondition": "Только если ровно два варианта уже названы, второй проверенно соответствует ограничению и остальные различия действительно несущественны."
     },
     {
       "id": "t712_request_short_answer_2",
@@ -165,7 +175,8 @@
         "all_ai_bots"
       ],
       "context": "direct_user_request",
-      "read_only": true
+      "read_only": true,
+      "selection_precondition": "Только для безопасного низковольтного пользовательского устройства и если проверка питания и соединения допустима инструкцией; не для электрошкафов или опасного оборудования."
     },
     {
       "id": "t712_request_short_answer_3",
@@ -179,7 +190,8 @@
         "all_ai_bots"
       ],
       "context": "direct_user_request",
-      "read_only": true
+      "read_only": true,
+      "selection_precondition": "Только если предыдущий вывод действительно зависит от отсутствующего результата проверки."
     },
     {
       "id": "t712_request_detailed_answer_1",
@@ -193,7 +205,8 @@
         "all_ai_bots"
       ],
       "context": "direct_user_request",
-      "read_only": true
+      "read_only": true,
+      "selection_precondition": "Только при диагностике причин сбоя, когда уместно собрать хронологию и уже выполненные проверки."
     },
     {
       "id": "t712_request_detailed_answer_2",
@@ -207,7 +220,8 @@
         "all_ai_bots"
       ],
       "context": "direct_user_request",
-      "read_only": true
+      "read_only": true,
+      "selection_precondition": "Только если пользователь предоставил исходные величины и формулу; обратная проверка применима к операции."
     },
     {
       "id": "t712_request_detailed_answer_3",
@@ -221,7 +235,8 @@
         "all_ai_bots"
       ],
       "context": "direct_user_request",
-      "read_only": true
+      "read_only": true,
+      "selection_precondition": "Только если варианты уже известны и критерии сравнения подходят к задаче."
     },
     {
       "id": "t712_resume_interrupted_topic_1",
@@ -235,7 +250,8 @@
         "all_ai_bots"
       ],
       "context": "direct_user_request",
-      "read_only": true
+      "read_only": true,
+      "selection_precondition": "Только если доступен достоверный контекст и точно установлен последний нерешённый пункт."
     },
     {
       "id": "t712_resume_interrupted_topic_2",
@@ -249,7 +265,8 @@
         "all_ai_bots"
       ],
       "context": "direct_user_request",
-      "read_only": true
+      "read_only": true,
+      "selection_precondition": "Только если в доступном контексте действительно обсуждались расчёт и настройка как две разные темы."
     },
     {
       "id": "t712_resume_interrupted_topic_3",
@@ -263,7 +280,8 @@
         "all_ai_bots"
       ],
       "context": "direct_user_request",
-      "read_only": true
+      "read_only": true,
+      "selection_precondition": "Только если предыдущая часть разговора действительно недоступна; не утверждать отсутствие памяти при наличии контекста."
     },
     {
       "id": "t712_handle_user_disagreement_1",
@@ -277,7 +295,8 @@
         "all_ai_bots"
       ],
       "context": "direct_user_request",
-      "read_only": true
+      "read_only": true,
+      "selection_precondition": "Только если пользователь оспаривает конкретный вывод и просит обсудить его основания."
     },
     {
       "id": "t712_handle_user_disagreement_2",
@@ -291,7 +310,8 @@
         "all_ai_bots"
       ],
       "context": "direct_user_request",
-      "read_only": true
+      "read_only": true,
+      "selection_precondition": "Только если разногласие касается предпочтений по стилю, а не проверяемого факта."
     },
     {
       "id": "t712_handle_user_disagreement_3",
@@ -305,7 +325,8 @@
         "all_ai_bots"
       ],
       "context": "direct_user_request",
-      "read_only": true
+      "read_only": true,
+      "selection_precondition": "Только если существуют два набора измерений, известны их источники и требуется сопоставить условия."
     },
     {
       "id": "t712_acknowledge_no_action_1",
@@ -319,7 +340,8 @@
         "all_ai_bots"
       ],
       "context": "direct_user_request",
-      "read_only": true
+      "read_only": true,
+      "selection_precondition": "Только если пользователь явно попросил объяснение без изменения настроек."
     },
     {
       "id": "t712_acknowledge_no_action_2",
@@ -333,7 +355,8 @@
         "all_ai_bots"
       ],
       "context": "direct_user_request",
-      "read_only": true
+      "read_only": true,
+      "selection_precondition": "Только если пользователь явно запретил изменения файлов и просит предварительный разбор."
     },
     {
       "id": "t712_acknowledge_no_action_3",
@@ -347,7 +370,8 @@
         "all_ai_bots"
       ],
       "context": "direct_user_request",
-      "read_only": true
+      "read_only": true,
+      "selection_precondition": "Только если пользователь явно просит оценить действие без отправки, запуска или другой внешней операции."
     }
   ]
 }
