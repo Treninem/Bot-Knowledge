@@ -8,10 +8,10 @@
   "editorially_accepted": 0,
   "counts": {
     "intents": 1,
-    "candidates": 12,
+    "candidates": 36,
     "accepted": 0
   },
-  "notes": "Independent unregistered evidence-source intent. Context-specific synthetic candidates; no consumer integration. Requires cross-pack/PR review, local tests, exact-head CI, manifest SHA/cache before publication.",
+  "notes": "Unregistered editorial staging only. 0 accepted; pending cross-pack/parallel PR review, local tests, actual-byte SHA/manifest, exact-head CI. Each reply requires its specific scenario, not universal selection.",
   "replies": [
     {
       "id": "evidence_source_request_001",
@@ -192,6 +192,366 @@
       "context": "direct_user_request",
       "read_only": true,
       "selection_precondition": "Когда требуется доказать действие изменяемого правила."
+    },
+    {
+      "id": "evidence_source_request_013",
+      "intent_id": "request_evidence_for_claim",
+      "canonical_question": "Откуда это известно?",
+      "scenario": "primary_document_link",
+      "context_note": "Когда собеседник просит ссылку на исходный документ.",
+      "text": "Могу указать первичный документ, если он доступен. Пересказ без ссылки пока не даёт возможности проверить утверждение.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда собеседник просит ссылку на исходный документ."
+    },
+    {
+      "id": "evidence_source_request_014",
+      "intent_id": "request_evidence_for_claim",
+      "canonical_question": "Откуда это известно?",
+      "scenario": "source_access_denied",
+      "context_note": "Когда источник упоминается, но доступ к нему закрыт.",
+      "text": "На закрытую страницу сослаться можно, но проверить её содержимое здесь не получится. Попроси открытый фрагмент или доступную копию.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда источник упоминается, но доступ к нему закрыт."
+    },
+    {
+      "id": "evidence_source_request_015",
+      "intent_id": "request_evidence_for_claim",
+      "canonical_question": "Откуда это известно?",
+      "scenario": "archived_page",
+      "context_note": "Когда подтверждение найдено только в архивной копии страницы.",
+      "text": "Архивная копия показывает состояние страницы на дату снимка. Она не подтверждает, что информация действует сейчас.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда подтверждение найдено только в архивной копии страницы."
+    },
+    {
+      "id": "evidence_source_request_016",
+      "intent_id": "request_evidence_for_claim",
+      "canonical_question": "Откуда это известно?",
+      "scenario": "deleted_publication",
+      "context_note": "Когда исходная публикация удалена.",
+      "text": "Ссылка больше не открывается. Если сохранилась копия, отдельно проверим её происхождение; без этого утверждение остаётся неподтверждённым.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда исходная публикация удалена."
+    },
+    {
+      "id": "evidence_source_request_017",
+      "intent_id": "request_evidence_for_claim",
+      "canonical_question": "Откуда это известно?",
+      "scenario": "source_title_mismatch",
+      "context_note": "Когда заголовок ссылки не совпадает с утверждением.",
+      "text": "Название материала похоже на нужную тему, но этого мало. Надо найти в тексте место, где прямо подтверждается вывод.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда заголовок ссылки не совпадает с утверждением."
+    },
+    {
+      "id": "evidence_source_request_018",
+      "intent_id": "request_evidence_for_claim",
+      "canonical_question": "Откуда это известно?",
+      "scenario": "source_qualifier_omitted",
+      "context_note": "Когда в пересказе пропущено условие из источника.",
+      "text": "В источнике есть оговорка, которая меняет смысл вывода. Приведу её вместе с утверждением, иначе получится неточная ссылка.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда в пересказе пропущено условие из источника."
+    },
+    {
+      "id": "evidence_source_request_019",
+      "intent_id": "request_evidence_for_claim",
+      "canonical_question": "Откуда это известно?",
+      "scenario": "research_sample_scope",
+      "context_note": "Когда вывод исследования переносят на другую группу людей.",
+      "text": "Результат получен на конкретной выборке. Пока не посмотрим, кого изучали, переносить его на всех нельзя.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда вывод исследования переносят на другую группу людей."
+    },
+    {
+      "id": "evidence_source_request_020",
+      "intent_id": "request_evidence_for_claim",
+      "canonical_question": "Откуда это известно?",
+      "scenario": "survey_question_wording",
+      "context_note": "Когда цитируют процент из опроса.",
+      "text": "Процент сам по себе мало говорит. Нужно увидеть формулировку вопроса, размер выборки и дату опроса.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда цитируют процент из опроса."
+    },
+    {
+      "id": "evidence_source_request_021",
+      "intent_id": "request_evidence_for_claim",
+      "canonical_question": "Откуда это известно?",
+      "scenario": "correlation_causation",
+      "context_note": "Когда источник показывает связь двух показателей.",
+      "text": "Данные могут подтверждать связь, но причину по одной корреляции не установить. Проверим, что именно измеряли авторы.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда источник показывает связь двух показателей."
+    },
+    {
+      "id": "evidence_source_request_022",
+      "intent_id": "request_evidence_for_claim",
+      "canonical_question": "Откуда это известно?",
+      "scenario": "preprint_not_peer_reviewed",
+      "context_note": "Когда утверждение основано на препринте.",
+      "text": "Это предварительная публикация. Её можно обсудить, но не стоит выдавать результаты за окончательно проверенные.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда утверждение основано на препринте."
+    },
+    {
+      "id": "evidence_source_request_023",
+      "intent_id": "request_evidence_for_claim",
+      "canonical_question": "Откуда это известно?",
+      "scenario": "official_statement_vs_independent",
+      "context_note": "Когда единственное подтверждение — заявление заинтересованной стороны.",
+      "text": "Это заявление самой организации. Для проверки спорного факта желательно найти независимые данные или исходные документы.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда единственное подтверждение — заявление заинтересованной стороны."
+    },
+    {
+      "id": "evidence_source_request_024",
+      "intent_id": "request_evidence_for_claim",
+      "canonical_question": "Откуда это известно?",
+      "scenario": "translation_discrepancy",
+      "context_note": "Когда вывод основан на переводе иностранного текста.",
+      "text": "Проверим исходную формулировку: перевод мог сгладить условие или изменить степень уверенности автора.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда вывод основан на переводе иностранного текста."
+    },
+    {
+      "id": "evidence_source_request_025",
+      "intent_id": "request_evidence_for_claim",
+      "canonical_question": "Откуда это известно?",
+      "scenario": "date_not_visible",
+      "context_note": "Когда на странице нет даты публикации или обновления.",
+      "text": "Без даты трудно понять, насколько сведения свежие. Посмотрим историю страницы или другой источник с указанным временем.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда на странице нет даты публикации или обновления."
+    },
+    {
+      "id": "evidence_source_request_026",
+      "intent_id": "request_evidence_for_claim",
+      "canonical_question": "Откуда это известно?",
+      "scenario": "regional_applicability",
+      "context_note": "Когда правило или цена относятся к определённой стране.",
+      "text": "Уточним страну и регион действия источника. Условия из другой юрисдикции могут здесь не подходить.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда правило или цена относятся к определённой стране."
+    },
+    {
+      "id": "evidence_source_request_027",
+      "intent_id": "request_evidence_for_claim",
+      "canonical_question": "Откуда это известно?",
+      "scenario": "unit_mismatch",
+      "context_note": "Когда два источника приводят показатели в разных единицах.",
+      "text": "Сначала приведём значения к одинаковым единицам и периодам. Иначе сравнение будет неверным.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда два источника приводят показатели в разных единицах."
+    },
+    {
+      "id": "evidence_source_request_028",
+      "intent_id": "request_evidence_for_claim",
+      "canonical_question": "Откуда это известно?",
+      "scenario": "chart_axis_truncated",
+      "context_note": "Когда доказательство — график с обрезанной шкалой.",
+      "text": "На графике нужно проверить начало оси и масштаб. Визуальная разница может выглядеть сильнее реальной.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда доказательство — график с обрезанной шкалой."
+    },
+    {
+      "id": "evidence_source_request_029",
+      "intent_id": "request_evidence_for_claim",
+      "canonical_question": "Откуда это известно?",
+      "scenario": "source_prediction",
+      "context_note": "Когда прогноз цитируют как свершившийся факт.",
+      "text": "В публикации описан прогноз, а не итог события. Уточним дату прогноза и проверим, что произошло потом.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда прогноз цитируют как свершившийся факт."
+    },
+    {
+      "id": "evidence_source_request_030",
+      "intent_id": "request_evidence_for_claim",
+      "canonical_question": "Откуда это известно?",
+      "scenario": "citation_chain",
+      "context_note": "Когда несколько статей ссылаются друг на друга.",
+      "text": "Повторение одной ссылки в нескольких публикациях не делает её независимым подтверждением. Попробуем дойти до исходных данных.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда несколько статей ссылаются друг на друга."
+    },
+    {
+      "id": "evidence_source_request_031",
+      "intent_id": "request_evidence_for_claim",
+      "canonical_question": "Откуда это известно?",
+      "scenario": "document_draft",
+      "context_note": "Когда доказательством служит проект документа.",
+      "text": "Это проект, его содержание ещё может измениться. Для действующего правила нужна утверждённая редакция.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда доказательством служит проект документа."
+    },
+    {
+      "id": "evidence_source_request_032",
+      "intent_id": "request_evidence_for_claim",
+      "canonical_question": "Откуда это известно?",
+      "scenario": "source_contradicts_claim",
+      "context_note": "Когда открытый источник прямо расходится с ранее данным ответом.",
+      "text": "Проверка показывает расхождение с моим ответом. Исправлю утверждение и укажу, какая часть источника его опровергает.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда открытый источник прямо расходится с ранее данным ответом."
+    },
+    {
+      "id": "evidence_source_request_033",
+      "intent_id": "request_evidence_for_claim",
+      "canonical_question": "Откуда это известно?",
+      "scenario": "citation_missing_page",
+      "context_note": "Когда ссылаются на длинный отчёт без страницы или раздела.",
+      "text": "Для длинного отчёта лучше указать страницу, таблицу или раздел. Тогда вывод можно проверить без поисков по всему документу.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда ссылаются на длинный отчёт без страницы или раздела."
+    },
+    {
+      "id": "evidence_source_request_034",
+      "intent_id": "request_evidence_for_claim",
+      "canonical_question": "Откуда это известно?",
+      "scenario": "secondhand_video_clip",
+      "context_note": "Когда доказательством служит короткий фрагмент видео.",
+      "text": "Отрывок может не содержать вопроса и продолжения ответа. Нужна полная запись с датой и контекстом разговора.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда доказательством служит короткий фрагмент видео."
+    },
+    {
+      "id": "evidence_source_request_035",
+      "intent_id": "request_evidence_for_claim",
+      "canonical_question": "Откуда это известно?",
+      "scenario": "retracted_study",
+      "context_note": "Когда выяснилось, что исследование отозвано.",
+      "text": "У работы есть отметка об отзыве. Использовать её как действующее подтверждение нельзя; нужно выяснить причину отзыва и найти другие данные.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда выяснилось, что исследование отозвано."
+    },
+    {
+      "id": "evidence_source_request_036",
+      "intent_id": "request_evidence_for_claim",
+      "canonical_question": "Откуда это известно?",
+      "scenario": "conflict_of_interest",
+      "context_note": "Когда источник финансировался заинтересованной стороной.",
+      "text": "Финансирование само по себе не опровергает результат. Посмотрим методику, раскрытие интересов и независимые проверки.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда источник финансировался заинтересованной стороной."
     }
   ]
 }
