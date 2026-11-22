@@ -6,10 +6,10 @@
   "base_commit": "4286695cd47f71b875fc24b350994afce02767d1",
   "target_per_intent": 100,
   "editorially_accepted": 0,
-  "notes": "Unregistered editorial candidates only. 120 context-bound entries across eight intents (15 each). No consumer routing or publication. Cross-pack semantic review, full tests and exact-head CI required.",
+  "notes": "Unregistered editorial candidates only. 125 context-bound entries across eight intents (15.625 each). No consumer routing or publication. Cross-pack semantic review, full tests and exact-head CI required.",
   "counts": {
     "intents": 8,
-    "candidates": 120,
+    "candidates": 125,
     "accepted": 0
   },
   "replies": [
@@ -1812,6 +1812,81 @@
       "context": "direct_user_request",
       "read_only": true,
       "selection_precondition": "Только при прямом запрете внешнего поиска и достаточности предоставленного текста."
+    },
+    {
+      "id": "t712_ask_for_example_16",
+      "intent_id": "ask_for_example",
+      "canonical_question": "Можешь привести пример?",
+      "scenario": "ambiguous_deadline",
+      "context_note": "Когда обсуждают разницу между сроком и временем начала",
+      "text": "Допустим, написано «сдать до пятницы». Это не сообщает, можно ли отправить работу в пятницу вечером. Для точного ответа нужно знать, включена ли пятница в срок.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только при обсуждении неоднозначного дедлайна; не придумывать правила конкретной организации."
+    },
+    {
+      "id": "t712_explain_in_plain_words_16",
+      "intent_id": "explain_in_plain_words",
+      "canonical_question": "Объясни простыми словами",
+      "scenario": "relative_vs_absolute_change",
+      "context_note": "Когда путают процентные пункты с процентным ростом",
+      "text": "Если показатель был 20%, а стал 25%, он вырос на пять процентных пунктов. Относительно прежнего значения рост составил четверть.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только при объяснении процентных пунктов и относительного изменения; числа учебные."
+    },
+    {
+      "id": "t712_separate_fact_from_guess_16",
+      "intent_id": "separate_fact_from_guess",
+      "canonical_question": "Где факт, а где твоя догадка?",
+      "scenario": "unverified_delivery",
+      "context_note": "Когда есть отметка об отправке, но нет подтверждения получения",
+      "text": "Факт: сообщение отправлено из приложения. Доставлено ли оно адресату и прочитал ли он его, по одной отметке отправки неизвестно.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только если интерфейс подтверждает отправку, но не доставку и не прочтение."
+    },
+    {
+      "id": "t712_handle_user_disagreement_16",
+      "intent_id": "handle_user_disagreement",
+      "canonical_question": "Я с тобой не согласен",
+      "scenario": "different_definitions",
+      "context_note": "Когда стороны используют одно слово в разных значениях",
+      "text": "Похоже, мы по-разному понимаем слово «готово». Ты говоришь о завершённой работе, а я — о проверенном результате. Давай уточним критерий.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только если разногласие связано с определением готовности; не приписывать позицию пользователю без контекста."
+    },
+    {
+      "id": "t712_acknowledge_no_action_16",
+      "intent_id": "acknowledge_no_action",
+      "canonical_question": "Не делай ничего, только объясни",
+      "scenario": "no_file_changes",
+      "context_note": "Когда пользователь разрешил анализ, но запретил правки файлов",
+      "text": "Проверю содержимое и объясню, что нашёл. Файлы оставлю без изменений.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только при прямом запрете изменять файлы; не заявлять, что проверка уже проведена."
     }
   ]
 }
