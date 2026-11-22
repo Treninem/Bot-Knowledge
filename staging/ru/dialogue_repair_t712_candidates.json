@@ -6,10 +6,10 @@
   "base_commit": "4286695cd47f71b875fc24b350994afce02767d1",
   "target_per_intent": 100,
   "editorially_accepted": 0,
-  "notes": "Unregistered editorial candidates only. 136 context-bound entries across eight intents. No consumer routing or publication. Cross-pack semantic review, full tests and exact-head CI required.",
+  "notes": "Unregistered editorial candidates only. 141 context-bound entries across eight intents. No consumer routing or publication. Cross-pack semantic review, full tests and exact-head CI required.",
   "counts": {
     "intents": 8,
-    "candidates": 136,
+    "candidates": 141,
     "accepted": 0
   },
   "replies": [
@@ -2052,6 +2052,81 @@
       "context": "direct_user_request",
       "read_only": true,
       "selection_precondition": "Только если повторение безопасно и есть отдельная тестовая среда."
+    },
+    {
+      "id": "t712_resume_interrupted_topic_17",
+      "intent_id": "resume_interrupted_topic",
+      "canonical_question": "Вернёмся к предыдущему вопросу",
+      "scenario": "new_evidence",
+      "context_note": "После паузы появились новые сведения",
+      "text": "Раньше мы сравнивали варианты по имеющимся данным. Если появились новые цифры или документы, сначала учтём их, а потом вернёмся к выводу.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только если в доступной истории действительно было сравнение, которое могло измениться из-за новых данных."
+    },
+    {
+      "id": "t712_resume_interrupted_topic_18",
+      "intent_id": "resume_interrupted_topic",
+      "canonical_question": "Вернёмся к предыдущему вопросу",
+      "scenario": "unfinished_calculation",
+      "context_note": "Возвращение к прерванному расчёту",
+      "text": "Расчёт остановился на исходных величинах. Проверим, не изменились ли они, и продолжим с последнего подтверждённого шага.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только если прежние исходные величины доступны и расчёт действительно был прерван."
+    },
+    {
+      "id": "t712_handle_user_disagreement_17",
+      "intent_id": "handle_user_disagreement",
+      "canonical_question": "Я с тобой не согласен",
+      "scenario": "different_criteria",
+      "context_note": "Стороны оценивают варианты по разным критериям",
+      "text": "Похоже, мы сравниваем по разным признакам: я смотрел на скорость, а ты — на надёжность. По твоему критерию вывод может быть другим.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только если в доступном контексте действительно различаются критерии скорости и надёжности."
+    },
+    {
+      "id": "t712_acknowledge_no_action_17",
+      "intent_id": "acknowledge_no_action",
+      "canonical_question": "Не делай ничего, только объясни",
+      "scenario": "draft_only",
+      "context_note": "Пользователь попросил черновик без отправки",
+      "text": "Подготовлю текст здесь. Отправлять его адресату или публиковать без отдельного разрешения не буду.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только если задача — подготовка черновика и отправка не разрешена."
+    },
+    {
+      "id": "t712_resume_interrupted_topic_19",
+      "intent_id": "resume_interrupted_topic",
+      "canonical_question": "Вернёмся к предыдущему вопросу",
+      "scenario": "expired_offer",
+      "context_note": "Обсуждение прервалось, пока действовало ограниченное по времени предложение",
+      "text": "Если предложение было ограничено по сроку, старую цену пока нельзя считать действующей. Сначала проверим актуальные условия.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только если предыдущий разговор касался предложения с ограниченным сроком действия."
     }
   ]
 }
