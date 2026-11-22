@@ -6,10 +6,10 @@
   "base_commit": "4286695cd47f71b875fc24b350994afce02767d1",
   "target_per_intent": 100,
   "editorially_accepted": 0,
-  "notes": "Unregistered editorial candidates only. 167 context-bound entries across eight intents. 0 editorially accepted. No consumer routing or publication. Cross-pack semantic review, full tests and exact-head CI required.",
+  "notes": "Unregistered editorial candidates only. 179 context-bound entries across eight intents. 0 editorially accepted. No consumer routing or publication. Cross-pack semantic review, full tests and exact-head CI required.",
   "counts": {
     "intents": 8,
-    "candidates": 167,
+    "candidates": 179,
     "accepted": 0
   },
   "replies": [
@@ -2517,6 +2517,186 @@
       "context": "direct_user_request",
       "read_only": true,
       "selection_precondition": "Только при явном запрете редактирования и доступном режиме чтения."
+    },
+    {
+      "id": "t712_ask_for_example_22",
+      "intent_id": "ask_for_example",
+      "canonical_question": "Можешь привести пример?",
+      "scenario": "unit_conversion_error",
+      "context_note": "Когда собеседник просит показать, почему нельзя складывать разные единицы",
+      "text": "Например, 3 метра и 40 сантиметров сначала приводим к одной единице: получится 3,4 метра. Запись «3 + 40 = 43 метра» неверна.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только при объяснении приведения единиц длины; числа — учебный пример."
+    },
+    {
+      "id": "t712_ask_for_example_23",
+      "intent_id": "ask_for_example",
+      "canonical_question": "Можешь привести пример?",
+      "scenario": "conditional_instruction",
+      "context_note": "Когда нужно показать, как условие меняет действие",
+      "text": "Допустим, инструкция говорит: «Если файл уже существует, не создавай второй». При наличии файла правильный результат — оставить его как есть, а не записать поверх.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только при обсуждении условного запрета на создание или перезапись файла."
+    },
+    {
+      "id": "t712_explain_in_plain_words_22",
+      "intent_id": "explain_in_plain_words",
+      "canonical_question": "Объясни простыми словами",
+      "scenario": "pagination",
+      "context_note": "Когда пользователь спрашивает, почему список загружается частями",
+      "text": "Большой список отдают порциями. Получил первую — запросил следующую. Если остановиться после первой, часть записей останется незамеченной.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только при обсуждении постраничного получения результатов."
+    },
+    {
+      "id": "t712_explain_in_plain_words_23",
+      "intent_id": "explain_in_plain_words",
+      "canonical_question": "Объясни простыми словами",
+      "scenario": "race_condition",
+      "context_note": "Когда обсуждается одновременное изменение одной записи",
+      "text": "Два процесса прочитали старое значение и оба попытались его заменить. Если не проверить, кто успел первым, одно изменение может затереть другое.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только для объяснения конфликта конкурентных записей; не утверждать, что он произошёл без журналов."
+    },
+    {
+      "id": "t712_separate_fact_from_guess_22",
+      "intent_id": "separate_fact_from_guess",
+      "canonical_question": "Где факт, а где твоя догадка?",
+      "scenario": "incomplete_export",
+      "context_note": "Когда выгрузка закончилась без сообщения об ошибке, но полнота не проверена",
+      "text": "Факт: файл выгрузки появился. Предположение: в нём есть все записи. Это проверяется сравнением количества и диапазона данных с источником.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только если файл действительно создан, но полнота выгрузки не подтверждена."
+    },
+    {
+      "id": "t712_separate_fact_from_guess_23",
+      "intent_id": "separate_fact_from_guess",
+      "canonical_question": "Где факт, а где твоя догадка?",
+      "scenario": "unverified_timezone",
+      "context_note": "Когда время события показано без часового пояса",
+      "text": "Из записи видно время 14:20. Какой это часовой пояс, пока неизвестно; переводить его в местное время без этого нельзя.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только если метка времени не содержит зоны и источник не задаёт её отдельно."
+    },
+    {
+      "id": "t712_request_short_answer_22",
+      "intent_id": "request_short_answer",
+      "canonical_question": "Можно короче?",
+      "scenario": "scope_of_answer",
+      "context_note": "Когда просят коротко сказать, относится ли вывод ко всем случаям",
+      "text": "Нет, вывод относится только к проверенным примерам. Для остальных случаев данных пока нет.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только если вывод действительно получен на ограниченной выборке."
+    },
+    {
+      "id": "t712_request_detailed_answer_23",
+      "intent_id": "request_detailed_answer",
+      "canonical_question": "Расскажи подробнее",
+      "scenario": "partial_dataset",
+      "context_note": "Когда пользователь просит подробный разбор неполной таблицы",
+      "text": "Сначала перечислю доступные строки и период, который они покрывают. Затем отдельно покажу пропуски и посчитаю итог только по имеющимся значениям. Общий итог за весь период без недостающих строк не назову.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только если таблица неполная и задача допускает расчёт по доступной части."
+    },
+    {
+      "id": "t712_resume_interrupted_topic_22",
+      "intent_id": "resume_interrupted_topic",
+      "canonical_question": "Вернёмся к предыдущему вопросу",
+      "scenario": "pending_attachment",
+      "context_note": "Когда разговор прервался перед обещанным вложением",
+      "text": "Мы остановились на файле, который ты собирался прислать. Пока его нет в этой переписке, я не могу проверить содержимое. Можем продолжить после вложения.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только если из доступной истории подтверждено ожидание файла и файл действительно не поступил."
+    },
+    {
+      "id": "t712_handle_user_disagreement_22",
+      "intent_id": "handle_user_disagreement",
+      "canonical_question": "Я с тобой не согласен",
+      "scenario": "different_error_metric",
+      "context_note": "Когда спорят об успешности проверки из-за разных метрик",
+      "text": "Ты считаешь число найденных ошибок, а я говорил о доле ошибок среди всех проверок. Оба показателя полезны, но сравнивать их напрямую нельзя.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только если стороны действительно используют абсолютное количество и долю."
+    },
+    {
+      "id": "t712_acknowledge_no_action_20",
+      "intent_id": "acknowledge_no_action",
+      "canonical_question": "Не делай ничего, только объясни",
+      "scenario": "no_calendar_write",
+      "context_note": "Когда пользователь просит обсудить встречу без создания события",
+      "text": "Могу помочь выбрать время и составить приглашение. В календарь ничего записывать не буду.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только при прямом запрете на создание события в календаре."
+    },
+    {
+      "id": "t712_acknowledge_no_action_21",
+      "intent_id": "acknowledge_no_action",
+      "canonical_question": "Не делай ничего, только объясни",
+      "scenario": "no_repository_changes",
+      "context_note": "Когда пользователь разрешил анализ репозитория только на чтение",
+      "text": "Проверю доступные файлы и опишу найденные проблемы. Ветки, коммиты и PR создавать не буду.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только если пользователь явно установил режим чтения без изменений."
     }
   ]
 }
