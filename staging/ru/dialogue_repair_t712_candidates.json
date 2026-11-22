@@ -6,10 +6,10 @@
   "base_commit": "4286695cd47f71b875fc24b350994afce02767d1",
   "target_per_intent": 100,
   "editorially_accepted": 0,
-  "notes": "Unregistered editorial candidates only. 72 context-bound entries across eight intents (9 each). No consumer routing or publication; each reply requires its scenario-specific selection_precondition and verified prior context. Cross-pack semantic review, full tests and exact-head CI remain required.",
+  "notes": "Unregistered editorial candidates only. 88 context-bound entries across eight intents (11 each). No consumer routing or publication; each reply requires its scenario-specific selection_precondition and verified prior context. Cross-pack semantic review, full tests and exact-head CI remain required.",
   "counts": {
     "intents": 8,
-    "candidates": 72,
+    "candidates": 88,
     "accepted": 0
   },
   "replies": [
@@ -1092,6 +1092,246 @@
       "context": "direct_user_request",
       "read_only": true,
       "selection_precondition": "Только при явном запрете удаления; не утверждать, что файлы уже проверены."
+    },
+    {
+      "id": "t712_ask_for_example_10",
+      "intent_id": "ask_for_example",
+      "canonical_question": "Можешь привести пример?",
+      "scenario": "ordering_example",
+      "context_note": "Когда пользователь спрашивает, почему порядок действий меняет результат",
+      "text": "Если сначала закрыть документ, а потом попытаться скопировать из него несохранённый текст, нужных данных уже может не быть. Поэтому порядок шагов имеет значение.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только при обсуждении последовательности действий с несохранёнными данными."
+    },
+    {
+      "id": "t712_ask_for_example_11",
+      "intent_id": "ask_for_example",
+      "canonical_question": "Можешь привести пример?",
+      "scenario": "exception_example",
+      "context_note": "Когда требуется показать исключение из общего правила",
+      "text": "Правило «после пяти минут ожидания повтори запрос» не подходит для операции, которая могла уже выполниться. Сначала нужно проверить её статус, иначе можно создать дубль.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только для обсуждения повторной отправки потенциально необратимых запросов; не выдавать за инструкцию конкретного сервиса."
+    },
+    {
+      "id": "t712_explain_in_plain_words_10",
+      "intent_id": "explain_in_plain_words",
+      "canonical_question": "Объясни простыми словами",
+      "scenario": "version_conflict",
+      "context_note": "Когда человек не понимает конфликт версий",
+      "text": "У тебя две разные редакции одного файла. Если сохранить старую поверх новой, последние изменения могут исчезнуть. Сначала сравни обе.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только при подтверждённом конфликте версий одного файла."
+    },
+    {
+      "id": "t712_explain_in_plain_words_11",
+      "intent_id": "explain_in_plain_words",
+      "canonical_question": "Объясни простыми словами",
+      "scenario": "rate_limit",
+      "context_note": "Когда непонятно ограничение частоты запросов",
+      "text": "Сервис временно перестал принимать новые обращения, потому что их было слишком много за короткое время. Обычно нужно подождать указанное время и попробовать снова.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только если источник действительно сообщил об ограничении частоты и срок ожидания не придумывается."
+    },
+    {
+      "id": "t712_separate_fact_from_guess_10",
+      "intent_id": "separate_fact_from_guess",
+      "canonical_question": "Где факт, а где твоя догадка?",
+      "scenario": "reported_vs_observed",
+      "context_note": "Когда слова свидетеля ошибочно приняты за непосредственное наблюдение",
+      "text": "Подтверждено, что собеседник сообщил о сбое. Сам сбой я не наблюдал, а журнал событий пока не проверял.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только когда имеется сообщение о сбое без независимой проверки."
+    },
+    {
+      "id": "t712_separate_fact_from_guess_11",
+      "intent_id": "separate_fact_from_guess",
+      "canonical_question": "Где факт, а где твоя догадка?",
+      "scenario": "date_inference",
+      "context_note": "Когда из даты ошибочно выводят длительность события",
+      "text": "В документе указана дата подписания. Когда началась работа над ним, из этой даты определить нельзя.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только если доступна дата подписания, но отсутствует дата начала работы."
+    },
+    {
+      "id": "t712_request_short_answer_10",
+      "intent_id": "request_short_answer",
+      "canonical_question": "Можно короче?",
+      "scenario": "risk_summary",
+      "context_note": "Когда после обсуждения последствий нужен короткий итог",
+      "text": "Главный риск — потерять несохранённые изменения. Сначала сделай копию.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только если речь шла о перезаписи или удалении несохранённых изменений."
+    },
+    {
+      "id": "t712_request_short_answer_11",
+      "intent_id": "request_short_answer",
+      "canonical_question": "Можно короче?",
+      "scenario": "next_step_only",
+      "context_note": "Когда пользователь просит назвать только следующий шаг",
+      "text": "Сначала проверь, воспроизводится ли ошибка при тех же условиях.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только если обсуждается воспроизводимая ошибка и безопасная проверка не меняет состояние."
+    },
+    {
+      "id": "t712_request_detailed_answer_10",
+      "intent_id": "request_detailed_answer",
+      "canonical_question": "Расскажи подробнее",
+      "scenario": "assumption_audit",
+      "context_note": "Когда требуется разобрать скрытые допущения расчёта",
+      "text": "В расчёте нужно отдельно указать исходные значения, единицы измерения и принятое округление. Затем проверить, что все строки относятся к одному периоду. Без этого правильная арифметика ещё не гарантирует правильный итог.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только при обсуждении расчёта с неоднозначными единицами или периодами."
+    },
+    {
+      "id": "t712_request_detailed_answer_11",
+      "intent_id": "request_detailed_answer",
+      "canonical_question": "Расскажи подробнее",
+      "scenario": "failure_recovery",
+      "context_note": "Когда пользователь просит подробный план после неудачной операции",
+      "text": "Сначала выясни, что успело сохраниться до ошибки. Затем проверь, есть ли резервная копия. Только после этого выбирай повторный запуск: он может затронуть уже созданные данные.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только при обсуждении сбоя операции с возможными частичными результатами; никаких действий без разрешения."
+    },
+    {
+      "id": "t712_resume_interrupted_topic_10",
+      "intent_id": "resume_interrupted_topic",
+      "canonical_question": "Вернёмся к предыдущему вопросу",
+      "scenario": "stale_evidence",
+      "context_note": "Когда возвращаются к вопросу, но прежние сведения могли устареть",
+      "text": "Мы остановились на проверке статуса. Прежде чем продолжать, нужно получить свежие данные: прежний результат мог измениться.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только если обсуждается меняющееся состояние и старый статус действительно известен."
+    },
+    {
+      "id": "t712_resume_interrupted_topic_11",
+      "intent_id": "resume_interrupted_topic",
+      "canonical_question": "Вернёмся к предыдущему вопросу",
+      "scenario": "unanswered_question",
+      "context_note": "Когда пользователь возвращается после заданного, но не отвеченного уточнения",
+      "text": "В прошлый раз мы остановились на уточнении условий. Без него можно разобрать общие варианты, но конкретный вывод будет преждевременным.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только если в доступной истории действительно есть незакрытое уточнение."
+    },
+    {
+      "id": "t712_handle_user_disagreement_10",
+      "intent_id": "handle_user_disagreement",
+      "canonical_question": "Я с тобой не согласен",
+      "scenario": "arithmetic_check",
+      "context_note": "Когда пользователь оспаривает числовой результат",
+      "text": "Проверим числа по строкам и единицам измерения. Если я ошибся в сложении или округлении, исправлю результат.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только при споре о вычислении, когда исходные числа доступны."
+    },
+    {
+      "id": "t712_handle_user_disagreement_11",
+      "intent_id": "handle_user_disagreement",
+      "canonical_question": "Я с тобой не согласен",
+      "scenario": "different_goal",
+      "context_note": "Когда спор вызван разными целями выбора",
+      "text": "Если для тебя главное скорость, мой вариант действительно может не подойти. Я сравнивал по надёжности; давай оценим оба решения по твоему критерию.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только если прежняя рекомендация опиралась на надёжность, а пользователь явно поставил скорость выше."
+    },
+    {
+      "id": "t712_acknowledge_no_action_10",
+      "intent_id": "acknowledge_no_action",
+      "canonical_question": "Не делай ничего, только объясни",
+      "scenario": "no_network",
+      "context_note": "Когда пользователь запрещает сетевые запросы",
+      "text": "В сеть обращаться не буду. Разберу только то, что уже есть в переписке, и отмечу, чего без проверки установить нельзя.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только при явном запрете сетевых обращений и отсутствии запуска внешних инструментов."
+    },
+    {
+      "id": "t712_acknowledge_no_action_11",
+      "intent_id": "acknowledge_no_action",
+      "canonical_question": "Не делай ничего, только объясни",
+      "scenario": "no_messages",
+      "context_note": "Когда пользователь запрещает отправку сообщений третьим лицам",
+      "text": "Никому писать не буду. Могу показать текст здесь, чтобы ты сам решил, использовать его или нет.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только при явном запрете отправки и отсутствии внешних действий."
     }
   ]
 }
