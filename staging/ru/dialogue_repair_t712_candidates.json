@@ -6,10 +6,10 @@
   "base_commit": "4286695cd47f71b875fc24b350994afce02767d1",
   "target_per_intent": 100,
   "editorially_accepted": 0,
-  "notes": "Unregistered candidates; no consumer routing or publication. Verify cross-pack/PR semantic uniqueness, contexts, and exact-head CI before promotion. Three candidates per intent are not a completed 100/100 set. Selection requires the scenario-specific selection_precondition and actual prior context; generic intent match alone is insufficient. Synthetic numbers and scenarios must not be represented as observed facts.",
+  "notes": "Unregistered editorial candidates only. 40 context-bound entries across eight intents. No consumer routing or publication; each reply requires its scenario-specific selection_precondition and verified prior context. Full cross-pack semantic review, tests and exact-head CI are still required.",
   "counts": {
     "intents": 8,
-    "candidates": 24,
+    "candidates": 40,
     "accepted": 0
   },
   "replies": [
@@ -372,6 +372,246 @@
       "context": "direct_user_request",
       "read_only": true,
       "selection_precondition": "Только если пользователь явно просит оценить действие без отправки, запуска или другой внешней операции."
+    },
+    {
+      "id": "t712_ask_for_example_4",
+      "intent_id": "ask_for_example",
+      "canonical_question": "Можешь привести пример?",
+      "scenario": "counterexample",
+      "context_note": "Когда пользователь просит контрпример к выводу о статусе сообщения",
+      "text": "Пример обратной ситуации: сообщение доставлено, но ответа нет уже неделю. Здесь одной отметки о доставке недостаточно, чтобы судить о причинах молчания.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только если ранее обсуждали разницу между доставкой и прочтением; не приписывать адресату намерения."
+    },
+    {
+      "id": "t712_ask_for_example_5",
+      "intent_id": "ask_for_example",
+      "canonical_question": "Можешь привести пример?",
+      "scenario": "boundary_case",
+      "context_note": "Пользователь просит пример границы числового ограничения",
+      "text": "Допустим, ограничение — до 10 килограммов включительно. Предмет весом ровно 10 килограммов подходит, а 10,1 уже нет.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только если ранее явно установлена включительная верхняя граница 10 кг."
+    },
+    {
+      "id": "t712_explain_in_plain_words_4",
+      "intent_id": "explain_in_plain_words",
+      "canonical_question": "Объясни простыми словами",
+      "scenario": "permission_scope",
+      "context_note": "Нужно объяснить разницу между чтением и действием",
+      "text": "Если у бота есть доступ читать сообщения, из этого ещё не следует, что он может удалять их. Для удаления нужны отдельные права.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только если обсуждается модель прав, где чтение и удаление действительно разделены; без утверждений о конкретном боте."
+    },
+    {
+      "id": "t712_explain_in_plain_words_5",
+      "intent_id": "explain_in_plain_words",
+      "canonical_question": "Объясни простыми словами",
+      "scenario": "cache",
+      "context_note": "Пользователь просит простое объяснение кэша",
+      "text": "Кэш — это сохранённая копия данных. Она помогает не загружать одно и то же каждый раз, но может устареть.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только при объяснении кэша данных; не обещать конкретную скорость или автоматическое обновление."
+    },
+    {
+      "id": "t712_separate_fact_from_guess_4",
+      "intent_id": "separate_fact_from_guess",
+      "canonical_question": "Где факт, а где твоя догадка?",
+      "scenario": "missing_log",
+      "context_note": "Есть только запись об остановке, без диагностического кода",
+      "text": "В журнале есть запись об остановке. Почему она произошла, по этой строке определить нельзя.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только если журнал действительно содержит остановку и не содержит достаточной причины."
+    },
+    {
+      "id": "t712_separate_fact_from_guess_5",
+      "intent_id": "separate_fact_from_guess",
+      "canonical_question": "Где факт, а где твоя догадка?",
+      "scenario": "correlation",
+      "context_note": "Пользователь путает последовательность событий с причиной",
+      "text": "После обновления ошибка стала появляться чаще. Это наблюдение; что обновление её вызвало, пока не доказано.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только если есть сравнимые наблюдения до и после обновления; не выдавать корреляцию за доказательство."
+    },
+    {
+      "id": "t712_request_short_answer_4",
+      "intent_id": "request_short_answer",
+      "canonical_question": "Можно короче?",
+      "scenario": "permission",
+      "context_note": "Нужен короткий ответ о возможности действия",
+      "text": "Нет подтверждённых прав на это действие. Сначала проверь доступ.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только если доступ действительно не подтверждён; не заявлять, что права отсутствуют."
+    },
+    {
+      "id": "t712_request_short_answer_5",
+      "intent_id": "request_short_answer",
+      "canonical_question": "Можно короче?",
+      "scenario": "comparison",
+      "context_note": "Нужно кратко сравнить варианты по одному критерию",
+      "text": "По указанному критерию подходит первый вариант. По остальным данных пока мало.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только если первый вариант подтверждённо подходит по названному критерию."
+    },
+    {
+      "id": "t712_request_detailed_answer_4",
+      "intent_id": "request_detailed_answer",
+      "canonical_question": "Расскажи подробнее",
+      "scenario": "source_check",
+      "context_note": "Запрошено подробное объяснение на основе источника",
+      "text": "Разделю ответ на то, что прямо сказано в источнике, и то, что мы из него выводим. Для каждого спорного вывода укажу, каких данных не хватает.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только при наличии доступного источника и спорных выводов; не обещать недоступные ссылки."
+    },
+    {
+      "id": "t712_request_detailed_answer_5",
+      "intent_id": "request_detailed_answer",
+      "canonical_question": "Расскажи подробнее",
+      "scenario": "troubleshooting",
+      "context_note": "Запрошен подробный план безопасной диагностики",
+      "text": "Для начала зафиксируем точный текст ошибки и момент её появления. Потом сравним поведение до и после последнего изменения. Проверки, которые уже дали результат, повторять без причины не станем.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только для информационного разбора; не предлагать опасные действия с оборудованием."
+    },
+    {
+      "id": "t712_resume_interrupted_topic_4",
+      "intent_id": "resume_interrupted_topic",
+      "canonical_question": "Вернёмся к предыдущему вопросу",
+      "scenario": "pending_choice",
+      "context_note": "Продолжение после паузы при известном состоянии выбора",
+      "text": "Мы остановились перед выбором варианта. Могу продолжить сравнение с того критерия, который ещё не разобрали.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только если предыдущий контекст действительно содержит незавершённое сравнение."
+    },
+    {
+      "id": "t712_resume_interrupted_topic_5",
+      "intent_id": "resume_interrupted_topic",
+      "canonical_question": "Вернёмся к предыдущему вопросу",
+      "scenario": "previous_correction",
+      "context_note": "Возобновление после явного исправления входных данных",
+      "text": "Продолжу с исправленными исходными данными. Старое значение в расчёт больше не беру.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только если новое значение присутствует в доступном контексте и исправление однозначно."
+    },
+    {
+      "id": "t712_handle_user_disagreement_4",
+      "intent_id": "handle_user_disagreement",
+      "canonical_question": "Я с тобой не согласен",
+      "scenario": "verified_correction",
+      "context_note": "Пользователь указывает на реально подтверждённую ошибку единиц",
+      "text": "Да, здесь я перепутал единицы. Пересчитаю с правильной единицей и отдельно проверю итог.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только после проверки, что прежний ответ действительно смешал единицы."
+    },
+    {
+      "id": "t712_handle_user_disagreement_5",
+      "intent_id": "handle_user_disagreement",
+      "canonical_question": "Я с тобой не согласен",
+      "scenario": "unverified_claim",
+      "context_note": "Пользователь предлагает альтернативную гипотезу",
+      "text": "Твой вариант возможен, но данных для выбора между версиями пока нет. Что из этого уже проверено?",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только когда обе версии остаются гипотезами; не обесценивать проверенные сведения."
+    },
+    {
+      "id": "t712_acknowledge_no_action_4",
+      "intent_id": "acknowledge_no_action",
+      "canonical_question": "Не делай ничего, только объясни",
+      "scenario": "publication",
+      "context_note": "Запрос на подготовку текста без публикации",
+      "text": "Черновик подготовлю здесь. Публиковать или отправлять его никуда не стану.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только если пользователь просил черновик и запретил публикацию; текст действительно должен быть подготовлен отдельно."
+    },
+    {
+      "id": "t712_acknowledge_no_action_5",
+      "intent_id": "acknowledge_no_action",
+      "canonical_question": "Не делай ничего, только объясни",
+      "scenario": "diagnostic_only",
+      "context_note": "Пользователь разрешил только диагностику",
+      "text": "Ограничусь чтением результатов проверки. Сброс ошибок и изменение параметров оставлю без действий.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только если доступен режим чтения и нет отдельного разрешения на изменение состояния."
     }
   ]
 }
