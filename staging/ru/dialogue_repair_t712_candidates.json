@@ -6,10 +6,10 @@
   "base_commit": "4286695cd47f71b875fc24b350994afce02767d1",
   "target_per_intent": 100,
   "editorially_accepted": 0,
-  "notes": "Unregistered editorial candidates only. 141 context-bound entries across eight intents. No consumer routing or publication. Cross-pack semantic review, full tests and exact-head CI required.",
+  "notes": "Unregistered editorial candidates only. 154 context-bound entries across eight intents. No consumer routing or publication. Cross-pack semantic review, full tests and exact-head CI required.",
   "counts": {
     "intents": 8,
-    "candidates": 141,
+    "candidates": 154,
     "accepted": 0
   },
   "replies": [
@@ -2127,6 +2127,201 @@
       "context": "direct_user_request",
       "read_only": true,
       "selection_precondition": "Только если предыдущий разговор касался предложения с ограниченным сроком действия."
+    },
+    {
+      "id": "t712_ask_for_example_19",
+      "intent_id": "ask_for_example",
+      "canonical_question": "Можешь привести пример?",
+      "scenario": "budget_boundary",
+      "context_note": "Когда пользователь просит показать, почему бюджет не равен цене покупки",
+      "text": "Допустим, на покупку есть 5000 рублей, а товар стоит 4800. Если доставка обойдётся в 400, общий расход составит 5200 — бюджет превышен на 200.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только при обсуждении полного бюджета покупки; все суммы — учебный пример."
+    },
+    {
+      "id": "t712_explain_in_plain_words_18",
+      "intent_id": "explain_in_plain_words",
+      "canonical_question": "Объясни простыми словами",
+      "scenario": "backup_vs_sync",
+      "context_note": "Когда пользователь путает резервную копию и синхронизацию",
+      "text": "Синхронизация повторяет изменения на других устройствах, включая удаление. Резервная копия нужна, чтобы вернуть прежнюю версию, если что-то пошло не так.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только если предыдущая тема — отличие синхронизации от отдельной сохраняемой резервной копии."
+    },
+    {
+      "id": "t712_explain_in_plain_words_19",
+      "intent_id": "explain_in_plain_words",
+      "canonical_question": "Объясни простыми словами",
+      "scenario": "percentage_points",
+      "context_note": "Когда пользователь просит объяснить разницу процентов и процентных пунктов",
+      "text": "Если показатель вырос с 10% до 15%, прибавилось пять процентных пунктов. Относительно исходных 10% рост составил 50%.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только при обсуждении разницы относительного изменения и процентных пунктов; цифры учебные."
+    },
+    {
+      "id": "t712_separate_fact_from_guess_18",
+      "intent_id": "separate_fact_from_guess",
+      "canonical_question": "Где факт, а где твоя догадка?",
+      "scenario": "unanswered_message",
+      "context_note": "Когда собеседник делает вывод о мотивах из отсутствия ответа",
+      "text": "Факт: на сообщение пока не ответили. Догадка: его специально проигнорировали. Без других сведений о причине молчания судить нельзя.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только если отсутствие ответа действительно установлено, а намерения адресата неизвестны."
+    },
+    {
+      "id": "t712_separate_fact_from_guess_19",
+      "intent_id": "separate_fact_from_guess",
+      "canonical_question": "Где факт, а где твоя догадка?",
+      "scenario": "missing_log_window",
+      "context_note": "Когда в логах нет данных за часть времени",
+      "text": "В журнале видна ошибка после перезапуска. Что происходило до него, по этому фрагменту неизвестно. Причину перезапуска пока не называю.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только если доступный фрагмент журнала начинается после перезапуска и содержит ошибку."
+    },
+    {
+      "id": "t712_request_short_answer_19",
+      "intent_id": "request_short_answer",
+      "canonical_question": "Можно короче?",
+      "scenario": "difference_two_terms",
+      "context_note": "Когда нужно одним предложением повторить различие резервной копии и синхронизации",
+      "text": "Синхронизация переносит текущие изменения, резервная копия позволяет восстановить сохранённое состояние.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только после обсуждения синхронизации и резервных копий; не применять к иным терминам."
+    },
+    {
+      "id": "t712_request_detailed_answer_19",
+      "intent_id": "request_detailed_answer",
+      "canonical_question": "Расскажи подробнее",
+      "scenario": "verify_before_reset",
+      "context_note": "Когда пользователь хочет понять безопасный порядок диагностики приложения",
+      "text": "Сначала запиши точный текст ошибки и версию приложения. Затем проверь, повторяется ли сбой после обычного перезапуска. Перед сбросом настроек выясни, какие данные он удалит и есть ли резервная копия. Если ошибка сохраняется, сравни результаты до и после каждого шага.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только для пользовательского приложения, где перезапуск безопасен; не предлагать сброс без подтверждения последствий."
+    },
+    {
+      "id": "t712_request_detailed_answer_20",
+      "intent_id": "request_detailed_answer",
+      "canonical_question": "Расскажи подробнее",
+      "scenario": "compare_total_cost",
+      "context_note": "Когда просят объяснить выбор между двумя ценовыми предложениями",
+      "text": "Сравни не только цену товара. Отдельно выпиши доставку, обязательные расходники и стоимость возврата, если она предусмотрена. Затем посчитай итог для одинакового количества. Если условия гарантии отличаются, это тоже стоит показать рядом с суммой.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только если сравниваются два предложения на сопоставимые товары и условия доступны; не выдумывать стоимость доставки или гарантию."
+    },
+    {
+      "id": "t712_resume_interrupted_topic_20",
+      "intent_id": "resume_interrupted_topic",
+      "canonical_question": "Вернёмся к предыдущему вопросу",
+      "scenario": "return_to_document_edit",
+      "context_note": "Когда беседу прервали перед правкой документа",
+      "text": "Мы остановились на правке документа. Последним обсуждали формулировку второго абзаца. Если текст всё ещё актуален, продолжим с него.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только если в доступной истории действительно обсуждали второй абзац; не заявлять память о недоступной переписке."
+    },
+    {
+      "id": "t712_resume_interrupted_topic_21",
+      "intent_id": "resume_interrupted_topic",
+      "canonical_question": "Вернёмся к предыдущему вопросу",
+      "scenario": "return_to_unresolved_choice",
+      "context_note": "Когда пользователь возвращается к выбору без окончательного решения",
+      "text": "Мы сравнивали два варианта, но выбор ещё не закрепили. Можем вернуться к тому критерию, на котором остановились.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только если оба варианта и незавершённое сравнение видны в текущем контексте."
+    },
+    {
+      "id": "t712_handle_user_disagreement_18",
+      "intent_id": "handle_user_disagreement",
+      "canonical_question": "Я с тобой не согласен",
+      "scenario": "challenge_calculation",
+      "context_note": "Когда пользователь указывает на возможную арифметическую ошибку",
+      "text": "Покажи строку, где сумма не сходится. Я пересчитаю её по исходным числам и исправлю вывод, если ошибся.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только если исходные числа доступны или пользователь может указать спорную строку."
+    },
+    {
+      "id": "t712_handle_user_disagreement_19",
+      "intent_id": "handle_user_disagreement",
+      "canonical_question": "Я с тобой не согласен",
+      "scenario": "different_priorities",
+      "context_note": "Когда стороны выбирают разные варианты из-за разных критериев",
+      "text": "Похоже, мы оцениваем варианты по разным критериям. Я ставил выше стоимость, а ты — срок. Если срок важнее, прежнюю рекомендацию надо пересмотреть.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только если пользователь явно поставил срок выше стоимости, а прежний ответ действительно отдавал приоритет цене."
+    },
+    {
+      "id": "t712_acknowledge_no_action_18",
+      "intent_id": "acknowledge_no_action",
+      "canonical_question": "Не делай ничего, только объясни",
+      "scenario": "no_send",
+      "context_note": "Когда пользователь запрещает отправлять подготовленное сообщение",
+      "text": "Сообщение оставляю черновиком. Никуда его не отправляю.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только если пользователь явно запретил отправку; не утверждать, что черновик сохранён во внешнем сервисе."
     }
   ]
 }
