@@ -6,10 +6,10 @@
   "base_commit": "4286695cd47f71b875fc24b350994afce02767d1",
   "target_per_intent": 100,
   "editorially_accepted": 0,
-  "notes": "Unregistered editorial candidates only. 112 context-bound entries across eight intents (14 each). No consumer routing or publication. Cross-pack semantic review, full tests and exact-head CI required.",
+  "notes": "Unregistered editorial candidates only. 120 context-bound entries across eight intents (15 each). No consumer routing or publication. Cross-pack semantic review, full tests and exact-head CI required.",
   "counts": {
     "intents": 8,
-    "candidates": 112,
+    "candidates": 120,
     "accepted": 0
   },
   "replies": [
@@ -1692,6 +1692,126 @@
       "context": "direct_user_request",
       "read_only": true,
       "selection_precondition": "Только если пользователь ограничил задачу анализом без транзакций."
+    },
+    {
+      "id": "t712_ask_for_example_15",
+      "intent_id": "ask_for_example",
+      "canonical_question": "Можешь привести пример?",
+      "scenario": "scope_of_negation",
+      "context_note": "Когда пользователь не понимает, что именно запрещено",
+      "text": "Сравни: «Не нужно удалять все файлы» и «Нужно не удалять ни одного файла». Первая фраза допускает удаление части, вторая запрещает удаление полностью.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только при разборе смысла отрицания; не превращать пример в команду удаления."
+    },
+    {
+      "id": "t712_explain_in_plain_words_15",
+      "intent_id": "explain_in_plain_words",
+      "canonical_question": "Объясни простыми словами",
+      "scenario": "stale_snapshot",
+      "context_note": "Когда объясняют расхождение с сохранённой копией",
+      "text": "Сохранённая копия показывает состояние на момент загрузки. Если исходные данные изменились позже, копия сама по себе их не узнает.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только для системы, где снимок действительно не обновляется автоматически."
+    },
+    {
+      "id": "t712_separate_fact_from_guess_15",
+      "intent_id": "separate_fact_from_guess",
+      "canonical_question": "Где факт, а где твоя догадка?",
+      "scenario": "selection_bias",
+      "context_note": "Когда вывод строится по нескольким удачным примерам",
+      "text": "В выбранных примерах результат положительный. Мы пока не знаем, как часто встречаются неудачные случаи, поэтому общий процент успеха из них не получить.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только если показана выборка положительных случаев без сведений об остальных."
+    },
+    {
+      "id": "t712_request_short_answer_15",
+      "intent_id": "request_short_answer",
+      "canonical_question": "Можно короче?",
+      "scenario": "irreversible_action",
+      "context_note": "Когда просят краткий ответ о необратимом действии",
+      "text": "Перед удалением проверь, что есть нужная копия и выбран правильный объект. Без этого действие лучше отложить.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только при обсуждении удаления данных; не инициировать действие и не утверждать наличие копии."
+    },
+    {
+      "id": "t712_request_detailed_answer_15",
+      "intent_id": "request_detailed_answer",
+      "canonical_question": "Расскажи подробнее",
+      "scenario": "sample_size",
+      "context_note": "Когда просят объяснить, почему одного опыта мало",
+      "text": "Один удачный запуск показывает, что действие сработало в конкретных условиях. Чтобы оценить надёжность, нужны повторения, одинаковые критерии успеха и запись сбоев.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только при обсуждении проверки повторяемости; не выдавать число опытов за статистическую гарантию."
+    },
+    {
+      "id": "t712_resume_interrupted_topic_15",
+      "intent_id": "resume_interrupted_topic",
+      "canonical_question": "Вернёмся к предыдущему вопросу",
+      "scenario": "changed_priority",
+      "context_note": "Когда после перерыва пользователь сменил приоритет",
+      "text": "Раньше мы разбирали скорость, а сейчас главным условием стала сохранность данных. Продолжу сравнение с учётом этого ограничения.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только если оба приоритета явно присутствуют в истории разговора."
+    },
+    {
+      "id": "t712_handle_user_disagreement_15",
+      "intent_id": "handle_user_disagreement",
+      "canonical_question": "Я с тобой не согласен",
+      "scenario": "different_denominators",
+      "context_note": "Когда два процента рассчитаны от разных оснований",
+      "text": "Наши проценты могут различаться из-за знаменателя. Ты считаешь долю от всех попыток, а я — только от завершённых. Давай сначала согласуем базу расчёта.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только если расхождение действительно связано с составом знаменателя; не утверждать без исходных чисел."
+    },
+    {
+      "id": "t712_acknowledge_no_action_15",
+      "intent_id": "acknowledge_no_action",
+      "canonical_question": "Не делай ничего, только объясни",
+      "scenario": "no_external_lookup",
+      "context_note": "Когда пользователь просит работать только с переданным текстом",
+      "text": "Буду опираться на текст из этого сообщения. Внешние источники проверять не стану.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Только при прямом запрете внешнего поиска и достаточности предоставленного текста."
     }
   ]
 }
