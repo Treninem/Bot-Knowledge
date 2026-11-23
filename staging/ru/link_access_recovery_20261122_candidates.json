@@ -8,10 +8,10 @@
   "editorially_accepted": 0,
   "counts": {
     "intents": 1,
-    "candidates": 60,
+    "candidates": 76,
     "accepted": 0
   },
-  "notes": "Synthetic editorial staging only; 16 added in this update. Requires cross-pack semantic/privacy review, full tests, manifest SHA/cache registration and exact-head CI before acceptance.",
+  "notes": "Synthetic editorial staging only; 16 new scenario-specific candidates in this update. Cross-pack semantic/privacy review, full tests, manifest SHA/cache registration and exact-head CI remain required before acceptance.",
   "replies": [
     {
       "id": "link_access_recovery_001",
@@ -912,6 +912,246 @@
       "context": "direct_user_request",
       "read_only": true,
       "selection_precondition": "Когда домен открывается, но адрес с изменёнными заглавными буквами ведёт на ошибку"
+    },
+    {
+      "id": "link_access_recovery_061",
+      "intent_id": "link_does_not_open",
+      "canonical_question": "Что делать, если ссылка не открывается?",
+      "scenario": "http_413",
+      "context_note": "Когда ссылка ведёт к загрузке файла и сервер отвечает 413",
+      "text": "Сервер отклонил слишком большой запрос. Уточни допустимый размер загрузки; не пытайся обойти ограничение разбиением файла без согласования.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда ссылка ведёт к загрузке файла и сервер отвечает 413"
+    },
+    {
+      "id": "link_access_recovery_062",
+      "intent_id": "link_does_not_open",
+      "canonical_question": "Что делать, если ссылка не открывается?",
+      "scenario": "http_416",
+      "context_note": "Когда возобновляемая загрузка возвращает 416",
+      "text": "Сервер не принимает запрошенный диапазон файла. Проверь, не изменился ли файл с момента начала скачивания; сохрани имеющуюся копию перед новой попыткой.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда возобновляемая загрузка возвращает 416"
+    },
+    {
+      "id": "link_access_recovery_063",
+      "intent_id": "link_does_not_open",
+      "canonical_question": "Что делать, если ссылка не открывается?",
+      "scenario": "http_423",
+      "context_note": "Когда общий документ отвечает кодом 423 Locked",
+      "text": "Ресурс сейчас заблокирован для операции. Уточни, кто держит блокировку и разрешено ли редактирование; не снимай чужую блокировку самостоятельно.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда общий документ отвечает кодом 423 Locked"
+    },
+    {
+      "id": "link_access_recovery_064",
+      "intent_id": "link_does_not_open",
+      "canonical_question": "Что делать, если ссылка не открывается?",
+      "scenario": "http_507",
+      "context_note": "Когда хранилище сообщает 507 Insufficient Storage",
+      "text": "У сервера может не хватать места для операции. Проверь состояние хранилища у владельца сервиса; удалять чужие файлы ради доступа нельзя.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда хранилище сообщает 507 Insufficient Storage"
+    },
+    {
+      "id": "link_access_recovery_065",
+      "intent_id": "link_does_not_open",
+      "canonical_question": "Что делать, если ссылка не открывается?",
+      "scenario": "http_425",
+      "context_note": "Когда сервер отвечает 425 Too Early",
+      "text": "Сервер отказался обрабатывать запрос в текущих условиях. Для операции с записью сначала проверь, не была ли она выполнена, чтобы повтором не создать дубль.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда сервер отвечает 425 Too Early"
+    },
+    {
+      "id": "link_access_recovery_066",
+      "intent_id": "link_does_not_open",
+      "canonical_question": "Что делать, если ссылка не открывается?",
+      "scenario": "http_421",
+      "context_note": "Когда сервер отвечает 421 Misdirected Request",
+      "text": "Сервер получил запрос не для того сайта. Проверь адрес и попробуй открыть его обычным способом; менять настройки безопасности наугад не стоит.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда сервер отвечает 421 Misdirected Request"
+    },
+    {
+      "id": "link_access_recovery_067",
+      "intent_id": "link_does_not_open",
+      "canonical_question": "Что делать, если ссылка не открывается?",
+      "scenario": "hsts_error",
+      "context_note": "Когда браузер показывает ошибку HSTS",
+      "text": "Сайт требует защищённое соединение, но проверка не прошла. Не обходи предупреждение; проверь дату устройства и сообщи владельцу сайта об ошибке сертификата.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда браузер показывает ошибку HSTS"
+    },
+    {
+      "id": "link_access_recovery_068",
+      "intent_id": "link_does_not_open",
+      "canonical_question": "Что делать, если ссылка не открывается?",
+      "scenario": "link_from_offline_export",
+      "context_note": "Когда ссылка из выгруженного архива переписки ведёт на недоступный внутренний адрес",
+      "text": "Архив мог сохранить внутреннюю ссылку без самого вложения. Проверь, включены ли файлы в экспорт, и запроси доступную копию у владельца материала.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда ссылка из выгруженного архива переписки ведёт на недоступный внутренний адрес"
+    },
+    {
+      "id": "link_access_recovery_069",
+      "intent_id": "link_does_not_open",
+      "canonical_question": "Что делать, если ссылка не открывается?",
+      "scenario": "link_only_works_in_original_thread",
+      "context_note": "Когда ссылка на сообщение открывает чат, но не нужное сообщение",
+      "text": "Проверь, сохранилось ли исходное сообщение и есть ли доступ к теме или ветке. Если сообщение удалено, переход по старой ссылке его не восстановит.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда ссылка на сообщение открывает чат, но не нужное сообщение"
+    },
+    {
+      "id": "link_access_recovery_070",
+      "intent_id": "link_does_not_open",
+      "canonical_question": "Что делать, если ссылка не открывается?",
+      "scenario": "clipboard_truncation",
+      "context_note": "Когда длинный адрес обрезается при пересылке через приложение",
+      "text": "Сравни конец ссылки с оригиналом: приложение могло обрезать текст. Попроси отправить адрес отдельным сообщением или через штатную функцию «Поделиться».",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда длинный адрес обрезается при пересылке через приложение"
+    },
+    {
+      "id": "link_access_recovery_071",
+      "intent_id": "link_does_not_open",
+      "canonical_question": "Что делать, если ссылка не открывается?",
+      "scenario": "link_requires_age_verification",
+      "context_note": "Когда страница открывает подтверждение возраста вместо материала",
+      "text": "Сервис может требовать подтверждения возраста. Используй только предусмотренный им способ проверки; обходить возрастное ограничение не предлагаю.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда страница открывает подтверждение возраста вместо материала"
+    },
+    {
+      "id": "link_access_recovery_072",
+      "intent_id": "link_does_not_open",
+      "canonical_question": "Что делать, если ссылка не открывается?",
+      "scenario": "link_requires_client_certificate",
+      "context_note": "Когда корпоративный сайт требует клиентский сертификат",
+      "text": "Похоже, сайт ожидает сертификат устройства или пользователя. Уточни у администратора, как получить разрешённый доступ; чужие сертификаты использовать нельзя.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда корпоративный сайт требует клиентский сертификат"
+    },
+    {
+      "id": "link_access_recovery_073",
+      "intent_id": "link_does_not_open",
+      "canonical_question": "Что делать, если ссылка не открывается?",
+      "scenario": "link_restricted_to_tenant",
+      "context_note": "Когда облачный документ доступен только участникам определённой организации",
+      "text": "Проверь, в какой организации открыт аккаунт. Если приглашение ограничено её участниками, попроси владельца выдать доступ по правилам сервиса.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда облачный документ доступен только участникам определённой организации"
+    },
+    {
+      "id": "link_access_recovery_074",
+      "intent_id": "link_does_not_open",
+      "canonical_question": "Что делать, если ссылка не открывается?",
+      "scenario": "link_wrong_port",
+      "context_note": "Когда адрес содержит нестандартный порт и соединение не устанавливается",
+      "text": "Проверь порт в адресе у отправителя: он мог измениться или быть доступен только из нужной сети. Не отключай сетевую защиту ради проверки.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда адрес содержит нестандартный порт и соединение не устанавливается"
+    },
+    {
+      "id": "link_access_recovery_075",
+      "intent_id": "link_does_not_open",
+      "canonical_question": "Что делать, если ссылка не открывается?",
+      "scenario": "link_replaced_by_shortener",
+      "context_note": "Когда короткая ссылка ведёт на неожиданный домен",
+      "text": "Не вводи данные на неожиданном сайте. Попроси прямую ссылку на официальный ресурс и сверь домен до входа.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда короткая ссылка ведёт на неожиданный домен"
+    },
+    {
+      "id": "link_access_recovery_076",
+      "intent_id": "link_does_not_open",
+      "canonical_question": "Что делать, если ссылка не открывается?",
+      "scenario": "link_to_local_file",
+      "context_note": "Когда адрес начинается с file:// и получен от другого человека",
+      "text": "Такая ссылка указывает на файл на конкретном устройстве. Попроси отправить сам файл разрешённым способом или предоставить доступ к общей папке.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда адрес начинается с file:// и получен от другого человека"
     }
   ]
 }
