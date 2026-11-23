@@ -8,10 +8,10 @@
   "editorially_accepted": 0,
   "counts": {
     "intents": 1,
-    "candidates": 76,
+    "candidates": 100,
     "accepted": 0
   },
-  "notes": "Synthetic editorial staging only; 16 new scenario-specific candidates in this update. Cross-pack semantic/privacy review, full tests, manifest SHA/cache registration and exact-head CI remain required before acceptance.",
+  "notes": "Synthetic editorial staging: 100 scenario-specific candidates, +24 this update. No editorial acceptance or consumer registration. Cross-pack review, full tests, manifest SHA/cache registration and exact-head CI required.",
   "replies": [
     {
       "id": "link_access_recovery_001",
@@ -1152,6 +1152,366 @@
       "context": "direct_user_request",
       "read_only": true,
       "selection_precondition": "Когда адрес начинается с file:// и получен от другого человека"
+    },
+    {
+      "id": "link_access_recovery_077",
+      "intent_id": "link_does_not_open",
+      "canonical_question": "Что делать, если ссылка не открывается?",
+      "scenario": "link_has_unexpanded_template",
+      "context_note": "Когда адрес содержит буквальные заполнители вроде {id} или <номер>",
+      "text": "В адресе остался шаблон вместо настоящего значения. Попроси отправителя сформировать готовую ссылку; не подставляй чужие идентификаторы наугад.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда адрес содержит буквальные заполнители вроде {id} или <номер>"
+    },
+    {
+      "id": "link_access_recovery_078",
+      "intent_id": "link_does_not_open",
+      "canonical_question": "Что делать, если ссылка не открывается?",
+      "scenario": "link_requires_post_request",
+      "context_note": "Когда адрес скопирован из формы, которая открывает результат только после отправки данных",
+      "text": "Похоже, результат создаётся после отправки формы, а одного адреса недостаточно. Открой исходную страницу и повтори поиск или попроси ссылку на сохранённый результат.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда адрес скопирован из формы, которая открывает результат только после отправки данных"
+    },
+    {
+      "id": "link_access_recovery_079",
+      "intent_id": "link_does_not_open",
+      "canonical_question": "Что делать, если ссылка не открывается?",
+      "scenario": "link_uses_ipv6_zone_identifier",
+      "context_note": "Когда локальный IPv6-адрес содержит обозначение сетевого интерфейса и не работает на другом устройстве",
+      "text": "Это адрес с привязкой к сетевому интерфейсу отправителя. На другом устройстве такая ссылка может не работать; попроси обычный доступный адрес ресурса.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда локальный IPv6-адрес содержит обозначение сетевого интерфейса и не работает на другом устройстве"
+    },
+    {
+      "id": "link_access_recovery_080",
+      "intent_id": "link_does_not_open",
+      "canonical_question": "Что делать, если ссылка не открывается?",
+      "scenario": "link_is_calendar_event_without_access",
+      "context_note": "Когда ссылка на календарное событие открывает календарь, но событие не показывается",
+      "text": "Проверь, под каким календарным аккаунтом открыта ссылка. Если событие не опубликовано для этого аккаунта, организатору придётся выдать доступ или прислать приглашение.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда ссылка на календарное событие открывает календарь, но событие не показывается"
+    },
+    {
+      "id": "link_access_recovery_081",
+      "intent_id": "link_does_not_open",
+      "canonical_question": "Что делать, если ссылка не открывается?",
+      "scenario": "link_to_unpublished_draft",
+      "context_note": "Когда редактор прислал ссылку на черновик страницы, который виден только авторам",
+      "text": "Похоже, материал ещё в черновиках. Попроси автора опубликовать его или дать разрешённый доступ для просмотра; обычная публичная ссылка пока не поможет.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда редактор прислал ссылку на черновик страницы, который виден только авторам"
+    },
+    {
+      "id": "link_access_recovery_082",
+      "intent_id": "link_does_not_open",
+      "canonical_question": "Что делать, если ссылка не открывается?",
+      "scenario": "link_requires_vpn_but_not_confirmed",
+      "context_note": "Когда собеседник предполагает, что ресурс доступен только через служебный VPN, но это не проверено",
+      "text": "Сначала уточни у владельца ресурса, нужен ли служебный VPN. Не устанавливай неизвестный VPN и не меняй сетевые настройки только по догадке.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда собеседник предполагает, что ресурс доступен только через служебный VPN, но это не проверено"
+    },
+    {
+      "id": "link_access_recovery_083",
+      "intent_id": "link_does_not_open",
+      "canonical_question": "Что делать, если ссылка не открывается?",
+      "scenario": "link_redirects_to_login_after_logout",
+      "context_note": "Когда ссылка работала в открытой сессии, но перестала открываться после выхода из аккаунта",
+      "text": "Вероятно, страница была доступна в авторизованной сессии. Войди в тот же разрешённый аккаунт и открой адрес заново; если доступа нет, запроси его у владельца.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда ссылка работала в открытой сессии, но перестала открываться после выхода из аккаунта"
+    },
+    {
+      "id": "link_access_recovery_084",
+      "intent_id": "link_does_not_open",
+      "canonical_question": "Что делать, если ссылка не открывается?",
+      "scenario": "link_has_wrong_query_parameter",
+      "context_note": "Когда открывается нужный сервис, но фильтр или номер записи в параметрах адреса неверен",
+      "text": "Сам сайт доступен, но параметры ссылки ведут не к той записи. Попроси новую ссылку из нужной карточки вместо ручного изменения идентификаторов.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда открывается нужный сервис, но фильтр или номер записи в параметрах адреса неверен"
+    },
+    {
+      "id": "link_access_recovery_085",
+      "intent_id": "link_does_not_open",
+      "canonical_question": "Что делать, если ссылка не открывается?",
+      "scenario": "link_blocked_by_download_quota",
+      "context_note": "Когда облачное хранилище сообщает о превышении лимита скачиваний файла",
+      "text": "Это ограничение скачиваний на стороне хранилища. Подожди до восстановления лимита или попроси владельца предоставить файл другим разрешённым способом.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда облачное хранилище сообщает о превышении лимита скачиваний файла"
+    },
+    {
+      "id": "link_access_recovery_086",
+      "intent_id": "link_does_not_open",
+      "canonical_question": "Что делать, если ссылка не открывается?",
+      "scenario": "link_is_relative_path",
+      "context_note": "Когда в сообщении указан путь вида /docs/page вместо полного веб-адреса",
+      "text": "Это относительный путь, ему не хватает адреса сайта. Попроси полную ссылку с доменом или уточни, на каком сайте находится раздел.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда в сообщении указан путь вида /docs/page вместо полного веб-адреса"
+    },
+    {
+      "id": "link_access_recovery_087",
+      "intent_id": "link_does_not_open",
+      "canonical_question": "Что делать, если ссылка не открывается?",
+      "scenario": "link_is_ftp_on_browser",
+      "context_note": "Когда адрес начинается с ftp://, а браузер не поддерживает открытие FTP",
+      "text": "Современный браузер может не поддерживать FTP-ссылки. Уточни у владельца, есть ли HTTPS-адрес или разрешённый способ получить файл; неизвестные FTP-клиенты устанавливать не нужно.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда адрес начинается с ftp://, а браузер не поддерживает открытие FTP"
+    },
+    {
+      "id": "link_access_recovery_088",
+      "intent_id": "link_does_not_open",
+      "canonical_question": "Что делать, если ссылка не открывается?",
+      "scenario": "link_requires_device_registration",
+      "context_note": "Когда сервис прямо сообщает, что устройство не зарегистрировано для доступа",
+      "text": "Сервис ограничивает доступ зарегистрированными устройствами. Уточни у администратора порядок регистрации; обходить проверку устройства не стоит.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда сервис прямо сообщает, что устройство не зарегистрировано для доступа"
+    },
+    {
+      "id": "link_access_recovery_089",
+      "intent_id": "link_does_not_open",
+      "canonical_question": "Что делать, если ссылка не открывается?",
+      "scenario": "link_references_unshared_folder",
+      "context_note": "Когда ссылка на файл существует, но родительская папка недоступна для получателя",
+      "text": "Попроси владельца проверить права именно на файл и папку, через которую он открывается. Самостоятельно менять чужие разрешения не нужно.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда ссылка на файл существует, но родительская папка недоступна для получателя"
+    },
+    {
+      "id": "link_access_recovery_090",
+      "intent_id": "link_does_not_open",
+      "canonical_question": "Что делать, если ссылка не открывается?",
+      "scenario": "link_to_revoked_public_share",
+      "context_note": "Когда владелец отключил публичную ссылку, хотя сам файл сохранился",
+      "text": "Файл может существовать, но прежний общий доступ отозван. Попроси владельца выдать новую ссылку с подходящими правами.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда владелец отключил публичную ссылку, хотя сам файл сохранился"
+    },
+    {
+      "id": "link_access_recovery_091",
+      "intent_id": "link_does_not_open",
+      "canonical_question": "Что делать, если ссылка не открывается?",
+      "scenario": "link_misread_from_print",
+      "context_note": "Когда адрес перепечатан с бумажного листа и символы 0/O или 1/l могли перепутаться",
+      "text": "Сверь сомнительные символы с оригиналом или попроси электронную ссылку. Не вводи логины на сайте, адрес которого пришлось угадывать.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда адрес перепечатан с бумажного листа и символы 0/O или 1/l могли перепутаться"
+    },
+    {
+      "id": "link_access_recovery_092",
+      "intent_id": "link_does_not_open",
+      "canonical_question": "Что делать, если ссылка не открывается?",
+      "scenario": "link_uses_untrusted_custom_scheme",
+      "context_note": "Когда ссылка запускает неизвестный протокол приложения и предлагает установить обработчик",
+      "text": "Не устанавливай программу только ради неизвестного протокола. Уточни у отправителя, какое официальное приложение требуется и существует ли обычная веб-версия.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда ссылка запускает неизвестный протокол приложения и предлагает установить обработчик"
+    },
+    {
+      "id": "link_access_recovery_093",
+      "intent_id": "link_does_not_open",
+      "canonical_question": "Что делать, если ссылка не открывается?",
+      "scenario": "link_fails_due_to_storage_permission",
+      "context_note": "Когда файл по ссылке скачался, но приложение не может открыть его из-за запрета доступа к хранилищу",
+      "text": "Проверь разрешение на чтение выбранного файла у приложения и открой его через системный выбор файла. Не выдавай доступ ко всему хранилищу без необходимости.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда файл по ссылке скачался, но приложение не может открыть его из-за запрета доступа к хранилищу"
+    },
+    {
+      "id": "link_access_recovery_094",
+      "intent_id": "link_does_not_open",
+      "canonical_question": "Что делать, если ссылка не открывается?",
+      "scenario": "link_points_to_nonexistent_branch",
+      "context_note": "Когда ссылка на исходный код ведёт на ветку, которую переименовали или удалили",
+      "text": "Проверь у автора актуальное имя ветки или ссылку на конкретный существующий коммит. Старая ссылка на удалённую ветку сама не восстановится.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда ссылка на исходный код ведёт на ветку, которую переименовали или удалили"
+    },
+    {
+      "id": "link_access_recovery_095",
+      "intent_id": "link_does_not_open",
+      "canonical_question": "Что делать, если ссылка не открывается?",
+      "scenario": "link_requires_region_specific_account",
+      "context_note": "Когда сервис сообщает, что текущий аккаунт не обслуживается в выбранном регионе",
+      "text": "Уточни у поддержки сервиса, доступен ли материал для твоего аккаунта и региона. Не меняй страну профиля ради обхода условий.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда сервис сообщает, что текущий аккаунт не обслуживается в выбранном регионе"
+    },
+    {
+      "id": "link_access_recovery_096",
+      "intent_id": "link_does_not_open",
+      "canonical_question": "Что делать, если ссылка не открывается?",
+      "scenario": "link_has_fragment_only",
+      "context_note": "Когда прислали только якорь вида #section без адреса страницы",
+      "text": "В сообщении есть только название раздела без самой страницы. Попроси полный адрес, иначе непонятно, на каком сайте искать этот раздел.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда прислали только якорь вида #section без адреса страницы"
+    },
+    {
+      "id": "link_access_recovery_097",
+      "intent_id": "link_does_not_open",
+      "canonical_question": "Что делать, если ссылка не открывается?",
+      "scenario": "link_points_to_private_ip",
+      "context_note": "Когда ссылка содержит частный IP-адрес и получатель находится вне той сети",
+      "text": "Адрес из частной сети обычно недоступен извне. Попроси владельца предоставить утверждённый удалённый доступ или публичный адрес, если он предусмотрен.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда ссылка содержит частный IP-адрес и получатель находится вне той сети"
+    },
+    {
+      "id": "link_access_recovery_098",
+      "intent_id": "link_does_not_open",
+      "canonical_question": "Что делать, если ссылка не открывается?",
+      "scenario": "link_from_terminated_shared_session",
+      "context_note": "Когда совместная сессия закончилась и приглашение больше не ведёт в комнату",
+      "text": "Похоже, общая сессия уже завершена. Попроси организатора создать новую комнату или прислать сохранённые материалы, если они доступны.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда совместная сессия закончилась и приглашение больше не ведёт в комнату"
+    },
+    {
+      "id": "link_access_recovery_099",
+      "intent_id": "link_does_not_open",
+      "canonical_question": "Что делать, если ссылка не открывается?",
+      "scenario": "link_requires_cookie_consent",
+      "context_note": "Когда сайт показывает окно согласия на cookies, но кнопки не работают и закрывают материал",
+      "text": "Попробуй открыть страницу в обычном браузере без блокирующего отображение режима. Если окно не работает, сообщи сайту об ошибке; не нужно соглашаться на лишние категории cookies.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда сайт показывает окно согласия на cookies, но кнопки не работают и закрывают материал"
+    },
+    {
+      "id": "link_access_recovery_100",
+      "intent_id": "link_does_not_open",
+      "canonical_question": "Что делать, если ссылка не открывается?",
+      "scenario": "link_from_deleted_repository",
+      "context_note": "Когда ссылка ведёт на репозиторий, который удалён или перенесён и не настроено перенаправление",
+      "text": "Попроси владельца актуальный адрес проекта. По старой ссылке нельзя надёжно определить, был ли репозиторий удалён, переименован или закрыт.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда ссылка ведёт на репозиторий, который удалён или перенесён и не настроено перенаправление"
     }
   ]
 }
