@@ -8,10 +8,10 @@
   "editorially_accepted": 0,
   "counts": {
     "intents": 3,
-    "candidates": 263,
+    "candidates": 283,
     "accepted": 0
   },
-  "notes": "2026-11-23: 263 staged candidates (100 describe_problem, 100 shorten_explanation, 63 verify_fix_effect). 0 editorially accepted. Added 21 new context-specific verification scenarios in latest cycle. Not manifest-registered. Full repository tests, cross-pack editorial review, SHA-256 and exact-head CI pending.",
+  "notes": "2026-11-23: 283 staged candidates (100 describe_problem, 100 shorten_explanation, 83 verify_fix_effect). 0 editorially accepted. Latest cycle added 20 independent context-specific verification scenarios. Not manifest-registered; full repository tests, cross-pack editorial review, SHA-256 and exact-head CI pending.",
   "replies": [
     {
       "id": "describe_problem_20261123_001",
@@ -3957,6 +3957,306 @@
       "context": "direct_user_request",
       "read_only": true,
       "selection_precondition": "Исправляли ответ API, которым пользуются старые клиенты"
+    },
+    {
+      "id": "verify_fix_effect_20261123_064",
+      "intent_id": "verify_fix_effect",
+      "canonical_question": "Как проверить, что исправление помогло?",
+      "scenario": "clock_skew",
+      "context_note": "Время на устройстве расходится с серверным",
+      "text": "Сравни время на тестовом устройстве и сервере. Проверь, что действие с ограниченным сроком не отклоняется из-за допустимого расхождения часов.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Время на устройстве расходится с серверным"
+    },
+    {
+      "id": "verify_fix_effect_20261123_065",
+      "intent_id": "verify_fix_effect",
+      "canonical_question": "Как проверить, что исправление помогло?",
+      "scenario": "attachment_mime",
+      "context_note": "Расширение файла и его фактический формат различаются",
+      "text": "Попробуй безопасный тестовый файл с неверным расширением. Проверь, что система распознаёт формат по содержимому и не открывает неподдерживаемый файл как доверенный.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Расширение файла и его фактический формат различаются"
+    },
+    {
+      "id": "verify_fix_effect_20261123_066",
+      "intent_id": "verify_fix_effect",
+      "canonical_question": "Как проверить, что исправление помогло?",
+      "scenario": "read_only_mode",
+      "context_note": "Сервис переведён в режим только чтения",
+      "text": "В тестовой среде открой доступную запись и попробуй изменить её. Чтение должно оставаться доступным, а изменение — завершаться понятным отказом без потери данных.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Сервис переведён в режим только чтения"
+    },
+    {
+      "id": "verify_fix_effect_20261123_067",
+      "intent_id": "verify_fix_effect",
+      "canonical_question": "Как проверить, что исправление помогло?",
+      "scenario": "browser_back_navigation",
+      "context_note": "После сохранения пользователь возвращается кнопкой «Назад»",
+      "text": "Сохрани тестовое изменение, вернись на предыдущую страницу и открой запись снова. Проверь, что устаревшая форма не перезаписывает новое значение.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "После сохранения пользователь возвращается кнопкой «Назад»"
+    },
+    {
+      "id": "verify_fix_effect_20261123_068",
+      "intent_id": "verify_fix_effect",
+      "canonical_question": "Как проверить, что исправление помогло?",
+      "scenario": "email_case",
+      "context_note": "Адрес электронной почты введён с заглавными буквами",
+      "text": "На тестовом аккаунте проверь вход с разным регистром букв в адресе. Сравни результат с правилами сервиса и убедись, что не создаётся второй профиль.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Адрес электронной почты введён с заглавными буквами"
+    },
+    {
+      "id": "verify_fix_effect_20261123_069",
+      "intent_id": "verify_fix_effect",
+      "canonical_question": "Как проверить, что исправление помогло?",
+      "scenario": "session_parallel_logout",
+      "context_note": "Один аккаунт открыт в двух тестовых сеансах",
+      "text": "Выйди из одного тестового сеанса и проверь другой. Ожидаемое поведение зависит от правил завершения сеансов; зафиксируй, что произошло фактически.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Один аккаунт открыт в двух тестовых сеансах"
+    },
+    {
+      "id": "verify_fix_effect_20261123_070",
+      "intent_id": "verify_fix_effect",
+      "canonical_question": "Как проверить, что исправление помогло?",
+      "scenario": "data_retention",
+      "context_note": "Истёк срок хранения тестовой записи",
+      "text": "Создай запись с коротким сроком хранения в тестовой среде. После истечения проверь и обычный список, и прямую ссылку, и поиск, если они поддерживаются.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Истёк срок хранения тестовой записи"
+    },
+    {
+      "id": "verify_fix_effect_20261123_071",
+      "intent_id": "verify_fix_effect",
+      "canonical_question": "Как проверить, что исправление помогло?",
+      "scenario": "decimal_rounding",
+      "context_note": "Результат вычисления находится на границе округления",
+      "text": "Проверь несколько заранее рассчитанных значений по обе стороны границы округления. Сравни не только отображение, но и сохранённое число.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Результат вычисления находится на границе округления"
+    },
+    {
+      "id": "verify_fix_effect_20261123_072",
+      "intent_id": "verify_fix_effect",
+      "canonical_question": "Как проверить, что исправление помогло?",
+      "scenario": "out_of_order_events",
+      "context_note": "Связанные события приходят в неправильном порядке",
+      "text": "В изолированном тесте поменяй порядок двух событий. Проверь, не откатывает ли запоздавшее событие более новое состояние.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Связанные события приходят в неправильном порядке"
+    },
+    {
+      "id": "verify_fix_effect_20261123_073",
+      "intent_id": "verify_fix_effect",
+      "canonical_question": "Как проверить, что исправление помогло?",
+      "scenario": "partial_batch_failure",
+      "context_note": "В пакетной операции одна запись содержит ошибку",
+      "text": "Отправь небольшой тестовый пакет с одной заведомо неверной записью. Проверь, какие элементы сохранились и сообщает ли результат об успешных и неуспешных отдельно.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "В пакетной операции одна запись содержит ошибку"
+    },
+    {
+      "id": "verify_fix_effect_20261123_074",
+      "intent_id": "verify_fix_effect",
+      "canonical_question": "Как проверить, что исправление помогло?",
+      "scenario": "stale_cache",
+      "context_note": "После исправления старые данные остаются в кэше",
+      "text": "Сравни результат в уже открытом клиенте и после штатного обновления данных. Проверь, исчезает ли устаревшее значение без опасной очистки рабочего хранилища.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "После исправления старые данные остаются в кэше"
+    },
+    {
+      "id": "verify_fix_effect_20261123_075",
+      "intent_id": "verify_fix_effect",
+      "canonical_question": "Как проверить, что исправление помогло?",
+      "scenario": "link_expiry",
+      "context_note": "Ссылка на тестовый ресурс имеет срок действия",
+      "text": "Открой тестовую ссылку до и после истечения срока. Убедись, что просроченная ссылка не даёт доступ и что отказ не раскрывает содержимое ресурса.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Ссылка на тестовый ресурс имеет срок действия"
+    },
+    {
+      "id": "verify_fix_effect_20261123_076",
+      "intent_id": "verify_fix_effect",
+      "canonical_question": "Как проверить, что исправление помогло?",
+      "scenario": "keyboard_layout",
+      "context_note": "Ввод зависит от раскладки клавиатуры",
+      "text": "Повтори тестовый поиск или ввод на русской и английской раскладках. Сравни фактический результат с заявленным правилом обработки текста.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Ввод зависит от раскладки клавиатуры"
+    },
+    {
+      "id": "verify_fix_effect_20261123_077",
+      "intent_id": "verify_fix_effect",
+      "canonical_question": "Как проверить, что исправление помогло?",
+      "scenario": "reconnect_subscription",
+      "context_note": "Клиент теряет соединение во время подписки на события",
+      "text": "Отключи тестовый клиент на короткое время, затем подключи снова. Проверь, восстанавливается ли подписка и не появляются ли лишние повторные события.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Клиент теряет соединение во время подписки на события"
+    },
+    {
+      "id": "verify_fix_effect_20261123_078",
+      "intent_id": "verify_fix_effect",
+      "canonical_question": "Как проверить, что исправление помогло?",
+      "scenario": "file_encoding_bom",
+      "context_note": "Импортируемый текстовый файл содержит метку BOM",
+      "text": "Импортируй небольшой тестовый UTF-8-файл с BOM и без неё. Сравни первую колонку и заголовки: скрытый символ не должен становиться частью имени поля.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Импортируемый текстовый файл содержит метку BOM"
+    },
+    {
+      "id": "verify_fix_effect_20261123_079",
+      "intent_id": "verify_fix_effect",
+      "canonical_question": "Как проверить, что исправление помогло?",
+      "scenario": "multi_tab_conflict",
+      "context_note": "Одна запись открыта в двух вкладках",
+      "text": "Измени тестовую запись в первой вкладке, затем попробуй сохранить старую форму во второй. Проверь, предупреждает ли система о конфликте и сохраняет ли последнее подтверждённое изменение.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Одна запись открыта в двух вкладках"
+    },
+    {
+      "id": "verify_fix_effect_20261123_080",
+      "intent_id": "verify_fix_effect",
+      "canonical_question": "Как проверить, что исправление помогло?",
+      "scenario": "zero_duration",
+      "context_note": "Интервал имеет нулевую длительность",
+      "text": "Проверь тестовое событие с одинаковым временем начала и конца. Сравни результат с правилами сервиса: такое событие должно либо корректно обрабатываться, либо явно отклоняться.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Интервал имеет нулевую длительность"
+    },
+    {
+      "id": "verify_fix_effect_20261123_081",
+      "intent_id": "verify_fix_effect",
+      "canonical_question": "Как проверить, что исправление помогло?",
+      "scenario": "upload_cancel_resume",
+      "context_note": "Загрузка прерывается пользователем и запускается заново",
+      "text": "Отмени тестовую загрузку на середине, затем начни её заново. Проверь, что незавершённый файл не виден как готовый и повторная загрузка не наследует повреждённые части.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Загрузка прерывается пользователем и запускается заново"
+    },
+    {
+      "id": "verify_fix_effect_20261123_082",
+      "intent_id": "verify_fix_effect",
+      "canonical_question": "Как проверить, что исправление помогло?",
+      "scenario": "soft_delete_restore",
+      "context_note": "Удалённая запись допускает восстановление",
+      "text": "На тестовой записи проверь удаление, отсутствие в обычном списке и восстановление. Убедись, что после восстановления сохраняются нужные поля и права доступа.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Удалённая запись допускает восстановление"
+    },
+    {
+      "id": "verify_fix_effect_20261123_083",
+      "intent_id": "verify_fix_effect",
+      "canonical_question": "Как проверить, что исправление помогло?",
+      "scenario": "network_proxy",
+      "context_note": "Ошибка возникает только при использовании прокси",
+      "text": "Сравни одинаковый безопасный запрос в тестовой сети с прокси и без него. Запиши коды ответа и этап сбоя, не публикуя адреса внутренних узлов или учётные данные.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Ошибка возникает только при использовании прокси"
     }
   ]
 }
