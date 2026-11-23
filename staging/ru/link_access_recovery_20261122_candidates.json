@@ -8,7 +8,7 @@
   "editorially_accepted": 0,
   "counts": {
     "intents": 1,
-    "candidates": 32,
+    "candidates": 44,
     "accepted": 0
   },
   "notes": "Independent synthetic staging; requires cross-pack review, repository tests, SHA-256 and exact-head CI before promotion.",
@@ -492,6 +492,186 @@
       "context": "direct_user_request",
       "read_only": true,
       "selection_precondition": "Когда устройство сообщает, что не знает, чем открыть ссылку"
+    },
+    {
+      "id": "link_access_recovery_033",
+      "intent_id": "link_does_not_open",
+      "canonical_question": "Что делать, если ссылка не открывается?",
+      "scenario": "qr_code_blurred",
+      "context_note": "Когда адрес получен из нечёткого QR-кода",
+      "text": "Если камера распознала адрес с ошибкой, не открывай случайный похожий домен. Попроси чёткий код или текстовую ссылку от отправителя.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда адрес получен из нечёткого QR-кода"
+    },
+    {
+      "id": "link_access_recovery_034",
+      "intent_id": "link_does_not_open",
+      "canonical_question": "Что делать, если ссылка не открывается?",
+      "scenario": "link_only_works_on_office_network",
+      "context_note": "Когда ссылка открывается только в рабочей сети",
+      "text": "Уточни, предназначен ли ресурс для внутренней сети организации. Если да, используй только согласованный способ доступа; открывать его через случайные прокси не стоит.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда ссылка открывается только в рабочей сети"
+    },
+    {
+      "id": "link_access_recovery_035",
+      "intent_id": "link_does_not_open",
+      "canonical_question": "Что делать, если ссылка не открывается?",
+      "scenario": "link_requires_specific_file_app",
+      "context_note": "Когда ссылка ведёт на файл, формат которого устройство не поддерживает",
+      "text": "Сначала посмотри расширение файла и проверь, есть ли приложение для его чтения. Не устанавливай неизвестный просмотрщик по всплывающему предложению сайта.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда ссылка ведёт на файл, формат которого устройство не поддерживает"
+    },
+    {
+      "id": "link_access_recovery_036",
+      "intent_id": "link_does_not_open",
+      "canonical_question": "Что делать, если ссылка не открывается?",
+      "scenario": "link_points_to_localhost",
+      "context_note": "Когда в ссылке указан localhost или 127.0.0.1",
+      "text": "Такой адрес ведёт на устройство, с которого его открывают. Попроси автора дать доступный сетевой адрес, если ресурс должен открываться у других.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда в ссылке указан localhost или 127.0.0.1"
+    },
+    {
+      "id": "link_access_recovery_037",
+      "intent_id": "link_does_not_open",
+      "canonical_question": "Что делать, если ссылка не открывается?",
+      "scenario": "link_contains_private_token",
+      "context_note": "Когда ссылка содержит одноразовый ключ доступа и её просят прислать для диагностики",
+      "text": "Не отправляй полный адрес в общий чат: параметр может давать доступ к аккаунту или файлу. Опиши ошибку, скрыв секретную часть ссылки.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда ссылка содержит одноразовый ключ доступа и её просят прислать для диагностики"
+    },
+    {
+      "id": "link_access_recovery_038",
+      "intent_id": "link_does_not_open",
+      "canonical_question": "Что делать, если ссылка не открывается?",
+      "scenario": "link_in_pdf_not_clickable",
+      "context_note": "Когда адрес напечатан в PDF, но нажатие ничего не делает",
+      "text": "Возможно, это обычный текст без активной ссылки. Выдели и скопируй адрес целиком, проверь его перед открытием.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда адрес напечатан в PDF, но нажатие ничего не делает"
+    },
+    {
+      "id": "link_access_recovery_039",
+      "intent_id": "link_does_not_open",
+      "canonical_question": "Что делать, если ссылка не открывается?",
+      "scenario": "link_blocked_by_parental_controls",
+      "context_note": "Когда устройство сообщает о блокировке семейными ограничениями",
+      "text": "Проверь сообщение ограничителя и обратись к человеку, который управляет настройками устройства. Обходить установленное ограничение я не предлагаю.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда устройство сообщает о блокировке семейными ограничениями"
+    },
+    {
+      "id": "link_access_recovery_040",
+      "intent_id": "link_does_not_open",
+      "canonical_question": "Что делать, если ссылка не открывается?",
+      "scenario": "link_is_malformed_unicode",
+      "context_note": "Когда адрес содержит похожие на латинские символы из другого алфавита",
+      "text": "Сверь доменное имя с официальным адресом сервиса. Похожие буквы могут вести на другой сайт, поэтому не вводи там пароль.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда адрес содержит похожие на латинские символы из другого алфавита"
+    },
+    {
+      "id": "link_access_recovery_041",
+      "intent_id": "link_does_not_open",
+      "canonical_question": "Что делать, если ссылка не открывается?",
+      "scenario": "link_expired_signed_download",
+      "context_note": "Когда временная ссылка на скачивание сообщает об истёкшей подписи",
+      "text": "Попроси владельца сформировать новую ссылку через исходный сервис. Изменять вручную параметры подписи бессмысленно и небезопасно.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда временная ссылка на скачивание сообщает об истёкшей подписи"
+    },
+    {
+      "id": "link_access_recovery_042",
+      "intent_id": "link_does_not_open",
+      "canonical_question": "Что делать, если ссылка не открывается?",
+      "scenario": "link_opens_wrong_language",
+      "context_note": "Когда адрес открывает правильный сайт, но материал показывается на другом языке",
+      "text": "Проверь переключатель языка на странице и параметры адреса. Если нужного перевода нет, можно работать с оригиналом, не выдавая машинный перевод за официальную версию.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда адрес открывает правильный сайт, но материал показывается на другом языке"
+    },
+    {
+      "id": "link_access_recovery_043",
+      "intent_id": "link_does_not_open",
+      "canonical_question": "Что делать, если ссылка не открывается?",
+      "scenario": "link_fails_only_on_wifi",
+      "context_note": "Когда ссылка работает через мобильную сеть, но не через Wi-Fi",
+      "text": "Сравни доступность других сайтов в той же сети. Если сбой касается одного домена, запиши ошибку и обратись к администратору сети, не меняя защитные настройки вслепую.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда ссылка работает через мобильную сеть, но не через Wi-Fi"
+    },
+    {
+      "id": "link_access_recovery_044",
+      "intent_id": "link_does_not_open",
+      "canonical_question": "Что делать, если ссылка не открывается?",
+      "scenario": "link_returns_empty_page",
+      "context_note": "Когда адрес открывается без сообщения об ошибке, но страница пустая",
+      "text": "Проверь, появляется ли содержимое в другом браузере и после обычного обновления. Если нет, запиши браузер и время сбоя для поддержки, не делая выводов о причине без проверки.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда адрес открывается без сообщения об ошибке, но страница пустая"
     }
   ]
 }
