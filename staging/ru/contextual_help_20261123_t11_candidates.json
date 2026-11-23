@@ -7,11 +7,11 @@
   "target_per_intent": 100,
   "editorially_accepted": 0,
   "counts": {
-    "intents": 2,
-    "candidates": 200,
+    "intents": 3,
+    "candidates": 220,
     "accepted": 0
   },
-  "notes": "2026-11-23: 200 synthetic contextual candidates (100 per intent), 0 editorially accepted; five targeted wording/privacy/context corrections; full cross-pack editorial acceptance, local tests, manifest and exact-head CI pending.",
+  "notes": "2026-11-23: 220 staged synthetic contextual candidates (100 describe_problem, 100 shorten_explanation, 20 verify_fix_effect); 0 editorially accepted. New 20 context-distinct diagnostic verification replies; no manifest registration. Full cross-pack semantic/editorial review, local repository suite, actual-byte SHA-256 and exact-head CI pending.",
   "replies": [
     {
       "id": "describe_problem_20261123_001",
@@ -3012,6 +3012,306 @@
       "context": "direct_user_request",
       "read_only": true,
       "selection_precondition": "Время без смещения может быть понято неверно"
+    },
+    {
+      "id": "verify_fix_effect_20261123_001",
+      "intent_id": "verify_fix_effect",
+      "canonical_question": "Как проверить, что исправление помогло?",
+      "scenario": "one_change",
+      "context_note": "После исправления изменён только один параметр",
+      "text": "Проверь тот же сценарий, на котором возникала ошибка. Пока не меняй остальные настройки: иначе будет непонятно, что помогло.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "После исправления изменён только один параметр"
+    },
+    {
+      "id": "verify_fix_effect_20261123_002",
+      "intent_id": "verify_fix_effect",
+      "canonical_question": "Как проверить, что исправление помогло?",
+      "scenario": "reboot_required",
+      "context_note": "Изменение требует перезапуска приложения",
+      "text": "Сначала сохрани работу, затем перезапусти приложение и повтори прежние действия. Без перезапуска результат может быть прежним.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Изменение требует перезапуска приложения"
+    },
+    {
+      "id": "verify_fix_effect_20261123_003",
+      "intent_id": "verify_fix_effect",
+      "canonical_question": "Как проверить, что исправление помогло?",
+      "scenario": "intermittent_fix",
+      "context_note": "Ошибка появлялась изредка",
+      "text": "Одного удачного запуска мало. Повтори проверку несколько раз в тех условиях, когда сбой обычно возникал.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Ошибка появлялась изредка"
+    },
+    {
+      "id": "verify_fix_effect_20261123_004",
+      "intent_id": "verify_fix_effect",
+      "canonical_question": "Как проверить, что исправление помогло?",
+      "scenario": "negative_case",
+      "context_note": "Исправление должно запретить ошибочное действие",
+      "text": "Проверь и обычный сценарий, и тот, который теперь должен блокироваться. Успех в первом ещё не подтверждает второй.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Исправление должно запретить ошибочное действие"
+    },
+    {
+      "id": "verify_fix_effect_20261123_005",
+      "intent_id": "verify_fix_effect",
+      "canonical_question": "Как проверить, что исправление помогло?",
+      "scenario": "permissions",
+      "context_note": "Исправляли доступ пользователя",
+      "text": "Проверь действие с теми же правами, с которыми возникал отказ. Проверка под администратором ничего не докажет о правах обычного пользователя.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Исправляли доступ пользователя"
+    },
+    {
+      "id": "verify_fix_effect_20261123_006",
+      "intent_id": "verify_fix_effect",
+      "canonical_question": "Как проверить, что исправление помогло?",
+      "scenario": "other_device",
+      "context_note": "Проблема проявлялась на другом устройстве",
+      "text": "Проверь исправление на устройстве, где была ошибка. Успех на твоём компьютере не означает, что она исчезла везде.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Проблема проявлялась на другом устройстве"
+    },
+    {
+      "id": "verify_fix_effect_20261123_007",
+      "intent_id": "verify_fix_effect",
+      "canonical_question": "Как проверить, что исправление помогло?",
+      "scenario": "saved_data",
+      "context_note": "Исправление затрагивало сохранение данных",
+      "text": "Создай тестовую запись, сохрани её, закрой приложение и открой снова. Проверь, что значение осталось прежним.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Исправление затрагивало сохранение данных"
+    },
+    {
+      "id": "verify_fix_effect_20261123_008",
+      "intent_id": "verify_fix_effect",
+      "canonical_question": "Как проверить, что исправление помогло?",
+      "scenario": "network_recovery",
+      "context_note": "Исправляли сетевое соединение",
+      "text": "Повтори запрос при обычном подключении и посмотри, восстановился ли ответ. Если сбой был при переключении сети, проверь и переключение.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Исправляли сетевое соединение"
+    },
+    {
+      "id": "verify_fix_effect_20261123_009",
+      "intent_id": "verify_fix_effect",
+      "canonical_question": "Как проверить, что исправление помогло?",
+      "scenario": "slow_operation",
+      "context_note": "Исправление касалось долгой операции",
+      "text": "Сравни время выполнения одинаковой операции до и после изменения. Запиши условия, иначе разница может оказаться случайной.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Исправление касалось долгой операции"
+    },
+    {
+      "id": "verify_fix_effect_20261123_010",
+      "intent_id": "verify_fix_effect",
+      "canonical_question": "Как проверить, что исправление помогло?",
+      "scenario": "error_message",
+      "context_note": "После исправления исчезло сообщение об ошибке",
+      "text": "Проверь, завершилось ли само действие. Исчезнувшее предупреждение ещё не означает, что результат получен.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "После исправления исчезло сообщение об ошибке"
+    },
+    {
+      "id": "verify_fix_effect_20261123_011",
+      "intent_id": "verify_fix_effect",
+      "canonical_question": "Как проверить, что исправление помогло?",
+      "scenario": "rollback",
+      "context_note": "После изменения стало хуже",
+      "text": "Верни только последнее изменение, если знаешь безопасный способ отката. Запиши, что именно ухудшилось, прежде чем пробовать следующий вариант.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "После изменения стало хуже"
+    },
+    {
+      "id": "verify_fix_effect_20261123_012",
+      "intent_id": "verify_fix_effect",
+      "canonical_question": "Как проверить, что исправление помогло?",
+      "scenario": "group_scope",
+      "context_note": "Ошибка была только в одном групповом чате",
+      "text": "Повтори проверку в том же чате и с той же ролью. Не переноси вывод из личной переписки на группу.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Ошибка была только в одном групповом чате"
+    },
+    {
+      "id": "verify_fix_effect_20261123_013",
+      "intent_id": "verify_fix_effect",
+      "canonical_question": "Как проверить, что исправление помогло?",
+      "scenario": "regression",
+      "context_note": "Исправили одну функцию, но рядом есть связанные",
+      "text": "После основного теста проверь соседнее действие, которое раньше работало. Иногда исправление одной ветки ломает другую.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Исправили одну функцию, но рядом есть связанные"
+    },
+    {
+      "id": "verify_fix_effect_20261123_014",
+      "intent_id": "verify_fix_effect",
+      "canonical_question": "Как проверить, что исправление помогло?",
+      "scenario": "fresh_session",
+      "context_note": "Результат мог сохраниться в текущей сессии",
+      "text": "Проверь в новой сессии, если это безопасно и не приведёт к потере данных. Старое состояние может скрывать проблему.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Результат мог сохраниться в текущей сессии"
+    },
+    {
+      "id": "verify_fix_effect_20261123_015",
+      "intent_id": "verify_fix_effect",
+      "canonical_question": "Как проверить, что исправление помогло?",
+      "scenario": "test_data",
+      "context_note": "Проверка может затронуть настоящие записи",
+      "text": "Используй отдельные тестовые данные и заранее убедись, что их можно удалить. Не проверяй рискованное исправление на единственном экземпляре.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Проверка может затронуть настоящие записи"
+    },
+    {
+      "id": "verify_fix_effect_20261123_016",
+      "intent_id": "verify_fix_effect",
+      "canonical_question": "Как проверить, что исправление помогло?",
+      "scenario": "version_scope",
+      "context_note": "Исправление выпущено только для определённой версии",
+      "text": "Сверь номер установленной версии с версией, для которой заявлено исправление. Иначе проверка может относиться к старому коду.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Исправление выпущено только для определённой версии"
+    },
+    {
+      "id": "verify_fix_effect_20261123_017",
+      "intent_id": "verify_fix_effect",
+      "canonical_question": "Как проверить, что исправление помогло?",
+      "scenario": "log_compare",
+      "context_note": "Есть журнал событий до и после исправления",
+      "text": "Сопоставь записи журнала для одинакового действия до и после. Убирай из примеров токены, адреса и личные данные.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Есть журнал событий до и после исправления"
+    },
+    {
+      "id": "verify_fix_effect_20261123_018",
+      "intent_id": "verify_fix_effect",
+      "canonical_question": "Как проверить, что исправление помогло?",
+      "scenario": "independent_confirmation",
+      "context_note": "Результат должен видеть другой участник",
+      "text": "Попроси участника с подходящими правами проверить только видимый ему результат. Не передавай ему свой пароль или доступ к аккаунту.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Результат должен видеть другой участник"
+    },
+    {
+      "id": "verify_fix_effect_20261123_019",
+      "intent_id": "verify_fix_effect",
+      "canonical_question": "Как проверить, что исправление помогло?",
+      "scenario": "boundary_values",
+      "context_note": "Ошибка возникала на предельных значениях",
+      "text": "Повтори проверку на том же граничном значении и на одном обычном. Исправление может работать только в середине диапазона.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Ошибка возникала на предельных значениях"
+    },
+    {
+      "id": "verify_fix_effect_20261123_020",
+      "intent_id": "verify_fix_effect",
+      "canonical_question": "Как проверить, что исправление помогло?",
+      "scenario": "completion_criteria",
+      "context_note": "Непонятно, считать ли проблему решённой",
+      "text": "Сначала сформулируй наблюдаемый признак успеха: что должно измениться, где это видно и сколько раз нужно проверить.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Непонятно, считать ли проблему решённой"
     }
   ]
 }
