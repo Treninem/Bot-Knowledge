@@ -8,10 +8,10 @@
   "editorially_accepted": 0,
   "counts": {
     "intents": 3,
-    "candidates": 242,
+    "candidates": 263,
     "accepted": 0
   },
-  "notes": "2026-11-23: 242 staged candidates (100 describe_problem, 100 shorten_explanation, 42 verify_fix_effect). 0 editorially accepted. 22 context-distinct verification scenarios added in this cycle. Not manifest-registered. Cross-pack semantic review, full repository tests, actual-byte SHA-256 and exact-head CI pending.",
+  "notes": "2026-11-23: 263 staged candidates (100 describe_problem, 100 shorten_explanation, 63 verify_fix_effect). 0 editorially accepted. Added 21 new context-specific verification scenarios in latest cycle. Not manifest-registered. Full repository tests, cross-pack editorial review, SHA-256 and exact-head CI pending.",
   "replies": [
     {
       "id": "describe_problem_20261123_001",
@@ -3642,6 +3642,321 @@
       "context": "direct_user_request",
       "read_only": true,
       "selection_precondition": "Исправляли разделение данных аккаунтов"
+    },
+    {
+      "id": "verify_fix_effect_20261123_043",
+      "intent_id": "verify_fix_effect",
+      "canonical_question": "Как проверить, что исправление помогло?",
+      "scenario": "empty_state",
+      "context_note": "Ошибка возникала, когда список был пуст",
+      "text": "Очисти отдельный тестовый список и повтори действие. Проверь, что пустое состояние обрабатывается без сбоя и не создаёт фиктивные элементы.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Ошибка возникала, когда список был пуст"
+    },
+    {
+      "id": "verify_fix_effect_20261123_044",
+      "intent_id": "verify_fix_effect",
+      "canonical_question": "Как проверить, что исправление помогло?",
+      "scenario": "large_attachment",
+      "context_note": "Исправляли обработку файлов большого размера",
+      "text": "Проверь тестовый файл у заявленной границы размера и файл чуть больше неё. При отказе убедись, что приложение объясняет ограничение и не сохраняет обрезанный файл.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Исправляли обработку файлов большого размера"
+    },
+    {
+      "id": "verify_fix_effect_20261123_045",
+      "intent_id": "verify_fix_effect",
+      "canonical_question": "Как проверить, что исправление помогло?",
+      "scenario": "offline_queue",
+      "context_note": "Исправляли отправку действий после работы без сети",
+      "text": "В тестовой среде выполни разрешённое действие офлайн, восстанови связь и проверь, что очередь отправилась один раз и в правильном порядке.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Исправляли отправку действий после работы без сети"
+    },
+    {
+      "id": "verify_fix_effect_20261123_046",
+      "intent_id": "verify_fix_effect",
+      "canonical_question": "Как проверить, что исправление помогло?",
+      "scenario": "notification_delivery",
+      "context_note": "Исправляли уведомления",
+      "text": "Проверь на тестовом получателе, пришло ли уведомление при нужном событии, и отдельно убедись, что оно не отправляется при отмене события.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Исправляли уведомления"
+    },
+    {
+      "id": "verify_fix_effect_20261123_047",
+      "intent_id": "verify_fix_effect",
+      "canonical_question": "Как проверить, что исправление помогло?",
+      "scenario": "notification_quiet_hours",
+      "context_note": "Исправляли режим тишины для уведомлений",
+      "text": "Задай тестовый интервал тишины и проверь событие внутри него и после окончания. Убедись, что настройки времени получателя учитываются верно.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Исправляли режим тишины для уведомлений"
+    },
+    {
+      "id": "verify_fix_effect_20261123_048",
+      "intent_id": "verify_fix_effect",
+      "canonical_question": "Как проверить, что исправление помогло?",
+      "scenario": "sorting_stability",
+      "context_note": "Исправляли порядок записей с одинаковым значением сортировки",
+      "text": "Создай тестовые записи с одинаковым значением поля сортировки. Перелистай список и проверь, что элементы не пропадают и не повторяются.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Исправляли порядок записей с одинаковым значением сортировки"
+    },
+    {
+      "id": "verify_fix_effect_20261123_049",
+      "intent_id": "verify_fix_effect",
+      "canonical_question": "Как проверить, что исправление помогло?",
+      "scenario": "filter_combination",
+      "context_note": "Ошибка возникала при одновременном применении нескольких фильтров",
+      "text": "Примени по отдельности каждый фильтр, затем их сочетание. Сравни результаты с небольшим заранее известным набором записей.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Ошибка возникала при одновременном применении нескольких фильтров"
+    },
+    {
+      "id": "verify_fix_effect_20261123_050",
+      "intent_id": "verify_fix_effect",
+      "canonical_question": "Как проверить, что исправление помогло?",
+      "scenario": "undo_action",
+      "context_note": "Исправляли отмену уже выполненного изменения",
+      "text": "На тестовом объекте внеси изменение и воспользуйся отменой. Проверь исходное значение и возможность повторить действие, если это предусмотрено.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Исправляли отмену уже выполненного изменения"
+    },
+    {
+      "id": "verify_fix_effect_20261123_051",
+      "intent_id": "verify_fix_effect",
+      "canonical_question": "Как проверить, что исправление помогло?",
+      "scenario": "password_reset",
+      "context_note": "Исправляли восстановление доступа к тестовому аккаунту",
+      "text": "Пройди восстановление на специально созданном аккаунте. Проверь, что старая ссылка после использования не позволяет повторно сменить пароль.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Исправляли восстановление доступа к тестовому аккаунту"
+    },
+    {
+      "id": "verify_fix_effect_20261123_052",
+      "intent_id": "verify_fix_effect",
+      "canonical_question": "Как проверить, что исправление помогло?",
+      "scenario": "file_name_collision",
+      "context_note": "Исправляли сохранение файлов с одинаковыми именами",
+      "text": "Загрузи два разных тестовых файла с одним именем. Проверь, сохранились ли оба согласно правилам приложения и не перезаписался ли первый без предупреждения.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Исправляли сохранение файлов с одинаковыми именами"
+    },
+    {
+      "id": "verify_fix_effect_20261123_053",
+      "intent_id": "verify_fix_effect",
+      "canonical_question": "Как проверить, что исправление помогло?",
+      "scenario": "partial_download",
+      "context_note": "Исправляли прерывание скачивания",
+      "text": "Прерви скачивание тестового файла и повтори его штатным способом. Сравни размер и контрольную сумму итогового файла с исходником.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Исправляли прерывание скачивания"
+    },
+    {
+      "id": "verify_fix_effect_20261123_054",
+      "intent_id": "verify_fix_effect",
+      "canonical_question": "Как проверить, что исправление помогло?",
+      "scenario": "date_leap_day",
+      "context_note": "Исправляли вычисление дат в високосный год",
+      "text": "Проверь тестовые даты 28 и 29 февраля високосного года и переход на 1 марта. Сравни результат с ожидаемым правилом расчёта.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Исправляли вычисление дат в високосный год"
+    },
+    {
+      "id": "verify_fix_effect_20261123_055",
+      "intent_id": "verify_fix_effect",
+      "canonical_question": "Как проверить, что исправление помогло?",
+      "scenario": "dst_transition",
+      "context_note": "Ошибка возникала при переводе часов на летнее или зимнее время",
+      "text": "Используй тестовые даты на границе перехода часов для нужного региона. Проверь, что событие не пропускается и не выполняется дважды без основания.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Ошибка возникала при переводе часов на летнее или зимнее время"
+    },
+    {
+      "id": "verify_fix_effect_20261123_056",
+      "intent_id": "verify_fix_effect",
+      "canonical_question": "Как проверить, что исправление помогло?",
+      "scenario": "webhook_duplicate",
+      "context_note": "Исправляли обработку повторно доставленных событий интеграции",
+      "text": "В изолированном тесте отправь одно событие с тем же идентификатором повторно. Проверь, что повторная доставка не создаёт второе действие, если контракт требует идемпотентности.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Исправляли обработку повторно доставленных событий интеграции"
+    },
+    {
+      "id": "verify_fix_effect_20261123_057",
+      "intent_id": "verify_fix_effect",
+      "canonical_question": "Как проверить, что исправление помогло?",
+      "scenario": "schema_migration",
+      "context_note": "Исправляли обновление формата сохранённых данных",
+      "text": "Проверь миграцию на копии данных старой версии и сравни значения до и после. Оригинал сохрани отдельно, чтобы тест не повредил рабочую базу.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Исправляли обновление формата сохранённых данных"
+    },
+    {
+      "id": "verify_fix_effect_20261123_058",
+      "intent_id": "verify_fix_effect",
+      "canonical_question": "Как проверить, что исправление помогло?",
+      "scenario": "feature_flag",
+      "context_note": "Исправление включается отдельной настройкой функции",
+      "text": "Проверь в тестовой среде поведение при выключенном и включённом переключателе. Убедись, что изменение затрагивает только предусмотренный сценарий.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Исправление включается отдельной настройкой функции"
+    },
+    {
+      "id": "verify_fix_effect_20261123_059",
+      "intent_id": "verify_fix_effect",
+      "canonical_question": "Как проверить, что исправление помогло?",
+      "scenario": "multi_language_ui",
+      "context_note": "Исправляли отображение сообщения на нескольких языках",
+      "text": "Переключи язык тестового интерфейса и повтори действие. Проверь смысл сообщения, обрезание текста и сохранение выбранного языка.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Исправляли отображение сообщения на нескольких языках"
+    },
+    {
+      "id": "verify_fix_effect_20261123_060",
+      "intent_id": "verify_fix_effect",
+      "canonical_question": "Как проверить, что исправление помогло?",
+      "scenario": "copy_paste",
+      "context_note": "Ошибка возникала при вставке текста из буфера обмена",
+      "text": "Вставь в тестовое поле многострочный текст и текст с пробелами по краям. Сравни сохранённое значение с ожидаемым поведением поля.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Ошибка возникала при вставке текста из буфера обмена"
+    },
+    {
+      "id": "verify_fix_effect_20261123_061",
+      "intent_id": "verify_fix_effect",
+      "canonical_question": "Как проверить, что исправление помогло?",
+      "scenario": "long_running_progress",
+      "context_note": "Исправляли индикатор длительной операции",
+      "text": "Запусти безопасную длительную тестовую задачу. Проверь, что индикатор соответствует реальному состоянию и не показывает успех до завершения.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Исправляли индикатор длительной операции"
+    },
+    {
+      "id": "verify_fix_effect_20261123_062",
+      "intent_id": "verify_fix_effect",
+      "canonical_question": "Как проверить, что исправление помогло?",
+      "scenario": "storage_full",
+      "context_note": "Ошибка возникала при нехватке свободного места",
+      "text": "В изолированной тестовой среде воспроизведи недостаток места. Проверь понятную ошибку и целостность уже сохранённых данных, не заполняя рабочий диск.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Ошибка возникала при нехватке свободного места"
+    },
+    {
+      "id": "verify_fix_effect_20261123_063",
+      "intent_id": "verify_fix_effect",
+      "canonical_question": "Как проверить, что исправление помогло?",
+      "scenario": "api_backward_compatibility",
+      "context_note": "Исправляли ответ API, которым пользуются старые клиенты",
+      "text": "Сравни ответы на тестовых запросах от поддерживаемых версий клиента. Проверь обязательные поля и типы, а не только код успешного ответа.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Исправляли ответ API, которым пользуются старые клиенты"
     }
   ]
 }
