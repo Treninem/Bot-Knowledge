@@ -8,10 +8,10 @@
   "editorially_accepted": 0,
   "counts": {
     "intents": 3,
-    "candidates": 283,
+    "candidates": 300,
     "accepted": 0
   },
-  "notes": "2026-11-23: 283 staged candidates (100 describe_problem, 100 shorten_explanation, 83 verify_fix_effect). 0 editorially accepted. Latest cycle added 20 independent context-specific verification scenarios. Not manifest-registered; full repository tests, cross-pack editorial review, SHA-256 and exact-head CI pending.",
+  "notes": "2026-11-23: 300 staged candidates, 100 per intent (describe_problem, shorten_explanation, verify_fix_effect). Latest cycle added 17 conditional verification scenarios. 0 editorially accepted, 0 manifest-registered, 0 published. Full tests, cross-pack semantic/privacy review, actual-byte SHA-256 registration and exact-head CI pending.",
   "replies": [
     {
       "id": "describe_problem_20261123_001",
@@ -4257,6 +4257,261 @@
       "context": "direct_user_request",
       "read_only": true,
       "selection_precondition": "Ошибка возникает только при использовании прокси"
+    },
+    {
+      "id": "verify_fix_effect_20261123_084",
+      "intent_id": "verify_fix_effect",
+      "canonical_question": "Как проверить, что исправление помогло?",
+      "scenario": "rtl_layout",
+      "context_note": "Экран на языке с письмом справа налево",
+      "text": "Проверь порядок полей, направление навигации и читаемость чисел в тестовом интерфейсе справа налево.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Экран на языке с письмом справа налево"
+    },
+    {
+      "id": "verify_fix_effect_20261123_085",
+      "intent_id": "verify_fix_effect",
+      "canonical_question": "Как проверить, что исправление помогло?",
+      "scenario": "locale_decimal",
+      "context_note": "Числа вводятся с разными десятичными разделителями",
+      "text": "Введи тестовые дробные числа с точкой и запятой в соответствующих локалях. Сверь сохранённые значения.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Числа вводятся с разными десятичными разделителями"
+    },
+    {
+      "id": "verify_fix_effect_20261123_086",
+      "intent_id": "verify_fix_effect",
+      "canonical_question": "Как проверить, что исправление помогло?",
+      "scenario": "empty_search",
+      "context_note": "Поиск возвращает пустую выдачу",
+      "text": "Выполни заведомо пустой поисковый запрос. Проверь, что отсутствие совпадений не выглядит как ошибка загрузки.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Поиск возвращает пустую выдачу"
+    },
+    {
+      "id": "verify_fix_effect_20261123_087",
+      "intent_id": "verify_fix_effect",
+      "canonical_question": "Как проверить, что исправление помогло?",
+      "scenario": "page_navigation",
+      "context_note": "Длинный список разбит на страницы",
+      "text": "Пройди тестовый список вперёд и назад. Сравни количество и порядок записей, чтобы исключить пропуски.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Длинный список разбит на страницы"
+    },
+    {
+      "id": "verify_fix_effect_20261123_088",
+      "intent_id": "verify_fix_effect",
+      "canonical_question": "Как проверить, что исправление помогло?",
+      "scenario": "simultaneous_quota",
+      "context_note": "Несколько запросов одновременно достигают лимита",
+      "text": "В тестовой среде отправь параллельные запросы у границы лимита. Сверь итоговый счётчик с правилами сервиса.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Несколько запросов одновременно достигают лимита"
+    },
+    {
+      "id": "verify_fix_effect_20261123_089",
+      "intent_id": "verify_fix_effect",
+      "canonical_question": "Как проверить, что исправление помогло?",
+      "scenario": "attachment_details",
+      "context_note": "У вложения отображаются неверные сведения",
+      "text": "Прикрепи тестовый файл и сверь его имя, размер и тип. Локальный путь устройства не должен показываться другим.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "У вложения отображаются неверные сведения"
+    },
+    {
+      "id": "verify_fix_effect_20261123_090",
+      "intent_id": "verify_fix_effect",
+      "canonical_question": "Как проверить, что исправление помогло?",
+      "scenario": "roundtrip_export",
+      "context_note": "Экспортированные данные нужно импортировать обратно",
+      "text": "Экспортируй обезличенный набор, импортируй в пустую тестовую область и сравни типы полей и число записей.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Экспортированные данные нужно импортировать обратно"
+    },
+    {
+      "id": "verify_fix_effect_20261123_091",
+      "intent_id": "verify_fix_effect",
+      "canonical_question": "Как проверить, что исправление помогло?",
+      "scenario": "redo_sequence",
+      "context_note": "Исправлена повторная отмена и возврат действий",
+      "text": "Измени тестовый объект дважды, отмени оба изменения и верни их. Сверь состояние после каждого шага.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Исправлена повторная отмена и возврат действий"
+    },
+    {
+      "id": "verify_fix_effect_20261123_092",
+      "intent_id": "verify_fix_effect",
+      "canonical_question": "Как проверить, что исправление помогло?",
+      "scenario": "app_background",
+      "context_note": "Ошибка возникала после возвращения приложения из фона",
+      "text": "Начни тестовую операцию, сверни приложение и вернись. Проверь действительный статус и отсутствие дубликатов.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Ошибка возникала после возвращения приложения из фона"
+    },
+    {
+      "id": "verify_fix_effect_20261123_093",
+      "intent_id": "verify_fix_effect",
+      "canonical_question": "Как проверить, что исправление помогло?",
+      "scenario": "time_rollback",
+      "context_note": "Системные часы переводятся назад",
+      "text": "В изолированной среде сдвинь часы назад. Проверь порядок событий и срок действия временных записей.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Системные часы переводятся назад"
+    },
+    {
+      "id": "verify_fix_effect_20261123_094",
+      "intent_id": "verify_fix_effect",
+      "canonical_question": "Как проверить, что исправление помогло?",
+      "scenario": "print_retry",
+      "context_note": "Повторная печать после сбоя очереди",
+      "text": "Отправь тестовый документ на печать и повтори после сбоя очереди. Убедись, что лишние копии не создаются.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Повторная печать после сбоя очереди"
+    },
+    {
+      "id": "verify_fix_effect_20261123_095",
+      "intent_id": "verify_fix_effect",
+      "canonical_question": "Как проверить, что исправление помогло?",
+      "scenario": "case_sensitive_keys",
+      "context_note": "Идентификаторы отличаются только регистром букв",
+      "text": "Сравни поиск двух тестовых идентификаторов с разным регистром. Поведение должно соответствовать правилам системы.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Идентификаторы отличаются только регистром букв"
+    },
+    {
+      "id": "verify_fix_effect_20261123_096",
+      "intent_id": "verify_fix_effect",
+      "canonical_question": "Как проверить, что исправление помогло?",
+      "scenario": "nested_move",
+      "context_note": "Переносится папка с вложенными каталогами",
+      "text": "Перемести тестовую папку с несколькими уровнями. Проверь структуру, ссылки и разрешения после переноса.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Переносится папка с вложенными каталогами"
+    },
+    {
+      "id": "verify_fix_effect_20261123_097",
+      "intent_id": "verify_fix_effect",
+      "canonical_question": "Как проверить, что исправление помогло?",
+      "scenario": "read_receipt_sync",
+      "context_note": "Два устройства одновременно отмечают сообщение прочитанным",
+      "text": "Открой тестовое сообщение на двух устройствах. Убедись, что после синхронизации отметка прочтения не откатывается.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Два устройства одновременно отмечают сообщение прочитанным"
+    },
+    {
+      "id": "verify_fix_effect_20261123_098",
+      "intent_id": "verify_fix_effect",
+      "canonical_question": "Как проверить, что исправление помогло?",
+      "scenario": "highlight_match",
+      "context_note": "Подсветка поискового совпадения работает неправильно",
+      "text": "Найди тестовую фразу с повторяющимися словами. Проверь нужное выделение без изменения исходного текста.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Подсветка поискового совпадения работает неправильно"
+    },
+    {
+      "id": "verify_fix_effect_20261123_099",
+      "intent_id": "verify_fix_effect",
+      "canonical_question": "Как проверить, что исправление помогло?",
+      "scenario": "quoted_csv_newline",
+      "context_note": "CSV содержит перенос строки внутри поля в кавычках",
+      "text": "Импортируй тестовый CSV с переносом внутри поля. Сравни количество строк и полное значение поля.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "CSV содержит перенос строки внутри поля в кавычках"
+    },
+    {
+      "id": "verify_fix_effect_20261123_100",
+      "intent_id": "verify_fix_effect",
+      "canonical_question": "Как проверить, что исправление помогло?",
+      "scenario": "exif_orientation",
+      "context_note": "Загруженное изображение самопроизвольно поворачивается",
+      "text": "Загрузи тестовое фото с метаданными ориентации. Сравни миниатюру и открытый файл с исходником.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Загруженное изображение самопроизвольно поворачивается"
     }
   ]
 }
