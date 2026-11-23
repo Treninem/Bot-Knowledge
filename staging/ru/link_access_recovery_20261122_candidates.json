@@ -8,10 +8,10 @@
   "editorially_accepted": 0,
   "counts": {
     "intents": 1,
-    "candidates": 44,
+    "candidates": 60,
     "accepted": 0
   },
-  "notes": "Independent synthetic staging; requires cross-pack review, repository tests, SHA-256 and exact-head CI before promotion.",
+  "notes": "Synthetic editorial staging only; 16 added in this update. Requires cross-pack semantic/privacy review, full tests, manifest SHA/cache registration and exact-head CI before acceptance.",
   "replies": [
     {
       "id": "link_access_recovery_001",
@@ -672,6 +672,246 @@
       "context": "direct_user_request",
       "read_only": true,
       "selection_precondition": "Когда адрес открывается без сообщения об ошибке, но страница пустая"
+    },
+    {
+      "id": "link_access_recovery_045",
+      "intent_id": "link_does_not_open",
+      "canonical_question": "Что делать, если ссылка не открывается?",
+      "scenario": "clock_incorrect_tls",
+      "context_note": "Когда сайт с корректным адресом выдаёт ошибку сертификата, а часы устройства сбились",
+      "text": "Проверь дату, время и часовой пояс устройства. Неверные часы могут мешать проверке сертификата; предупреждение безопасности игнорировать не нужно.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда сайт с корректным адресом выдаёт ошибку сертификата, а часы устройства сбились"
+    },
+    {
+      "id": "link_access_recovery_046",
+      "intent_id": "link_does_not_open",
+      "canonical_question": "Что делать, если ссылка не открывается?",
+      "scenario": "captive_portal_wifi",
+      "context_note": "Когда в общественной сети Wi-Fi открывается страница входа вместо нужного сайта",
+      "text": "Сначала проверь, не требует ли сеть подтверждения подключения. Не вводи пароль от нужного сайта в форму, появившуюся от имени Wi-Fi.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда в общественной сети Wi-Fi открывается страница входа вместо нужного сайта"
+    },
+    {
+      "id": "link_access_recovery_047",
+      "intent_id": "link_does_not_open",
+      "canonical_question": "Что делать, если ссылка не открывается?",
+      "scenario": "link_opens_store_listing",
+      "context_note": "Когда приглашение открывает страницу приложения в магазине вместо нужного раздела",
+      "text": "Проверь, установлено ли официальное приложение и поддерживает ли оно такие переходы. Если переход не восстановился, попроси обычную веб-ссылку.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда приглашение открывает страницу приложения в магазине вместо нужного раздела"
+    },
+    {
+      "id": "link_access_recovery_048",
+      "intent_id": "link_does_not_open",
+      "canonical_question": "Что делать, если ссылка не открывается?",
+      "scenario": "document_moved_workspace",
+      "context_note": "Когда документ перенесли в другую папку и старая ссылка больше не действует",
+      "text": "Попроси владельца прислать новый адрес или открыть документ через доступный тебе рабочий каталог. Не пытайся получить доступ через чужую учётную запись.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда документ перенесли в другую папку и старая ссылка больше не действует"
+    },
+    {
+      "id": "link_access_recovery_049",
+      "intent_id": "link_does_not_open",
+      "canonical_question": "Что делать, если ссылка не открывается?",
+      "scenario": "link_broken_by_chat_preview",
+      "context_note": "Когда ссылка из предпросмотра сообщения ведёт не туда, куда написано в тексте",
+      "text": "Сравни видимый адрес с фактическим назначением перехода. При расхождении не открывай его и уточни ссылку у отправителя.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда ссылка из предпросмотра сообщения ведёт не туда, куда написано в тексте"
+    },
+    {
+      "id": "link_access_recovery_050",
+      "intent_id": "link_does_not_open",
+      "canonical_question": "Что делать, если ссылка не открывается?",
+      "scenario": "file_download_interrupted",
+      "context_note": "Когда загрузка по ссылке обрывается на середине",
+      "text": "Проверь свободное место и стабильность подключения. Для большого файла попробуй штатное возобновление загрузки, если сервис его поддерживает.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда загрузка по ссылке обрывается на середине"
+    },
+    {
+      "id": "link_access_recovery_051",
+      "intent_id": "link_does_not_open",
+      "canonical_question": "Что делать, если ссылка не открывается?",
+      "scenario": "http_451",
+      "context_note": "Когда сайт отвечает кодом 451 Unavailable For Legal Reasons",
+      "text": "Код 451 указывает на ограничение доступа по юридическим причинам. Проверь уведомление сервиса и доступность материала у правообладателя; не выдавай это за обычный сетевой сбой.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда сайт отвечает кодом 451 Unavailable For Legal Reasons"
+    },
+    {
+      "id": "link_access_recovery_052",
+      "intent_id": "link_does_not_open",
+      "canonical_question": "Что делать, если ссылка не открывается?",
+      "scenario": "url_has_trailing_punctuation",
+      "context_note": "Когда в скопированный адрес случайно попала точка или скобка из предложения",
+      "text": "Сравни ссылку с исходным сообщением: завершающая точка или скобка иногда оказывается лишней. Удаляй только очевидный знак вне адреса, не меняя остальные символы.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда в скопированный адрес случайно попала точка или скобка из предложения"
+    },
+    {
+      "id": "link_access_recovery_053",
+      "intent_id": "link_does_not_open",
+      "canonical_question": "Что делать, если ссылка не открывается?",
+      "scenario": "link_opens_in_inapp_browser",
+      "context_note": "Когда страница не работает во встроенном браузере мессенджера",
+      "text": "Попробуй открыть тот же адрес в обычном браузере устройства. Если нужен вход, убедись, что домен официальный, прежде чем вводить данные.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда страница не работает во встроенном браузере мессенджера"
+    },
+    {
+      "id": "link_access_recovery_054",
+      "intent_id": "link_does_not_open",
+      "canonical_question": "Что делать, если ссылка не открывается?",
+      "scenario": "link_requires_one_time_code",
+      "context_note": "Когда страница просит одноразовый код, но он не приходит",
+      "text": "Проверь, каким официальным способом сервис отправляет код и правильно ли указан канал получения. Никому не пересылай код и не вводи его на постороннем домене.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда страница просит одноразовый код, но он не приходит"
+    },
+    {
+      "id": "link_access_recovery_055",
+      "intent_id": "link_does_not_open",
+      "canonical_question": "Что делать, если ссылка не открывается?",
+      "scenario": "link_wrong_document_version",
+      "context_note": "Когда ссылка открывает устаревшую редакцию документа вместо ожидаемой",
+      "text": "Проверь дату и номер версии в самом документе. Попроси автора дать прямую ссылку на актуальную редакцию, особенно если от неё зависит решение.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда ссылка открывает устаревшую редакцию документа вместо ожидаемой"
+    },
+    {
+      "id": "link_access_recovery_056",
+      "intent_id": "link_does_not_open",
+      "canonical_question": "Что делать, если ссылка не открывается?",
+      "scenario": "proxy_authentication_required",
+      "context_note": "Когда браузер показывает 407 Proxy Authentication Required",
+      "text": "Код 407 относится к авторизации на прокси-сервере. Если сеть рабочая, уточни настройки у администратора; вводить корпоративные данные в неизвестное окно нельзя.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда браузер показывает 407 Proxy Authentication Required"
+    },
+    {
+      "id": "link_access_recovery_057",
+      "intent_id": "link_does_not_open",
+      "canonical_question": "Что делать, если ссылка не открывается?",
+      "scenario": "link_blocked_by_organization_policy",
+      "context_note": "Когда корпоративный фильтр прямо сообщает о запрете категории сайта",
+      "text": "Посмотри причину блокировки и обратись к администратору, если ресурс нужен для работы. Самостоятельно обходить политику организации не предлагаю.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда корпоративный фильтр прямо сообщает о запрете категории сайта"
+    },
+    {
+      "id": "link_access_recovery_058",
+      "intent_id": "link_does_not_open",
+      "canonical_question": "Что делать, если ссылка не открывается?",
+      "scenario": "browser_outdated_tls",
+      "context_note": "Когда старый браузер не может согласовать защищённое соединение с современным сайтом",
+      "text": "Проверь обновления браузера и системы из официального источника. Не включай устаревшие протоколы безопасности ради одной страницы.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда старый браузер не может согласовать защищённое соединение с современным сайтом"
+    },
+    {
+      "id": "link_access_recovery_059",
+      "intent_id": "link_does_not_open",
+      "canonical_question": "Что делать, если ссылка не открывается?",
+      "scenario": "link_references_removed_attachment",
+      "context_note": "Когда сообщение открывается, а прикреплённый к нему файл уже удалён",
+      "text": "Уточни у отправителя, сохранился ли исходный файл, и попроси повторно поделиться им с нужными правами. Ссылка на само сообщение не восстановит удалённое вложение.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда сообщение открывается, а прикреплённый к нему файл уже удалён"
+    },
+    {
+      "id": "link_access_recovery_060",
+      "intent_id": "link_does_not_open",
+      "canonical_question": "Что делать, если ссылка не открывается?",
+      "scenario": "url_case_sensitive_path",
+      "context_note": "Когда домен открывается, но адрес с изменёнными заглавными буквами ведёт на ошибку",
+      "text": "Сверь путь после имени сайта с оригиналом посимвольно. На некоторых серверах регистр букв в пути имеет значение.",
+      "language": "ru",
+      "audiences": [
+        "all_ai_bots"
+      ],
+      "context": "direct_user_request",
+      "read_only": true,
+      "selection_precondition": "Когда домен открывается, но адрес с изменёнными заглавными буквами ведёт на ошибку"
     }
   ]
 }
